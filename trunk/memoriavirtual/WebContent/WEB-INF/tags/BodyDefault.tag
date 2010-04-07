@@ -20,7 +20,7 @@
         <div id="header">
             <div id="logoContainer" >
                 <div id="logo" >
-                    <p><img src="/MemoriaVirtualCataloguing/images/banner.png" alt="Mem&oacute;ria Virtual" /></p>
+                    <p><img src="/memoriavirtual/images/banner.png" alt="Mem&oacute;ria Virtual" /></p>
                 </div>
             </div>
         </div>
