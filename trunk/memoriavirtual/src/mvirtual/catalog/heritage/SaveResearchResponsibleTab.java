@@ -23,6 +23,4 @@ public class SaveResearchResponsibleTab extends ActionSupport {
     public String execute () {
         return this.to;
     }
-
-
 }

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.LogManager;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.hibernate.Session;
 
@@ -31,6 +32,18 @@ public class RenderListOfHeritages extends ActionSupport {
         Session session = IndustrialEstate.getSessionFactory().openSession();
 
         List <Heritage> listOfHeritages = session.createQuery("from Heritage").list ();
+
+        if (listOfHeritages == null)
+        {
+            listOfHeritages = new ArrayList <Heritage> ();
+        }
+
+            Heritage herit = new Heritage ();
+
+            herit.setId(1L);
+            herit.setTitle("Teste");
+
+            listOfHeritages.add (herit);
 
         return listOfHeritages;
     }

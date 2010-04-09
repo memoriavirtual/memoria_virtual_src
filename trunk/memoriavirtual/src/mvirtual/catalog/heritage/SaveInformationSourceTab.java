@@ -20,11 +20,7 @@ public class SaveInformationSourceTab extends ActionSupport {
 
     @Override
     public String execute () {
-        return SUCCESS;
+        return this.to;
     }
 
-    @Override
-    public void validate () {
-
-    }
 }

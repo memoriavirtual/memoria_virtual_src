@@ -13,6 +13,7 @@ import org.mvirtual.persistence.hibernate.IndustrialEstate;
 import org.hibernate.Session;
 
 import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -35,6 +36,9 @@ public class RenderDescriptorMainPage extends ActionSupport {
         finally {
             dbSession.close ();
         }
+
+        if (listOfDescriptors == null)
+            listOfDescriptors = new ArrayList <Descriptor> ();
 
         return listOfDescriptors;
     }

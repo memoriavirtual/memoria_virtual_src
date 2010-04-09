@@ -114,7 +114,7 @@ public class SaveHeritageTab extends ActionSupport {
 
         String heritageOperation = (String) session.get(SessionNames.HERITAGE_OPERATION);
 
-        if (heritageOperation.equalsIgnoreCase("new")) {
+        if (heritageOperation != null && heritageOperation.equalsIgnoreCase("new")) {
 
             heritage.setComplementTitle(heritageComplementTitle);
             heritage.setControlNumber(heritageControlNumber);
@@ -153,8 +153,8 @@ public class SaveHeritageTab extends ActionSupport {
             }
         }
 
-        if (heritageOperation.equalsIgnoreCase("edit"))
-        {
+//        if (heritageOperation.equalsIgnoreCase("edit"))
+//        {
             heritage.setComplementTitle(heritageComplementTitle);
             heritage.setControlNumber(heritageControlNumber);
             heritage.setTitle(heritageTitle);
@@ -207,7 +207,7 @@ public class SaveHeritageTab extends ActionSupport {
 
             }
 
-        }
+//        }
 
 //        if (this.button != null && this.button.equalsIgnoreCase("SAVE")) {
 //            return "SaveHeritage";

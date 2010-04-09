@@ -12,13 +12,14 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Fabricio
  */
 public class SaveSubjectAndDescriptorsTab extends ActionSupport {
-    @Override
-    public String execute () {
-        return SUCCESS;
+    private String to;
+
+    public void setTo(String to) {
+        this.to = to;
     }
 
     @Override
-    public void validate () {
-
+    public String execute () {
+        return this.to;
     }
 }

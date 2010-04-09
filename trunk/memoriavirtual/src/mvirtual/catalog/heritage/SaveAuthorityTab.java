@@ -53,6 +53,8 @@ public class SaveAuthorityTab extends ActionSupport {
             dbSession.delete(ah);
         }
 
+        dbSession.flush ();
+
         for (Long authorityId : authoritiesSelected) {
             Authority tempAuthority
                     = (Authority) dbSession.get (Authority.class, authorityId);

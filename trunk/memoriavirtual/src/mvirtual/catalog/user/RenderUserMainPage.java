@@ -13,6 +13,7 @@ import org.mvirtual.persistence.entity.User;
 import org.mvirtual.persistence.hibernate.IndustrialEstate;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -34,6 +35,9 @@ public class RenderUserMainPage extends ActionSupport {
         finally {
             dbSession.close ();
         }
+
+        if (listOfUsers == null)
+            listOfUsers = new ArrayList <User> ();
 
         return listOfUsers;
     }

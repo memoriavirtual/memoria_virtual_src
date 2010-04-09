@@ -14,6 +14,7 @@ import org.mvirtual.persistence.hibernate.IndustrialEstate;
 import org.hibernate.Session;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,6 +37,9 @@ public class RenderInstitutionMainPage extends ActionSupport {
         finally {
             dbSession.close ();
         }
+
+        if (listOfInstitutions == null)
+            listOfInstitutions = new ArrayList <Institution> ();
 
         return listOfInstitutions;
     }

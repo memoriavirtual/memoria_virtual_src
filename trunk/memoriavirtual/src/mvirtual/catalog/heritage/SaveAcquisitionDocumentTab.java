@@ -14,13 +14,15 @@ import org.apache.commons.lang.NotImplementedException;
  * @author Fabricio
  */
 public class SaveAcquisitionDocumentTab extends ActionSupport {
-    @Override
-    public String execute () {
-        throw new NotImplementedException ();
+
+    private String to;
+
+    public void setTo(String to) {
+        this.to = to;
     }
 
     @Override
-    public void validate () {
-
+    public String execute () {
+        return this.to;
     }
 }
