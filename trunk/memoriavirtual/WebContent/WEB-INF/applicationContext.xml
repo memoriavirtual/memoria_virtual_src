@@ -26,9 +26,9 @@
     
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql://localhost:5432/mvirtual2" />
+        <property name="url" value="jdbc:postgresql://127.0.0.1:5432/memoria_virtual" />
         <property name="username" value="postgres" />
-        <property name="password" value="m3m0r14" />
+        <property name="password" value="postgres" />
     </bean>
     
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

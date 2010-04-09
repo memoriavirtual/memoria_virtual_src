@@ -31,3 +31,11 @@ function hidlay(lay)
 function insertHidden () {
 
 }
+
+//function selectAllOptions (selectId) {
+//    var source = document.getElementById (selectId);
+//
+//    for (var i = 0; i < source.options.length; i++) {
+//        source.options [i].selected = true;
+//    }
+//}

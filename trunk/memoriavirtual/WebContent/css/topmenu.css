@@ -32,8 +32,8 @@
 	height:28px; 
 	color:#800000; 
 	float:left; 
-	background:url("../images/uds1.gif") 
-	repeat-x; 
+	/*background:url("../images/uds1.gif")*/ 
+	/*repeat-x;*/
 	background-position:0 35px;
 }
 	

@@ -9,22 +9,22 @@
 
     <context-param>
         <param-name>mainCSSPath</param-name>
-        <param-value>/memoriavirtual/css/main.css</param-value>
+        <param-value>/MemoriaVirtualCataloguing/css/main.css</param-value>
     </context-param>
 
     <context-param>
         <param-name>CSSPath</param-name>
-        <param-value>/memoriavirtual/css</param-value>
+        <param-value>/MemoriaVirtualCataloguing/css</param-value>
     </context-param>
 
     <context-param>
         <param-name>appPath</param-name>
-        <param-value>/memoriavirtual</param-value>
+        <param-value>/MemoriaVirtualCataloguing</param-value>
     </context-param>
 
     <context-param>
         <param-name>favoriteIcon</param-name>
-        <param-value>/memoriavirtual/images/favicon.ico</param-value>
+        <param-value>/MemoriaVirtualCataloguing/images/favicon.ico</param-value>
     </context-param>
 
     <context-param>

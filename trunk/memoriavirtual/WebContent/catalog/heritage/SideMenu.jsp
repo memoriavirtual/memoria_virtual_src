@@ -31,7 +31,7 @@
 <ul>
     <%-- HeritageTab Link --%>
         <li <c:if test="${currentTab eq 'HeritageTab'}" >id="itemSelected"</c:if>>
-            <a onclick="insertHidden ('myForm', 'to', 'to', 'HeritageTab');">Bem Patrimonial</a>
+            <a onclick="insertHidden ('myForm', 'to', 'to', 'HeritageTab');">Informações Gerais</a>
         </li>
 
     <%-- AuthorityTab Link --%>

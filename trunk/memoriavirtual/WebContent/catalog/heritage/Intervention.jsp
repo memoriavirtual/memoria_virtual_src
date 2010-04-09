@@ -286,6 +286,14 @@
                 listOfInterventions.appendChild(myOption);
             }
         }
+
+        function selectAllOptions (selectId) {
+            var source = document.getElementById (selectId);
+
+            for (var i = 0; i < source.options.length; i++) {
+                source.options [i].selected = true;
+            }
+        }
         
 
         </script>
@@ -300,13 +308,11 @@
             <%@include file="/templates/logo.jsp" %>
 
             <div id="topmenusp">
-
                 <%@include file="/catalog/TopMenu.jsp" %>
-
             </div> <%-- topmenusp --%>
 
             <div id="groupsp">
-                <div id="sidebarsp">
+                <div id="sidebarsp" onmouseover="selectAllOptions('listOfInterventions');">
                     <c:set var="currentTab" value="InterventionTab"/>
                     <%@include file="SideMenu.jsp" %>
                 </div>
@@ -333,8 +339,6 @@
                                 namespace="/heritage"
                                 action="SaveInterventionTab"
                                 onsubmit="document.listOfInterventions">
-
-                            <s:hidden name="to" value="HeritageTab" />
 
                             <s:hidden name="listOfInterventionIds" id="listOfInterventionIdsHidden" />
                             <s:hidden name="listOfInterventionDates" id="listOfInterventionDatesHidden" />

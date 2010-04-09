@@ -9,23 +9,23 @@
 
 <html>
     <head>
-        <script language='javascript' type='text/javascript' src='${initParam.appPath}/catalog/heritage/common.js' ></script>
-
+        <script language='javascript' type='text/javascript' src='${initParam.appPath}/catalog/heritage/common.js'></script>
+        
         <templates:HeadDefault />
 
         <sx:head debug="true" cache="false" compressed="false" />
 
-        
         <title>${initParam.applicationName}</title>
     </head>
-            
+
+
 
     <body>
         <div id="sitemain"> <!-- Site main division -->
 
             <%@include file="/templates/logo.jsp" %>
 
-            <div id="topmenusp">                
+            <div id="topmenusp">
                 <%@include file="/catalog/TopMenu.jsp" %>
             </div> <%-- topmenusp --%>
 

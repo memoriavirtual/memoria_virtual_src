@@ -64,22 +64,28 @@
                 deathDateRef.value = document.getElementById("Authority" + id + "deathDate").innerHTML;
             }
 
-            function selectAllOptions (selectId) {
-                alert ("here");
-                var source = document.getElementById (selectId);
 
-                for (var i = 0; i < source.options.length; i++) {
-                    source.options [i].selected = true;
-                }
+
+            function finish () {
+                selectAllOptions('authoritiesSelected');
+                selectAllOptions('coAuthoritiesSelected');
             }
+
+    function selectAllOptions (selectId) {
+        var source = document.getElementById (selectId);
+
+        for (var i = 0; i < source.options.length; i++) {
+            source.options [i].selected = true;
+        }
+
+    }
         </script>
 
         <templates:HeadDefault />
         <title>${initParam.applicationName}</title>
     </head>
 
-    <body onload="showAuthorityData ('authorities');selectAllOptions('authoritiesSelected');
-                                              selectAllOptions('coAuthoritiesSelected');">
+    <body onload="showAuthorityData ('authorities');">
         <div id="sitemain"> <!-- Site main division -->
 
             <%@include file="/templates/logo.jsp" %>
@@ -94,14 +100,14 @@
 
 
             <div id="groupsp">
-                    <div id="sidebarsp">
+                    <div id="sidebarsp" onmouseover="finish();">
                         <c:set var="currentTab" value="AuthorityTab"/>
 
                         <%@include file="SideMenu.jsp" %>
                     </div>
 
                     <div id="maincontentsp" style="margin-left:240px;">
-                        <h1>Autoria</h1>
+                        <h1>Bem Patrimonial > Autoria</h1>
 
                         <div class="boxsp">
 
@@ -121,8 +127,7 @@
                             <s:form id="myForm"
                                     namespace="/heritage"
                                     action="SaveAuthorityTab" 
-                                    onsubmit="selectAllOptions('authoritiesSelected');
-                                              selectAllOptions('coAuthoritiesSelected');">
+                                    onsubmit="">
 
 
                                     <s:select id="authorities"
@@ -172,6 +177,8 @@
                                             onclick="transferOptions ('authorities', 'coAuthoritiesSelected');
                                             showAuthorityData ('authorities');">Adicionar Co-Autor</button>
 
+                                    <p><br/></p>
+
                                     <s:select id="authoritiesSelected"
                                                 label="Autores Selecionados"
                                                 name="authoritiesSelected"
@@ -186,7 +193,8 @@
                                             onclick="transferOptions ('authoritiesSelected', 'authorities');
                                             showAuthorityData ('authorities');">Remover Autor</button>
 
-
+                                    <p><br/></p>
+                                    
                                     <s:select id="coAuthoritiesSelected"
                                               label="Co-Autores Selecionados"
                                               name="coAuthoritiesSelected"
