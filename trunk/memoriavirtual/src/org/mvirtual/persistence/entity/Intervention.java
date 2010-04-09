@@ -13,12 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
-
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
 
 /**
  * Intervention model bean
