@@ -15,28 +15,27 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
-
-import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
 
 /**
  * Descriptor model bean
+ * 
  * @author Kiyoshi de Brito Murata <kbmurata@gmail.com>
  * @author Gabriel de Faria Andery <gfandery@gmail.com>
  */
 @Entity
 @Table(name = "`descriptor`")
-public class Descriptor
-	extends AbstractPersistentObject
-	implements java.io.Serializable
-{
+public class Descriptor extends AbstractPersistentObject implements
+		java.io.Serializable {
 	private static final long serialVersionUID = -135233366110723119L;
 
 	private String descriptor;
-	
+
 	private Set<Heritage> heritages = new HashSet<Heritage>(0);
 
-	public Descriptor() {}
+	public Descriptor() {
+	}
 
 	public Descriptor(String descriptor) {
 		this.descriptor = descriptor;
@@ -48,14 +47,12 @@ public class Descriptor
 	}
 
 	/*
-	@Transient
-	@DocumentId
-	public Long getID() {
-		return super.getId();
-	}
-	*/
+	 * @Transient
+	 * 
+	 * @DocumentId public Long getID() { return super.getId(); }
+	 */
 
-	@NaturalId
+	@NaturalId(mutable = true)
 	@Column(name = "`descriptor`", nullable = false)
 	@Field
 	@Type(type = "text")
@@ -69,13 +66,7 @@ public class Descriptor
 
 	@ContainedIn
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "`descriptor_heritage`", 
-                   joinColumns = { @JoinColumn(name = "`id_descriptor`",
-                                               nullable = false,
-                                               updatable = false) },
-                   inverseJoinColumns = { @JoinColumn(name = "`id_heritage`",
-                                          nullable = false,
-                                          updatable = false) })
+	@JoinTable(name = "`descriptor_heritage`", joinColumns = { @JoinColumn(name = "`id_descriptor`", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "`id_heritage`", nullable = false, updatable = false) })
 	public Set<Heritage> getHeritages() {
 		return this.heritages;
 	}
@@ -85,7 +76,7 @@ public class Descriptor
 	}
 
 	@Transient
-    @Override
+	@Override
 	public String getRepr() {
 		return String.format("%s", descriptor);
 	}

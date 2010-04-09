@@ -1,12 +1,6 @@
 package org.mvirtual.persistence.entity;
 
-import org.mvirtual.persistence.entity.relation.AuthorityHeritage;
-import org.mvirtual.persistence.entity.relation.embedded.AuthorityHeritageId;
-import org.mvirtual.persistence.entity.relation.HeritageResearcherResponsible;
-import org.mvirtual.persistence.entity.relation.HeritageSubject;
-import org.mvirtual.persistence.entity.relation.UserHeritageCatalogue;
-import org.mvirtual.persistence.entity.relation.UserHeritageReview;
-
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,107 +15,105 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-//import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
-
-import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Fields;
-//import org.hibernate.search.annotations.DocumentId;
-import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
-
-import java.math.BigDecimal;
+import org.mvirtual.persistence.entity.relation.AuthorityHeritage;
+import org.mvirtual.persistence.entity.relation.HeritageResearcherResponsible;
+import org.mvirtual.persistence.entity.relation.HeritageSubject;
+import org.mvirtual.persistence.entity.relation.UserHeritageCatalogue;
+import org.mvirtual.persistence.entity.relation.UserHeritageReview;
+import org.mvirtual.persistence.entity.relation.embedded.AuthorityHeritageId;
 
 /**
  * Heritage model bean
+ * 
  * @author Kiyoshi de Brito Murata <kbmurata@gmail.com>
  * @author Gabriel de Faria Andery <gfandery@gmail.com>
  */
 @Entity
 @Table(name = "`heritage`")
 @Indexed
-public class Heritage
-	extends AbstractPersistentObject
-	implements java.io.Serializable
-{
+public class Heritage extends AbstractPersistentObject implements
+		java.io.Serializable {
 	private static final long serialVersionUID = 27895880527820405L;
 
-        /**
-         * Número atribuído pela instituição ao bem patrimonial.
-         */
+	/**
+	 * Número atribuído pela instituição ao bem patrimonial.
+	 */
 	private String controlNumber;
 
-        /**
-         * Título ou nome da obra, documento, bem arquitetônico, objeto museológico.
-         * Para os bens naturais a equivalência para nome popular mais utilizado.
-         * Pode estar previamente estabelecido para o bem patrimonial ou será 
-         * construído pelo pesquisador/catalogador ou ainda complementado de acordo
-         * com o plano de organização do acervo da instituição. Ex.: Título já 
-         * estabelecido: "Revista Moderna". Título construído: "Xícara do Conde
-         * do Pinhal". Título complementado: "Revista Moderna Fasciculo 2".
-         */
+	/**
+	 * Título ou nome da obra, documento, bem arquitetônico, objeto museológico.
+	 * Para os bens naturais a equivalência para nome popular mais utilizado.
+	 * Pode estar previamente estabelecido para o bem patrimonial ou será
+	 * construído pelo pesquisador/catalogador ou ainda complementado de acordo
+	 * com o plano de organização do acervo da instituição. Ex.: Título já
+	 * estabelecido: "Revista Moderna". Título construído: "Xícara do Conde do
+	 * Pinhal". Título complementado: "Revista Moderna Fasciculo 2".
+	 */
 	private String title;
 
-        /**
-         * Obra ou documento traduzido para informar título na língua original,
-         * para bens naturais informar nome científico.
-         */
+	/**
+	 * Obra ou documento traduzido para informar título na língua original, para
+	 * bens naturais informar nome científico.
+	 */
 	private String originalTitle;
 
-        /**
-         * Outro nome da obra ou documento que geralmente aparece acompanhado da 
-         * conjunção “ou�? após vírgula; para os bens naturais equivalência para 
-         * outros nomes também populares ou regionais.
-         */
+	/**
+	 * Outro nome da obra ou documento que geralmente aparece acompanhado da
+	 * conjunção “ou�? após vírgula; para os bens naturais equivalência para
+	 * outros nomes também populares ou regionais.
+	 */
 	private String alternativeTitle;
 
-        /**
-         * Nome da coleção a que pertence o item inventariado conforme organização 
-         * da instituição.
-         */
+	/**
+	 * Nome da coleção a que pertence o item inventariado conforme organização
+	 * da instituição.
+	 */
 	private String collection;
 
-        /**
-         * Conjunto de informações que descreve a localização física do bem 
-         * patrimonial no acervo.
-         */
+	/**
+	 * Conjunto de informações que descreve a localização física do bem
+	 * patrimonial no acervo.
+	 */
 	private String physicalLocation;
 
-        /**
-         * Pode ser usado para subtítulos, nomes de séries monográficas, subcoleções, 
-         * entre outras situações não previstas nos campos anteriores. 
-         */
+	/**
+	 * Pode ser usado para subtítulos, nomes de séries monográficas,
+	 * subcoleções, entre outras situações não previstas nos campos anteriores.
+	 */
 	private String complementTitle;
 
-        /**
-         * Situação de disponibilidade do bem patrimonial (acervo, evento ou
-         * manutenção).
-         * 0 - NÃO SE APLICA
-         * 1 - ACERVO (estante, reserva técnica, etc);
-         * 2 - EVENTO (exposição, feira, etc);
-         * 3 - MANUTENÇÃO (restauro, encadernação, pequenos consertos, etc).
-         * 4 - BAIXA DO PATRIMÔNIO Obs.: Considerar bens naturais, imateriais e arquitetônicos como parte do acervo.
-         */
+	/**
+	 * Situação de disponibilidade do bem patrimonial (acervo, evento ou
+	 * manutenção). 0 - NÃO SE APLICA 1 - ACERVO (estante, reserva técnica,
+	 * etc); 2 - EVENTO (exposição, feira, etc); 3 - MANUTENÇÃO (restauro,
+	 * encadernação, pequenos consertos, etc). 4 - BAIXA DO PATRIMÔNIO Obs.:
+	 * Considerar bens naturais, imateriais e arquitetônicos como parte do
+	 * acervo.
+	 */
 	private Long situation;
-
 
 	private String local;
 
-        /**
-         * Latitude GPS.
-         */
-        private BigDecimal gpsLatitude;
+	/**
+	 * Latitude GPS.
+	 */
+	private BigDecimal gpsLatitude;
 
-        /**
-         * Longitude GPS.
-         */
-        private BigDecimal gpsLongitude;
-        
+	/**
+	 * Longitude GPS.
+	 */
+	private BigDecimal gpsLongitude;
+
 	private String date;
 	private String editionNumber;
 	private String reissueNumber;
@@ -150,25 +142,33 @@ public class Heritage
 	private Institution institution;
 	private Boolean reviewed;
 
-	private Set<UserHeritageReview> userHeritageReviews = new HashSet<UserHeritageReview>(0);
+	private Set<UserHeritageReview> userHeritageReviews = new HashSet<UserHeritageReview>(
+			0);
 
-	private Set<AuthorityHeritage> authorityHeritages = new HashSet<AuthorityHeritage>(0);
+	private Set<AuthorityHeritage> authorityHeritages = new HashSet<AuthorityHeritage>(
+			0);
 	private Set<Multimedia> multimedias = new HashSet<Multimedia>(0);
 	private Set<Intervention> interventions = new HashSet<Intervention>(0);
 
-        /**
+	/**
          * 
          */
-        private Set<UserHeritageCatalogue> userHeritageCatalogues = new HashSet<UserHeritageCatalogue>(0);
-	private Set<HeritageResearcherResponsible> heritageResearcherResponsibles = new HashSet<HeritageResearcherResponsible>(0);
-	private Set<InformationSource> informationSources = new HashSet<InformationSource>(0);
+	private Set<UserHeritageCatalogue> userHeritageCatalogues = new HashSet<UserHeritageCatalogue>(
+			0);
+	private Set<HeritageResearcherResponsible> heritageResearcherResponsibles = new HashSet<HeritageResearcherResponsible>(
+			0);
+	private Set<InformationSource> informationSources = new HashSet<InformationSource>(
+			0);
 	private Set<Descriptor> descriptors = new HashSet<Descriptor>(0);
 	private Set<HeritageType> heritageTypes = new HashSet<HeritageType>(0);
 	private Set<Heritage> heritagesForIdHeritage = new HashSet<Heritage>(0);
-	private Set<Heritage> heritagesForIdRelatedHeritage = new HashSet<Heritage>(0);
-	private Set<HeritageSubject> heritageSubjects = new HashSet<HeritageSubject>(0);
+	private Set<Heritage> heritagesForIdRelatedHeritage = new HashSet<Heritage>(
+			0);
+	private Set<HeritageSubject> heritageSubjects = new HashSet<HeritageSubject>(
+			0);
 
-	public Heritage() {}
+	public Heritage() {
+	}
 
 	public Heritage(Institution institution, String title) {
 		this.institution = institution;
@@ -179,7 +179,7 @@ public class Heritage
 			String title, String originaltitle, String alternativetitle,
 			String collection, String physicallocation, String complementtitle,
 			Long situation, String local, BigDecimal gpsLatitude,
-                        BigDecimal gpsLongitude, String date, String editionnumber,
+			BigDecimal gpsLongitude, String date, String editionnumber,
 			String reissuenumber, String otherresponsibilities, String content,
 			String note, String dimensions, String physicalfeatures,
 			String support, String condition, String conditionnotes,
@@ -200,8 +200,8 @@ public class Heritage
 		this.complementTitle = complementtitle;
 		this.situation = situation;
 		this.local = local;
-                this.gpsLatitude = gpsLatitude;
-                this.gpsLongitude = gpsLongitude;
+		this.gpsLatitude = gpsLatitude;
+		this.gpsLongitude = gpsLongitude;
 		this.date = date;
 		this.editionNumber = editionnumber;
 		this.reissueNumber = reissuenumber;
@@ -233,9 +233,9 @@ public class Heritage
 			String title, String originaltitle, String alternativetitle,
 			String collection, String physicallocation, String complementtitle,
 			Long situation, String local, BigDecimal gpsLatitude,
-                        BigDecimal gpsLongitude, String date,
-                        String editionnumber, String reissuenumber, String otherresponsibilities,
-                        String content,	String note, String dimensions, String physicalfeatures,
+			BigDecimal gpsLongitude, String date, String editionnumber,
+			String reissuenumber, String otherresponsibilities, String content,
+			String note, String dimensions, String physicalfeatures,
 			String support, String condition, String conditionnotes,
 			String accessconditions, String reproductionconditions,
 			String usage, String protection,
@@ -263,8 +263,8 @@ public class Heritage
 		this.complementTitle = complementtitle;
 		this.situation = situation;
 		this.local = local;
-                this.gpsLatitude = gpsLatitude;
-                this.gpsLongitude = gpsLongitude;
+		this.gpsLatitude = gpsLatitude;
+		this.gpsLongitude = gpsLongitude;
 		this.date = date;
 		this.editionNumber = editionnumber;
 		this.reissueNumber = reissuenumber;
@@ -305,16 +305,14 @@ public class Heritage
 	}
 
 	/*
-	@Transient
-	@DocumentId
-	public Long getID() {
-		return super.getId();
-	}
-	*/
+	 * @Transient
+	 * 
+	 * @DocumentId public Long getID() { return super.getId(); }
+	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "`id_institution`", nullable = false)
-	@IndexedEmbedded(depth=1)
+	@IndexedEmbedded(depth = 1)
 	public Institution getInstitution() {
 		return this.institution;
 	}
@@ -323,7 +321,7 @@ public class Heritage
 		this.institution = institution;
 	}
 
-	@NaturalId
+	@NaturalId(mutable = true)
 	@Column(name = "`controlnumber`", unique = true)
 	@Field
 	@Type(type = "text")
@@ -335,12 +333,11 @@ public class Heritage
 		this.controlNumber = controlnumber;
 	}
 
-	@NaturalId
+	@NaturalId(mutable = true)
 	@Column(name = "`title`", nullable = false)
 	@Fields( {
-		@Field(index = Index.TOKENIZED),
-		@Field(name = "heritageTitle_forSort", index = Index.UN_TOKENIZED, store = Store.YES)
-	} )
+			@Field(index = Index.TOKENIZED),
+			@Field(name = "heritageTitle_forSort", index = Index.UN_TOKENIZED, store = Store.YES) })
 	@Type(type = "text")
 	public String getTitle() {
 		return this.title;
@@ -427,43 +424,49 @@ public class Heritage
 		this.local = local;
 	}
 
-        /**
-         * Coordenada GPS - Latitude.
-         * @return Latitude.
-         */
-        @Column (name="GPS_LATITUDE")
-        @Field
-        @Type(type = "big_decimal")
-        public BigDecimal getGpsLatitude() {
-            return gpsLatitude;
-        }
+	/**
+	 * Coordenada GPS - Latitude.
+	 * 
+	 * @return Latitude.
+	 */
+	@Column(name = "GPS_LATITUDE")
+	@Field
+	@Type(type = "big_decimal")
+	public BigDecimal getGpsLatitude() {
+		return gpsLatitude;
+	}
 
-        /**
-         * Coordenada GPS - Latitude.
-         * @param gpsLatitude Latitude.
-         */
-        public void setGpsLatitude(BigDecimal gpsLatitude) {
-            this.gpsLatitude = gpsLatitude;
-        }
+	/**
+	 * Coordenada GPS - Latitude.
+	 * 
+	 * @param gpsLatitude
+	 *            Latitude.
+	 */
+	public void setGpsLatitude(BigDecimal gpsLatitude) {
+		this.gpsLatitude = gpsLatitude;
+	}
 
-        /**
-         * Coordenada GPS - Longitude
-         * @return Longitude.
-         */
-        @Column (name="GPS_LONGITUDE")
-        @Field
-        @Type(type = "big_decimal")
-        public BigDecimal getGpsLongitude() {
-            return gpsLongitude;
-        }
+	/**
+	 * Coordenada GPS - Longitude
+	 * 
+	 * @return Longitude.
+	 */
+	@Column(name = "GPS_LONGITUDE")
+	@Field
+	@Type(type = "big_decimal")
+	public BigDecimal getGpsLongitude() {
+		return gpsLongitude;
+	}
 
-        /**
-         * Coordenada GPS - Longitude.
-         * @param gpsLongitude Longitude.
-         */
-        public void setGpsLongitude(BigDecimal gpsLongitude) {
-            this.gpsLongitude = gpsLongitude;
-        }
+	/**
+	 * Coordenada GPS - Longitude.
+	 * 
+	 * @param gpsLongitude
+	 *            Longitude.
+	 */
+	public void setGpsLongitude(BigDecimal gpsLongitude) {
+		this.gpsLongitude = gpsLongitude;
+	}
 
 	@Column(name = "`date`")
 	@Field
@@ -637,7 +640,8 @@ public class Heritage
 		return this.heritageProtectionInstitution;
 	}
 
-	public void setHeritageProtectionInstitution(String heritageprotectioninstitution) {
+	public void setHeritageProtectionInstitution(
+			String heritageprotectioninstitution) {
 		this.heritageProtectionInstitution = heritageprotectioninstitution;
 	}
 
@@ -736,7 +740,7 @@ public class Heritage
 	public void setRegistryNumber(String registrynumber) {
 		this.registryNumber = registrynumber;
 	}
-	
+
 	@Column(name = "`reviewed`")
 	public Boolean isReviewed() {
 		return this.reviewed;
@@ -751,12 +755,13 @@ public class Heritage
 		return this.userHeritageReviews;
 	}
 
-	public void setUserHeritageReviews(Set<UserHeritageReview> userHeritageReviews) {
+	public void setUserHeritageReviews(
+			Set<UserHeritageReview> userHeritageReviews) {
 		this.userHeritageReviews = userHeritageReviews;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "heritage")
-	@IndexedEmbedded(depth=2)
+	@IndexedEmbedded(depth = 2)
 	public Set<AuthorityHeritage> getAuthorityHeritages() {
 		return this.authorityHeritages;
 	}
@@ -778,7 +783,7 @@ public class Heritage
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "`intervention_heritage`", joinColumns = { @JoinColumn(name = "`id_heritage`", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "`id_intervention`", nullable = false, updatable = false) })
-	@IndexedEmbedded(depth=1)
+	@IndexedEmbedded(depth = 1)
 	public Set<Intervention> getInterventions() {
 		return this.interventions;
 	}
@@ -792,7 +797,8 @@ public class Heritage
 		return this.userHeritageCatalogues;
 	}
 
-	public void setUserHeritageCatalogues(Set<UserHeritageCatalogue> userHeritageCatalogues) {
+	public void setUserHeritageCatalogues(
+			Set<UserHeritageCatalogue> userHeritageCatalogues) {
 		this.userHeritageCatalogues = userHeritageCatalogues;
 	}
 
@@ -801,7 +807,8 @@ public class Heritage
 		return this.heritageResearcherResponsibles;
 	}
 
-	public void setHeritageResearcherResponsibles(Set<HeritageResearcherResponsible> heritageResearcherresponsibles) {
+	public void setHeritageResearcherResponsibles(
+			Set<HeritageResearcherResponsible> heritageResearcherresponsibles) {
 		this.heritageResearcherResponsibles = heritageResearcherresponsibles;
 	}
 
@@ -816,14 +823,8 @@ public class Heritage
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "`descriptor_heritage`", 
-                   joinColumns = { @JoinColumn(name = "`id_heritage`",
-                                               nullable = false,
-                                               updatable = false) },
-                   inverseJoinColumns = { @JoinColumn(name = "`id_descriptor`",
-                                                      nullable = false,
-                                                      updatable = false) })
-	@IndexedEmbedded(depth=1)
+	@JoinTable(name = "`descriptor_heritage`", joinColumns = { @JoinColumn(name = "`id_heritage`", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "`id_descriptor`", nullable = false, updatable = false) })
+	@IndexedEmbedded(depth = 1)
 	public Set<Descriptor> getDescriptors() {
 		return this.descriptors;
 	}
@@ -833,10 +834,8 @@ public class Heritage
 	}
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "`heritagetype_heritage`", 
-                   joinColumns = { @JoinColumn(name = "`id_heritage`", nullable = false, updatable = false) },
-                   inverseJoinColumns = { @JoinColumn(name = "`id_heritagetype`", nullable = false, updatable = false) })
-	@IndexedEmbedded(depth=1)
+	@JoinTable(name = "`heritagetype_heritage`", joinColumns = { @JoinColumn(name = "`id_heritage`", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "`id_heritagetype`", nullable = false, updatable = false) })
+	@IndexedEmbedded(depth = 1)
 	public Set<HeritageType> getHeritageTypes() {
 		return this.heritageTypes;
 	}
@@ -861,12 +860,13 @@ public class Heritage
 		return this.heritagesForIdRelatedHeritage;
 	}
 
-	public void setRelatedHeritagesToThis(Set<Heritage> heritagesForIdRelatedHeritage) {
+	public void setRelatedHeritagesToThis(
+			Set<Heritage> heritagesForIdRelatedHeritage) {
 		this.heritagesForIdRelatedHeritage = heritagesForIdRelatedHeritage;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "heritage")
-	@IndexedEmbedded(depth=2)
+	@IndexedEmbedded(depth = 2)
 	public Set<HeritageSubject> getHeritageSubjects() {
 		return this.heritageSubjects;
 	}
@@ -875,36 +875,33 @@ public class Heritage
 		this.heritageSubjects = heritageSubjects;
 	}
 
-        /**
-         * Adds a authority and cares all about relation table.
-         * @param authority Authority Data
-         * @param authorshipType Type of authorship
-         * @param function Function of author related to heritage.
-         */
-        public void addAuthority (Authority authority,
-                                  String authorshipType,
-                                  String function) {
+	/**
+	 * Adds a authority and cares all about relation table.
+	 * 
+	 * @param authority
+	 *            Authority Data
+	 * @param authorshipType
+	 *            Type of authorship
+	 * @param function
+	 *            Function of author related to heritage.
+	 */
+	public void addAuthority(Authority authority, String authorshipType,
+			String function) {
 
-            AuthorityHeritageId authorityHeritageId =
-                    new AuthorityHeritageId (this.getId(),
-                                             authority.getId(),
-                                             authorshipType);
+		AuthorityHeritageId authorityHeritageId = new AuthorityHeritageId(this
+				.getId(), authority.getId(), authorshipType);
 
-            AuthorityHeritage authorityHeritage =
-                    new AuthorityHeritage(authorityHeritageId,
-                                          this,
-                                          authority,
-                                          function);
+		AuthorityHeritage authorityHeritage = new AuthorityHeritage(
+				authorityHeritageId, this, authority, function);
 
-            this.authorityHeritages.add (authorityHeritage);
-        }
+		this.authorityHeritages.add(authorityHeritage);
+	}
 
-        public void addDescriptor (Descriptor descriptor) {
-            this.descriptors.add (descriptor);
-        }
+	public void addDescriptor(Descriptor descriptor) {
+		this.descriptors.add(descriptor);
+	}
 
-
-        @Override
+	@Override
 	@Transient
 	public String getRepr() {
 		return String.format("%s", title);

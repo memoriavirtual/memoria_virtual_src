@@ -12,28 +12,24 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
-
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * Multimedia model bean
+ * 
  * @author Kiyoshi de Brito Murata <kbmurata@gmail.com>
  * @author Gabriel de Faria Andery <gfandery@gmail.com>
  */
 @Entity
 @Table(name = "`multimedia`")
 @Indexed
-public class Multimedia
-	extends AbstractPersistentObject
-	implements java.io.Serializable
-{
+public class Multimedia extends AbstractPersistentObject implements
+		java.io.Serializable {
 	private static final long serialVersionUID = 1721730577372374347L;
 
 	private String name;
@@ -43,7 +39,8 @@ public class Multimedia
 
 	private Set<Heritage> heritages = new HashSet<Heritage>(0);
 
-	public Multimedia() {}
+	public Multimedia() {
+	}
 
 	public Multimedia(String name, String title, String type) {
 		this.name = name;
@@ -68,14 +65,12 @@ public class Multimedia
 	}
 
 	/*
-	@Transient
-	@DocumentId
-	public Long getID() {
-		return super.getId();
-	}
-	*/
+	 * @Transient
+	 * 
+	 * @DocumentId public Long getID() { return super.getId(); }
+	 */
 
-	@NaturalId
+	@NaturalId(mutable = true)
 	@Column(name = "`name`", nullable = false)
 	public String getName() {
 		return this.name;

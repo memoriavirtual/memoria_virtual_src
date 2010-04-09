@@ -12,21 +12,19 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
 
 /**
  * InformationSource model bean
+ * 
  * @author Kiyoshi de Brito Murata <kbmurata@gmail.com>
  */
 @Entity
 @Table(name = "`informationsource`")
-public class InformationSource
-	extends AbstractPersistentObject
-	implements java.io.Serializable
-{
+public class InformationSource extends AbstractPersistentObject implements
+		java.io.Serializable {
 	private static final long serialVersionUID = 2496751473283314897L;
 
 	private String bibliography;
@@ -34,20 +32,21 @@ public class InformationSource
 
 	private Set<Heritage> heritages = new HashSet<Heritage>(0);
 
-	public InformationSource() {}
+	public InformationSource() {
+	}
 
 	public InformationSource(String bibliography) {
 		this.bibliography = bibliography;
 	}
 
-	public InformationSource(String bibliography,
-			String bibliographytype, Set<Heritage> heritages) {
+	public InformationSource(String bibliography, String bibliographytype,
+			Set<Heritage> heritages) {
 		this.bibliography = bibliography;
 		this.bibliographytype = bibliographytype;
 		this.heritages = heritages;
 	}
 
-	@NaturalId
+	@NaturalId(mutable = true)
 	@Column(name = "`bibliography`", unique = true, nullable = false)
 	@Type(type = "text")
 	public String getBibliography() {
