@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.ActionContext;
 import org.hibernate.Session;
 
 import org.mvirtual.persistence.entity.Heritage;
+import org.mvirtual.persistence.entity.Institution;
 
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class SaveUseConditionTab extends ActionSupport {
     private String heritageProtectionInstitution;
     private String legislation;
     private String to;
+    private Long institutionSelected;
 
     public void setAccessConditions(Long accessConditions) {
         this.accessConditions = accessConditions;
@@ -58,7 +60,10 @@ public class SaveUseConditionTab extends ActionSupport {
         this.to = to;
     }
 
-    
+    public void setInstitutionSelected(Long institutionSelected) {
+        this.institutionSelected = institutionSelected;
+    }
+
 
 
     @Override
@@ -96,6 +101,11 @@ public class SaveUseConditionTab extends ActionSupport {
         heritage.setHeritageProtectionInstitution(this.heritageProtectionInstitution);
 
         heritage.setLegislation(this.legislation);
+        
+        Institution institution = (Institution) dbSession.get(Institution.class, institutionSelected);
+
+        if (institution != null)
+            heritage.setInstitution(institution);
 
         return this.to;
     }
