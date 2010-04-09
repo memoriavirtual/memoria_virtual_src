@@ -58,10 +58,10 @@ public class RenderResearchResponsibleTab extends ActionSupport {
         for (HeritageResearcherResponsible hrr: setOfResearcherResponsible) {
             HeritageResearcherResponsibleId hrri = hrr.getId();
 
-            key = hrri.getResponsibleName ();
-            this.researchDate = hrri.getResearchDate();
-            this.researcherNotes = hrr.getResearcherNotes();
-            this.responsibleName = hrri.getResponsibleName();
+            key = hrri.getResponsiblename();
+            this.researchDate = hrri.getResearchdate();
+            this.researcherNotes = hrr.getResearchernotes();
+            this.responsibleName = hrri.getResponsiblename();
 
         }
 
