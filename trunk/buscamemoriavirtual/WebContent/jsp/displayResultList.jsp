@@ -11,6 +11,17 @@
                                   <div class="main-content">
 
                                     <!-- Pagetitle -->
+	                                <br />
+	                                <form action="../jsp/displayResultList.jsp">
+	                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                <input style="WIDTH: 60%; HEIGHT: 22px" size=25 name=buscar value="" align="center">
+	                                <br /><br />
+	                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                    <input type="submit" value="Pesquisa na Memorial Virtual" name="pesquisa" style="WIDTH: 28%; HEIGHT: 24px" size=25>
+	                                </form>
+	                                <br />
+	                                
                                     <h1 class="pagetitle">:: Resultado da Sua Buscar </h1>
                                      <!-- Content unit - One column -->
                                     <div class="column1-unit">
@@ -32,7 +43,7 @@
                                          (General Public License). Permite o registro de informações, em uma única base de dados e de forma
                                          integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
                                          arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="#">Leia Mais.. </a></p>
+                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
                                     </div>
                                     <!-- Content unit - One column -->
                                     <hr class="clear-contentunit" />
@@ -44,7 +55,7 @@
                                          (General Public License). Permite o registro de informações, em uma única base de dados e de forma
                                          integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
                                          arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="#">Leia Mais.. </a></p>
+                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
                                     </div>
                                     <hr class="clear-contentunit" />
                                     <!-- Content unit - One column -->
@@ -55,7 +66,7 @@
                                          (General Public License). Permite o registro de informações, em uma única base de dados e de forma
                                          integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
                                          arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="#">Leia Mais.. </a></p>
+                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
                                     </div>
                                     <hr class="clear-contentunit" />
                                     <!-- Content unit - One column -->
@@ -66,7 +77,7 @@
                                          (General Public License). Permite o registro de informações, em uma única base de dados e de forma
                                          integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
                                          arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="#">Leia Mais.. </a></p>
+                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
                                     </div>
                                     <!-- Content unit - One column -->
                                     <hr class="clear-contentunit" />

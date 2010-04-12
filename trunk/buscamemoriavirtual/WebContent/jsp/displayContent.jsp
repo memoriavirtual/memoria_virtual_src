@@ -11,6 +11,18 @@
                                   <div class="main-content">
 
                                     <!-- Pagetitle -->
+                                    
+                                    <br />
+	                                <form action="../jsp/displayResultList.jsp">
+	                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                <input style="WIDTH: 60%; HEIGHT: 22px" size=25 name=buscar value="" align="center">
+	                                <br /><br />
+	                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                                    <input type="submit" value="Pesquisa na Memorial Virtual" name="pesquisa" style="WIDTH: 28%; HEIGHT: 24px" size=25>
+	                                </form>
+	                                <br />
+	                                
                                     <h1 class="pagetitle">:: Conteudo da Sua Buscar </h1>
                                      <!-- Content unit - One column -->
                                     <div class="column1-unit">

@@ -19,17 +19,8 @@
       <div id="menu">
         <ul>
           <li class="active">
-            <a href="#" title="Resume">Home</a>
+            <a href="http://memoriavirtual.icmc.usp.br/www/memoriavirtual/" title="portal" target="_blank">Portal</a>
           </li>
-          <li>
-	        <a href="jsp/sobreMV.jsp" title="One Column">Sobre</a>
-	      </li>
-	      <li>
-	         <a href="jsp/equipe.jsp" title="Tags">Equipe</a>
-	      </li>
-	      <li>
-	         <a href="jsp/contatos.jsp" title="Blank">Contatos</a>
-	       </li>
         </ul>
       </div>
 </div>
