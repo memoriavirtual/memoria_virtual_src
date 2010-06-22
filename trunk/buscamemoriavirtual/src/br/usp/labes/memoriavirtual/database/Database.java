@@ -3,6 +3,8 @@ package br.usp.labes.memoriavirtual.database;
 import java.sql.*;
 import br.usp.labes.memoriavirtual.config.*;
 
+
+
 public class Database implements DBConfig {
 	private Connection conn;
 	

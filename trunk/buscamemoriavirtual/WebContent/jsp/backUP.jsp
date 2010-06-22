@@ -29,7 +29,9 @@ public class BuscaSimplesServlet extends HttpServlet implements ConfigServlet{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-				
+		
+		String pageRS = null;
+		PrintWriter out = response.getWriter();
 		ResultSet rs = null;		
 		int operation = Integer.parseInt(request.getParameter("operation"));
 		BuscarSimples buscarSimples = null;
@@ -39,36 +41,52 @@ public class BuscaSimplesServlet extends HttpServlet implements ConfigServlet{
 			case SEARCH:
 				buscarSimples = new BuscarSimples();				
 				String busca = request.getParameter("busca");
-				String test = request.getParameter("busca");
 				
 				try {
 					Interceptor.filter(busca);
 				} catch (Exception e) {
-					//response.sendRedirect("jsp/message.jsp?id=1");
+					response.sendRedirect("message.jsp?id=1");
 				}
 				
 				buscarSimples.setBusca(busca);
-				
 				try {
 					rs = buscarSimples.Buscar();
+					pageRS = "displayResultList.jsp?rs="+rs;
 				} catch (Exception e) {
-					//response.sendRedirect("jsp/message.jsp?id=1");
+					pageRS = "message.jsp?id=1";
 				}
 				
-				request.setAttribute("busca",rs);	
-				request.setAttribute("Mensagem",test);
+				pageRS = "message.jsp?id=0";
 				
 				break;
-							
+				
+			case INSERT:
+				pageRS = "message.jsp?id=2";
+				try {
+				} catch (Exception e) {
+					pageRS = "message.jsp?id=3";
+				}
+				break;
+				
+			case REMOVE:
+				pageRS = "message.jsp?id=2";
+				try {
+				} catch (Exception e) {
+					pageRS = "message.jsp?id=3";
+				}
+				break;
+				
+			case UPDATE:
+				pageRS = "message.jsp?id=2";
+				try {
+				} catch (Exception e) {
+					pageRS = "message.jsp?id=3";
+				}
+				break;
+				
 		}
-		
-		try {
-			request.getRequestDispatcher("jsp/displayResultList.jsp").forward(request, response);
-		} 
-		catch (Exception e) {
-			//response.sendRedirect("jsp/message.jsp?id=3");
-		}
-		 
+
+		request.getRequestDispatcher("../jsp/displayResultList.jsp").forward(request, response); 
 	}
 
 	/**

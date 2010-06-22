@@ -12,11 +12,11 @@
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>Memoria Virtual</title>
-	<link href="../css/style.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div id="head">
-	  	<div id="title"> <a href="../index.jsp" >Memoria Virtual</a> |<i><font size="2">Contribuindo para o Acesso ao Patrimônio Histórico e Cultural.</font></i> </div>
+	  	<div id="title"> <a href="index.jsp" >Memoria Virtual</a> |<i><font size="2">Contribuindo para o Acesso ao Patrimônio Histórico e Cultural.</font></i> </div>
 	      <div id="menu">
 	        <ul>
 	          <li class="active">
@@ -31,5 +31,5 @@
 			<div class="top"></div>
 				<div class="content">
           			<fieldset>
-                            <legend ><a href="../index.jsp"><strong>Home -> Busca Memoria Virtual</strong></a></legend>
+                            <legend ><a href="index.jsp"><strong>Home -> Busca Memoria Virtual</strong></a></legend>
                                 <br />

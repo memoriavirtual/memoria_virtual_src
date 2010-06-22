@@ -8,8 +8,7 @@
 <jsp:include page="../config/header.jsp" />
 
    <%
-	ResourceBundle r = ResourceBundle.getBundle(
-		"br.usp.labes.memoriavirtual.busca.Messages", request.getLocale());
+	ResourceBundle r = ResourceBundle.getBundle("br.usp.labes.memoriavirtual.busca.Messages", request.getLocale());
 	%>
 
                                 <%
@@ -25,11 +24,11 @@
 											break;
 										}
 										case 2: {
-											out.print(r.getString("USER_UNDERCONSTRUCTION_OK"));
+											out.print(r.getString("SEARCH_UNDERCONSTRUCTION_OK"));
 											break;
 										}
 										case 3: {
-											out.print(r.getString("USER_UNDERCONSTRUCTION_ERROR"));
+											out.print(r.getString("SEARCH_UNDERCONSTRUCTION_ERROR"));
 											break;
 										}
 								

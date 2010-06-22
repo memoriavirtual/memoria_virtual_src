@@ -12,7 +12,11 @@ import java.text.SimpleDateFormat;
  */
 
 public class Interceptor {
-
+	
+	/* Validate string busca
+	 * @param busca
+	 * @return void
+	 */
 	public static void filter(String str) throws Exception {
 		if (str == null)
 			throw new Exception("Null parameter");
@@ -24,8 +28,8 @@ public class Interceptor {
 		if (sqlinjection) {
 			if (str.indexOf("--") != -1)
 				throw new Exception("Starting SQL");
-			if (str.indexOf("insert into") != -1)
-				throw new Exception("Inserting");
+			if (str.indexOf("select ") != -1)
+				throw new Exception("Getting Data!!");
 		}
 	}
 

@@ -17,7 +17,7 @@
 	    
 		<div id="footer">
 			<br /> 
-			<p><a href="../jsp/equipe.jsp">Sobre N&oacute;s</a> |&nbsp;<a href="../jsp/sobreMV.jsp">O Projeto</a> |&nbsp;<a href="../jsp/sobreMV.jsp">Contato </a>| <a href="mailto:kibe_paul@yahoo.com?subject=Memoria Virtual &body=Comentarios, Duvidas e Sugestoes!" >Copyright &copy; 2010 </a><a href="http://www.labes.icmc.usp.br/ ">LABES - Laborat&oacute;rio de Engenharia de&nbsp;&nbsp; Software</a> * <a href="http://www.icmc.usp.br/">ICMC-USP</a>.</p>
+			<p><a href="jsp/equipe.jsp">Sobre N&oacute;s</a> |&nbsp;<a href="jsp/sobreMV.jsp">O Projeto</a> |&nbsp;<a href="jsp/sobreMV.jsp">Contato </a>| <a href="mailto:kibe_paul@yahoo.com?subject=Memoria Virtual &body=Comentarios, Duvidas e Sugestoes!" >Copyright &copy; 2010 </a><a href="http://www.labes.icmc.usp.br/ ">LABES - Laborat&oacute;rio de Engenharia de&nbsp;&nbsp; Software</a> * <a href="http://www.icmc.usp.br/">ICMC-USP</a>.</p>
 		<br />
 		</div>
 		<br /><br />

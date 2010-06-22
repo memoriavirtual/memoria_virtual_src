@@ -3,7 +3,7 @@
     Created on : Mar 24, 2010, 12:42:03 AM
     Author     : paul
 --%>
-
+<%@page import="java.util.*, java.sql.*" %>
 <jsp:include page="../config/header.jsp" />
 
                                 <table width="100%" border="0" cellspacing="2" cellpadding="0">
@@ -12,7 +12,7 @@
 
                                     <!-- Pagetitle -->
 	                                <br />
-	                                <form action="../jsp/displayResultList.jsp">
+	                                <form action="jsp/displayResultList.jsp">
 	                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                                <input style="WIDTH: 60%; HEIGHT: 22px" size=25 name=buscar value="" align="center">
 	                                <br /><br />
@@ -22,70 +22,42 @@
 	                                </form>
 	                                <br />
 	                                
-                                    <h1 class="pagetitle">:: Resultado da Sua Buscar </h1>
-                                     <!-- Content unit - One column -->
+                                    <h1 class="pagetitle">:: Resultado da Sua Buscar </h1>                                     
+                                     
+                     				<%
+                                         	//ResultSet rs = (ResultSet) request.getAttribute("busca");
+											String L_mensagem = (String) request.getAttribute("Mensagem");
+											int count = 0;
+											
+											while(count < 20){
+									%>
+									<!-- Content unit - One column -->	
+									<hr class="clear-contentunit" />                                    		
                                     <div class="column1-unit">
-                                      <p><span class="description"><img src="../images/museu.JPG" width="100" height="50" />
-                                         O Memória Virtual é um sistema web para catalogação e disseminação de informações sobre acervos 
-                                         do patrimônio histórico, cultural e artístico. É um sistema de software livre licenciado sob a GPL
-                                         (General Public License). Permite o registro de informações, em uma única base de dados e de forma
-                                         integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
-                                         arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
-                                    </div>
-
-                                    <hr class="clear-contentunit" />
-                                    <!-- Content unit - One column -->
-                                    <div class="column1-unit">
-                                      <p><span class="description"><img src="../images/museu.JPG" width="100" height="50"  />
-                                         O Memória Virtual é um sistema web para catalogação e disseminação de informações sobre acervos
-                                         do patrimônio histórico, cultural e artístico. É um sistema de software livre licenciado sob a GPL
-                                         (General Public License). Permite o registro de informações, em uma única base de dados e de forma
-                                         integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
-                                         arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
-                                    </div>
-                                    <!-- Content unit - One column -->
-                                    <hr class="clear-contentunit" />
-                                    <!-- Content unit - One column -->
-                                    <div class="column1-unit">
-                                      <p><span class="description"><img src="../images/museu.JPG" width="100" height="50"  />
-                                         O Memória Virtual é um sistema web para catalogação e disseminação de informações sobre acervos
-                                         do patrimônio histórico, cultural e artístico. É um sistema de software livre licenciado sob a GPL
-                                         (General Public License). Permite o registro de informações, em uma única base de dados e de forma
-                                         integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
-                                         arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
+                                      <p><span class="description"><img src="images/museu.JPG" width="100" height="50" />
+                                         	
+                                         	<%
+												out.println("<br />");
+												out.println(L_mensagem);
+												count++;
+											%>
+											<br />
+                                        <a href="../jsp/displayContent.jsp">Leia Mais.. </a></p>
                                     </div>
                                     <hr class="clear-contentunit" />
                                     <!-- Content unit - One column -->
-                                    <div class="column1-unit">
-                                      <p><span class="description"><img src="../images/museu.JPG" width="100" height="50"  />
-                                         O Memória Virtual é um sistema web para catalogação e disseminação de informações sobre acervos
-                                         do patrimônio histórico, cultural e artístico. É um sistema de software livre licenciado sob a GPL
-                                         (General Public License). Permite o registro de informações, em uma única base de dados e de forma
-                                         integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
-                                         arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
-                                    </div>
-                                    <hr class="clear-contentunit" />
-                                    <!-- Content unit - One column -->
-                                    <div class="column1-unit">
-                                      <p><span class="description"><img src="../images/museu.JPG" width="100" height="50" />
-                                         O Memória Virtual é um sistema web para catalogação e disseminação de informações sobre acervos
-                                         do patrimônio histórico, cultural e artístico. É um sistema de software livre licenciado sob a GPL
-                                         (General Public License). Permite o registro de informações, em uma única base de dados e de forma
-                                         integrada, de diferentes tipos de acervos históricos, seja bibliográficos, museológicos,
-                                         arquiviológicos, arquitetônicos, naturais e imateriais.......<br />
-                                        <a href="displayContent.jsp">Leia Mais.. </a></p>
-                                    </div>
+									<%
+									}
+											
+									%>
+                                    
                                     <!-- Content unit - One column -->
                                     <hr class="clear-contentunit" />
                                     <!-- Content unit - One column -->
                                     <div class="column1-unit">
                                         <p align="center"><span class="description">
                                               <br />
-                                              <a href="#"><img src="../images/previous_arrow.png" width="20" height="20" /></a>
+                                              <a href="#"><img src="images/previous_arrow.png" width="20" height="20" /></a>
                                               &nbsp;&nbsp;&nbsp;&nbsp;
                                               <a href="#"><font size="5" color="red">1</font></a>
                                               <a href="#"><font size="5" color="red">2</font></a>
@@ -98,7 +70,7 @@
                                               <a href="#"><font size="5" color="red">9</font></a>
                                               <a href="#"><font size="5" color="red">10</font></a>
                                               &nbsp;&nbsp;&nbsp;&nbsp;
-                                              <a href="#"><img src="../images/Next_arrow.png" width="20" height="20" /></a>
+                                              <a href="#"><img src="images/Next_arrow.png" width="20" height="20" /></a>
                                               
                                       </p>
                                     </div>
