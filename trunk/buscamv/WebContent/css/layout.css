@@ -1,9 +1,0 @@
-@CHARSET "ISO-8859-1";
-
-html, body { position: relative; }
-
-#page-header { position: absolute; }
-
-#wrapper { margin-top: 260px; border: 1px solid #ffffff; } 
-
-#sidebar { width: 190px; }
