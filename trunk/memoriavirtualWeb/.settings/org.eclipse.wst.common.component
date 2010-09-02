@@ -4,6 +4,6 @@
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <property name="java-output-path" value="/memoriavirtual/build/classes"/>
-        <property name="context-root" value="memoriavirtualWeb"/>
+        <property name="context-root" value="memoriavirtual"/>
     </wb-module>
 </project-modules>
