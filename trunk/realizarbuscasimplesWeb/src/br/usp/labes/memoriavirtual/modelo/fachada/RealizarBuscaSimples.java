@@ -9,7 +9,7 @@ import br.usp.labes.memoriavirtual.database.Database;
 
 public class RealizarBuscaSimples {
 	
-	public BemPatrimonial bemPatrimonial(String id) throws Exception {
+	public static BemPatrimonial bemPatrimonial(String id) throws Exception {
 		Database db = new Database();
 		BemPatrimonial bempatrimonial = new BemPatrimonial();
 		ResultSet rs = findByPrimaryKey(db, id);
