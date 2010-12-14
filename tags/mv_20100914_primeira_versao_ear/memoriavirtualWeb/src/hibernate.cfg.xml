@@ -5,9 +5,6 @@
 
 <hibernate-configuration>
     <session-factory>
-        <!--
-        <property name="hibernate.hbm2ddl.auto">update</property>
--->
 
     <!-- Use the C3P0 connection pool -->
         <property name="hibernate.c3p0.min_size">5</property>
