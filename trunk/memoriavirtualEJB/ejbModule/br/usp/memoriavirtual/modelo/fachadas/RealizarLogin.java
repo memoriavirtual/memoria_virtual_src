@@ -1,6 +1,8 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
@@ -10,6 +12,10 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 @Stateless(mappedName = "RealizarLogin")
 public class RealizarLogin implements RealizarLoginRemote {
 
+
+	@PersistenceContext (unitName = "memoriavirtual")
+	private EntityManager entityManager;
+	
     /**
      * Default constructor. 
      */
