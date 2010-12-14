@@ -8,7 +8,7 @@
 
 <%@include file="/templates/Header.jsp" %>
 
-<html>
+<HTML>
     <head>
         <templates:HeadDefault />
         <title>${applicationName}</title>
