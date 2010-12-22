@@ -27,6 +27,7 @@ public class Usuario {
 		super();
 		this.login = login;
 	}
+	
 
 	/**
 	 * @return the login

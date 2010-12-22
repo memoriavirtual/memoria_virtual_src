@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf12929639186291" configfile="/memoriavirtualWeb/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login" x="48" y="84" width="73" height="97" id="pf12929812275952" outlinks="pf12929812275953 pf12929812275954" path="/login.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="logado" x="300" y="36" width="61" height="73" id="pf12929812275955" inlinks="pf12929812275953" path="/logado.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="erro" x="300" y="156" width="61" height="85" id="pf12929812275956" inlinks="pf12929812275954" path="/erro.jsp"/>
+  <links id="pf12929812275953" target="pf12929812275955" source="pf12929812275952" outcome="sucesso"/>
+  <links id="pf12929812275954" target="pf12929812275956" source="pf12929812275952" outcome="falha"/>
+</pageflow:Pageflow>
