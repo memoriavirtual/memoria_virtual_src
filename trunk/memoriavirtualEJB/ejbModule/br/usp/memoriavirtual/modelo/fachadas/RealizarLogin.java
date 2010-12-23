@@ -27,9 +27,9 @@ public class RealizarLogin implements RealizarLoginRemote {
     }
     
     /**
-     * return resultado Resultado da validação do login
+     * return resultado Resultado da validaï¿½ï¿½o do login
      */
-    public boolean validarLogin(Usuario usuario) {
+    public boolean autenticarUsuario(Usuario usuario) {
 		boolean resultado = false;
 	
 		Query query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.login = :login AND u.senha = :senha");

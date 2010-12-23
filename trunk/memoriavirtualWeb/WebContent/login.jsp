@@ -14,11 +14,11 @@
 	<h:form>
 		<h:panelGrid>
 			<h:outputText value="Login:" />
-			<h:inputText value="#{realizarLoginMB.usuario.login}" required="true" requiredMessage="Campo obrigatorio"/>
+			<h:inputText value="#{realizarLoginMB.usuario}" required="true" requiredMessage="Campo obrigatorio"/>
 			<h:outputText value="Senha:" />
-			<h:inputText value="#{realizarLoginMB.usuario.senha}" />
+			<h:inputText value="#{realizarLoginMB.senha}" />
 		</h:panelGrid>
-		<h:commandButton action="#{realizarLoginMB.login}" value="Logar" />
+		<h:commandButton action="#{realizarLoginMB.autenticarUsuario}" value="Logar" />
 	</h:form>
 </f:view>
 </body>

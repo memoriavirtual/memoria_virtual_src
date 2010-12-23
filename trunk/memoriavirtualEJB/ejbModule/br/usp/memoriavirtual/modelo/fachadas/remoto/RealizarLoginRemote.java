@@ -6,6 +6,6 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 @Remote
 public interface RealizarLoginRemote {
 
-	public boolean validarLogin(Usuario usuario);
+	public boolean autenticarUsuario(Usuario usuario);
 	
 }

@@ -14,7 +14,7 @@ public class Usuario {
 	 * Construtor padrão
 	 */
 	public Usuario() {
-
+		super();
 	}
 
 	/**
@@ -24,10 +24,14 @@ public class Usuario {
 	 *            Login do usuário
 	 */
 	public Usuario(String login) {
-		super();
+		this();
 		this.login = login;
 	}
-	
+
+	public Usuario(String login, String senha) {
+		this(login);
+		this.senha = senha;
+	}
 
 	/**
 	 * @return the login
