@@ -9,8 +9,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 		<jta-data-source>jdbc/memoriavirtual</jta-data-source>
 		<properties>
 			<!--Use the java2db feature -->
-			<property name="toplink.ddl-generation" value="create" />
-			
+			<property name="toplink.ddl-generation" value="drop-and-create-tables" />
 		</properties>
 	</persistence-unit>
 </persistence>
