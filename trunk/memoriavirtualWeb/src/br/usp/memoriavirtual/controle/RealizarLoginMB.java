@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
@@ -23,6 +24,11 @@ public class RealizarLoginMB {
 
 		autenticado = realizarLogin.autenticarUsuario(new Usuario(usuario,
 				senha));
+		if (autenticado) {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.getSessionMap().put("usuario", usuario);
+		}
+
 		return autenticado ? "sucesso" : "falha";
 	}
 
