@@ -7,7 +7,8 @@ import javax.persistence.Id;
 public class Usuario {
 
 	@Id
-	private String login;
+	private String id;
+	private String email;
 	private String senha;
 
 	/**
@@ -25,7 +26,14 @@ public class Usuario {
 	 */
 	public Usuario(String login) {
 		this();
-		this.login = login;
+
+		if (login.contains("@") != true) {   //Verifica se a autentificação possui @ ou nao...
+			this.id = login;				 //Se nao possuir é id.. se possuir é email
+			this.email = null;
+		} else {
+			this.id = null;
+			this.email = login;
+		}
 	}
 
 	public Usuario(String login, String senha) {
@@ -36,16 +44,16 @@ public class Usuario {
 	/**
 	 * @return the login
 	 */
-	public String getLogin() {
-		return login;
+	public String getId() {
+		return id;
 	}
 
 	/**
 	 * @param login
 	 *            the login to set
 	 */
-	public void setLogin(String login) {
-		this.login = login;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
@@ -62,4 +70,13 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }
