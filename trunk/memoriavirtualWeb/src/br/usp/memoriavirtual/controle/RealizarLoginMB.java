@@ -22,11 +22,10 @@ public class RealizarLoginMB {
 	public String autenticarUsuario() {
 		boolean autenticado = false;
 
-		autenticado = realizarLogin.autenticarUsuario(new Usuario(usuario,
-				senha));
-		if (autenticado) {
+		Usuario usuarioAutenticado = realizarLogin.realizarLogin(usuario, senha );
+		if (usuarioAutenticado != null) {
 			FacesContext.getCurrentInstance().getExternalContext()
-					.getSessionMap().put("usuario", usuario);
+					.getSessionMap().put("usuario", usuarioAutenticado);
 		}
 
 		return autenticado ? "sucesso" : "falha";

@@ -3,9 +3,10 @@ import javax.ejb.Remote;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
+
 @Remote
 public interface RealizarLoginRemote {
 
-	public boolean autenticarUsuario(Usuario usuario);
+	public Usuario realizarLogin(String usuario, String senha);
 	
 }

@@ -1,7 +1,11 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Entity
 public class Usuario {
@@ -11,6 +15,9 @@ public class Usuario {
 	private String email;
 	private String senha;
 
+	@PersistenceContext(unitName = "memoriavirtual")
+	private EntityManager entityManager;
+
 	/**
 	 * Construtor padrÃ£o
 	 */
@@ -18,28 +25,38 @@ public class Usuario {
 		super();
 	}
 
-	/**
-	 * Construtor com login
-	 * 
-	 * @param login
-	 *            Login do usuÃ¡rio
-	 */
-	public Usuario(String login) {
+
+	public Usuario(String id, String email, String senha) {
 		this();
-
-		if (login.contains("@") != true) {   //Verifica se a autentificação possui @ ou nao...
-			this.id = login;				 //Se nao possuir é id.. se possuir é email
-			this.email = null;
-		} else {
-			this.id = null;
-			this.email = login;
-		}
-	}
-
-	public Usuario(String login, String senha) {
-		this(login);
+		this.id = id;
+		this.email = email;
 		this.senha = senha;
 	}
+	
+	
+	/**
+	 * return resultado Resultado da validaï¿½ï¿½o do login
+	 */
+	public Usuario realizarLogin(String usuario, String senha) {
+
+		Query query;
+
+		query = this.entityManager
+				.createQuery("SELECT u FROM Usuario WHERE (id = :usuario OR email = :usuario) AND senha = :senha");
+		query.setParameter("usuario", usuario);
+		query.setParameter("senha", senha);
+
+		Usuario resultado;
+		try {
+		    resultado = (Usuario) query.getSingleResult();
+		    resultado.setSenha(null);
+		} catch (NoResultException e) {
+			resultado = null;
+		}
+
+		return resultado;
+	}
+
 
 	/**
 	 * @return the login
