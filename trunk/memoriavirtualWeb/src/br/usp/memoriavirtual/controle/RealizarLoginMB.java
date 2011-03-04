@@ -22,8 +22,9 @@ public class RealizarLoginMB {
 	public String autenticarUsuario() {
 		boolean autenticado = false;
 
-		Usuario usuarioAutenticado = realizarLogin.realizarLogin(usuario, senha );
+		Usuario usuarioAutenticado = realizarLogin.realizarLogin(usuario, senha);
 		if (usuarioAutenticado != null) {
+			autenticado = true;
 			FacesContext.getCurrentInstance().getExternalContext()
 					.getSessionMap().put("usuario", usuarioAutenticado);
 		}

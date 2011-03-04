@@ -1,22 +1,23 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.Id;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 @Entity
-public class Usuario {
+public class Usuario implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	private String id;
 	private String email;
 	private String senha;
 
-	@PersistenceContext(unitName = "memoriavirtual")
-	private EntityManager entityManager;
+
 
 	/**
 	 * Construtor padrão
@@ -34,28 +35,7 @@ public class Usuario {
 	}
 	
 	
-	/**
-	 * return resultado Resultado da valida��o do login
-	 */
-	public Usuario realizarLogin(String usuario, String senha) {
 
-		Query query;
-
-		query = this.entityManager
-				.createQuery("SELECT u FROM Usuario WHERE (id = :usuario OR email = :usuario) AND senha = :senha");
-		query.setParameter("usuario", usuario);
-		query.setParameter("senha", senha);
-
-		Usuario resultado;
-		try {
-		    resultado = (Usuario) query.getSingleResult();
-		    resultado.setSenha(null);
-		} catch (NoResultException e) {
-			resultado = null;
-		}
-
-		return resultado;
-	}
 
 
 	/**
