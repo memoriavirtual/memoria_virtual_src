@@ -1,0 +1,38 @@
+/* Makeshift CSS Reset */  
+{  
+    margin: 0;  
+    padding: 0;  
+}  
+  
+/* Tell the browser to render HTML 5 elements as block */  
+header, footer, aside, nav, article, section {  
+    display: block;  
+}  
+
+body{
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+
+#container{
+	background-color:#FFF;
+	margin: 50px 0 0;
+	padding: 0;
+	text-align: center;
+	
+}
+
+
+#content{
+	color:#FFF;
+	font-size:13px;
+	height:179px;
+	width:325px;
+	margin:0 auto;
+	padding:17px 17px 17px 162px;
+	position: relative;
+	/*top:-233px;*/
+	background: url(imagens/bemvindo_background.png) no-repeat;
+}
