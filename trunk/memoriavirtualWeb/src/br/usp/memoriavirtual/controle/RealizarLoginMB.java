@@ -6,6 +6,8 @@ import javax.faces.context.FacesContext;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
+
+
 public class RealizarLoginMB {
 
 	@EJB
@@ -27,6 +29,10 @@ public class RealizarLoginMB {
 			autenticado = true;
 			FacesContext.getCurrentInstance().getExternalContext()
 					.getSessionMap().put("usuario", usuarioAutenticado);
+		}
+		
+		if(!autenticado){
+			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		}
 
 		return autenticado ? "sucesso" : "falha";

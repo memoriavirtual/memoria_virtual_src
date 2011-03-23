@@ -44,14 +44,22 @@ public class RealizarLogin implements RealizarLoginRemote {
 		//.createQuery("SELECT u FROM Usuario WHERE (id = :usuario OR email = :usuario) AND senha = :senha");
 		
 		Usuario resultado;
+		Usuario resultadoClone;
+		
+		//-->Problema: quando setamos a senha como null a senha no banco de dados tb esta sendo
+		//setada como null, Solucao: criar um clone do resultado para retornar???
+		
 		try {
 		    resultado = (Usuario) query.getSingleResult();
-		    resultado.setSenha(null);
+		    
+		    resultadoClone = new Usuario(resultado.getId(), resultado.getEmail(), null);
+		    
 		} catch (NoResultException e) {
-			resultado = null;
+			resultadoClone = null;
+			e.printStackTrace();
 		}
 
-		return resultado;
+		return resultadoClone;
 	}
 
 }

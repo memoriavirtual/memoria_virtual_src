@@ -15,7 +15,8 @@
 		<from-view-id>/login.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>sucesso</from-outcome>
-			<to-view-id>/logado.jsp</to-view-id>
+			<to-view-id>/restrito/logado.jsp</to-view-id>
+			<redirect /> 
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
