@@ -46,12 +46,8 @@ public class RealizarLogin implements RealizarLoginRemote {
 		Usuario resultado;
 		Usuario resultadoClone;
 		
-		//-->Problema: quando setamos a senha como null a senha no banco de dados tb esta sendo
-		//setada como null, Solucao: criar um clone do resultado para retornar???
-		
 		try {
 		    resultado = (Usuario) query.getSingleResult();
-		    
 		    resultadoClone = new Usuario(resultado.getId(), resultado.getEmail(), null);
 		    
 		} catch (NoResultException e) {

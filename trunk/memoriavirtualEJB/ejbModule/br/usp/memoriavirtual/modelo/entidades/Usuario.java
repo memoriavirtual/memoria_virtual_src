@@ -1,6 +1,11 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,10 +36,8 @@ public class Usuario implements Serializable{
 		this();
 		this.id = id;
 		this.email = email;
-		this.senha = senha;
+		this.senha = gerarHash(senha);
 	}
-	
-	
 
 
 	/**
@@ -75,4 +78,32 @@ public class Usuario implements Serializable{
 		this.email = email;
 	}
 
+	/**
+	 * @param senha
+	 * 				a senha para ser criptografada
+	 */
+	public String gerarHash(String senha){
+		
+		MessageDigest md = null;
+        byte messageDigest[] = null;
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+            messageDigest = md.digest(senha.getBytes("UTF-8"));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Converte para hexa antes de utilizar a senha criptografada
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : messageDigest) {
+            hexString.append(String.format("%02X", 0xFF & b));
+        }
+        
+        String senhaCifrada = hexString.toString();
+        
+		return senhaCifrada;
+	}
+	
 }
