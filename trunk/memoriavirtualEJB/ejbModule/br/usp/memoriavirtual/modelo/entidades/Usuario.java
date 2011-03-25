@@ -87,7 +87,7 @@ public class Usuario implements Serializable{
 		MessageDigest md = null;
         byte messageDigest[] = null;
         try {
-            md = MessageDigest.getInstance("SHA-1");
+            md = MessageDigest.getInstance("SHA-512");
             messageDigest = md.digest(senha.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
