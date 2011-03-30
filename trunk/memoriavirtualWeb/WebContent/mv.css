@@ -1,0 +1,178 @@
+body{
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+#container{
+	background-color:#FFF;
+	margin: 20px auto 0;
+	padding: 0;
+	width: 960px;
+	text-align: center;
+	
+}
+
+#header{
+	margin: 25px 10px 0;
+	background-color:#0FF;
+	position:relative;
+	text-align:left;
+}
+
+#user{
+	font-size:14px;
+	width: 200px;
+	background-color:#F00;
+	position: absolute;
+	top: 0;
+	right:0;
+	text-align:right;
+}
+
+#user a{
+	text-decoration:none;
+	color:#000;
+}
+
+#user a:hover{
+	text-decoration:underline;
+	color:#000;
+}
+
+#content{
+	color:#FFF;
+	font-size:13px;
+	margin:0 10px;
+	padding:10px ;
+	position: relative;
+	background-color:#0C0;
+}
+
+#footer{
+	margin: 0 10px;
+	font-size:10px;
+	background-color:#FC0;
+}
+
+/*        jQuery TABS          */
+/* styles refering to the tabs */
+
+a {
+	color:#ccc;
+	text-decoration:none;
+}
+a:hover {
+	color:#ccc;
+	text-decoration:none
+}
+ 
+#tabMenu {
+	margin:0;
+	padding:0 15px 0 0;
+	list-style:none;
+}
+#tabMenu li {
+	float:right;
+	height:32px;
+	cursor:pointer;
+	cursor:hand;
+}
+
+li.comments {
+	background:url(tabmenu/images/tabComment.png) no-repeat 0 -32px;
+}
+li.posts {
+	background:url(imagens/descritor.png) no-repeat 0 -32px;
+	width:96px;
+}
+li.category {
+	background:url(imagens/bem_patrimonial.png) no-repeat 0 -32px;
+	width:156px;
+}
+li.famous {
+	background:url(tabmenu/images/tabHeart.png) no-repeat 0 -32px;
+}
+li.random {
+	background:url(tabmenu/images/tabRandom.png) no-repeat 0 -32px;
+}
+
+li.mouseover {
+	background-position:0 0;
+}
+li.mouseout {
+	background-position:0 -32px;
+}
+li.selected {
+	background-position:0 0;
+}
+
+.tabLeft{
+	background:url(imagens/tab_left.png) no-repeat #000;
+	height:32px;
+	padding-left:8px;
+	clear:both;
+	float:left;
+}
+.tabRight{
+	background:url(imagens/tab_right.png) no-repeat;
+	height:32px;
+	width:8px;
+	float:right;
+}
+
+
+.box {
+	width:920px;
+}
+.boxTop {
+	background:url(imagens/box_top.png) no-repeat;
+	height:10px;
+	clear:both;
+}
+*html .boxTop {
+	margin-bottom:-2px;
+}
+.boxBody {
+	background-color:#000;
+}
+.boxBottom {
+	background:url(imagens/box_bottom.png) no-repeat;
+	height:10px;
+}
+
+.boxBody div {
+	display:none;
+}
+.boxBody div.show {
+	display:block;
+}
+.boxBody #category a {
+	display:block;
+}
+
+.boxBody div ul {
+	margin:0 10px 0 25px;
+	padding:0;
+	width:885px;
+	list-style-image:url(imagens/arrow.gif);
+	text-align:left;
+}
+*html .boxBody div ul {
+	margin-left:10px;
+	padding-left:15px;
+}
+.boxBody div li {
+	border-bottom:1px dotted #8e8e8e;
+	padding:4px 0;
+	cursor:hand;
+	cursor:pointer;
+}
+.boxBody div ul li.last {
+	border-bottom:none
+}
+.boxBody div li span {
+	font-size:8px;
+	font-style:italic;
+	color:#888;
+}
