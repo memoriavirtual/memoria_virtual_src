@@ -6,27 +6,32 @@ body{
 
 #container{
 	background-color:#FFF;
-	margin: 20px auto 0;
+	margin: 0px auto 0;
 	padding: 0;
-	width: 960px;
+	width: 976px;
 	text-align: center;
 	
 }
 
 #header{
-	margin: 25px 10px 0;
-	background-color:#0FF;
+	/*margin: 15px 0 0;*/
+	padding:  30px 10px 0;
+	background: url(imagens/content_background.png) repeat-y;
 	position:relative;
 	text-align:left;
+	width:956px;
+}
+
+#header img{
+	margin: 0 0 0 20px;
 }
 
 #user{
 	font-size:14px;
 	width: 200px;
-	background-color:#F00;
 	position: absolute;
-	top: 0;
-	right:0;
+	top: 10px;
+	right:15px;
 	text-align:right;
 }
 
@@ -43,17 +48,21 @@ body{
 #content{
 	color:#FFF;
 	font-size:13px;
-	margin:0 10px;
-	padding:10px ;
+	margin:0 ;
+	padding:10px 18px ;
 	position: relative;
-	background-color:#0C0;
+	background: url(imagens/content_background.png) repeat-y;
 }
 
 #footer{
-	margin: 0 10px;
+	margin: 0 ;
+	padding-top:5px;
 	font-size:10px;
-	background-color:#FC0;
+	height:35px;
+	width:976px;
+	background: url(imagens/footer.png) no-repeat;
 }
+
 
 /*        jQuery TABS          */
 /* styles refering to the tabs */
@@ -80,7 +89,8 @@ a:hover {
 }
 
 li.comments {
-	background:url(tabmenu/images/tabComment.png) no-repeat 0 -32px;
+	background:url(imagens/autoria.png) no-repeat 0 -32px;
+	width:82px;
 }
 li.posts {
 	background:url(imagens/descritor.png) no-repeat 0 -32px;
@@ -107,23 +117,9 @@ li.selected {
 	background-position:0 0;
 }
 
-.tabLeft{
-	background:url(imagens/tab_left.png) no-repeat #000;
-	height:32px;
-	padding-left:8px;
-	clear:both;
-	float:left;
-}
-.tabRight{
-	background:url(imagens/tab_right.png) no-repeat;
-	height:32px;
-	width:8px;
-	float:right;
-}
-
 
 .box {
-	width:920px;
+	width:940px;
 }
 .boxTop {
 	background:url(imagens/box_top.png) no-repeat;
@@ -175,4 +171,7 @@ li.selected {
 	font-size:8px;
 	font-style:italic;
 	color:#888;
+}
+.boxBody div.bloco{
+	display:block;
 }
