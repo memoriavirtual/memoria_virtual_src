@@ -10,8 +10,8 @@ public class RealizarLoginMB {
 
     @EJB
     private RealizarLoginRemote realizarLoginEJB;
-    private String usuario;
-    private String senha;
+    private String usuario = "";
+    private String senha = "";
 
     /**
      * Verifica as informacões de usuário e senha na base de dados.
