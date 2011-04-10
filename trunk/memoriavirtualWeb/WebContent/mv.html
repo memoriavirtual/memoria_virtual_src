@@ -11,50 +11,50 @@
 $(document).ready(function() {	
 
 
-  //Get all the LI from the #tabMenu UL
-  $('#tabMenu > li').click(function(){
+  //Pega todos os elementos da lista #MenuAbas
+  $('#MenuAbas > li').click(function(){
         
-    //remove the selected class from all LI    
-    $('#tabMenu > li').removeClass('selected');
+    //Remove a classe dos elementos
+    $('#MenuAbas > li').removeClass('selecionado');
     
-    //Reassign the LI
-    $(this).addClass('selected');
+    //Reatribui uma nova classe
+    $(this).addClass('selecionado');
     
-    //Hide all the DIV in .boxBody
-    $('.boxBody div').slideUp('1500');
+    //Esconde todos os DIV em CaixaCorpo
+    $('.CaixaCorpo div').slideUp('1500');
     
-    //Look for the right DIV in boxBody according to the Navigation UL index, therefore, the arrangement is very important.
-    $('.boxBody div:eq(' + $('#tabMenu > li').index(this) + ')').slideDown('1500');
+    //Procura o DIV certo em CaixaCorpo
+    $('.boxBody div:eq(' + $('#MenuAbas > li').index(this) + ')').slideDown('1500');
     
   }).mouseover(function() {
 
-    //Add and remove class, Personally I dont think this is the right way to do it, anyone please suggest    
-    $(this).addClass('mouseover');
-    $(this).removeClass('mouseout');   
+    //Adiciona e remove a classe
+    $(this).addClass('mousesobre');
+    $(this).removeClass('mousefora');   
     
   }).mouseout(function() {
     
-    //Add and remove class
-    $(this).addClass('mouseout');
-    $(this).removeClass('mouseover');    
+    //Adiciona e remove a classe
+    $(this).addClass('mousefora');
+    $(this).removeClass('mousesobre');    
     
   });
 
-  //Mouseover with animate Effect for Category menu list
-  $('.boxBody #category li').mouseover(function() {
+  //Mouseover com efeito animado para a lista #categoria
+  $('.CaixaCorpo #categoria li').mouseover(function() {
 
-    //Change background color and animate the padding
+    //Muda cor de fundo e padding
     $(this).css('backgroundColor','#888');
     $(this).children().animate({paddingLeft:"20px"}, {queue:false, duration:300});
   }).mouseout(function() {
     
-    //Change background color and animate the padding
+    //Muda cor de fundo e padding
     $(this).css('backgroundColor','');
     $(this).children().animate({paddingLeft:"0"}, {queue:false, duration:300});
   });  
 	
-  //Mouseover effect for Posts, Comments, Famous Posts and Random Posts menu list.
-  $('.boxBody li').click(function(){
+  //Efeito mouseover para a lista menu Posts, Comentarios, Posts Famosos e Posts Aleatorios.
+  $('.CaixaCorpo li').click(function(){
     window.location = $(this).find("a").attr("href");
   }).mouseover(function() {
     $(this).css('backgroundColor','#333');
@@ -72,26 +72,26 @@ $(document).ready(function() {
 
 <body>
 <div id="container">
-	<div id="header">
+	<div id="cabecalho">
     	
         	<img src="imagens/logo_mv_catalogacao.png">
 	    	<div id="user">&lt;usuario&gt;, <a href="#">sair</a></div>
         
     	
-    </div> <!-- end #header -->
-        <div id="content">
-        	<div class="box">
-            	<ul id="tabMenu">
-                	<li class="posts selected"></li>
-                    <li class="comments"></li>
-                    <li class="category"></li>
-                    <li class="famous">Usu&aacute;rio</li>
-                    <li class="random">Institui&ccedil;&atilde;o</li>
+    </div> <!-- fim #cabecalho -->
+        <div id="conteudo">
+        	<div class="caixa">
+            	<ul id="MenuAbas">
+                	<li class="posts selecionados"></li>
+                    <li class="comentarios"></li>
+                    <li class="categoria"></li>
+                    <li class="famosos">Usu&aacute;rio</li>
+                    <li class="aleatorios">Institui&ccedil;&atilde;o</li>
                 </ul>
-				<div class="boxTop"></div>
+				<div class="CaixadeCima"></div>
 
-				<div class="boxBody">
-  					<div id="posts" class="show">
+				<div class="CaixaCorpo">
+  					<div id="posts" class="mostra">
                     	
                         <ul>
 						    <li><a>AAAAAAAAAAAAAAAAAAAAA. <span> - kevin</span></a></li>
@@ -99,7 +99,7 @@ $(document).ready(function() {
 						    <li><a>menu 3<span> - kevin</span></a></li>
 						    <li><a>menu 4<span> - kevin</span></a></li>
 						    <li><a>Menu 5<span> - kevin</span></a></li>
-						    <li class="last"><a>menu 6<span> - kevin</span></a></li>
+						    <li class="ultimo"><a>menu 6<span> - kevin</span></a></li>
 					    </ul>
                                       
                         
@@ -107,20 +107,20 @@ $(document).ready(function() {
                         
                         
                         
-			  		</div>  <!-- end #posts -->
+			  		</div>  <!-- fim #posts -->
   
-  					<div id="comments">
+  					<div id="comentarios">
     					<ul>
 						    <li><a>BBBBBBBBBBjQuery Tabbed Navigation Menu. <span> - kevin</span></a></li>
 						    <li><a>You can add links in here! <span> - kevin</span></a></li>
 						    <li><a>It's easy to understand. Though it's not the best, but hell yeah it works. <span> - kevin</span></a></li>
 						    <li><a>I hope you will like it. <span> - kevin</span></a></li>
 						    <li><a>My next tutorial will be jQuery-based Accordion. <span> - kevin</span></a></li>
-						    <li class="last"><a>And, I'm working on a free wordpress template as well : ) <span> - kevin</span></a></li>
+						    <li class="ultimo"><a>And, I'm working on a free wordpress template as well : ) <span> - kevin</span></a></li>
 					    </ul>
-					</div><!-- end #coments -->
+					</div><!-- fim #comentarios -->
   
-                    <div id="category">
+                    <div id="categoria">
                     	<ul>
                         	<li><a href="http://www.queness.com/tag/ajax">CCCCCCCCCCCCajax</a></li>
 	                        <li><a href="http://www.queness.com/tag/css-html">css-html</a></li>
@@ -136,20 +136,20 @@ $(document).ready(function() {
             	            <li><a href="http://www.queness.com/tag/tutorial">tutorial</a></li>
                 	        <li><a href="http://www.queness.com/tag/usability">usability</a></li>
                     	    <li><a href="http://www.queness.com/tag/wallpaper">wallpaper</a></li>
-                        	<li class="last"><a href="http://www.queness.com/tag/wordpress">wordpress</a></li>
+                        	<li class="ultimo"><a href="http://www.queness.com/tag/wordpress">wordpress</a></li>
                        	</ul>  
-                   	</div> <!-- end #category -->
+                   	</div> <!-- fim #categoria -->
   
-                   	<div id="famous">
+                   	<div id="famosos">
                         <ul>
                           	<li>DDDDDDDDDDDDDSimple JQuery Modal Window Tutorial.</li>
                          	<li>Create a Simple CSS + Javascript Tooltip with jQuery.</li>
                          	<li>Navigation List menu + Jquery Animate Effect Tutorial.</li>
                           	<li class="last">Exclusive RSS Icons from Queness.</li>
                         </ul>  
-                   	</div><!-- end #famous -->
+                   	</div><!-- fim #famosos -->
                       
-                   	<div id="random">
+                   	<div id="aleatorios">
                         <ul>
                           	<li>EEEEEEEEEEEEEE50 Monochromatic Website Designs.</li>
                           	<li>Breadcrumbs In Web Design: Examples And Best Practices.</li>
@@ -158,19 +158,19 @@ $(document).ready(function() {
                           	<li>Create a Simple CSS + Javascript Tooltip with jQuery.</li>
                           	<li>Exclusive RSS Icons from Queness.</li>
                           	<li>New Smashing Freebies For Designers and Bloggers.</li>
-                          	<li class="last">Food Plates and Creative Dishware Designs.</li>
+                          	<li class="ultimo">Food Plates and Creative Dishware Designs.</li>
                         </ul>    
-                   	</div><!-- end #random -->
-				</div><!-- end .boxbody -->
+                   	</div><!-- fim #aletorios -->
+				</div><!-- fim .CaixaCorpo -->
 
-				<div class="boxBottom"></div>
-			</div><!-- end .box -->
+				<div class="CaixadeBaixo"></div>
+			</div><!-- fim .caixa -->
           
-		</div><!-- end #content -->
-	<div id="footer">
+		</div><!-- fim #conteudo -->
+	<div id="pe">
     	Copyright &copy; 2009 LABES - Laborat&oacute;rio de Engenharia de Software - ICMC-USP
-    </div> <!-- end #footer -->
-</div><!-- end #container -->
+    </div> <!-- fim #pe -->
+</div><!-- fim #container -->
 
 </body>
 </html>
