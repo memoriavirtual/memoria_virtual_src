@@ -13,7 +13,7 @@ body{
 	
 }
 
-#header{
+#cabecalho{
 	/*margin: 15px 0 0;*/
 	padding:  30px 10px 0;
 	background: url(imagens/content_background.png) repeat-y;
@@ -22,11 +22,11 @@ body{
 	width:956px;
 }
 
-#header img{
+#cabecalho img{
 	margin: 0 0 0 20px;
 }
 
-#user{
+#usuario{
 	font-size:14px;
 	width: 200px;
 	position: absolute;
@@ -35,7 +35,7 @@ body{
 	text-align:right;
 }
 
-#user a{
+#usuario a{
 	text-decoration:none;
 	color:#000;
 }
@@ -45,7 +45,7 @@ body{
 	color:#000;
 }
 
-#content{
+#conteudo{
 	color:#FFF;
 	font-size:13px;
 	margin:0 ;
@@ -54,7 +54,7 @@ body{
 	background: url(imagens/content_background.png) repeat-y;
 }
 
-#footer{
+#pe{
 	margin: 0 ;
 	padding-top:5px;
 	font-size:10px;
@@ -76,19 +76,19 @@ a:hover {
 	text-decoration:none
 }
  
-#tabMenu {
+#MenuAbas {
 	margin:0;
 	padding:0 15px 0 0;
 	list-style:none;
 }
-#tabMenu li {
+#MenuAbas li {
 	float:right;
 	height:32px;
 	cursor:pointer;
 	cursor:hand;
 }
 
-li.comments {
+li.comentarios {
 	background:url(imagens/autoria.png) no-repeat 0 -32px;
 	width:82px;
 }
@@ -96,82 +96,82 @@ li.posts {
 	background:url(imagens/descritor.png) no-repeat 0 -32px;
 	width:96px;
 }
-li.category {
+li.categoria {
 	background:url(imagens/bem_patrimonial.png) no-repeat 0 -32px;
 	width:156px;
 }
-li.famous {
+li.famosos {
 	background:url(tabmenu/images/tabHeart.png) no-repeat 0 -32px;
 }
-li.random {
+li.aleatorios {
 	background:url(tabmenu/images/tabRandom.png) no-repeat 0 -32px;
 }
 
-li.mouseover {
+li.mousesobre {
 	background-position:0 0;
 }
-li.mouseout {
+li.mousefora {
 	background-position:0 -32px;
 }
-li.selected {
+li.selecionado {
 	background-position:0 0;
 }
 
 
-.box {
+.caixa {
 	width:940px;
 }
-.boxTop {
+.CaixadeBaixo {
 	background:url(imagens/box_top.png) no-repeat;
 	height:10px;
 	clear:both;
 }
-*html .boxTop {
+*html .CaixadeCima {
 	margin-bottom:-2px;
 }
-.boxBody {
+.CaixaCorpo {
 	background-color:#000;
 }
-.boxBottom {
+.CaixadeBaixo {
 	background:url(imagens/box_bottom.png) no-repeat;
 	height:10px;
 }
 
-.boxBody div {
+.CaixaCorpo div {
 	display:none;
 }
-.boxBody div.show {
+.CaixaCorpo div.mostra {
 	display:block;
 }
-.boxBody #category a {
+.CaixaCorpo #categoria a {
 	display:block;
 }
 
-.boxBody div ul {
+.CaixaCorpo div ul {
 	margin:0 10px 0 25px;
 	padding:0;
 	width:225px;
 	list-style-image:url(imagens/arrow.gif);
 	text-align:left;
 }
-*html .boxBody div ul {
+*html .CaixaCorpo div ul {
 	margin-left:10px;
 	padding-left:15px;
 }
-.boxBody div li {
+.CaixaCorpo div li {
 	border-bottom:1px dotted #8e8e8e;
 	padding:4px 0;
 	cursor:hand;
 	cursor:pointer;
 }
-.boxBody div ul li.last {
+.CaixaCorpo div ul li.last {
 	border-bottom:none
 }
-.boxBody div li span {
+.CaixaCorpo div li span {
 	font-size:8px;
 	font-style:italic;
 	color:#888;
 }
-.boxBody div.bloco{
+.CaixaCorpo div.bloco{
 	display:block;
 }
