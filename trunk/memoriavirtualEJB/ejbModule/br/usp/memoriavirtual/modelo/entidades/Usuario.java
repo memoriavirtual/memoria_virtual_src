@@ -21,7 +21,7 @@ public class Usuario implements Serializable{
 	private String id;
 	private String email;
 	private String senha;
-
+	private String validade;
 
 
 	/**
@@ -37,6 +37,7 @@ public class Usuario implements Serializable{
 		this.id = id;
 		this.email = email;
 		this.senha = gerarHash(senha);
+	
 	}
 
 
@@ -76,6 +77,21 @@ public class Usuario implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	/**
+	 * @return validade do cadastro
+	 */
+	public String getValidade() {
+		return validade;
+	}
+
+	/**
+	 * @param validade
+	 *            a data limite da validade
+	 */
+	public void setValidade(String validade) {
+		this.validade = validade;
 	}
 
 	/**
