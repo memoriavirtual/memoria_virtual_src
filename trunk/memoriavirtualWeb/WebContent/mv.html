@@ -4,173 +4,44 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Memória Virtual</title>
 <link href="mv.css" rel="stylesheet" type="text/css">
-
-<script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
-<script type="text/javascript">
-
-$(document).ready(function() {	
-
-
-  //Pega todos os elementos da lista #MenuAbas
-  $('#MenuAbas > li').click(function(){
-        
-    //Remove a classe dos elementos
-    $('#MenuAbas > li').removeClass('selecionado');
-    
-    //Reatribui uma nova classe
-    $(this).addClass('selecionado');
-    
-    //Esconde todos os DIV em CaixaCorpo
-    $('.CaixaCorpo div').slideUp('1500');
-    
-    //Procura o DIV certo em CaixaCorpo
-    $('.boxBody div:eq(' + $('#MenuAbas > li').index(this) + ')').slideDown('1500');
-    
-  }).mouseover(function() {
-
-    //Adiciona e remove a classe
-    $(this).addClass('mousesobre');
-    $(this).removeClass('mousefora');   
-    
-  }).mouseout(function() {
-    
-    //Adiciona e remove a classe
-    $(this).addClass('mousefora');
-    $(this).removeClass('mousesobre');    
-    
-  });
-
-  //Mouseover com efeito animado para a lista #categoria
-  $('.CaixaCorpo #categoria li').mouseover(function() {
-
-    //Muda cor de fundo e padding
-    $(this).css('backgroundColor','#888');
-    $(this).children().animate({paddingLeft:"20px"}, {queue:false, duration:300});
-  }).mouseout(function() {
-    
-    //Muda cor de fundo e padding
-    $(this).css('backgroundColor','');
-    $(this).children().animate({paddingLeft:"0"}, {queue:false, duration:300});
-  });  
-	
-  //Efeito mouseover para a lista menu Posts, Comentarios, Posts Famosos e Posts Aleatorios.
-  $('.CaixaCorpo li').click(function(){
-    window.location = $(this).find("a").attr("href");
-  }).mouseover(function() {
-    $(this).css('backgroundColor','#333');
-  }).mouseout(function() {
-    $(this).css('backgroundColor','');
-  });  	
-	
-});
-
-</script>
-
+<script src="js/jquery-1.5.2.min.js"></script>
+<script src="js/abas.js"></script>
+<script src="js/link.js"></script>
 </head>
 
-
-
 <body>
-<div id="container">
-	<div id="cabecalho">
-    	
-        	<img src="imagens/logo_mv_catalogacao.png">
-	    	<div id="user">&lt;usuario&gt;, <a href="#">sair</a></div>
-        
-    	
+<div id="recipiente">
+	
+    <div id="cabecalho">
+      	<img src="imagens/logo_mv_catalogacao.png">
+    	<div id="usuario">&lt;usuario&gt;, <a href="#">sair</a></div>    	
     </div> <!-- fim #cabecalho -->
-        <div id="conteudo">
-        	<div class="caixa">
-            	<ul id="MenuAbas">
-                	<li class="posts selecionados"></li>
-                    <li class="comentarios"></li>
-                    <li class="categoria"></li>
-                    <li class="famosos">Usu&aacute;rio</li>
-                    <li class="aleatorios">Institui&ccedil;&atilde;o</li>
-                </ul>
-				<div class="CaixadeCima"></div>
+    
+    <div id="conteudo">
+    	<div class="caixa">
+        	<ul id="Abas">
+            	<li class="descritor selecionado"><a href="bempatrimonial.html" >haha</a></li>
+                <li class="autoria"></li>
+                <li class="bempatrimonial"></li>
+                <li class="usuario"></li>
+                <li class="instituicao"></li>
+            </ul>
+			<div class="CaixadeCima"></div>
 
-				<div class="CaixaCorpo">
-  					<div id="posts" class="mostra">
-                    	
-                        <ul>
-						    <li><a>AAAAAAAAAAAAAAAAAAAAA. <span> - kevin</span></a></li>
-						    <li><a>menu 2<span> - kevin</span></a></li>
-						    <li><a>menu 3<span> - kevin</span></a></li>
-						    <li><a>menu 4<span> - kevin</span></a></li>
-						    <li><a>Menu 5<span> - kevin</span></a></li>
-						    <li class="ultimo"><a>menu 6<span> - kevin</span></a></li>
-					    </ul>
-                                      
-                        
-                        
-                        
-                        
-                        
-			  		</div>  <!-- fim #posts -->
-  
-  					<div id="comentarios">
-    					<ul>
-						    <li><a>BBBBBBBBBBjQuery Tabbed Navigation Menu. <span> - kevin</span></a></li>
-						    <li><a>You can add links in here! <span> - kevin</span></a></li>
-						    <li><a>It's easy to understand. Though it's not the best, but hell yeah it works. <span> - kevin</span></a></li>
-						    <li><a>I hope you will like it. <span> - kevin</span></a></li>
-						    <li><a>My next tutorial will be jQuery-based Accordion. <span> - kevin</span></a></li>
-						    <li class="ultimo"><a>And, I'm working on a free wordpress template as well : ) <span> - kevin</span></a></li>
-					    </ul>
-					</div><!-- fim #comentarios -->
-  
-                    <div id="categoria">
-                    	<ul>
-                        	<li><a href="http://www.queness.com/tag/ajax">CCCCCCCCCCCCajax</a></li>
-	                        <li><a href="http://www.queness.com/tag/css-html">css-html</a></li>
-    	                    <li><a href="http://www.queness.com/tag/freebies">freebies</a></li>
-        	                <li><a href="http://www.queness.com/tag/icon">icon</a></li>
-            	            <li><a href="http://www.queness.com/tag/inspiration">inspiration</a></li>
-                	        <li><a href="http://www.queness.com/tag/javascript">javascript</a></li>
-                    	    <li><a href="http://www.queness.com/tag/logo">logo</a></li>
-                        	<li><a href="http://www.queness.com/tag/photography">photography</a></li>
-	                        <li><a href="http://www.queness.com/tag/photoshop">photoshop</a></li>
-    	                    <li><a href="http://www.queness.com/tag/php">php</a></li>
-        	                <li><a href="http://www.queness.com/tag/seo">seo</a></li>
-            	            <li><a href="http://www.queness.com/tag/tutorial">tutorial</a></li>
-                	        <li><a href="http://www.queness.com/tag/usability">usability</a></li>
-                    	    <li><a href="http://www.queness.com/tag/wallpaper">wallpaper</a></li>
-                        	<li class="ultimo"><a href="http://www.queness.com/tag/wordpress">wordpress</a></li>
-                       	</ul>  
-                   	</div> <!-- fim #categoria -->
-  
-                   	<div id="famosos">
-                        <ul>
-                          	<li>DDDDDDDDDDDDDSimple JQuery Modal Window Tutorial.</li>
-                         	<li>Create a Simple CSS + Javascript Tooltip with jQuery.</li>
-                         	<li>Navigation List menu + Jquery Animate Effect Tutorial.</li>
-                          	<li class="last">Exclusive RSS Icons from Queness.</li>
-                        </ul>  
-                   	</div><!-- fim #famosos -->
-                      
-                   	<div id="aleatorios">
-                        <ul>
-                          	<li>EEEEEEEEEEEEEE50 Monochromatic Website Designs.</li>
-                          	<li>Breadcrumbs In Web Design: Examples And Best Practices.</li>
-                          	<li>Simple JQuery Modal Window Tutorial.</li>
-                          	<li>Navigation List menu + Jquery Animate Effect Tutorial.</li>
-                          	<li>Create a Simple CSS + Javascript Tooltip with jQuery.</li>
-                          	<li>Exclusive RSS Icons from Queness.</li>
-                          	<li>New Smashing Freebies For Designers and Bloggers.</li>
-                          	<li class="ultimo">Food Plates and Creative Dishware Designs.</li>
-                        </ul>    
-                   	</div><!-- fim #aletorios -->
-				</div><!-- fim .CaixaCorpo -->
+			<ol id="CaixaCorpo">
+            	<script>
+				  $("#CaixaCorpo").load("bempatrimonial.html");
+				</script>
+ 			</ol><!-- fim .CaixaCorpo -->
 
-				<div class="CaixadeBaixo"></div>
-			</div><!-- fim .caixa -->
+			<div class="CaixadeBaixo"></div>
+		</div><!-- fim .caixa -->
           
 		</div><!-- fim #conteudo -->
-	<div id="pe">
+	<div id="rodape">
     	Copyright &copy; 2009 LABES - Laborat&oacute;rio de Engenharia de Software - ICMC-USP
-    </div> <!-- fim #pe -->
-</div><!-- fim #container -->
+    </div> <!-- fim #rodape -->
+</div><!-- fim #recipiente -->
 
 </body>
 </html>

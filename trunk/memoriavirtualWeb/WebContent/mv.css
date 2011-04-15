@@ -1,16 +1,17 @@
+@import url(conteudo.css);
+
 body{
 	margin: 0;
 	padding: 0;
 	font-family: Verdana, Geneva, sans-serif;
 }
 
-#container{
+#recipiente{
 	background-color:#FFF;
 	margin: 0px auto 0;
 	padding: 0;
 	width: 976px;
 	text-align: center;
-	
 }
 
 #cabecalho{
@@ -40,7 +41,7 @@ body{
 	color:#000;
 }
 
-#user a:hover{
+#usuario a:hover{
 	text-decoration:underline;
 	color:#000;
 }
@@ -54,7 +55,7 @@ body{
 	background: url(imagens/content_background.png) repeat-y;
 }
 
-#pe{
+#rodape{
 	margin: 0 ;
 	padding-top:5px;
 	font-size:10px;
@@ -63,48 +64,30 @@ body{
 	background: url(imagens/footer.png) no-repeat;
 }
 
-
-/*        jQuery TABS          */
-/* styles refering to the tabs */
-
-a {
-	color:#ccc;
-	text-decoration:none;
-}
-a:hover {
-	color:#ccc;
-	text-decoration:none
-}
  
-#MenuAbas {
+#Abas {
 	margin:0;
 	padding:0 15px 0 0;
 	list-style:none;
 }
-#MenuAbas li {
+#Abas li {
 	float:right;
 	height:32px;
 	cursor:pointer;
 	cursor:hand;
 }
 
-li.comentarios {
+li.autoria {
 	background:url(imagens/autoria.png) no-repeat 0 -32px;
 	width:82px;
 }
-li.posts {
+li.descritor {
 	background:url(imagens/descritor.png) no-repeat 0 -32px;
 	width:96px;
 }
-li.categoria {
+li.bempatrimonial {
 	background:url(imagens/bem_patrimonial.png) no-repeat 0 -32px;
 	width:156px;
-}
-li.famosos {
-	background:url(tabmenu/images/tabHeart.png) no-repeat 0 -32px;
-}
-li.aleatorios {
-	background:url(tabmenu/images/tabRandom.png) no-repeat 0 -32px;
 }
 
 li.mousesobre {
@@ -117,11 +100,10 @@ li.selecionado {
 	background-position:0 0;
 }
 
-
 .caixa {
 	width:940px;
 }
-.CaixadeBaixo {
+.CaixadeCima {
 	background:url(imagens/box_top.png) no-repeat;
 	height:10px;
 	clear:both;
@@ -129,49 +111,12 @@ li.selecionado {
 *html .CaixadeCima {
 	margin-bottom:-2px;
 }
-.CaixaCorpo {
-	background-color:#000;
+
+#CaixaCorpo {
+	padding:0;
+	margin:0;
 }
 .CaixadeBaixo {
 	background:url(imagens/box_bottom.png) no-repeat;
 	height:10px;
-}
-
-.CaixaCorpo div {
-	display:none;
-}
-.CaixaCorpo div.mostra {
-	display:block;
-}
-.CaixaCorpo #categoria a {
-	display:block;
-}
-
-.CaixaCorpo div ul {
-	margin:0 10px 0 25px;
-	padding:0;
-	width:225px;
-	list-style-image:url(imagens/arrow.gif);
-	text-align:left;
-}
-*html .CaixaCorpo div ul {
-	margin-left:10px;
-	padding-left:15px;
-}
-.CaixaCorpo div li {
-	border-bottom:1px dotted #8e8e8e;
-	padding:4px 0;
-	cursor:hand;
-	cursor:pointer;
-}
-.CaixaCorpo div ul li.last {
-	border-bottom:none
-}
-.CaixaCorpo div li span {
-	font-size:8px;
-	font-style:italic;
-	color:#888;
-}
-.CaixaCorpo div.bloco{
-	display:block;
 }
