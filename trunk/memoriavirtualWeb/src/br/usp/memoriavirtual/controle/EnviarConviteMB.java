@@ -18,7 +18,7 @@ public class EnviarConviteMB {
     
     public String enviarConvite(){
     	boolean sucesso = true;
-    	enviarConviteEJB.enviarConvite(null, validade, nivelAcesso);
+    	enviarConviteEJB.enviarConvite(emails, validade, nivelAcesso);
     	return sucesso ? "sucesso" : "falha";
     }
     
