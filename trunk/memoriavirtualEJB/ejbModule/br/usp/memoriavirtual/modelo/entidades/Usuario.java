@@ -95,16 +95,16 @@ public class Usuario implements Serializable{
 	}
 
 	/**
-	 * @param senha
-	 * 				a senha para ser criptografada
+	 * @param input
+	 * 				a senha para ser criptografada ou o email para criar o id usando no convite
 	 */
-	public String gerarHash(String senha){
+	public String gerarHash(String input){
 		
 		MessageDigest md = null;
         byte messageDigest[] = null;
         try {
             md = MessageDigest.getInstance("SHA-512");
-            messageDigest = md.digest(senha.getBytes("UTF-8"));
+            messageDigest = md.digest(input.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
@@ -117,9 +117,9 @@ public class Usuario implements Serializable{
             hexString.append(String.format("%02X", 0xFF & b));
         }
         
-        String senhaCifrada = hexString.toString();
+        String inputCifrado = hexString.toString();
         
-		return senhaCifrada;
+		return inputCifrado;
 	}
 	
 }

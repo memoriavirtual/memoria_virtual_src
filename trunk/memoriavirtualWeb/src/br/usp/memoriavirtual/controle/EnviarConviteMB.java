@@ -17,15 +17,14 @@ public class EnviarConviteMB {
     private String nivelAcesso = "";
     
     public String enviarConvite(){
-    	boolean sucesso = false;
-    	//Fazer parse de email para arrayList
+    	boolean sucesso = true;
     	enviarConviteEJB.enviarConvite(null, validade, nivelAcesso);
     	return sucesso ? "sucesso" : "falha";
     }
     
     public List<SelectItem> getNiveisPermitidos(){
     	List<SelectItem> itens = new ArrayList<SelectItem>();
-    	itens.add(new SelectItem("Teste")); //itens.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro é o valor que vc passa para o mb e o segundo é o label que ficará na página jsp 
+    	itens.add(new SelectItem("Teste")); //itens.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro ï¿½ o valor que vc passa para o mb e o segundo ï¿½ o label que ficarï¿½ na pï¿½gina jsp 
     	return itens;
     }
     

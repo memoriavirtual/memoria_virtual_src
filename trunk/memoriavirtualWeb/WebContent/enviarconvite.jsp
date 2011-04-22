@@ -56,7 +56,7 @@
 				</h:selectOneMenu>
 
 			</h:panelGrid>
-			<h:commandButton action="#{realizarLoginMB.autenticarUsuario}"
+			<h:commandButton action="#{enviarConviteMB.enviarConvite}"
 				value="Enviar" />
 		</h:form>
 	</f:view>
