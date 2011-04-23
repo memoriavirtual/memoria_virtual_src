@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Instituicao implements Serializable{
@@ -12,9 +13,8 @@ public class Instituicao implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
-	private String numRegistro;
-	private String nome;
+	@Id	private String numRegistro;
+	@NotNull private String nome;
 	private String email;
 
 	/**

@@ -50,10 +50,18 @@
 					<f:selectItem itemValue="30" itemLabel="30" />
 				</h:selectOneMenu>
 
+				<h:outputText value="Instituição:" />
+				<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
+					<f:selectItems value="#{enviarConviteMB.instituicoesPermitidos}" />
+				</h:selectOneMenu>
+				
   				<h:outputText value="Nível de Acesso:" />
 				<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}">
 					<f:selectItems value="#{enviarConviteMB.niveisPermitidos}" />
 				</h:selectOneMenu>
+				
+				<h:outputText value="Mensagem personalizada:" />
+				<h:inputTextarea id="mensagem" rows="4" cols="40" value="#{enviarConviteMB.mensagem}" />
 
 			</h:panelGrid>
 			<h:commandButton action="#{enviarConviteMB.enviarConvite}"

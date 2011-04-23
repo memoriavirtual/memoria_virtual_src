@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf12929639186291" configfile="/memoriavirtualWeb/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="login" x="60" y="72" width="61" height="85" id="pf12997929979525" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf12997929979526 pf12997929979527" path="/login.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="60" y="72" width="61" height="85" id="pf12997929979525" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf12997929979526 pf12997929979527" path="/login.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="erro" x="204" y="132" width="49" height="85" id="pf12997929979528" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf12997929979527" path="/erro.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="restrito/logado" x="204" y="24" width="49" height="85" id="pf12997929979529" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf12997929979526" path="/restrito/logado.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/logado" x="204" y="24" width="49" height="85" id="pf12997929979529" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf12997929979526" path="/restrito/logado.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="convite" x="67" y="281" id="pf13026657488180" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13026657488181 pf13026658171645" path="/enviarconvite.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="conviteenviado" x="188" y="228" id="pf13026657488193" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf13026657488181" path="/conviteenviado.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="erroconvite" id="pf13026658171646" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf13026658171645" path="/erroconvite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="conviteenviado" x="300" y="281" id="pf13026657488193" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf13026657488181" path="/conviteenviado.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="erroconvite" x="312" y="192" id="pf13026658171646" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf13026658171645" path="/erroconvite.jsp"/>
   <links id="pf12997929979526" target="pf12997929979529" source="pf12997929979525" outcome="sucesso" redirect="true"/>
   <links id="pf12997929979527" target="pf12997929979528" source="pf12997929979525" outcome="falha"/>
   <links id="pf13026657488181" target="pf13026657488193" source="pf13026657488180" outcome="sucesso" redirect="true"/>

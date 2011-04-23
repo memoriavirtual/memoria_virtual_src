@@ -6,9 +6,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Date;
+
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Usuario implements Serializable{
@@ -17,11 +20,16 @@ public class Usuario implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Id private String id;
 	@Id
-	private String id;
+	@Pattern(regexp="[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
+		+"[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
+		+"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+		message="{invalid.email}")
 	private String email;
 	private String senha;
-	private String validade;
+	private Date validade;
 
 
 	/**
@@ -82,7 +90,7 @@ public class Usuario implements Serializable{
 	/**
 	 * @return validade do cadastro
 	 */
-	public String getValidade() {
+	public Date getValidade() {
 		return validade;
 	}
 
@@ -90,8 +98,9 @@ public class Usuario implements Serializable{
 	 * @param validade
 	 *            a data limite da validade
 	 */
-	public void setValidade(String validade) {
-		this.validade = validade;
+	public void setValidade(java.util.Date validade){
+		java.sql.Date temp = new Date(validade.getTime());
+		this.validade = temp;
 	}
 
 	/**

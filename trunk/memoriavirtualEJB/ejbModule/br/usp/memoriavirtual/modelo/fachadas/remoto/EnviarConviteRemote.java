@@ -5,5 +5,5 @@ import javax.ejb.Remote;
 @Remote
 public interface EnviarConviteRemote {
 
-	public String enviarConvite(String emails, String validade, String nivelAcesso);	
+	public String enviarConvite(String emails, String mensagem, String validade, String instituicao, String nivelAcesso);	
 }
