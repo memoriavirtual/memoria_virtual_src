@@ -13,6 +13,7 @@
 	<f:view>
 		<h:form>
 			<h:panelGrid>
+				<h:outputText value="#{enviarConviteMB.erro}" />
 				<h:outputText value="Email(s):" />
 				<h:inputTextarea id="emails" rows="4" cols="40" value="#{enviarConviteMB.emails}" />
 
@@ -54,7 +55,6 @@
 				<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
 					<f:selectItems value="#{enviarConviteMB.instituicoesPermitidos}" />
 				</h:selectOneMenu>
-				
   				<h:outputText value="Nível de Acesso:" />
 				<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}">
 					<f:selectItems value="#{enviarConviteMB.niveisPermitidos}" />

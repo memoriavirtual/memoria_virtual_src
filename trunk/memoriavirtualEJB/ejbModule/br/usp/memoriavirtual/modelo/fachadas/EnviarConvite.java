@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -28,11 +29,11 @@ public class EnviarConvite implements EnviarConviteRemote {
 	}
 
 	/**
-	 * @return <code>"ok"</code> se emails s�o validos e ainda n�o foram
+	 * @return <code>"sucesso"</code> se convites foram enviados com sucesso
 	 *         cadastrados
-	 * @return <code>"email invalido: email"</code> se existe erro no email
+	 * @return <code>"Formato de email invalido: email"</code> se existe erro no email
 	 * 
-	 * @return <code>"email existente: email"</code> se o email ja esta
+	 * @return <code>"Email ja existente no sistema: email"</code> se o email ja esta
 	 *         cadastrado
 	 * @return <code>"Erro ao cadastrar no banco de dados: email"</code> Se
 	 *         houve algum erro ao incluir o email no banco de dados
@@ -44,15 +45,18 @@ public class EnviarConvite implements EnviarConviteRemote {
 
 		emailErro = procurarEmailsBD(email);
 		if (emailErro != null) {
-			return "email existente: " + emailErro;
+			return "Email ja existente no sistema: " + emailErro;
 		}
 
 		for (Integer i = 0; i < email.length; i++) {
-			if (!cadastrarUsuarioBD(email[i], validade, instituicao, nivelAcesso))
+			emailErro = cadastrarUsuarioBD(email[i], validade, instituicao, nivelAcesso);
+			if (emailErro.equals("falhaBD"))
 				return "Erro ao cadastrar no banco de dados: " + email[i];
+			else if(emailErro.equals("falhaEmail"))
+				return "Formato de email invalido: " + email[i];
 		}
 
-		return "ok";
+		return "sucesso";
 	}
 
 	/**
@@ -78,20 +82,29 @@ public class EnviarConvite implements EnviarConviteRemote {
 	}
 
 	/**
-	 * @return true Se teve sucesso
-	 * @return false Se aconteceu algum erro
+	 * @return falhaEmail Se formato do email esta incorreto
+	 * @return falhaBD Se ocorreu algum erro ao incluir no banco de dados
+	 * @return sucesso Se o usuario foi incluido no banco de dados com sucesso
 	 */
-	public boolean cadastrarUsuarioBD(String email, String validade,
+	public String cadastrarUsuarioBD(String email, String validade,
 			String instituicao, String nivelAcesso) {
 		Boolean usuarioCadastrado = false;
 		Boolean usuarioInstituicaoCadastrado = false;
 		Date dataAtual = new Date();
 		Date vencimento = new Date(dataAtual.getTime()
 				+ (long) Integer.parseInt(validade) * Timer.ONE_DAY);
-
+		String id;
 		Usuario user = new Usuario();
+		Random generator = new Random();
+		
 		user.setEmail(email);
-		user.setId(user.gerarHash(email + "Memoria"));
+		//Gera o id do usuario calculando o hash com base no email + um numero aleatorio.
+		//Se ja existir o id, calcula outro numero aleatorio ate que o id seja unico
+		//id será usado para verificação do convite enviado via email
+		do{
+			id = user.gerarHash(email + Integer.toString(generator.nextInt()));
+		}while(entityManager.find(Usuario.class, id) != null);
+		user.setId(id);
 		user.setValidade(vencimento);
 
 		UsuarioInstituicao usuarioInstituicao = new UsuarioInstituicao();
@@ -100,7 +113,11 @@ public class EnviarConvite implements EnviarConviteRemote {
 		usuarioInstituicao.setTipo(nivelAcesso);
 		if (!this.entityManager.contains(user)) {
 			// Persiste usuario na base
-			this.entityManager.persist(user);
+			try{
+				this.entityManager.persist(user);
+			}catch(Exception e){
+				return "falhaEmail";
+			}
 			if (this.entityManager.contains(user))
 				usuarioCadastrado = true;
 
@@ -109,7 +126,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 			if (this.entityManager.contains(usuarioInstituicao))
 				usuarioInstituicaoCadastrado = true;
 		}
-		return usuarioCadastrado && usuarioInstituicaoCadastrado;
+		return (usuarioCadastrado && usuarioInstituicaoCadastrado)?"sucesso":"falhaBD";
 	}
 
 	private void enviarEmail(String destinatario, String assunto, String mensagem) {

@@ -17,11 +17,12 @@ public class EnviarConviteMB {
     private String validade = "";
     private String instituicao = "";
     private String nivelAcesso = "";
+    private String erro = "";
     
     public String enviarConvite(){
     	boolean sucesso = true;
-    	String resultado = this.enviarConviteEJB.enviarConvite(emails, mensagem, validade, instituicao, nivelAcesso);
-    	if(resultado != "ok")
+    	this.erro = this.enviarConviteEJB.enviarConvite(emails, mensagem, validade, instituicao, nivelAcesso);
+    	if(erro != "sucesso")
     		sucesso = false;
     	return sucesso ? "sucesso" : "falha";
     }
@@ -110,7 +111,12 @@ public class EnviarConviteMB {
 	public void setInstituicao(String instituicao) {
 		this.instituicao = instituicao;
 	}
-	
-    
+
+	/**
+	 * @return O erro corrido
+	 */
+	public String getErro() {
+		return erro;
+	}    
 
 }

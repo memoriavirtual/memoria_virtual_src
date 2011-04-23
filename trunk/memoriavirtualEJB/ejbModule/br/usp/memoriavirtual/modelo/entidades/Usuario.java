@@ -26,7 +26,7 @@ public class Usuario implements Serializable{
 	@Pattern(regexp="[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
 		+"[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
 		+"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-		message="{invalid.email}")
+		message="Email invalido")
 	private String email;
 	private String senha;
 	private Date validade;
