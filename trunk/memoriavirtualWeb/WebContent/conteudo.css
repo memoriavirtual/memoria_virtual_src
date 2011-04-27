@@ -49,17 +49,12 @@
 }
 
 .campos{
-	position:absolute;
-	top:0;
+	text-align:right;
+	margin-right: 250px;
+	margin-top:50px;
 	right:275px;
 }
 
-.campos p{
-	margin:0;
-	margin-bottom:3px;
-}
-
 .botao{
-	position:absolute;
-	right:0;
+	margin-right:20px;
 }
