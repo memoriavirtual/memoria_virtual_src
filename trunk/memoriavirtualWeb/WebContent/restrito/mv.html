@@ -1,0 +1,48 @@
+<!DOCTYPE HTML><!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> --><!-- <!DOCTYPE HTML> -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Memória Virtual</title>
+<link href="mv.css" rel="stylesheet" type="text/css">
+<script src="js/jquery-1.5.2.min.js"></script>
+<script src="js/abas.js"></script>
+<script src="js/link.js"></script>
+<script src="js/mv.js"></script>
+</head>
+
+<body>
+<div id="recipiente">
+    <div id="cabecalho">
+      	<img src="imagens/logo_mv_catalogacao.png">
+    	<div id="usuario">&lt;usuario&gt;, <a href="#">sair</a></div>    	
+    </div> <!-- fim #cabecalho -->
+    
+    <div id="conteudo"> 
+    	<div class="caixa">
+        	<ul id="Abas">
+            	<li class="descritor selecionado"></li>
+                <li class="autoria"></li>
+                <li onclick="loadbempatrimonial()" class="bempatrimonial" id="bempatrimonial"></li><!-- Necessario uso de id pela funcao getlementbyid() (AJAX)
+                que fara o load dos documentos adequados dentro do div caixa corpo auxilido pelo atributo onclick ->
+                <li class="usuario"></li>
+                <li class="instituicao"></li>
+            </ul>
+			<div class="CaixadeCima"></div>
+
+			<ol id="CaixaCorpo">
+            	<script>
+				  $("#CaixaCorpo").load("bempatrimonial.html");
+				</script>
+ 			</ol><!-- fim .CaixaCorpo -->
+
+			<div class="CaixadeBaixo"></div>
+		</div><!-- fim .caixa -->
+          
+		</div><!-- fim #conteudo -->
+	<div id="rodape">
+    	Copyright &copy; 2009 LABES - Laborat&oacute;rio de Engenharia de Software - ICMC-USP
+    </div> <!-- fim #rodape -->
+</div><!-- fim #recipiente -->
+
+</body>
+</html>
