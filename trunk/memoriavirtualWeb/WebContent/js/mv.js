@@ -1,0 +1,23 @@
+//script responsavel por fazer o load de cada documento dentro do div CaixaCorpo, basta 
+//criar o documento e fazer as alteraçoes, mas basicamente eh esse script (AJAX)
+
+function loadbempatrimonial()
+{
+var xmlhttp;
+
+xmlhttp=new XMLHttpRequest();
+
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status== 220)
+    {
+    document.getElementById("CaixaCorpo").innerHTML=xmlhttp.responseText;
+    }
+  else
+	{
+	document.getElementById("CaixaCorpo").innerHTML=xmlhttp.readyStatus;
+	}
+  }
+xmlhttp.open("GET","text.html",true);
+xmlhttp.send();
+}
