@@ -9,15 +9,15 @@ xmlhttp=new XMLHttpRequest();
 
 xmlhttp.onreadystatechange=function()
   {
-  if (xmlhttp.readyState==4 && xmlhttp.status== 220)
+  if (xmlhttp.readyState==4 && xmlhttp.status == 200)
     {
     document.getElementById("CaixaCorpo").innerHTML=xmlhttp.responseText;
     }
   else
 	{
-	document.getElementById("CaixaCorpo").innerHTML=xmlhttp.readyStatus;
+	document.getElementById("CaixaCorpo").innerHTML=xmlhttp.readyState;
 	}
   }
-xmlhttp.open("GET","bempatrimonial.html",true);
+xmlhttp.open("GET","WEB-INF/bempatrimonial.html",true);
 xmlhttp.send();
 }
