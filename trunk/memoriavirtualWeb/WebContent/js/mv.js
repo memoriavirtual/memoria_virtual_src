@@ -18,6 +18,6 @@ xmlhttp.onreadystatechange=function()
 	document.getElementById("CaixaCorpo").innerHTML=xmlhttp.readyStatus;
 	}
   }
-xmlhttp.open("GET","text.html",true);
+xmlhttp.open("GET","bempatrimonial.html",true);
 xmlhttp.send();
 }
