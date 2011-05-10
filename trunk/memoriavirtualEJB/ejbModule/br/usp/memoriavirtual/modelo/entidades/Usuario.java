@@ -11,6 +11,7 @@ import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -22,7 +23,7 @@ public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id private String id;
-	@Id
+	@NotNull
 	@Pattern(regexp="[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
 		+"[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
 		+"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
@@ -42,10 +43,9 @@ public class Usuario implements Serializable{
 
 	public Usuario(String id, String email, String senha) {
 		this();
-		this.id = id;
-		this.email = email;
-		this.senha = gerarHash(senha);
-	
+		this.setId(id);
+		this.setEmail(email);
+		this.setSenha(senha);
 	}
 
 
@@ -76,7 +76,8 @@ public class Usuario implements Serializable{
 	 *            the senha to set
 	 */
 	public void setSenha(String senha) {
-		this.senha = senha;
+		String senhaCriptografada = gerarHash(senha);
+		this.senha = senhaCriptografada;
 	}
 
 	public String getEmail() {

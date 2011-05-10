@@ -13,7 +13,17 @@ public class RealizarLoginMB {
     private String usuario = "";
     private String senha = "";
 
-    /**
+    /**html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Logado com sucesso</title>
+</head>
+<body>
+
+<h1>Logado com sucesso</h1>
+
+</body>
+</html>
      * Verifica as informacões de usuário e senha na base de dados.
      * 
      * @return <code>true</code> se o usuário foi autenticado com sucesso ou
