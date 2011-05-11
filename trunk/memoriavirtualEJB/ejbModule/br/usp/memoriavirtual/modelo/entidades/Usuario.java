@@ -4,13 +4,15 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Date;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -24,6 +26,7 @@ public class Usuario implements Serializable{
 	
 	@Id private String id;
 	@NotNull
+	@Column(unique = true)
 	@Pattern(regexp="[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
 		+"[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
 		+"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
@@ -31,8 +34,9 @@ public class Usuario implements Serializable{
 	private String email;
 	private String senha;
 	private Date validade;
-
-
+	@ManyToMany(targetEntity=br.usp.memoriavirtual.modelo.entidades.Instituicao.class)
+	private ArrayList<Instituicao> instituicoes;
+	
 	/**
 	 * Construtor padrão
 	 */
@@ -104,6 +108,14 @@ public class Usuario implements Serializable{
 		this.validade = temp;
 	}
 
+	public ArrayList<Instituicao> getInstituicoes() {
+		return instituicoes;
+	}
+	
+	public void adicionarInstituicoes(Instituicao instituicao) {
+		this.instituicoes.add(instituicao);
+	}
+
 	/**
 	 * @param input
 	 * 				a senha para ser criptografada ou o email para criar o id usando no convite
@@ -119,6 +131,8 @@ public class Usuario implements Serializable{
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex){
+        	return null;
         }
 
         //Converte para hexa antes de utilizar a senha criptografada

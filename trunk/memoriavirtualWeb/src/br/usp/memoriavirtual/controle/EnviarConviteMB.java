@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
 
 public class EnviarConviteMB {
@@ -18,6 +20,7 @@ public class EnviarConviteMB {
     private String instituicao = "";
     private String nivelAcesso = "";
     private String erro = "";
+    private Usuario usuario = null;
     
     public String enviarConvite(){
     	boolean sucesso = true;
@@ -30,13 +33,14 @@ public class EnviarConviteMB {
     public List<SelectItem> getNiveisPermitidos(){
     	//TODO verificar quais niveis sao permitidos para o usurio logado.
     	List<SelectItem> itens = new ArrayList<SelectItem>();
-    	itens.add(new SelectItem("Teste")); //itens.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
+    	itens.add(new SelectItem("Teste")); //itens.add(new SelectItem(instituicao.getId, instituicao.getnome)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
     	return itens;
     }
     
     public List<SelectItem> getInstituicoesPermitidos(){
     	//TODO verificar quais instituições sao permitidas
     	//Se o usurio logado for gerente, verificar quais instituicoes ele é gerente
+    	usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
     	List<SelectItem> instituicoes = new ArrayList<SelectItem>();
     	instituicoes.add(new SelectItem("Teste")); //instituicoes.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
     	return instituicoes;

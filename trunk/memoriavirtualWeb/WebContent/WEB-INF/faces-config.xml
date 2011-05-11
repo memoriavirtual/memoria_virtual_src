@@ -34,10 +34,10 @@
 
 	<navigation-rule>
 		<display-name>convite</display-name>
-		<from-view-id>/enviarconvite.jsp</from-view-id>
+		<from-view-id>/restrito/enviarconvite.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>sucesso</from-outcome>
-			<to-view-id>/conviteenviado.jsp</to-view-id>
+			<to-view-id>/restrito/conviteenviado.jsp</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
