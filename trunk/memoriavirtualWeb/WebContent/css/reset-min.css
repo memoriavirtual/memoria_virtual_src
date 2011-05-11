@@ -18,4 +18,4 @@ table,td,th{vertical-align:middle;}
 blockquote:before,blockquote:after,q:before,q:after{content:"";}
 blockquote,q{quotes:"" "";}
 a img{border:none;}
-ul,li,ol{margin-left:3em;}
+ul,li,ol{margin-left:0;}

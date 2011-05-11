@@ -1,10 +1,10 @@
 .abaDentro{
 	padding:0;
-	margin:-13px 0;
+	margin:0px 0;
 	height:auto;
-	width:940px;
-	background:#000;
-	position:relative;
+	width:936px;
+	background:#FFF;
+	border:#000 2px solid;
 }
 
 .menu{
@@ -22,35 +22,29 @@
 	list-style:none;
 	display:block;
 	height:32px;
-	width:150px;
+	width:160px;
 	cursor:pointer;
 	cursor:hand;
-	left:-40px;
 	position:relative;
+}
+.menu li:hover{
+	background:#666;
 }
 
 .formulario{
 	height:auto;
-	width:790px;
+	width:780px;
 	position:absolute;
+	background:#FFF;
+	border:#000 medium;
 	top:0;
 	right:0;
-	color:#FFF;
-}
-
-.texto{
-	text-align:right;
-	width:250px;
-}
-
-.texto p{
-	margin:0;
-	margin-bottom:8px;
+	color:#000;
 }
 
 .campos{
 	position:absolute;
-	top:0;
+	top:10px;
 	right:275px;
 }
 

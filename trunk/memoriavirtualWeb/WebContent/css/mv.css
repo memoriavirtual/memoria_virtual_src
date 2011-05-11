@@ -25,7 +25,7 @@ body{
 }
 
 #cabecalho img{
-	margin: 0 0 0 20px;
+	margin: 0 0 5px 20px;
 }
 
 #usuario{
@@ -51,7 +51,7 @@ body{
 	color:#FFF;
 	font-size:13px;
 	margin:0 ;
-	padding:10px 18px ;
+	padding:0 18px 10px;
 	position: relative;
 	background: url(../imagens/content_background.png) repeat-y #0C0;
 }
@@ -65,19 +65,77 @@ body{
 	background: url(../imagens/footer.png) no-repeat;
 }
 
- 
+/* 
 #Abas {
+	background:#3CC;
 	margin:0;
 	padding:0 15px 0 0;
 	list-style:none;
 }
 #Abas li {
-	float:right;
-	height:32px;
 	cursor:pointer;
 	cursor:hand;
+	font-size:14px;
+	font-weight:900;
 }
+#Abas li a{
+	text-decoration:none;
+	color:#000;
+	background:#FF0;
+	float:right;
+	display:inline-block;
+	padding:8px;
+}
+#Abas li a:hover{
+	text-decoration:none;
+	color:#FFF;
+	background:#000;
 
+}*/
+
+#Abas{
+	height: 30px;
+	position: absolute;
+	top:105px;
+	right:18px;
+	border:none 0;
+	margin:0;
+	padding:0;
+	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	}
+#Abas ul{
+	background:#FFF;
+	height:30px;
+	list-style:none;
+	margin:0;
+	padding:0;
+	}
+	#Abas li{
+		float:left;
+		padding:0;
+		}
+	#Abas li a{
+		background:#FFF;
+		color:#000;
+		display:block;
+		font-weight:bold;
+		line-height:30px;
+		margin:0;
+		padding:2px 20px;
+		text-align:center;
+		text-decoration:none;
+		}
+		#Abas li a:hover, #Abas ul li:hover a{
+			background: #000;
+			color:#FFF;
+			text-decoration:none;
+			}
+	#Abas p{
+		clear:left;
+		}
+/*
 li.autoria {
 	background:url(../imagens/autoria.png) no-repeat 0 -32px;
 	width:82px;
@@ -89,9 +147,9 @@ li.descritor {
 li.bempatrimonial {
 	background:url(../imagens/bem_patrimonial.png) no-repeat 0 -32px;
 	width:156px;
-}
+}*/
 
-li.mousesobre {
+/*li.mousesobre {
 	background-position:0 0;
 }
 li.mousefora {
@@ -100,11 +158,8 @@ li.mousefora {
 li.selecionado {
 	background-position:0 0;
 }
+*/
 
-.caixa {
-	width:940px;
-	background:#96F;
-}
 /*.CaixadeCima {
 	background:url(../imagens/box_top.png) no-repeat;
 	height:10px;
@@ -115,6 +170,10 @@ li.selecionado {
 }*/
 
 #CaixaCorpo {
+	width:940px;
+	height:50px;
+	background:#A60;
+
 	padding:0;
 	margin:0;
 }
