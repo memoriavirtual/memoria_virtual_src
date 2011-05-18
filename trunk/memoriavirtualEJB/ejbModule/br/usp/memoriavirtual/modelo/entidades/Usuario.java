@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Usuario implements Serializable{
 	private String email;
 	private String senha;
 	private Date validade;
-	@ManyToMany(targetEntity=br.usp.memoriavirtual.modelo.entidades.Instituicao.class)
+	@ManyToMany(targetEntity=br.usp.memoriavirtual.modelo.entidades.Instituicao.class, cascade={CascadeType.ALL})
 	private ArrayList<Instituicao> instituicoes;
 	
 	/**

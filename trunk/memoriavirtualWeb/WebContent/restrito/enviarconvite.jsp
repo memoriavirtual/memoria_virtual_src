@@ -54,9 +54,10 @@
 				<h:outputText value="Instituição:" />
 				<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
 					<f:selectItems value="#{enviarConviteMB.instituicoesPermitidos}" />
+					
 				</h:selectOneMenu>
   				<h:outputText value="Nível de Acesso:" />
-				<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}">
+				<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}" id="niveisAcesso">
 					<f:selectItems value="#{enviarConviteMB.niveisPermitidos}" />
 				</h:selectOneMenu>
 				

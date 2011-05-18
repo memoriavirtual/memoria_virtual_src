@@ -21,6 +21,7 @@ public class EnviarConviteMB {
     private String nivelAcesso = "";
     private String erro = "";
     private Usuario usuario = null;
+    private List<SelectItem> itens = null;
     
     public String enviarConvite(){
     	boolean sucesso = true;
@@ -32,7 +33,7 @@ public class EnviarConviteMB {
     
     public List<SelectItem> getNiveisPermitidos(){
     	//TODO verificar quais niveis sao permitidos para o usurio logado.
-    	List<SelectItem> itens = new ArrayList<SelectItem>();
+    	new ArrayList<SelectItem>();
     	itens.add(new SelectItem("Teste")); //itens.add(new SelectItem(instituicao.getId, instituicao.getnome)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
     	return itens;
     }
@@ -44,6 +45,10 @@ public class EnviarConviteMB {
     	List<SelectItem> instituicoes = new ArrayList<SelectItem>();
     	instituicoes.add(new SelectItem("Teste")); //instituicoes.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
     	return instituicoes;
+    }
+    
+    public void carregarNiveisAcesso(){
+    	itens.add(new SelectItem(validade));
     }
 
 	/**

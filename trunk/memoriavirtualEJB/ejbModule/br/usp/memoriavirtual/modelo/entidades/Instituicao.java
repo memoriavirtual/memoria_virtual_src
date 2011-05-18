@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.modelo.entidades;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +24,8 @@ public class Instituicao implements Serializable{
 	private String nome;
 	@Column(unique = true)
 	private String email;
-	@ManyToMany(targetEntity=br.usp.memoriavirtual.modelo.entidades.Usuario.class, mappedBy="instituicoes")
+	@ManyToMany(targetEntity=br.usp.memoriavirtual.modelo.entidades.Usuario.class, mappedBy="instituicoes", cascade={CascadeType.ALL})
+
 	private ArrayList<Usuario> usuarios;
 
 	/**
