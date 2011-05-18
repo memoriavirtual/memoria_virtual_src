@@ -28,12 +28,13 @@ public class EnviarConviteMB {
     	this.erro = this.enviarConviteEJB.enviarConvite(emails, mensagem, validade, instituicao, nivelAcesso);
     	if(erro != "sucesso")
     		sucesso = false;
+    	erro = instituicao;
     	return sucesso ? "sucesso" : "falha";
     }
     
     public List<SelectItem> getNiveisPermitidos(){
     	//TODO verificar quais niveis sao permitidos para o usurio logado.
-    	new ArrayList<SelectItem>();
+    	List<SelectItem> itens = new ArrayList<SelectItem>();
     	itens.add(new SelectItem("Teste")); //itens.add(new SelectItem(instituicao.getId, instituicao.getnome)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
     	return itens;
     }
@@ -43,7 +44,7 @@ public class EnviarConviteMB {
     	//Se o usurio logado for gerente, verificar quais instituicoes ele é gerente
     	usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
     	List<SelectItem> instituicoes = new ArrayList<SelectItem>();
-    	instituicoes.add(new SelectItem("Teste")); //instituicoes.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
+    	instituicoes.add(new SelectItem("1", "Teste")); //instituicoes.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
     	return instituicoes;
     }
     

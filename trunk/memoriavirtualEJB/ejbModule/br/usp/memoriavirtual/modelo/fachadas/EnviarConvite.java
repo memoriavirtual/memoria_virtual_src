@@ -121,7 +121,6 @@ public class EnviarConvite implements EnviarConviteRemote {
 		instituicao = (Instituicao) entityManager.find(Instituicao.class, instituicaoId);
 		if(instituicao == null)
 			return "falhaBD";
-		user.adicionarInstituicoes(instituicao);
 		
 		if (!this.entityManager.contains(user)) {
 			// Persiste usuario na base

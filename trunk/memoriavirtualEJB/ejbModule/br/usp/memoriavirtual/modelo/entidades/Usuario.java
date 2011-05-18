@@ -4,16 +4,13 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -35,8 +32,8 @@ public class Usuario implements Serializable{
 	private String email;
 	private String senha;
 	private Date validade;
-	@ManyToMany(targetEntity=br.usp.memoriavirtual.modelo.entidades.Instituicao.class, cascade={CascadeType.ALL})
-	private ArrayList<Instituicao> instituicoes;
+	private Boolean administrador;
+	private Boolean ativo;
 	
 	/**
 	 * Construtor padr√£o
@@ -109,13 +106,35 @@ public class Usuario implements Serializable{
 		this.validade = temp;
 	}
 
-	public ArrayList<Instituicao> getInstituicoes() {
-		return instituicoes;
-	}
 	
-	public void adicionarInstituicoes(Instituicao instituicao) {
-		this.instituicoes.add(instituicao);
+
+	public Boolean getAdministrador() {
+		return administrador;
 	}
+
+	/**
+	 * @param administrador
+	 *            se o usuario È ou n„o administrador do sistema
+	 */
+
+	public void setAdministrador(Boolean administrador) {
+		this.administrador = administrador;
+	}
+
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	/**
+	 * @param ativo
+	 *            Se o usuario ja fez cadastro
+	 */
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
 
 	/**
 	 * @param input
