@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
 
@@ -43,7 +44,7 @@ public class EnviarConviteMB {
     	//Se o usurio logado for gerente, verificar quais instituicoes ele é gerente
     	usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
     	List<SelectItem> instituicoes = new ArrayList<SelectItem>();
-    	instituicoes.add(new SelectItem("Teste")); //instituicoes.add(new SelectItem(quadra.getId, quadra.getDescricao)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
+    	List<Instituicao> teste = enviarConviteEJB.getInstituicoesAutorizadas(usuario); 
     	return instituicoes;
     }
     
