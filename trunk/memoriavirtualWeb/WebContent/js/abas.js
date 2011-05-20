@@ -2,16 +2,16 @@ $(document).ready(function() {
 
 
   //Pega todos os elementos da lista #MenuAbas
-  $('#Abas > li').click(function(){
+  $('#Abas > ul > li').click(function(){
         
     //Remove a classe dos elementos
-    $('#Abas > li').removeClass('selecionado');
+    $('#Abas > ul > li').removeClass('selecionado');
     
     //Reatribui uma nova classe
     $(this).addClass('selecionado');
  
     
-  }).mouseover(function() {
+  })/*.mouseover(function() {
 
     //Adiciona e remove a classe
     $(this).addClass('mousesobre');
@@ -21,8 +21,8 @@ $(document).ready(function() {
     
     //Adiciona e remove a classe
     $(this).addClass('mousefora');
-    $(this).removeClass('mousesobre');    
+    $(this).removeClass('mousesobre');
     
   });
-	
+	*/
 });

@@ -3,7 +3,7 @@
 	margin:0px 0;
 	height:auto;
 	width:936px;
-	background:#FFF;
+	background:#F9F9F9; /* cor do fundo do formulario*/
 	border:#000 2px solid;
 }
 
@@ -26,6 +26,7 @@
 	cursor:pointer;
 	cursor:hand;
 	position:relative;
+	border-bottom:1px solid #FFF;
 }
 .menu li:hover{
 	background:#666;
@@ -57,7 +58,13 @@
 	margin-bottom:3px;
 }
 
+.campos ul input{
+	background:#D2D2D2;
+}
+
 .botao{
 	position:absolute;
 	right:0;
 }
+
+
