@@ -39,18 +39,16 @@ public class RealizarLogin implements RealizarLoginRemote {
 	query.setParameter("senha", senha);
 
 	Usuario resultado;
-	Usuario resultadoClone;
 
 	try {
 	    resultado = (Usuario) query.getSingleResult();
-	    resultadoClone = new Usuario(resultado.getId(), resultado.getEmail(), null);
 
 	} catch (NoResultException e) {
-	    resultadoClone = null;
+		resultado = null;
 	    e.printStackTrace();
 	}
 
-	return resultadoClone;
+	return resultado;
     }
 
 }

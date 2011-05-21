@@ -53,7 +53,7 @@
 
 				<h:outputText value="Instituição:" />
 				<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
-					<f:selectItems value="#{enviarConviteMB.instituicoesPermitidos}" />
+					<f:selectItems value="#{enviarConviteMB.instituicoesPermitidas}" />
 					
 				</h:selectOneMenu>
   				<h:outputText value="Nível de Acesso:" />
@@ -65,8 +65,7 @@
 				<h:inputTextarea id="mensagem" rows="4" cols="40" value="#{enviarConviteMB.mensagem}" />
 
 			</h:panelGrid>
-			<h:commandButton action="#{enviarConviteMB.enviarConvite}"
-				value="Enviar" />
+			<h:commandButton action="#{enviarConviteMB.enviarConvite}" value="Enviar" />
 		</h:form>
 	</f:view>
 </body>

@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,8 +32,11 @@ public class Usuario implements Serializable{
 	private String email;
 	private String senha;
 	private Date validade;
+	@NotNull
 	private Boolean administrador;
+	@NotNull
 	private Boolean ativo;
+
 	
 	/**
 	 * Construtor padrão
@@ -41,15 +44,6 @@ public class Usuario implements Serializable{
 	public Usuario() {
 		super();
 	}
-
-
-	public Usuario(String id, String email, String senha) {
-		this();
-		this.setId(id);
-		this.setEmail(email);
-		this.setSenha(senha);
-	}
-
 
 	/**
 	 * @return the login
@@ -107,8 +101,7 @@ public class Usuario implements Serializable{
 	}
 
 	
-
-	public Boolean getAdministrador() {
+	public Boolean isAdministrador() {
 		return administrador;
 	}
 
@@ -121,8 +114,7 @@ public class Usuario implements Serializable{
 		this.administrador = administrador;
 	}
 
-
-	public Boolean getAtivo() {
+	public Boolean isAtivo() {
 		return ativo;
 	}
 
@@ -134,7 +126,6 @@ public class Usuario implements Serializable{
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
-
 
 	/**
 	 * @param input

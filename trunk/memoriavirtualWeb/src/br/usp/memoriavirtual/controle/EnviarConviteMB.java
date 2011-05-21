@@ -7,50 +7,71 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
 
 public class EnviarConviteMB {
 
-    @EJB
-    private EnviarConviteRemote enviarConviteEJB;
-    private String emails = "";
-    private String mensagem = "";
-    private String validade = "";
-    private String instituicao = "";
-    private String nivelAcesso = "";
-    private String erro = "";
-    private Usuario usuario = null;
-    private List<SelectItem> itens = null;
-    
-    public String enviarConvite(){
-    	boolean sucesso = true;
-    	this.erro = this.enviarConviteEJB.enviarConvite(emails, mensagem, validade, instituicao, nivelAcesso);
-    	if(erro != "sucesso")
-    		sucesso = false;
-    	return sucesso ? "sucesso" : "falha";
-    }
-    
-    public List<SelectItem> getNiveisPermitidos(){
-    	//TODO verificar quais niveis sao permitidos para o usurio logado.
-    	List<SelectItem> itens = new ArrayList<SelectItem>();
-    	itens.add(new SelectItem("Teste")); //itens.add(new SelectItem(instituicao.getId, instituicao.getnome)); // o primeiro parametro � o valor que vc passa para o mb e o segundo � o label que ficar� na p�gina jsp 
-    	return itens;
-    }
-    
-    public List<SelectItem> getInstituicoesPermitidos(){
-    	//TODO verificar quais instituições sao permitidas
-    	//Se o usurio logado for gerente, verificar quais instituicoes ele é gerente
-    	usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-    	List<SelectItem> instituicoes = new ArrayList<SelectItem>();
-    	List<Instituicao> teste = enviarConviteEJB.getInstituicoesAutorizadas(usuario); 
-    	return instituicoes;
-    }
-    
-    public void carregarNiveisAcesso(){
-    	itens.add(new SelectItem(validade));
-    }
+	@EJB
+	private EnviarConviteRemote enviarConviteEJB;
+	private String emails = "";
+	private String mensagem = "";
+	private String validade = "";
+	private String instituicao = "";
+	private String nivelAcesso = "";
+	private String erro = "";
+
+	public String enviarConvite() {
+		boolean sucesso = true;
+		this.erro = this.enviarConviteEJB.enviarConvite(emails, mensagem,
+				validade, instituicao, nivelAcesso);
+		if (erro != "sucesso")
+			sucesso = false;
+		return sucesso ? "sucesso" : "falha";
+	}
+
+	public List<SelectItem> getNiveisPermitidos() {
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+		.getExternalContext().getSessionMap().get("usuario");
+		
+		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
+		List<Grupo> grupos = null;
+		
+		grupos = enviarConviteEJB.getGrupos();
+		for(Grupo grupo : grupos){
+			niveisPermissao.add(new SelectItem(grupo.getId()));
+		}
+		if(usuario.isAdministrador()){
+			niveisPermissao.add(new SelectItem("Administrador"));
+		}
+		
+		return niveisPermissao;
+	}
+
+	public List<SelectItem> getInstituicoesPermitidas() {
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+
+		// Lista de SelectItem que sera exibida na pagina
+		List<SelectItem> listaInstituicoes = new ArrayList<SelectItem>();
+
+		// Lista de instituicoes que o usuario pertence
+		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
+		if (usuario.isAdministrador()) {
+			instituicoesUsuario = this.enviarConviteEJB.getInstituicoes();
+		} else {
+			Grupo grupo = new Grupo("Gerente");
+			instituicoesUsuario = this.enviarConviteEJB.getInstituicoes(grupo,
+					usuario);
+		}
+		for (Instituicao instituicao : instituicoesUsuario) {
+			listaInstituicoes.add(new SelectItem(instituicao.getNumRegistro(), instituicao
+					.getNome()));
+		}
+		return listaInstituicoes;
+	}
 
 	/**
 	 * @return String contendo a lista de emails
@@ -60,7 +81,8 @@ public class EnviarConviteMB {
 	}
 
 	/**
-	 * @param Define String contendo a lista de emails a enviar convite
+	 * @param Define
+	 *            String contendo a lista de emails a enviar convite
 	 */
 	public void setEmails(String emails) {
 		this.emails = emails;
@@ -74,7 +96,9 @@ public class EnviarConviteMB {
 	}
 
 	/**
-	 * @param mensagem Define a mensagem personalizada a ser enviada junto com os convites
+	 * @param mensagem
+	 *            Define a mensagem personalizada a ser enviada junto com os
+	 *            convites
 	 */
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
@@ -88,7 +112,8 @@ public class EnviarConviteMB {
 	}
 
 	/**
-	 * @param validade Define a validade do convite
+	 * @param validade
+	 *            Define a validade do convite
 	 */
 	public void setValidade(String validade) {
 		this.validade = validade;
@@ -102,7 +127,8 @@ public class EnviarConviteMB {
 	}
 
 	/**
-	 * @param nivelAcesso Define o nivel de acesso do usuario
+	 * @param nivelAcesso
+	 *            Define o nivel de acesso do usuario
 	 */
 	public void setNivelAcesso(String nivelAcesso) {
 		this.nivelAcesso = nivelAcesso;
@@ -116,17 +142,18 @@ public class EnviarConviteMB {
 	}
 
 	/**
-	 * @param instituicao Define a instituição
+	 * @param instituicao
+	 *            Define a instituição
 	 */
 	public void setInstituicao(String instituicao) {
 		this.instituicao = instituicao;
 	}
 
 	/**
-	 * @return O erro corrido
+	 * @return O erro ocorrido
 	 */
 	public String getErro() {
 		return erro;
-	}    
+	}
 
 }
