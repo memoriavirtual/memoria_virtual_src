@@ -28,27 +28,30 @@ public class RealizarLogin implements RealizarLoginRemote {
 
     /**
      * @return resultado Resultado da validação do login
+     * @throws CloneNotSupportedException
      */
-    public Usuario realizarLogin(String usuario, String senha) {
+    public Usuario realizarLogin(String usuario, String senha) throws CloneNotSupportedException {
 
 	Query query;
 
 	query = this.entityManager
-		.createQuery("SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha");
+		.createQuery("SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true");
 	query.setParameter("usuario", usuario);
 	query.setParameter("senha", senha);
 
-	Usuario resultado;
+	Usuario usuarioAutenticado = null;
+	Usuario usuarioClone = null;
 
 	try {
-	    resultado = (Usuario) query.getSingleResult();
-
+	    usuarioAutenticado = (Usuario) query.getSingleResult();
+	    usuarioClone = (Usuario) usuarioAutenticado.clone();
+	    usuarioClone.setSenha(null);
 	} catch (NoResultException e) {
-		resultado = null;
+	    usuarioAutenticado = null;
 	    e.printStackTrace();
 	}
 
-	return resultado;
+	return usuarioClone;
     }
 
 }

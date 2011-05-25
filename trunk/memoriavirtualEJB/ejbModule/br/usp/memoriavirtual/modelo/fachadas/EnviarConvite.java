@@ -33,8 +33,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
-	@Resource(name = "mail/myMailSession")
-	private javax.mail.Session session;
+	@Resource(name = "mail/memoriavirtual")
+	private javax.mail.Session mailSession;
 	private Usuario usuario;
 	private Instituicao instituicao;
 
@@ -87,9 +87,9 @@ public class EnviarConvite implements EnviarConviteRemote {
 			else if(erro.equals("sucesso")){
 				DateFormat formatoData =  new SimpleDateFormat("dd/MM/yy"); 
 				String assunto =  "Convite para o Memoria Virtual";
-				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como "+ nivelAcesso
-				+ "na insittuicao: " + this.instituicao.getNome() + ". Para concluir seu cadastro entre no link a seguir: .../fazerCadastro.jsf?Validacao="
-					+this.usuario.getId()+"&email="+this.usuario.getEmail() + ".... Seu convite é valido ate " + formatoData.format(this.usuario.getValidade()) + " ... Voce recebeu a seguinte mensagem: " + mensagem; 
+				String textoEmail = "Vocï¿½ foi convidado(a) para participar do memoria virtual como "+ nivelAcesso
+				+ "na instituicao: " + this.instituicao.getNome() + ". Para concluir seu cadastro entre no link a seguir: .../fazerCadastro.jsf?Validacao="
+					+this.usuario.getId()+"&email="+this.usuario.getEmail() + ".... Seu convite ï¿½ valido ate " + formatoData.format(this.usuario.getValidade()) + " ... Voce recebeu a seguinte mensagem: " + mensagem; 
 				
 					enviarEmail(email[i], assunto, textoEmail);
 			}
@@ -148,9 +148,9 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * @param validade
 	 *            A validade do convite
 	 * @param instituicaoId
-	 *            O id da instituiçao a ser vinculada com o usuario
+	 *            O id da instituiï¿½ao a ser vinculada com o usuario
 	 * @param nivelAcesso
-	 *            O nivel de acesso do usuario na instituiçao
+	 *            O nivel de acesso do usuario na instituiï¿½ao
 	 * 
 	 * @return falhaEmail Se formato do email esta incorreto
 	 * 
@@ -240,7 +240,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * 
 	 * @param usuario
 	 * 
-	 * @return List<Instituicao> Instituições que o usuario faz parte e pertence
+	 * @return List<Instituicao> Instituiï¿½ï¿½es que o usuario faz parte e pertence
 	 *         ao grupo passado como parametro
 	 */
 
@@ -302,7 +302,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 
 	public void enviarEmail(String destinatario, String assunto, String mensagem) {
 		try {
-			Message message = new MimeMessage(session);
+			Message message = new MimeMessage(mailSession);
 			message.setFrom();
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(destinatario, false));
