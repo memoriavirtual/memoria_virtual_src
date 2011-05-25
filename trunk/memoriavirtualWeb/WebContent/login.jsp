@@ -7,23 +7,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>GlassFish JSP Page</title>
+<title>Memória Virtual</title>
+<link href="css/bemvindo.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<f:view>
-		<h:form>
-			<ul>
-				<li><h:outputText value="Login:" /> <h:inputText
-						value="#{realizarLoginMB.usuario}" required="true"
-						requiredMessage="Campo obrigatorio" />
-				</li>
-				<li><h:outputText value="Senha:" /> <h:inputText
-						value="#{realizarLoginMB.senha}" />
-				</li>
-			</ul>
-			<h:commandButton action="#{realizarLoginMB.autenticarUsuario}"
-				value="Logar" />
-		</h:form>
-	</f:view>
+<f:view>
+	<div id="container">
+	<div id="conteudo"><h:outputText value="Usuário" /> <h:form>
+		<div><h:inputText value="#{realizarLoginMB.usuario}" required="true"
+			requiredMessage="Campo obrigatorio" /></div>
+		<h:outputText value="Senha" />
+		<div><h:inputSecret value="#{realizarLoginMB.senha}" /></div>
+		<br>
+		<div>
+			<h:commandButton action="#{realizarLoginMB.autenticarUsuario}" value="Entrar" />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="reset" name="cancel" id="cancel" value="Cancelar">
+		</div>
+	</h:form></div>
+	<!--end #conteudo--></div>
+	<!-- end #container-->
+
+
+</f:view>
 </body>
 </html>
