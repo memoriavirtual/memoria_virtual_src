@@ -157,7 +157,9 @@ public class Usuario implements Serializable, Cloneable {
     
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+	Usuario clone = (Usuario) super.clone();
+	clone.setSenha(null);
+        return clone;
     }
 
 }

@@ -45,7 +45,6 @@ public class RealizarLogin implements RealizarLoginRemote {
 	try {
 	    usuarioAutenticado = (Usuario) query.getSingleResult();
 	    usuarioClone = (Usuario) usuarioAutenticado.clone();
-	    usuarioClone.setSenha(null);
 	} catch (NoResultException e) {
 	    usuarioAutenticado = null;
 	    e.printStackTrace();
