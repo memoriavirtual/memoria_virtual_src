@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -38,6 +39,10 @@ public class RealizarLoginMB {
 	} else {
 	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	}
+
+	if (!autenticado)
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuário ou Senha incorretos."));
+
 	return autenticado ? "sucesso" : "falha";
     }
 

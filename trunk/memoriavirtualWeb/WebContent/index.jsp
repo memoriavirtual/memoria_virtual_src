@@ -13,7 +13,10 @@
 <body>
 <f:view>
 	<div id="container">
-	<div id="conteudo"><h:outputText value="Usuário" /> <h:form>
+	
+	<div id="conteudo">
+		<h:messages globalOnly="true"/>
+		<h:outputText value="Usuário" /> <h:form>
 		<div><h:inputText value="#{realizarLoginMB.usuario}" required="true"
 			requiredMessage="Campo obrigatorio" /></div>
 		<h:outputText value="Senha" />
@@ -27,8 +30,6 @@
 	</h:form></div>
 	<!--end #conteudo--></div>
 	<!-- end #container-->
-
-
 </f:view>
 </body>
 </html>

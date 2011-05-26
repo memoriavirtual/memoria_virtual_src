@@ -15,20 +15,16 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<navigation-rule>
-		<display-name>login</display-name>
-		<from-view-id>/login.jsp</from-view-id>
+		<display-name>index</display-name>
+		<from-view-id>/index.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>sucesso</from-outcome>
 			<to-view-id>/restrito/logado.jsp</to-view-id>
 			<redirect />
 		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>login</display-name>
-		<from-view-id>/login.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>falha</from-outcome>
-			<to-view-id>/erro.jsp</to-view-id>
+			<to-view-id>/index.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -41,5 +37,4 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-
 </faces-config>

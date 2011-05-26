@@ -51,7 +51,7 @@ public class FiltroLogin implements Filter {
 
 			session.setAttribute("url", url);
 
-			resp.sendRedirect(req.getContextPath() + "/login.jsf");
+			resp.sendRedirect(req.getContextPath() + "/index.jsf");
 			return;
 		} else {
 
