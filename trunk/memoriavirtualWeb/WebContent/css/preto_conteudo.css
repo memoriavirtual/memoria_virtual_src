@@ -1,0 +1,73 @@
+.abaDentro{
+	padding:0;
+	margin:0px 0;
+	height:auto;
+	width:936px;
+	background:#F9F9F9; /* cor do fundo do formulario*/
+	border: 5px solid;
+	border-color:#505050;
+
+}
+
+.menu{
+	margin:0;
+	padding:0;
+}
+
+.menu li{
+	color:#FFF;
+	background-color:#000000;
+	margin:0;
+	padding:0;
+	padding-top:6px;
+	padding-left:10px;
+	text-align:left;
+	list-style:none;
+	display:block;
+	height:30px;
+	width:160px;
+	cursor:pointer;
+	cursor:hand;
+	position:relative;
+	border-bottom:1px solid #FFF;
+}
+.menu li:hover{
+	background-color:#505050;
+	margin-left:10px;
+}
+
+.formulario{
+	height:auto;
+	width:780px;
+	position:absolute;
+	background:#FFF;
+	border:#000 medium;
+	top:50px;
+	right:0;
+	color:#000;
+}
+
+.campos{
+	position:absolute;
+	top:10px;
+	right:275px;
+}
+
+.campos li{
+	list-style:none;
+}
+
+.campos div{
+	margin:0;
+	margin-bottom:3px;
+}
+
+.campos ul input{
+	background:#D2D2D2;
+}
+
+.botao{
+	position:absolute;
+	right:0;
+}
+

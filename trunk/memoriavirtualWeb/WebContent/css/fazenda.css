@@ -1,0 +1,143 @@
+@import url(reset-min.css);
+@import url(conteudo.css);
+
+body{
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Geneva, sans-serif;
+	background: url('../imagens/fazenda.jpg') no-repeat center top;
+}
+
+#recipiente{
+
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	width: 976px;
+	text-align: center;
+}
+
+#cabecalho{
+
+	padding:  30px 10px 0;
+	background: url(../imagens/content_background.png) repeat-y;
+	position:relative;
+	text-align:left;
+	width:956px;
+}
+
+#cabecalho img{
+
+	margin: 0 0 5px 20px;
+}
+
+#usuario{
+
+	font-size:14px;
+	width: 200px;
+	position: absolute;
+	top: 10px;
+	right:15px;
+	text-align:right;
+}
+
+#usuario a{
+
+	text-decoration:none;
+	color:#000;
+}
+
+#usuario a:hover{
+
+	text-decoration:underline;
+	color:#000;
+}
+
+#conteudo{
+
+	color:#FFF;
+	font-size:13px;
+	margin:0 ;
+	padding:0 18px 10px;
+	position: relative;
+	background: url(../imagens/content_background.png) repeat-y;
+}
+
+#rodape{
+
+	margin: 0 ;
+	padding-top:5px;
+	font-size:10px;
+	height:35px;
+	width:976px;
+	background: url(../imagens/footer.png) no-repeat;
+}
+
+#Abas{
+
+	height: 30px;
+	position: absolute;
+	top:105px;
+	right:18px;
+	border:none 0;
+	margin:0;
+	padding:0;
+	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	}
+
+#Abas ul{
+
+	background:#FFF;
+	height:30px;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+#Abas li{
+
+	float:left;
+	padding:0;
+}
+
+#Abas li a{
+
+	background-color:RGB(50, 20, 0);
+	color:#FFF;
+	display:block;
+	font-weight:bold;
+	line-height:30px;
+	margin:0;
+	padding:2px 20px;
+	text-align:center;
+	text-decoration:none;
+}
+
+#Abas li a:hover, #Abas ul li:hover a{
+
+	background-color:RGB(150, 65, 0);
+	color:#FFF;
+	text-decoration:none;
+}
+	
+#Abas p{
+	
+	clear:left;
+}
+
+
+#CaixaCorpo {
+
+	width:940px;
+	padding:0;
+	margin:0;
+}
+#Abas ul li.selecionado a, #Abas li.selecionado a{
+
+	background-color:RGB(150, 65, 0);
+	color:#FFF;
+	text-decoration:none;
+}
+
