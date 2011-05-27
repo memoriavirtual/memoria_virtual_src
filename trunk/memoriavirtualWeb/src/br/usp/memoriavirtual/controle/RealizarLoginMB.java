@@ -1,16 +1,23 @@
 package br.usp.memoriavirtual.controle;
 
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
 public class RealizarLoginMB {
 
     @EJB
     private RealizarLoginRemote realizarLoginEJB;
+
+    @EJB
+    MemoriaVirtualRemote memoriaVirtual;
     private String usuario = "";
     private String senha = "";
 
@@ -27,11 +34,18 @@ public class RealizarLoginMB {
      * @return <code>true</code> se o usuário foi autenticado com sucesso ou
      *         <code>false</code> caso contrário.
      * @throws CloneNotSupportedException
+     * @throws UnknownHostException
+     * @throws SocketException
      */
-    public String autenticarUsuario() throws CloneNotSupportedException {
+    public String autenticarUsuario() {
 	boolean autenticado = false;
 
-	Usuario usuarioAutenticado = realizarLoginEJB.realizarLogin(this.getUsuario(), this.getSenha());
+	Usuario usuarioAutenticado = null;
+	try {
+	    usuarioAutenticado = realizarLoginEJB.realizarLogin(this.getUsuario(), this.getSenha());
+	} catch (CloneNotSupportedException e) {
+	    e.printStackTrace();
+	}
 
 	if (usuarioAutenticado != null) {
 	    autenticado = true;
