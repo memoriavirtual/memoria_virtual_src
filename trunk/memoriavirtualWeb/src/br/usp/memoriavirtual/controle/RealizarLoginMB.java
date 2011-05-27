@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -15,9 +16,9 @@ public class RealizarLoginMB {
 
     @EJB
     private RealizarLoginRemote realizarLoginEJB;
-
     @EJB
-    MemoriaVirtualRemote memoriaVirtual;
+    private MemoriaVirtualRemote memoriaVirtual;
+    
     private String usuario = "";
     private String senha = "";
 
@@ -44,6 +45,12 @@ public class RealizarLoginMB {
 	try {
 	    usuarioAutenticado = realizarLoginEJB.realizarLogin(this.getUsuario(), this.getSenha());
 	} catch (CloneNotSupportedException e) {
+	    e.printStackTrace();
+	}
+	
+	try {
+	    System.out.println(memoriaVirtual.getEnderecoServidor().getHostAddress());
+	} catch (IOException e) {
 	    e.printStackTrace();
 	}
 
