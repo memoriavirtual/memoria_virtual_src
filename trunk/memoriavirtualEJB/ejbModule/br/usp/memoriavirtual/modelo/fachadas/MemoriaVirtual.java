@@ -11,7 +11,7 @@ import javax.ejb.Singleton;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 /**
- * Session Bean implementation class MemoriaVirtual
+ * EJB Sem estado e singleton que contém métodos comuns ao sistema todo.
  */
 @Singleton
 @LocalBean
@@ -27,6 +27,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
     }
 
     /**
+     * Retorna o endereço físico do servidor.
      * @throws IOException
      * 
      */
