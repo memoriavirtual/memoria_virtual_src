@@ -5,7 +5,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
-import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
@@ -14,7 +13,6 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
  * EJB Sem estado e singleton que contém métodos comuns ao sistema todo.
  */
 @Singleton
-@LocalBean
 public class MemoriaVirtual implements MemoriaVirtualRemote {
 
     private static InetAddress enderecoServidor = null;
@@ -44,7 +42,6 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			InetAddress enderecoRede = (InetAddress) enderecosRede.nextElement();
 			if (enderecoRede.isReachable(10) && !enderecoRede.isLoopbackAddress()
 				&& !enderecoRede.isAnyLocalAddress()) {
-			    System.out.println("Passou aqui");
 			    enderecoServidor = enderecoRede;
 			    return enderecoServidor;
 			}
