@@ -13,7 +13,7 @@
 	<f:view>
 		<h:form>
 			<h:panelGrid>
-				<h:outputText value="#{enviarConviteMB.erro}" />
+				<h:messages globalOnly="true"/>
 				<h:outputText value="Email(s):" />
 				<h:inputTextarea id="emails" rows="4" cols="40" value="#{enviarConviteMB.emails}" />
 

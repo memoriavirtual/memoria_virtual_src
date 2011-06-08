@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -24,29 +25,58 @@ public class EnviarConviteMB {
 	private String erro = "";
 
 	public String enviarConvite() {
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
 		boolean sucesso = true;
-		this.erro = this.enviarConviteEJB.enviarConvite(emails, mensagem,
-				validade, instituicao, nivelAcesso);
-		if (erro != "sucesso")
-			sucesso = false;
+		boolean consistente = false;
+
+		// Faz verificacao para ver se os dados retornados pela pagina sao
+		// consistentes
+		if (usuario.isAdministrador()) {
+			consistente = true;
+		} else if (!nivelAcesso.toUpperCase().equals("ADMINISTRADOR")) {
+			Grupo grupo = new Grupo("Gerente");
+			instituicoesUsuario = this.enviarConviteEJB.getInstituicoes(grupo,
+					usuario);
+			for (Instituicao instituicao : instituicoesUsuario) {
+				if (instituicao.getNumRegistro().equals(this.instituicao)) {
+					consistente = true;
+					break;
+				}
+			}
+		}
+
+		if (Integer.parseInt(validade) < 31 && consistente) {
+			this.erro = this.enviarConviteEJB.enviarConvite(emails, mensagem,
+					validade, instituicao, nivelAcesso);
+			if (erro != "sucesso") {
+				sucesso = false;
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(erro));
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Dados inconsistentes recebidos"));
+		}
 		return sucesso ? "sucesso" : "falha";
 	}
 
 	public List<SelectItem> getNiveisPermitidos() {
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-		.getExternalContext().getSessionMap().get("usuario");
-		
+				.getExternalContext().getSessionMap().get("usuario");
+
 		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
 		List<Grupo> grupos = null;
-		
+
 		grupos = enviarConviteEJB.getGrupos();
-		for(Grupo grupo : grupos){
+		for (Grupo grupo : grupos) {
 			niveisPermissao.add(new SelectItem(grupo.getId()));
 		}
-		if(usuario.isAdministrador()){
+		if (usuario.isAdministrador()) {
 			niveisPermissao.add(new SelectItem("Administrador"));
 		}
-		
+
 		return niveisPermissao;
 	}
 
@@ -67,8 +97,8 @@ public class EnviarConviteMB {
 					usuario);
 		}
 		for (Instituicao instituicao : instituicoesUsuario) {
-			listaInstituicoes.add(new SelectItem(instituicao.getNumRegistro(), instituicao
-					.getNome()));
+			listaInstituicoes.add(new SelectItem(instituicao.getNumRegistro(),
+					instituicao.getNome()));
 		}
 		return listaInstituicoes;
 	}
