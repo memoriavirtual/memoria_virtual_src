@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf12929639186291" configfile="/memoriavirtualWeb/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="index" x="60" y="72" width="61" height="85" id="pf12997929979525" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" outlinks="pf13064218018821 pf13064218018822" inlinks="pf13064218018822" path="/index.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="convite" x="96" y="408" id="pf13051005699460" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf13051005699461" path="/restrito/enviarconvite.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="restrito/conviteenviado" x="204" y="408" id="pf13051005699462" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf13051005699461" path="/restrito/conviteenviado.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="restrito/logado" id="pf13064218018823" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13064218018821" path="/restrito/logado.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="index" x="420" y="69" width="61" height="85" id="pf12997929979525" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" outlinks="pf13064218018822 pf13081604886000" inlinks="pf13064218018822" path="/index.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="convite" x="96" y="408" id="pf13051005699460" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13051005699461" path="/restrito/enviarconvite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/conviteenviado" x="204" y="408" id="pf13051005699462" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13051005699461" path="/restrito/conviteenviado.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/mv" id="pf13081604886001" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13081604886000" path="/restrito/mv.jsp"/>
   <links id="pf13051005699461" target="pf13051005699462" source="pf13051005699460" outcome="sucesso" redirect="true"/>
-  <links id="pf13064218018821" target="pf13064218018823" source="pf12997929979525" outcome="sucesso" redirect="true"/>
   <links id="pf13064218018822" target="pf12997929979525" source="pf12997929979525" outcome="falha"/>
+  <links id="pf13081604886000" target="pf13081604886001" source="pf12997929979525" outcome="sucesso" redirect="true"/>
 </pageflow:Pageflow>

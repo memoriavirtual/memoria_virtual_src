@@ -9,11 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Memória Virtual</title>
 
-<link href="css/mv.css" rel="stylesheet" type="text/css">
-<script src="js/jquery-1.5.2.min.js"></script>
-<script src="js/jquery.corner.js"></script>
-<script src="js/abas.js"></script>
-<script src="js/link.js"></script>
+<link href="../css/mv.css" rel="stylesheet" type="text/css">
+<script src="../js/jquery-1.5.2.min.js"></script>
+<script src="../js/jquery.corner.js"></script>
+<script src="../js/abas.js"></script>
+<script src="../js/link.js"></script>
 </head>
 <body>
 <f:view>

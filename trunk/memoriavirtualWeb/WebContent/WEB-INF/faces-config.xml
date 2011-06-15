@@ -7,7 +7,7 @@
 	<managed-bean>
 		<managed-bean-name>realizarLoginMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.RealizarLoginMB</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>enviarConviteMB</managed-bean-name>
@@ -16,15 +16,15 @@
 	</managed-bean>
 	<navigation-rule>
 		<display-name>index</display-name>
-		<from-view-id>/index.jsp</from-view-id>
+		<from-view-id>/index.jsf</from-view-id>
 		<navigation-case>
 			<from-outcome>sucesso</from-outcome>
-			<to-view-id>/restrito/logado.jsp</to-view-id>
+			<to-view-id>/restrito/mv.jsp</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>falha</from-outcome>
-			<to-view-id>/index.jsp</to-view-id>
+			<to-view-id>/index.jsf</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

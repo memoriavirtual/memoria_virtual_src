@@ -11,25 +11,30 @@
 <link href="css/bemvindo.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<f:view>
-	<div id="container">
-	
-	<div id="conteudo">
-		<h:messages globalOnly="true"/>
-		<h:outputText value="Usuário" /> <h:form>
-		<div><h:inputText value="#{realizarLoginMB.usuario}" required="true"
-			requiredMessage="Campo obrigatorio" /></div>
-		<h:outputText value="Senha" />
-		<div><h:inputSecret value="#{realizarLoginMB.senha}" /></div>
-		<br>
-		<div>
-			<h:commandButton action="#{realizarLoginMB.autenticarUsuario}" value="Entrar" />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="reset" name="cancel" id="cancel" value="Cancelar">
+	<f:view>
+		<div id="container">
+
+			<div id="conteudo">
+				<h:messages globalOnly="true" />
+				<h:outputText value="Usuário" />
+				<h:form>
+					<div>
+						<h:inputText value="#{realizarLoginMB.usuario}" required="true" />
+					</div>
+					<h:outputText value="Senha" />
+					<div>
+						<h:inputSecret value="#{realizarLoginMB.senha}" />
+					</div>
+					<br>
+					<div>
+						<h:commandButton action="#{realizarLoginMB.autenticarUsuario}"
+							value="Entrar" />
+					</div>
+				</h:form>
+			</div>
+			<!--end #conteudo-->
 		</div>
-	</h:form></div>
-	<!--end #conteudo--></div>
-	<!-- end #container-->
-</f:view>
+		<!-- end #container-->
+	</f:view>
 </body>
 </html>
