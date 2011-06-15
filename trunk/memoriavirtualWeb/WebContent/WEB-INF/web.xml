@@ -25,6 +25,9 @@
 		<filter-name>FiltroLogin</filter-name>
 		<url-pattern>/restrito/*</url-pattern>
 	</filter-mapping>
-
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
 
 </web-app>
