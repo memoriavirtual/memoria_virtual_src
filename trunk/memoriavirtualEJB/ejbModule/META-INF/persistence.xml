@@ -14,7 +14,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 			<property name="toplink.ddl-generation.output-mode" value="sql-script" />
 			<property name="toplink.create-ddl-jdbc-file-name" value="createDDL.sql" />
 			<property name="toplink.drop-ddl-jdbc-file-name" value="dropDDL.sql" />
-			<property name="toplink.application-location" value="/tmp" />
+
 		</properties>
 	</persistence-unit>
 </persistence>
