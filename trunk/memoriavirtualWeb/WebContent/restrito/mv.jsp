@@ -20,7 +20,7 @@
 <div id="recipiente">
 	
     <div id="cabecalho">
-      	<img src="imagens/logo_mv_catalogacao.png">
+      	<img src="../imagens/logo_mv_catalogacao.png">
         <div id="Abas">
         	<ul>
             	<li class="descritor"><a href="descritor.html" >Descritor<script>$('.descritor a').corner("top");</script></a></li>
