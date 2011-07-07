@@ -25,30 +25,20 @@
 					<ul>
 						<li class="descritor"><a href="descritor.html">Descritor<script>
 							$('.descritor a').corner("top");
-						</script>
-						</a>
-						</li>
+						</script> </a></li>
 						<li class="autoria"><a href="autoria.html">Autoria<script>
 							$('.autoria a').corner("top");
-						</script>
-						</a>
-						</li>
+						</script> </a></li>
 						<li class="bempatrimonial"><a href="bempatrimonial.html">Bem
 								Patrimonial<script>
 									$('.bempatrimonial a').corner("top");
-								</script>
-						</a>
-						</li>
+								</script> </a></li>
 						<li class="usuario"><a href="usuario.html">Usu&aacute;rio<script>
 							$('.usuario a').corner("top");
-						</script>
-						</a>
-						</li>
+						</script> </a></li>
 						<li class="instituicao"><a href="instituicao.html">Institui&ccedil;&atilde;o<script>
 							$('.instituicao a').corner("top");
-						</script>
-						</a>
-						</li>
+						</script> </a></li>
 					</ul>
 
 				</div>
