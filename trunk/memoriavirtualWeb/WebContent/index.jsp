@@ -12,7 +12,7 @@
 	content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Memória Virtual</title>
-<link href="css/bemvindo.css" rel="stylesheet" type="text/css">
+<link href="css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<f:view>
