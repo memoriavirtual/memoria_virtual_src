@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13107591827080" configfile="/memoriavirtualWeb/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index" x="338" y="178" id="pf13107593541961" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf13107593541962 pf13107593541963" inlinks="pf13107593541963 pf13107593541964" path="/index.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="logoff" x="122" y="178" id="pf13107593541965" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf13107593541964" inlinks="pf13107593541962" path="/restrito/mv.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="convite" x="122" y="562" id="pf13107593541976" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13107593541977" path="/restrito/enviarconvite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/conviteenviado" x="338" y="562" id="pf13107593541978" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13107593541977" path="/restrito/conviteenviado.jsp"/>
+  <links id="pf13107593541962" target="pf13107593541965" source="pf13107593541961" outcome="sucesso" redirect="true"/>
+  <links id="pf13107593541977" target="pf13107593541978" source="pf13107593541976" outcome="sucesso" redirect="true"/>
+  <links id="pf13107593541964" target="pf13107593541961" source="pf13107593541965" outcome="sucesso" redirect="true"/>
+  <links id="pf13107593541963" target="pf13107593541961" source="pf13107593541961" outcome="falha">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+</pageflow:Pageflow>

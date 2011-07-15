@@ -19,7 +19,7 @@
 		<div id="container">
 
 			<div id="conteudo">
-				<h:messages globalOnly="true" />
+				<h:messages globalOnly="false" />
 				<h:outputText value="Usuário" />
 				<h:form>
 					<div>

@@ -19,7 +19,7 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.EnviarConviteMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<navigation-rule>
 		<display-name>index</display-name>
 		<from-view-id>/index.jsp</from-view-id>
@@ -43,7 +43,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>logoff</display-name>
 		<from-view-id>/restrito/mv.jsp</from-view-id>
@@ -53,4 +53,8 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	<application>
+		<locale-config>pt</locale-config>
+		<message-bundle>br.usp.memoriavirtual.mensagens</message-bundle>
+	</application>
 </faces-config>
