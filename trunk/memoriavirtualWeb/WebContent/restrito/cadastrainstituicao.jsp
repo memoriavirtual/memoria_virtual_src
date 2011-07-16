@@ -12,6 +12,7 @@
 <script src="../js/jquery-1.6.2.js" type="text/javascript"></script>
 <script src="../js/mask.js" type="text/javascript"></script>
 <script src="../js/maskedinput-1.3.js" type="text/javascript"></script>
+<script src="../js/back.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -27,7 +28,7 @@
  			CEP <h:inputText id="cep" value="#{cadastraInstituicaoMB.cep}"/>
  			Telefone <h:inputText id="telefone" value="#{cadastraInstituicaoMB.telefone}"/>
  			<h:commandButton id="salvar" value="Salvar" action="#{cadastraInstituicao.efetuaCadastro}" />
- 			<h:commandButton id="cancelar" value="Cancelar" action="Cancelar"/>
+ 			<h:commandButton id="cancelar" value="Cancelar" onclick="goBack()"/>
  			
  			
  		</h:form>
