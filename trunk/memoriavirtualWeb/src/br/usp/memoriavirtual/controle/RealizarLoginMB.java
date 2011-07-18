@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
@@ -45,14 +46,16 @@ public class RealizarLoginMB {
 
 	if (usuarioAutenticado != null) {
 	    autenticado = true;
-	    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioAutenticado);
+	    HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+		    .getRequest();
+	    request.getSession().setAttribute("usuario", usuarioAutenticado);
 	} else {
 	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	}
 
 	if (!autenticado)
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuário ou Senha incorretos."));
-	
+
 	this.setSenha(null);
 
 	return autenticado ? "sucesso" : "falha";
