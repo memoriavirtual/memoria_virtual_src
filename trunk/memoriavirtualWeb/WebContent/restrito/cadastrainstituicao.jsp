@@ -13,6 +13,7 @@
 <script src="../js/mask.js" type="text/javascript"></script>
 <script src="../js/maskedinput-1.3.js" type="text/javascript"></script>
 <script src="../js/back.js" type="text/javascript"></script>
+<link 	href="../css/conteudo.css" rel="stylesheet" type="text/css" >
 
 </head>
 <body>
@@ -24,7 +25,7 @@
  			Localização <h:inputText id="localizacao" value="#{cadastraInstituicaoMB.localizacao}" required="true"/>
  			Endereço <h:inputText id="endereco" value="#{cadastraInstituicaoMB.endereco}"/>
  			Cidade <h:inputText id="cidade" value="#{cadastraInstituicaoMB.cidade}"/>
- 			Estado <h:inputText id="estado" value="#{cadastraInstituicaoMB.estado}"/>
+ 			Estado <h:selectOneMenu id="estado" value="#{cadastraInstituicaoMB.estado}"> <f:selectItems value="#{cadastrarInstituicaoMB.estados}" /></h:selectOneMenu>
  			CEP <h:inputText id="cep" value="#{cadastraInstituicaoMB.cep}"/>
  			Telefone <h:inputText id="telefone" value="#{cadastraInstituicaoMB.telefone}"/>
  			<h:commandButton id="salvar" value="Salvar" action="#{cadastraInstituicao.efetuaCadastro}" />
