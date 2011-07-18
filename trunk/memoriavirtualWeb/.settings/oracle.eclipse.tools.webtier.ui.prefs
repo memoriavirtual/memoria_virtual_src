@@ -1,4 +1,4 @@
-#Wed Dec 22 10:12:41 BRST 2010
+#Mon Jul 18 17:09:12 BRT 2011
 //_hiddenCategory_\:http\://java.sun.com/jsf/core=false
 //_hiddenCategory_\:http\://java.sun.com/jsf/html=false
 //_hiddenCategory_\:http\://java.sun.com/jsp/jstl/core=false
@@ -17,4 +17,5 @@
 _hiddenCategory_\:DataPalette=false
 _hiddenCategory_\:HTML=false
 _hiddenCategory_\:jsp11=false
+_hiddenCategory_\:urn\:com\:sun\:jersey\:api\:view=false
 eclipse.preferences.version=1

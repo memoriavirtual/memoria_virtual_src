@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 
-@Stateless(mappedName = "RealizarLogin")
+@Stateless(mappedName = "CadastrarInstituicao")
 public class CadastrarInstituicao implements CadastrarInstituicaoRemote{
 	
 	@PersistenceContext(unitName = "memoriavirtual")
@@ -19,6 +19,7 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote{
 		Query query;
 		query = this.entityManager.createQuery("INSERT INTO Instituicao VALUES()");
 		
+		return null;
 	}
 
 

@@ -10,7 +10,7 @@
 <title>Memória Virtual</title>
 
 <link href="../css/mv.css" rel="stylesheet" type="text/css">
-<script src="../js/jquery-1.5.2.min.js"></script>
+<script src="../js/jquery.js"></script>
 <script src="../js/jquery.corner.js"></script>
 <script src="../js/abas.js"></script>
 <script src="../js/link.js"></script>
@@ -45,7 +45,7 @@
 				<!-- fim #Abas -->
 				<div id="usuario">
 					&lt;
-					<h:outputText value="#{realizarLoginMB.usuario}" />
+					<h:outputText value="#{usuario.id}" />
 					&gt;,
 					<h:form>
 						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">Sair</h:commandLink>
