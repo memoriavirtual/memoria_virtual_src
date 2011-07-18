@@ -1,6 +1,9 @@
 package br.usp.memoriavirtual.controle;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
@@ -20,6 +23,7 @@ public class CadastrarInstituicaoMB {
 	private String estado;
 	private String cep;
 	private String telefone;
+	private List<String> estados;
 	
 	/**
 	 * Construtor padrão
@@ -108,6 +112,45 @@ public class CadastrarInstituicaoMB {
 	}
 	
 	/**
+	 * Getter dos estados (Usado no form de cadastro)
+	 * @return (List<String>) todos os estados do Brasil (somente this.estados)
+	 */
+	public List<String> getEstados(){
+		
+		this.estados = new ArrayList<String>();
+		
+		this.estados.add("AC");
+		this.estados.add("AL");
+		this.estados.add("AM");
+		this.estados.add("AP");
+		this.estados.add("BA");
+		this.estados.add("CE");
+		this.estados.add("DF");
+		this.estados.add("ES");
+		this.estados.add("GO");
+		this.estados.add("MA");
+		this.estados.add("MG");
+		this.estados.add("MS");
+		this.estados.add("MT");
+		this.estados.add("PA");
+		this.estados.add("PB");
+		this.estados.add("PE");
+		this.estados.add("PI");
+		this.estados.add("PR");
+		this.estados.add("RJ");
+		this.estados.add("RN");
+		this.estados.add("RO");
+		this.estados.add("RR");
+		this.estados.add("RS");
+		this.estados.add("SC");
+		this.estados.add("SP");
+		this.estados.add("SE");
+		this.estados.add("TO");
+		
+		return this.estados;
+	}
+	
+	/**
 	 * Setter do nome da instituição
 	 */
 	public void setNome(String pNome){
@@ -155,17 +198,13 @@ public class CadastrarInstituicaoMB {
 	public void setTelefone(String pTelefone){
 		this.telefone = pTelefone;
 	}
-
+	
 	/**
-	 * Método estático auxiliar na checagem de strings
-	 * 
-	 * @param pString String a ser checada
-	 * @return (boolean) true Se a string tem comprimento maior que zero
+	 * Setter do atributo estados
 	 */
-	public static boolean ChecaString(String pString){
-		if(pString.length() > 0)
-			return true;
-		return false;
+	public void setEstados(List<String> pEstados){
+		this.estados = pEstados;
 	}
+
 	
 }
