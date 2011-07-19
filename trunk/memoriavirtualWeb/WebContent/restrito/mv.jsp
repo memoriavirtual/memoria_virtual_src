@@ -36,7 +36,7 @@
 						<li class="usuario"><a href="usuario.html">Usu&aacute;rio<script>
 							$('.usuario a').corner("top");
 						</script> </a></li>
-						<li class="instituicao"><a href="instituicao.html">Institui&ccedil;&atilde;o<script>
+						<li class="instituicao"><a href="cadastrainstituicao.jsp">Institui&ccedil;&atilde;o<script>
 							$('.instituicao a').corner("top");
 						</script> </a></li>
 					</ul>

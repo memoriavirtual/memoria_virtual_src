@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<script src="../js/jquery-1.6.2.js" type="text/javascript"></script>
+<script src="../js/jquery.js" type="text/javascript"></script>
 <script src="../js/mask.js" type="text/javascript"></script>
 <script src="../js/maskedinput-1.3.js" type="text/javascript"></script>
 <script src="../js/back.js" type="text/javascript"></script>
