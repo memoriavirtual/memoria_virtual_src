@@ -13,9 +13,9 @@
  *  Confira http://digitalbush.com/projects/masked-input-plugin/ para mais informações
  * */
 
-jQuery(function($){
+jQuery(function($) {
 
-   $("#cep").mask("(999)99999-999");
-   $("#telefone").mask("(999)9999-9999");
+	$("[id$='cep']").mask("(999)99999-999");
+	$("[id$='telefone']").mask("(999)9999-9999");
 
 });
