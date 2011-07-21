@@ -12,8 +12,7 @@ public class Instituicao implements Serializable{
 
 	
 	private static final long serialVersionUID = 1L;
-	@Id	
-	private String numeroRegistro;
+	@Id
 	@NotNull 
 	@Column(unique = true)
 	private String nome;
@@ -38,29 +37,7 @@ public class Instituicao implements Serializable{
 	public Instituicao() {
 		super();
 	}
-
-	public Instituicao(String numRegistro, String nome) {
-		this();
-		this.numeroRegistro = numRegistro;
-		this.nome = nome;
 	
-	}
-	
-	/**
-	 * @return Numero de registro da instituição
-	 */
-	public String getNumeroRegistro() {
-		return numeroRegistro;
-	}
-
-	/**
-	 * @param numeroRegistro
-	 *            Define o numero de registro da instituição
-	 */
-	public void setNumeroRegistro(String numeroRegistro) {
-		this.numeroRegistro = numeroRegistro;
-	}
-
 	/**
 	 * @return O nome da instituição
 	 */
