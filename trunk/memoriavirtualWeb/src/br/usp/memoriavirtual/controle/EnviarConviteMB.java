@@ -40,7 +40,7 @@ public class EnviarConviteMB {
 			instituicoesUsuario = this.enviarConviteEJB.getInstituicoes(grupo,
 					usuario);
 			for (Instituicao instituicao : instituicoesUsuario) {
-				if (instituicao.getNumeroRegistro().equals(this.instituicao)) {
+				if (instituicao.getNome().equals(this.instituicao)) {
 					consistente = true;
 					break;
 				}
@@ -97,7 +97,7 @@ public class EnviarConviteMB {
 					usuario);
 		}
 		for (Instituicao instituicao : instituicoesUsuario) {
-			listaInstituicoes.add(new SelectItem(instituicao.getNumeroRegistro(),
+			listaInstituicoes.add(new SelectItem(instituicao.getNome(),
 					instituicao.getNome()));
 		}
 		return listaInstituicoes;
