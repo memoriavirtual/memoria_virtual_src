@@ -23,7 +23,7 @@
 				<img src="../imagens/logo_mv_catalogacao.png">
 				<div id="Abas">
 					<ul>
-						<li class="descritor"><a href="descritor.html">Descritor<script>
+						<li class="descritor"><a href="teste.jsf">Descritor<script>
 							$('.descritor a').corner("top");
 						</script> </a></li>
 						<li class="autoria"><a href="autoria.html">Autoria<script>
@@ -36,7 +36,7 @@
 						<li class="usuario"><a href="usuario.html">Usu&aacute;rio<script>
 							$('.usuario a').corner("top");
 						</script> </a></li>
-						<li class="instituicao"><a href="cadastrainstituicao.jsp">Institui&ccedil;&atilde;o<script>
+						<li class="instituicao"><a href="cadastrarinstituicao.jsf">Institui&ccedil;&atilde;o<script>
 							$('.instituicao a').corner("top");
 						</script> </a></li>
 					</ul>

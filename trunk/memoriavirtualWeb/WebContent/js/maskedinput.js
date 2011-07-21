@@ -79,7 +79,7 @@
 
 			return this.trigger("unmask").each(function() {
 				var input = $(this);
-				var buffer = $.map(mask.split(""), function(c, i) { if (c != '?') return defs[c] ? settings.placeholder : c });
+				var buffer = $.map(mask.split(""), function(c, i) { if (c != '?') return defs[c] ? settings.placeholder : c; });
 				var focusText = input.val();
 
 				function seekNext(pos) {
@@ -219,7 +219,7 @@
 					return $.map(buffer, function(c, i) {
 						return tests[i]&&c!=settings.placeholder ? c : null;
 					}).join('');
-				})
+				});
 
 				if (!input.attr("readonly"))
 					input
@@ -238,7 +238,7 @@
 							else
 								input.caret(pos);
 						};
-						($.browser.msie ? moveCaret:function(){setTimeout(moveCaret,0)})();
+						($.browser.msie ? moveCaret:function(){setTimeout(moveCaret,0);})();
 					})
 					.bind("blur.mask", function() {
 						checkVal();

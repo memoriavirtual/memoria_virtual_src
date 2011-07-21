@@ -15,7 +15,6 @@
 
 jQuery(function($){
 
-   $("#estado").mask("aa", {completed:function(){this.val().toUpperCase()}});
    $("#cep").mask("(999)99999-999");
    $("#telefone").mask("(999)9999-9999");
 
