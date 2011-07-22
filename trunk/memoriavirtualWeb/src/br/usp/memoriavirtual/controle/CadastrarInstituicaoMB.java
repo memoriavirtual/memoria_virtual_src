@@ -38,7 +38,7 @@ public class CadastrarInstituicaoMB {
 	 * 
 	 * @return "sucesso" ou "falha" dependendo resultado das operações
 	 */
-	public String CadatrarInstituicao(){
+	public String CadastrarInstituicao(){
 		Instituicao instituicaoCadastrada = null;
 		boolean cadastrada = false;
 		
@@ -120,11 +120,8 @@ public class CadastrarInstituicaoMB {
 
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 		
-		SelectItem a = new SelectItem();
-		a.setLabel("LOL");
-		a.setValue(this.estado);
-		estados.add(a);
-		/*estados.add(new SelectItem("am", "AM"));
+		estados.add(new SelectItem("al", "AL"));
+		estados.add(new SelectItem("am", "AM"));
 		estados.add(new SelectItem("ap", "AP"));
 		estados.add(new SelectItem("ba", "BA"));
 		estados.add(new SelectItem("ce", "CE"));
@@ -148,7 +145,7 @@ public class CadastrarInstituicaoMB {
 		estados.add(new SelectItem("sc", "SC"));
 		estados.add(new SelectItem("sp", "SP"));
 		estados.add(new SelectItem("se", "SE"));
-		estados.add(new SelectItem("to", "TO"));*/
+		estados.add(new SelectItem("to", "TO"));
 		
 		return estados;
 	}

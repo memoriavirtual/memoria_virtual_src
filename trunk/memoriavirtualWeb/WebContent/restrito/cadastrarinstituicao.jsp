@@ -26,15 +26,16 @@
  		<h:messages globalOnly="true"/>
  		<h:form>
  		
- 			<label>Nome* </label><h:inputText id="nome" value="#{cadastraInstituicaoMB.nome}" required="true"/><br/>
- 			<label>Localização Geográfica* </label><h:inputText id="localizacao" value="#{cadastraInstituicaoMB.localizacao}" required="true"/><br/>
- 			<label>Endereço </label><h:inputText id="endereco" value="#{cadastraInstituicaoMB.endereco}"/><br/>
- 			<label>Cidade </label><h:inputText id="cidade" value="#{cadastraInstituicaoMB.cidade}"/><br/>
- 			<label>Estado </label><h:selectOneMenu id="estado" value="#{cadastraInstituicaoMB.estado}"> <f:selectItem itemValue ="" itemLabel="Escolha"/> <f:selectItems value="#{cadastrarInstituicaoMB.estados}" /></h:selectOneMenu><br/>
- 			<label>CEP </label><h:inputText id="cep" value="#{cadastraInstituicaoMB.cep}"></h:inputText><br/>
- 			<label>Telefone </label><h:inputText id="telefone" value="#{cadastraInstituicaoMB.telefone}"/><br/>
- 			<h:commandButton id="salvar" value="Salvar" action="#{cadastraInstituicao.efetuaCadastro}" />
- 			<h:commandButton id="cancelar" value="Cancelar" onclick="goBack()"/><br/>
+ 			<label>Nome* </label><h:inputText id="nome" value="#{cadastrarInstituicaoMB.nome}" required="true"/><br/>
+ 			<label>Localização Geográfica* </label><h:inputText id="localizacao" value="#{cadastrarInstituicaoMB.localizacao}" required="true"/><br/>
+ 			<label>Endereço </label><h:inputText id="endereco" value="#{cadastrarInstituicaoMB.endereco}"/><br/>
+ 			<label>Cidade </label><h:inputText id="cidade" value="#{cadastrarInstituicaoMB.cidade}"/><br/>
+ 			<label>Estado </label><h:selectOneMenu id="estado" value="#{cadastrarInstituicaoMB.estado}"> <f:selectItem itemValue ="" itemLabel="Escolha"/> <f:selectItems value="#{cadastrarInstituicaoMB.estados}" /></h:selectOneMenu><br/>
+ 			<label>CEP </label><h:inputText id="cep" value="#{cadastrarInstituicaoMB.cep}"></h:inputText><br/>
+ 			<label>Telefone </label><h:inputText id="telefone" value="#{cadastrarInstituicaoMB.telefone}"/><br/>
+ 			<label>Os campos marcados com asterisco (*) são de preenchimento obrigatório</label><br/>
+ 			<h:commandButton id="salvar" value="Salvar" action="#{cadastrarInstituicaoMB.CadastrarInstituicao}" />
+ 			<h:commandButton id="cancelar" value="Cancelar"/><br/>
  			
  			
  		</h:form>
