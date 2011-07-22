@@ -3,7 +3,6 @@ package br.usp.memoriavirtual.modelo.fachadas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
@@ -16,10 +15,13 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote{
 	
 	public Instituicao cadastrarInstituicao(String Nome, String Localizacao, String Endereco, String Cidade, String Estado, String Cep, String Telefone){
 		
-		Query query;
-		query = this.entityManager.createQuery("INSERT INTO Instituicao VALUES()");
+		final Instituicao ins = new Instituicao(Nome, Localizacao, Endereco, Cidade, Estado, Cep, Telefone);
+
+		if(entityManager.find(ins.getClass(), ins.getNome()) != null)
+			return null;
 		
-		return null;
+		entityManager.persist(ins);
+		return ins;
 	}
 
 

@@ -39,6 +39,29 @@ public class Instituicao implements Serializable{
 	}
 	
 	/**
+	 * Construtor conveniente
+	 * 
+	 * @param Nome Nome da insituição
+	 * @param Local Localização
+	 * @param End Endereço
+	 * @param Cidade 
+	 * @param Est Estado
+	 * @param Cep
+	 * @param Tel Telefone
+	 */
+	public Instituicao(String Nome, String Local, String End, String Cidade, String Est, String Cep, String Tel){
+		super();
+		this.nome = Nome;
+		this.localizacao = Local;
+		this.endereco = End;
+		this.cidade = Cidade;
+		this.estado = Est;
+		this.cep = Cep;
+		this.telefone = Tel;
+		
+	}
+	
+	/**
 	 * @return O nome da instituição
 	 */
 	public String getNome() {
