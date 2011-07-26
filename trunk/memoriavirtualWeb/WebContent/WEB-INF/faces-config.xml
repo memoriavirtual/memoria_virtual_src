@@ -9,11 +9,13 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.RealizarLoginMB</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	
 	<managed-bean>
 		<managed-bean-name>cadastrarInstituicaoMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarInstituicaoMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	
 	<managed-bean>
 		<managed-bean-name>realizarLogoffMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.RealizarLogoffMB</managed-bean-class>
@@ -61,7 +63,7 @@
 	
 	<navigation-rule>
 		<display-name>cadastrarinstituicao</display-name>
-		<from-view-id>/restrito/cadastrarsnstituicao.jsp</from-view-id>
+		<from-view-id>/restrito/cadastrarinstituicao.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>sucesso</from-outcome>
 			<to-view-id>/restrito/instituicaocadastrada.jsp</to-view-id>
@@ -71,7 +73,6 @@
 			<to-view-id>/restrito/instituicaocadastrada.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
 	
 	<application>
 		<locale-config>

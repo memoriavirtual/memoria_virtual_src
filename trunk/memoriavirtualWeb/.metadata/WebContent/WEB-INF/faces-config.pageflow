@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13107591827080" configfile="/memoriavirtualWeb/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="index" x="338" y="178" id="pf13107593541961" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf13107593541962 pf13107593541963" inlinks="pf13107593541963 pf13107593541964" path="/index.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="logoff" x="122" y="178" id="pf13107593541965" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13107593541964" inlinks="pf13107593541962" path="/restrito/mv.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="convite" x="122" y="562" id="pf13107593541976" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13107593541977" path="/restrito/enviarconvite.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="restrito/conviteenviado" x="338" y="562" id="pf13107593541978" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13107593541977" path="/restrito/conviteenviado.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="cadastrarinstituicao" id="pf13113571864250" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13113571864251 pf13113588060573" path="/restrito/cadastrarsnstituicao.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="restrito/instituicaocadastrada" id="pf13113571864252" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" inlinks="pf13113571864251 pf13113588060573" path="/restrito/instituicaocadastrada.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="index" x="432" y="264" id="pf13107593541961" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf13107593541962 pf13107593541963" inlinks="pf13107593541963 pf13107593541964" path="/index.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="logoff" x="108" y="252" id="pf13107593541965" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf13107593541964" inlinks="pf13107593541962" path="/restrito/mv.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="convite" x="96" y="348" id="pf13107593541976" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13107593541977" path="/restrito/enviarconvite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/conviteenviado" x="312" y="348" id="pf13107593541978" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13107593541977" path="/restrito/conviteenviado.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastrarinstituicao" x="53" y="120" id="pf13113571864250" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13116618876530 pf13116618876531" path="/restrito/cadastrarinstituicao.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/instituicaocadastrada" x="390" y="144" id="pf13113571864252" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" inlinks="pf13116618876530 pf13116618876531" path="/restrito/instituicaocadastrada.jsp"/>
   <links id="pf13107593541962" target="pf13107593541965" source="pf13107593541961" outcome="sucesso" redirect="true"/>
   <links id="pf13107593541977" target="pf13107593541978" source="pf13107593541976" outcome="sucesso" redirect="true"/>
   <links id="pf13107593541964" target="pf13107593541961" source="pf13107593541965" outcome="sucesso" redirect="true"/>
@@ -14,6 +14,6 @@
     <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
     <bendPoints d1Width="-64" d2Width="-64"/>
   </links>
-  <links id="pf13113571864251" target="pf13113571864252" source="pf13113571864250" outcome="sucesso"/>
-  <links id="pf13113588060573" target="pf13113571864252" source="pf13113571864250" outcome="falha"/>
+  <links id="pf13116618876530" target="pf13113571864252" source="pf13113571864250" outcome="sucesso"/>
+  <links id="pf13116618876531" target="pf13113571864252" source="pf13113571864250" outcome="falha"/>
 </pageflow:Pageflow>
