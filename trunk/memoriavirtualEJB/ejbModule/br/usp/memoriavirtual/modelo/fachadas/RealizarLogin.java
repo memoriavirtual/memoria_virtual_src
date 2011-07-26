@@ -16,41 +16,42 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 @Stateless(mappedName = "RealizarLogin")
 public class RealizarLogin implements RealizarLoginRemote {
 
-    @PersistenceContext(unitName = "memoriavirtual")
-    private EntityManager entityManager;
+	@PersistenceContext(unitName = "memoriavirtual")
+	private EntityManager entityManager;
 
-    /**
-     * Default constructor.
-     */
-    public RealizarLogin() {
+	/**
+	 * Default constructor.
+	 */
+	public RealizarLogin() {
 
-    }
-
-    /**
-     * @return resultado Resultado da validação do login
-     * @throws CloneNotSupportedException
-     */
-    public Usuario realizarLogin(String usuario, String senha) throws CloneNotSupportedException {
-
-	Query query;
-
-	query = this.entityManager
-		.createQuery("SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true");
-	query.setParameter("usuario", usuario);
-	query.setParameter("senha", senha);
-
-	Usuario usuarioAutenticado = null;
-	Usuario usuarioClone = null;
-
-	try {
-	    usuarioAutenticado = (Usuario) query.getSingleResult();
-	    usuarioClone = (Usuario) usuarioAutenticado.clone();
-	} catch (NoResultException e) {
-	    usuarioAutenticado = null;
-	    e.printStackTrace();
 	}
 
-	return usuarioClone;
-    }
+	/**
+	 * @return resultado Resultado da validação do login
+	 * @throws CloneNotSupportedException
+	 */
+	public Usuario realizarLogin(String usuario, String senha)
+			throws CloneNotSupportedException {
+
+		Usuario usuarioAutenticado = null;
+		Usuario usuarioClone = null;
+		
+		Query query;
+
+		query = this.entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true");
+		query.setParameter("usuario", usuario);
+		query.setParameter("senha", new Usuario().gerarHash(senha));
+
+		try {
+			usuarioAutenticado = (Usuario) query.getSingleResult();
+			usuarioClone = (Usuario) usuarioAutenticado.clone();
+		} catch (NoResultException e) {
+			usuarioAutenticado = null;
+			e.printStackTrace();
+		}
+
+		return usuarioClone;
+	}
 
 }
