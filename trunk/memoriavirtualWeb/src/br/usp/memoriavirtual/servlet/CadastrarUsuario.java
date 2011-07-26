@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
-public class Cadastro extends HttpServlet {
+public class CadastrarUsuario extends HttpServlet {
 
 	//@PersistenceContext(unitName = "memoriavirtual")
     //private EntityManager entityManager;
