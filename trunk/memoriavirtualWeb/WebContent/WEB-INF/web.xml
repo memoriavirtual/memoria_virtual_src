@@ -17,6 +17,15 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Cadastro Servlet</servlet-name>
+		<servlet-class>br.usp.memoriavirtual.servlet.Cadastro</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Cadastro Servlet</servlet-name>
+		<url-pattern>/fazercadastro</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>FiltroLogin</filter-name>
 		<filter-class>br.usp.memoriavirtual.filtro.FiltroLogin</filter-class>

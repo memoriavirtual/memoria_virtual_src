@@ -7,21 +7,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Cadastrar usuario</title>
 </head>
 <body>
 	<f:view>
 		<h:form>
 			<h:panelGrid>
-				<h:messages globalOnly="true"/>
 				<h:outputText value="Email:" />
-				<h:inputText value="#{cadastrarUsuarioMB.email}" required="true" />
+				<h:inputText value="#{cadastrarUsuarioMB.email}"  />
 
- 				<h:outputText value="Nome completo:" />
-				<h:inputText value="#{cadastrarUsuarioMB.senha}" required="true" />
+				<h:outputText value="Nome completo:" />
+				<h:inputText value="#{cadastrarUsuarioMB.nomeCompleto}"  />
 
+				<h:outputText value="Telefone:" />
+				<h:inputText value="#{cadastrarUsuarioMB.telefone}"  />
+				
+ 				<h:outputText value="Senha:" />
+				<h:inputText value="#{cadastrarUsuarioMB.senha}"  />
+				
+				<h:outputText value="Confirmacao de senha:" />
+				<h:inputText value="#{cadastrarUsuarioMB.confirmacaoSenha}"  />
+				
+				<h:inputHidden value="#{cadastrarUsuarioMB.validacao}" />
+				
 			</h:panelGrid>
 			<h:commandButton action="#{cadastrarUsuarioMB.completarCadastro}" value="Cadastrar" />
+			<h:messages globalOnly="true"/>
 		</h:form>
 	</f:view>
 </body>
