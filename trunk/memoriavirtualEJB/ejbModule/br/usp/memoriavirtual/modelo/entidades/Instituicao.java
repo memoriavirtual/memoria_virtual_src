@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Instituicao implements Serializable{
@@ -13,20 +12,18 @@ public class Instituicao implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	@Id
-	@NotNull 
-	@Column(unique = true)
 	private String nome;
 	@Column(unique = true)
 	private String email;
-	@Column(unique = true)
+	@Column(unique = false)
 	private String localizacao;
-	@Column(unique = true)
+	@Column(unique = false)
 	private String endereco;
-	@Column(unique = true)
+	@Column(unique = false)
 	private String cidade;
-	@Column(unique = true)
+	@Column(unique = false)
 	private String estado;
-	@Column(unique = true)
+	@Column(unique = false)
 	private String cep;
 	@Column(unique = true)
 	private String telefone;
