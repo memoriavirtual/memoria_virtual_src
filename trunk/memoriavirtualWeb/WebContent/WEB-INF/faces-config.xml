@@ -24,6 +24,7 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.EnviarConviteMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	
 	<managed-bean>
 		<managed-bean-name>cadastrarUsuarioMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarUsuarioMB</managed-bean-class>
@@ -76,7 +77,7 @@
 	
 	<navigation-rule>
 		<display-name>cadastrousuario</display-name>
-		<from-view-id>/cadastro.jsp</from-view-id>
+		<from-view-id>/restrito/cadastrarusuario.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>sucesso</from-outcome>
 			<to-view-id>/cadastroconcluido.jsp</to-view-id>
