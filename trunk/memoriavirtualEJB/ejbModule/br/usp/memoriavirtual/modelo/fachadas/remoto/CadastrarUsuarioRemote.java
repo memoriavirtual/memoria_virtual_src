@@ -2,9 +2,13 @@ package br.usp.memoriavirtual.modelo.fachadas.remoto;
 
 import javax.ejb.Remote;
 
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
+
 @Remote
 public interface CadastrarUsuarioRemote {
 
-	public String completarCadastro(String email, String nomeCompleto, String telefone, String senha, String validacao);
-	public String validarEmail(String email); 
+	public Usuario completarCadastro(String id, String email, String nome,
+			String telefone, String senha, String validacao);
+
+	public String validarEmail(String email);
 }
