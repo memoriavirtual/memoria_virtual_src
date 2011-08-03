@@ -28,14 +28,13 @@ public class RealizarLogin implements RealizarLoginRemote {
 
 	/**
 	 * @return resultado Resultado da validação do login
-	 * @throws CloneNotSupportedException
+	 * 
 	 */
-	public Usuario realizarLogin(String usuario, String senha)
-			throws CloneNotSupportedException {
+	public Usuario realizarLogin(String usuario, String senha) {
 
 		Usuario usuarioAutenticado = null;
 		Usuario usuarioClone = null;
-		
+
 		Query query;
 
 		query = this.entityManager
@@ -45,7 +44,9 @@ public class RealizarLogin implements RealizarLoginRemote {
 
 		try {
 			usuarioAutenticado = (Usuario) query.getSingleResult();
-			usuarioClone = (Usuario) usuarioAutenticado.clone();
+			if (usuarioAutenticado.isAtivo()) {
+				usuarioClone = usuarioAutenticado.clone();
+			}
 		} catch (NoResultException e) {
 			usuarioAutenticado = null;
 			e.printStackTrace();
