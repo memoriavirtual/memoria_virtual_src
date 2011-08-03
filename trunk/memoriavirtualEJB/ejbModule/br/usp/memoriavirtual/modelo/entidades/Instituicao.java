@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Instituicao implements Serializable{
@@ -14,18 +15,23 @@ public class Instituicao implements Serializable{
 	@Id
 	private String nome;
 	@Column(unique = true)
+	@Pattern(regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\." + "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
+	+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email invalido")
 	private String email;
-	@Column(unique = false)
+	@Column
 	private String localizacao;
-	@Column(unique = false)
+	@Column
 	private String endereco;
-	@Column(unique = false)
+	@Column
 	private String cidade;
-	@Column(unique = false)
+	@Column
+	@Pattern(regexp = "[A-Z]{2}", message = "Estado no formato incorreto (ex: SP e não sp)")
 	private String estado;
-	@Column(unique = false)
+	@Column
+	@Pattern(regexp = "(" + "[0-9]{3}" + ")" + "[0-9]{5}" + "-" + "[0-9]{3}", message = "CEP no formato incorreto")
 	private String cep;
-	@Column(unique = true)
+	@Column
+	@Pattern(regexp = "(" + "[0-9]{3}" + ")" +"[0-9]{4}"+ "-" + "[0-9]{4}", message = "Telefone no formato incorreto")
 	private String telefone;
 
 	/**
