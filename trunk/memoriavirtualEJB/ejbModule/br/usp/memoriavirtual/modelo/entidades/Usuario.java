@@ -162,10 +162,16 @@ public class Usuario implements Serializable, Cloneable {
     }
     
     @Override
-    public Object clone() throws CloneNotSupportedException {
-	Usuario clone = (Usuario) super.clone();
-	clone.setSenha(null);
+    public Usuario clone() {
+    	
+    	Usuario clone = null;
+		try {
+			clone = (Usuario) super.clone();
+			clone.setSenha(null);
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return clone;
     }
-
 }
