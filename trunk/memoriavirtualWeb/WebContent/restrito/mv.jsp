@@ -23,6 +23,38 @@
 				<img src="../imagens/logo_mv_catalogacao.png">
 				<div id="Abas">
 					<ul>
+            	<li class="descritor"><a href="descritor.html" >Descritor<script>$('.descritor a').corner("top");$('.descritor li a').corner("top 1px");</script></a>
+                	<ul>
+                    	<li><a href="teste.jsf">descritor 1</a></li>
+                       	<li><a href="#">descritor 2</a></li>
+                    </ul>
+                </li>
+                <li class="autoria"><a href="autoria.html" >Autoria<script>$('.autoria a').corner("top");$('.autoria li a').corner("top 1px");</script></a>
+                	<ul>
+                    	<li><a href="#">autoria 1</a></li>
+                       	<li><a href="#">autoria 2</a></li>
+                    </ul>
+                </li>
+                <li class="bempatrimonial"><a href="bempatrimonial.html" >Bem Patrimonial<script>$('.bempatrimonial a').corner("top");$('.bempatrimonial li a').corner("top 1px");</script></a>
+                	<ul>
+                    	<li><a href="#">bem patrimonial 1</a></li>
+                       	<li><a href="#">bem patrimonial 2</a></li>
+                    </ul>
+                </li>
+                <li class="usuario"><a href="usuario.html" >Administra&ccedil;&atilde;o<script>$('.usuario a').corner("top");$('.usuario li a').corner("top 1px");</script></a>
+                	<ul>
+                    	<li><a href="#">Convidar Amigo</a></li>
+                       	<li><a href="#">usuario 2</a></li>
+                    </ul>
+                </li>
+                <li class="instituicao"><a href="instituicao.html" >Institui&ccedil;&atilde;o<script>$('.instituicao a').corner("top");$('.instituicao li a').corner("top 1px");</script></a>
+	                <ul>
+                    	<li><a href="instituicao.html">instituicao 1</a></li>
+                       	<li><a href="cadastrarinstituicao.jsf">Cadastrar</a></li>
+                    </ul>
+                </li>
+            </ul>
+					<!-- <ul>
 						<li class="descritor"><a href="teste.jsf">Descritor<script>
 							$('.descritor a').corner("top");
 						</script> </a></li>
@@ -39,7 +71,7 @@
 						<li class="instituicao"><a href="cadastrarinstituicao.jsf">Institui&ccedil;&atilde;o<script>
 							$('.instituicao a').corner("top");
 						</script> </a></li>
-					</ul>
+					</ul>-->
 
 				</div>
 				<!-- fim #Abas -->
@@ -48,7 +80,7 @@
 					<h:outputText value="#{usuario.id}" />
 					,
 					
-						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">Sair</h:commandLink>
+						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
 					</h:form>
 				</div>
 			</div>

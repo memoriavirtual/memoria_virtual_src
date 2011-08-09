@@ -7,14 +7,56 @@
 	border:#000 2px solid;
 }
 
-.menu{
+.aba2{
+	height: 30px;
+	position: relative;
+	/*top:105px;
+	right:18px;*/
+	border:none 0;
+	margin: 0;
+	padding:0;
+	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	background:#0C3;
+	}
+.aba2 ul{
+	background:#000;
+	height:40px;
+	list-style:none;
 	margin:0;
+	padding:0;
+	}
+	.aba2 li{
+		float:left;
+		padding:0;
+		height:25px;
+		}
+	.aba2 li a{
+		background:#000;
+		color:#FFF;
+		display:block;
+		font-weight:bold;
+		line-height:25px;
+		margin-left:3px;
+		padding:2px 15px;
+		text-align:center;
+		text-decoration:none;
+		}
+		.aba2 li a:hover, .aba2 ul li:hover a{
+			background: #FFF;
+			color:#000;
+			text-decoration:none;
+			}
+
+.menu{
+	margin:10px 0 0;
 	padding:0;
 }
 
 .menu li{
-	color:#FFF;
-	background:#000;
+	color:#000;
+	background:#FFF;
 	margin:0;
 	padding:0;
 	padding-left:10px;
@@ -26,7 +68,7 @@
 	cursor:pointer;
 	cursor:hand;
 	position:relative;
-	border-bottom:1px solid #FFF;
+	border-bottom:1px solid #000;
 }
 .menu li:hover{
 	background:#666;
@@ -36,7 +78,7 @@
 	height:auto;
 	width:780px;
 	position:absolute;
-	background:#FFF;
+	background:#000;
 	border:#000 medium;
 	top:0;
 	right:0;
@@ -45,7 +87,7 @@
 
 .campos{
 	position:absolute;
-	top:10px;
+	top:70px;
 	right:275px;
 }
 
@@ -65,37 +107,4 @@
 .botao{
 	position:absolute;
 	right:0;
-}
-
-label{
-	color: #000000;
-}
-
-#formu{
-	width:940px;
-	border-width: 3px;
-	border-style: solid;
-	border-color: black;
-}
-
-#informu{
-
-	position:relative;
-	text-align:right;
-	margin-right:350px;
-	margin-top:30px;
-	margin-bottom:30px;
-}
-
-#titulo h2{
-
-		color: #000000;
-		font-size: 17px;
-		font-weight: 900;
-}
-
-#titulo h3{
-
-		color: #000000;
-		font-size: 16px;
 }
