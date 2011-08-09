@@ -57,7 +57,7 @@ public class RealizarLoginMB {
 
 		if (!autenticado)
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Usuário ou Senha incorretos."));
+					new FacesMessage("Usu&aacute;rio ou Senha incorretos."));
 
 		this.setSenha(null);
 
