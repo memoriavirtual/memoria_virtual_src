@@ -44,10 +44,10 @@
 				</div>
 				<!-- fim #Abas -->
 				<div id="usuario">
-					&lt;
-					<h:outputText value="#{usuario.id}" />
-					&gt;,
 					<h:form>
+					<h:outputText value="#{usuario.id}" />
+					,
+					
 						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">Sair</h:commandLink>
 					</h:form>
 				</div>
