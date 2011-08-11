@@ -120,32 +120,32 @@ public class CadastrarInstituicaoMB {
 
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 		
-		estados.add(new SelectItem("al", "AL"));
-		estados.add(new SelectItem("am", "AM"));
-		estados.add(new SelectItem("ap", "AP"));
-		estados.add(new SelectItem("ba", "BA"));
-		estados.add(new SelectItem("ce", "CE"));
-		estados.add(new SelectItem("df", "DF"));
-		estados.add(new SelectItem("es", "ES"));
-		estados.add(new SelectItem("go", "GO"));
-		estados.add(new SelectItem("ma", "MA"));
-		estados.add(new SelectItem("mg", "MG"));
-		estados.add(new SelectItem("ms", "MS"));
-		estados.add(new SelectItem("mt", "MT"));
-		estados.add(new SelectItem("pa", "PA"));
-		estados.add(new SelectItem("pb", "PB"));
-		estados.add(new SelectItem("pe", "PE"));
-		estados.add(new SelectItem("pi", "PI"));
-		estados.add(new SelectItem("pr", "PR"));
-		estados.add(new SelectItem("rj", "RJ"));
-		estados.add(new SelectItem("rn", "RN"));
-		estados.add(new SelectItem("ro", "RO"));
-		estados.add(new SelectItem("rr", "RR"));
-		estados.add(new SelectItem("rs", "RS"));
-		estados.add(new SelectItem("sc", "SC"));
-		estados.add(new SelectItem("sp", "SP"));
-		estados.add(new SelectItem("se", "SE"));
-		estados.add(new SelectItem("to", "TO"));
+		estados.add(new SelectItem("AL", "AL"));
+		estados.add(new SelectItem("AM", "AM"));
+		estados.add(new SelectItem("AP", "AP"));
+		estados.add(new SelectItem("BA", "BA"));
+		estados.add(new SelectItem("CE", "CE"));
+		estados.add(new SelectItem("DF", "DF"));
+		estados.add(new SelectItem("ES", "ES"));
+		estados.add(new SelectItem("GO", "GO"));
+		estados.add(new SelectItem("MA", "MA"));
+		estados.add(new SelectItem("MG", "MG"));
+		estados.add(new SelectItem("MS", "MS"));
+		estados.add(new SelectItem("MT", "MT"));
+		estados.add(new SelectItem("PA", "PA"));
+		estados.add(new SelectItem("PB", "PB"));
+		estados.add(new SelectItem("PE", "PE"));
+		estados.add(new SelectItem("PI", "PI"));
+		estados.add(new SelectItem("PR", "PR"));
+		estados.add(new SelectItem("RJ", "RJ"));
+		estados.add(new SelectItem("RN", "RN"));
+		estados.add(new SelectItem("RO", "RO"));
+		estados.add(new SelectItem("RR", "RR"));
+		estados.add(new SelectItem("RS", "RS"));
+		estados.add(new SelectItem("SC", "SC"));
+		estados.add(new SelectItem("SP", "SP"));
+		estados.add(new SelectItem("SE", "SE"));
+		estados.add(new SelectItem("TO", "TO"));
 		
 		return estados;
 	}

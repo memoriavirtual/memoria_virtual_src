@@ -94,7 +94,7 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>falha</from-outcome>
-			<to-view-id>/restrito/instituicaocadastrada.jsp</to-view-id>
+			<to-view-id>/restrito/mv.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
