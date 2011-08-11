@@ -22,16 +22,16 @@ public class Instituicao implements Serializable {
     private String cidade;
     @Pattern(regexp = "[A-Z]{2}", message = "Estado no formato incorreto (ex: SP e não sp)")
     private String estado;
-    @Pattern(regexp = "(" + "[0-9]{3}" + ")" + "[0-9]{5}" + "-" + "[0-9]{3}", message = "CEP no formato incorreto")
+    @Pattern(regexp = "[0-9]{11}")
     private String cep;
-    @Pattern(regexp = "(" + "[0-9]{3}" + ")" + "[0-9]{4}" + "-" + "[0-9]{4}", message = "Telefone no formato incorreto")
+ //   @Pattern(regexp = "(" + "[0-9]{3}" + ")" + "[0-9]{4}" + "-" + "[0-9]{4}", message = "Telefone no formato incorreto")
     private String telefone;
 
     /**
      * Construtor padrão
      */
     public Instituicao() {
-	super();
+    	super();
     }
 
     /**
@@ -51,14 +51,14 @@ public class Instituicao implements Serializable {
      *            Telefone
      */
     public Instituicao(String Nome, String Local, String End, String Cidade, String Est, String Cep, String Tel) {
-	super();
-	this.nome = Nome;
-	this.localizacao = Local;
-	this.endereco = End;
-	this.cidade = Cidade;
-	this.estado = Est;
-	this.cep = Cep;
-	this.telefone = Tel;
+    	super();
+    	this.nome = Nome;
+    	this.localizacao = Local;
+    	this.endereco = End;
+    	this.cidade = Cidade;
+    	this.estado = Est;
+    	this.cep = Cep;
+    	this.telefone = Tel;
 
     }
 
@@ -66,7 +66,7 @@ public class Instituicao implements Serializable {
      * @return O nome da instituição
      */
     public String getNome() {
-	return nome;
+    	return nome;
     }
 
     /**
@@ -74,14 +74,14 @@ public class Instituicao implements Serializable {
      *            Define o nome da instituição
      */
     public void setNome(String nome) {
-	this.nome = nome;
+    	this.nome = nome;
     }
 
     /**
      * @return O email da instituição
      */
     public String getEmail() {
-	return email;
+    	return email;
     }
 
     /**
@@ -89,14 +89,14 @@ public class Instituicao implements Serializable {
      *            Define o email da instituição
      */
     public void setEmail(String email) {
-	this.email = email;
+    	this.email = email;
     }
 
     /**
      * @return A localizacao da instituição
      */
     public String getLocalizacao() {
-	return localizacao;
+    	return localizacao;
     }
 
     /**
@@ -104,14 +104,14 @@ public class Instituicao implements Serializable {
      *            Define a localizacao da instituição
      */
     public void setLocalizacao(String localizacao) {
-	this.localizacao = localizacao;
+    	this.localizacao = localizacao;
     }
 
     /**
      * @return O endereco da instituição
      */
     public String getEndereco() {
-	return endereco;
+    	return endereco;
     }
 
     /**
@@ -119,14 +119,14 @@ public class Instituicao implements Serializable {
      *            Define o endereco da instituição
      */
     public void setEndereco(String endereco) {
-	this.endereco = endereco;
+    	this.endereco = endereco;
     }
 
     /**
      * @return A cidade da instituição
      */
     public String getCidade() {
-	return cidade;
+    	return cidade;
     }
 
     /**
@@ -134,14 +134,14 @@ public class Instituicao implements Serializable {
      *            Define a cidade da instituição
      */
     public void setCidade(String cidade) {
-	this.cidade = cidade;
+    	this.cidade = cidade;
     }
 
     /**
      * @return O estado(UF) da instituição
      */
     public String getEstado() {
-	return estado;
+    	return estado;
     }
 
     /**
@@ -149,14 +149,14 @@ public class Instituicao implements Serializable {
      *            Define o estado(UF) da instituição
      */
     public void setEstado(String estado) {
-	this.estado = estado;
+    	this.estado = estado;
     }
 
     /**
      * @return O cep da instituição
      */
     public String getCep() {
-	return cep;
+    	return cep;
     }
 
     /**
@@ -164,14 +164,14 @@ public class Instituicao implements Serializable {
      *            Define o cep da instituição
      */
     public void setCep(String cep) {
-	this.cep = cep;
+    	this.cep = cep;
     }
 
     /**
      * @return O telefone da instituição
      */
     public String getTelefone() {
-	return telefone;
+    	return telefone;
     }
 
     /**
@@ -179,6 +179,6 @@ public class Instituicao implements Serializable {
      *            Define o telefone da instituição
      */
     public void setTelefone(String telefone) {
-	this.telefone = telefone;
+    	this.telefone = telefone;
     }
 }

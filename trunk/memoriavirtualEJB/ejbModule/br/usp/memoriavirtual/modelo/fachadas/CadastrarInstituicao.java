@@ -15,14 +15,23 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote{
 	
 	public Instituicao cadastrarInstituicao(String Nome, String Localizacao, String Endereco, String Cidade, String Estado, String Cep, String Telefone){
 		
-		final Instituicao ins = new Instituicao(Nome, Localizacao, Endereco, Cidade, Estado, Cep, Telefone);
+		Instituicao ins = new Instituicao(Nome, Localizacao, Endereco, Cidade, Estado, Cep, Telefone);
 
+		//verifica se ja existe uma instituicao com esse nome
 		if(entityManager.find(ins.getClass(), ins.getNome()) != null)
 			return null;
+		//tenta persistir no banco
+		try{
+			entityManager.persist(ins);
+		}
+		catch(Exception e){
+			return null;
+		}
 		
-		entityManager.persist(ins);
+		//certifica de que a persistencia ocorreu com sucesso
+		if(!entityManager.contains(ins))
+			return null;
+		
 		return ins;
 	}
-
-
 }

@@ -79,7 +79,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 			try {
 				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
 				String assunto = "Convite para o Memoria Virtual";
-				String textoEmail = "Voc� foi convidado(a) para participar do memoria virtual como "
+				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como "
 						+ nivelAcesso
 						+ "na instituicao: "
 						+ this.instituicao.getNome()
@@ -90,7 +90,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 						+ this.usuario.getId()
 						+ "&email="
 						+ this.usuario.getEmail()
-						+ ".... Seu convite � valido ate "
+						+ ".... Seu convite é valido ate "
 						+ formatoData.format(this.usuario.getValidade())
 						+ " ... Voce recebeu a seguinte mensagem: " + mensagem;
 				enviarEmail(email[i], assunto, textoEmail);
