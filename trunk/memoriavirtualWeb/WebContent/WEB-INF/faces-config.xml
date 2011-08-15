@@ -24,22 +24,22 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.EnviarConviteMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>cadastrarUsuarioMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarUsuarioMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-        	<property-name>validacao</property-name>
-        	<value>#{param.validacao}</value>
-    	</managed-property>
-    	<managed-property>
-        	<property-name>email</property-name>
-        	<value>#{param.email}</value>
-    	</managed-property>
+			<property-name>validacao</property-name>
+			<value>#{param.validacao}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>email</property-name>
+			<value>#{param.email}</value>
+		</managed-property>
 	</managed-bean>
-	
-	
+
+
 
 	<navigation-rule>
 		<display-name>index</display-name>
@@ -74,7 +74,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>cadastrousuario</display-name>
 		<from-view-id>/restrito/cadastrarusuario.jsp</from-view-id>
@@ -84,7 +84,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>cadastrarinstituicao</display-name>
 		<from-view-id>/restrito/cadastrarinstituicao.jsp</from-view-id>
@@ -97,9 +97,13 @@
 			<to-view-id>/restrito/mv.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<application>
-		<message-bundle>br.usp.memoriavirtual.mensagens</message-bundle>
+		<resource-bundle>
+			<base-name>br.usp.memoriavirtual.mensagens</base-name>
+			<var>mensagens</var>
+		</resource-bundle>
+
 	</application>
 </faces-config>
