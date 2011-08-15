@@ -100,9 +100,6 @@
 	
 	
 	<application>
-		<locale-config>
-			<default-locale>pt</default-locale>
-		</locale-config>
 		<message-bundle>br.usp.memoriavirtual.mensagens</message-bundle>
 	</application>
 </faces-config>
