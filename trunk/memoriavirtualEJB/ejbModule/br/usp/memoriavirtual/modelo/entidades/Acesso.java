@@ -12,10 +12,9 @@ import javax.persistence.ManyToOne;
 public class Acesso implements Serializable {
 
     /**
-	 * 
-	 */
-    private static final long serialVersionUID = 1L;
-
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 7511773311010053091L;
     @Id
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USUARIO")
