@@ -32,7 +32,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>FiltroLogin</filter-name>
-		<url-pattern>/restrito/*</url-pattern>
+		<url-pattern>/js/*</url-pattern>
 	</filter-mapping>
 	<context-param>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -40,7 +40,7 @@
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-		<param-value>.jsf, .jsp</param-value>
+		<param-value>.jsf, .jsp, .xhtml</param-value>
 	</context-param>
 
 </web-app>

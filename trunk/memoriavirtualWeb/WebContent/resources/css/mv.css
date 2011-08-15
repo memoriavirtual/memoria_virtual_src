@@ -1,97 +1,82 @@
-@import url(reset-min.css);
-@import url(conteudo.css);
+html, body {
+	height: 100%;
+}
+
+* html #recipiente {
+		height: 100%; /* hack para IE6 que trata height como min-height */
+}
+
 
 body{
 	margin: 0;
 	padding: 0;
 	font-family: Verdana, Geneva, sans-serif;
+	text-align:center;
 }
 
 #recipiente{
-	background-color:#FFF;
-	margin: 0px auto 0;
-	padding: 0;
+	min-height: 100%;
 	width: 976px;
-	text-align: center;
+	background-color:#FFF;
+	margin: 0px auto;
+	padding: 0;
+	text-align:left;
+	position: relative;
+}
+
+#topo{
+	padding:  15px 10px 0;
+	background: url(../resources/imagens/header.png) no-repeat;
+	text-align:left;
+	width:956px;
+	height:10px;
+
 }
 
 #cabecalho{
 	/*margin: 15px 0 0;*/
 	padding:  30px 10px 0;
-	background: url(../imagens/content_background.png) repeat-y;
+	background: url(../resources/imagens/content_background2.png) repeat-y;
 	position:relative;
 	text-align:left;
 	width:956px;
+
 }
 
 #cabecalho img{
 	margin: 0 0 5px 20px;
 }
 
-#usuario{
-	font-size:14px;
-	width: 200px;
-	position: absolute;
-	top: 10px;
-	right:15px;
-	text-align:right;
-}
-
-#usuario a{
-	text-decoration:none;
-	color:#000;
-}
-
-#usuario a:hover{
-	text-decoration:underline;
-	color:#000;
-}
-
 #conteudo{
-	color:#FFF;
+	color:#000;
 	font-size:13px;
 	margin:0 ;
 	padding:0 18px 10px;
-	position: relative;
-	background: url(../imagens/content_background.png) repeat-y;
+	height: 100%;
+	background: url(../resources/imagens/content_background2.png) repeat-y;
+	width:956px;
+	padding-bottom: 30px;
+		clear:both;
 }
-
+#CaixaCorpo {
+	
+	width:940px;
+	float:right;	
+	padding:0;
+	margin:0;
+	
+}
 #rodape{
 	margin: 0 ;
-	padding-top:5px;
 	font-size:10px;
 	height:35px;
-	width:976px;
-	background: url(../imagens/footer.png) no-repeat;
+	width:956px;
+	background: url(../resources/imagens/footer.png) no-repeat;
+	padding:  5px 10px 0;
+	position: absolute;
+	bottom: 0;
+	clear:both;
 }
-
-/* 
-#Abas {
-	background:#3CC;
-	margin:0;
-	padding:0 15px 0 0;
-	list-style:none;
-}
-#Abas li {
-	cursor:pointer;
-	cursor:hand;
-	font-size:14px;
-	font-weight:900;
-}
-#Abas li a{
-	text-decoration:none;
-	color:#000;
-	background:#FF0;
-	float:right;
-	display:inline-block;
-	padding:8px;
-}
-#Abas li a:hover{
-	text-decoration:none;
-	color:#FFF;
-	background:#000;
-
-}*/
 
 #Abas{
 	height: 30px;
@@ -182,45 +167,8 @@ body{
 	#Abas p{
 		clear:left;
 		}
-/*
-li.autoria {
-	background:url(../imagens/autoria.png) no-repeat 0 -32px;
-	width:82px;
-}
-li.descritor {
-	background:url(../imagens/descritor.png) no-repeat 0 -32px  #F00;
-	width:96px;
-}
-li.bempatrimonial {
-	background:url(../imagens/bem_patrimonial.png) no-repeat 0 -32px;
-	width:156px;
-}*/
 
-/*li.mousesobre {
-	background-position:0 0;
-}
-li.mousefora {
-	background-position:0 -32px;
-}
-li.selecionado {
-	background-position:0 0;
-}
-*/
 
-/*.CaixadeCima {
-	background:url(../imagens/box_top.png) no-repeat;
-	height:10px;
-	clear:both;
-}
-*html .CaixadeCima {
-	margin-bottom:-2px;
-}*/
-
-#CaixaCorpo {
-	width:940px;
-	padding:0;
-	margin:0;
-}
 #Abas ul li.selecionado a, #Abas li.selecionado a{
 	background: #000;
 	color:#FFF;
@@ -232,3 +180,6 @@ li.selecionado {
 	background:url(../imagens/box_bottom.png) no-repeat;
 	height:10px;
 }*/
+
+
+

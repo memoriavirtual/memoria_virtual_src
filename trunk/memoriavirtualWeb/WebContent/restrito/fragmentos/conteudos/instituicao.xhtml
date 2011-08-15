@@ -1,22 +1,14 @@
-	<div class="abaDentro">
-    	 <div class="menu">
-         	<ul>
-            	<li>Informa&ccedil;&atilde;o</li>
-                <li>Autoria</li>
-                <li>Produ&ccedil;&atilde;o</li>
-                <li>Descri&ccedil;&atilde;o</li>
-                <li>Interven&ccedil;&atilde;o</li>
-                <li>Condi&ccedil;&otilde;es</li>
-                <li>Hist&oacute;rico</li>
-                <li>Documentos</li>
-                <li>Assunto</li>
-                <li>Audio</li>
-                <li>Fonte</li>
-            </ul>
-         </div><!-- end .menu -->
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition>
+			<div class="abaDentro">
+    	 
          <div class="formulario">
-         	<div class="texto">
-            </div><!-- end .texto -->
             <div class="campos">
          		<form action="" method="post" id="#form">
         	  		<ul>
@@ -52,7 +44,7 @@
                         </li>
                         <li>
                         	<div>
-                            	<label style="width:200px;display:block;text-align:right;float:left;margin-right:15px;">Localização F&iacute;sica</label>
+                            	<label style="width:200px;display:block;text-align:right;float:left;margin-right:15px;">LocalizaÃ§Ã£o F&iacute;sica</label>
                                 <input type="text" style="width:200px" />
                             </div>
                         </li>
@@ -76,12 +68,15 @@
                         </li>
                     </ul>
                     
-                    <br>
+                    <br/>
           			<div class="botao">
-            	    	<input type="submit" name="salvar" id="salvar" value="Salvar">&nbsp;&nbsp;
-        	       		<input type="reset" name="cancel" id="cancel" value="Cancelar">
+            	    	<input type="submit" name="salvar" id="salvar" value="Salvar"/>&nbsp;&nbsp;
+        	       		<input type="reset" name="cancel" id="cancel" value="Cancelar"/>
     	      		</div>
 	          	</form>
             </div><!-- end .campos -->
          </div><!-- end .formulario-->
     </div><!-- end .abaDentro  -->
+	</ui:composition>
+</body>
+</html>
