@@ -5,7 +5,7 @@
   <nodes xsi:type="pageflow:PFPage" name="convite" x="122" y="562" id="pf13107593541976" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13107593541977" path="/restrito/enviarconvite.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="restrito/conviteenviado" x="338" y="562" id="pf13107593541978" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf13107593541977" path="/restrito/conviteenviado.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastrarinstituicao" x="122" y="946" id="pf13113571864250" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf13116618876530 pf13130701653910" path="/restrito/cadastrarinstituicao.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="restrito/instituicaocadastrada" x="338" y="946" id="pf13113571864252" referenceLink="//@navigationRule.4/@navigationCase.1/@toViewId|" inlinks="pf13116618876530" path="/restrito/instituicaocadastrada.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/instituicaocadastrada" x="338" y="946" id="pf13113571864252" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf13116618876530" path="/restrito/instituicaocadastrada.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastrousuario" id="pf13123873869600" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13123873869601" path="/restrito/cadastrarusuario.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastroconcluido" id="pf13123873869612" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf13123873869601" path="/cadastroconcluido.jsp"/>
   <links id="pf13107593541962" target="pf13107593541965" source="pf13107593541961" outcome="sucesso" redirect="true"/>
