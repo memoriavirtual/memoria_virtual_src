@@ -17,7 +17,7 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 public class CadastrarUsuario extends HttpServlet {
 
     /**
-     * 
+     * Serial Version UID
      */
     private static final long serialVersionUID = 2734229838622329992L;
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("memoriavirtual");
