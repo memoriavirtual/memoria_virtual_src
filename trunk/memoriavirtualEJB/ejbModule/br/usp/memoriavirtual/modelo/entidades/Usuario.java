@@ -18,10 +18,9 @@ import javax.validation.constraints.Pattern;
 public class Usuario implements Serializable, Cloneable {
 
     /**
-	 * 
-	 */
-    private static final long serialVersionUID = 1L;
-
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = -2966677929188737645L;
     @Id
     private String id;
     @NotNull
@@ -42,6 +41,7 @@ public class Usuario implements Serializable, Cloneable {
      */
     public Usuario() {
 	super();
+	System.out.println();
     }
 
     /**
@@ -124,54 +124,53 @@ public class Usuario implements Serializable, Cloneable {
     public void setAtivo(Boolean ativo) {
 	this.ativo = ativo;
     }
-    
+
     public String getNomeCompleto() {
-		return nomeCompleto;
-	}
+	return nomeCompleto;
+    }
 
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
-	}
+    public void setNomeCompleto(String nomeCompleto) {
+	this.nomeCompleto = nomeCompleto;
+    }
 
-	/**
+    /**
      * @param input
      *            a senha para ser criptografada ou o email para criar o id
      *            usando no convite
      */
     public String gerarHash(String input) {
 
-    	MessageDigest md = null;
-    	byte messageDigest[] = null;
-    	try {
-    		md = MessageDigest.getInstance("SHA-512");
-    		messageDigest = md.digest(input.getBytes("UTF-8"));
-    	} catch (NoSuchAlgorithmException ex) {
-    		Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-    	} catch (UnsupportedEncodingException ex) {
-    		Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-    	} catch (NullPointerException ex) {
-    		return null;
-    	}
-    	// Converte para hexa antes de utilizar a senha criptografada
-    	StringBuilder hexString = new StringBuilder();
-    	for (byte b : messageDigest) {
-    		hexString.append(String.format("%02X", 0xFF & b));
-    	}
-    	String inputCifrado = hexString.toString();
-    	return inputCifrado;
+	MessageDigest md = null;
+	byte messageDigest[] = null;
+	try {
+	    md = MessageDigest.getInstance("SHA-512");
+	    messageDigest = md.digest(input.getBytes("UTF-8"));
+	} catch (NoSuchAlgorithmException ex) {
+	    Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (UnsupportedEncodingException ex) {
+	    Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (NullPointerException ex) {
+	    return null;
+	}
+	// Converte para hexa antes de utilizar a senha criptografada
+	StringBuilder hexString = new StringBuilder();
+	for (byte b : messageDigest) {
+	    hexString.append(String.format("%02X", 0xFF & b));
+	}
+	String inputCifrado = hexString.toString();
+	return inputCifrado;
     }
-    
+
     @Override
     public Usuario clone() {
-    	
-    	Usuario clone = null;
-		try {
-			clone = (Usuario) super.clone();
-			clone.setSenha(null);
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        return clone;
+
+	Usuario clone = null;
+	try {
+	    clone = (Usuario) super.clone();
+	    clone.setSenha(null);
+	} catch (CloneNotSupportedException e) {
+	    e.printStackTrace();
+	}
+	return clone;
     }
 }

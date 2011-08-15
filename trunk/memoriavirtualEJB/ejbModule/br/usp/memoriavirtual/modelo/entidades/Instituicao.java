@@ -10,7 +10,10 @@ import javax.validation.constraints.Pattern;
 @Entity
 public class Instituicao implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = -5996690587044446292L;
     @Id
     private String nome;
     @Column(unique = true)
