@@ -14,7 +14,7 @@ public class RealizarLogoffMB {
 		.getRequest();
 	
 	request.getSession().invalidate();
-	return "sucesso";
+	return "logout";
     }
 
 }
