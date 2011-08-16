@@ -67,10 +67,10 @@
 
 	<navigation-rule>
 		<display-name>logoff</display-name>
-		<from-view-id>/restrito/mv.jsp</from-view-id>
+		<from-view-id>/restrito/*.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>sucesso</from-outcome>
-			<to-view-id>/index.jsp</to-view-id>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
