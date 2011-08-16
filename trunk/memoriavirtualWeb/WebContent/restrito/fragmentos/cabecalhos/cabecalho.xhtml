@@ -68,6 +68,12 @@
 			</ul>
 		</div>
 		<!-- fim #Abas -->
+		<div id="usuario">
+					<h:form>
+						<h:outputText value="#{usuario.id}" />, 
+						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
+					</h:form>
+		</div>
 	</ui:composition>
 </body>
 </html>
