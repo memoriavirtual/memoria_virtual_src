@@ -67,7 +67,7 @@
 
 	<navigation-rule>
 		<display-name>logoff</display-name>
-		<from-view-id>/restrito/*.xhtml</from-view-id>
+		<from-view-id>/restrito/*</from-view-id>
 		<navigation-case>
 			<from-outcome>logout</from-outcome>
 			<to-view-id>/login.xhtml</to-view-id>
