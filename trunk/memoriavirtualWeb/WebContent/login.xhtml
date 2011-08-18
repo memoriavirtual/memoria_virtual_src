@@ -14,17 +14,17 @@
 	<h:outputStylesheet name="login.css" library="css" />
 </h:head>
 <h:body>
-	<f:view>
+	<f:view locale="#{facesContext.externalContext.requestLocale}">
 		<div id="container">
 
 			<div id="conteudo">
 				<h:messages globalOnly="false" />
-				<h:outputText value="Usuário" />
+				<h:outputText value="#{mensagens.usuario}" />
 				<h:form>
 					<div>
 						<h:inputText value="#{realizarLoginMB.usuario}" required="true" />
 					</div>
-					<h:outputText value="Senha" />
+					<h:outputText value="#{mensagens.senha}" />
 					<div>
 						<h:inputSecret value="#{realizarLoginMB.senha}" />
 					</div>
