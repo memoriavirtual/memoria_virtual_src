@@ -49,8 +49,6 @@ public class RealizarLogin implements RealizarLoginRemote {
 	} catch (NoResultException e) {
 	    usuarioAutenticado = null;
 	    e.printStackTrace();
-	} finally {
-	    entityManager.close();
 	}
 	return usuarioClone;
     }
