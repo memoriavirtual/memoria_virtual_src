@@ -37,10 +37,9 @@ public class RealizarLogin implements RealizarLoginRemote {
 
 	Query query;
 
-	query = this.entityManager
-		.createQuery("SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true");
+	query = this.entityManager.createNamedQuery("login", Usuario.class);
 	query.setParameter("usuario", usuario);
-	query.setParameter("senha", new Usuario().gerarHash(senha));
+	query.setParameter("senha", Usuario.gerarHash(senha));
 
 	try {
 	    usuarioAutenticado = (Usuario) query.getSingleResult();
@@ -50,6 +49,8 @@ public class RealizarLogin implements RealizarLoginRemote {
 	} catch (NoResultException e) {
 	    usuarioAutenticado = null;
 	    e.printStackTrace();
+	} finally {
+	    entityManager.close();
 	}
 	return usuarioClone;
     }
