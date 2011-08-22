@@ -11,9 +11,11 @@ import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+@NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
 @Entity
 public class Usuario implements Serializable, Cloneable {
 
@@ -105,7 +107,7 @@ public class Usuario implements Serializable, Cloneable {
 
     /**
      * @param administrador
-     *            se o usuario � ou n�o administrador do sistema
+     *            se o usuario é ou não administrador do sistema
      */
 
     public void setAdministrador(Boolean administrador) {
@@ -138,7 +140,7 @@ public class Usuario implements Serializable, Cloneable {
      *            a senha para ser criptografada ou o email para criar o id
      *            usando no convite
      */
-    public String gerarHash(String input) {
+    public static String gerarHash(String input) {
 
 	MessageDigest md = null;
 	byte messageDigest[] = null;
