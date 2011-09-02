@@ -109,7 +109,7 @@ body{
 	}
 	
 	
-	#usuario{
+#usuario{
 	font-size:14px;
 	width: 200px;
 	position: absolute;
@@ -128,15 +128,16 @@ body{
 	color:#000;
 }
 
-	h4 {
-		font-size:16px;
-	}
-	.clear {
-		clear:both;
-	}
+h4 {
+	font-size:16px;
+}
+	
+.clear {
+	clear:both;
+}
 
 	
-	#Abas{
+#Abas{
 	height: 30px;
 	position: absolute;
 	top:105px;
@@ -154,77 +155,72 @@ body{
 	list-style:none;
 	margin:0;
 	padding:0;
-	}
-	#Abas li{
-		float:left;
-		padding:0;
-		}
-	#Abas li a{
-		background:#FFF;
-		color:#000;
-		display:block;
-		font-weight:bold;
-		line-height:30px;
-		margin:0;
-		padding:2px 20px;
-		text-align:center;
-		text-decoration:none;
-		}
-		#Abas li a:hover, #Abas ul li:hover a{
-			background: #000;
-			color:#FFF;
-			text-decoration:none;
-			}
+}
+#Abas li{
+	float:left;
+	padding:0;
+}
+#Abas li a{
+	background:#FFF;
+	color:#000;
+	display:block;
+	font-weight:bold;
+	line-height:30px;
+	margin:0;
+	padding:2px 20px;
+	text-align:center;
+	text-decoration:none;
+}
+#Abas li a:hover, #Abas ul li:hover a{
+	background: #000;
+	color:#FFF;
+	text-decoration:none;
+}
 #Abas li ul{
-		background:#000;
-		color:#FFF;
-		display:none;
-		height:auto;
-		padding:0;
-		margin:0;
-		border:0;
-		position:absolute;
-		width:150px;
-		z-index:200;
-		/*top:1em;
-		/*left:0;*/
-		}
-	#Abas li:hover ul{
-		display:block;
-		
-		}
-	#Abas li li {
-		background:#000;
-		color:#FFF;
-		display:block;
-		float:none;
-		margin:0;
-		padding:0;
-		width:150px;
-		}
-	#Abas li:hover li a{
-		background:none;
-		
-		}
-	#Abas li ul a{
-		display:block;
-		height:35px;
-		font-size:12px;
-		font-style:normal;
-		margin:0;
-		padding:0 10px 0 15px;
-		text-align:left;
-		}
-		#Abas li ul a:hover, #Abas li ul li:hover a{
-			background:#333;
-			border:0;
-			color:#FFF;
-			text-decoration: none;
-			}	
-
-	#Abas p{
-		clear:left;
-		}
+	background:#000;
+	color:#FFF;
+	display:none;
+	height:auto;
+	padding:0;
+	margin:0;
+	border:0;
+	position:absolute;
+	width:150px;
+	z-index:200;
+}
+#Abas li:hover ul{
+	display:block;	
+}
+#Abas li li {
+	background:#000;
+	color:#FFF;
+	display:block;
+	float:none;
+	margin:0;
+	padding:0;
+	width:150px;
+}
+#Abas li:hover li a{
+	background:none;	
+}
+#Abas li ul a{
+	display:block;
+	height:35px;
+	font-size:12px;
+	font-style:normal;
+	margin:0;
+	padding:0 10px 0 15px;
+	text-align:left;
+}
+#Abas li ul a:hover, #Abas li ul li:hover a{
+	background:#333;
+	border:0;
+	color:#FFF;
+	text-decoration: none;
+}	
+#Abas p{
+	clear:left;
+}
 		
 #Abas ul li.selecionado a, #Abas li.selecionado a{
 	background: #000;
@@ -235,136 +231,73 @@ body{
 
 /* Conteudoooooo */
 
-
-.abaDentro{
-	padding:0;
-	margin:0px 0;
-	height:auto;
-	width:936px;
-	background:#F9F9F9; /* cor do fundo do formulario*/
-	border:#000 2px solid;
-}
-
 .aba2{
 	height: 30px;
 	position: relative;
-	/*top:105px;
-	right:18px;*/
 	border:none 0;
 	margin: 0;
 	padding:0;
 	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
 	font-size:13px;
 	font-weight:bold;
-	background:#0C3;
+	background-color: #000;
 	}
 .aba2 ul{
 	background:#000;
-
 	list-style:none;
 	margin:0;
 	padding:0;
 	}
-	.aba2 li{
-		float:left;
-		padding:0;
-		height:25px;
-		}
-	.aba2 li a{
-		background:#000;
-		color:#FFF;
-		display:block;
-		font-weight:bold;
-		line-height:25px;
-		margin-left:3px;
-		padding:2px 15px;
-		text-align:center;
-		text-decoration:none;
-		}
-		.aba2 li a:hover, .aba2 ul li:hover a{
-			background: #FFF;
-			color:#000;
-			text-decoration:none;
-			}
-
-.menu{
-	margin:0px 0 0;
+.aba2 li{
+	float:left;
 	padding:0;
+	height:25px;
 }
-
-.menu li{
-	color:#000;
-	background:#FFF;
-	margin:0;
-	padding:0;
-	padding-left:10px;
-	text-align:left;
-	list-style:none;
+.aba2 li a{
+	background:#000;
+	color:#FFF;
 	display:block;
-	height:32px;
-	width:160px;
-	cursor:pointer;
-	cursor:hand;
-	position:relative;
-	border-bottom:1px solid #000;
+	font-weight:bold;
+	line-height:25px;
+	margin-left:3px;
+	padding:2px 15px;
+	text-align:center;
+	text-decoration:none;
 }
-.menu li:hover{
-	background:#666;
+.aba2 li a:hover, .aba2 ul li:hover a{
+	background: #FFF;
+	color:#000;
+	text-decoration:none;
 }
 
 .formulario{
-	height:auto;
-	width:780px;
-	position:absolute;
-	background:#000;
-	border:#000 medium;
-	top:0;
-	right:0;
+	width:932px;
+	margin: auto;
+	background-color: #D4D4D4;
+	border-color: #000;
+	border-style: solid;
+	border-width: 4px;	
 	color:#000;
+	text-align: right;
 }
 
-.campos{
-	position:absolute;
-	top:70px;
-	right:275px;
+.teste{
+	margin-right: 350px;
+	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
-.campos li{
-	list-style:none;
+.erro{
+	margin:auto;
+	margin-top: 10px;
+	width: 400px;
+	padding: 15px;
+	color: #690000;
+	background-color:#FF8282;
+	border-color: #FF0000;
+	border-style: solid;
+	border-width: 2px;	
 }
-
-.campos div{
-	margin:0;
-	margin-bottom:3px;
-}
-
-.campos ul input{
-	background:#D2D2D2;
-}
-
-.botao{
-	position:absolute;
-	right:0;
-}
-
-.menu ul{
-	margin:0px 0 0;
-	padding:0;
-}
-
-div.aba2 {
-		background-color: #000;
-	}
-	
-#conteudo_index{
-	width:100%;
-	text-align:center;
-	color:000;
-	}
-#conteudo_index p{
-	font-size: 30px;
-	color: olive;
-	}
 
 /*
  *Regras CSS utilizadas para deixar algum dos menus selecionados

@@ -185,5 +185,40 @@ public class EnviarConviteMB {
 	public String getErro() {
 		return erro;
 	}
+	
+	/*Metodos usados no formulario para popular menu de seleção*/
 
+	public List<SelectItem> getValidades(){
+		
+		List<SelectItem> validades = new ArrayList<SelectItem>();
+		SelectItem week = new SelectItem();
+		week.setLabel("teste");
+		week.setValue("wie");
+		validades.add(week);
+		
+		return validades;
+		
+	}
+	
+	public List<SelectItem> getInstituicoes(){
+		
+		List<SelectItem> inst = new ArrayList<SelectItem>();
+		inst.add(new SelectItem("Instituicao1", "Instituicao1"));
+		inst.add(new SelectItem("Instituicao2", "Instituicao2"));
+		inst.add(new SelectItem("Instituicao3", "Instituicao 3"));
+		
+		return inst;
+		
+	}
+	
+	public List<SelectItem> getNiveisAcesso(){
+		
+		List<SelectItem> niv = new ArrayList<SelectItem>();
+		niv.add(new SelectItem("Gerente", "Gerente"));
+		niv.add(new SelectItem("Catalogador", "Catalogador"));
+		niv.add(new SelectItem("Revisor", "Revisor"));
+		
+		return niv;
+		
+	}
 }
