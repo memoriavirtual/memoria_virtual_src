@@ -1,0 +1,404 @@
+/*************************************************************/
+/*                   RESET INICIAL                           */
+/*************************************************************/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,
+  p,blockquote,pre,a,abbr,acronym,address,code,del,dfn,
+  em,img,q,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,
+  table,caption,tbody,tfoot,thead,tr,th,td{
+	  border:0;
+	  font-weight:inherit;
+	  font-style:inherit;
+	  font-size:100%;
+	  font-family:inherit;
+	  vertical-align:baseline;
+	  margin:0;
+	  padding:0;
+}
+body{
+	line-height:1.5;
+}
+table{
+	border-collapse:separate;border-spacing:0;
+}
+caption,th,td{
+	text-align:left;
+	font-weight:400;
+}
+table,td,th{
+	vertical-align:middle;
+}
+blockquote:before,blockquote:after,q:before,q:after{
+	content:"";
+}
+blockquote,q{
+	quotes:"" "";
+}
+a img{
+	border:none;
+}
+ul,li,ol{
+	margin-left:0;
+}
+/*************************************************************/
+/*                 FIM RESET INICIAL                         */
+/*************************************************************/
+
+/*Configuracoes para o rodape ficar embaixo sempre*/
+html, body {
+		height: 100%;
+}
+
+* html #tudo {
+		height: 100%; /* hack para IE6 que trata height como min-height */
+}
+/*Final das configs*/
+	
+	
+body{
+		margin:0;
+		padding:0;
+		color:#666;
+		font:75%/1.4 Verdana, Arial;
+		text-align:center;
+}
+	#recipiente { 	
+		min-height: 90%;
+		width: 976px;	
+		background: url(../imagens/content_background.png) repeat-y;	
+		margin: 0px auto 0;
+		padding: 0;
+		text-align:left;	
+		position: relative;
+		
+	}
+	#topo{
+	/*padding:  15px 10px 0;*/
+	background: url(../imagens/header.png) no-repeat;
+	text-align:left;
+	width: 976px;
+	height:10px;
+	}
+	
+	#cabecalho {	
+		padding:  30px 8px 0;
+		position:relative;
+		text-align:left;
+		width:960px;
+	}
+	
+	#cabecalho img{
+		margin: 0 0 0 20px;
+		clear:right;
+	}
+	#CaixaCorpo {	
+	width:940px;
+	padding:0 0px 10px;
+	margin:0;
+
+	}
+	
+
+	
+	#rodape {	
+		background: url(../imagens/footer.png) no-repeat;
+		width: 976px;	
+		height:30px;	
+		text-align:center;	
+		clear:both;
+		position: relative;
+		bottom: 0;
+		font-size:10px;
+		margin: 0 auto ;
+		padding-top:10px;
+	}
+	#rodape p {	
+		margin:0;	
+		font-weight:bold;	
+		color:#000;	
+	}
+	
+	
+	#usuario{
+	font-size:14px;
+	width: 200px;
+	position: absolute;
+	top: 10px;
+	right:15px;
+	text-align:right;
+}
+
+#usuario a{
+	text-decoration:none;
+	color:#000;
+}
+
+#usuario a:hover{
+	text-decoration:underline;
+	color:#000;
+}
+
+	h4 {
+		font-size:16px;
+	}
+	.clear {
+		clear:both;
+	}
+	
+/*************************************************************/
+/*                         MENU                              */
+/*************************************************************/
+#menuRecipiente{
+	float:right;
+	margin-bottom:-1px;
+}
+#menuNavegacao{
+	margin: 0 0 2px;
+	text-align: left;
+	min-height: 25px;
+	padding-top: 10px;
+	padding-left: 0px;
+}
+#menuNavegacao li{
+	display:inline;
+	list-style:none;
+}
+#menuNavegacao li a{
+	margin-right: 5px;
+	font-size:15px;
+	text-decoration:none;
+	color:#000;
+	font-family:Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	padding:10px;
+	outline: 0;
+	position:relative;
+	top: -2px;
+}
+#menuNavegacao li a:hover, #menuNavegacao li a.ativo{
+	background:#000;
+	color:#FFF;
+}
+#menuNavegacao li .linkSecundario li a{
+	color:#FFF;
+}
+#menuNavegacao li .linkSecundario li a:hover{
+	background:#484848;
+}
+#linkSecundarioRecipiente{
+	background:#000;
+	min-height:5px;
+	border-bottom:#999 1px solid;
+	width:960px;
+	clear:both;
+}
+.linkSecundario{
+	display:none;
+	width:960px;
+	text-align:left;
+	position:absolute;
+	z-index:200;
+	left:8px;
+	margin-top:16px;
+}
+/*************************************************************/
+/*                       FIM MENU                             /
+/*************************************************************/
+/*************************************************************/
+/*                CONTEUDO / FORMULARIO                       /
+/*************************************************************/
+#conteudo{
+	background:#FFF;
+	color:#000;
+	width:940px;
+	font-size:13px;
+	margin:0 auto;
+	padding: 0 10px 10px;
+}
+.formulario{
+	background:#FFF;
+	border:#000 2px solid;
+	border-top:none;
+	padding-top: 5px;
+}
+.conteudoTitulo{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:24px;
+	margin-left:10px;
+}
+.conteudoDescricao{
+	margin:0 10px 10px 20px;
+	font-size:13px;
+	text-align:justify;
+	text-indent:20px;
+}
+/*.formulario fieldset{
+	background:#00F;
+}*/
+.formulario fieldset div{
+	clear:both;
+	display:block;
+}
+
+/*.formulario fieldset div{
+	background:#93C;
+	display:compact;
+	clear:right;
+	margin-bottom:10px;
+}*/
+.formulario fieldset label{
+	width:45%;
+	display:inline-block;
+	margin:0 10px;
+	text-align:right;
+	font-size:16px;
+}
+.formulario fieldset input{
+	background:#F7F7F7;
+	border:#444 solid 1px;
+	padding:1px;
+	width:250px;
+	height:20px;
+}
+.formulario fieldset div div{
+	color:#414141;
+	width: 45%;
+	float:left;
+	text-align:right;
+	font-size:11px;
+	margin:-6px 10px 10px;
+}
+.formulario fieldset div span{
+	min-width:242px;
+	max-width:473px;
+	min-height:22px;
+	float:left;
+	clear:none;
+	margin:2px 0 7px;
+	font-size:12px;
+	text-indent:5px;
+	padding:5px;
+}
+.sucesso{
+	background:#DEE7B6;
+	border:#C2D277 solid 1px;
+	color:#3F7227;
+
+}
+.falha{
+	background:#F4D2D2;
+	border:#EAA8A8 solid 1px;
+	color:#BE4741;
+}
+.fatal{
+	background:#900;
+	border:#FFC6C6 solid 1.5px;
+	color:#FFC6C6;
+}
+.aviso{
+	background:#FBF4AA;
+	border:#CBBC07 solid 1px;
+	color:#7B7802;
+}
+/*.labelInformacao{
+	background:#CCC;
+	margin:-5px 10px 10px 10px;
+	text-align:right;
+	position:relative;
+	top:0;
+	width:45%;
+	font-size:10px;
+	color:#666;
+	display:block;
+
+}*/
+/*.formulario fieldset div div{
+	background:#0FF;
+	width:45%;
+	margin:-6px 10px 10px;
+	text-align:right;
+	font-size:11px;
+	float:left;
+}
+.formulario fieldset span{
+	background:#C66;
+	min-width:250px;
+	max-width:484px;
+	min-height:22px;
+	margin:3px 0 7px;
+	float:left;
+	clear:right;
+}*/
+/*.formulario label{
+	
+	width:200px;
+	display:block;
+	text-align:right;
+	float:left;
+	margin:0 15px 0 50px;
+	background:#3F0;
+	position:relative;
+}
+.formulario input{
+	width:250px;
+}
+.formulario li{
+	list-style:none;
+	width:976px;
+	clear:both;
+}
+
+.formulario li div{
+	margin:0;
+	margin-top:10px;
+	display: block;
+	float:left;
+	
+}
+
+.formulario ul input{
+	background:#E1E1E1;
+	border:inset 1px #333;
+	height:19px;
+}*/
+.erroPrincipal span{
+	text-align:left;
+	padding:7px 10px;
+	max-width:70%;
+	display:block;
+	margin:0 auto;
+	font-size:12px;
+	text-indent:5px;
+}
+/*
+	max-width:70%;
+	min-height:22px;
+	margin: 7px  auto;
+
+
+.erroPrincipal.falha{
+	color:#F20000;
+}
+.erroPrincipal.sucesso{
+	color:#090;
+}*/
+/*.erroCampo{
+	color:#090;
+	border-left:none;
+	height:23px;
+}
+.botao{
+	text-align:center;
+	margin: 10px 0
+}
+.botao input{
+	width:auto;
+}*/
+.botao{
+	text-align:right;
+	padding:10px;
+	
+}
+/*************************************************************/
+/*                FIM CONTEUDO / FORMULARIO                   /
+/*************************************************************/
