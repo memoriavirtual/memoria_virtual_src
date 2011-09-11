@@ -12,43 +12,51 @@
 
 		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
 
-		<div id="Abas">
-			<ul>
-				<li class="descritor"><a href="descritor.jsf">Descritor<script>
-					$('.descritor a').corner("top");
-					$('.descritor li a').corner("top 1px");
-				</script> </a></li>
-					
-				<li class="autoria"><a href="autoria.jsf">Autoria<script>
-					$('.autoria a').corner("top");
-					$('.autoria li a').corner("top 1px");
-				</script> </a>
-					</li>
-				<li class="bempatrimonial"><a href="bempatrimonial.jsf">Bem
-						Patrimonial<script>
-							$('.bempatrimonial a').corner("top");
-							$('.bempatrimonial li a').corner("top 1px");
-						</script> </a>
-					</li>
-				<li class="administracao"><a href="administracao.jsf">Administra&ccedil;&atilde;o<script>
-					$('.administracao a').corner("top");
-					$('.administracao li a').corner("top 1px");
-				</script> </a>
-					</li>
-				<li class="instituicao"><a href="instituicao.jsf">Institui&ccedil;&atilde;o<script>
-					$('.instituicao a').corner("top");
-					$('.instituicao li a').corner("top 1px");
-				</script> </a>
-					</li>
+		<div id="menuRecipiente">
+			<ul id="menuNavegacao">
+				<li><a class="linkPrincipal" href="descritor.html">Descritor</a>
+					<ul class="linkSecundario">
+						<li><a href="#">descritor 1</a></li>
+						<li><a href="#">descritor 2</a></li>
+					</ul>
+				</li>
+				<li><a class="linkPrincipal" href="autoria.html">Autoria</a>
+					<ul class="linkSecundario">
+						<li><a href="#">autoria 1</a></li>
+						<li><a href="#">autoria 2</a></li>
+					</ul>
+				</li>
+				<li><a class="linkPrincipal" href="bempatrimonial.html">Bem
+						Patrimonial</a>
+					<ul class="linkSecundario">
+						<li><a href="#">bem patrimonial 1</a></li>
+						<li><a href="#">bem patrimonial 2</a></li>
+					</ul>
+				</li>
+				<li><a class="linkPrincipal" href="usuario.html">Administra&ccedil;&atilde;o</a>
+					<ul class="linkSecundario">
+						<li><a href="#">Convidar Amigo</a></li>
+						<li><a href="#">usuario 2</a></li>
+					</ul>
+				</li>
+				<li><a class="linkPrincipal" href="instituicao.html">Institui&ccedil;&atilde;o</a>
+					<ul class="linkSecundario">
+						<li><a href="instituicao.html">instituicao 1</a></li>
+						<li><a href="#">instituicao 2</a></li>
+					</ul>
+				</li>
 			</ul>
+
 		</div>
-		<!-- fim #Abas -->
+		<!-- fim #menuRecipiente -->
+
+		<div id="linkSecundarioRecipiente"></div>
 		<div id="usuario">
-					<h:form>
-						<h:outputText value="#{usuario.id}" />, 
-						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
-					</h:form>
+			&lt;<h:outputText value="#{usuario.id}" />&gt;,
+			<h:link action="#{realizarLogoffMB.realizarLogoff}">sair</h:link>
+
 		</div>
+
 	</ui:composition>
 </body>
 </html>
