@@ -52,7 +52,7 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 		}
 	}
 
-	public String validarEmail(String email) {
+	public boolean validarEmail(String email) {
 
 		String regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
 				+ "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
@@ -61,7 +61,12 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 		Matcher matcher = pattern.matcher(email);
 
 		if (!matcher.matches())
-			return "Formato invalido de email";
+			return false;
+
+		return true;
+	}
+	
+	public boolean disponibilidadeEmail(String email) {
 
 		Query query = this.entityManager
 				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
@@ -69,11 +74,11 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 
 		try {
 			query.getSingleResult();
-			return "Email ja cadastrado.";
+			return false;
 		} catch (NoResultException e) {
 
 		}
-		return null;
+		return true;
 	}
 
 }
