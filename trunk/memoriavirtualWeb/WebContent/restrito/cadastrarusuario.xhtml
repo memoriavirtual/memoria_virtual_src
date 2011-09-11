@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+</head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+		<ui:define name="title">
+			<title>Cadastrar Usuario</title>
+		</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="formulario">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado"
+								infoClass="sucesso"></h:message>
+				</div>
+
+				<div class="conteudoTitulo">Cadastrar Usuario</div>
+				<div class="conteudoDescricao">Preencha o formulario abaixo
+					para completar seu cadastro no sistema Memória Virtual.</div>
+
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">ID:</h:outputLabel>
+							<h:inputText value="#{cadastrarUsuarioMB.id}">
+								<f:ajax event="blur" execute="@this" render="validacaoId"
+									listener="#{cadastrarUsuarioMB.validateId}" />
+							</h:inputText>
+							<div>Nome da conta.</div>
+							<h:message id="validacaoId" for="validacaoId"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">Email:</h:outputLabel>
+							<h:inputText value="#{cadastrarUsuarioMB.email}">
+								<f:ajax event="blur" execute="@this" render="validacaoEmail"
+										listener="#{cadastrarUsuarioMB.validateEmail}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoEmail" for="validacaoEmail"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">Nome completo:</h:outputLabel>
+							<h:inputText value="#{cadastrarUsuarioMB.nomeCompleto}">
+								<f:ajax event="blur" execute="@this"
+										render="validacaoNomeCompleto"
+										listener="#{cadastrarUsuarioMB.validateNomeCompleto}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNomeCompleto" for="validacaoNomeCompleto"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">Telefone:</h:outputLabel>
+							<h:inputText value="#{cadastrarUsuarioMB.telefone}">
+								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
+										listener="#{cadastrarUsuarioMB.validateTelefone}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoTelefone" for="validacaoTelefone"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						
+						<div>
+							<h:outputLabel class="labels">Senha:</h:outputLabel>
+							<h:inputText value="#{cadastrarUsuarioMB.senha}">
+								<f:ajax event="blur" execute="@this" render="validacaoSenha"
+										listener="#{cadastrarUsuarioMB.validateSenha}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoSenha" for="validacaoSenha"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">Confirmar senha:</h:outputLabel>
+							<h:inputText value="#{cadastrarUsuarioMB.confirmacaoSenha}">
+								<f:ajax event="blur" execute="@all"
+										render="validacaoConfirmacaoSenha"
+										listener="#{cadastrarUsuarioMB.validateConfirmacaoSenha}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoConfirmacaoSenha" for="validacaoConfirmacaoSenha"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoCadastrar" value="Cadastrar"
+							action="#{cadastrarUsuarioMB.completarCadastro}">
+						</h:commandButton>
+						
+						<h:commandButton id="botaoResetar" value="Resetar" type="reset">
+						</h:commandButton>
+						
+					</div>
+				</h:form>
+			</div>
+			<!-- end .formulario-->
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
