@@ -10,5 +10,6 @@ public interface CadastrarUsuarioRemote {
 	public Usuario completarCadastro(String id, String email, String nome,
 			String telefone, String senha, String validacao);
 
-	public String validarEmail(String email);
+	public boolean validarEmail(String email);
+	public boolean disponibilidadeEmail(String email);
 }
