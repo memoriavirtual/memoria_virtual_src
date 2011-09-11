@@ -1,5 +1,7 @@
-  /*Reset inicial*/
-  html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,
+/*************************************************************/
+/*                   RESET INICIAL                           */
+/*************************************************************/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,
   p,blockquote,pre,a,abbr,acronym,address,code,del,dfn,
   em,img,q,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,
   table,caption,tbody,tfoot,thead,tr,th,td{
@@ -12,15 +14,34 @@
 	  margin:0;
 	  padding:0;
 }
-body{line-height:1.5;}
-table{border-collapse:separate;border-spacing:0;}
-caption,th,td{text-align:left;font-weight:400;}
-table,td,th{vertical-align:middle;}
-blockquote:before,blockquote:after,q:before,q:after{content:"";}
-blockquote,q{quotes:"" "";}
-a img{border:none;}
-ul,li,ol{margin-left:0;}
-/*Final do reset*/
+body{
+	line-height:1.5;
+}
+table{
+	border-collapse:separate;border-spacing:0;
+}
+caption,th,td{
+	text-align:left;
+	font-weight:400;
+}
+table,td,th{
+	vertical-align:middle;
+}
+blockquote:before,blockquote:after,q:before,q:after{
+	content:"";
+}
+blockquote,q{
+	quotes:"" "";
+}
+a img{
+	border:none;
+}
+ul,li,ol{
+	margin-left:0;
+}
+/*************************************************************/
+/*                 FIM RESET INICIAL                         */
+/*************************************************************/
 
 /*Configuracoes para o rodape ficar embaixo sempre*/
 html, body {
@@ -41,9 +62,9 @@ body{
 		text-align:center;
 }
 	#recipiente { 	
-		min-height: 100%;
+		min-height: 90%;
 		width: 976px;	
-		background: url(../resources/imagens/content_background2.png) repeat-y;	
+		background: url(../resources/imagens/content_background.png) repeat-y;	
 		margin: 0px auto 0;
 		padding: 0;
 		text-align:left;	
@@ -59,27 +80,16 @@ body{
 	}
 	
 	#cabecalho {	
-		padding:  30px 10px 0;
+		padding:  30px 8px 0;
 		position:relative;
 		text-align:left;
-		width:956px;
+		width:960px;
 	}
 	
 	#cabecalho img{
-		margin: 0 0 5px 20px;
+		margin: 0 0 0 20px;
+		clear:right;
 	}
-
-	#conteudo{
-	color:#FFF;
-	font-size:13px;
-	margin:0 ;
-	padding:0 18px 30px;
-	position: relative;
-	height: 100%;
-	clear:both;
-
-}
-
 	#CaixaCorpo {	
 	width:940px;
 	padding:0 0px 10px;
@@ -95,12 +105,11 @@ body{
 		height:30px;	
 		text-align:center;	
 		clear:both;
-		position: absolute;
+		position: relative;
 		bottom: 0;
 		font-size:10px;
-		margin: 0 ;
+		margin: 0 auto ;
 		padding-top:10px;
-
 	}
 	#rodape p {	
 		margin:0;	
@@ -109,7 +118,7 @@ body{
 	}
 	
 	
-#usuario{
+	#usuario{
 	font-size:14px;
 	width: 200px;
 	position: absolute;
@@ -128,187 +137,180 @@ body{
 	color:#000;
 }
 
-h4 {
-	font-size:16px;
-}
+	h4 {
+		font-size:16px;
+	}
+	.clear {
+		clear:both;
+	}
 	
-.clear {
+/*************************************************************/
+/*                         MENU                              */
+/*************************************************************/
+#menuRecipiente{
+	float:right;
+	margin-bottom:-1px;
+}
+#menuNavegacao{
+	margin: 0 0 2px;
+	text-align: left;
+	min-height: 25px;
+	padding-top: 10px;
+	padding-left: 0px;
+}
+#menuNavegacao li{
+	display:inline;
+	list-style:none;
+}
+#menuNavegacao li a{
+	margin-right: 5px;
+	font-size:15px;
+	text-decoration:none;
+	color:#000;
+	font-family:Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	padding:10px;
+	outline: 0;
+	position:relative;
+	top: -2px;
+}
+#menuNavegacao li a:hover, #menuNavegacao li a.ativo{
+	background:#000;
+	color:#FFF;
+}
+#menuNavegacao li .linkSecundario li a{
+	color:#FFF;
+}
+#menuNavegacao li .linkSecundario li a:hover{
+	background:#484848;
+}
+#linkSecundarioRecipiente{
+	background:#000;
+	min-height:5px;
+	border-bottom:#999 1px solid;
+	width:960px;
 	clear:both;
 }
-
-	
-#Abas{
-	height: 30px;
-	position: absolute;
-	top:105px;
-	right:18px;
-	border:none 0;
-	margin:0;
-	padding:0;
-	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
-	font-size:15px;
-	font-weight:bold;
-	}
-#Abas ul{
-	background:#FFF;
-	height:30px;
-	list-style:none;
-	margin:0;
-	padding:0;
-}
-#Abas li{
-	float:left;
-	padding:0;
-}
-#Abas li a{
-	background:#FFF;
-	color:#000;
-	display:block;
-	font-weight:bold;
-	line-height:30px;
-	margin:0;
-	padding:2px 20px;
-	text-align:center;
-	text-decoration:none;
-}
-#Abas li a:hover, #Abas ul li:hover a{
-	background: #000;
-	color:#FFF;
-	text-decoration:none;
-}
-#Abas li ul{
-	background:#000;
-	color:#FFF;
+.linkSecundario{
 	display:none;
-	height:auto;
-	padding:0;
-	margin:0;
-	border:0;
-	position:absolute;
-	width:150px;
-	z-index:200;
-}
-#Abas li:hover ul{
-	display:block;	
-}
-#Abas li li {
-	background:#000;
-	color:#FFF;
-	display:block;
-	float:none;
-	margin:0;
-	padding:0;
-	width:150px;
-}
-#Abas li:hover li a{
-	background:none;	
-}
-#Abas li ul a{
-	display:block;
-	height:35px;
-	font-size:12px;
-	font-style:normal;
-	margin:0;
-	padding:0 10px 0 15px;
+	width:960px;
 	text-align:left;
+	position:absolute;
+	z-index:200;
+	left:8px;
+	margin-top:16px;
 }
-#Abas li ul a:hover, #Abas li ul li:hover a{
-	background:#333;
-	border:0;
-	color:#FFF;
-	text-decoration: none;
-}	
-#Abas p{
-	clear:left;
-}
-		
-#Abas ul li.selecionado a, #Abas li.selecionado a{
-	background: #000;
-	color:#FFF;
-	text-decoration:none;
-}
-
-
-/* Conteudoooooo */
-
-.aba2{
-	height: 30px;
-	position: relative;
-	border:none 0;
-	margin: 0;
-	padding:0;
-	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
+/*************************************************************/
+/*                       FIM MENU                             /
+/*************************************************************/
+/*************************************************************/
+/*                CONTEUDO / FORMULARIO                       /
+/*************************************************************/
+#conteudo{
+	background:#FFF;
+	color:#000;
+	width:940px;
 	font-size:13px;
-	font-weight:bold;
-	background-color: #000;
-	}
-.aba2 ul{
-	background:#000;
-	list-style:none;
-	margin:0;
-	padding:0;
-	}
-.aba2 li{
-	float:left;
-	padding:0;
-	height:25px;
+	margin:0 auto;
+	padding: 0 10px 10px;
 }
-.aba2 li a{
-	background:#000;
-	color:#FFF;
-	display:block;
-	font-weight:bold;
-	line-height:25px;
-	margin-left:3px;
-	padding:2px 15px;
-	text-align:center;
-	text-decoration:none;
-}
-.aba2 li a:hover, .aba2 ul li:hover a{
-	background: #FFF;
-	color:#000;
-	text-decoration:none;
-}
-
 .formulario{
-	width:932px;
-	margin: auto;
-	background-color: #D4D4D4;
-	border-color: #000;
-	border-style: solid;
-	border-width: 4px;	
-	color:#000;
-	text-align: right;
+	background:#FFF;
+	border:#000 2px solid;
+	border-top:none;
+	padding-top: 5px;
+}
+.conteudoTitulo{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:24px;
+	margin-left:10px;
+}
+.conteudoDescricao{
+	margin:0 10px 10px 20px;
+	font-size:13px;
+	text-align:justify;
+	text-indent:20px;
+}
+.formulario fieldset div{
+	clear:both;
+	display:block;
 }
 
-.teste{
-	margin-right: 350px;
-	margin-top: 50px;
-	margin-bottom: 50px;
+/*.formulario fieldset div{
+	background:#93C;
+	display:compact;
+	clear:right;
+	margin-bottom:10px;
+}*/
+.formulario fieldset label{
+	width:45%;
+	display:inline-block;
+	margin:0 10px;
+	text-align:right;
+	font-size:16px;
 }
+.formulario fieldset input{
+	background:#F7F7F7;
+	border:#444 solid 1px;
+	padding:1px;
+	width:250px;
+	height:20px;
+}
+.formulario fieldset div div{
+	color:#414141;
+	width: 45%;
+	float:left;
+	text-align:right;
+	font-size:11px;
+	margin:-6px 10px 10px;
+}
+.formulario fieldset div span{
+	min-width:242px;
+	max-width:473px;
+	min-height:0px;
+	float:left;
+	clear:none;
+	margin:2px 0 7px;
+	font-size:12px;
+	text-indent:5px;
+	padding:5px;
+}
+.sucesso{
+	background:#CBF3C7;
+	border:#2EA021 solid 1px;
+	color:#3F7227;
 
+}
 .erro{
-	margin:auto;
-	margin-top: 10px;
-	width: 400px;
-	padding: 15px;
-	color: #690000;
-	background-color:#FF8282;
-	border-color: #FF0000;
-	border-style: solid;
-	border-width: 2px;	
+	background:#F4D2D2;
+	border:#EAA8A8 solid 1px;
+	color:#BE4741;
 }
-
-/*
- *Regras CSS utilizadas para deixar algum dos menus selecionados
- */
-#descritor #Abas li.descritor a,
-#autoria #Abas li.autoria a,
-#bempatrimonial #Abas li.bempatrimonial a,
-#administracao #Abas li.administracao a,
-#instituicao #Abas li.instituicao a{
-		background: #000;
-		color:#FFF;
+.fatal{
+	background:#900;
+	border:#FFC6C6 solid 1.5px;
+	color:#FFC6C6;
 }
-
-
+.aviso{
+	background:#FBF4AA;
+	border:#CBBC07 solid 1px;
+	color:#7B7802;
+}
+.erroPrincipal span{
+	text-align:left;
+	padding:7px 10px;
+	max-width:70%;
+	display:block;
+	margin:0 auto;
+	font-size:12px;
+	text-indent:5px;
+}
+.botao{
+	text-align:right;
+	padding:10px;
+	
+}
+/*************************************************************/
+/*                FIM CONTEUDO / FORMULARIO                   /
+/*************************************************************/
