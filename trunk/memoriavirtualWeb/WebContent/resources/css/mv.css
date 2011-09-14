@@ -266,15 +266,15 @@ body{
 	margin:-6px 10px 10px;
 }
 .formulario fieldset div span{
-	min-width:242px;
-	max-width:473px;
+	min-width:252px;
+	max-width:252px;
 	min-height:0px;
 	float:left;
 	clear:none;
 	margin:2px 0 7px;
 	font-size:12px;
 	text-indent:5px;
-	padding:5px;
+	padding:0px;
 }
 .sucesso{
 	background:#CBF3C7;
@@ -297,10 +297,16 @@ body{
 	border:#CBBC07 solid 1px;
 	color:#7B7802;
 }
+.erroPrincipal{
+	text-align: center;
+	max-width: 50%;
+	margin:0 auto;
+	}
+
 .erroPrincipal span{
-	text-align:left;
+	text-align:center;
 	padding:7px 10px;
-	max-width:70%;
+
 	display:block;
 	margin:0 auto;
 	font-size:12px;
