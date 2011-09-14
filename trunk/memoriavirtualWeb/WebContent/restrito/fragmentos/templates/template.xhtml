@@ -5,14 +5,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title><ui:insert name="titulo">Memória Virtual</ui:insert></title>
+	<title><ui:insert name="titulo">Mem</ui:insert></title>
 	<h:outputStylesheet name="mv.css" library="css" />
 
 
 </h:head>
 
 <h:body>
-	<f:view locale="pt_BR">
+	<f:view locale="#{facesContext.externalContext.requestLocale}">
 		<div id="recipiente">
 
 			<!-- <div id="topo"></div> -->
