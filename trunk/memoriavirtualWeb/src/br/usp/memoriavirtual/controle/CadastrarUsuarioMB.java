@@ -3,10 +3,12 @@ package br.usp.memoriavirtual.controle;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
+import br.usp.memoriavirtual.utils.MensagensErro;
 
 public class CadastrarUsuarioMB {
 
@@ -26,32 +28,10 @@ public class CadastrarUsuarioMB {
 
 	public String completarCadastro() {
 
-		boolean erro = false;
-
-		// Validar ID
-
-		/* Verifico se o email é valido e se ainda não está cadastrado */
-		String erroEmail = cadastrarUsuarioEJB.validarEmail(email);
-		if (erroEmail != null) {
-			erro = true;
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(erroEmail));
-		}
-
-		// Faltando validar o campo telefone
-
-		/*
-		 * Verifica se as senhas digitadas nos dois campos de senha são iguais
-		 * para evitar erro de digitação.
-		 */
-		if (!senha.equals(confirmacaoSenha)) {
-			erro = true;
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Confirmacao de senha não confere."));
-		}
-		if (erro)
-			return "erro nos dados";
-
+		FacesContext.getCurrentInstance().addMessage(
+				"resultado",
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Cadastro concluido com sucesso.", null));
 		/*
 		 * Realiza o cadastro do usuario no banco de dados e retorna uma cópia
 		 * do usuário sem conter a senha para colocar na seção.
@@ -62,10 +42,16 @@ public class CadastrarUsuarioMB {
 			HttpServletRequest request = (HttpServletRequest) FacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
 			request.getSession().setAttribute("usuario", usuario);
-			return "sucesso";
+
+			FacesContext.getCurrentInstance().addMessage(
+					"cadastroConcluido",
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Cadastro concluido com sucesso.", null));
 		} else {
 			return "falhou";
 		}
+
+		return "falhou";
 	}
 
 	public String getId() {
@@ -76,12 +62,32 @@ public class CadastrarUsuarioMB {
 		this.id = id;
 	}
 
+	public void validateId(AjaxBehaviorEvent event) {
+
+		if (this.id.equals("")) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroIdVazio", "validacaoId");
+		}
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void validateEmail(AjaxBehaviorEvent event) {
+
+		//MensagensErro messageManager = new MensagensErro();
+		
+		if (this.email.equals("")) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailVazio", "validacaoEmail");
+		} else if (!cadastrarUsuarioEJB.validarEmail(this.email)) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido", "validacaoEmail");
+		} else if (!cadastrarUsuarioEJB.disponibilidadeEmail(this.email)) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
+		}
 	}
 
 	public String getSenha() {
@@ -92,6 +98,16 @@ public class CadastrarUsuarioMB {
 		this.senha = senha;
 	}
 
+	public void validateSenha(AjaxBehaviorEvent event) {
+		if (this.senha.equals("")) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroSenhaVazia", "validacaoSenha");
+		} else if (this.senha.length() < 6) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroSenhaDigitosMinimos", "validacaoSenha");
+		} else if (!this.senha.contains("a")) {
+			MensagensErro.getWarningMessage("cadastrarUsuarioErroSenhaFraca", "validacaoSenha");
+		}
+	}
+
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
@@ -100,12 +116,20 @@ public class CadastrarUsuarioMB {
 		this.nomeCompleto = nomeCompleto;
 	}
 
+	public void validateNomeCompleto(AjaxBehaviorEvent event) {
+
+	}
+
 	public String getTelefone() {
 		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public void validateTelefone(AjaxBehaviorEvent event) {
+
 	}
 
 	public String getValidacao() {
@@ -122,6 +146,23 @@ public class CadastrarUsuarioMB {
 
 	public void setConfirmacaoSenha(String confirmacaoSenha) {
 		this.confirmacaoSenha = confirmacaoSenha;
+	}
+
+	public void validateConfirmacaoSenha(AjaxBehaviorEvent event) {
+		if (confirmacaoSenha.equals("")) {
+			FacesContext.getCurrentInstance().addMessage(
+					"validacaoConfirmacaoSenha",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Confirmacao de senha deve ser preenchida.", null));
+		} else if (!this.confirmacaoSenha.equals(this.senha)) {
+			FacesContext.getCurrentInstance().addMessage(
+					"validacaoConfirmacaoSenha",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Confirmacao de senha não confere com a senha.",
+							null));
+		} else {
+
+		}
 	}
 
 }
