@@ -12,7 +12,24 @@
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
-		<ui:define name="title">"#{mensagens.cadastrarUsuarioTitle}"</ui:define>
+
+		
+		<ui:define name="titulo">Cadastrar Usuario</ui:define>
+
+
+		<ui:define name="cabecalho">
+			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
+
+			<div id="menuRecipiente">
+				<ul id="menuNavegacao">
+					
+				</ul>
+			</div>
+			<!-- fim #menuRecipiente -->
+
+			<div id="linkSecundarioRecipiente"></div>
+			
+		</ui:define>
 
 		<ui:define name="conteudo">
 			<div class="formulario">
