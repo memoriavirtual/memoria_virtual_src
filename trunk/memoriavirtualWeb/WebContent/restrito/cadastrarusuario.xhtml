@@ -13,7 +13,7 @@
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-		
+
 		<ui:define name="titulo">Cadastrar Usuario</ui:define>
 
 
@@ -22,20 +22,19 @@
 
 			<div id="menuRecipiente">
 				<ul id="menuNavegacao">
-					
+
 				</ul>
 			</div>
 			<!-- fim #menuRecipiente -->
 
 			<div id="linkSecundarioRecipiente"></div>
-			
+
 		</ui:define>
 
 		<ui:define name="conteudo">
 			<div class="formulario">
 				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado"
-								infoClass="sucesso"></h:message>
+					<h:message id="resultado" for="resultado" infoClass="sucesso"></h:message>
 				</div>
 
 				<div class="conteudoTitulo">#{mensagens.cadastrarUsuarioTitle}</div>
@@ -50,83 +49,86 @@
 									listener="#{cadastrarUsuarioMB.validateId}" />
 							</h:inputText>
 							<div></div>
-							<h:message id="validacaoId" for="validacaoId"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							<h:message id="validacaoId" for="validacaoId" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarUsuarioEmail}</h:outputLabel>
 							<h:inputText value="#{cadastrarUsuarioMB.email}">
 								<f:ajax event="blur" execute="@this" render="validacaoEmail"
-										listener="#{cadastrarUsuarioMB.validateEmail}" />
+									listener="#{cadastrarUsuarioMB.validateEmail}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoEmail" for="validacaoEmail"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarUsuarioNomeCompleto}</h:outputLabel>
 							<h:inputText value="#{cadastrarUsuarioMB.nomeCompleto}">
 								<f:ajax event="blur" execute="@this"
-										render="validacaoNomeCompleto"
-										listener="#{cadastrarUsuarioMB.validateNomeCompleto}" />
+									render="validacaoNomeCompleto"
+									listener="#{cadastrarUsuarioMB.validateNomeCompleto}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoNomeCompleto" for="validacaoNomeCompleto"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarUsuarioTelefone}</h:outputLabel>
 							<h:inputText value="#{cadastrarUsuarioMB.telefone}">
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
-										listener="#{cadastrarUsuarioMB.validateTelefone}" />
+									listener="#{cadastrarUsuarioMB.validateTelefone}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoTelefone" for="validacaoTelefone"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
-						
+
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarUsuarioSenha}</h:outputLabel>
 							<h:inputText value="#{cadastrarUsuarioMB.senha}">
 								<f:ajax event="blur" execute="@this" render="validacaoSenha"
-										listener="#{cadastrarUsuarioMB.validateSenha}" />
+									listener="#{cadastrarUsuarioMB.validateSenha}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoSenha" for="validacaoSenha"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarUsuarioConfirmarSenha}</h:outputLabel>
 							<h:inputText value="#{cadastrarUsuarioMB.confirmacaoSenha}">
 								<f:ajax event="blur" execute="@all"
-										render="validacaoConfirmacaoSenha"
-										listener="#{cadastrarUsuarioMB.validateConfirmacaoSenha}" />
+									render="validacaoConfirmacaoSenha"
+									listener="#{cadastrarUsuarioMB.validateConfirmacaoSenha}" />
 							</h:inputText>
 							<div></div>
-							<h:message id="validacaoConfirmacaoSenha" for="validacaoConfirmacaoSenha"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							<h:message id="validacaoConfirmacaoSenha"
+								for="validacaoConfirmacaoSenha" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 					</fieldset>
 					<div class="botao">
-						<h:commandButton id="botaoCadastrar" value="#{mensagens.cadastrarUsuarioBotaoCadastrar}"
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.cadastrarUsuarioBotaoCadastrar}"
 							action="#{cadastrarUsuarioMB.completarCadastro}">
 						</h:commandButton>
-						
-						<h:commandButton id="botaoResetar" value="#{mensagens.cadastrarUsuarioBotaoResetar}" type="reset">
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.cadastrarUsuarioBotaoResetar}" type="reset">
 						</h:commandButton>
-						
+
 					</div>
 				</h:form>
 			</div>
