@@ -27,12 +27,13 @@ import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 @Stateless(mappedName = "EnviarConvite")
 public class EnviarConvite implements EnviarConviteRemote {
 
     @EJB
-    private MemoriaVirtual memoriaVirtual;
+    private MemoriaVirtualRemote memoriaVirtual;
     @PersistenceContext(unitName = "memoriavirtual")
     private EntityManager entityManager;
     @Resource(name = "mail/memoriavirtual")
