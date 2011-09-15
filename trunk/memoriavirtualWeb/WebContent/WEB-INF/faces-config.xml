@@ -7,7 +7,7 @@
 	<managed-bean>
 		<managed-bean-name>realizarLoginMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.RealizarLoginMB</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>cadastrarInstituicaoMB</managed-bean-name>
@@ -17,7 +17,7 @@
 	<managed-bean>
 		<managed-bean-name>realizarLogoffMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.RealizarLogoffMB</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>enviarConviteMB</managed-bean-name>
