@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
 public class RealizarLoginMB {
@@ -41,7 +42,7 @@ public class RealizarLoginMB {
 		try {
 			usuarioAutenticado = realizarLoginEJB.realizarLogin(
 					this.getUsuario(), this.getSenha());
-		} catch (CloneNotSupportedException e) {
+		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
 

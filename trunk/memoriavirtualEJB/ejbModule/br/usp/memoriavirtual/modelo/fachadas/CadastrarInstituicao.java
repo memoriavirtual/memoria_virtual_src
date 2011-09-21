@@ -24,9 +24,5 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote {
 		// tenta persistir no banco
 
 		entityManager.persist(instituicao);
-
-		// certifica que a persistencia ocorreu com sucesso
-		if (!entityManager.contains(instituicao))
-			throw new ModeloException("A inserção da nova Instituição foi mal sucedida!");
 	}
 }
