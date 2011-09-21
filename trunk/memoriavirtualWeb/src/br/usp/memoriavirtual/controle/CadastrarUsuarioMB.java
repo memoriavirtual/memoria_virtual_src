@@ -11,7 +11,6 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensErro;
 
-
 public class CadastrarUsuarioMB {
 
 	@EJB
@@ -25,7 +24,6 @@ public class CadastrarUsuarioMB {
 	private String senha = "";
 	private String confirmacaoSenha = "";
 	private String validacao = "";
-
 
 	public CadastrarUsuarioMB() {
 
@@ -70,7 +68,8 @@ public class CadastrarUsuarioMB {
 	public void validateId(AjaxBehaviorEvent event) {
 
 		if (this.id.equals("")) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroIdVazio", "validacaoId");
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroIdVazio",
+					"validacaoId");
 		}
 	}
 
@@ -84,14 +83,17 @@ public class CadastrarUsuarioMB {
 
 	public void validateEmail(AjaxBehaviorEvent event) {
 
-		//MensagensErro messageManager = new MensagensErro();
-		
+		// MensagensErro messageManager = new MensagensErro();
+
 		if (this.email.equals("")) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailVazio", "validacaoEmail");
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailVazio",
+					"validacaoEmail");
 		} else if (!memoriaVirtualEJB.validarEmail(this.email)) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido", "validacaoEmail");
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
+					"validacaoEmail");
 		} else if (!cadastrarUsuarioEJB.disponibilidadeEmail(this.email)) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
+			MensagensErro.getErrorMessage(
+					"cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
 		}
 	}
 
@@ -105,11 +107,15 @@ public class CadastrarUsuarioMB {
 
 	public void validateSenha(AjaxBehaviorEvent event) {
 		if (this.senha.equals("")) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroSenhaVazia", "validacaoSenha");
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroSenhaVazia",
+					"validacaoSenha");
 		} else if (this.senha.length() < 6) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroSenhaDigitosMinimos", "validacaoSenha");
+			MensagensErro
+					.getErrorMessage("cadastrarUsuarioErroSenhaDigitosMinimos",
+							"validacaoSenha");
 		} else if (!this.senha.contains("a")) {
-			MensagensErro.getWarningMessage("cadastrarUsuarioErroSenhaFraca", "validacaoSenha");
+			MensagensErro.getWarningMessage("cadastrarUsuarioErroSenhaFraca",
+					"validacaoSenha");
 		}
 	}
 
