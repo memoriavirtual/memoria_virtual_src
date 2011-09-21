@@ -1,13 +1,12 @@
 package br.usp.memoriavirtual.controle;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
 
-import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 
 /**
@@ -15,9 +14,9 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
  */
 
 public class CadastrarInstituicaoMB {
-	
+
 	@EJB
-	private CadastrarInstituicaoRemote CadastrarInstituicaoEJB;
+	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
 	private String nome;
 	private String localizacao;
 	private String endereco;
@@ -25,101 +24,107 @@ public class CadastrarInstituicaoMB {
 	private String estado;
 	private String cep;
 	private String telefone;
-	
+
 	/**
 	 * Construtor padrão
 	 */
-	public CadastrarInstituicaoMB(){
-		
+	public CadastrarInstituicaoMB() {
+
 	}
-	
+
 	/**
-	 * Método responsável por verificar a formatação dos campos e passar o comando para o EJB realizar a operação no banco de dados
+	 * Método responsável por verificar a formatação dos campos e passar o comando para o EJB realizar a operação no
+	 * banco de dados
 	 * 
 	 * @return "sucesso" ou "falha" dependendo resultado das operações
 	 */
-	public String CadastrarInstituicao(){
-		Instituicao instituicaoCadastrada = null;
-		boolean cadastrada = false;
-		
-		try{
-			instituicaoCadastrada = CadastrarInstituicaoEJB.cadastrarInstituicao(this.nome, this.localizacao, this.endereco, this.cidade, this.estado, this.cep, this.telefone);
-		}
-		catch(Exception e){
+	public String CadastrarInstituicao() {
+		boolean cadastrada = true;
+
+		try {
+			cadastrarInstituicaoEJB.cadastrarInstituicao(this.nome, this.localizacao, this.endereco, this.cidade,
+					this.estado, this.cep, this.telefone);
+		} catch (ModeloException e) {
 			e.printStackTrace();
+			cadastrada = false;
 		}
-		
-		if(instituicaoCadastrada != null)
-			cadastrada = true;
-		
+
 		return cadastrada ? "sucesso" : "falha";
-		
+
 	}
-	
+
 	/**
 	 * Getter do nome
-	 * @return (String) Nome da instituicao  
+	 * 
+	 * @return (String) Nome da instituicao
 	 */
-	public String getNome(){
+	public String getNome() {
 		return this.nome;
 	}
-	
+
 	/**
 	 * Getter da localização
-	 * @return (String) Localização da instituicao  
+	 * 
+	 * @return (String) Localização da instituicao
 	 */
-	public String getLocalizacao(){
+	public String getLocalizacao() {
 		return this.localizacao;
 	}
-	
+
 	/**
 	 * Getter do endereco
-	 * @return (String) Endereco da instituicao  
+	 * 
+	 * @return (String) Endereco da instituicao
 	 */
-	public String getEndereco(){
+	public String getEndereco() {
 		return this.endereco;
 	}
-	
+
 	/**
 	 * Getter da cidade
-	 * @return (String) Cidade da instituicao  
+	 * 
+	 * @return (String) Cidade da instituicao
 	 */
-	public String getCidade(){
+	public String getCidade() {
 		return this.cidade;
 	}
-	
+
 	/**
 	 * Getter do estado(unidade da federação)
-	 * @return (String) Estado da instituicao  
+	 * 
+	 * @return (String) Estado da instituicao
 	 */
-	public String getEstado(){
+	public String getEstado() {
 		return this.estado;
 	}
-	
+
 	/**
-	 * Getter do CEP 
-	 * @return (String) CEP da instituicao  
+	 * Getter do CEP
+	 * 
+	 * @return (String) CEP da instituicao
 	 */
-	public String getCep(){
+	public String getCep() {
 		return this.cep;
 	}
-	
+
 	/**
 	 * Getter do telefone
-	 * @return (String) telefone da instituicao  
+	 * 
+	 * @return (String) telefone da instituicao
 	 */
-	public String getTelefone(){
+	public String getTelefone() {
 		return this.telefone;
 	}
-	
+
 	/**
 	 * Getter dos estados (Usado no form de cadastro)
+	 * 
 	 * @return (List<String>) todos os estados do Brasil (somente estados)
 	 */
-	public List<SelectItem> getEstados(){
+	public List<SelectItem> getEstados() {
 
 		List<SelectItem> estados = new ArrayList<SelectItem>();
-		
+
 		estados.add(new SelectItem("AL", "AL"));
 		estados.add(new SelectItem("AM", "AM"));
 		estados.add(new SelectItem("AP", "AP"));
@@ -146,58 +151,57 @@ public class CadastrarInstituicaoMB {
 		estados.add(new SelectItem("SP", "SP"));
 		estados.add(new SelectItem("SE", "SE"));
 		estados.add(new SelectItem("TO", "TO"));
-		
+
 		return estados;
 	}
-	
+
 	/**
 	 * Setter do nome da instituição
 	 */
-	public void setNome(String pNome){
+	public void setNome(String pNome) {
 		this.nome = pNome;
 	}
-	
+
 	/**
 	 * Setter da localização da instituicao
 	 */
-	public void setLocalizacao(String pLocalizacao){
+	public void setLocalizacao(String pLocalizacao) {
 		this.localizacao = pLocalizacao;
 	}
-	
+
 	/**
 	 * Setter do endereco da instituicao
 	 */
-	public void setEndereco(String pEndereco){
+	public void setEndereco(String pEndereco) {
 		this.endereco = pEndereco;
 	}
 
 	/**
 	 * Setter da cidade da instituicao
 	 */
-	public void setCidade(String pCidade){
+	public void setCidade(String pCidade) {
 		this.cidade = pCidade;
 	}
-	
+
 	/**
 	 * Setter do estado (UF) da instituicao
 	 */
-	public void setEstado(String pEstado){
+	public void setEstado(String pEstado) {
 		this.estado = pEstado;
 	}
-	
+
 	/**
 	 * Setter do CEP da instituicao
 	 */
-	public void setCep(String pCep){
+	public void setCep(String pCep) {
 		this.cep = pCep;
 	}
-	
+
 	/**
 	 * Setter do telefone da instituicao
 	 */
-	public void setTelefone(String pTelefone){
+	public void setTelefone(String pTelefone) {
 		this.telefone = pTelefone;
 	}
 
-	
 }

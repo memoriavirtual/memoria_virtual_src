@@ -13,28 +13,20 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	public Instituicao cadastrarInstituicao(String Nome, String Localizacao,
-			String Endereco, String Cidade, String Estado, String Cep,
-			String Telefone) {
+	public void cadastrarInstituicao(String Nome, String Localizacao, String Endereco, String Cidade, String Estado,
+			String Cep, String Telefone) throws ModeloException {
 
-		Instituicao instituicao = new Instituicao(Nome, Localizacao, Endereco,
-				Cidade, Estado, Cep, Telefone);
+		Instituicao instituicao = new Instituicao(Nome, Localizacao, Endereco, Cidade, Estado, Cep, Telefone);
 
 		// verifica se ja existe uma instituicao com esse nome
 		if (entityManager.find(instituicao.getClass(), instituicao.getNome()) != null)
-			return null;
+			throw new ModeloException("Já existe uma Intituição com este nome");
 		// tenta persistir no banco
-		try {
-			entityManager.persist(instituicao);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+
+		entityManager.persist(instituicao);
 
 		// certifica que a persistencia ocorreu com sucesso
 		if (!entityManager.contains(instituicao))
-			return null;
-
-		return instituicao;
+			throw new ModeloException("A inserção da nova Instituição foi mal sucedida!");
 	}
 }
