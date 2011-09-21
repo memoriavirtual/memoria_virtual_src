@@ -8,6 +8,8 @@ import javax.ejb.Remote;
 @Remote
 public interface MemoriaVirtualRemote {
 
-    public InetAddress getEnderecoServidor() throws IOException;
+	public InetAddress getEnderecoServidor() throws IOException;
+
+	public boolean validarEmail(String email);
 
 }
