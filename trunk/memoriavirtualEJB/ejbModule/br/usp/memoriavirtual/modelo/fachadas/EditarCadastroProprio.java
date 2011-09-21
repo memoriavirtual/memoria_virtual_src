@@ -10,19 +10,17 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroProprioRemote;
 public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 
 	private Usuario usuario;
-	
-	public Usuario atualizarDadosUsuario(String id, String email, String nome,
-			String telefone, String senha, String validacao){
-		return usuario;
-	}
-	
-	public boolean disponibilidadeEmail(String email){
-		return true;
-	}
-	
-	public Usuario recuperarDadosUsuario(String id){
-		return usuario;
+
+	public void atualizarDadosUsuario(String id, String email, String nome,
+			String telefone, String senha, String validacao) {
 	}
 
+	public boolean disponibilidadeEmail(String email) {
+		return true;
+	}
+
+	public Usuario recuperarDadosUsuario(String id) {
+		return usuario;
+	}
 
 }
