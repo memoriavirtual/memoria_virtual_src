@@ -13,10 +13,30 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	public void cadastrarInstituicao(String Nome, String Localizacao, String Endereco, String Cidade, String Estado,
-			String Cep, String Telefone) throws ModeloException {
+	/**
+	 * Este método cadastra uma nova instituição no banco de dados.
+	 * 
+	 * @param nome
+	 *            Nome da Instituição
+	 * @param localizacao
+	 *            Localização da Instituição
+	 * @param endereco
+	 *            Endereço da Instituição
+	 * @param cidade
+	 *            Cidade da Instituição
+	 * @param estado
+	 *            Estado da Instituição
+	 * @param cep
+	 *            CEP da Instituição
+	 * @param telefone
+	 *            Telefone da Instituição
+	 * @throws ModeloException
+	 *             A exceção é lançada caso uma instituição já exista com este nome
+	 */
+	public void cadastrarInstituicao(String nome, String localizacao, String endereco, String cidade, String estado,
+			String cep, String telefone) throws ModeloException {
 
-		Instituicao instituicao = new Instituicao(Nome, Localizacao, Endereco, Cidade, Estado, Cep, Telefone);
+		Instituicao instituicao = new Instituicao(nome, localizacao, endereco, cidade, estado, cep, telefone);
 
 		// verifica se ja existe uma instituicao com esse nome
 		if (entityManager.find(instituicao.getClass(), instituicao.getNome()) != null)
