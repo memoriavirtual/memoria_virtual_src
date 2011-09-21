@@ -64,7 +64,6 @@ body{
 	#recipiente { 	
 		min-height: 90%;
 		width: 976px;	
-		background: url(../resources/imagens/content_background.png) repeat-y;	
 		margin: 0px auto 0;
 		padding: 0;
 		text-align:left;	
@@ -80,6 +79,7 @@ body{
 	}
 	
 	#cabecalho {	
+		background: url(../resources/imagens/content_background.png) repeat-y;
 		padding:  30px 8px 0;
 		position:relative;
 		text-align:left;
@@ -208,12 +208,12 @@ body{
 /*                CONTEUDO / FORMULARIO                       /
 /*************************************************************/
 #conteudo{
-	background:#FFF;
+	background: url(../resources/imagens/content_background.png) repeat-y;
 	color:#000;
-	width:940px;
+	width:936px;
 	font-size:13px;
 	margin:0 auto;
-	padding: 0 10px 10px;
+	padding: 0 20px 10px;
 }
 .formulario{
 	background:#FFF;
