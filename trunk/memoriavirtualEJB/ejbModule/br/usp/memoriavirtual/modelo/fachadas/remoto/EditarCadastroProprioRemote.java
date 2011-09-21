@@ -7,4 +7,11 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 @Remote
 public interface EditarCadastroProprioRemote {
 
+	public Usuario atualizarDadosUsuario(String id, String email, String nome,
+			String telefone, String senha, String validacao);
+	
+	public boolean disponibilidadeEmail(String email);
+	
+	public Usuario recuperarDadosUsuario(String id);
+	
 }
