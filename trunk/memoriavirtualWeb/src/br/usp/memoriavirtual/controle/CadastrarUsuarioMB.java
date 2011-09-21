@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensErro;
+
 
 public class CadastrarUsuarioMB {
 
+	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private CadastrarUsuarioRemote cadastrarUsuarioEJB;
 	private String id = "";
@@ -21,6 +25,7 @@ public class CadastrarUsuarioMB {
 	private String senha = "";
 	private String confirmacaoSenha = "";
 	private String validacao = "";
+
 
 	public CadastrarUsuarioMB() {
 
@@ -83,7 +88,7 @@ public class CadastrarUsuarioMB {
 		
 		if (this.email.equals("")) {
 			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailVazio", "validacaoEmail");
-		} else if (!cadastrarUsuarioEJB.validarEmail(this.email)) {
+		} else if (!memoriaVirtualEJB.validarEmail(this.email)) {
 			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido", "validacaoEmail");
 		} else if (!cadastrarUsuarioEJB.disponibilidadeEmail(this.email)) {
 			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
