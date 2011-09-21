@@ -1,8 +1,5 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -29,9 +26,9 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 		Usuario usuario = null;
 		Usuario usuarioCadastrado = new Usuario();
 
-		/* 
-		 * Insiro no banco de dados uma nova tupla com os dados cadastrados
-		 * e deleto a tupla usada para enviar o convite
+		/*
+		 * Insiro no banco de dados uma nova tupla com os dados cadastrados e
+		 * deleto a tupla usada para enviar o convite
 		 */
 		try {
 			usuario = (Usuario) query.getSingleResult();
@@ -50,25 +47,12 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 			e.printStackTrace();
 			return null;
 		}
+
 	}
 
-	public boolean validarEmail(String email) {
-
-		String regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
-				+ "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
-				+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-		Pattern pattern = Pattern.compile(regexp);
-		Matcher matcher = pattern.matcher(email);
-
-		if (!matcher.matches())
-			return false;
-
-		return true;
-	}
-	
 	public boolean disponibilidadeEmail(String email) {
 
-		Query query = this.entityManager
+		Query query = entityManager
 				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
 		query.setParameter("email", email);
 
@@ -79,6 +63,6 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 
 		}
 		return true;
-	}
 
+	}
 }
