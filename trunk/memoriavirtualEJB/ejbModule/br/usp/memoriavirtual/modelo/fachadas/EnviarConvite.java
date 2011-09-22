@@ -49,14 +49,18 @@ public class EnviarConvite implements EnviarConviteRemote {
 	}
 
 	/**
-	 * @return <code>"sucesso"</code> se convites foram enviados com sucesso cadastrados
-	 * @return <code>"Formato de email invalido: email"</code> se existe erro no email
+	 * @return <code>"sucesso"</code> se convites foram enviados com sucesso
+	 *         cadastrados
+	 * @return <code>"Formato de email invalido: email"</code> se existe erro no
+	 *         email
 	 * 
-	 * @return <code>"Email ja existente no sistema: email"</code> se o email ja esta cadastrado
-	 * @return <code>"Erro ao cadastrar no banco de dados: email"</code> Se houve algum erro ao incluir o email no banco
-	 *         de dados
+	 * @return <code>"Email ja existente no sistema: email"</code> se o email ja
+	 *         esta cadastrado
+	 * @return <code>"Erro ao cadastrar no banco de dados: email"</code> Se
+	 *         houve algum erro ao incluir o email no banco de dados
 	 */
-	public String enviarConvite(String emails, String mensagem, String validade, String instituicao, String nivelAcesso) {
+	public String enviarConvite(String emails, String mensagem,
+			String validade, String instituicao, String nivelAcesso) {
 		String[] email = emails.split("[; ]+");
 		String erro;
 
@@ -76,12 +80,19 @@ public class EnviarConvite implements EnviarConviteRemote {
 			try {
 				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
 				String assunto = "Convite para o Memoria Virtual";
-				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como " + nivelAcesso
-						+ "na instituicao: " + this.instituicao.getNome()
+				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como "
+						+ nivelAcesso
+						+ "na instituicao: "
+						+ this.instituicao.getNome()
 						+ ". Para concluir seu cadastro entre no link a seguir:"
-						+ new MemoriaVirtual().getEnderecoServidor().getCanonicalHostName()
-						+ "/fazerCadastro.jsf?Validacao=" + this.usuario.getId() + "&email=" + this.usuario.getEmail()
-						+ ".... Seu convite é valido ate " + formatoData.format(this.usuario.getValidade())
+						+ new MemoriaVirtual().getEnderecoServidor()
+								.getCanonicalHostName()
+						+ "/fazerCadastro.jsf?Validacao="
+						+ this.usuario.getId()
+						+ "&email="
+						+ this.usuario.getEmail()
+						+ ".... Seu convite é valido ate "
+						+ formatoData.format(this.usuario.getValidade())
 						+ " ... Voce recebeu a seguinte mensagem: " + mensagem;
 				enviarEmail(email[i], assunto, textoEmail);
 			} catch (Exception e) {
@@ -89,9 +100,11 @@ public class EnviarConvite implements EnviarConviteRemote {
 			}
 
 			// Cadastra usuario no banco
-			erro = cadastrarUsuarioBD(email[i], validade, instituicao, nivelAcesso);
+			erro = cadastrarUsuarioBD(email[i], validade, instituicao,
+					nivelAcesso);
 			if (erro.equals("falhaBD"))
-				return "Erro desconhecido ao cadastrar no banco de dados: " + email[i];
+				return "Erro desconhecido ao cadastrar no banco de dados: "
+						+ email[i];
 			else if (erro.equals("falhaEmail"))
 				return "Formato de email invalido: " + email[i];
 		}
@@ -108,7 +121,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 
 	public String validacaoEmail(String[] emails) {
 		for (Integer i = 0; i < emails.length; i++) {
-			String regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\." + "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
+			String regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
+					+ "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
 					+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 			Pattern pattern = Pattern.compile(regexp);
 			Matcher matcher = pattern.matcher(emails[i]);
@@ -131,7 +145,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 	public String procurarEmailsBD(String[] emails) {
 		Query query;
 		for (Integer i = 0; i < emails.length; i++) {
-			query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+			query = this.entityManager
+					.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
 			query.setParameter("email", emails[i]);
 			try {
 				query.getSingleResult();
@@ -159,11 +174,13 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * @return sucesso Se o usuario foi incluido no banco de dados com sucesso
 	 */
 
-	private String cadastrarUsuarioBD(String email, String validade, String instituicaoId, String nivelAcesso) {
+	private String cadastrarUsuarioBD(String email, String validade,
+			String instituicaoId, String nivelAcesso) {
 
 		Boolean usuarioCadastrado = false;
 		Date dataAtual = new Date();
-		Date vencimento = new Date(dataAtual.getTime() + (long) Integer.parseInt(validade) * Timer.ONE_DAY);
+		Date vencimento = new Date(dataAtual.getTime()
+				+ (long) Integer.parseInt(validade) * Timer.ONE_DAY);
 		String id;
 		this.usuario = new Usuario();
 		Random generator = new Random(); // Usado para gerar o hash do convite
@@ -174,7 +191,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 		// unico
 		// id será usado para verificação do convite enviado via email
 		do {
-			id = Usuario.gerarHash(email + Integer.toString(generator.nextInt()));
+			id = Usuario.gerarHash(email
+					+ Integer.toString(generator.nextInt()));
 		} while (entityManager.find(Usuario.class, id) != null);
 
 		this.usuario.setId(id);
@@ -204,7 +222,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 				Acesso acesso = new Acesso();
 				Grupo grupo = null;
 
-				this.instituicao = (Instituicao) entityManager.find(Instituicao.class, instituicaoId);
+				this.instituicao = (Instituicao) entityManager.find(
+						Instituicao.class, instituicaoId);
 				if (this.instituicao == null)
 					return "falhaBD";
 
@@ -235,7 +254,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * 
 	 * @param usuario
 	 * 
-	 * @return List<Instituicao> Institui��es que o usuario faz parte e pertence ao grupo passado como parametro
+	 * @return List<Instituicao> Institui��es que o usuario faz parte e pertence
+	 *         ao grupo passado como parametro
 	 */
 
 	public List<Instituicao> getInstituicoes(Grupo grupo, Usuario usuario) {
@@ -273,7 +293,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 	@SuppressWarnings("unchecked")
 	public List<Instituicao> getInstituicoes() {
 		List<Instituicao> instituicoes = null;
-		Query query = this.entityManager.createQuery("select i from Instituicao i");
+		Query query = this.entityManager
+				.createQuery("select i from Instituicao i");
 		instituicoes = (List<Instituicao>) query.getResultList();
 
 		return instituicoes;
@@ -293,16 +314,19 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * 
 	 */
 
-	public void enviarEmail(String destinatario, String assunto, String mensagem) throws Exception {
+	public void enviarEmail(String destinatario, String assunto, String mensagem)
+			throws Exception {
 		Message message = new MimeMessage(mailSession);
 		message.setFrom();
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario, false));
+		message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(destinatario, false));
 		message.setSubject(assunto);
 		Date timeStamp = new Date();
 		message.setText(mensagem);
 		message.setHeader("X-Mailer", "Memoria virtual mailer");
 		message.setSentDate(timeStamp);
-		System.out.println(this.memoriaVirtual.getEnderecoServidor().getHostAddress());
+		System.out.println(this.memoriaVirtual.getEnderecoServidor()
+				.getHostAddress());
 		// Send message
 		Transport.send(message);
 	}

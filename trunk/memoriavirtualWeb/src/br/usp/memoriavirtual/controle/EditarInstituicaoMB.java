@@ -79,11 +79,12 @@ public class EditarInstituicaoMB {
 		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
 
 		if (usuario.isAdministrador()) {
-			instituicoesUsuario = this.editarInstituicaoEJB.getInstituicoes();
+			instituicoesUsuario = this.editarInstituicaoEJB
+					.getInstituicoesSugeridas(this.velhoNome);
 		} else {
 			Grupo grupo = new Grupo("Gerente");
-			instituicoesUsuario = this.editarInstituicaoEJB.getInstituicoes(
-					grupo, usuario);
+			instituicoesUsuario = this.editarInstituicaoEJB
+					.getInstituicoesSugeridas(this.velhoNome, grupo, usuario);
 		}
 
 		this.instituicoes = instituicoesUsuario;
@@ -257,7 +258,7 @@ public class EditarInstituicaoMB {
 	public void setNovoTelefone(String novoTelefone) {
 		this.novoTelefone = novoTelefone;
 	}
-	
+
 	/**
 	 * @return the instituicoes
 	 */
