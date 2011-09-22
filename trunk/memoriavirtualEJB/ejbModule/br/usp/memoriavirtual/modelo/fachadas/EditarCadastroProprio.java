@@ -31,9 +31,6 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 			throw new ModeloException("Usuario não encontrado");
 	}
 
-	public boolean disponibilidadeEmail(String email) {
-		return true;
-	}
 
 	public Usuario recuperarDadosUsuario(String id) {
 		return usuario;
