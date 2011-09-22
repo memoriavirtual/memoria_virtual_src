@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.modelo.fachadas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
@@ -26,13 +27,16 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 			usuario.setNomeCompleto(novoNomeCompleto);
 			usuario.setSenha(novaSenha);
 			entityManager.flush();
-		}
-		else
+		} else
 			throw new ModeloException("Usuario não encontrado");
 	}
 
-
 	public Usuario recuperarDadosUsuario(String id) {
+
+		Query query = entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
+		query.setParameter("id", id);
+		usuario = (Usuario) query.getSingleResult();
 		return usuario;
 	}
 
