@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
@@ -16,12 +17,29 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 @Stateless (mappedName = "EditarInstituicao")
 public class EditarInstituicao implements EditarInstituicaoRemote{
 	
+	@PersistenceContext(unitName="memoriavirtual")
 	private EntityManager entityManager;
+
 
 	@Override
 	public String editarInstituicao(String velhoNome, String novoNome, String novoEmail, String novoLocalizacao, String novoEndereco, String novoCidade, String novoEstado, String novoCep, String novoTelefone) {
+		Instituicao instituicao;
 		
-		return null;
+		instituicao = this.entityManager.find(Instituicao.class, velhoNome);
+			if(instituicao != null){
+				instituicao.setNome(novoNome);
+				instituicao.setEmail(novoEmail);
+				instituicao.setLocalizacao(novoLocalizacao);
+				instituicao.setEndereco(novoEndereco);
+				instituicao.setCidade(novoCidade);
+				instituicao.setEstado(novoEstado);
+				instituicao.setCep(novoCep);
+				instituicao.setTelefone(novoTelefone);
+				entityManager.flush();
+				return "sucesso";
+			}
+		
+		return "erro";
 	}
 
 	@Override
@@ -39,14 +57,15 @@ public class EditarInstituicao implements EditarInstituicaoRemote{
 		}
 
 		return instituicoes;
-	    }
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
     public List<Instituicao> getInstituicoes() {
-	List<Instituicao> instituicoes = null;
-	Query query = this.entityManager.createQuery("select i from Instituicao i");
-	instituicoes = (List<Instituicao>) query.getResultList();
+		
+		List<Instituicao> instituicoes = null;
+		Query query = this.entityManager.createQuery("select i from Instituicao i");
+		instituicoes = (List<Instituicao>) query.getResultList();
 
 	return instituicoes;
     }

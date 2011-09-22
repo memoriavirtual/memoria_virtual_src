@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+</head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+
+		<ui:define name="titulo">Cadastrar Usuario</ui:define>
+
+
+		<ui:define name="cabecalho">
+			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
+
+			<div id="menuRecipiente">
+				<ul id="menuNavegacao">
+
+				</ul>
+			</div>
+			<!-- fim #menuRecipiente -->
+
+			<div id="linkSecundarioRecipiente"></div>
+
+		</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="formulario">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"></h:message>
+				</div>
+
+				<div class="conteudoTitulo">#{mensagens.editarInstituicao}</div>
+				<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
+
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoID}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.velhoNome}">
+								<f:ajax event="keyup" execute="@this" render="sugestoesId"
+									listener="#{editarInstituicao.instituicoesSugeridas}" />
+							</h:inputText>
+							<h:outputText id="sugestoesId" values="#{editarInstituicaoMB.instituicoes}"/>
+							<h:message id="validacaoNome" for="validacaoNome"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoNome}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoNome"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEmail}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoEmail}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoEmail"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoLocalizacao}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoLocalizacao}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoLocalizacao"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEndereco}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoEndereco}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoEndereco"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCidade}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoCidade}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoCidade"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEstado}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoEstado}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoEstado"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoCep}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoCep"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoTelefone}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.novoTelefone}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoTelefone"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.ceditarInstituicaoBotaoSalvar}"
+							action="#{editarInstituicaoMB.editarInstituicao}">
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.editarInstituicaoBotaoResetar}" type="reset">
+						</h:commandButton>
+
+					</div>
+				</h:form>
+			</div>
+			<!-- end .formulario-->
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
