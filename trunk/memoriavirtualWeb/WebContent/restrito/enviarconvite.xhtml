@@ -12,86 +12,91 @@
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
-		<ui:define name="title">
-			<title>Administracao</title>
-		</ui:define>
 
-		<ui:define name="cabecalho">
-			<div id="administracao"><ui:include
-				src="/restrito/fragmentos/cabecalhos/cabecalho.xhtml"></ui:include>
-			</div>
-		</ui:define>
+
+		<ui:define name="titulo">#{mensagens.enviarconvite_title}</ui:define>
 
 		<ui:define name="conteudo">
-			<div class="conteudo">
-			<div class="aba2">
-			<ul>
-				<li><a href="#">Enviar Convite <script>
-	$('.aba2 a').corner();
-</script> </a></li>
-				<li><a href="#">Adm 2 <script>
-	$('.aba2 a').corner();
-</script> </a></li>
-			</ul>
-			</div>
-
-			<div class="formulario"><h:form>
-				<div class="erro">Os campos com (*) sao de preenchimento
-				obrigatorio</div>
-				<div class="teste"><label>E-mail (*)</label><h:inputText
-					required="true" size="20" value="#{enviarConviteMB.emails}"></h:inputText><br />
-				<label>Validade </label>
-<h:selectOneMenu value="#{enviarConviteMB.validade}">
-					<f:selectItem itemValue="1" itemLabel="1" />
-					<f:selectItem itemValue="2" itemLabel="2" />
-					<f:selectItem itemValue="3" itemLabel="3" />
-					<f:selectItem itemValue="4" itemLabel="4" />
-					<f:selectItem itemValue="5" itemLabel="5" />
-					<f:selectItem itemValue="6" itemLabel="6" />
-					<f:selectItem itemValue="7" itemLabel="7" />
-					<f:selectItem itemValue="8" itemLabel="8" />
-					<f:selectItem itemValue="9" itemLabel="9" />
-					<f:selectItem itemValue="10" itemLabel="10" />
-					<f:selectItem itemValue="11" itemLabel="11" />
-					<f:selectItem itemValue="12" itemLabel="12" />
-					<f:selectItem itemValue="13" itemLabel="13" />
-					<f:selectItem itemValue="14" itemLabel="14" />
-					<f:selectItem itemValue="15" itemLabel="15" />
-					<f:selectItem itemValue="16" itemLabel="16" />
-					<f:selectItem itemValue="17" itemLabel="17" />
-					<f:selectItem itemValue="18" itemLabel="18" />
-					<f:selectItem itemValue="19" itemLabel="19" />
-					<f:selectItem itemValue="20" itemLabel="20" />
-					<f:selectItem itemValue="21" itemLabel="21" />
-					<f:selectItem itemValue="22" itemLabel="22" />
-					<f:selectItem itemValue="23" itemLabel="23" />
-					<f:selectItem itemValue="24" itemLabel="24" />
-					<f:selectItem itemValue="25" itemLabel="25" />
-					<f:selectItem itemValue="26" itemLabel="26" />
-					<f:selectItem itemValue="27" itemLabel="27" />
-					<f:selectItem itemValue="28" itemLabel="28" />
-					<f:selectItem itemValue="29" itemLabel="29" />
-					<f:selectItem itemValue="30" itemLabel="30" />
-				</h:selectOneMenu>
-				<br />
-				<label>Nivel de Acesso (*)</label><h:selectOneMenu required="true"
-					value="#{enviarConviteMB.nivelAcesso}">
-					<f:selectItem itemLabel="----- Escolha o nivel ----" />
-					<f:selectItems value="#{enviarConviteMB.niveisPermitidos}" />
-				</h:selectOneMenu><br />
-				<label>Instituicao (*)</label><h:selectOneMenu required="true"
-					value="#{enviarConviteMB.instituicao}">
-					<f:selectItem itemLabel="--Escolha a instituicao--" />
-					<f:selectItems value="#{enviarConviteMB.instituicoesPermitidas}" />
-				</h:selectOneMenu><br />
-				<!--						<label>Mensagem Personalizada </label><h:inputTextArea rows="2" cols="20" value="#{EnviarConviteMB.mensagem}"></h:inputTextArea>-->
+			<div class="formulario">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"></h:message>
 				</div>
-				<h:commandButton action="#{enviarConviteMB.enviarConvite}" value="Enviar" />
-			</h:form></div>
+
+				<div class="conteudoTitulo">#{mensagens.enviarconvite_title}</div>
+				<div class="conteudoDescricao">#{mensagens.enviarconvite_descricao}</div>
+
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarconvite_email}</h:outputLabel>
+							<h:inputText value="#{enviarConviteMB.emails}">
+								<f:ajax event="blur" execute="@this" render="validacaoEmail"
+									listener="#{enviarConviteMB.validateEmail}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoEmail" for="validacaoEmail"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarconvite_validade}</h:outputLabel>
+							<h:selectOneMenu value="#{enviarConviteMB.validade}">
+									<f:selectItems value="#{enviarConviteMB.validadeDias}" />
+									<f:ajax event="blur" execute="@this" render="validacaoValidade"
+									listener="#{enviarConviteMB.validateValidade}" />
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoValidade" for="validacaoValidade"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarconvite_niveldeacesso}</h:outputLabel>
+							<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}">	
+									<f:selectItems value="#{enviarConviteMB.niveisPermitidos}" />
+									<f:ajax event="blur" execute="@this"
+										render="validacaoNivelAcesso"
+										listener="#{enviarConviteMB.validateNivelAcesso}" />
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoNivelAcesso" for="validacaoNivelAcesso"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarconvite_instituicao}</h:outputLabel>
+							<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
+								<f:selectItems value="#{enviarConviteMB.instituicoesPermitidas}" />
+								<f:ajax event="blur" execute="@this" render="validacaoInstituicao"
+									listener="#{enviarConviteMB.validateInstituicao}" />
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoInstituicao" for="validacaoInstituicao"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.cadastrarUsuarioBotaoCadastrar}"
+							action="#{cadastrarUsuarioMB.completarCadastro}">
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.cadastrarUsuarioBotaoResetar}" type="reset">
+						</h:commandButton>
+
+					</div>
+				</h:form>
 			</div>
+			<!-- end .formulario-->
+
 		</ui:define>
 	</ui:composition>
-
-
 </h:body>
 </html>
