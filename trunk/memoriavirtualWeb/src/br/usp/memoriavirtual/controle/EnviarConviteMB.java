@@ -6,22 +6,27 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MensagensErro;
 
 public class EnviarConviteMB {
 
 	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
+	@EJB
 	private EnviarConviteRemote enviarConviteEJB;
 	private String emails = "";
 	private String mensagem = "";
-	private String validade = "";
-	private String instituicao = "";
-	private String nivelAcesso = "";
+	private String validade = null;
+	private String instituicao = null;
+	private String nivelAcesso = null;
 	private String erro = "";
 
 	public String enviarConvite() {
@@ -61,6 +66,19 @@ public class EnviarConviteMB {
 		}
 		return sucesso ? "sucesso" : "falha";
 	}
+	
+	public List<SelectItem> getValidadeDias() {
+
+		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
+
+		niveisPermissao.add(new SelectItem(null, ""));
+		for (int i = 1; i<= 30; i++) {
+			niveisPermissao.add(new SelectItem(i, i + " dias"));
+		}
+		
+
+		return niveisPermissao;
+	}
 
 	public List<SelectItem> getNiveisPermitidos() {
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
@@ -69,6 +87,8 @@ public class EnviarConviteMB {
 		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
 		List<Grupo> grupos = null;
 
+		niveisPermissao.add(new SelectItem(null,"----- Escolha o nivel ----"));
+		
 		grupos = enviarConviteEJB.getGrupos();
 		for (Grupo grupo : grupos) {
 			niveisPermissao.add(new SelectItem(grupo.getId()));
@@ -96,6 +116,7 @@ public class EnviarConviteMB {
 			instituicoesUsuario = this.enviarConviteEJB.getInstituicoes(grupo,
 					usuario);
 		}
+		listaInstituicoes.add(new SelectItem(null,"--Escolha a instituicao--"));
 		for (Instituicao instituicao : instituicoesUsuario) {
 			listaInstituicoes.add(new SelectItem(instituicao.getNome(),
 					instituicao.getNome()));
@@ -116,6 +137,21 @@ public class EnviarConviteMB {
 	 */
 	public void setEmails(String emails) {
 		this.emails = emails;
+	}
+	
+	public void validateEmail(AjaxBehaviorEvent event){
+		if (this.emails.equals("")) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailVazio",
+					"validacaoEmail");
+		} else if (!memoriaVirtualEJB.validarEmail(this.emails)) {
+			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
+					"validacaoEmail");
+		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.emails)) {
+			MensagensErro.getErrorMessage(
+					"cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
+		} else {
+			
+		}
 	}
 
 	/**
@@ -148,6 +184,14 @@ public class EnviarConviteMB {
 	public void setValidade(String validade) {
 		this.validade = validade;
 	}
+	
+	public void validateValidade(AjaxBehaviorEvent event){
+		
+		if (this.validade == null) {
+			MensagensErro.getErrorMessage("enviarconvite_validadevazia",
+					"validacaoValidade");
+		} 
+	}
 
 	/**
 	 * @return O nivel de acesso do usuario
@@ -164,6 +208,13 @@ public class EnviarConviteMB {
 		this.nivelAcesso = nivelAcesso;
 	}
 
+	public void validateNivelAcesso(AjaxBehaviorEvent event){
+		if (this.nivelAcesso == null) {
+			MensagensErro.getErrorMessage("enviarconvite_nivelacessovazio",
+					"validacaoNivelAcesso");
+		} 
+	}
+	
 	/**
 	 * @return A instituição
 	 */
@@ -179,6 +230,15 @@ public class EnviarConviteMB {
 		this.instituicao = instituicao;
 	}
 
+	public void validateInstituicao(AjaxBehaviorEvent event){
+		if (this.instituicao == null) {
+			MensagensErro.getErrorMessage("enviarconvite_instituicaovazia",
+					"validacaoInstituicao");
+		} else {
+			MensagensErro.getErrorMessage("enviarconvite_title",
+			"validacaoInstituicao");
+		}
+	}
 	/**
 	 * @return O erro ocorrido
 	 */
