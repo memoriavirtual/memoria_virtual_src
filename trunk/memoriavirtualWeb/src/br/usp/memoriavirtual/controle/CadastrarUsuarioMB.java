@@ -91,7 +91,7 @@ public class CadastrarUsuarioMB {
 		} else if (!memoriaVirtualEJB.validarEmail(this.email)) {
 			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
 					"validacaoEmail");
-		} else if (!cadastrarUsuarioEJB.disponibilidadeEmail(this.email)) {
+		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.email)) {
 			MensagensErro.getErrorMessage(
 					"cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
 		}
