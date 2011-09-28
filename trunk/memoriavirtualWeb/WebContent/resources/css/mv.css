@@ -257,6 +257,14 @@ body{
 	width:250px;
 	height:20px;
 }
+
+.formulario fieldset option{
+	background:#F7F7F7;
+	border:#444 solid 1px;
+	padding:1px;
+	width:250px;
+	height:20px;
+}
 .formulario fieldset div div{
 	color:#414141;
 	width: 45%;
