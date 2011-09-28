@@ -49,20 +49,5 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 		}
 
 	}
-
-	public boolean disponibilidadeEmail(String email) {
-
-		Query query = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
-		query.setParameter("email", email);
-
-		try {
-			query.getSingleResult();
-			return false;
-		} catch (NoResultException e) {
-
-		}
-		return true;
-
-	}
+	
 }
