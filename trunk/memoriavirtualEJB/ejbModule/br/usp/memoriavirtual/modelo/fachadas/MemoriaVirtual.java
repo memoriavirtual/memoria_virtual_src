@@ -8,6 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.Singleton;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
@@ -19,7 +23,8 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	private static InetAddress enderecoServidor = null;
-	
+	@PersistenceContext(unitName = "memoriavirtual")
+	private EntityManager entityManager;
 
 
 	/**
@@ -61,6 +66,21 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			}
 		}
 		return enderecoServidor;
+	}
+	
+	public boolean disponibilidadeEmail(String email) {
+
+		Query query = entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+		query.setParameter("email", email);
+
+		try {
+			query.getSingleResult();
+			return false;
+		} catch (NoResultException e) {
+
+		}
+		return true;
 	}
 
 	public boolean validarEmail(String email) {
