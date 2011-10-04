@@ -14,35 +14,26 @@
 
 		<div id="menuRecipiente">
 			<ul id="menuNavegacao">
-				<li><a class="linkPrincipal" href="descritor.html">Descritor</a>
+				<li><a class="linkPrincipal" href="#">Descritor</a>
 					<ul class="linkSecundario">
-						<li><a href="#">descritor 1</a></li>
-						<li><a href="#">descritor 2</a></li>
 					</ul>
 				</li>
-				<li><a class="linkPrincipal" href="autoria.html">Autoria</a>
+				<li><a class="linkPrincipal" href="#">Autoria</a>
 					<ul class="linkSecundario">
-						<li><a href="#">autoria 1</a></li>
-						<li><a href="#">autoria 2</a></li>
 					</ul>
 				</li>
-				<li><a class="linkPrincipal" href="bempatrimonial.html">Bem
-						Patrimonial</a>
+				<li><a class="linkPrincipal" href="#">Bem Patrimonial</a>
 					<ul class="linkSecundario">
-						<li><a href="#">bem patrimonial 1</a></li>
-						<li><a href="#">bem patrimonial 2</a></li>
 					</ul>
 				</li>
-				<li><a class="linkPrincipal" href="usuario.html">Administra&ccedil;&atilde;o</a>
+				<li><a class="linkPrincipal" href="#">Administra&ccedil;&atilde;o</a>
 					<ul class="linkSecundario">
-						<li><a href="#">Convidar Amigo</a></li>
-						<li><a href="#">usuario 2</a></li>
+						<li><a href="enviarconvite.jsf">Enviar Convite</a></li>
 					</ul>
 				</li>
-				<li><a class="linkPrincipal" href="instituicao.html">Institui&ccedil;&atilde;o</a>
+				<li><a class="linkPrincipal" href="#">Institui&ccedil;&atilde;o</a>
 					<ul class="linkSecundario">
-						<li><a href="instituicao.html">instituicao 1</a></li>
-						<li><a href="#">instituicao 2</a></li>
+						<li><a href="cadastrarinstituicao.jsf">Cadastrar Institui&ccedil;&atilde;o</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -52,11 +43,12 @@
 
 		<div id="linkSecundarioRecipiente"></div>
 		<div id="usuario">
-			&lt;<h:outputText value="#{usuario.id}" />&gt;,
-			<h:link action="#{realizarLogoffMB.realizarLogoff}">sair</h:link>
-
+			
+			<h:form>
+				&lt;<h:outputText value="#{usuario.id}" />&gt;,
+				<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
+			</h:form>
 		</div>
-
 	</ui:composition>
 </body>
 </html>
