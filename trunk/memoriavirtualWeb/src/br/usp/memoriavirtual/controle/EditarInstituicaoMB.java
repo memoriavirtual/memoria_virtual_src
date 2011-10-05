@@ -2,11 +2,9 @@ package br.usp.memoriavirtual.controle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.model.SelectItem;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -62,13 +60,12 @@ public class EditarInstituicaoMB {
 		} else {
 			Grupo grupo = new Grupo("Gerente");
 			instituicoesUsuario = this.editarInstituicaoEJB
-					.getInstituicoesSugeridas(this.velhoNome, grupo, usuario);
+					.getInstituicoesSugeridas("a", grupo, usuario);
 		}
 
 		for (Instituicao it : instituicoesUsuario) {
-			this.instituicoes += it.getNome();
+			this.instituicoes += (it.getNome() + "<br/>");
 		}
-		this.instituicoes += this.velhoNome;
 
 	}
 

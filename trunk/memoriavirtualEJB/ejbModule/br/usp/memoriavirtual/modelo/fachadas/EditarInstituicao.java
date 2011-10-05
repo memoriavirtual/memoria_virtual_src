@@ -25,14 +25,17 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		List<Instituicao> ins = new ArrayList<Instituicao>();
 		Query query;
 
-		query = entityManager
-				.createQuery("SELECT a FROM Instituicao WHERE a.nome like nome%");
-		query.setParameter("nome", pnome);
-		try {
-			ins = (List<Instituicao>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (pnome != "" ) {
+			query = entityManager
+					.createQuery("SELECT a FROM Instituicao a WHERE a.nome LIKE :padrao");
+			query.setParameter("padrao", pnome + "%");
 
+			try {
+				ins = (List<Instituicao>) query.getResultList();
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			}
 		}
 
 		return ins;
