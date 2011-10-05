@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.controle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -25,31 +26,7 @@ public class EditarInstituicaoMB {
 	private String novoEstado;
 	private String novoCep;
 	private String novoTelefone;
-	private List<Instituicao> instituicoes;
-
-	public List<SelectItem> getInstituicoesPermitidas() {
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
-
-		// Lista de SelectItem que sera exibida na pagina
-		List<SelectItem> listaInstituicoes = new ArrayList<SelectItem>();
-
-		// Lista de instituicoes que o usuario pertence
-		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
-
-		if (usuario.isAdministrador()) {
-			instituicoesUsuario = this.editarInstituicaoEJB.getInstituicoes();
-		} else {
-			Grupo grupo = new Grupo("Gerente");
-			instituicoesUsuario = this.editarInstituicaoEJB.getInstituicoes(
-					grupo, usuario);
-		}
-		for (Instituicao instituicao : instituicoesUsuario) {
-			listaInstituicoes.add(new SelectItem(instituicao.getNome(),
-					instituicao.getNome()));
-		}
-		return listaInstituicoes;
-	}
+	private String instituicoes;
 
 	public String editarInstituicao() {
 
@@ -72,6 +49,7 @@ public class EditarInstituicaoMB {
 
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
+		this.instituicoes = "";
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
@@ -87,7 +65,10 @@ public class EditarInstituicaoMB {
 					.getInstituicoesSugeridas(this.velhoNome, grupo, usuario);
 		}
 
-		this.instituicoes = instituicoesUsuario;
+		for (Instituicao it : instituicoesUsuario) {
+			this.instituicoes += it.getNome();
+		}
+		this.instituicoes += this.velhoNome;
 
 	}
 
@@ -128,7 +109,7 @@ public class EditarInstituicaoMB {
 	 * @return the velhoNome
 	 */
 	public String getVelhoNome() {
-		return velhoNome;
+		return this.velhoNome;
 	}
 
 	/**
@@ -262,7 +243,7 @@ public class EditarInstituicaoMB {
 	/**
 	 * @return the instituicoes
 	 */
-	public List<Instituicao> getInstituicoes() {
+	public String getInstituicoes() {
 		return this.instituicoes;
 	}
 
@@ -270,7 +251,7 @@ public class EditarInstituicaoMB {
 	 * @param novoTelefone
 	 *            the instituicoes to set
 	 */
-	public void setInstituicoes(List<Instituicao> novoInstituicoes) {
+	public void setInstituicoes(String novoInstituicoes) {
 		this.instituicoes = novoInstituicoes;
 	}
 
