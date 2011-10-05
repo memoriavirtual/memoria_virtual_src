@@ -38,7 +38,7 @@ public class CadastrarInstituicaoMB {
 	 * 
 	 * @return "sucesso" ou "falha" dependendo resultado das operações
 	 */
-	public String CadastrarInstituicao() {
+	public String cadastrarInstituicao() {
 		boolean cadastrada = true;
 
 		try {
