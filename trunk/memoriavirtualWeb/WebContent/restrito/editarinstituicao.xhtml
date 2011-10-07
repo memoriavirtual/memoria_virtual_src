@@ -7,7 +7,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
 </head>
 <h:body>
 	<ui:composition
@@ -42,11 +41,15 @@
 			<h:form method="post" prependId="false">
 				<fieldset>
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoID}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.velhoNome}">
+				<h:inputText id="input" value="#{editarInstituicaoMB.velhoNome}">
 					<f:ajax event="keyup" execute="@this" render="sugestoesId"
 						listener="#{editarInstituicaoMB.instituicoesSugeridas}" />
-				</h:inputText><br /> 
-				<h:outputText id="sugestoesId" value="#{editarInstituicaoMB.instituicoes}"> </h:outputText></div>
+				</h:inputText><br />
+				<div id="sugestao"><h:dataTable id="sugestoesId"
+					value="#{editarInstituicaoMB.instituicoes}" var="o">
+					<h:column>#{o.nome}</h:column>
+				</h:dataTable></div>
+				</div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
 				<h:inputText value="#{editarInstituicaoMB.novoNome}">

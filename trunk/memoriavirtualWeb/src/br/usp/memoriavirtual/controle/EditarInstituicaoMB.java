@@ -24,7 +24,7 @@ public class EditarInstituicaoMB {
 	private String novoEstado;
 	private String novoCep;
 	private String novoTelefone;
-	private String instituicoes;
+	private List<Instituicao> instituicoes;
 
 	public String editarInstituicao() {
 
@@ -47,7 +47,7 @@ public class EditarInstituicaoMB {
 
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
-		this.instituicoes = "";
+		
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
@@ -63,9 +63,8 @@ public class EditarInstituicaoMB {
 					.getInstituicoesSugeridas("a", grupo, usuario);
 		}
 
-		for (Instituicao it : instituicoesUsuario) {
-			this.instituicoes += (it.getNome() + "<br/>");
-		}
+		this.instituicoes = instituicoesUsuario;
+		this.novoNome = event.toString();
 
 	}
 
@@ -240,7 +239,7 @@ public class EditarInstituicaoMB {
 	/**
 	 * @return the instituicoes
 	 */
-	public String getInstituicoes() {
+	public List<Instituicao> getInstituicoes() {
 		return this.instituicoes;
 	}
 
@@ -248,7 +247,7 @@ public class EditarInstituicaoMB {
 	 * @param novoTelefone
 	 *            the instituicoes to set
 	 */
-	public void setInstituicoes(String novoInstituicoes) {
+	public void setInstituicoes(List<Instituicao> novoInstituicoes) {
 		this.instituicoes = novoInstituicoes;
 	}
 

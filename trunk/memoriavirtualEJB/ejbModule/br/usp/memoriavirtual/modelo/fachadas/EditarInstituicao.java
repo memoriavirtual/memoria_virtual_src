@@ -27,7 +27,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 
 		if (pnome != "" ) {
 			query = entityManager
-					.createQuery("SELECT a FROM Instituicao a WHERE a.nome LIKE :padrao");
+					.createQuery("SELECT a FROM Instituicao a WHERE a.nome LIKE :padrao ORDER BY a.nome");
 			query.setParameter("padrao", pnome + "%");
 
 			try {
