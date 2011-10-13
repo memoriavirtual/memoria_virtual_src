@@ -12,7 +12,6 @@
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-
 		<ui:define name="titulo">#{mensagens.editarCadastrorProprioTitle}</ui:define>
 
 
@@ -44,7 +43,7 @@
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
 							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
 							</h:inputText>
-						</div>
+						</div><br></br>
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
@@ -72,7 +71,8 @@
 							action="#{editarCadastroProprioMB.editarCadastroProprio}">
 						</h:commandButton>
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.editarCadastroProprioBotaoResetar}" type="reset">
+							value="#{mensagens.editarCadastroProprioBotaoResetar}"
+							type="reset">
 						</h:commandButton>
 					</div>
 				</h:form>
