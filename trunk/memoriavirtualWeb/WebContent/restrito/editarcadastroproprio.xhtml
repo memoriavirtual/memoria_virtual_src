@@ -13,7 +13,7 @@
 		template="/restrito/fragmentos/templates/template.xhtml">
 
 
-		<ui:define name="titulo">Editar Cadastro Proprio</ui:define>
+		<ui:define name="titulo">#{mensagens.editarCadastrorProprioTitle}</ui:define>
 
 
 		<ui:define name="cabecalho">
@@ -27,6 +27,57 @@
 			<!-- fim #menuRecipiente -->
 
 			<div id="linkSecundarioRecipiente"></div>
+
+		</ui:define>
+		<ui:define name="conteudo">
+			<div class="formulario">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"></h:message>
+				</div>
+
+				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
+				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
+
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
+							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
+							</h:inputText>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
+							<h:inputText value="#{editarCadastroProprioMB.novoEmail}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoEmail" for="validacaoEmail"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
+							<h:inputText value="#{editarCadastroProprioMB.novaSenha}">
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoSenha" for="validacaoSenha"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.editarCadastroProprioBotaoSalvar}"
+							action="#{editarCadastroProprioMB.editarCadastroProprio}">
+						</h:commandButton>
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.editarCadastroProprioBotaoResetar}" type="reset">
+						</h:commandButton>
+					</div>
+				</h:form>
+			</div>
+			<!-- end .formulario-->
 
 		</ui:define>
 	</ui:composition>
