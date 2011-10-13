@@ -47,7 +47,6 @@ public class EditarInstituicaoMB {
 
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
-		
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
