@@ -5,8 +5,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
@@ -106,20 +104,6 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return true;
 	}
 
-	public boolean validarEmail(String email) {
-
-		String regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
-				+ "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
-				+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-		Pattern pattern = Pattern.compile(regexp);
-		Matcher matcher = pattern.matcher(email);
-
-		if (!matcher.matches())
-			return false;
-
-		return true;
-	}
-	
 	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException{
 		Message message = new MimeMessage(this.mailSession);
 		message.setFrom();
