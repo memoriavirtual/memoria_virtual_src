@@ -32,6 +32,7 @@ public class Usuario implements Serializable, Cloneable {
 			+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email invalido")
 	private String email;
 	private String nomeCompleto;
+	private String telefone;
 	private String senha;
 	private Date validade;
 	@NotNull
@@ -44,9 +45,11 @@ public class Usuario implements Serializable, Cloneable {
 	 */
 	public Usuario() {
 		super();
-		System.out.println();
 	}
 
+	public Usuario(String id, String email, String nomeCompleto, String telefone, String senha){
+		
+	}
 	/**
 	 * @return the login
 	 */
@@ -138,6 +141,16 @@ public class Usuario implements Serializable, Cloneable {
 
 	public void setNomeCompleto(String nomeCompleto) {
 		this.nomeCompleto = nomeCompleto;
+	}
+
+	
+	
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	/**
