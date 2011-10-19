@@ -13,7 +13,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 /**
@@ -25,7 +24,6 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	private static InetAddress enderecoServidor = null;
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
-
 
 	/**
 	 * Default constructor.
@@ -67,7 +65,23 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		return enderecoServidor;
 	}
-	
+
+	public boolean disponibilidadeId(String id) {
+
+		Query query = entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
+		query.setParameter("id", id);
+
+		try {
+			query.getSingleResult();
+			return false;
+		} catch (NoResultException e) {
+			return true;
+		} catch (Exception e){
+			return false;
+		}
+	}
+
 	public boolean disponibilidadeEmail(String email) {
 
 		Query query = entityManager
