@@ -7,7 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
+<title>Cadastrar Usuario</title>
 </head>
 <h:body>
 	<ui:composition
@@ -33,8 +33,9 @@
 
 		<ui:define name="conteudo">
 			<div class="formulario">
+			
 				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado" infoClass="sucesso"></h:message>
+					<h:message id="resultado" for="resultado" infoClass="sucesso" errorClass="erro"></h:message>
 				</div>
 
 				<div class="conteudoTitulo">#{mensagens.cadastrarUsuarioTitle}</div>
@@ -85,7 +86,7 @@
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{cadastrarUsuarioMB.validateTelefone}" />
 							</h:inputText>
-							<div></div>
+							<div>(dd)xxxx-xxxx</div>
 							<h:message id="validacaoTelefone" for="validacaoTelefone"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -123,6 +124,7 @@
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.cadastrarUsuarioBotaoCadastrar}"
 							action="#{cadastrarUsuarioMB.completarCadastro}">
+							
 						</h:commandButton>
 
 						<h:commandButton id="botaoResetar"
