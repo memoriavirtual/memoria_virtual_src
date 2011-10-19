@@ -45,6 +45,7 @@ public class EditarInstituicaoMB {
 
 	}
 
+
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
@@ -63,7 +64,14 @@ public class EditarInstituicaoMB {
 		}
 
 		this.instituicoes = instituicoesUsuario;
-		this.novoNome = event.toString();
+
+	}
+	
+	public void testeAbc(AjaxBehaviorEvent event){
+
+		for(Instituicao i : this.instituicoes){
+			i.setNome("aaa");
+		}
 
 	}
 

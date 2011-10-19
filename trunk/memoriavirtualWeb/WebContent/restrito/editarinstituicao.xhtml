@@ -45,10 +45,14 @@
 					<f:ajax event="keyup" execute="@this" render="sugestoesId"
 						listener="#{editarInstituicaoMB.instituicoesSugeridas}" />
 				</h:inputText><br />
-				<div id="sugestao"><h:dataTable id="sugestoesId"
+				<h:dataTable id="sugestoesId"
 					value="#{editarInstituicaoMB.instituicoes}" var="o">
-					<h:column>#{o.nome}</h:column>
-				</h:dataTable></div>
+					<f:ajax event="click" execute="@this" render="sugestoesId"
+						listener="#{editarInstituicaoMB.testeAbc}" onevent="alert('hi')"/>
+					<h:column>#{o.nome}
+
+					</h:column>
+				</h:dataTable>
 				</div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
