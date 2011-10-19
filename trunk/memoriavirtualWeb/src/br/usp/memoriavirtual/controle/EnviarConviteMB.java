@@ -14,7 +14,8 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
-import br.usp.memoriavirtual.utils.MensagensErro;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 public class EnviarConviteMB {
 
@@ -141,13 +142,13 @@ public class EnviarConviteMB {
 	
 	public void validateEmail(AjaxBehaviorEvent event){
 		if (this.emails.equals("")) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailVazio",
+			MensagensDeErro.getErrorMessage("cadastrarUsuarioErroEmailVazio",
 					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.validarEmail(this.emails)) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
+		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.emails)) {
+			MensagensDeErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
 					"validacaoEmail");
 		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.emails)) {
-			MensagensErro.getErrorMessage(
+			MensagensDeErro.getErrorMessage(
 					"cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
 		} else {
 			
@@ -188,7 +189,7 @@ public class EnviarConviteMB {
 	public void validateValidade(AjaxBehaviorEvent event){
 		
 		if (this.validade == null) {
-			MensagensErro.getErrorMessage("enviarconvite_validadevazia",
+			MensagensDeErro.getErrorMessage("enviarconvite_validadevazia",
 					"validacaoValidade");
 		} 
 	}
@@ -210,7 +211,7 @@ public class EnviarConviteMB {
 
 	public void validateNivelAcesso(AjaxBehaviorEvent event){
 		if (this.nivelAcesso == null) {
-			MensagensErro.getErrorMessage("enviarconvite_nivelacessovazio",
+			MensagensDeErro.getErrorMessage("enviarconvite_nivelacessovazio",
 					"validacaoNivelAcesso");
 		} 
 	}
@@ -232,10 +233,10 @@ public class EnviarConviteMB {
 
 	public void validateInstituicao(AjaxBehaviorEvent event){
 		if (this.instituicao == null) {
-			MensagensErro.getErrorMessage("enviarconvite_instituicaovazia",
+			MensagensDeErro.getErrorMessage("enviarconvite_instituicaovazia",
 					"validacaoInstituicao");
 		} else {
-			MensagensErro.getErrorMessage("enviarconvite_title",
+			MensagensDeErro.getErrorMessage("enviarconvite_title",
 			"validacaoInstituicao");
 		}
 	}
