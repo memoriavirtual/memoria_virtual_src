@@ -3,11 +3,18 @@ package br.usp.memoriavirtual.modelo.fachadas;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Resource;
 import javax.ejb.Singleton;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -24,6 +31,8 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	private static InetAddress enderecoServidor = null;
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
+	@Resource(name = "mail/memoriavirtual")
+	private javax.mail.Session mailSession;
 
 	/**
 	 * Default constructor.
@@ -109,6 +118,20 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			return false;
 
 		return true;
+	}
+	
+	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException{
+		Message message = new MimeMessage(this.mailSession);
+		message.setFrom();
+		message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(destinatario, false));
+		message.setSubject(assunto);
+		Date timeStamp = new Date();
+		message.setText(mensagem);
+		message.setHeader("X-Mailer", "Memoria virtual mailer");
+		message.setSentDate(timeStamp);
+		// Enviar mensagem
+		Transport.send(message);
 	}
 
 }
