@@ -40,7 +40,7 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 			token = Usuario.gerarHash(email
 					+ Integer.toString(new Random().nextInt()));
 
-			usuario.setSenha(token);
+			usuario.setSenhaTemporaria(token);
 			this.entityManager.flush();
 			
 			try {
@@ -71,7 +71,7 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 		
 		usuario = recuperarUsuario(email, token);
 		if (usuario != null) {
-			usuario.setSenha(Usuario.gerarHash(novaSenha));
+			usuario.setSenha(novaSenha);
 			this.entityManager.flush();
 		} else
 			throw new ModeloException("Erro ao processar sua solicitação.");

@@ -77,6 +77,10 @@ public class Usuario implements Serializable, Cloneable {
 		String senhaCriptografada = gerarHash(senha);
 		this.senha = senhaCriptografada;
 	}
+	
+	public void setSenhaTemporaria(String senhaTemporaria){
+		this.senha = senhaTemporaria;		
+	}
 
 	public String getEmail() {
 		return email;
