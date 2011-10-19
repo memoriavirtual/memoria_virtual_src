@@ -12,7 +12,6 @@ public interface MemoriaVirtualRemote {
 	public InetAddress getEnderecoServidor() throws IOException;
 
 	public boolean disponibilidadeId(String id);
-	public boolean validarEmail(String email);
 	public boolean disponibilidadeEmail(String email);
 	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException;
 }
