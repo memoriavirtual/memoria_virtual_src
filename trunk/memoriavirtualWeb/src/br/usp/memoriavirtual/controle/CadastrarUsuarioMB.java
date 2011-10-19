@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -31,14 +32,21 @@ public class CadastrarUsuarioMB {
 
 	public String completarCadastro() {
 
-		FacesContext.getCurrentInstance().addMessage(
+		/*FacesContext.getCurrentInstance().addMessage(
 				"resultado",
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Cadastro concluido com sucesso.", null));
+*/
+		FacesContext.getCurrentInstance().getMessages();
+		MensagensErro.getSucessMessage("cadastro_concluido", "resultado");
+		
+
 		/*
 		 * Realiza o cadastro do usuario no banco de dados e retorna uma cópia
 		 * do usuário sem conter a senha para colocar na seção.
 		 */
+		
+		/*
 		Usuario usuario = cadastrarUsuarioEJB.completarCadastro(id, email,
 				nomeCompleto, telefone, senha, validacao);
 		if (usuario != null) {
@@ -53,7 +61,7 @@ public class CadastrarUsuarioMB {
 		} else {
 			return "falhou";
 		}
-
+*/
 		return "falhou";
 	}
 
@@ -66,9 +74,20 @@ public class CadastrarUsuarioMB {
 	}
 
 	public void validateId(AjaxBehaviorEvent event) {
-
+		System.out.println(event.getComponent().toString());
+		System.out.println(event.getBehavior().toString());
+		
 		if (this.id.equals("")) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroIdVazio",
+			String[] argumentos = { "id" };
+			MensagensErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoId");
+		} else if (this.id.length() < 4) {
+			String[] argumentos = { "id", "id_minimo" };
+			MensagensErro.getErrorMessage("tamanho_minimo", argumentos,
+					"validacaoId");
+		} else if (!memoriaVirtualEJB.disponibilidadeId(this.id)) {
+			String[] argumentos = { "id" };
+			MensagensErro.getErrorMessage("ja_cadastrado", argumentos,
 					"validacaoId");
 		}
 	}
@@ -83,17 +102,18 @@ public class CadastrarUsuarioMB {
 
 	public void validateEmail(AjaxBehaviorEvent event) {
 
-		// MensagensErro messageManager = new MensagensErro();
-
 		if (this.email.equals("")) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailVazio",
+			String[] argumentos = { "email" };
+			MensagensErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoEmail");
 		} else if (!memoriaVirtualEJB.validarEmail(this.email)) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
+			String[] argumentos = { "email" };
+			MensagensErro.getErrorMessage("formato_invalido", argumentos,
 					"validacaoEmail");
 		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.email)) {
-			MensagensErro.getErrorMessage(
-					"cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
+			String[] argumentos = { "email" };
+			MensagensErro.getErrorMessage("ja_cadastrado", argumentos,
+					"validacaoEmail");
 		}
 	}
 
@@ -107,16 +127,14 @@ public class CadastrarUsuarioMB {
 
 	public void validateSenha(AjaxBehaviorEvent event) {
 		if (this.senha.equals("")) {
-			MensagensErro.getErrorMessage("cadastrarUsuarioErroSenhaVazia",
+			String[] argumentos = { "senha" };
+			MensagensErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoSenha");
 		} else if (this.senha.length() < 6) {
-			MensagensErro
-					.getErrorMessage("cadastrarUsuarioErroSenhaDigitosMinimos",
-							"validacaoSenha");
-		} else if (!this.senha.contains("a")) {
-			MensagensErro.getWarningMessage("cadastrarUsuarioErroSenhaFraca",
+			String[] argumentos = { "senha", "senha_minima" };
+			MensagensErro.getErrorMessage("tamanho_minimo", argumentos,
 					"validacaoSenha");
-		}
+		} 
 	}
 
 	public String getNomeCompleto() {
@@ -128,7 +146,11 @@ public class CadastrarUsuarioMB {
 	}
 
 	public void validateNomeCompleto(AjaxBehaviorEvent event) {
-
+		if (this.nomeCompleto.equals("")) {
+			String[] argumentos = { "nome_completo" };
+			MensagensErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoNomeCompleto");
+		}
 	}
 
 	public String getTelefone() {
@@ -140,6 +162,17 @@ public class CadastrarUsuarioMB {
 	}
 
 	public void validateTelefone(AjaxBehaviorEvent event) {
+		String formato = "\\([0-9]{2}?\\)[0-9]{4}?\\-[0-9]{4}?";
+
+		if (this.telefone.equals("")) {
+			String[] argumentos = { "telefone" };
+			MensagensErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoTelefone");
+		} else if (!this.telefone.matches(formato)) {
+			String[] argumentos = { "telefone" };
+			MensagensErro.getErrorMessage("formato_invalido", argumentos,
+					"validacaoTelefone");
+		}
 
 	}
 
@@ -161,19 +194,14 @@ public class CadastrarUsuarioMB {
 
 	public void validateConfirmacaoSenha(AjaxBehaviorEvent event) {
 		if (confirmacaoSenha.equals("")) {
-			FacesContext.getCurrentInstance().addMessage(
-					"validacaoConfirmacaoSenha",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Confirmacao de senha deve ser preenchida.", null));
+			String[] argumentos = { "confirmacao_senha" };
+			MensagensErro.getErrorMessage("campo_vazio", argumentos,
+			"validacaoConfirmacaoSenha");
 		} else if (!this.confirmacaoSenha.equals(this.senha)) {
-			FacesContext.getCurrentInstance().addMessage(
-					"validacaoConfirmacaoSenha",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Confirmacao de senha não confere com a senha.",
-							null));
-		} else {
-
-		}
+			String[] argumentos = { "confirmacao_senha", "senha" };
+			MensagensErro.getErrorMessage("confirmacao_errado", argumentos,
+			"validacaoConfirmacaoSenha");
+		} 
 	}
 
 }
