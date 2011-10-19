@@ -85,7 +85,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 						+ "na instituicao: "
 						+ this.instituicao.getNome()
 						+ ". Para concluir seu cadastro entre no link a seguir:"
-						+ new MemoriaVirtual().getEnderecoServidor()
+						+ memoriaVirtual.getEnderecoServidor()
 								.getCanonicalHostName()
 						+ "/fazerCadastro.jsf?Validacao="
 						+ this.usuario.getId()
@@ -254,8 +254,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * 
 	 * @param usuario
 	 * 
-	 * @return List<Instituicao> Institui��es que o usuario faz parte e pertence
-	 *         ao grupo passado como parametro
+	 * @return List<Instituicao> Institui��es que o usuario faz parte e
+	 *         pertence ao grupo passado como parametro
 	 */
 
 	public List<Instituicao> getInstituicoes(Grupo grupo, Usuario usuario) {
