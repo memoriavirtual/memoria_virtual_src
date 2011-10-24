@@ -35,7 +35,7 @@
 			<div class="erroPrincipal"><h:message id="resultado"
 				for="resultado" infoClass="sucesso"></h:message></div>
 
-			<div class="conteudoTitulo">#{mensagens.editarInstituicao}</div>
+			<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
 			<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
 
 			<h:form method="post" prependId="false">
@@ -45,18 +45,16 @@
 					<f:ajax event="keyup" execute="@this" render="sugestoesId"
 						listener="#{editarInstituicaoMB.instituicoesSugeridas}" />
 				</h:inputText><br />
-				<h:dataTable id="sugestoesId"
-					value="#{editarInstituicaoMB.instituicoes}" var="o">
-					<f:ajax event="click" execute="@this" render="sugestoesId"
-						listener="#{editarInstituicaoMB.testeAbc}" onevent="alert('hi')"/>
-					<h:column>#{o.nome}
 
+				<h:dataTable id="sugestoesId" var="instituicao"
+					value="#{editarInstituicaoMB.instituicoes}">
+					<h:column>
+						<h:commandLink action="#{editarInstituicaoMB.selecionarInstituicao(instituicao)}">#{instituicao.nome}</h:commandLink>
 					</h:column>
-				</h:dataTable>
-				</div>
+				</h:dataTable></div>
 
-				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoNome}">
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel> <h:inputText
+					id="nome" value="#{editarInstituicaoMB.novoNome}">
 				</h:inputText></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoEmail}</h:outputLabel>
@@ -76,7 +74,7 @@
 				</h:message></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoEndereco}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoEndereco}">
+				<h:inputText id="lol" value="#{editarInstituicaoMB.novoEndereco}">
 				</h:inputText>
 				<div></div>
 				<h:message id="validacaoEndereco" for="validacaoEndereco"
@@ -118,7 +116,7 @@
 
 				</fieldset>
 				<div class="botao"><h:commandButton id="botaoCadastrar"
-					value="#{mensagens.ceditarInstituicaoBotaoSalvar}"
+					value="#{mensagens.editarInstituicaoBotaoSalvar}"
 					action="#{editarInstituicaoMB.editarInstituicao}">
 				</h:commandButton> <h:commandButton id="botaoResetar"
 					value="#{mensagens.editarInstituicaoBotaoResetar}" type="reset">

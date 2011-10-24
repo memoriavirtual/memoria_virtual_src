@@ -1,20 +1,27 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 
-public class EditarInstituicaoMB {
+@ManagedBean(name = "editarInstituicaoMB")
+@SessionScoped
+public class EditarInstituicaoMB implements Serializable {
 
+	private static final long serialVersionUID = -2609697377310497761L;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-	private Instituicao instituicao;
 	private String velhoNome;
 	private String novoNome;
 	private String novoEmail;
@@ -29,22 +36,15 @@ public class EditarInstituicaoMB {
 	public String editarInstituicao() {
 
 		String resultado;
-		// Checagem no servidor de completeza dos dados
-		if ((this.novoNome == null) || (this.novoEmail == null)
-				|| (this.novoLocalizacao == null)
-				|| (this.novoEndereco == null) || (this.novoCidade == null)
-				|| (this.novoEstado == null) || (this.novoCep == null)
-				|| (this.novoTelefone == null))
-			return "Incompleto";
 
 		resultado = this.editarInstituicaoEJB.editarInstituicao(
-				this.instituicao.getNome(), this.novoNome, this.novoEmail,
+				this.velhoNome, this.novoNome, this.novoEmail,
 				this.novoLocalizacao, this.novoEndereco, this.novoCidade,
 				this.novoEstado, this.novoCep, this.novoTelefone);
+
 		return resultado;
 
 	}
-
 
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
@@ -64,48 +64,21 @@ public class EditarInstituicaoMB {
 		}
 
 		this.instituicoes = instituicoesUsuario;
-
-	}
-	
-	public void testeAbc(AjaxBehaviorEvent event){
-
-		for(Instituicao i : this.instituicoes){
-			i.setNome("aaa");
-		}
-
 	}
 
-	// Metodos usados para preencher o form com os dados antigos da instiuicao
-	public String getNome() {
-		return this.instituicao.getNome();
-	}
-
-	public String getEmail() {
-		return this.instituicao.getEmail();
-	}
-
-	public String getLocalizacao() {
-		return this.instituicao.getLocalizacao();
-	}
-
-	public String getEndereco() {
-		return this.instituicao.getEndereco();
-	}
-
-	public String getCidade() {
-		return this.instituicao.getCidade();
-	}
-
-	public String getEstado() {
-		return this.instituicao.getEstado();
-	}
-
-	public String getCep() {
-		return this.instituicao.getCep();
-	}
-
-	public String getTelefone() {
-		return this.instituicao.getTelefone();
+	public String selecionarInstituicao(Instituicao instituicao) {
+		
+		this.velhoNome = instituicao.getNome();
+		this.novoNome = instituicao.getNome();
+		this.novoCep = instituicao.getCep();
+		this.novoCidade = instituicao.getCidade();
+		this.novoEmail = instituicao.getEmail();
+		this.novoEndereco = instituicao.getEndereco();
+		this.novoEstado = instituicao.getEstado();
+		this.novoLocalizacao = instituicao.getLocalizacao();
+		this.novoTelefone = instituicao.getTelefone();
+		this.instituicoes.clear();
+		return null;
 	}
 
 	/**
@@ -126,6 +99,11 @@ public class EditarInstituicaoMB {
 	/**
 	 * @return the novoNome
 	 */
+
+	public void getNovoNome(AjaxBehaviorEvent event) {
+		this.novoNome = "lol";
+	}
+
 	public String getNovoNome() {
 		return novoNome;
 	}

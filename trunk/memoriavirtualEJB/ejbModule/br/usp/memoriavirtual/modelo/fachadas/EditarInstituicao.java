@@ -21,7 +21,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<Instituicao> getInstituicoesSugeridas(String pnome) {
+	public List<Instituicao> getInstituicoesSugeridas(String pnome){
 		List<Instituicao> ins = new ArrayList<Instituicao>();
 		Query query;
 
