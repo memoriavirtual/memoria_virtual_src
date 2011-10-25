@@ -3,13 +3,13 @@ package br.usp.memoriavirtual.controle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -79,6 +79,45 @@ public class EditarInstituicaoMB implements Serializable {
 		this.novoTelefone = instituicao.getTelefone();
 		this.instituicoes.clear();
 		return null;
+	}
+	
+	public void validateId(AjaxBehaviorEvent event){
+		this.validateId();
+	}
+	
+	public boolean validateId(){
+		if(this.velhoNome == ""){
+			MensagensDeErro.getErrorMessage("editarInstituicao.idInvalido", "validacaoId");
+			return false;
+		}
+		else
+			return true;
+	}
+	
+	public void validateNome(AjaxBehaviorEvent event){
+		this.validateNome();
+	}
+	
+	public boolean validateNome(){
+		if(this.novoNome == ""){
+			MensagensDeErro.getErrorMessage("editarInstituicao.nomeInvalido", "validacaoNome");
+			return false;
+		}
+		else
+			return true;
+	}
+	
+	public void validateLocaliacao(AjaxBehaviorEvent event){
+		this.validateLocalizacao();
+	}
+	
+	public boolean validateLocalizacao(){
+		if(this.novoLocalizacao == ""){
+			MensagensDeErro.getErrorMessage("editarInstituicao.localizacaoInvalido", "validacaoLocalizacao");
+			return false;
+		}
+		else
+			return true;
 	}
 
 	/**
