@@ -25,9 +25,8 @@ public class Instituicao implements Serializable {
     private String cidade;
     @Pattern(regexp = "[A-Z]{2}", message = "Estado no formato incorreto (ex: SP e não sp)")
     private String estado;
-    @Pattern(regexp = "[0-9]{11}")
+   // @Pattern(regexp = "[0-9]{11}")
     private String cep;
- //   @Pattern(regexp = "(" + "[0-9]{3}" + ")" + "[0-9]{4}" + "-" + "[0-9]{4}", message = "Telefone no formato incorreto")
     private String telefone;
 
     /**

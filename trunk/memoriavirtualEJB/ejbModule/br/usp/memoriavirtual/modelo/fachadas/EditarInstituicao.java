@@ -21,11 +21,11 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<Instituicao> getInstituicoesSugeridas(String pnome){
+	public List<Instituicao> getInstituicoesSugeridas(String pnome) {
 		List<Instituicao> ins = new ArrayList<Instituicao>();
 		Query query;
 
-		if (pnome != "" ) {
+		if (pnome != "") {
 			query = entityManager
 					.createQuery("SELECT a FROM Instituicao a WHERE a.nome LIKE :padrao ORDER BY a.nome");
 			query.setParameter("padrao", pnome + "%");
@@ -48,7 +48,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		Query query;
 
 		query = entityManager
-				.createQuery("SELECT a FROM Acesso WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like pnome% ");
+				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like pnome% ");
 		query.setParameter("nome", pnome);
 		query.setParameter("grupo", grupo);
 		query.setParameter("usuario", usuario);
@@ -69,7 +69,11 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 			String novoTelefone) {
 		Instituicao instituicao;
 
-		instituicao = this.entityManager.find(Instituicao.class, velhoNome);
+		Query query = this.entityManager
+				.createQuery("SELECT a FROM Instituicao a WHERE a.nome =:nome");
+		query.setParameter("nome", velhoNome);
+		instituicao = (Instituicao) query.getSingleResult();
+
 		if (instituicao != null) {
 			instituicao.setNome(novoNome);
 			instituicao.setEmail(novoEmail);
@@ -79,7 +83,6 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 			instituicao.setEstado(novoEstado);
 			instituicao.setCep(novoCep);
 			instituicao.setTelefone(novoTelefone);
-			entityManager.flush();
 			return "sucesso";
 		}
 

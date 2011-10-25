@@ -37,10 +37,10 @@ public class EditarInstituicaoMB implements Serializable {
 
 		String resultado;
 
-		resultado = this.editarInstituicaoEJB.editarInstituicao(
-				this.velhoNome, this.novoNome, this.novoEmail,
-				this.novoLocalizacao, this.novoEndereco, this.novoCidade,
-				this.novoEstado, this.novoCep, this.novoTelefone);
+		resultado = this.editarInstituicaoEJB.editarInstituicao(this.velhoNome,
+				this.novoNome, this.novoEmail, this.novoLocalizacao,
+				this.novoEndereco, this.novoCidade, this.novoEstado,
+				this.novoCep, this.novoTelefone);
 
 		return resultado;
 
@@ -67,7 +67,7 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	public String selecionarInstituicao(Instituicao instituicao) {
-		
+
 		this.velhoNome = instituicao.getNome();
 		this.novoNome = instituicao.getNome();
 		this.novoCep = instituicao.getCep();
