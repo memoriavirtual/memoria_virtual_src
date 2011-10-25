@@ -1,6 +1,8 @@
 package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroProprioRemote;
@@ -14,16 +16,24 @@ public class EditarCadastroProprioMB {
 	private String novoNomeCompleto;
 	private String novaSenha;
 
+	public EditarCadastroProprioMB() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
+	}
+
 	public String editarCadastroProprio() {
 		if (this.novoEmail == null || this.novoNomeCompleto == null
 				|| this.novaSenha == null)
 			return "Incompleto";
-		usuario = this.editarCadastroProprioEJB.recuperarDadosUsuario("1");
+		usuario = this.editarCadastroProprioEJB
+				.recuperarDadosUsuario("mvirtual");
 		try {
 			this.editarCadastroProprioEJB.atualizarDadosUsuario(
 					usuario.getId(), this.novoEmail, this.novoNomeCompleto,
 					this.novaSenha);
 			return "Sucesso";
+			/** Atualizar os dados da sessão de usuario */
 		} catch (Exception e) {
 			return "Falha";
 		}
