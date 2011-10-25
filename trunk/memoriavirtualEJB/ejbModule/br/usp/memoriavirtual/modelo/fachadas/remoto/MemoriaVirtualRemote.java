@@ -13,5 +13,6 @@ public interface MemoriaVirtualRemote {
 
 	public boolean disponibilidadeId(String id);
 	public boolean disponibilidadeEmail(String email);
+	public boolean disponibilidadeNomeInstituicao(String Nome);
 	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException;
 }

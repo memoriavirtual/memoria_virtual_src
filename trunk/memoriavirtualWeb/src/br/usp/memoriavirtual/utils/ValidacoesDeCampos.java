@@ -31,5 +31,28 @@ public class ValidacoesDeCampos {
 		return true;
 	}
 	
+	public static boolean validarFormatoCep(String Cep) {
+
+		String regexp = "\\[0-9]{5}?\\-[0-9]{3}?";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(Cep);
+
+		if (!matcher.matches())
+			return false;
+
+		return true;
+	}
+	
+	public static boolean validarFormatoLocalizacao(String Localizacao) {
+
+		String regexp = "\\[0-9]{2}?\\°[SN]{1}?\\ [0-9]{2}?\\°[OL]{1}?";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(Localizacao);
+
+		if (!matcher.matches())
+			return false;
+
+		return true;
+	}
 	
 }

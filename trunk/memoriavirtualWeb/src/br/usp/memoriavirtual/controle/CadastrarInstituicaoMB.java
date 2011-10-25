@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 /**
  * Mananged Bean responsável pelo controle do cadatro de uma nova instituição
@@ -16,14 +20,16 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 public class CadastrarInstituicaoMB {
 
 	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
+	@EJB
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
-	private String nome;
-	private String localizacao;
-	private String endereco;
-	private String cidade;
-	private String estado;
-	private String cep;
-	private String telefone;
+	private String nome = "";
+	private String localizacao = "";
+	private String endereco = "";
+	private String cidade = "";
+	private String estado = "";
+	private String cep = "";
+	private String telefone = "";
 
 	/**
 	 * Construtor padrão
@@ -32,25 +38,39 @@ public class CadastrarInstituicaoMB {
 
 	}
 
-	/**
-	 * Método responsável por verificar a formatação dos campos e passar o comando para o EJB realizar a operação no
-	 * banco de dados
-	 * 
-	 * @return "sucesso" ou "falha" dependendo resultado das operações
-	 */
 	public String cadastrarInstituicao() {
-		boolean cadastrada = true;
 
-		try {
-			cadastrarInstituicaoEJB.cadastrarInstituicao(this.nome, this.localizacao, this.endereco, this.cidade,
-					this.estado, this.cep, this.telefone);
-		} catch (ModeloException e) {
-			e.printStackTrace();
-			cadastrada = false;
+		/*
+		 * FacesContext.getCurrentInstance().addMessage( "resultado", new
+		 * FacesMessage(FacesMessage.SEVERITY_INFO,
+		 * "Cadastro concluido com sucesso.", null));
+		 */
+
+		if (this.validateNome() && this.validateLocalizacao()
+				&& this.validateEndereco() && this.validateCidade()
+				&& this.validateEstado() && this.validateCep()
+				&& this.validateTelefone()) {
+
+			Instituicao instituicao = new Instituicao(this.nome,
+					this.localizacao, this.endereco, this.cidade, this.estado,
+					this.cep, this.telefone);
+
+			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
+			// if
+			// (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)){
+
+			this.nome = "";
+			this.localizacao = "";
+			this.endereco = "";
+			this.cidade = "";
+			this.estado = "";
+			this.cep = "";
+
+			MensagensDeErro.getSucessMessage("cadastrarInstituicaoSucessocadatramento", "sucesso");
+			return null;
+			// }
 		}
-
-		return cadastrada ? "sucesso" : "falha";
-
+		return null;
 	}
 
 	/**
@@ -121,10 +141,11 @@ public class CadastrarInstituicaoMB {
 	 * 
 	 * @return (List<String>) todos os estados do Brasil (somente estados)
 	 */
-	public List<SelectItem> getEstados() {
+	public List<SelectItem> getEstadoSigla() {
 
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 
+		estados.add(new SelectItem(null, "--Escolha o estado--"));
 		estados.add(new SelectItem("AL", "AL"));
 		estados.add(new SelectItem("AM", "AM"));
 		estados.add(new SelectItem("AP", "AP"));
@@ -204,4 +225,139 @@ public class CadastrarInstituicaoMB {
 		this.telefone = pTelefone;
 	}
 
+	/**
+	 * Validacao do nome
+	 */
+	public void validateNome(AjaxBehaviorEvent event) {
+		this.validateNome();
+	}
+
+	public boolean validateNome() {
+
+		if (this.nome.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroNomeVazio", "validacaoNome");
+			return false;
+		} else if (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)) {
+			MensagensDeErro
+					.getErrorMessage(
+							"cadastrarInstituicaoErroNomeJaCadastrado",
+							"validacaoNome");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validacao do Localizacao
+	 */
+	public void validateLocalizacao(AjaxBehaviorEvent event) {
+		this.validateLocalizacao();
+	}
+
+	public boolean validateLocalizacao() {
+		if (this.localizacao.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroLocalizacaoVazio",
+					"validacaoLocalizacao");
+			return false;
+		}/*
+		 * else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)) {
+		 * MensagensDeErro
+		 * .getErrorMessage("cadastrarInstituicaoErroLocalizacaoInvalido",
+		 * "validacaoLocalizacao"); return false; }
+		 */
+		return true;
+	}
+
+	/**
+	 * Validacao do endereco
+	 */
+	public void validateEndereco(AjaxBehaviorEvent event) {
+		this.validateEndereco();
+	}
+
+	public boolean validateEndereco() {
+		if (this.endereco.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroEnderecoVazio",
+					"validacaoEndereco");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validacao do cidade
+	 */
+	public void validateCidade(AjaxBehaviorEvent event) {
+		this.validateCidade();
+	}
+
+	public boolean validateCidade() {
+		if (this.cidade.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroCidadeVazio", "validacaoCidade");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validacao do estado
+	 */
+	public void validateEstado(AjaxBehaviorEvent event) {
+		this.validateEstado();
+	}
+
+	public boolean validateEstado() {
+		if (this.estado.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroEstadoVazio", "validacaoEstado");
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * Validacao do Cep
+	 */
+	public void validateCep(AjaxBehaviorEvent event) {
+		this.validateCep();
+	}
+
+	public boolean validateCep() {
+		if (this.cep.equals("")) {
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroCepVazio",
+					"validacaoCep");
+			return false;
+		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroCEPInvalido", "validacaoCep");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validacao do Telefone
+	 */
+	public void validateTelefone(AjaxBehaviorEvent event) {
+		this.validateTelefone();
+	}
+
+	public boolean validateTelefone() {
+		if (this.telefone.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroTelefoneVazio",
+					"validacaoTelefone");
+			return false;
+		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroTelefoneInvalido",
+					"validacaoTelefone");
+			return false;
+		}
+		return true;
+	}
 }

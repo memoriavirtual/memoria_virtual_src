@@ -89,6 +89,21 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 	}
 
+	public boolean disponibilidadeNomeInstituicao(String Nome) {
+
+		Query query = entityManager
+				.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
+		query.setParameter("nome", Nome);
+
+		try {
+			query.getSingleResult();
+			return false;
+		} catch (NoResultException e) {
+			return true;
+		} catch (Exception e){
+			return false;
+		}
+	}
 	public boolean disponibilidadeEmail(String email) {
 
 		Query query = entityManager
