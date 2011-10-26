@@ -78,7 +78,17 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<display-name>cadastrarInstituicao</display-name>
+		<from-view-id>/restrito/cadastrarinstituicao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>reset</from-outcome>
+			<to-view-id>/restrito/cadastrarinstituicao.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 
+	</navigation-rule>
+	
 	<application>
 		<resource-bundle>
 			<base-name>br.usp.memoriavirtual.mensagens</base-name>

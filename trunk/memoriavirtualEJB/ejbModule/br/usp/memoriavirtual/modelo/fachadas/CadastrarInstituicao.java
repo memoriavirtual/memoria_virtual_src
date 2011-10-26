@@ -17,7 +17,6 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote {
 	public void cadastrarInstituicao(Instituicao instituicao)
 	 {
 
-		 
 		entityManager.persist(instituicao); 
 
 	}

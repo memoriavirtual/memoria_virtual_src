@@ -2,6 +2,8 @@ package br.usp.memoriavirtual.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+   
+
 
 public class ValidacoesDeCampos {
 
@@ -33,7 +35,7 @@ public class ValidacoesDeCampos {
 	
 	public static boolean validarFormatoCep(String Cep) {
 
-		String regexp = "\\[0-9]{5}?\\-[0-9]{3}?";
+		String regexp = "[0-9]{5}?\\-[0-9]{3}?";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Cep);
 
@@ -45,7 +47,7 @@ public class ValidacoesDeCampos {
 	
 	public static boolean validarFormatoLocalizacao(String Localizacao) {
 
-		String regexp = "\\[0-9]{2}?\\°[SN]{1}?\\ [0-9]{2}?\\°[OL]{1}?";
+		String regexp = "[0-9]{2}?\\°[SN]{1}?\\-[0-9]{2}?\\°[OL]{1}?";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Localizacao);
 

@@ -47,32 +47,38 @@ public class CadastrarInstituicaoMB {
 		 */
 
 		if (this.validateNome() && this.validateLocalizacao()
-				&& this.validateEndereco() && this.validateCidade()
-				&& this.validateEstado() && this.validateCep()
-				&& this.validateTelefone()) {
-
+				&& this.validateCep() && this.validateTelefone()) {
 			Instituicao instituicao = new Instituicao(this.nome,
 					this.localizacao, this.endereco, this.cidade, this.estado,
 					this.cep, this.telefone);
 
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
-			// if
-			// (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)){
+			if (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)) {
 
-			this.nome = "";
-			this.localizacao = "";
-			this.endereco = "";
-			this.cidade = "";
-			this.estado = "";
-			this.cep = "";
+				this.nome = "";
+				this.localizacao = "";
+				this.endereco = "";
+				this.cidade = "";
+				this.estado = "";
+				this.cep = "";
+				this.telefone = "";
 
-			MensagensDeErro.getSucessMessage("cadastrarInstituicaoSucessocadatramento", "sucesso");
-			return null;
-			// }
+				MensagensDeErro
+						.getSucessMessage(
+								"cadastrarInstituicaoSucessocadastramento",
+								"resultado");
+				return null;
+			}
 		}
+		MensagensDeErro.getErrorMessage(
+				"cadastrarInstituicaoErrocadastramento", "resultado");
 		return null;
 	}
-
+	
+	
+	public String resetCadastrarinstituicao(){
+		return "reset";
+	}
 	/**
 	 * Getter do nome
 	 * 
@@ -279,7 +285,7 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateEndereco() {
 		if (this.endereco.equals("")) {
-			MensagensDeErro.getErrorMessage(
+			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroEnderecoVazio",
 					"validacaoEndereco");
 			return false;
@@ -296,7 +302,7 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateCidade() {
 		if (this.cidade.equals("")) {
-			MensagensDeErro.getErrorMessage(
+			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroCidadeVazio", "validacaoCidade");
 			return false;
 		}
@@ -311,8 +317,8 @@ public class CadastrarInstituicaoMB {
 	}
 
 	public boolean validateEstado() {
-		if (this.estado.equals("")) {
-			MensagensDeErro.getErrorMessage(
+		if (this.estado.equals("--Escolha o estado--")) {
+			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroEstadoVazio", "validacaoEstado");
 			return false;
 		}
@@ -328,10 +334,11 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateCep() {
 		if (this.cep.equals("")) {
-			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroCepVazio",
-					"validacaoCep");
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroCEPVazio", "validacaoCep");
 			return false;
-		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)) {
+		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)
+				&& !this.cep.equals("")) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarInstituicaoErroCEPInvalido", "validacaoCep");
 			return false;
@@ -348,11 +355,12 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateTelefone() {
 		if (this.telefone.equals("")) {
-			MensagensDeErro.getErrorMessage(
+			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroTelefoneVazio",
 					"validacaoTelefone");
 			return false;
-		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
+		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)
+				&& !this.telefone.equals("")) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarInstituicaoErroTelefoneInvalido",
 					"validacaoTelefone");

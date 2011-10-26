@@ -95,11 +95,11 @@
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCEP}</h:outputLabel>
 							<h:inputText value="#{cadastrarInstituicaoMB.cep}">
-								<f:ajax event="blur" execute="@this" render="validacaoCEP"
-									listener="#{cadastrarInstituicaoMB.validateCEP}" />
+								<f:ajax event="blur" execute="@this" render="validacaoCep"
+									listener="#{cadastrarInstituicaoMB.validateCep}" />
 							</h:inputText>
 							<div>xxxxx-xxx</div>
-							<h:message id="validacaoCEP" for="validacaoCEP"
+							<h:message id="validacaoCep" for="validacaoCep"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
@@ -125,7 +125,8 @@
 						</h:commandButton>
 
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.cadastrarInstituicaoBotaoResetar}" type="reset">
+							value="#{mensagens.cadastrarInstituicaoBotaoResetar}" 
+							action="#{cadastrarInstituicaoMB.resetCadastrarinstituicao}">
 						</h:commandButton>
 
 					</div>
