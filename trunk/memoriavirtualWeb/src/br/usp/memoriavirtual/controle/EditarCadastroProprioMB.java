@@ -18,6 +18,7 @@ public class EditarCadastroProprioMB {
 	private String novoTelefone;
 	private String novaSenha;
 	private String confirmacaoNovaSenha;
+	private String mudaSenha = "1";
 
 	public EditarCadastroProprioMB() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -36,7 +37,7 @@ public class EditarCadastroProprioMB {
 			this.editarCadastroProprioEJB.atualizarDadosUsuario(
 					usuario.getId(), getNovoEmail(), getNovoNomeCompleto(),
 					getNovoTelefone(), getNovaSenha());
-			MensagensDeErro.getSucessMessage("cadastro_concluido", "resultado");
+			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso", "resultado");
 			return "Sucesso";
 			/** Atualizar os dados da sessão de usuario */
 		} catch (Exception e) {
@@ -122,6 +123,14 @@ public class EditarCadastroProprioMB {
 			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
 					"validacaoConfirmacaoSenha");
 		}
+	}
+	
+	public void setMudaSenha(String mudaSenha){
+		this.mudaSenha = mudaSenha;
+	}
+	
+	public String getMudaSenha(){
+		return this.mudaSenha;
 	}
 
 }
