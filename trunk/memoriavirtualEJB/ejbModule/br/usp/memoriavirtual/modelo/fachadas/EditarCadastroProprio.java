@@ -18,13 +18,14 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 	private Usuario usuario;
 
 	public void atualizarDadosUsuario(String id, String novoEmail,
-			String novoNomeCompleto, String novaSenha)
+			String novoNomeCompleto, String novoTelefone, String novaSenha)
 			throws ModeloException {
 
 		usuario = this.entityManager.find(Usuario.class, id);
 		if (usuario != null) {
 			usuario.setEmail(novoEmail);
 			usuario.setNomeCompleto(novoNomeCompleto);
+			usuario.setTelefone(novoTelefone);
 			usuario.setSenha(novaSenha);
 			entityManager.flush();
 		} else
