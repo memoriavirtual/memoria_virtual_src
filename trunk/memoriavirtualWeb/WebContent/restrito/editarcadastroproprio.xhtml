@@ -45,6 +45,7 @@
 							</h:inputText>
 						</div>
 						<div></div>
+						<br></br>
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
@@ -54,6 +55,13 @@
 							<h:message id="validacaoEmail" for="validacaoEmail"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioTelefone}</h:outputLabel>
+							<h:inputText value="#{editarCadastroProprioMB.novoTelefone}">
+							</h:inputText>
+							<div></div>
 						</div>
 
 						<div>
@@ -72,8 +80,9 @@
 								value="#{editarCadastroProprioMB.confirmacaoNovaSenha}">
 							</h:inputSecret>
 							<div></div>
-							<h:message id="validacaoConfirmacaoSenha" for="validacaoConfirmacaoSenha"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							<h:message id="validacaoConfirmacaoSenha"
+								for="validacaoConfirmacaoSenha" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
 					</fieldset>
