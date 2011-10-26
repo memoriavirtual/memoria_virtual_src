@@ -7,6 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Editar Cadastro Próprio</title>
 </head>
 <h:body>
 	<ui:composition
@@ -56,7 +57,7 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioTelefone}</h:outputLabel>
 							<h:inputText value="#{editarCadastroProprioMB.novoTelefone}">
@@ -65,8 +66,19 @@
 						</div>
 
 						<div>
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
+							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}">
+								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
+									itemValue="1" />
+								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioNao}"
+									itemValue="0" />
+							</h:selectOneRadio>
+						</div>
+
+						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
-							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}">
+							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}"
+								rendered="#{editarCadastroProprioMB.mudaSenha == 1}">
 							</h:inputSecret>
 							<div></div>
 							<h:message id="validacaoSenha" for="validacaoSenha"
