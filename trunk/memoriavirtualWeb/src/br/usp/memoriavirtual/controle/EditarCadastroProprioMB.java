@@ -18,7 +18,9 @@ public class EditarCadastroProprioMB {
 	private String novoTelefone;
 	private String novaSenha;
 	private String confirmacaoNovaSenha;
-	private String mudaSenha = "1";
+	private String mudaSenha;
+	private String habilitaAlteracao;
+	private String senhaConfirmacao;
 
 	public EditarCadastroProprioMB() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -27,6 +29,8 @@ public class EditarCadastroProprioMB {
 		setNovoNomeCompleto(getNomeCompleto());
 		setNovoEmail(getEmail());
 		setNovoTelefone(getTelefone());
+		setHabilitaAlteracao("true");
+		setMudaSenha("0");
 	}
 
 	public String editarCadastroProprio() {
@@ -37,7 +41,8 @@ public class EditarCadastroProprioMB {
 			this.editarCadastroProprioEJB.atualizarDadosUsuario(
 					usuario.getId(), getNovoEmail(), getNovoNomeCompleto(),
 					getNovoTelefone(), getNovaSenha());
-			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso", "resultado");
+			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
+					"resultado");
 			return "Sucesso";
 			/** Atualizar os dados da sessão de usuario */
 		} catch (Exception e) {
@@ -124,13 +129,61 @@ public class EditarCadastroProprioMB {
 					"validacaoConfirmacaoSenha");
 		}
 	}
-	
-	public void setMudaSenha(String mudaSenha){
+
+	public void setMudaSenha(String mudaSenha) {
 		this.mudaSenha = mudaSenha;
 	}
-	
-	public String getMudaSenha(){
+
+	public String getMudaSenha() {
 		return this.mudaSenha;
+	}
+
+	public void setHabilitaAlteracao(String habilitaAlteracao) {
+		this.habilitaAlteracao = habilitaAlteracao;
+	}
+
+	public String getHabilitaAlteracao() {
+		return this.habilitaAlteracao;
+	}
+
+	public void setSenhaConfirmacao(String senhaConfirmacao) {
+		this.senhaConfirmacao = senhaConfirmacao;
+	}
+
+	public String getSenhaConfirmacao() {
+		return this.senhaConfirmacao;
+	}
+
+	public String validateLiberaAlteracao() {
+		if (senhaConfirmacao.equals("")) {
+			String[] argumentos = { "confirmacao_senha" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoLiberaAlteracao");
+			return "Falha";
+		} else if (!this.senhaConfirmacao.equals(this.usuario.getSenha())) {
+			String[] argumentos = { "confirmacao_senha", "senha" };
+			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
+					"validacaoLiberaAlteracao");
+			return "Falha";
+		}
+		setHabilitaAlteracao("false");
+		return "Sucesso";
+	}
+
+	public String vA() {
+		if (senhaConfirmacao.equals("")) {
+			String[] argumentos = { "confirmacao_senha" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoLiberaAlteracao");
+			return "Falha";
+		} else if (!this.senhaConfirmacao.equals(this.usuario.getSenha())) {
+			String[] argumentos = { "confirmacao_senha", "senha" };
+			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
+					"validacaoLiberaAlteracao");
+			return "Falha";
+		}
+		setHabilitaAlteracao("false");
+		return "Sucesso";
 	}
 
 }
