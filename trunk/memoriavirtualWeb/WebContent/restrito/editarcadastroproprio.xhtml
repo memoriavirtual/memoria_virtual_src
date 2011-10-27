@@ -41,8 +41,23 @@
 				<h:form method="post" prependId="false">
 					<fieldset>
 						<div>
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
+							<h:inputSecret
+								value="#{editarCadastroProprioMB.senhaConfirmacao}">
+							</h:inputSecret>
+						</div>
+
+						<div class="botao">
+							<h:commandButton id="botaoConfirmaSenha"
+								value="#{mensagens.editarCadastroProprioBotaoAlterar}"
+								action="#{editarCadastroProprioMB.vA}">
+							</h:commandButton>
+						</div>
+
+						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
+							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 							</h:inputText>
 						</div>
 						<div></div>
@@ -50,7 +65,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoEmail}">
+							<h:inputText value="#{editarCadastroProprioMB.novoEmail}"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoEmail" for="validacaoEmail"
@@ -60,14 +76,16 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioTelefone}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoTelefone}">
+							<h:inputText value="#{editarCadastroProprioMB.novoTelefone}"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 							</h:inputText>
 							<div></div>
 						</div>
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
-							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}">
+							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
 									itemValue="1" />
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioNao}"
