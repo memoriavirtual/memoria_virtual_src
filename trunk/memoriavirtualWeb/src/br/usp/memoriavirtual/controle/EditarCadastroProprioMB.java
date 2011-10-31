@@ -2,15 +2,19 @@ package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroProprioRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 public class EditarCadastroProprioMB {
 
 	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private EditarCadastroProprioRemote editarCadastroProprioEJB;
 	private Usuario usuario;
 	private String novoEmail;
@@ -152,6 +156,39 @@ public class EditarCadastroProprioMB {
 
 	public String getSenhaConfirmacao() {
 		return this.senhaConfirmacao;
+	}
+	
+	public void validateNomeCompleto(AjaxBehaviorEvent event) {
+		this.validateNomeCompleto();
+	}
+
+	public void validateNomeCompleto() {
+		if (this.novoNomeCompleto.equals("")) {
+			String[] argumentos = { "nome_completo" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoNomeCompleto");
+		}
+	}
+	
+	public void validateEmail(AjaxBehaviorEvent event) {
+		this.validateEmail();
+	}
+
+	public void validateEmail() {
+
+		if (this.novoEmail.equals("")) {
+			String[] argumentos = { "email" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoEmail");
+		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
+			String[] argumentos = { "email" };
+			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
+					"validacaoEmail");
+		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.novoEmail)) {
+			String[] argumentos = { "email" };
+			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
+					"validacaoEmail");
+		}
 	}
 
 	public String validateLiberaAlteracao() {
