@@ -56,8 +56,11 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
-								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoNomeCompleto"
+									listener="#{editarCadastroProprioMB.validateNomeCompleto}"
+									disabled="#{editarCadastroProprioMB.habilitaAlteracao}" />
 							</h:inputText>
 						</div>
 						<div></div>
@@ -65,8 +68,10 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoEmail}"
-								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+							<h:inputText value="#{editarCadastroProprioMB.novoEmail}">
+								<f:ajax event="blur" execute="@this" render="validacaoEmail"
+									listener="#{editarCadastroProprioMB.validateEmail}"
+									disabled="#{editarCadastroProprioMB.habilitaAlteracao}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoEmail" for="validacaoEmail"
