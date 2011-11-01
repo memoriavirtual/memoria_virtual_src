@@ -43,7 +43,11 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.EditarCadastroProprioMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+	<managed-bean>
+		<managed-bean-name>obterNovaSenhaMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.ObterNovaSenhaMB</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login</display-name>
@@ -91,9 +95,18 @@
 			<to-view-id>/restrito/cadastrarinstituicao.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-
 	</navigation-rule>
-	
+
+	<navigation-rule>
+		<display-name>cadastrarNovaSenha</display-name>
+		<from-view-id>/cadastrarnovasenha.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
 	<application>
 		<resource-bundle>
 			<base-name>br.usp.memoriavirtual.mensagens</base-name>
