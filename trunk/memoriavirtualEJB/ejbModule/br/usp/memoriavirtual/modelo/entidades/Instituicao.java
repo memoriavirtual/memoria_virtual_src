@@ -1,8 +1,6 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Pattern;
@@ -16,10 +14,6 @@ public class Instituicao implements Serializable {
     private static final long serialVersionUID = -5996690587044446292L;
     @Id
     private String nome;
-    @Column(unique = true)
-    @Pattern(regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\." + "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
-	    + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email invalido")
-    private String email;
     private String localizacao;
     private String endereco;
     private String cidade;
@@ -77,21 +71,6 @@ public class Instituicao implements Serializable {
      */
     public void setNome(String nome) {
     	this.nome = nome;
-    }
-
-    /**
-     * @return O email da instituição
-     */
-    public String getEmail() {
-    	return email;
-    }
-
-    /**
-     * @param email
-     *            Define o email da instituição
-     */
-    public void setEmail(String email) {
-    	this.email = email;
     }
 
     /**

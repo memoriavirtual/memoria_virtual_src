@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -63,30 +64,35 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 	}
 
 	@Override
-	public String editarInstituicao(String velhoNome, String novoNome,
-			String novoEmail, String novoLocalizacao, String novoEndereco,
-			String novoCidade, String novoEstado, String novoCep,
-			String novoTelefone) {
+	public void editarInstituicao(String velhoNome, String novoNome,
+			String novoLocalizacao, String novoEndereco, String novoCidade,
+			String novoEstado, String novoCep, String novoTelefone) throws ModeloException {
 		Instituicao instituicao;
 
 		Query query = this.entityManager
 				.createQuery("SELECT a FROM Instituicao a WHERE a.nome =:nome");
 		query.setParameter("nome", velhoNome);
-		instituicao = (Instituicao) query.getSingleResult();
-
+		
+		try{
+			instituicao = (Instituicao) query.getSingleResult();
+		}
+		catch(NoResultException e){
+			ModeloException excessao = new ModeloException(e);
+			throw excessao;
+		}
+		catch(Exception e){
+			RuntimeException excessao = new RuntimeException(e);
+			throw excessao;
+		}
 		if (instituicao != null) {
 			instituicao.setNome(novoNome);
-			instituicao.setEmail(novoEmail);
 			instituicao.setLocalizacao(novoLocalizacao);
 			instituicao.setEndereco(novoEndereco);
 			instituicao.setCidade(novoCidade);
 			instituicao.setEstado(novoEstado);
 			instituicao.setCep(novoCep);
 			instituicao.setTelefone(novoTelefone);
-			return "sucesso";
 		}
-
-		return "erro";
 	}
 
 	@Override
