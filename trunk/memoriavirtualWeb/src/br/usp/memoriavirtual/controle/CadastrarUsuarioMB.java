@@ -51,7 +51,7 @@ public class CadastrarUsuarioMB {
 		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
 
 			try {
-				cadastrarUsuarioEJB.completarCadastro(usuario, validacao);
+				cadastrarUsuarioEJB.cadastrarUsuario(usuario, validacao);
 			} catch (ModeloException e) {
 				usuario = null;
 				MensagensDeErro

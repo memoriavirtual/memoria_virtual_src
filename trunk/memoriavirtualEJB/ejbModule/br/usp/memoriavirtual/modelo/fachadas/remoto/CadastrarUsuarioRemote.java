@@ -8,6 +8,8 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface CadastrarUsuarioRemote {
 
-	public void completarCadastro(Usuario usuario, String validacao) throws ModeloException;
+	public void cadastrarUsuario(Usuario usuario, String validacao) throws ModeloException;
+
+	public Usuario verificarConvite(String convite) throws ModeloException;
 
 }

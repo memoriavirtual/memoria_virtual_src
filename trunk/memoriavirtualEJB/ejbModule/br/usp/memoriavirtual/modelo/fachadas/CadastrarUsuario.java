@@ -15,19 +15,32 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	public void completarCadastro(Usuario usuario, String validacao)
-			throws ModeloException {
+	public Usuario verificarConvite(String convite) throws ModeloException {
+		Query query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
+		query.setParameter("usuario", convite);
+
+		Usuario usuarioAutenticado = null;
+
+		try {
+			usuarioAutenticado = (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			usuarioAutenticado = null;
+			throw new ModeloException(e);
+		}
+
+		return usuarioAutenticado;
+	}
+
+	public void cadastrarUsuario(Usuario usuario, String validacao) throws ModeloException {
 
 		/* Busco pelo convite usando o campo ID na tabela */
-		Query query = this.entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
+		Query query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
 		query.setParameter("usuario", validacao);
 
 		Usuario convite = null;
 
 		/*
-		 * Insiro no banco de dados uma nova tupla com os dados cadastrados e
-		 * deleto a tupla usada para enviar o convite
+		 * Insiro no banco de dados uma nova tupla com os dados cadastrados e deleto a tupla usada para enviar o convite
 		 */
 		try {
 			convite = (Usuario) query.getSingleResult();
@@ -37,6 +50,6 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 		usuario.setAtivo(true);
 		usuario.setAdministrador(convite.isAdministrador());
 		entityManager.persist(usuario);
-		entityManager.remove(usuario);
+		entityManager.remove(convite);
 	}
 }
