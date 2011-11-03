@@ -356,6 +356,7 @@ h4 {
 	border-width: 2px;
 	border-style: solid;
 	margin-left: 440px;
+	margin-top:-10px;
 	width: 250px;
 	z-index: -1;
 }
@@ -365,6 +366,16 @@ h4 {
 	color: white;
 	cursor: pointer;
 	cursor: hand;
+}
+
+#sugestoesId a{
+	color:black;
+	text-decoration:none;
+	display:block;
+}
+
+#sugestoesId a:hover{
+	color:white;
 }
 
 /*************************************************************/

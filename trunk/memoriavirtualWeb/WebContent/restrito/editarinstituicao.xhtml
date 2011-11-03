@@ -7,7 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Editar Instituição</title>
+<title>Editar Instituicao</title>
 </head>
 <h:body>
 	<ui:composition
@@ -17,19 +17,6 @@
 		<ui:define name="titulo">#{mensagens.editarInstituicaoTitle}</ui:define>
 
 
-		<ui:define name="cabecalho">
-			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
-
-			<div id="menuRecipiente">
-				<ul id="menuNavegacao">
-
-				</ul>
-			</div>
-			<!-- fim #menuRecipiente -->
-
-			<div id="linkSecundarioRecipiente"></div>
-
-		</ui:define>
 
 		<ui:define name="conteudo">
 			<div class="formulario">
@@ -38,103 +25,95 @@
 					<h:message id="resultado" for="resultado" infoClass="sucesso" errorClass="erro"></h:message>
 				</div>
 
-				<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
+			<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
+			<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
 
-				<h:form method="post" prependId="false">
-					<fieldset>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoID}
-							</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.velhoNome}">
-								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{editarInstituicaoMB.instituicoesSugeridas}"/>
-								<f:ajax event="blur" execute="@this" render="validacaoId"
-									listener="#{editarInstituicaoMB.validateId}"/>
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoId" for="validacaoId" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-						<div id="sugestoes">
-						<h:dataTable id="sugestoesId" var="instituicao"
-							value="#{editarInstituicaoMB.instituicoes}">
-						<h:column>
-						<h:commandLink action="#{editarInstituicaoMB.selecionarInstituicao(instituicao)}">#{instituicao.nome}</h:commandLink>
-						</h:column>
-						</h:dataTable>
-						</div>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoNome}">
-								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{editarInstituicaoMB.validateNome}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoLocalizacao}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoLocalizacao}">
-								<f:ajax event="blur" execute="@this" render="validacaoLocalizacao"
-									listener="#{editarInstituicaoMB.validateLocalizacao}" />
-							</h:inputText>
-							<h:message id="validacaoLocalizacao" for="validacaoLocalizacao" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEmail}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoEmail}">
-							</h:inputText>
-						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEndereco}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoEndereco}">
-							</h:inputText>
-						</div>
-				
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCidade}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoCidade}">
-							</h:inputText>
+			<h:form method="post" prependId="false">
+				<fieldset>
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
+				<h:inputText value="#{editarInstituicaoMB.novoNome}">
+					<f:ajax event="blur" execute="@this" render="validacaoNome"
+						listener="#{editarInstituicaoMB.validateNome}" />
+				</h:inputText>
+				<div></div>
+				<h:message id="validacaoNome" for="validacaoNome"
+					infoClass="sucesso" errorClass="erro" warnClass="aviso">
+				</h:message></div>
 
-						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEstado}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoEstado}"> 
-							</h:inputText>
-						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoCep}">
-							</h:inputText>
-						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoTelefone}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.novoTelefone}">
-							</h:inputText>
-						</div>
-						
-					</fieldset>
-					
-					<div class="botao"><h:commandButton id="botaoCadastrar"
-						value="#{mensagens.editarInstituicaoBotaoSalvar}"
-						action="#{editarInstituicaoMB.editarInstituicao}">
-					</h:commandButton> <h:commandButton id="botaoResetar"
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoLocalizacao}</h:outputLabel>
+				<h:inputText value="#{editarInstituicaoMB.novoLocalizacao}">
+					<f:ajax event="blur" execute="@this" render="validacaoLocalizacao"
+						listener="#{editarInstituicaoMB.validateLocalizacao}" />
+				</h:inputText>
+				<div></div>
+				<h:message id="validacaoLocalizacao" for="validacaoLocalizacao"
+					infoClass="sucesso" errorClass="erro" warnClass="aviso">
+				</h:message></div>
+
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoEndereco}</h:outputLabel>
+				<h:inputText value="#{editarInstituicaoMB.novoEndereco}">
+					<f:ajax event="blur" execute="@this" render="validacaoEndereco"
+						listener="#{editarInstituicaoMB.validateEndereco}" />
+				</h:inputText>
+				<div></div>
+				<h:message id="validacaoEndereco" for="validacaoEndereco"
+					infoClass="sucesso" errorClass="erro" warnClass="aviso">
+				</h:message></div>
+
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoCidade}</h:outputLabel>
+				<h:inputText value="#{editarInstituicaoMB.novoCidade}">
+					<f:ajax event="blur" execute="@this" render="validacaoCidade"
+						listener="#{editarInstituicaoMB.validateCidade}" />
+				</h:inputText>
+				<div></div>
+				<h:message id="validacaoCidade" for="validacaoCidade"
+					infoClass="sucesso" errorClass="erro" warnClass="aviso">
+				</h:message></div>
+
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoEstado}</h:outputLabel>
+				<h:selectOneMenu value="#{editarInstituicaoMB.novoEstado}">
+					<f:selectItem value="#{editarInstituicaoMB.novoEstadoSigla}"></f:selectItem>
+					<f:selectItems value="#{editarInstituicaoMB.estadoSigla}" />
+				</h:selectOneMenu>
+				<div></div>
+				<h:message id="validacaoEstado" for="validacaoEstado"
+					infoClass="sucesso" errorClass="erro" warnClass="aviso">
+				</h:message></div>
+
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
+				<h:inputText value="#{editarInstituicaoMB.novoCep}">
+					<f:ajax event="blur" execute="@this" render="validacaoCep"
+						listener="#{editarInstituicaoMB.validateCep}" />
+				</h:inputText>
+				<div></div>
+				<h:message id="validacaoCep" for="validacaoCep" infoClass="sucesso"
+					errorClass="erro" warnClass="aviso">
+				</h:message></div>
+
+				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoTelefone}</h:outputLabel>
+				<h:inputText value="#{editarInstituicaoMB.novoTelefone}">
+					<f:ajax event="blur" execute="@this" render="validacaoTelefone"
+						listener="#{editarInstituicaoMB.validateTelefone}" />
+				</h:inputText>
+				<div></div>
+				<h:message id="validacaoTelefone" for="validacaoTelefone"
+					infoClass="sucesso" errorClass="erro" warnClass="aviso">
+				</h:message></div>
+
+				</fieldset>
+
+				<div class="botao"><h:commandButton id="botaoCadastrar"
+					value="#{mensagens.editarInstituicaoBotaoSalvar}"
+					action="#{editarInstituicaoMB.editarInstituicao}">
+					</h:commandButton>
+					<h:commandButton id="botaoCancelar"
+						value="#{mensagens.editarInstituicaoBotaoCancelar}"
+						action="#{editarInstituicaoMB.cancelar}">
+					</h:commandButton>
+					<h:commandButton id="botaoResetar"
 						value="#{mensagens.editarInstituicaoBotaoResetar}" type="reset">
 					</h:commandButton></div>
-				</h:form>
-			</div>
+			</h:form></div>
 			<!-- end .formulario-->
 
 		</ui:define>
