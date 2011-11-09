@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
@@ -14,6 +13,7 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.Email;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
@@ -28,57 +28,64 @@ public class EnviarConviteMB {
 	private String validade = null;
 	private String instituicao = null;
 	private String nivelAcesso = null;
-	private String erro = "";
 
-	public String enviarConvite() {
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
-		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
-		boolean sucesso = true;
-		boolean consistente = false;
+	
+	private ArrayList<Email> inputList;
+	
+	public EnviarConviteMB(){
+		inputList = new ArrayList<Email>();
+	}
+	public void addInput() {
+		inputList.add(new Email());
+	}
 
-		// Faz verificacao para ver se os dados retornados pela pagina sao
-		// consistentes
-		if (usuario.isAdministrador()) {
-			consistente = true;
-		} else if (!nivelAcesso.toUpperCase().equals("ADMINISTRADOR")) {
-			Grupo grupo = new Grupo("Gerente");
-			instituicoesUsuario = this.enviarConviteEJB.getInstituicoes(grupo,
-					usuario);
-			for (Instituicao instituicao : instituicoesUsuario) {
-				if (instituicao.getNome().equals(this.instituicao)) {
-					consistente = true;
-					break;
-				}
-			}
+	public ArrayList<Email> getInputList() {
+		return inputList;
+	}
+
+	public void setInputList(ArrayList<Email> inputList) {
+		this.inputList = inputList;
+	}
+
+	public String deleteValue(Email element) {
+		inputList.remove(element);
+		return null;
+	}
+	
+	public String enviarConvite(int i){
+		
+		this.validateEmail();
+		this.validateInstituicao();
+		this.validateNivelAcesso();
+		this.validateValidade();
+		
+		
+		ArrayList<String> emails = new ArrayList<String>();
+		for(Email m:inputList){
+			emails.add(m.getEmail());
 		}
-
-		if (Integer.parseInt(validade) < 31 && consistente) {
-			this.erro = this.enviarConviteEJB.enviarConvite(emails, mensagem,
+		
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
+			try{
+				this.enviarConviteEJB.enviarConvite(emails, mensagem,
 					validade, instituicao, nivelAcesso);
-			if (erro != "sucesso") {
-				sucesso = false;
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(erro));
+				MensagensDeErro.getSucessMessage("convite_enviado", "resultado");
+			}catch(Exception e){
+				MensagensDeErro.getErrorMessage("erro_envio_convite", "resultado");
 			}
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Dados inconsistentes recebidos"));
-		}
-		return sucesso ? "sucesso" : "falha";
+		}		
+		return "falha";
 	}
 	
 	public List<SelectItem> getValidadeDias() {
 
-		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
+		List<SelectItem> diasValidade = new ArrayList<SelectItem>();
 
-		niveisPermissao.add(new SelectItem(null, ""));
+		diasValidade.add(new SelectItem(null, ""));
 		for (int i = 1; i<= 30; i++) {
-			niveisPermissao.add(new SelectItem(i, i + " dias"));
+			diasValidade.add(new SelectItem(i, i + " dias"));
 		}
-		
-
-		return niveisPermissao;
+		return diasValidade;
 	}
 
 	public List<SelectItem> getNiveisPermitidos() {
@@ -140,7 +147,7 @@ public class EnviarConviteMB {
 		this.emails = emails;
 	}
 	
-	public void validateEmail(AjaxBehaviorEvent event){
+	public void validateEmail(){
 		if (this.emails.equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarUsuarioErroEmailVazio",
 					"validacaoEmail");
@@ -153,6 +160,10 @@ public class EnviarConviteMB {
 		} else {
 			
 		}
+	}
+	
+	public void validateEmail(AjaxBehaviorEvent event){
+		this.validateEmail();
 	}
 
 	/**
@@ -186,12 +197,16 @@ public class EnviarConviteMB {
 		this.validade = validade;
 	}
 	
-	public void validateValidade(AjaxBehaviorEvent event){
+	public void validateValidade(){
 		
 		if (this.validade == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_validadevazia",
 					"validacaoValidade");
 		} 
+	}
+	
+	public void validateValidade(AjaxBehaviorEvent event){
+		this.validateValidade();
 	}
 
 	/**
@@ -209,11 +224,15 @@ public class EnviarConviteMB {
 		this.nivelAcesso = nivelAcesso;
 	}
 
-	public void validateNivelAcesso(AjaxBehaviorEvent event){
+	public void validateNivelAcesso(){
 		if (this.nivelAcesso == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_nivelacessovazio",
 					"validacaoNivelAcesso");
 		} 
+	}
+	
+	public void validateNivelAcesso(AjaxBehaviorEvent event){
+		this.validateNivelAcesso();
 	}
 	
 	/**
@@ -231,7 +250,7 @@ public class EnviarConviteMB {
 		this.instituicao = instituicao;
 	}
 
-	public void validateInstituicao(AjaxBehaviorEvent event){
+	public void validateInstituicao(){
 		if (this.instituicao == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_instituicaovazia",
 					"validacaoInstituicao");
@@ -240,10 +259,9 @@ public class EnviarConviteMB {
 			"validacaoInstituicao");
 		}
 	}
-	/**
-	 * @return O erro ocorrido
-	 */
-	public String getErro() {
-		return erro;
+	
+	public void validateInstituicao(AjaxBehaviorEvent event){
+		this.validateInstituicao();
 	}
+	
 }
