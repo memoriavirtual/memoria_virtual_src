@@ -59,23 +59,10 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * @return <code>"Erro ao cadastrar no banco de dados: email"</code> Se
 	 *         houve algum erro ao incluir o email no banco de dados
 	 */
-	public String enviarConvite(String emails, String mensagem,
-			String validade, String instituicao, String nivelAcesso) {
-		String[] email = emails.split("[; ]+");
-		String erro;
+	public void enviarConvite(ArrayList<String> emails, String mensagem,
+			String validade, String instituicao, String nivelAcesso) throws ModeloException{
 
-		erro = procurarEmailsBD(email);
-		if (erro != null) {
-			return "Email ja existente no sistema: " + erro;
-		}
-
-		erro = validacaoEmail(email);
-		if (erro != null) {
-			return "Formato de email invalido: " + erro;
-		}
-
-		for (Integer i = 0; i < email.length; i++) {
-			// Envia email
+		for (String mail:emails) {
 
 			try {
 				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
@@ -94,68 +81,20 @@ public class EnviarConvite implements EnviarConviteRemote {
 						+ ".... Seu convite é valido ate "
 						+ formatoData.format(this.usuario.getValidade())
 						+ " ... Voce recebeu a seguinte mensagem: " + mensagem;
-				enviarEmail(email[i], assunto, textoEmail);
+				enviarEmail(mail, assunto, textoEmail);
+				
+
+				cadastrarUsuarioBD(mail, validade, instituicao,
+						nivelAcesso);
+				
 			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			// Cadastra usuario no banco
-			erro = cadastrarUsuarioBD(email[i], validade, instituicao,
-					nivelAcesso);
-			if (erro.equals("falhaBD"))
-				return "Erro desconhecido ao cadastrar no banco de dados: "
-						+ email[i];
-			else if (erro.equals("falhaEmail"))
-				return "Formato de email invalido: " + email[i];
-		}
-
-		return "sucesso";
-	}
-
-	/**
-	 * Verifica se emails sao validos.
-	 * 
-	 * @return <code>email</code> O primeiro email invalido.
-	 * @return <code>null</code> nenhum email invalido.
-	 */
-
-	public String validacaoEmail(String[] emails) {
-		for (Integer i = 0; i < emails.length; i++) {
-			String regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
-					+ "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
-					+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-			Pattern pattern = Pattern.compile(regexp);
-			Matcher matcher = pattern.matcher(emails[i]);
-			// Verifica se email esta de acorda com a expressao regular e se nao
-			// tem 2 email juntos
-			if (!matcher.matches())
-				// if(matcher.matches())
-				return emails[i];
-		}
-		return null;
-	}
-
-	/**
-	 * Verifica se emails ja existem na base.
-	 * 
-	 * @return <code>email</code> O primeiro email encontrado na base.
-	 * @return <code>null</code> nenhum email encontrado na base.
-	 */
-
-	public String procurarEmailsBD(String[] emails) {
-		Query query;
-		for (Integer i = 0; i < emails.length; i++) {
-			query = this.entityManager
-					.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
-			query.setParameter("email", emails[i]);
-			try {
-				query.getSingleResult();
-				return emails[i];
-			} catch (NoResultException e) {
+				throw new ModeloException("Erro ao enviar convite", e);
 			}
 		}
-		return null;
 	}
+
+
+
 
 	/**
 	 * @param email
@@ -172,12 +111,12 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * @return falhaBD Se ocorreu algum erro ao incluir no banco de dados
 	 * 
 	 * @return sucesso Se o usuario foi incluido no banco de dados com sucesso
+	 * @throws ModeloException 
 	 */
 
-	private String cadastrarUsuarioBD(String email, String validade,
-			String instituicaoId, String nivelAcesso) {
+	private void cadastrarUsuarioBD(String email, String validade,
+			String instituicaoId, String nivelAcesso) throws ModeloException {
 
-		Boolean usuarioCadastrado = false;
 		Date dataAtual = new Date();
 		Date vencimento = new Date(dataAtual.getTime()
 				+ (long) Integer.parseInt(validade) * Timer.ONE_DAY);
@@ -210,12 +149,13 @@ public class EnviarConvite implements EnviarConviteRemote {
 			try {
 				this.entityManager.persist(this.usuario);
 			} catch (Exception e) {
-				return "falhaEmail"; // Na hora de persisitir o usuario, se o
+				throw new ModeloException("Erro ao persistir email", e);
+				 // Na hora de persisitir o usuario, se o
 				// email estiver errado � gerada uma
 				// exce�ao
 			}
 			if (this.entityManager.contains(this.usuario)) {
-				usuarioCadastrado = true;
+				throw new ModeloException("Erro no banco de dados", null);
 			}
 			// Se nao foi convidado para ser Administrador, inclui em um grupo
 			if (!nivelAcesso.toUpperCase().equals("ADMINISTRADOR")) {
@@ -225,11 +165,11 @@ public class EnviarConvite implements EnviarConviteRemote {
 				this.instituicao = (Instituicao) entityManager.find(
 						Instituicao.class, instituicaoId);
 				if (this.instituicao == null)
-					return "falhaBD";
+					throw new ModeloException("Erro no banco de dados", null);
 
 				grupo = (Grupo) entityManager.find(Grupo.class, nivelAcesso);
 				if (grupo == null)
-					return "falhaBD";
+					throw new ModeloException("Erro no banco de dados", null);
 
 				acesso.setInstituicao(this.instituicao);
 				acesso.setUsuario(this.usuario);
@@ -237,15 +177,14 @@ public class EnviarConvite implements EnviarConviteRemote {
 				try {
 					this.entityManager.persist(acesso);
 				} catch (Exception e) {
-					return "falhaBD";
+					throw new ModeloException("Falha no banco de dados", e);
 				}
 				if (!this.entityManager.contains(acesso)) {
-					usuarioCadastrado = false;
+					throw new ModeloException("Falha no banco de dados", null);
 				}
 			}
 
 		}
-		return (usuarioCadastrado) ? "sucesso" : "falhaBD";
 	}
 
 	/**
