@@ -33,6 +33,17 @@
 								<f:ajax event="blur" execute="@this" render="validacaoEmail"
 									listener="#{enviarConviteMB.validateEmail}" />
 							</h:inputText>
+							
+							<h:dataTable var="text" value="#{enviarConviteMB.inputList}">
+								<h:column>
+									<h:inputText value="#{text.email}" />
+									<h:commandButton action="#{enviarConviteMB.deleteValue(text)}"
+											value="Delete Value">
+									</h:commandButton>
+								</h:column>
+							</h:dataTable>
+							<h:commandButton action="#{enviarConviteMB.addInput}" value="Add Textbox" />
+							
 							<div></div>
 							<h:message id="validacaoEmail" for="validacaoEmail"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
