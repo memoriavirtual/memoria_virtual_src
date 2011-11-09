@@ -48,7 +48,11 @@ public class Usuario implements Serializable, Cloneable {
 	}
 
 	public Usuario(String id, String email, String nomeCompleto, String telefone, String senha){
-		
+		this.id = id;
+		this.email = email;
+		this.nomeCompleto = nomeCompleto;
+		this.telefone = telefone;
+		this.senha = senha;
 	}
 	/**
 	 * @return the login
