@@ -110,6 +110,10 @@ public class EditarCadastroProprioMB {
 		return this.confirmacaoNovaSenha;
 	}
 
+	public void validateSenha(AjaxBehaviorEvent event) {
+		this.validateSenha();
+	}
+	
 	public void validateSenha() {
 		if (this.novaSenha.equals("")) {
 			String[] argumentos = { "senha" };
@@ -120,6 +124,10 @@ public class EditarCadastroProprioMB {
 			MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
 					"validacaoSenha");
 		}
+	}
+	
+	public void validateConfirmacaoSenha(AjaxBehaviorEvent event) {
+		this.validateConfirmacaoSenha();
 	}
 
 	public void validateConfirmacaoSenha() {
@@ -188,6 +196,22 @@ public class EditarCadastroProprioMB {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
 					"validacaoEmail");
+		}
+	}
+	
+	public void validateTelefone(AjaxBehaviorEvent event) {
+		this.validateTelefone();
+	}
+
+	public void validateTelefone() {
+		if (this.novoTelefone.equals("")) {
+			String[] argumentos = { "telefone" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoTelefone");
+		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
+			String[] argumentos = { "telefone" };
+			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
+					"validacaoTelefone");
 		}
 	}
 
