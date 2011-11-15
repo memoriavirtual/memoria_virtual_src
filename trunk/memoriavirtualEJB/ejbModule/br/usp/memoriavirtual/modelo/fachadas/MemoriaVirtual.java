@@ -132,5 +132,46 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		// Enviar mensagem
 		Transport.send(message);
 	}
+	
+	/*Método para embaralhar a validade e email do caso de uso Enviar Convite*/
+	public static String embaralhar(String msgOriginal) {
+
+        String msgNova = "";
+
+        if (msgOriginal.length() % 2 != 0) {
+            for (int i = 0; i < msgOriginal.length(); i++) {
+                if ((i + 1) % 2 != 0) {
+                    msgNova = msgNova.concat("" + msgOriginal.charAt(msgOriginal.length() - 1 - i));
+                } else {
+                    msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+                }
+            }
+        } else {
+            int aux = 0;
+            for (int i = 0; i < msgOriginal.length(); i++) {
+                if (i + 1 != msgOriginal.length() - 1 - i) {
+                    if ((i + 1 - aux) % 2 != 0) {
+                        msgNova = msgNova.concat("" + msgOriginal.charAt(msgOriginal.length() - 1 - i));
+                    } else {
+                        msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+                    }
+                } else {
+                    if (msgOriginal.length() % 4 == 0) {
+                        msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+                        msgNova = msgNova.concat("" + msgOriginal.charAt(i + 1));
+                        aux++;
+                        i++;
+                    } else {
+                        msgNova = msgNova.concat("" + msgOriginal.charAt(i + 1));
+                        msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+                        aux++;
+                        i++;
+                    }
+                }
+            }
+        }
+        return msgNova;
+    }
+	
 
 }
