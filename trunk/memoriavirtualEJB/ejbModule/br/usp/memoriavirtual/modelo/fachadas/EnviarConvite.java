@@ -68,13 +68,13 @@ public class EnviarConvite implements EnviarConviteRemote {
 						+ nivelAcesso
 						+ "na instituicao: "
 						+ this.instituicao.getNome()
-						+ ". Para concluir seu cadastro entre no link a seguir:"
+						+ ". Para concluir seu cadastro entre no link a seguir: "
 						+ memoriaVirtual.getEnderecoServidor()
 								.getCanonicalHostName()
 						+ "/fazerCadastro.jsf?Validacao="
-						+ this.usuario.getId()
+						+ MemoriaVirtual.embaralhar(this.usuario.getId())
 						+ "&email="
-						+ this.usuario.getEmail()
+						+ MemoriaVirtual.embaralhar(this.usuario.getEmail())
 						+ ".... Seu convite é valido ate "
 						+ formatoData.format(this.usuario.getValidade())
 						+ " ... Voce recebeu a seguinte mensagem: " + mensagem;
