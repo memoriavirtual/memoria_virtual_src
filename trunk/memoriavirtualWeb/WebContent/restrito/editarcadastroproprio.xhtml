@@ -57,14 +57,18 @@
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
 							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoNomeCompleto"
-									listener="#{editarCadastroProprioMB.validateNomeCompleto}"
-									disabled="#{editarCadastroProprioMB.habilitaAlteracao}" />
 							</h:inputText>
 						</div>
 						<div></div>
 						<br></br>
+
+						<!--  <div>
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
+							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
+							</h:inputText>
+						</div>
+						<div></div>
+						<br></br>-->
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
@@ -89,8 +93,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
-							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}"
-								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}">
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
 									itemValue="1" />
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioNao}"
@@ -100,8 +103,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
-							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}"
-								rendered="#{editarCadastroProprioMB.mudaSenha == 1}">
+							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}">
 							</h:inputSecret>
 							<div></div>
 							<h:message id="validacaoSenha" for="validacaoSenha"
@@ -130,6 +132,9 @@
 							value="#{mensagens.editarCadastroProprioBotaoDescartar}"
 							type="reset">
 						</h:commandButton>
+						<h:message id="validacaoCadastro" for="validacaoCadastro"
+							infoClass="sucesso" errorClass="erro" warnClass="aviso">
+						</h:message>
 					</div>
 				</h:form>
 			</div>
