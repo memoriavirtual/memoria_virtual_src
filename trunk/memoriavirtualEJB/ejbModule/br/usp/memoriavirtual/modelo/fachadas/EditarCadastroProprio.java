@@ -15,12 +15,11 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	private Usuario usuario;
 
 	public void atualizarDadosUsuario(String id, String novoEmail,
 			String novoNomeCompleto, String novoTelefone, String novaSenha)
 			throws ModeloException {
-
+		Usuario usuario = null;
 		usuario = this.entityManager.find(Usuario.class, id);
 		if (usuario != null) {
 			usuario.setEmail(novoEmail);
@@ -37,6 +36,7 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 		Query query = entityManager
 				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
 		query.setParameter("id", id);
+		Usuario usuario = null;
 		usuario = (Usuario) query.getSingleResult();
 		return usuario;
 	}
