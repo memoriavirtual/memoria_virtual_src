@@ -1,7 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +27,7 @@ public class EditarCadastroProprioMB {
 	private String habilitaAlteracao;
 	private String senhaConfirmacao;
 	private String id;
+	private String antigaSenha;
 
 	public EditarCadastroProprioMB() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -36,18 +36,27 @@ public class EditarCadastroProprioMB {
 		setId(this.usuario.getId());
 		try {
 			this.usuario = (Usuario) this.editarCadastroProprioEJB
-					.recuperarDadosUsuario(getId());
+					.recuperarDadosUsuario("mvirtual");
+			setNovoNomeCompleto(this.usuario.getNomeCompleto());
+			setNovoEmail(this.usuario.getEmail());
+			setNovoTelefone(this.usuario.getTelefone());
+			setAntigaSenha(this.usuario.getSenha());
 		} catch (ModeloException e) {
 			e.printStackTrace();
-		} catch (NullPointerException e){
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		setNovoNomeCompleto(this.usuario.getNomeCompleto());
-		setNovoEmail(this.usuario.getEmail());
-		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("true");
 		setMudaSenha("0");
-		
+
+	}
+
+	public void setAntigaSenha(String antigaSenha) {
+		this.antigaSenha = antigaSenha;
+	}
+
+	public String getAntigaSenha() {
+		return this.antigaSenha;
 	}
 
 	public void setId(String id) {
@@ -63,9 +72,9 @@ public class EditarCadastroProprioMB {
 				|| this.novaSenha == null)
 			return "Incompleto";
 		try {
-			this.editarCadastroProprioEJB.atualizarDadosUsuario(
-					usuario.getId(), getNovoEmail(), getNovoNomeCompleto(),
-					getNovoTelefone(), getNovaSenha());
+			this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
+					getNovoEmail(), getNovoNomeCompleto(), getNovoTelefone(),
+					getNovaSenha());
 			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
 					"resultado");
 			return "Sucesso";
