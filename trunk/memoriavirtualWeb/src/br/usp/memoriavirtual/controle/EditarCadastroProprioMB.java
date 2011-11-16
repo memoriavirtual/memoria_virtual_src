@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroProprioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
 public class EditarCadastroProprioMB {
 
@@ -25,16 +27,35 @@ public class EditarCadastroProprioMB {
 	private String mudaSenha;
 	private String habilitaAlteracao;
 	private String senhaConfirmacao;
+	private String id;
 
 	public EditarCadastroProprioMB() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
 		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
-		setNovoNomeCompleto(getNomeCompleto());
-		setNovoEmail(getEmail());
-		setNovoTelefone(getTelefone());
+		setId(this.usuario.getId());
+		try {
+			this.usuario = (Usuario) this.editarCadastroProprioEJB
+					.recuperarDadosUsuario(getId());
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			e.printStackTrace();
+		}
+		setNovoNomeCompleto(this.usuario.getNomeCompleto());
+		setNovoEmail(this.usuario.getEmail());
+		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("true");
 		setMudaSenha("0");
+		
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return this.id;
 	}
 
 	public String editarCadastroProprio() {
@@ -52,22 +73,6 @@ public class EditarCadastroProprioMB {
 		} catch (Exception e) {
 			return "Falha";
 		}
-	}
-
-	public String getNomeCompleto() {
-		return this.usuario.getNomeCompleto();
-	}
-
-	public String getEmail() {
-		return this.usuario.getEmail();
-	}
-
-	public String getTelefone() {
-		return this.usuario.getTelefone();
-	}
-
-	public String getSenha() {
-		return this.usuario.getSenha();
 	}
 
 	public void setNovoEmail(String novoEmail) {
@@ -113,7 +118,7 @@ public class EditarCadastroProprioMB {
 	public void validateSenha(AjaxBehaviorEvent event) {
 		this.validateSenha();
 	}
-	
+
 	public void validateSenha() {
 		if (this.novaSenha.equals("")) {
 			String[] argumentos = { "senha" };
@@ -125,7 +130,7 @@ public class EditarCadastroProprioMB {
 					"validacaoSenha");
 		}
 	}
-	
+
 	public void validateConfirmacaoSenha(AjaxBehaviorEvent event) {
 		this.validateConfirmacaoSenha();
 	}
@@ -165,7 +170,7 @@ public class EditarCadastroProprioMB {
 	public String getSenhaConfirmacao() {
 		return this.senhaConfirmacao;
 	}
-	
+
 	public void validateNomeCompleto(AjaxBehaviorEvent event) {
 		this.validateNomeCompleto();
 	}
@@ -177,7 +182,7 @@ public class EditarCadastroProprioMB {
 					"validacaoNomeCompleto");
 		}
 	}
-	
+
 	public void validateEmail(AjaxBehaviorEvent event) {
 		this.validateEmail();
 	}
@@ -198,7 +203,7 @@ public class EditarCadastroProprioMB {
 					"validacaoEmail");
 		}
 	}
-	
+
 	public void validateTelefone(AjaxBehaviorEvent event) {
 		this.validateTelefone();
 	}
@@ -208,7 +213,8 @@ public class EditarCadastroProprioMB {
 			String[] argumentos = { "telefone" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoTelefone");
-		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
+		} else if (!ValidacoesDeCampos
+				.validarFormatoTelefone(this.novoTelefone)) {
 			String[] argumentos = { "telefone" };
 			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
 					"validacaoTelefone");
