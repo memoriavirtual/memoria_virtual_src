@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.modelo.fachadas;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -14,7 +15,6 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
-
 
 	public void atualizarDadosUsuario(String id, String novoEmail,
 			String novoNomeCompleto, String novoTelefone, String novaSenha)
@@ -31,13 +31,18 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 			throw new ModeloException("Usuario não encontrado");
 	}
 
-	public Usuario recuperarDadosUsuario(String id) {
+	public Usuario recuperarDadosUsuario(String id) throws ModeloException {
 
 		Query query = entityManager
 				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
 		query.setParameter("id", id);
 		Usuario usuario = null;
-		usuario = (Usuario) query.getSingleResult();
+		try {
+			usuario = (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			throw new ModeloException("Erro ao carregar os dados!");
+		}
+
 		return usuario;
 	}
 
