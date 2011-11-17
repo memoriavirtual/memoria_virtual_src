@@ -16,6 +16,7 @@ public class EditarCadastroProprioMB {
 
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
+	@EJB
 	private EditarCadastroProprioRemote editarCadastroProprioEJB;
 	private Usuario usuario;
 	private String novoEmail;
@@ -30,25 +31,8 @@ public class EditarCadastroProprioMB {
 	private String antigaSenha;
 
 	public EditarCadastroProprioMB() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
-		setId(this.usuario.getId());
-		try {
-			this.usuario = this.editarCadastroProprioEJB
-					.recuperarDadosUsuario("diego");
-			setNovoNomeCompleto(this.usuario.getNomeCompleto());
-			setNovoEmail(this.usuario.getEmail());
-			setNovoTelefone(this.usuario.getTelefone());
-			setAntigaSenha(this.usuario.getSenha());
-		} catch (ModeloException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-		setHabilitaAlteracao("false");
-		setMudaSenha("0");
-
+		setHabilitaAlteracao("true");
+		setMudaSenha("false");
 	}
 
 	public void setAntigaSenha(String antigaSenha) {
@@ -68,6 +52,7 @@ public class EditarCadastroProprioMB {
 	}
 
 	public String editarCadastroProprio() {
+		System.out.println(this.mudaSenha);
 		if (this.novoEmail == null || this.novoNomeCompleto == null
 				|| this.novaSenha == null)
 			return "Incompleto";
@@ -123,7 +108,15 @@ public class EditarCadastroProprioMB {
 	public String getConfirmacaoNovaSenha() {
 		return this.confirmacaoNovaSenha;
 	}
+	
+	public void validateMudaSenha(AjaxBehaviorEvent event) {
+		this.validateMudaSenha();
+	}
 
+	public void validateMudaSenha(){
+		
+	}
+	
 	public void validateSenha(AjaxBehaviorEvent event) {
 		this.validateSenha();
 	}
@@ -247,19 +240,35 @@ public class EditarCadastroProprioMB {
 	}
 
 	public String vA() {
-		if (senhaConfirmacao.equals("")) {
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
+		setId(this.usuario.getId());
+		try {
+			this.usuario = this.editarCadastroProprioEJB
+					.recuperarDadosUsuario(getId());
+			setAntigaSenha(this.usuario.getSenha());
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		if (Usuario.gerarHash(this.senhaConfirmacao).equals("")) {
 			String[] argumentos = { "confirmacao_senha" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoLiberaAlteracao");
 			return "Falha";
-		} else if (!this.senhaConfirmacao.equals(this.usuario.getSenha())) {
+		} else if (!Usuario.gerarHash(this.senhaConfirmacao).equals(
+				getAntigaSenha())) {
 			String[] argumentos = { "confirmacao_senha", "senha" };
 			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
 					"validacaoLiberaAlteracao");
 			return "Falha";
 		}
+		setNovoNomeCompleto(this.usuario.getNomeCompleto());
+		setNovoEmail(this.usuario.getEmail());
+		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("false");
 		return "Sucesso";
 	}
-
 }
