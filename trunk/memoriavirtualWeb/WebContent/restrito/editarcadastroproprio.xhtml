@@ -56,26 +56,19 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
+							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 							</h:inputText>
 						</div>
 						<div></div>
 						<br></br>
 
-						<!--  <div>
-							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}">
-							</h:inputText>
-						</div>
-						<div></div>
-						<br></br>-->
-
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoEmail}">
+							<h:inputText value="#{editarCadastroProprioMB.novoEmail}"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 								<f:ajax event="blur" execute="@this" render="validacaoEmail"
-									listener="#{editarCadastroProprioMB.validateEmail}"
-									disabled="#{editarCadastroProprioMB.habilitaAlteracao}" />
+									listener="#{editarCadastroProprioMB.validateEmail}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoEmail" for="validacaoEmail"
@@ -85,25 +78,42 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioTelefone}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.novoTelefone}"
+							<h:inputText value="#{editarCadastroProprioMB.mudaSenha}"
 								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
+									listener="#{editarCadastroProprioMB.validateTelefone}" />
 							</h:inputText>
 							<div></div>
+							<h:message id="validacaoTelefone" for="validacaoTelefone"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
-							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}">
+							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}"
+								required="true"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
-									itemValue="1" />
+									itemValue="true" />
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioNao}"
-									itemValue="0" />
+									itemValue="false" />
+								<f:ajax event="blur" execute="@this" render="validacaoMudaSenha"
+									listener="#{editarCadastroProprioMB.validateMudaSenha}" />
 							</h:selectOneRadio>
+							<div></div>
+							<h:message id="validacaoMudaSenha" for="validacaoMudaSenha"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
 
 						<div>
-							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
-							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}">
+							<h:outputLabel class="labels"
+								rendered="#{editarCadastroProprioMB.mudaSenha == false}">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
+							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}"
+								rendered="#{editarCadastroProprioMB.mudaSenha}">
+								<f:ajax event="blur" execute="@this" render="validacaoSenha"
+									listener="#{editarCadastroProprioMB.validateSenha}" />
 							</h:inputSecret>
 							<div></div>
 							<h:message id="validacaoSenha" for="validacaoSenha"
@@ -111,10 +121,14 @@
 							</h:message>
 						</div>
 
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
 							<h:inputSecret
 								value="#{editarCadastroProprioMB.confirmacaoNovaSenha}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoConfirmacaoSenha"
+									listener="#{editarCadastroProprioMB.validateConfirmacaoSenha}" />
 							</h:inputSecret>
 							<div></div>
 							<h:message id="validacaoConfirmacaoSenha"
