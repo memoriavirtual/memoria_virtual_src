@@ -271,7 +271,7 @@ public class CadastrarInstituicaoMB {
 	public boolean validateEndereco() {
 		if (this.endereco.equals("")) {
 			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroEnderecoVazio", "validacaoEndereco");
-			return false;
+			return true;
 		}
 		return true;
 	}
@@ -316,7 +316,7 @@ public class CadastrarInstituicaoMB {
 	public boolean validateCep() {
 		if (this.cep.equals("")) {
 			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroCEPVazio", "validacaoCep");
-			return false;
+			return true;
 		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep) && !this.cep.equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroCEPInvalido", "validacaoCep");
 			return false;
@@ -334,7 +334,7 @@ public class CadastrarInstituicaoMB {
 	public boolean validateTelefone() {
 		if (this.telefone.equals("")) {
 			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroTelefoneVazio", "validacaoTelefone");
-			return false;
+			return true;
 		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone) && !this.telefone.equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroTelefoneInvalido", "validacaoTelefone");
 			return false;
