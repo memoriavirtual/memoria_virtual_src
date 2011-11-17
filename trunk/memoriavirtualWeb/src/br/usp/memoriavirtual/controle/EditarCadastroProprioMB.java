@@ -35,8 +35,8 @@ public class EditarCadastroProprioMB {
 		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
 		setId(this.usuario.getId());
 		try {
-			this.usuario = (Usuario) this.editarCadastroProprioEJB
-					.recuperarDadosUsuario("mvirtual");
+			this.usuario = this.editarCadastroProprioEJB
+					.recuperarDadosUsuario("diego");
 			setNovoNomeCompleto(this.usuario.getNomeCompleto());
 			setNovoEmail(this.usuario.getEmail());
 			setNovoTelefone(this.usuario.getTelefone());
@@ -46,7 +46,7 @@ public class EditarCadastroProprioMB {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		setHabilitaAlteracao("true");
+		setHabilitaAlteracao("false");
 		setMudaSenha("0");
 
 	}
