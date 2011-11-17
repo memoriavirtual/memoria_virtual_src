@@ -23,7 +23,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 /**
  * EJB Sem estado e singleton que contém métodos comuns ao sistema todo.
  */
-@Singleton
+@Singleton(mappedName = "MemoriaVirtual")
 public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	private static InetAddress enderecoServidor = null;
@@ -48,20 +48,15 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	public InetAddress getEnderecoServidor() throws IOException {
 
 		if (enderecoServidor == null) {
-			Enumeration<NetworkInterface> interfaces = NetworkInterface
-					.getNetworkInterfaces();
+			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 
 			while (interfaces.hasMoreElements()) {
-				NetworkInterface interfaceRede = (NetworkInterface) interfaces
-						.nextElement();
+				NetworkInterface interfaceRede = (NetworkInterface) interfaces.nextElement();
 				if (interfaceRede.isUp()) {
-					Enumeration<InetAddress> enderecosRede = interfaceRede
-							.getInetAddresses();
+					Enumeration<InetAddress> enderecosRede = interfaceRede.getInetAddresses();
 					while (enderecosRede.hasMoreElements()) {
-						InetAddress enderecoRede = (InetAddress) enderecosRede
-								.nextElement();
-						if (enderecoRede.isReachable(10)
-								&& !enderecoRede.isLoopbackAddress()
+						InetAddress enderecoRede = (InetAddress) enderecosRede.nextElement();
+						if (enderecoRede.isReachable(10) && !enderecoRede.isLoopbackAddress()
 								&& !enderecoRede.isAnyLocalAddress()) {
 							enderecoServidor = enderecoRede;
 							return enderecoServidor;
@@ -75,8 +70,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	public boolean disponibilidadeId(String id) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
+		Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
 		query.setParameter("id", id);
 
 		try {
@@ -84,15 +78,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			return false;
 		} catch (NoResultException e) {
 			return true;
-		} catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	public boolean disponibilidadeNomeInstituicao(String Nome) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
+		Query query = entityManager.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
 		query.setParameter("nome", Nome);
 
 		try {
@@ -100,14 +93,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			return false;
 		} catch (NoResultException e) {
 			return true;
-		} catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
+
 	public boolean disponibilidadeEmail(String email) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+		Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
 		query.setParameter("email", email);
 
 		try {
@@ -119,11 +112,10 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return true;
 	}
 
-	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException{
+	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException {
 		Message message = new MimeMessage(this.mailSession);
 		message.setFrom();
-		message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(destinatario, false));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario, false));
 		message.setSubject(assunto);
 		Date timeStamp = new Date();
 		message.setText(mensagem);
@@ -132,46 +124,45 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		// Enviar mensagem
 		Transport.send(message);
 	}
-	
-	/*M�todo para embaralhar a validade e email do caso de uso Enviar Convite*/
+
+	/* M�todo para embaralhar a validade e email do caso de uso Enviar Convite */
 	public static String embaralhar(String msgOriginal) {
 
-        String msgNova = "";
+		String msgNova = "";
 
-        if (msgOriginal.length() % 2 != 0) {
-            for (int i = 0; i < msgOriginal.length(); i++) {
-                if ((i + 1) % 2 != 0) {
-                    msgNova = msgNova.concat("" + msgOriginal.charAt(msgOriginal.length() - 1 - i));
-                } else {
-                    msgNova = msgNova.concat("" + msgOriginal.charAt(i));
-                }
-            }
-        } else {
-            int aux = 0;
-            for (int i = 0; i < msgOriginal.length(); i++) {
-                if (i + 1 != msgOriginal.length() - 1 - i) {
-                    if ((i + 1 - aux) % 2 != 0) {
-                        msgNova = msgNova.concat("" + msgOriginal.charAt(msgOriginal.length() - 1 - i));
-                    } else {
-                        msgNova = msgNova.concat("" + msgOriginal.charAt(i));
-                    }
-                } else {
-                    if (msgOriginal.length() % 4 == 0) {
-                        msgNova = msgNova.concat("" + msgOriginal.charAt(i));
-                        msgNova = msgNova.concat("" + msgOriginal.charAt(i + 1));
-                        aux++;
-                        i++;
-                    } else {
-                        msgNova = msgNova.concat("" + msgOriginal.charAt(i + 1));
-                        msgNova = msgNova.concat("" + msgOriginal.charAt(i));
-                        aux++;
-                        i++;
-                    }
-                }
-            }
-        }
-        return msgNova;
-    }
-	
+		if (msgOriginal.length() % 2 != 0) {
+			for (int i = 0; i < msgOriginal.length(); i++) {
+				if ((i + 1) % 2 != 0) {
+					msgNova = msgNova.concat("" + msgOriginal.charAt(msgOriginal.length() - 1 - i));
+				} else {
+					msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+				}
+			}
+		} else {
+			int aux = 0;
+			for (int i = 0; i < msgOriginal.length(); i++) {
+				if (i + 1 != msgOriginal.length() - 1 - i) {
+					if ((i + 1 - aux) % 2 != 0) {
+						msgNova = msgNova.concat("" + msgOriginal.charAt(msgOriginal.length() - 1 - i));
+					} else {
+						msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+					}
+				} else {
+					if (msgOriginal.length() % 4 == 0) {
+						msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+						msgNova = msgNova.concat("" + msgOriginal.charAt(i + 1));
+						aux++;
+						i++;
+					} else {
+						msgNova = msgNova.concat("" + msgOriginal.charAt(i + 1));
+						msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+						aux++;
+						i++;
+					}
+				}
+			}
+		}
+		return msgNova;
+	}
 
 }
