@@ -32,7 +32,6 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 	}
 
 	public Usuario recuperarDadosUsuario(String id) throws ModeloException {
-
 		Query query = entityManager
 				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
 		query.setParameter("id", id);
