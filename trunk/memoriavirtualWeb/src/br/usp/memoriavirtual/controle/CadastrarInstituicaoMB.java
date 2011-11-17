@@ -41,16 +41,13 @@ public class CadastrarInstituicaoMB {
 	public String cadastrarInstituicao() {
 
 		/*
-		 * FacesContext.getCurrentInstance().addMessage( "resultado", new
-		 * FacesMessage(FacesMessage.SEVERITY_INFO,
+		 * FacesContext.getCurrentInstance().addMessage( "resultado", new FacesMessage(FacesMessage.SEVERITY_INFO,
 		 * "Cadastro concluido com sucesso.", null));
 		 */
 
-		if (this.validateNome() && this.validateLocalizacao()
-				&& this.validateCep() && this.validateTelefone()) {
-			Instituicao instituicao = new Instituicao(this.nome,
-					this.localizacao, this.endereco, this.cidade, this.estado,
-					this.cep, this.telefone);
+		if (this.validateNome() && this.validateLocalizacao() && this.validateCep() && this.validateTelefone()) {
+			Instituicao instituicao = new Instituicao(this.nome, this.localizacao, this.endereco, this.cidade,
+					this.estado, this.cep, this.telefone);
 
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
 			if (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)) {
@@ -63,22 +60,18 @@ public class CadastrarInstituicaoMB {
 				this.cep = "";
 				this.telefone = "";
 
-				MensagensDeErro
-						.getSucessMessage(
-								"cadastrarInstituicaoSucessocadastramento",
-								"resultado");
+				MensagensDeErro.getSucessMessage("cadastrarInstituicaoSucessocadastramento", "resultado");
 				return null;
 			}
 		}
-		MensagensDeErro.getErrorMessage(
-				"cadastrarInstituicaoErrocadastramento", "resultado");
+		MensagensDeErro.getErrorMessage("cadastrarInstituicaoErrocadastramento", "resultado");
 		return null;
 	}
-	
-	
-	public String resetCadastrarinstituicao(){
+
+	public String resetCadastrarinstituicao() {
 		return "reset";
 	}
+
 	/**
 	 * Getter do nome
 	 * 
@@ -241,14 +234,10 @@ public class CadastrarInstituicaoMB {
 	public boolean validateNome() {
 
 		if (this.nome.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarInstituicaoErroNomeVazio", "validacaoNome");
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroNomeVazio", "validacaoNome");
 			return false;
 		} else if (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)) {
-			MensagensDeErro
-					.getErrorMessage(
-							"cadastrarInstituicaoErroNomeJaCadastrado",
-							"validacaoNome");
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroNomeJaCadastrado", "validacaoNome");
 			return false;
 		}
 		return true;
@@ -263,15 +252,11 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateLocalizacao() {
 		if (this.localizacao.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarInstituicaoErroLocalizacaoVazio",
-					"validacaoLocalizacao");
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroLocalizacaoVazio", "validacaoLocalizacao");
 			return false;
 		}/*
-		 * else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)) {
-		 * MensagensDeErro
-		 * .getErrorMessage("cadastrarInstituicaoErroLocalizacaoInvalido",
-		 * "validacaoLocalizacao"); return false; }
+		 * else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)) { MensagensDeErro
+		 * .getErrorMessage("cadastrarInstituicaoErroLocalizacaoInvalido", "validacaoLocalizacao"); return false; }
 		 */
 		return true;
 	}
@@ -285,9 +270,7 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateEndereco() {
 		if (this.endereco.equals("")) {
-			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroEnderecoVazio",
-					"validacaoEndereco");
+			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroEnderecoVazio", "validacaoEndereco");
 			return false;
 		}
 		return true;
@@ -302,8 +285,7 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateCidade() {
 		if (this.cidade.equals("")) {
-			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroCidadeVazio", "validacaoCidade");
+			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroCidadeVazio", "validacaoCidade");
 			return false;
 		}
 		return true;
@@ -318,8 +300,7 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateEstado() {
 		if (this.estado.equals("--Escolha o estado--")) {
-			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroEstadoVazio", "validacaoEstado");
+			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroEstadoVazio", "validacaoEstado");
 			return false;
 		}
 		return false;
@@ -334,13 +315,10 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateCep() {
 		if (this.cep.equals("")) {
-			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroCEPVazio", "validacaoCep");
+			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroCEPVazio", "validacaoCep");
 			return false;
-		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)
-				&& !this.cep.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarInstituicaoErroCEPInvalido", "validacaoCep");
+		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep) && !this.cep.equals("")) {
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroCEPInvalido", "validacaoCep");
 			return false;
 		}
 		return true;
@@ -355,15 +333,10 @@ public class CadastrarInstituicaoMB {
 
 	public boolean validateTelefone() {
 		if (this.telefone.equals("")) {
-			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroTelefoneVazio",
-					"validacaoTelefone");
+			MensagensDeErro.getWarningMessage("cadastrarInstituicaoErroTelefoneVazio", "validacaoTelefone");
 			return false;
-		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)
-				&& !this.telefone.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarInstituicaoErroTelefoneInvalido",
-					"validacaoTelefone");
+		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone) && !this.telefone.equals("")) {
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroTelefoneInvalido", "validacaoTelefone");
 			return false;
 		}
 		return true;
