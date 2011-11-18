@@ -52,9 +52,8 @@ public class EditarCadastroProprioMB {
 	}
 
 	public String editarCadastroProprio() {
-		System.out.println(this.mudaSenha);
-		if (this.novoEmail == null || this.novoNomeCompleto == null
-				|| this.novaSenha == null)
+		if (this.novoEmail == null || this.novoNomeCompleto == null || this.novoTelefone == null
+				|| this.novaSenha == null || this.confirmacaoNovaSenha == null)
 			return "Incompleto";
 		try {
 			this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
@@ -62,6 +61,7 @@ public class EditarCadastroProprioMB {
 					getNovaSenha());
 			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
 					"resultado");
+			setAntigaSenha(getNovaSenha());
 			return "Sucesso";
 			/** Atualizar os dados da sessão de usuario */
 		} catch (Exception e) {
