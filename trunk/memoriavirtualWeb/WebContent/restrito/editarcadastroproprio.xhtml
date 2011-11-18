@@ -39,6 +39,7 @@
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
 
 				<h:form method="post" prependId="false">
+					<!-- -->
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
@@ -46,14 +47,14 @@
 								value="#{editarCadastroProprioMB.senhaConfirmacao}">
 							</h:inputSecret>
 						</div>
-
-						<div class="botao">
-							<h:commandButton id="botaoConfirmaSenha"
-								value="#{mensagens.editarCadastroProprioBotaoAlterar}"
-								action="#{editarCadastroProprioMB.vA}">
-							</h:commandButton>
-						</div>
-
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoConfirmaSenha"
+							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
+							action="#{editarCadastroProprioMB.vA}">
+						</h:commandButton>
+					</div>
+					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
 							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
@@ -78,8 +79,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioTelefone}</h:outputLabel>
-							<h:inputText value="#{editarCadastroProprioMB.mudaSenha}"
-								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+							<h:inputText value="#{editarCadastroProprioMB.novoTelefone}"
+								disabled="#{editarCadastroProprioMB.novoTelefone}">
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{editarCadastroProprioMB.validateTelefone}" />
 							</h:inputText>
@@ -88,30 +89,31 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
+					</fieldset>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
-							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}"
-								required="true"
-								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
-								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
-									itemValue="true" />
-								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioNao}"
-									itemValue="false" />
-								<f:ajax event="blur" execute="@this" render="validacaoMudaSenha"
-									listener="#{editarCadastroProprioMB.validateMudaSenha}" />
-							</h:selectOneRadio>
-							<div></div>
-							<h:message id="validacaoMudaSenha" for="validacaoMudaSenha"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
+					<div>
+						<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
+						<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}"
+							required="true"
+							disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+							<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
+								itemValue="true" />
+							<f:selectItem itemLabel="#{mensagens.editarCadastroProprioNao}"
+								itemValue="false" />
+							<f:ajax event="blur" execute="@this" render="validacaoMudaSenha"
+								listener="#{editarCadastroProprioMB.validateMudaSenha}" />
+						</h:selectOneRadio>
+						<div></div>
+						<h:message id="validacaoMudaSenha" for="validacaoMudaSenha"
+							infoClass="sucesso" errorClass="erro" warnClass="aviso">
+						</h:message>
+					</div>
 
+
+					<fieldset>
 						<div>
-							<h:outputLabel class="labels"
-								rendered="#{editarCadastroProprioMB.mudaSenha == false}">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
-							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}"
-								rendered="#{editarCadastroProprioMB.mudaSenha}">
+							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
+							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}">
 								<f:ajax event="blur" execute="@this" render="validacaoSenha"
 									listener="#{editarCadastroProprioMB.validateSenha}" />
 							</h:inputSecret>
@@ -120,6 +122,7 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
+
 
 
 						<div>
