@@ -30,13 +30,17 @@ public class EnviarConviteMB {
 	private String nivelAcesso = null;
 
 	
+	
 	private ArrayList<Email> inputList;
 	
 	public EnviarConviteMB(){
 		inputList = new ArrayList<Email>();
 	}
+	
 	public void addInput() {
-		inputList.add(new Email());
+		Email email = new Email();
+		email.setNumero(inputList.size()+"");
+		inputList.add(email);
 	}
 
 	public ArrayList<Email> getInputList() {
