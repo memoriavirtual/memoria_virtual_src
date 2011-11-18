@@ -1,5 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
+
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -31,6 +33,12 @@ public class EditarCadastroProprioMB {
 	private String antigaSenha;
 
 	public EditarCadastroProprioMB() {
+		
+
+	}
+	
+	@PostConstruct
+	public void carregarDados(){
 		setHabilitaAlteracao("true");
 		setMudaSenha("false");
 	}
