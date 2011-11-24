@@ -122,7 +122,7 @@ public class EditarInstituicaoMB implements Serializable {
 			MensagensDeErro.getErrorMessage("editarInstituicaoErroIdVazio",
 					"validacaoId");
 			return false;
-		} else if (memoriaVirtualEJB.disponibilidadeNomeInstituicao(velhoNome)) {
+		} else if (memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(velhoNome)) {
 			MensagensDeErro.getErrorMessage(
 					"editarInstituicaoErroIdInexistente", "validacaoId");
 			return false;
@@ -136,7 +136,7 @@ public class EditarInstituicaoMB implements Serializable {
 
 	public boolean validateNome() {
 		if (!(this.novoNome.equals(this.velhoNome) || this.memoriaVirtualEJB
-				.disponibilidadeNomeInstituicao(this.novoNome))) {
+				.verificarDisponibilidadeNomeInstituicao(this.novoNome))) {
 			MensagensDeErro.getErrorMessage(
 					"editarInstituicaoErroNomeExistente", "validacaoNome");
 			return false;

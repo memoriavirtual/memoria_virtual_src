@@ -95,7 +95,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuario.erroIdVazio", "validacaoId");
 			return false;
-		} else if (memoriaVirtualEJB.disponibilidadeId(this.velhoNome)) {
+		} else if (memoriaVirtualEJB.verificarDisponibilidadeIdUsuario(this.velhoNome)) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuario.erroIdInvalida", "validacaoId");
 			return false;
@@ -112,7 +112,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuario.erroNomeVazio", "validacaoNome");
 			return false;
-		} else if (!memoriaVirtualEJB.disponibilidadeId(this.velhoNome)
+		} else if (!memoriaVirtualEJB.verificarDisponibilidadeIdUsuario(this.velhoNome)
 				&& !this.velhoNome.equals(this.novoNome)) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuario.erroNomeInvalido", "validacaoNome");

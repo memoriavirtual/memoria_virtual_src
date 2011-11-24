@@ -112,7 +112,7 @@ public class CadastrarUsuarioMB {
 			String[] argumentos = { "id", "id_minimo" };
 			MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
 					"validacaoId");
-		} else if (!memoriaVirtualEJB.disponibilidadeId(this.id)) {
+		} else if (!memoriaVirtualEJB.verificarDisponibilidadeIdUsuario(this.id)) {
 			String[] argumentos = { "id" };
 			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
 					"validacaoId");
@@ -141,7 +141,7 @@ public class CadastrarUsuarioMB {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
 					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.email)) {
+		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.email)) {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
 					"validacaoEmail");

@@ -50,7 +50,7 @@ public class CadastrarInstituicaoMB {
 					this.estado, this.cep, this.telefone);
 
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
-			if (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)) {
+			if (!memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(this.nome)) {
 
 				this.nome = "";
 				this.localizacao = "";
@@ -236,7 +236,7 @@ public class CadastrarInstituicaoMB {
 		if (this.nome.equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroNomeVazio", "validacaoNome");
 			return false;
-		} else if (!memoriaVirtualEJB.disponibilidadeNomeInstituicao(this.nome)) {
+		} else if (!memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(this.nome)) {
 			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroNomeJaCadastrado", "validacaoNome");
 			return false;
 		}

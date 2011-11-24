@@ -158,7 +158,7 @@ public class EnviarConviteMB {
 		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.emails)) {
 			MensagensDeErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
 					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.emails)) {
+		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.emails)) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
 		} else {

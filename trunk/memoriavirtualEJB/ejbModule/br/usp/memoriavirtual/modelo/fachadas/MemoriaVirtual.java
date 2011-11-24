@@ -50,20 +50,15 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	public InetAddress getEnderecoServidor() throws IOException {
 
 		if (enderecoServidor == null) {
-			Enumeration<NetworkInterface> interfaces = NetworkInterface
-					.getNetworkInterfaces();
+			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 
 			while (interfaces.hasMoreElements()) {
-				NetworkInterface interfaceRede = (NetworkInterface) interfaces
-						.nextElement();
+				NetworkInterface interfaceRede = (NetworkInterface) interfaces.nextElement();
 				if (interfaceRede.isUp()) {
-					Enumeration<InetAddress> enderecosRede = interfaceRede
-							.getInetAddresses();
+					Enumeration<InetAddress> enderecosRede = interfaceRede.getInetAddresses();
 					while (enderecosRede.hasMoreElements()) {
-						InetAddress enderecoRede = (InetAddress) enderecosRede
-								.nextElement();
-						if (enderecoRede.isReachable(10)
-								&& !enderecoRede.isLoopbackAddress()
+						InetAddress enderecoRede = (InetAddress) enderecosRede.nextElement();
+						if (enderecoRede.isReachable(10) && !enderecoRede.isLoopbackAddress()
 								&& !enderecoRede.isAnyLocalAddress()) {
 							enderecoServidor = enderecoRede;
 							return enderecoServidor;
@@ -75,10 +70,9 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return enderecoServidor;
 	}
 
-	public boolean disponibilidadeId(String id) {
+	public boolean verificarDisponibilidadeIdUsuario(String id) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
+		Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
 		query.setParameter("id", id);
 
 		try {
@@ -91,10 +85,9 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 	}
 
-	public boolean disponibilidadeNomeInstituicao(String Nome) {
+	public boolean verificarDisponibilidadeNomeInstituicao(String Nome) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
+		Query query = entityManager.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
 		query.setParameter("nome", Nome);
 
 		try {
@@ -107,10 +100,9 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 	}
 
-	public boolean disponibilidadeEmail(String email) {
+	public boolean verificarDisponibilidadeEmail(String email) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+		Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
 		query.setParameter("email", email);
 
 		try {
@@ -122,12 +114,10 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return true;
 	}
 
-	public void enviarEmail(String destinatario, String assunto, String mensagem)
-			throws MessagingException {
+	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException {
 		Message message = new MimeMessage(this.mailSession);
 		message.setFrom();
-		message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(destinatario, false));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario, false));
 		message.setSubject(assunto);
 		Date timeStamp = new Date();
 		message.setText(mensagem);
@@ -137,42 +127,42 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		Transport.send(message);
 	}
 
-	/* Mï¿½todo para embaralhar a validade e email do caso de uso Enviar Convite */
-	public static String embaralhar(String msgOriginal) {
+	/**
+	 * MÃ©todo para embaralhar a validade e email do caso de uso Enviar Convite
+	 * 
+	 * @param mensagemOriginal
+	 * @return
+	 */
+	public static String embaralhar(String mensagemOriginal) {
 
 		String msgNova = "";
 
-		if (msgOriginal.length() % 2 != 0) {
-			for (int i = 0; i < msgOriginal.length(); i++) {
+		if (mensagemOriginal.length() % 2 != 0) {
+			for (int i = 0; i < mensagemOriginal.length(); i++) {
 				if ((i + 1) % 2 != 0) {
-					msgNova = msgNova.concat(""
-							+ msgOriginal.charAt(msgOriginal.length() - 1 - i));
+					msgNova = msgNova.concat("" + mensagemOriginal.charAt(mensagemOriginal.length() - 1 - i));
 				} else {
-					msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+					msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
 				}
 			}
 		} else {
 			int aux = 0;
-			for (int i = 0; i < msgOriginal.length(); i++) {
-				if (i + 1 != msgOriginal.length() - 1 - i) {
+			for (int i = 0; i < mensagemOriginal.length(); i++) {
+				if (i + 1 != mensagemOriginal.length() - 1 - i) {
 					if ((i + 1 - aux) % 2 != 0) {
-						msgNova = msgNova.concat(""
-								+ msgOriginal.charAt(msgOriginal.length() - 1
-										- i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(mensagemOriginal.length() - 1 - i));
 					} else {
-						msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
 					}
 				} else {
-					if (msgOriginal.length() % 4 == 0) {
-						msgNova = msgNova.concat("" + msgOriginal.charAt(i));
-						msgNova = msgNova
-								.concat("" + msgOriginal.charAt(i + 1));
+					if (mensagemOriginal.length() % 4 == 0) {
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i + 1));
 						aux++;
 						i++;
 					} else {
-						msgNova = msgNova
-								.concat("" + msgOriginal.charAt(i + 1));
-						msgNova = msgNova.concat("" + msgOriginal.charAt(i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i + 1));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
 						aux++;
 						i++;
 					}
@@ -182,30 +172,28 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return msgNova;
 	}
 
-	
-
 	/**
-	 * Método de sugestões para instituição
+	 * Mï¿½todo de sugestï¿½es para instituiï¿½ï¿½o
 	 * 
-	 * @param pnome String para a qual o sistema gera sugestões
-	 * @return Lista de Instituições que começam com a String de parâmetro
+	 * @param pnome
+	 *            String para a qual o sistema gera sugestï¿½es
+	 * @return Lista de Instituiï¿½ï¿½es que comeï¿½am com a String de parï¿½metro
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Instituicao> listarInstuicoes(String pnome) {
-		List<Instituicao> ins = new ArrayList<Instituicao>();
+		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 		Query query;
 
-		query = entityManager
-				.createQuery("SELECT a FROM Instituicao a WHERE a.nome LIKE padrao ORDER BY a.nome ");
+		query = entityManager.createQuery("SELECT a FROM Instituicao a WHERE a.nome LIKE :padrao ORDER BY a.nome ");
 
-		query.setParameter("padrao", pnome + "%");
+		query.setParameter("padrao", "%" + pnome + "%");
 		try {
-			ins = (List<Instituicao>) query.getResultList();
+			instituicoes = (List<Instituicao>) query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return ins;
+		return instituicoes;
 	}
 
 }

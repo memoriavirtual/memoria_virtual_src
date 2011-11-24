@@ -71,7 +71,7 @@ public class EditarCadastroProprioMB {
 					"resultado");
 			setAntigaSenha(getNovaSenha());
 			return "Sucesso";
-			/** Atualizar os dados da sessão de usuario */
+			/** Atualizar os dados da sessï¿½o de usuario */
 		} catch (Exception e) {
 			return "Falha";
 		}
@@ -207,7 +207,7 @@ public class EditarCadastroProprioMB {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
 					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.disponibilidadeEmail(this.novoEmail)) {
+		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
 					"validacaoEmail");
