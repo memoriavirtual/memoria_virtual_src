@@ -173,14 +173,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * M�todo de sugest�es para institui��o
+	 * Metodo de sugestoes para instituicao
 	 * 
 	 * @param pnome
-	 *            String para a qual o sistema gera sugest�es
-	 * @return Lista de Institui��es que come�am com a String de par�metro
+	 *            String para a qual o sistema gera sugestoes
+	 * @return Lista de Instituicoes que comecam com a String de parametro
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Instituicao> listarInstuicoes(String pnome) {
+	public List<Instituicao> listarInstituicoes(String pnome) {
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 		Query query;
 

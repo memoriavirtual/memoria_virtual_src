@@ -16,13 +16,9 @@ public interface EditarInstituicaoRemote {
 			String novoLocalizacao, String novoEndereco, String novoCidade,
 			String novoEstado, String novoCep, String novoTelefone) throws ModeloException;
 
-	public List<Instituicao> getInstituicoes(Grupo grupo, Usuario usuario);
-
-	public List<Instituicao> getInstituicoes();
-
-	public List<Instituicao> getInstituicoesSugeridas(String pnome,
+	public List<Instituicao> listarInstituicoes(String pnome,
 			Grupo grupo, Usuario usuario);
 
-	public List<Instituicao> getInstituicoesSugeridas(String pnome);
+	public List<Instituicao> listarInstituicoes(String pnome);
 
 }
