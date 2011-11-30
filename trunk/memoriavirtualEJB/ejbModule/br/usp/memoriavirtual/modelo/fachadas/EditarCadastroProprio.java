@@ -30,6 +30,20 @@ public class EditarCadastroProprio implements EditarCadastroProprioRemote {
 		} else
 			throw new ModeloException("Usuario não encontrado");
 	}
+	
+	public void atualizarDadosUsuario(String id, String novoEmail,
+			String novoNomeCompleto, String novoTelefone)
+			throws ModeloException {
+		Usuario usuario = null;
+		usuario = this.entityManager.find(Usuario.class, id);
+		if (usuario != null) {
+			usuario.setEmail(novoEmail);
+			usuario.setNomeCompleto(novoNomeCompleto);
+			usuario.setTelefone(novoTelefone);
+			entityManager.flush();
+		} else
+			throw new ModeloException("Usuario não encontrado");
+	}
 
 	public Usuario recuperarDadosUsuario(String id) throws ModeloException {
 		Query query = entityManager
