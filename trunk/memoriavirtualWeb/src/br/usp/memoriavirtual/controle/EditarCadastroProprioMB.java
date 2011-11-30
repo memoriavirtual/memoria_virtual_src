@@ -54,7 +54,7 @@ public class EditarCadastroProprioMB {
 		setNovoEmail(this.usuario.getEmail());
 		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("true");
-		setMudaSenha("true");
+		setMudaSenha("false");
 	}
 
 	public void setAntigaSenha(String antigaSenha) {
@@ -138,7 +138,7 @@ public class EditarCadastroProprioMB {
 	}
 
 	public String editarCadastroProprio() {
-		if (this.mudaSenha == "true") {
+		if (this.mudaSenha == "false") {
 			if (this.novoEmail == null || this.novoNomeCompleto == null
 					|| this.novoTelefone == null || this.novaSenha == null
 					|| this.confirmacaoNovaSenha == null)
@@ -156,6 +156,7 @@ public class EditarCadastroProprioMB {
 			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
 					"resultado");
 			setAntigaSenha(getNovaSenha());
+			setHabilitaAlteracao("true");
 			return "Sucesso";
 			/** Atualizar os dados da sess�o de usuario */
 		} catch (Exception e) {
@@ -227,14 +228,16 @@ public class EditarCadastroProprioMB {
 	}
 
 	public void validateSenha() {
-		if (this.novaSenha.equals("")) {
-			String[] argumentos = { "senha" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoSenha");
-		} else if (this.novaSenha.length() < 6) {
-			String[] argumentos = { "senha", "senha_minima" };
-			MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
-					"validacaoSenha");
+		if (this.mudaSenha == "false") {
+			if (this.novaSenha.equals("")) {
+				String[] argumentos = { "senha" };
+				MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+						"validacaoSenha");
+			} else if (this.novaSenha.length() < 6) {
+				String[] argumentos = { "senha", "senha_minima" };
+				MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
+						"validacaoSenha");
+			}
 		}
 	}
 
@@ -270,4 +273,5 @@ public class EditarCadastroProprioMB {
 		setHabilitaAlteracao("false");
 		return "Sucesso";
 	}
+
 }
