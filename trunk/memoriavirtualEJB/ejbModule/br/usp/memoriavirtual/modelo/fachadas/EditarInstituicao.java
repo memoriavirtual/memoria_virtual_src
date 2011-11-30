@@ -26,6 +26,21 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 	public EditarInstituicao() {
 	}
 	
+	/**
+	 * listarInstituicoes(pnome, grupo, usuario)
+	 * @param String pnome todo ou parte do nome da instituicao a ser procurada
+	 * @param Grupo grupo Grupo do usuario que faz o pedido
+	 * @param Usuario usuario usuario que faz o pedido
+	 * @return List<Instituicao>  Lista de instituicoes cujo nome comeca com pnome, e podem ser acessadas pelo 
+	 */
+	public List<Instituicao> listarInstituicoes(String pnome,
+			Grupo grupo, Usuario usuario) {
+		List<Instituicao> instituicoesLista = new ArrayList<Instituicao>();
+		instituicoesLista = memoriaVirtualEJB.listarInstituicoes(pnome, grupo, usuario);
+		return instituicoesLista;
+	}
+
+	
 
 	/**
 	 * listarInstituicoes(pnome)
@@ -37,34 +52,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		ins = memoriaVirtualEJB.listarInstituicoes(pnome);
 		return ins;
 	}
-
-	/**
-	 * listarInstituicoes(pnome, grupo, usuario)
-	 * @param String pnome todo ou parte do nome da instituicao a ser procurada
-	 * @param Grupo grupo Grupo do usuario que faz o pedido
-	 * @param Usuario usuario usuario que faz o pedido
-	 * @return List<Instituicao>  Lista de instituicoes cujo nome comeca com pnome, e podem ser acessadas pelo 
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Instituicao> listarInstituicoes(String pnome,
-			Grupo grupo, Usuario usuario) {
-		List<Instituicao> ins = new ArrayList<Instituicao>();
-		Query query;
-
-		query = entityManager
-				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like nome% ");
-		query.setParameter("nome", pnome);
-		query.setParameter("grupo", grupo);
-		query.setParameter("usuario", usuario);
-		try {
-			ins = (List<Instituicao>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-
-		return ins;
-	}
+	
 
 	@Override
 	public void editarInstituicao(String velhoNome, String novoNome,
