@@ -11,6 +11,10 @@ public interface EditarCadastroProprioRemote {
 	public void atualizarDadosUsuario(String id, String novoEmail,
 			String novoNomeCompleto, String novoTelefone, String novaSenha)
 			throws ModeloException;
+	
+	public void atualizarDadosUsuario(String id, String novoEmail,
+			String novoNomeCompleto, String novoTelefonea)
+			throws ModeloException;
 
 	public Usuario recuperarDadosUsuario(String id) throws ModeloException;
 
