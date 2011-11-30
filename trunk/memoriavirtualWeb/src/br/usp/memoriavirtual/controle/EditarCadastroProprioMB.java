@@ -147,15 +147,18 @@ public class EditarCadastroProprioMB {
 			if (this.novoEmail == null || this.novoNomeCompleto == null
 					|| this.novoTelefone == null)
 				return "Incompleto";
-			setNovaSenha(getAntigaSenha());
 		}
 		try {
-			this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
-					getNovoEmail(), getNovoNomeCompleto(), getNovoTelefone(),
-					getNovaSenha());
+			if (this.mudaSenha == "false")
+				this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
+						getNovoEmail(), getNovoNomeCompleto(),
+						getNovoTelefone(), getNovaSenha());
+			else
+				this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
+						getNovoEmail(), getNovoNomeCompleto(),
+						getNovoTelefone());
 			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
 					"resultado");
-			setAntigaSenha(getNovaSenha());
 			setHabilitaAlteracao("true");
 			return "Sucesso";
 			/** Atualizar os dados da sess�o de usuario */
