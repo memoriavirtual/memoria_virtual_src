@@ -1,6 +1,5 @@
 package br.usp.memoriavirtual.controle;
 
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -33,14 +32,29 @@ public class EditarCadastroProprioMB {
 	private String antigaSenha;
 
 	public EditarCadastroProprioMB() {
-		
 
 	}
-	
+
 	@PostConstruct
-	public void carregarDados(){
+	public void carregarDados() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
+		setId(this.usuario.getId());
+		try {
+			this.usuario = this.editarCadastroProprioEJB
+					.recuperarDadosUsuario(getId());
+			setAntigaSenha(this.usuario.getSenha());
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		setNovoNomeCompleto(this.usuario.getNomeCompleto());
+		setNovoEmail(this.usuario.getEmail());
+		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("true");
-		setMudaSenha("false");
+		setMudaSenha("true");
 	}
 
 	public void setAntigaSenha(String antigaSenha) {
@@ -57,24 +71,6 @@ public class EditarCadastroProprioMB {
 
 	public String getId() {
 		return this.id;
-	}
-
-	public String editarCadastroProprio() {
-		if (this.novoEmail == null || this.novoNomeCompleto == null || this.novoTelefone == null
-				|| this.novaSenha == null || this.confirmacaoNovaSenha == null)
-			return "Incompleto";
-		try {
-			this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
-					getNovoEmail(), getNovoNomeCompleto(), getNovoTelefone(),
-					getNovaSenha());
-			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
-					"resultado");
-			setAntigaSenha(getNovaSenha());
-			return "Sucesso";
-			/** Atualizar os dados da sess�o de usuario */
-		} catch (Exception e) {
-			return "Falha";
-		}
 	}
 
 	public void setNovoEmail(String novoEmail) {
@@ -116,15 +112,116 @@ public class EditarCadastroProprioMB {
 	public String getConfirmacaoNovaSenha() {
 		return this.confirmacaoNovaSenha;
 	}
-	
+
+	public void setMudaSenha(String mudaSenha) {
+		this.mudaSenha = mudaSenha;
+	}
+
+	public String getMudaSenha() {
+		return this.mudaSenha;
+	}
+
+	public void setHabilitaAlteracao(String habilitaAlteracao) {
+		this.habilitaAlteracao = habilitaAlteracao;
+	}
+
+	public String getHabilitaAlteracao() {
+		return this.habilitaAlteracao;
+	}
+
+	public void setSenhaConfirmacao(String senhaConfirmacao) {
+		this.senhaConfirmacao = senhaConfirmacao;
+	}
+
+	public String getSenhaConfirmacao() {
+		return this.senhaConfirmacao;
+	}
+
+	public String editarCadastroProprio() {
+		if (this.mudaSenha == "true") {
+			if (this.novoEmail == null || this.novoNomeCompleto == null
+					|| this.novoTelefone == null || this.novaSenha == null
+					|| this.confirmacaoNovaSenha == null)
+				return "Incompleto";
+		} else {
+			if (this.novoEmail == null || this.novoNomeCompleto == null
+					|| this.novoTelefone == null)
+				return "Incompleto";
+			setNovaSenha(getAntigaSenha());
+		}
+		try {
+			this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
+					getNovoEmail(), getNovoNomeCompleto(), getNovoTelefone(),
+					getNovaSenha());
+			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
+					"resultado");
+			setAntigaSenha(getNovaSenha());
+			return "Sucesso";
+			/** Atualizar os dados da sess�o de usuario */
+		} catch (Exception e) {
+			return "Falha";
+		}
+	}
+
 	public void validateMudaSenha(AjaxBehaviorEvent event) {
 		this.validateMudaSenha();
 	}
 
-	public void validateMudaSenha(){
-		
+	public void validateMudaSenha() {
+
 	}
-	
+
+	public void validateNomeCompleto(AjaxBehaviorEvent event) {
+		this.validateNomeCompleto();
+	}
+
+	public void validateNomeCompleto() {
+		if (this.novoNomeCompleto.equals("")) {
+			String[] argumentos = { "nome_completo" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoNomeCompleto");
+		}
+	}
+
+	public void validateEmail(AjaxBehaviorEvent event) {
+		this.validateEmail();
+	}
+
+	public void validateEmail() {
+
+		if (this.novoEmail.equals("")) {
+			String[] argumentos = { "email" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoEmail");
+		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
+			String[] argumentos = { "email" };
+			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
+					"validacaoEmail");
+		} else if (!memoriaVirtualEJB
+				.verificarDisponibilidadeEmail(this.novoEmail)) {
+			String[] argumentos = { "email" };
+			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
+					"validacaoEmail");
+		}
+	}
+
+	public void validateTelefone(AjaxBehaviorEvent event) {
+		this.validateTelefone();
+	}
+
+	public void validateTelefone() {
+		if (this.novoTelefone.equals("")) {
+			String[] argumentos = { "telefone" };
+			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+					"validacaoTelefone");
+		} else if (!ValidacoesDeCampos
+				.validarFormatoTelefone(this.novoTelefone)) {
+			String[] argumentos = { "telefone" };
+			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
+					"validacaoTelefone");
+		}
+	}
+
 	public void validateSenha(AjaxBehaviorEvent event) {
 		this.validateSenha();
 	}
@@ -157,110 +254,7 @@ public class EditarCadastroProprioMB {
 		}
 	}
 
-	public void setMudaSenha(String mudaSenha) {
-		this.mudaSenha = mudaSenha;
-	}
-
-	public String getMudaSenha() {
-		return this.mudaSenha;
-	}
-
-	public void setHabilitaAlteracao(String habilitaAlteracao) {
-		this.habilitaAlteracao = habilitaAlteracao;
-	}
-
-	public String getHabilitaAlteracao() {
-		return this.habilitaAlteracao;
-	}
-
-	public void setSenhaConfirmacao(String senhaConfirmacao) {
-		this.senhaConfirmacao = senhaConfirmacao;
-	}
-
-	public String getSenhaConfirmacao() {
-		return this.senhaConfirmacao;
-	}
-
-	public void validateNomeCompleto(AjaxBehaviorEvent event) {
-		this.validateNomeCompleto();
-	}
-
-	public void validateNomeCompleto() {
-		if (this.novoNomeCompleto.equals("")) {
-			String[] argumentos = { "nome_completo" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoNomeCompleto");
-		}
-	}
-
-	public void validateEmail(AjaxBehaviorEvent event) {
-		this.validateEmail();
-	}
-
-	public void validateEmail() {
-
-		if (this.novoEmail.equals("")) {
-			String[] argumentos = { "email" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoEmail");
-		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
-			String[] argumentos = { "email" };
-			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
-					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
-			String[] argumentos = { "email" };
-			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
-					"validacaoEmail");
-		}
-	}
-
-	public void validateTelefone(AjaxBehaviorEvent event) {
-		this.validateTelefone();
-	}
-
-	public void validateTelefone() {
-		if (this.novoTelefone.equals("")) {
-			String[] argumentos = { "telefone" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoTelefone");
-		} else if (!ValidacoesDeCampos
-				.validarFormatoTelefone(this.novoTelefone)) {
-			String[] argumentos = { "telefone" };
-			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
-					"validacaoTelefone");
-		}
-	}
-
-	public String validateLiberaAlteracao() {
-		if (senhaConfirmacao.equals("")) {
-			String[] argumentos = { "confirmacao_senha" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoLiberaAlteracao");
-			return "Falha";
-		} else if (!this.senhaConfirmacao.equals(this.usuario.getSenha())) {
-			String[] argumentos = { "confirmacao_senha", "senha" };
-			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
-					"validacaoLiberaAlteracao");
-			return "Falha";
-		}
-		setHabilitaAlteracao("false");
-		return "Sucesso";
-	}
-
 	public String vA() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
-		setId(this.usuario.getId());
-		try {
-			this.usuario = this.editarCadastroProprioEJB
-					.recuperarDadosUsuario(getId());
-			setAntigaSenha(this.usuario.getSenha());
-		} catch (ModeloException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
 		if (Usuario.gerarHash(this.senhaConfirmacao).equals("")) {
 			String[] argumentos = { "confirmacao_senha" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
@@ -273,9 +267,6 @@ public class EditarCadastroProprioMB {
 					"validacaoLiberaAlteracao");
 			return "Falha";
 		}
-		setNovoNomeCompleto(this.usuario.getNomeCompleto());
-		setNovoEmail(this.usuario.getEmail());
-		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("false");
 		return "Sucesso";
 	}
