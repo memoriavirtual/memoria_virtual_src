@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
@@ -40,34 +42,40 @@ public class CadastrarInstituicaoMB {
 
 	public String cadastrarInstituicao() {
 
-		/*
-		 * FacesContext.getCurrentInstance().addMessage( "resultado", new FacesMessage(FacesMessage.SEVERITY_INFO,
-		 * "Cadastro concluido com sucesso.", null));
-		 */
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+		.getExternalContext().getSessionMap().get("usuario");
+		
+		if(usuario.isAdministrador()){
 
-		if (this.validateNome() && this.validateLocalizacao() && this.validateCep() && this.validateTelefone()) {
-			Instituicao instituicao = new Instituicao(this.nome, this.localizacao, this.endereco, this.cidade,
-					this.estado, this.cep, this.telefone);
+			if (this.validateNome() && this.validateLocalizacao() && this.validateCep() && this.validateTelefone()) {
+				Instituicao instituicao = new Instituicao(this.nome, this.localizacao, this.endereco, this.cidade,
+						this.estado, this.cep, this.telefone);
 
-			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
-			if (!memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(this.nome)) {
+				cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
+				if (!memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(this.nome)) {
 
-				this.nome = "";
-				this.localizacao = "";
-				this.endereco = "";
-				this.cidade = "";
-				this.estado = "";
-				this.cep = "";
-				this.telefone = "";
+					this.nome = "";
+					this.localizacao = "";
+					this.endereco = "";
+					this.cidade = "";
+					this.estado = "";
+					this.cep = "";
+					this.telefone = "";
 
-				MensagensDeErro.getSucessMessage("cadastrarInstituicaoSucessocadastramento", "resultado");
-				return null;
+					MensagensDeErro.getSucessMessage("cadastrarInstituicaoSucessocadastramento", "resultado");
+					return null;
+				}
 			}
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroUsuario", "resultado");
+			return null;
 		}
-		MensagensDeErro.getErrorMessage("cadastrarInstituicaoErrocadastramento", "resultado");
-		return null;
+		else
+		{
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErrocadastramento", "resultado");
+			return null;
+		}
 	}
-
+	
 	public String resetCadastrarinstituicao() {
 		return "reset";
 	}
