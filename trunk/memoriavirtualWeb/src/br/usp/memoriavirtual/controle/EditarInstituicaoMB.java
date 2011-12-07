@@ -28,29 +28,27 @@ public class EditarInstituicaoMB implements Serializable {
 	private EditarInstituicaoRemote editarInstituicaoEJB;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-	private String velhoNome;
-	private String novoNome;
-	private String novoLocalizacao;
-	private String novoEndereco;
-	private String novoCidade;
-	private String novoEstado;
-	private String novoCep;
-	private String novoTelefone;
+	private String nome;
+	private String localizacao;
+	private String endereco;
+	private String cidade;
+	private String estado;
+	private String cep;
+	private String telefone;
 	private List<Instituicao> instituicoes;
+	private Instituicao instituicao;
 
 	public String editarInstituicao() {
 
 		if (this.validateCep() && this.validateCidade()
-				&& this.validateEndereco() && this.validateId()
-				&& this.validateLocalizacao() && this.validateNome()
-				&& this.validateTelefone()) {
+				&& this.validateendereco() && this.validatelocalizacao()
+				&& this.validateNome() && this.validateTelefone()) {
 
 			try {
 
-				this.editarInstituicaoEJB.editarInstituicao(this.velhoNome,
-						this.novoNome, this.novoLocalizacao, this.novoEndereco,
-						this.novoCidade, this.novoEstado, this.novoCep,
-						this.novoTelefone);
+				this.editarInstituicaoEJB.editarInstituicao(this.instituicao,
+						this.nome, this.localizacao, this.endereco,
+						this.cidade, this.estado, this.cep, this.telefone);
 			} catch (ModeloException e) {
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroEditarFalha", "resutado");
@@ -58,14 +56,14 @@ public class EditarInstituicaoMB implements Serializable {
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroEditarFalha", "resultado");
 			}
-			this.velhoNome = "";
-			this.novoCep = "";
-			this.novoCidade = "";
-			this.novoEndereco = "";
-			this.novoEstado = "";
-			this.novoLocalizacao = "";
-			this.novoNome = "";
-			this.novoTelefone = "";
+
+			this.cep = "";
+			this.cidade = "";
+			this.endereco = "";
+			this.estado = "";
+			this.localizacao = "";
+			this.nome = "";
+			this.telefone = "";
 
 			MensagensDeErro.getSucessMessage("editarInstituicaoSucessoEditar",
 					"resultado");
@@ -73,8 +71,8 @@ public class EditarInstituicaoMB implements Serializable {
 		return "falha";
 
 	}
-	
-	public String cancelar(){
+
+	public String cancelar() {
 		return "cancelar";
 	}
 
@@ -87,12 +85,12 @@ public class EditarInstituicaoMB implements Serializable {
 		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
 
 		if (usuario.isAdministrador()) {
-			instituicoesUsuario = this.editarInstituicaoEJB
-					.getInstituicoesSugeridas(this.velhoNome);
+			instituicoesUsuario = this.memoriaVirtualEJB
+					.listarInstituicoes(this.nome);
 		} else {
 			Grupo grupo = new Grupo("Gerente");
-			instituicoesUsuario = this.editarInstituicaoEJB
-					.getInstituicoesSugeridas("a", grupo, usuario);
+			instituicoesUsuario = this.memoriaVirtualEJB.listarInstituicoes(
+					this.nome, grupo, usuario);
 		}
 
 		this.instituicoes = instituicoesUsuario;
@@ -100,34 +98,16 @@ public class EditarInstituicaoMB implements Serializable {
 
 	public String selecionarInstituicao(Instituicao instituicao) {
 
-		this.velhoNome = instituicao.getNome();
-		this.novoNome = instituicao.getNome();
-		this.novoCep = instituicao.getCep();
-		this.novoCidade = instituicao.getCidade();
-		this.novoEndereco = instituicao.getEndereco();
-		this.novoEstado = instituicao.getEstado();
-		this.novoLocalizacao = instituicao.getLocalizacao();
-		this.novoTelefone = instituicao.getTelefone();
+		this.nome = instituicao.getNome();
+		this.cep = instituicao.getCep();
+		this.cidade = instituicao.getCidade();
+		this.endereco = instituicao.getEndereco();
+		this.estado = instituicao.getEstado();
+		this.localizacao = instituicao.getLocalizacao();
+		this.telefone = instituicao.getTelefone();
+		this.instituicao = instituicao;
 		this.instituicoes.clear();
 		return "sucesso";
-	}
-
-	public void validateId(AjaxBehaviorEvent event) {
-		this.validateId();
-	}
-
-	public boolean validateId() {
-
-		if (this.velhoNome.equals("")) {
-			MensagensDeErro.getErrorMessage("editarInstituicaoErroIdVazio",
-					"validacaoId");
-			return false;
-		} else if (memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(velhoNome)) {
-			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroIdInexistente", "validacaoId");
-			return false;
-		}
-		return true;
 	}
 
 	public void validateNome(AjaxBehaviorEvent event) {
@@ -135,12 +115,12 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	public boolean validateNome() {
-		if (!(this.novoNome.equals(this.velhoNome) || this.memoriaVirtualEJB
-				.verificarDisponibilidadeNomeInstituicao(this.novoNome))) {
+		if (!(this.memoriaVirtualEJB
+				.verificarDisponibilidadeNomeInstituicao(this.nome))) {
 			MensagensDeErro.getErrorMessage(
 					"editarInstituicaoErroNomeExistente", "validacaoNome");
 			return false;
-		} else if (this.novoNome.length() < 4) {
+		} else if (this.nome.length() < 4) {
 			MensagensDeErro.getErrorMessage("editarInstituicaoErroNomeCurto",
 					"validacaoNome");
 			return false;
@@ -149,32 +129,32 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	public void validateLocaliacao(AjaxBehaviorEvent event) {
-		this.validateLocalizacao();
+		this.validatelocalizacao();
 	}
 
-	public boolean validateLocalizacao() {
-		if (this.novoLocalizacao.equals("")) {
+	public boolean validatelocalizacao() {
+		if (this.localizacao.equals("")) {
 			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroLocalizacaoVazio",
-					"validacaoLocalizacao");
+					"editarInstituicaoErrolocalizacaoVazio",
+					"validacaolocalizacao");
 			return false;
 		} else if (!ValidacoesDeCampos
-				.validarFormatoLocalizacao(this.novoLocalizacao)) {
+				.validarFormatoLocalizacao(this.localizacao)) {
 			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroLocalizacaoInvalido",
-					"validacaoLocalizacao");
+					"editarInstituicaoErrolocalizacaoInvalido",
+					"validacaolocalizacao");
 		}
 		return true;
 	}
 
-	public void validateEndereco(AjaxBehaviorEvent event) {
-		this.validateEndereco();
+	public void validateendereco(AjaxBehaviorEvent event) {
+		this.validateendereco();
 	}
 
-	public boolean validateEndereco() {
-		if (this.novoEndereco.equals("")) {
+	public boolean validateendereco() {
+		if (this.endereco.equals("")) {
 			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroEnderecoVazio", "validacaoEndereco");
+					"editarInstituicaoErroenderecoVazio", "validacaoendereco");
 			return false;
 		}
 		return true;
@@ -185,7 +165,7 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	public boolean validateCidade() {
-		if (this.novoCidade.equals("")) {
+		if (this.cidade.equals("")) {
 			MensagensDeErro.getErrorMessage("editarInstituicaoErroCidadeVazio",
 					"validacaoCidade");
 			return false;
@@ -198,11 +178,11 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	public boolean validateCep() {
-		if (this.novoCep.equals("")) {
+		if (this.cep.equals("")) {
 			MensagensDeErro.getErrorMessage("editarInstituicaoErroCepVazio",
 					"validacaoCep");
 			return false;
-		} else if (!ValidacoesDeCampos.validarFormatoCep(this.novoCep)) {
+		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)) {
 			MensagensDeErro.getErrorMessage("editarInstituicaoErroCepInvalido",
 					"validacaoCep");
 			return false;
@@ -215,12 +195,11 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	public boolean validateTelefone() {
-		if (this.novoTelefone.equals("")) {
+		if (this.telefone.equals("")) {
 			MensagensDeErro.getErrorMessage(
 					"editarInstituicaoErroTelefoneVazio", "validacaoTelefone");
 			return false;
-		} else if (!ValidacoesDeCampos
-				.validarFormatoTelefone(this.novoTelefone)) {
+		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
 			MensagensDeErro.getErrorMessage(
 					"editarInstituicaoErroTelefoneInvalido",
 					"validacaoTelefone");
@@ -229,16 +208,9 @@ public class EditarInstituicaoMB implements Serializable {
 		return true;
 	}
 
-	/**
-	 * @return the velhoNome
-	 */
-	public String getVelhoNome() {
-		return this.velhoNome;
-	}
-
-	public SelectItem getNovoEstadoSigla() {
-		SelectItem novoEstado = new SelectItem(this.novoEstado, this.novoEstado);
-		return novoEstado;
+	public SelectItem getestadoSigla() {
+		SelectItem estado = new SelectItem(this.estado, this.estado);
+		return estado;
 	}
 
 	public List<SelectItem> getEstadoSigla() {
@@ -275,121 +247,109 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * @param velhoNome
-	 *            the velhoNome to set
-	 */
-	public void setVelhoNome(String velhoNome) {
-		this.velhoNome = velhoNome;
-	}
-
-	/**
 	 * @return the novoNome
 	 */
 
-	public void getNovoNome(AjaxBehaviorEvent event) {
-		this.novoNome = "lol";
-	}
-
-	public String getNovoNome() {
-		return novoNome;
+	public String getNome() {
+		return this.nome;
 	}
 
 	/**
 	 * @param novoNome
 	 *            the novoNome to set
 	 */
-	public void setNovoNome(String novoNome) {
-		this.novoNome = novoNome;
+	public void setNome(String novoNome) {
+		this.nome = novoNome;
 	}
 
 	/**
-	 * @return the novoLocalizacao
+	 * @return the localizacao
 	 */
-	public String getNovoLocalizacao() {
-		return novoLocalizacao;
+	public String getlocalizacao() {
+		return localizacao;
 	}
 
 	/**
-	 * @param novoLocalizacao
-	 *            the novoLocalizacao to set
+	 * @param localizacao
+	 *            the localizacao to set
 	 */
-	public void setNovoLocalizacao(String novoLocalizacao) {
-		this.novoLocalizacao = novoLocalizacao;
+	public void setlocalizacao(String localizacao) {
+		this.localizacao = localizacao;
 	}
 
 	/**
-	 * @return the novoEndereco
+	 * @return the endereco
 	 */
-	public String getNovoEndereco() {
-		return novoEndereco;
+	public String getendereco() {
+		return endereco;
 	}
 
 	/**
-	 * @param novoEndereco
-	 *            the novoEndereco to set
+	 * @param endereco
+	 *            the endereco to set
 	 */
-	public void setNovoEndereco(String novoEndereco) {
-		this.novoEndereco = novoEndereco;
+	public void setendereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	/**
-	 * @return the novoCidade
+	 * @return the cidade
 	 */
-	public String getNovoCidade() {
-		return novoCidade;
+	public String getcidade() {
+		return cidade;
 	}
 
 	/**
-	 * @param novoCidade
-	 *            the novoCidade to set
+	 * @param cidade
+	 *            the cidade to set
 	 */
-	public void setNovoCidade(String novoCidade) {
-		this.novoCidade = novoCidade;
+	public void setcidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 	/**
-	 * @return the novoEstado
+	 * @return the estado
 	 */
-	public String getNovoEstado() {
-		return novoEstado;
+	public String getestado() {
+		return estado;
 	}
 
 	/**
-	 * @param novoEstado
-	 *            the novoEstado to set
+	 * @param estado
+	 *            the estado to set
 	 */
-	public void setNovoEstado(String novoEstado) {
-		this.novoEstado = novoEstado;
+	public void setestado(String estado) {
+		this.estado = estado;
 	}
 
 	/**
-	 * @return the novoCep
+	 * @return the cep
 	 */
-	public String getNovoCep() {
-		return novoCep;
+	public String getcep() {
+		return cep;
 	}
 
 	/**
-	 * @param novoCep
-	 *            the novoCep to set
+	 * @param cep
+	 *            the cep to set
 	 */
-	public void setNovoCep(String novoCep) {
-		this.novoCep = novoCep;
+	public void setcep(String cep) {
+		this.cep = cep;
 	}
 
 	/**
-	 * @return the novoTelefone
+	 * @return the telefone
 	 */
-	public String getNovoTelefone() {
-		return novoTelefone;
+	public String gettelefone() {
+		return telefone;
 	}
 
 	/**
-	 * @param novoTelefone
-	 *            the novoTelefone to set
+	 * @param telefone
+	 *            the telefone to set
 	 */
-	public void setNovoTelefone(String novoTelefone) {
-		this.novoTelefone = novoTelefone;
+	public void settelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	/**
@@ -400,7 +360,7 @@ public class EditarInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * @param novoTelefone
+	 * @param telefone
 	 *            the instituicoes to set
 	 */
 	public void setInstituicoes(List<Instituicao> novoInstituicoes) {

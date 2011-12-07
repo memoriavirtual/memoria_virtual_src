@@ -31,7 +31,7 @@
 			<h:form method="post" prependId="false">
 				<fieldset>
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoNome}">
+				<h:inputText value="#{editarInstituicaoMB.nome}">
 					<f:ajax event="blur" execute="@this" render="validacaoNome"
 						listener="#{editarInstituicaoMB.validateNome}" />
 				</h:inputText>
@@ -41,7 +41,7 @@
 				</h:message></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoLocalizacao}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoLocalizacao}">
+				<h:inputText value="#{editarInstituicaoMB.localizacao}">
 					<f:ajax event="blur" execute="@this" render="validacaoLocalizacao"
 						listener="#{editarInstituicaoMB.validateLocalizacao}" />
 				</h:inputText>
@@ -51,7 +51,7 @@
 				</h:message></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoEndereco}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoEndereco}">
+				<h:inputText value="#{editarInstituicaoMB.endereco}">
 					<f:ajax event="blur" execute="@this" render="validacaoEndereco"
 						listener="#{editarInstituicaoMB.validateEndereco}" />
 				</h:inputText>
@@ -61,7 +61,7 @@
 				</h:message></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoCidade}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoCidade}">
+				<h:inputText value="#{editarInstituicaoMB.cidade}">
 					<f:ajax event="blur" execute="@this" render="validacaoCidade"
 						listener="#{editarInstituicaoMB.validateCidade}" />
 				</h:inputText>
@@ -71,7 +71,7 @@
 				</h:message></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoEstado}</h:outputLabel>
-				<h:selectOneMenu value="#{editarInstituicaoMB.novoEstado}">
+				<h:selectOneMenu value="#{editarInstituicaoMB.estado}">
 					<f:selectItem value="#{editarInstituicaoMB.novoEstadoSigla}"></f:selectItem>
 					<f:selectItems value="#{editarInstituicaoMB.estadoSigla}" />
 				</h:selectOneMenu>
@@ -81,7 +81,7 @@
 				</h:message></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoCep}">
+				<h:inputText value="#{editarInstituicaoMB.cep}">
 					<f:ajax event="blur" execute="@this" render="validacaoCep"
 						listener="#{editarInstituicaoMB.validateCep}" />
 				</h:inputText>
@@ -91,7 +91,7 @@
 				</h:message></div>
 
 				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoTelefone}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.novoTelefone}">
+				<h:inputText value="#{editarInstituicaoMB.telefone}">
 					<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 						listener="#{editarInstituicaoMB.validateTelefone}" />
 				</h:inputText>
