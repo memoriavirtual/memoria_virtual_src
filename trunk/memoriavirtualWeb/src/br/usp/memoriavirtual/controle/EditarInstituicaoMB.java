@@ -110,12 +110,59 @@ public class EditarInstituicaoMB implements Serializable {
 		return "sucesso";
 	}
 
+	public String selecionarInstituicao() {
+
+		if (this.validateNome()) {
+			Instituicao instituicao;
+			Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap().get("usuario");
+
+			if (usuario.isAdministrador()) {
+				try {
+					instituicao = editarInstituicaoEJB
+							.getInstituicao(this.nome);
+					this.cep = instituicao.getCep();
+					this.cidade = instituicao.getCidade();
+					this.endereco = instituicao.getEndereco();
+					this.estado = instituicao.getEstado();
+					this.localizacao = instituicao.getLocalizacao();
+					this.telefone = instituicao.getTelefone();
+					this.instituicao = instituicao;
+					this.instituicoes.clear();
+					System.out.println("akie");
+					return "sucesso";
+				} catch (ModeloException e) {
+					e.printStackTrace();
+				}
+			} else {
+				Grupo grupo = new Grupo("Gerente");
+				try {
+					instituicao = editarInstituicaoEJB.getInstituicao(
+							this.nome, grupo, usuario);
+					this.cep = instituicao.getCep();
+					this.cidade = instituicao.getCidade();
+					this.endereco = instituicao.getEndereco();
+					this.estado = instituicao.getEstado();
+					this.localizacao = instituicao.getLocalizacao();
+					this.telefone = instituicao.getTelefone();
+					this.instituicao = instituicao;
+					this.instituicoes.clear();
+					return "sucesso";
+				} catch (ModeloException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return "erro";
+
+	}
+
 	public void validateNome(AjaxBehaviorEvent event) {
 		this.validateNome();
 	}
 
 	public boolean validateNome() {
-		if (!(this.memoriaVirtualEJB
+		if ((this.memoriaVirtualEJB
 				.verificarDisponibilidadeNomeInstituicao(this.nome))) {
 			MensagensDeErro.getErrorMessage(
 					"editarInstituicaoErroNomeExistente", "validacaoNome");

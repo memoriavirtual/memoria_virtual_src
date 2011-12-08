@@ -17,39 +17,51 @@
 		<ui:define name="conteudo">
 			<div class="formulario">
 
-			<div class="erroPrincipal"><h:message id="resultado"
-				for="resultado" infoClass="sucesso" errorClass="erro"></h:message></div>
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
 
-			<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
-			<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
+				<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
+				<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
 
-			<h:form method="post" prependId="false">
-				<fieldset>
-				<div><h:outputLabel class="labels">#{mensagens.editarInstituicaoID}</h:outputLabel>
-				<h:inputText value="#{editarInstituicaoMB.nome}" autocomplete="off">
-					<f:ajax event="keyup" execute="@this" render="sugestoesId"
-						listener="#{editarInstituicaoMB.instituicoesSugeridas}" />
-					<f:ajax event="blur" execute="@this" render="validacaoNome"
-						listener="#{editarInstituicaoMB.validateId}" />
-				</h:inputText>
-				<div></div>
-				<h:message id="validacaoNome" for="validacaoNome" infoClass="sucesso"
-					errorClass="erro" warnClass="aviso">
-				</h:message></div>
-				<div id="sugestoes"><h:dataTable id="sugestoesId"
-					var="instituicao" value="#{editarInstituicaoMB.instituicoes}">
-					<h:column>
-						<h:commandLink
-							action="#{editarInstituicaoMB.selecionarInstituicao(instituicao)}">#{instituicao.nome}</h:commandLink>
-					</h:column>
-				</h:dataTable></div>
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoID}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.nome}"
+								autocomplete="off">
+								<f:ajax event="keyup" execute="@this" render="sugestoesId"
+									listener="#{editarInstituicaoMB.instituicoesSugeridas}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoNome"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						<div id="sugestoes">
+							<h:dataTable id="sugestoesId" var="instituicao"
+								value="#{editarInstituicaoMB.instituicoes}">
+								<h:column>
+									<h:commandLink
+										action="#{editarInstituicaoMB.selecionarInstituicao(instituicao)}">#{instituicao.nome}</h:commandLink>
+								</h:column>
+							</h:dataTable>
+						</div>
 
-				</fieldset>
-				<div class="botao"><h:commandButton id="botaoCancelar"
-					value="#{mensagens.editarInstituicaoBotaoCancelar}"
-					action="#{editarInstituicaoMB.cancelar}">
-				</h:commandButton></div>
-			</h:form></div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoSelecionar"
+							value="#{mensagens.editarInstituicaoBotaoSelecionar}"
+							action="#{editarInstituicaoMB.selecionarInstituicao}">
+						</h:commandButton>
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.editarInstituicaoBotaoCancelar}"
+							action="#{editarInstituicaoMB.cancelar}">
+						</h:commandButton>
+					</div>
+				</h:form>
+			</div>
 			<!-- end .formulario-->
 
 		</ui:define>
