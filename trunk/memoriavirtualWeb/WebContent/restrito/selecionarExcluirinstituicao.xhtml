@@ -33,7 +33,7 @@
 				<div><h:outputLabel class="labels">#{mensagens.excluirInstituicaoNome}</h:outputLabel>
 				<h:inputText value="#{excluirInstituicaoMB.nome}" autocomplete="off">
 					<f:ajax event="keyup" execute="@this" render="sugestoesId"
-						listener="#{excluirInstituicaoMB.instituicoesSugeridas}" />
+						listener="#{excluirInstituicaoMB.listarInstituicoes}" />
 					<f:ajax event="blur" execute="@this" render="validacaoId"
 						listener="#{editarInstituicaoMB.validateId}" />
 				</h:inputText>
