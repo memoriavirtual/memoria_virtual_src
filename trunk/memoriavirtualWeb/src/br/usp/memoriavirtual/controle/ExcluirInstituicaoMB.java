@@ -35,15 +35,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 	
 	public void listarInstituicoes(AjaxBehaviorEvent event) {
 
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
 		
-		if(usuario.isAdministrador()){
+		
+		
 			
 			this.setInstituicoes ( this.memoriaVirtualEJB.listarInstituicoes(this.nome));
-		}else{
-			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErrocadastramento", "resultado");
-		}
+		
+			//MensagensDeErro.getErrorMessage("cadastrarInstituicaoErrocadastramento", "resultado");
+		
 		return;
 	}
 	
