@@ -44,13 +44,15 @@
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
 							<h:inputSecret
-								value="#{editarCadastroProprioMB.senhaConfirmacao}">
+								value="#{editarCadastroProprioMB.senhaConfirmacao}"
+								disabled="#{!editarCadastroProprioMB.habilitaAlteracao}">
 							</h:inputSecret>
 						</div>
 					</fieldset>
 					<div class="botao">
 						<h:commandButton id="botaoConfirmaSenha"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
+							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}"
 							action="#{editarCadastroProprioMB.vA}">
 						</h:commandButton>
 					</div>
@@ -97,13 +99,17 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
-							<h:selectOneRadio value="#{editarCadastroProprioMB.mudaSenha}"
-								disabled="#{editarCadastroProprioMB.habilitaAlteracao}"
-								required="yes">
+							<h:selectOneRadio id="mudaSenha" value="#{editarCadastroProprioMB.mudaSenha}"
+								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
-									itemValue="true" />
+									itemValue="false">
+								</f:selectItem>
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioNao}"
-									itemValue="false"/>
+									itemValue="true">
+								</f:selectItem>
+								<f:ajax event="click" execute="@this" render="senha" />
+								<f:ajax event="click" execute="@this" render="confirmacaoSenha" />
+								<f:ajax event="click" execute="@this" render="mudaSenha" />
 							</h:selectOneRadio>
 							<div></div>
 							<h:message id="validacaoMudaSenha" for="validacaoMudaSenha"
@@ -114,7 +120,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioSenha}</h:outputLabel>
-							<h:inputSecret value="#{editarCadastroProprioMB.novaSenha}"
+							<h:inputSecret id="senha"
+								value="#{editarCadastroProprioMB.novaSenha}"
 								disabled="#{editarCadastroProprioMB.mudaSenha}">
 								<f:ajax event="blur" execute="@this" render="validacaoSenha"
 									listener="#{editarCadastroProprioMB.validateSenha}" />
@@ -125,11 +132,9 @@
 							</h:message>
 						</div>
 
-
-
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
-							<h:inputSecret
+							<h:inputSecret id="confirmacaoSenha"
 								value="#{editarCadastroProprioMB.confirmacaoNovaSenha}"
 								disabled="#{editarCadastroProprioMB.mudaSenha}">
 								<f:ajax event="blur" execute="@this"
