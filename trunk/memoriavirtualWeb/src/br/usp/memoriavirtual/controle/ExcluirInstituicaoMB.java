@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -23,22 +24,28 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 @SessionScoped
 public class ExcluirInstituicaoMB implements Serializable {
 
-	@EJB
-	private EditarInstituicaoRemote excluirInstituicaoEJB;
-	
+	//@EJB
+	//private ExcluirInstituicaoRemote excluirInstituicaoEJB;
+		
 
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
+	private EditarInstituicaoRemote editarInstituicaoEJB;
 	
 	private String nome;
 	private List<Instituicao> instituicoes;
+
+	private String localizacao;
+	private String endereco;
+	private String cidade;
+	private String estado;
+	private String cep;
+	private String telefone;
+	private Instituicao instituicao;
+
 	
 	public void listarInstituicoes(AjaxBehaviorEvent event) {
-
-		
-		
-		
-			
+	
 			this.setInstituicoes ( this.memoriaVirtualEJB.listarInstituicoes(this.nome));
 		
 			//MensagensDeErro.getErrorMessage("cadastrarInstituicaoErrocadastramento", "resultado");
@@ -46,6 +53,20 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return;
 	}
 	
+	public String listarInstituicoes (Instituicao instituicao){
+		this.setNome(instituicao.getNome());
+		this.setCep(instituicao.getCep());
+		this.setCidade(instituicao.getCidade());
+		this.setEndereco(instituicao.getEndereco());
+		this.setEstado(instituicao.getEstado());
+		this.setLocalizacao(instituicao.getLocalizacao());
+		this.setTelefone(instituicao.getTelefone());
+		this.setInstituicao(instituicao);
+		this.instituicoes.clear();
+		return "sucesso";
+	}
+		
+
 	//get e set
 	
 	//nome
@@ -64,5 +85,57 @@ public class ExcluirInstituicaoMB implements Serializable {
 	//listadeinstituicao
 	public void setInstituicoes(List<Instituicao> instituicoes) {
 		this.instituicoes = instituicoes;
+	}
+	public void setLocalizacao(String localizacao) {
+		this.localizacao = localizacao;
+	}
+	public String getLocalizacao() {
+		return localizacao;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
+	}
+
+	public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+	public void setEditarInstituicaoEJB(EditarInstituicaoRemote editarInstituicaoEJB) {
+		this.editarInstituicaoEJB = editarInstituicaoEJB;
+	}
+
+	public EditarInstituicaoRemote getEditarInstituicaoEJB() {
+		return editarInstituicaoEJB;
 	}
 }

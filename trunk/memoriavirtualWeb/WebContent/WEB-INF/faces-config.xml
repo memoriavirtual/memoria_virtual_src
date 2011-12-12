@@ -87,8 +87,12 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<display-name>editarInstituicao</display-name>
-		<from-view-id>/restrito/editarinstituicao.xhtml</from-view-id>
+		<display-name>excluirInstituicao</display-name>
+		<from-view-id>/restrito/selecionarExcluirinstituicao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/restrito/selecionarAdministradores.xhtml</to-view-id>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>cancelar</from-outcome>
 			<to-view-id>/restrito/index.xhtml</to-view-id>

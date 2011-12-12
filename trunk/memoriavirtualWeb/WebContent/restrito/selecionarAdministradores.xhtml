@@ -9,9 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Excluir Instituicao</title>
 </head>
-
 <h:body>
-	
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
@@ -22,7 +20,7 @@
 
 		<ui:define name="conteudo">
 			<div class="formulario">
-				<script type="text/javascript">Window.alert(“ATENÇÃO: A Exclusão da Instituição automaticamente leva a exclusão dos bens patrimoniais associados a ela. Certifique-se de ter solicitado backup dos dados antes de prosseguir.”)</script>
+			
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso" errorClass="erro"></h:message>
 				</div>
@@ -46,12 +44,16 @@
 				value="#{excluirInstituicaoMB.instituicoes}">
 					<h:column>
 						<h:commandLink
-							action="#{excluirInstituicaoMB.listarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
+							action="#{excluirInstituicaoMB.listarInstituicao(instituicao)}">#{instituicao.nome}</h:commandLink>
 					</h:column>
 				</h:dataTable></div>
 
 				</fieldset>
 				<div class="botao">
+				<h:commandButton id="botaoSelecionar"
+							value="#{mensagens.editarInstituicaoBotaoSelecionar}"
+							action="#{editarInstituicaoMB.selecionarInstituicao}">
+						</h:commandButton>
 				<h:commandButton id="botaoCancelar"
 					value="#{mensagens.excluirInstituicaoBotaoCancelar}"
 					action="#{editarInstituicaoMB.cancelar}">
