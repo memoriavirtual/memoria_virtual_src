@@ -138,28 +138,31 @@ public class EditarCadastroProprioMB {
 	public String getSenhaConfirmacao() {
 		return this.senhaConfirmacao;
 	}
-	
-	public void setHabilitaSenha(){
-		if(this.mudaSenha.matches("false") && this.habilitaAlteracao.matches("true"))
+
+	public void setHabilitaSenha() {
+		if (this.mudaSenha.matches("false")
+				&& this.habilitaAlteracao.matches("true"))
 			this.habilitaSenha = "true";
 		else
 			this.habilitaSenha = "false";
 	}
-	
-	public String getHabilitaSenha(){
+
+	public String getHabilitaSenha() {
 		return this.habilitaSenha;
 	}
 
 	public String editarCadastroProprio() {
 		if (this.mudaSenha.matches("false")) {
-			if (this.novoEmail == null || this.novoNomeCompleto == null
-					|| this.novoTelefone == null || this.novaSenha == null
-					|| this.confirmacaoNovaSenha == null)
+			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
+					|| this.novoTelefone.matches("")
+					|| this.novaSenha.matches("")
+					|| this.confirmacaoNovaSenha.matches(""))
 				return "Incompleto";
 		} else {
-			if (this.novoEmail == null || this.novoNomeCompleto == null
-					|| this.novoTelefone == null)
+			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
+					|| this.novoTelefone.matches("")) {
 				return "Incompleto";
+			}
 		}
 		try {
 			setHabilitaAlteracao("true");
@@ -174,7 +177,7 @@ public class EditarCadastroProprioMB {
 			setHabilitaAlteracao("true");
 			setHabilitaSenha();
 			carregarDados();
-			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
+			MensagensDeErro.getSucessMessage("Cadastro alterado com sucesso",
 					"resultado");
 			return "Sucesso";
 		} catch (Exception e) {
@@ -275,7 +278,7 @@ public class EditarCadastroProprioMB {
 		}
 	}
 
-	public String vA() {
+	public String validaAlteracao() {
 		if (Usuario.gerarHash(this.senhaConfirmacao).equals("")) {
 			String[] argumentos = { "confirmacao_senha" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
