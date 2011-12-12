@@ -18,14 +18,14 @@
 		<ui:define name="conteudo">
 			<div class="formulario">
 				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado" infoClass="sucesso"></h:message>
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
 				</div>
 
 				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
 
 				<h:form method="post" prependId="false">
-					<!-- -->
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
@@ -39,7 +39,7 @@
 						<h:commandButton id="botaoConfirmaSenha"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
 							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}"
-							action="#{editarCadastroProprioMB.vA}">
+							action="#{editarCadastroProprioMB.validaAlteracao}">
 						</h:commandButton>
 					</div>
 					<fieldset>
@@ -47,12 +47,12 @@
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
 							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
 								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
-								<f:ajax event="blur" execute="@this" render="validacaoNome"
+								<f:ajax event="blur" execute="@this" render="validacaoNomeCompleto"
 									listener="#{editarCadastroProprioMB.validateNomeCompleto}" />
 							</h:inputText>
 						</div>
 						<div></div>
-						<h:message id="validacaoNome" for="validacaoNome"
+						<h:message id="validacaoNomeCompleto" for="validacaoNomeCompleto"
 							infoClass="sucesso" errorClass="erro" warnClass="aviso">
 						</h:message>
 						<br></br>
@@ -147,6 +147,7 @@
 							infoClass="sucesso" errorClass="erro" warnClass="aviso">
 						</h:message>
 					</div>
+
 				</h:form>
 			</div>
 			<!-- end .formulario-->
