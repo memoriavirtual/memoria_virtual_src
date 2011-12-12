@@ -15,19 +15,6 @@
 
 		<ui:define name="titulo">#{mensagens.editarCadastrorProprioTitle}</ui:define>
 
-		<!--  <ui:define name="cabecalho">
-			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
-
-			<div id="menuRecipiente">
-				<ul id="menuNavegacao">
-
-				</ul>
-			</div>
-		
-
-			<div id="linkSecundarioRecipiente"></div>
-
-		</ui:define>-->
 		<ui:define name="conteudo">
 			<div class="formulario">
 				<div class="erroPrincipal">
@@ -98,7 +85,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioMudarSenha}</h:outputLabel>
-							<h:selectOneRadio id="mudaSenha" value="#{editarCadastroProprioMB.mudaSenha}"
+							<h:selectOneRadio id="mudaSenha"
+								value="#{editarCadastroProprioMB.mudaSenha}"
 								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 								<f:selectItem itemLabel="#{mensagens.editarCadastroProprioSim}"
 									itemValue="false">
