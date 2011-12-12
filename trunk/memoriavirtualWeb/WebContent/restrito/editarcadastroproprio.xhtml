@@ -15,8 +15,7 @@
 
 		<ui:define name="titulo">#{mensagens.editarCadastrorProprioTitle}</ui:define>
 
-
-		<ui:define name="cabecalho">
+		<!--  <ui:define name="cabecalho">
 			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
 
 			<div id="menuRecipiente">
@@ -24,11 +23,11 @@
 
 				</ul>
 			</div>
-			<!-- fim #menuRecipiente -->
+		
 
 			<div id="linkSecundarioRecipiente"></div>
 
-		</ui:define>
+		</ui:define>-->
 		<ui:define name="conteudo">
 			<div class="formulario">
 				<div class="erroPrincipal">
@@ -136,7 +135,7 @@
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
 							<h:inputSecret id="confirmacaoSenha"
 								value="#{editarCadastroProprioMB.confirmacaoNovaSenha}"
-								disabled="#{editarCadastroProprioMB.mudaSenha}">
+								disabled="#{editarCadastroProprioMB.mudaSenha} ">
 								<f:ajax event="blur" execute="@this"
 									listener="#{editarCadastroProprioMB.validateConfirmacaoSenha}" />
 							</h:inputSecret>
