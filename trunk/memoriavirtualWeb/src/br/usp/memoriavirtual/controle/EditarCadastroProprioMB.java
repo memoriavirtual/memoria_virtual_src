@@ -138,7 +138,7 @@ public class EditarCadastroProprioMB {
 	}
 
 	public String editarCadastroProprio() {
-		if (this.mudaSenha == "false") {
+		if (this.mudaSenha.matches("false")) {
 			if (this.novoEmail == null || this.novoNomeCompleto == null
 					|| this.novoTelefone == null || this.novaSenha == null
 					|| this.confirmacaoNovaSenha == null)
@@ -149,7 +149,8 @@ public class EditarCadastroProprioMB {
 				return "Incompleto";
 		}
 		try {
-			if (this.mudaSenha == "false")
+			setHabilitaAlteracao("true");
+			if (this.mudaSenha.matches("false"))
 				this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
 						getNovoEmail(), getNovoNomeCompleto(),
 						getNovoTelefone(), getNovaSenha());
@@ -157,11 +158,11 @@ public class EditarCadastroProprioMB {
 				this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
 						getNovoEmail(), getNovoNomeCompleto(),
 						getNovoTelefone());
+			setHabilitaAlteracao("true");
+			carregarDados();
 			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
 					"resultado");
-			setHabilitaAlteracao("true");
 			return "Sucesso";
-			/** Atualizar os dados da sess�o de usuario */
 		} catch (Exception e) {
 			return "Falha";
 		}
