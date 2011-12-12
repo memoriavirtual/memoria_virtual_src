@@ -30,6 +30,7 @@ public class EditarCadastroProprioMB {
 	private String senhaConfirmacao;
 	private String id;
 	private String antigaSenha;
+	private String habilitaSenha;
 
 	public EditarCadastroProprioMB() {
 
@@ -55,6 +56,7 @@ public class EditarCadastroProprioMB {
 		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("true");
 		setMudaSenha("false");
+		setHabilitaSenha();
 	}
 
 	public void setAntigaSenha(String antigaSenha) {
@@ -136,6 +138,17 @@ public class EditarCadastroProprioMB {
 	public String getSenhaConfirmacao() {
 		return this.senhaConfirmacao;
 	}
+	
+	public void setHabilitaSenha(){
+		if(this.mudaSenha.matches("false") && this.habilitaAlteracao.matches("true"))
+			this.habilitaSenha = "true";
+		else
+			this.habilitaSenha = "false";
+	}
+	
+	public String getHabilitaSenha(){
+		return this.habilitaSenha;
+	}
 
 	public String editarCadastroProprio() {
 		if (this.mudaSenha.matches("false")) {
@@ -159,6 +172,7 @@ public class EditarCadastroProprioMB {
 						getNovoEmail(), getNovoNomeCompleto(),
 						getNovoTelefone());
 			setHabilitaAlteracao("true");
+			setHabilitaSenha();
 			carregarDados();
 			MensagensDeErro.getSucessMessage("cadastro alterado com sucesso",
 					"resultado");
@@ -275,6 +289,7 @@ public class EditarCadastroProprioMB {
 			return "Falha";
 		}
 		setHabilitaAlteracao("false");
+		setHabilitaSenha();
 		return "Sucesso";
 	}
 
