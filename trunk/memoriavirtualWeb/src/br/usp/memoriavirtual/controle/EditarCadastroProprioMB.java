@@ -30,7 +30,6 @@ public class EditarCadastroProprioMB {
 	private String senhaConfirmacao;
 	private String id;
 	private String antigaSenha;
-	private String habilitaSenha;
 
 	public EditarCadastroProprioMB() {
 
@@ -55,7 +54,7 @@ public class EditarCadastroProprioMB {
 		setNovoEmail(this.usuario.getEmail());
 		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("true");
-		setMudaSenha("false");
+		setMudaSenha("true");
 	}
 
 	public void setAntigaSenha(String antigaSenha) {
@@ -138,18 +137,6 @@ public class EditarCadastroProprioMB {
 		return this.senhaConfirmacao;
 	}
 
-	public void setHabilitaSenha() {
-		if (this.mudaSenha.matches("false")
-				&& this.habilitaAlteracao.matches("true"))
-			this.habilitaSenha = "true";
-		else
-			this.habilitaSenha = "false";
-	}
-
-	public String getHabilitaSenha() {
-		return this.habilitaSenha;
-	}
-
 	public String editarCadastroProprio() {
 		Boolean erro = false;
 		if (this.mudaSenha.matches("false")) {
@@ -167,8 +154,8 @@ public class EditarCadastroProprioMB {
 				erro = true;
 			}
 			if (this.novaSenha.length() < 6) {
-				MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoSenha",
-						"resultado");
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroProprioFormatoSenha", "resultado");
 				erro = true;
 			}
 		} else {
@@ -184,17 +171,17 @@ public class EditarCadastroProprioMB {
 					"editarCadastroProprioFormatoEmail", "resultado");
 			erro = true;
 		}
-		if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
+		/*
+		 * if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail))
+		 * { MensagensDeErro.getErrorMessage(
+		 * "editarCadastroProprioDisponibilidadeEmail", "resultado"); erro =
+		 * true; }
+		 */
+		if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
 			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioDisponibilidadeEmail",
-					"resultado");
+					"editarCadastroProprioFormatoTelefone", "resultado");
 			erro = true;
 		}
-		/*if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
-			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoTelefone",
-					"resultado");
-			erro = true;
-		}*/
 		if (erro == false) {
 			try {
 				if (this.mudaSenha.matches("false"))
@@ -214,10 +201,10 @@ public class EditarCadastroProprioMB {
 				carregarDados();
 			}
 		}
-		return null;
+		return "Sucesso";
 	}
-	
-	public String descartar(){
+
+	public String descartar() {
 		carregarDados();
 		return null;
 	}
@@ -235,7 +222,7 @@ public class EditarCadastroProprioMB {
 	}
 
 	public void validateNomeCompleto() {
-		if (this.novoNomeCompleto.equals("")) {
+		if (this.novoNomeCompleto.matches("")) {
 			String[] argumentos = { "nome_completo" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoNomeCompleto");
@@ -248,7 +235,7 @@ public class EditarCadastroProprioMB {
 
 	public void validateEmail() {
 
-		if (this.novoEmail.equals("")) {
+		if (this.novoEmail.matches("")) {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoEmail");
@@ -269,7 +256,7 @@ public class EditarCadastroProprioMB {
 	}
 
 	public void validateTelefone() {
-		if (this.novoTelefone.equals("")) {
+		if (this.novoTelefone.matches("")) {
 			String[] argumentos = { "telefone" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoTelefone");
@@ -287,7 +274,7 @@ public class EditarCadastroProprioMB {
 
 	public void validateSenha() {
 		if (this.mudaSenha == "false") {
-			if (this.novaSenha.equals("")) {
+			if (this.novaSenha.matches("")) {
 				String[] argumentos = { "senha" };
 				MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 						"validacaoSenha");
@@ -304,11 +291,11 @@ public class EditarCadastroProprioMB {
 	}
 
 	public void validateConfirmacaoSenha() {
-		if (confirmacaoNovaSenha.equals("")) {
+		if (confirmacaoNovaSenha.matches("")) {
 			String[] argumentos = { "confirmacao_senha" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoConfirmacaoSenha");
-		} else if (!this.confirmacaoNovaSenha.equals(this.novaSenha)) {
+		} else if (!this.confirmacaoNovaSenha.matches(this.novaSenha)) {
 			String[] argumentos = { "confirmacao_senha", "senha" };
 			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
 					"validacaoConfirmacaoSenha");
@@ -316,20 +303,22 @@ public class EditarCadastroProprioMB {
 	}
 
 	public String validaAlteracao() {
-		if (Usuario.gerarHash(this.senhaConfirmacao).equals("")) {
-			String[] argumentos = { "confirmacao_senha" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoLiberaAlteracao");
-			return "Falha";
-		} else if (!Usuario.gerarHash(this.senhaConfirmacao).equals(
+		Boolean erro = false;
+		if (Usuario.gerarHash(this.senhaConfirmacao).matches("")) {
+			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
+					"resultado");
+			erro = true;
+		} else if (!Usuario.gerarHash(this.senhaConfirmacao).matches(
 				getAntigaSenha())) {
-			String[] argumentos = { "confirmacao_senha", "senha" };
-			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
-					"validacaoLiberaAlteracao");
-			return "Falha";
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioSenhaInvalida",
+					"resultado");
+			erro = true;
 		}
-		setHabilitaAlteracao("false");
-		return "Sucesso";
+		if (erro == false) {
+			setHabilitaAlteracao("false");
+		}
+		return null;
 	}
 
 }
