@@ -21,7 +21,7 @@
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro" warnClass="aviso"></h:message>
 				</div>
-				<br></br>
+				<br></br> 
 
 				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
@@ -52,12 +52,11 @@
 									render="validacaoNomeCompleto"
 									listener="#{editarCadastroProprioMB.validateNomeCompleto}" />
 							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNomeCompleto" for="validacaoNomeCompleto"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
-						<div></div>
-						<h:message id="validacaoNomeCompleto" for="validacaoNomeCompleto"
-							infoClass="sucesso" errorClass="erro" warnClass="aviso">
-						</h:message>
-						<br></br>
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioEmail}</h:outputLabel>
