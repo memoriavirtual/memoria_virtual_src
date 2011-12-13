@@ -13,14 +13,15 @@
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-		<ui:define name="titulo">#{mensagens.editarCadastrorProprioTitle}</ui:define>
+		<ui:define name="titulo">#{mensagens.editarCadastroProprioTitle}</ui:define>
 
 		<ui:define name="conteudo">
 			<div class="formulario">
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
-						errorClass="erro"></h:message>
+						errorClass="erro" warnClass="aviso"></h:message>
 				</div>
+				<br></br>
 
 				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
@@ -47,7 +48,8 @@
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
 							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
 								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
-								<f:ajax event="blur" execute="@this" render="validacaoNomeCompleto"
+								<f:ajax event="blur" execute="@this"
+									render="validacaoNomeCompleto"
 									listener="#{editarCadastroProprioMB.validateNomeCompleto}" />
 							</h:inputText>
 						</div>
@@ -77,7 +79,7 @@
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{editarCadastroProprioMB.validateTelefone}" />
 							</h:inputText>
-							<div></div>
+							<div>(dd)xxxx-xxxx</div>
 							<h:message id="validacaoTelefone" for="validacaoTelefone"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -137,11 +139,13 @@
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
-							action="#{editarCadastroProprioMB.editarCadastroProprio}">
+							action="#{editarCadastroProprioMB.editarCadastroProprio}"
+							disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 						</h:commandButton>
 						<h:commandButton id="botaoDescartarr"
 							value="#{mensagens.editarCadastroProprioBotaoDescartar}"
-							type="reset">
+							type="reset"
+							disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 						</h:commandButton>
 						<h:message id="validacaoCadastro" for="validacaoCadastro"
 							infoClass="sucesso" errorClass="erro" warnClass="aviso">
