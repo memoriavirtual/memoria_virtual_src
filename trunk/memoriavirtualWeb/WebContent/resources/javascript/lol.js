@@ -11,4 +11,6 @@ $(document).ready(function(){
 	$("#sugestao").click(function(){
 		alert(this.size());
 	});
+	
 });
+

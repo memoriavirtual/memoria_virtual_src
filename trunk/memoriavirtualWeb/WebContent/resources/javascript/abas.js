@@ -10,7 +10,7 @@ $(document).ready(function() {
 	    //Reatribui uma nova classe
     	$(this).addClass('selecionado');
 		
-	})
+	});
 	$("#menuNavegacao li a.linkPrincipal").mouseover(function(){
 		$("#menuNavegacao li a.close").fadeIn();
 		$("#menuNavegacao li a.linkPrincipal").removeClass("ativo");
