@@ -167,6 +167,11 @@ public class EditarCadastroProprioMB {
 						"editarCadastroProprioSenhasDiferentes", "resultado");
 				erro = true;
 			}
+			if (this.novaSenha.length() < 6) {
+				MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoSenha",
+						"resultado");
+				erro = true;
+			}
 		} else {
 			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
 					|| this.novoTelefone.matches("")) {
@@ -180,19 +185,14 @@ public class EditarCadastroProprioMB {
 					"editarCadastroProprioFormatoEmail", "resultado");
 			erro = true;
 		}
-		/*if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
+		if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroProprioDisponibilidadeEmail",
-					"validacaoEmail");
+					"resultado");
 			erro = true;
 		}
 		if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
 			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoTelefone",
-					"validacaoTelefone");
-			erro = true;
-		}*/
-		if (this.novaSenha.length() < 6) {
-			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoSenha",
 					"resultado");
 			erro = true;
 		}
