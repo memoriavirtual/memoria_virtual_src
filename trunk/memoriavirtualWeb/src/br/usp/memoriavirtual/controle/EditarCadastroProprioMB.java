@@ -177,10 +177,10 @@ public class EditarCadastroProprioMB {
 		}
 		if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
 			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioFormatoEmail", "validacaoEmail");
+					"editarCadastroProprioFormatoEmail", "resultado");
 			erro = true;
 		}
-		if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
+		/*if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroProprioDisponibilidadeEmail",
 					"validacaoEmail");
@@ -190,15 +190,14 @@ public class EditarCadastroProprioMB {
 			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoTelefone",
 					"validacaoTelefone");
 			erro = true;
-		}
+		}*/
 		if (this.novaSenha.length() < 6) {
 			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoSenha",
-					"validacaoSenha");
+					"resultado");
 			erro = true;
 		}
 		if (erro == false) {
 			try {
-				setHabilitaAlteracao("true");
 				if (this.mudaSenha.matches("false"))
 					this.editarCadastroProprioEJB.atualizarDadosUsuario(
 							getId(), getNovoEmail(), getNovoNomeCompleto(),
