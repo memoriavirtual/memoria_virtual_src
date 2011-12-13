@@ -152,37 +152,72 @@ public class EditarCadastroProprioMB {
 	}
 
 	public String editarCadastroProprio() {
+		Boolean erro = false;
 		if (this.mudaSenha.matches("false")) {
 			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
 					|| this.novoTelefone.matches("")
 					|| this.novaSenha.matches("")
-					|| this.confirmacaoNovaSenha.matches(""))
-				return "Incompleto";
+					|| this.confirmacaoNovaSenha.matches("")) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroProprioFaltaCampos", "resultado");
+				erro = true;
+			}
+			if (!this.novaSenha.matches(this.confirmacaoNovaSenha)) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroProprioSenhasDiferentes", "resultado");
+				erro = true;
+			}
 		} else {
 			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
 					|| this.novoTelefone.matches("")) {
-				return "Incompleto";
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroProprioFaltaCampos", "resultado");
+				erro = true;
 			}
 		}
-		try {
-			setHabilitaAlteracao("true");
-			if (this.mudaSenha.matches("false"))
-				this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
-						getNovoEmail(), getNovoNomeCompleto(),
-						getNovoTelefone(), getNovaSenha());
-			else
-				this.editarCadastroProprioEJB.atualizarDadosUsuario(getId(),
-						getNovoEmail(), getNovoNomeCompleto(),
-						getNovoTelefone());
-			setHabilitaAlteracao("true");
-			setHabilitaSenha();
-			carregarDados();
-			MensagensDeErro.getSucessMessage("Cadastro alterado com sucesso",
-					"resultado");
-			return "Sucesso";
-		} catch (Exception e) {
-			return "Falha";
+		if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioFormatoEmail", "validacaoEmail");
+			erro = true;
 		}
+		if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail)) {
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioDisponibilidadeEmail",
+					"validacaoEmail");
+			erro = true;
+		}
+		if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
+			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoTelefone",
+					"validacaoTelefone");
+			erro = true;
+		}
+		if (this.novaSenha.length() < 6) {
+			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoSenha",
+					"validacaoSenha");
+			erro = true;
+		}
+		if (erro == false) {
+			try {
+				setHabilitaAlteracao("true");
+				if (this.mudaSenha.matches("false"))
+					this.editarCadastroProprioEJB.atualizarDadosUsuario(
+							getId(), getNovoEmail(), getNovoNomeCompleto(),
+							getNovoTelefone(), getNovaSenha());
+				else
+					this.editarCadastroProprioEJB.atualizarDadosUsuario(
+							getId(), getNovoEmail(), getNovoNomeCompleto(),
+							getNovoTelefone());
+				MensagensDeErro.getSucessMessage(
+						"editarCadastroProprioSucesso", "resultado");
+			} catch (Exception e) {
+				MensagensDeErro.getErrorMessage("editarCadastroProprioErro",
+						"resultado");
+			}
+		}
+		setHabilitaAlteracao("true");
+		setHabilitaSenha();
+		carregarDados();
+		return null;
 	}
 
 	public void validateMudaSenha(AjaxBehaviorEvent event) {
