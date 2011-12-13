@@ -56,7 +56,6 @@ public class EditarCadastroProprioMB {
 		setNovoTelefone(this.usuario.getTelefone());
 		setHabilitaAlteracao("true");
 		setMudaSenha("false");
-		setHabilitaSenha();
 	}
 
 	public void setAntigaSenha(String antigaSenha) {
@@ -191,11 +190,11 @@ public class EditarCadastroProprioMB {
 					"resultado");
 			erro = true;
 		}
-		if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
+		/*if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
 			MensagensDeErro.getErrorMessage("editarCadastroProprioFormatoTelefone",
 					"resultado");
 			erro = true;
-		}
+		}*/
 		if (erro == false) {
 			try {
 				if (this.mudaSenha.matches("false"))
@@ -208,13 +207,17 @@ public class EditarCadastroProprioMB {
 							getNovoTelefone());
 				MensagensDeErro.getSucessMessage(
 						"editarCadastroProprioSucesso", "resultado");
+				carregarDados();
 			} catch (Exception e) {
 				MensagensDeErro.getErrorMessage("editarCadastroProprioErro",
 						"resultado");
+				carregarDados();
 			}
 		}
-		setHabilitaAlteracao("true");
-		setHabilitaSenha();
+		return null;
+	}
+	
+	public String descartar(){
 		carregarDados();
 		return null;
 	}
@@ -326,7 +329,6 @@ public class EditarCadastroProprioMB {
 			return "Falha";
 		}
 		setHabilitaAlteracao("false");
-		setHabilitaSenha();
 		return "Sucesso";
 	}
 
