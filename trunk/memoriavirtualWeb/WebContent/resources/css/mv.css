@@ -378,7 +378,33 @@ h4 {
 #sugestoesId a:hover{
 	color:white;
 }
-
 /*************************************************************/
 /*                FIM CONTEUDO / FORMULARIO                   /
 /*************************************************************/
+
+/*************************************************************/
+/*              INICIO AVISO EXCLUIR INSTITUIÇÃO             /
+/*************************************************************/
+
+.avisoexcluir {
+	max-width: 70%;
+	text-align: center;
+	padding: 15px 15px;
+	display: block;
+	margin: 0 auto;
+	font-size: 14px;
+	text-indent: 5px;
+}
+
+.mensagenavisoexcluir{
+	background: #F4D2D2;
+	border: #EAA8A8 solid 1px;
+	color: #BE4741;
+}
+.mensagenavisoexcluir div{
+	padding: 10px;
+}
+.botaoavisoexcluir {
+	padding-bottom: 10px;
+	padding-top: 5px
+}

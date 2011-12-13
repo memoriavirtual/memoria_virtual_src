@@ -2,7 +2,7 @@ $(document).ready(function(){
 	$("#sugestoesId").hide();
 	$("#input").keyup(function(){
 		if(this.value != ""){
-			$("#sugestoesId").show();
+			//$("#sugestoesId").show();
 		}
 		else{
 			$("#sugestoesId").hide();

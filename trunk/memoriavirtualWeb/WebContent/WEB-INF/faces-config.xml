@@ -9,6 +9,7 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.RealizarLoginMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	
 	<managed-bean>
 		<managed-bean-name>cadastrarInstituicaoMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarInstituicaoMB</managed-bean-class>
@@ -88,10 +89,10 @@
 
 	<navigation-rule>
 		<display-name>excluirInstituicao</display-name>
-		<from-view-id>/restrito/selecionarExcluirinstituicao.xhtml</from-view-id>
+		<from-view-id>/restrito/excluirInstituicao.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>sucesso</from-outcome>
-			<to-view-id>/restrito/selecionarAdministradores.xhtml</to-view-id>
+			<from-outcome>sim</from-outcome>
+			<to-view-id>/restrito/excluirInstituiçaoXHTMLfiles/selecionarExcluirInstituicao.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>cancelar</from-outcome>
