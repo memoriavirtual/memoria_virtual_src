@@ -195,6 +195,11 @@ public class EditarCadastroProprioMB {
 				MensagensDeErro.getSucessMessage(
 						"editarCadastroProprioSucesso", "resultado");
 				carregarDados();
+				/*Salva na sessão*/
+				HttpServletRequest request = (HttpServletRequest) FacesContext
+						.getCurrentInstance().getExternalContext().getRequest();
+				request.getSession().setAttribute("usuario",
+						this.usuario.clone());
 			} catch (Exception e) {
 				MensagensDeErro.getErrorMessage("editarCadastroProprioErro",
 						"resultado");
@@ -273,7 +278,7 @@ public class EditarCadastroProprioMB {
 	}
 
 	public void validateSenha() {
-		if (this.mudaSenha == "false") {
+		if (this.mudaSenha.matches("false")) {
 			if (this.novaSenha.matches("")) {
 				String[] argumentos = { "senha" };
 				MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
@@ -291,28 +296,29 @@ public class EditarCadastroProprioMB {
 	}
 
 	public void validateConfirmacaoSenha() {
-		if (confirmacaoNovaSenha.matches("")) {
-			String[] argumentos = { "confirmacao_senha" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoConfirmacaoSenha");
-		} else if (!this.confirmacaoNovaSenha.matches(this.novaSenha)) {
-			String[] argumentos = { "confirmacao_senha", "senha" };
-			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
-					"validacaoConfirmacaoSenha");
+		if (this.mudaSenha.matches("false")) {
+			if (confirmacaoNovaSenha.matches("")) {
+				String[] argumentos = { "confirmacao_senha" };
+				MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
+						"validacaoConfirmacaoSenha");
+			} else if (!this.confirmacaoNovaSenha.matches(this.novaSenha)) {
+				String[] argumentos = { "confirmacao_senha", "senha" };
+				MensagensDeErro.getErrorMessage("confirmacao_errado",
+						argumentos, "validacaoConfirmacaoSenha");
+			}
 		}
 	}
 
 	public String validaAlteracao() {
 		Boolean erro = false;
-		if (Usuario.gerarHash(this.senhaConfirmacao).matches("")) {
+		if (this.senhaConfirmacao.matches("")) {
 			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
 					"resultado");
 			erro = true;
 		} else if (!Usuario.gerarHash(this.senhaConfirmacao).matches(
 				getAntigaSenha())) {
 			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioSenhaInvalida",
-					"resultado");
+					"editarCadastroProprioSenhaInvalida", "resultado");
 			erro = true;
 		}
 		if (erro == false) {
