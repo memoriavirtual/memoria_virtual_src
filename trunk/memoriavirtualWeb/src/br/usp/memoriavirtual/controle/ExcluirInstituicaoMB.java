@@ -50,7 +50,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return;
 	}
 	
-	public String listarInstituicoes (Instituicao instituicao){
+	public void listarInstituicoes (Instituicao instituicao){
 		this.setNome(instituicao.getNome());
 		this.setCep(instituicao.getCep());
 		this.setCidade(instituicao.getCidade());
@@ -60,7 +60,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		this.setTelefone(instituicao.getTelefone());
 		this.setInstituicao(instituicao);
 		this.instituicoes.clear();
-		return "sucesso";
+		return;
 	}
 		
 
