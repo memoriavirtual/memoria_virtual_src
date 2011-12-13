@@ -125,7 +125,7 @@
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
 							<h:inputSecret id="confirmacaoSenha"
 								value="#{editarCadastroProprioMB.confirmacaoNovaSenha}"
-								disabled="#{editarCadastroProprioMB.mudaSenha} ">
+								disabled="#{editarCadastroProprioMB.mudaSenha}">
 								<f:ajax event="blur" execute="@this"
 									listener="#{editarCadastroProprioMB.validateConfirmacaoSenha}" />
 							</h:inputSecret>
