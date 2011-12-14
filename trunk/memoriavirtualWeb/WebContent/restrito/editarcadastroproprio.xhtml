@@ -5,26 +5,28 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<f:metadata>
-	<f:event listener="#{editarCadastroProprioMB.carregarDados2}" type="preRenderView" />
-</f:metadata>
+<!--  <f:metadata>
+	<f:event listener="#{editarCadastroProprioMB.carregarDados2}" type="postValidate" />
+</f:metadata>-->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Alterar Cadastro</title>
-</head> 
+</head>
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
 		<ui:define name="titulo">#{mensagens.editarCadastroProprioTitle}</ui:define>
 
+
 		<ui:define name="conteudo">
-			<div class="formulario">
+			<div class="formulario" id="formulario">
+
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro" warnClass="aviso"></h:message>
 				</div>
-				<br></br> 
+				<br></br>
 
 				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
