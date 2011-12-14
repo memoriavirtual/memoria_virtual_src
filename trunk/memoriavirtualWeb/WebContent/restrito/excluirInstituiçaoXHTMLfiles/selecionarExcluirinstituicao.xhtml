@@ -24,42 +24,42 @@
 
 				<div class="conteudoTitulo">#{mensagens.excluirInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoDescricao}</div>
-				
-				
-					<h:form method="post" prependId="false">
-						<fieldset>
-							<div>
-								<h:outputLabel class="labels">#{mensagens.excluirInstituicaoNome}</h:outputLabel>
-								<h:inputText value="#{excluirInstituicaoMB.nome}"
-									autocomplete="off">
-									<f:ajax event="keyup" execute="@this" render="sugestoesId"
-										listener="#{excluirInstituicaoMB.listarInstituicoes}" />
-								</h:inputText>
-								<div></div>
-							</div>
-							<div id="sugestoes">
-								<h:dataTable id="sugestoesId" var="instituicao"
-									value="#{excluirInstituicaoMB.instituicoes}">
-									<h:column>
-										<h:commandLink
-											action="#{excluirInstituicaoMB.selecionarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
-									</h:column>
-								</h:dataTable>
-							</div>
-						</fieldset>
-						<div class="botao">
-							<h:commandButton id="botaoSelecionar"
-								value="#{mensagens.editarInstituicaoBotaoSelecionar}"
-								action="#{excluirInstituicaoMB.selecionarInstituicoes}">
-							</h:commandButton>
-							<h:commandButton id="botaoCancelar"
-								value="#{mensagens.excluirInstituicaoBotaoCancelar}"
-								action="#{editarInstituicaoMB.cancelar}">
-							</h:commandButton>
-						</div>
-					</h:form>
 
-				
+
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoNome}</h:outputLabel>
+							<h:inputText value="#{excluirInstituicaoMB.nome}"
+								autocomplete="off">
+								<f:ajax event="keyup" execute="@this" render="sugestoesId"
+									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
+							</h:inputText>
+							<div></div>
+						</div>
+						<div id="sugestoes">
+							<h:dataTable id="sugestoesId" var="instituicao"
+								value="#{excluirInstituicaoMB.instituicoes}">
+								<h:column>
+									<h:commandLink
+										action="#{excluirInstituicaoMB.selecionarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
+								</h:column>
+							</h:dataTable>
+						</div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoSelecionar"
+							value="#{mensagens.editarInstituicaoBotaoSelecionar}"
+							action="#{excluirInstituicaoMB.selecionarInstituicoes}">
+						</h:commandButton>
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
+							action="#{editarInstituicaoMB.cancelar}">
+						</h:commandButton>
+					</div>
+				</h:form>
+
+
 				<!-- end .formulario-->
 			</div>
 		</ui:define>

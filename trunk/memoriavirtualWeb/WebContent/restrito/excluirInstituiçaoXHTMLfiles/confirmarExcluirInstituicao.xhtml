@@ -16,33 +16,39 @@
 		<ui:define name="titulo">#{mensagens.excluirInstituicaoTitle}</ui:define>
 		<ui:define name="conteudo">
 			<div class="formulario">
-
-
 				<div class="conteudoTitulo">#{mensagens.excluirInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoDescricao}</div>
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
 				<h:form method="post" prependId="false">
-					<div class="avisoexcluir">
-						<div class="mensagenavisoexcluir">
-							#{mensagens.excluirInstituicaoAviso}
-							<div>#{mensagens.excluirInstituicaoPergunta}</div>
-							<div class="botaoavisoexcluir">
-								<h:commandButton id="botaoSelecionar"
-									value="#{mensagens.excluirInstituicaoBotaoSim}"
-									action="#{excluirInstituicaoMB.sim}">
-								</h:commandButton>
-								<h:commandButton id="botaoCancelar"
-									value="#{mensagens.excluirInstituicaoBotaoNao}"
-									action="#{excluirInstituicaoMB.cancelar}">
-								</h:commandButton>
-							</div>
+					<fieldset>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoNome}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.instituicao.getNome()}</h:outputLabel>
+
+
 						</div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
+							action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
+
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.cadastrarInstituicaoBotaoResetar}"
+							action="#{cadastrarInstituicaoMB.resetCadastrarinstituicao}">
+						</h:commandButton>
+
 					</div>
 				</h:form>
-
-
-
-				<!-- end .formulario-->
 			</div>
+			<!-- end .formulario-->
+
 		</ui:define>
 	</ui:composition>
 </h:body>

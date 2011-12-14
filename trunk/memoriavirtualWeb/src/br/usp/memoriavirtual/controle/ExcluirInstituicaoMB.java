@@ -57,7 +57,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 			this.setInstituicao ( editarInstituicaoEJB
 					.getInstituicao(this.nome));
 			this.instituicoes.clear();
-			return "sucesso";
+			return "Instselecionada";
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
