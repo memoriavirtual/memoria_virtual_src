@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -30,31 +31,110 @@ public class EditarCadastroProprioMB {
 	private String senhaConfirmacao;
 	private String id;
 	private String antigaSenha;
+	private Boolean atualiza = true;
+	private Boolean flag = false;
+	private int tipoMensagem = 0;
 
 	public EditarCadastroProprioMB() {
 
 	}
 
-	@PostConstruct
-	public void carregarDados() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
-		setId(this.usuario.getId());
-		try {
-			this.usuario = this.editarCadastroProprioEJB
-					.recuperarDadosUsuario(getId());
-			setAntigaSenha(this.usuario.getSenha());
-		} catch (ModeloException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+	/*
+	 * @PostConstruct public void carregarDados() { HttpServletRequest request =
+	 * (HttpServletRequest) FacesContext
+	 * .getCurrentInstance().getExternalContext().getRequest(); this.usuario =
+	 * (Usuario) request.getSession().getAttribute("usuario");
+	 * setId(this.usuario.getId()); try { this.usuario =
+	 * this.editarCadastroProprioEJB .recuperarDadosUsuario(getId());
+	 * setAntigaSenha(this.usuario.getSenha()); } catch (ModeloException e) {
+	 * e.printStackTrace(); } catch (NullPointerException e) {
+	 * e.printStackTrace(); }
+	 * setNovoNomeCompleto(this.usuario.getNomeCompleto());
+	 * setNovoEmail(this.usuario.getEmail());
+	 * setNovoTelefone(this.usuario.getTelefone());
+	 * setHabilitaAlteracao("true"); setMudaSenha("true"); }
+	 */
+
+	/* Método que é chamado toda vez que a página é carregada */
+	public void carregarDados2(ComponentSystemEvent event) {
+		if (atualiza == true) {
+			HttpServletRequest request = (HttpServletRequest) FacesContext
+					.getCurrentInstance().getExternalContext().getRequest();
+			this.usuario = (Usuario) request.getSession().getAttribute(
+					"usuario");
+			setId(this.usuario.getId());
+			try {
+				this.usuario = this.editarCadastroProprioEJB
+						.recuperarDadosUsuario(getId());
+				setAntigaSenha(this.usuario.getSenha());
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+			setNovoNomeCompleto(this.usuario.getNomeCompleto());
+			setNovoEmail(this.usuario.getEmail());
+			setNovoTelefone(this.usuario.getTelefone());
+			setHabilitaAlteracao("true");
+			setMudaSenha("true");
+			atualiza = false;
+		} else {
+			if (flag == true) {
+				setHabilitaAlteracao("false");
+				atualiza = true;
+				flag = false;
+			}
 		}
-		setNovoNomeCompleto(this.usuario.getNomeCompleto());
-		setNovoEmail(this.usuario.getEmail());
-		setNovoTelefone(this.usuario.getTelefone());
-		setHabilitaAlteracao("true");
-		setMudaSenha("true");
+		switch (tipoMensagem) {
+		case 1:
+			MensagensDeErro.getErrorMessage("editarCadastroProprioFaltaCampos",
+					"resultado");
+			break;
+		case 2:
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioSenhasDiferentes", "resultado");
+			break;
+		case 3:
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioFormatoSenha", "resultado");
+			break;
+		case 4:
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioFormatoEmail", "resultado");
+			break;
+		case 5:
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioDisponibilidadeEmail", "resultado");
+			break;
+		case 6:
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioFormatoTelefone", "resultado");
+			break;
+		case 7:
+			MensagensDeErro.getSucessMessage("editarCadastroProprioSucesso",
+					"resultado");
+			break;
+		case 8:
+			MensagensDeErro.getErrorMessage("editarCadastroProprioErro",
+					"resultado");
+			break;
+		case 9:
+			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
+					"resultado");
+			break;
+		case 10:
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioSenhaInvalida", "resultado");
+			break;
+		}
+		tipoMensagem = 0;
+	}
+
+	public void abc(ComponentSystemEvent event) {
+		if (flag == false) {
+			atualiza = true;
+			flag = true;
+		}
 	}
 
 	public void setAntigaSenha(String antigaSenha) {
@@ -144,42 +224,34 @@ public class EditarCadastroProprioMB {
 					|| this.novoTelefone.matches("")
 					|| this.novaSenha.matches("")
 					|| this.confirmacaoNovaSenha.matches("")) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioFaltaCampos", "resultado");
+				tipoMensagem = 1;
 				erro = true;
 			}
 			if (!this.novaSenha.matches(this.confirmacaoNovaSenha)) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioSenhasDiferentes", "resultado");
+				tipoMensagem = 2;
 				erro = true;
 			}
 			if (this.novaSenha.length() < 6) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioFormatoSenha", "resultado");
+				tipoMensagem = 3;
 				erro = true;
 			}
 		} else {
 			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
 					|| this.novoTelefone.matches("")) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioFaltaCampos", "resultado");
+				tipoMensagem = 1;
 				erro = true;
 			}
 		}
 		if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioFormatoEmail", "resultado");
+			tipoMensagem = 4;
 			erro = true;
 		}
 		/*
 		 * if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail))
-		 * { MensagensDeErro.getErrorMessage(
-		 * "editarCadastroProprioDisponibilidadeEmail", "resultado"); erro =
-		 * true; }
+		 * { tipoMensagem = 5; erro = true; }
 		 */
 		if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioFormatoTelefone", "resultado");
+			tipoMensagem = 6;
 			erro = true;
 		}
 		if (erro == false) {
@@ -192,25 +264,26 @@ public class EditarCadastroProprioMB {
 					this.editarCadastroProprioEJB.atualizarDadosUsuario(
 							getId(), getNovoEmail(), getNovoNomeCompleto(),
 							getNovoTelefone());
-				MensagensDeErro.getSucessMessage(
-						"editarCadastroProprioSucesso", "resultado");
-				carregarDados();
-				/*Salva na sessão*/
+				tipoMensagem = 7;
+				atualiza = false;
+				flag = true;
+				/* Salva na sessão */
 				HttpServletRequest request = (HttpServletRequest) FacesContext
 						.getCurrentInstance().getExternalContext().getRequest();
 				request.getSession().setAttribute("usuario",
 						this.usuario.clone());
 			} catch (Exception e) {
-				MensagensDeErro.getErrorMessage("editarCadastroProprioErro",
-						"resultado");
-				carregarDados();
+				tipoMensagem = 8;
+				atualiza = false;
+				flag = true;
+				// carregarDados();
 			}
 		}
 		return "Sucesso";
 	}
 
 	public String descartar() {
-		carregarDados();
+		// carregarDados();
 		return null;
 	}
 
@@ -312,17 +385,15 @@ public class EditarCadastroProprioMB {
 	public String validaAlteracao() {
 		Boolean erro = false;
 		if (this.senhaConfirmacao.matches("")) {
-			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
-					"resultado");
+			tipoMensagem = 9;
 			erro = true;
 		} else if (!Usuario.gerarHash(this.senhaConfirmacao).matches(
 				getAntigaSenha())) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioSenhaInvalida", "resultado");
+			tipoMensagem = 10;
 			erro = true;
 		}
 		if (erro == false) {
-			setHabilitaAlteracao("false");
+			flag = true;
 		}
 		return null;
 	}
