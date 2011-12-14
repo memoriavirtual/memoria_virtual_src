@@ -5,10 +5,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:metadata>
+	<f:event listener="#{editarCadastroProprioMB.carregarDados2}" type="preRenderView" />
+</f:metadata>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Alterar Cadastro</title>
-</head>
+</head> 
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
