@@ -81,9 +81,9 @@ public class EditarCadastroProprioMB {
 		} else {
 			if (flag == true) {
 				setHabilitaAlteracao("false");
-				atualiza = true;
 				flag = false;
 			}
+			atualiza = true;
 		}
 		switch (tipoMensagem) {
 		case 1:
@@ -225,25 +225,35 @@ public class EditarCadastroProprioMB {
 					|| this.novaSenha.matches("")
 					|| this.confirmacaoNovaSenha.matches("")) {
 				tipoMensagem = 1;
+				atualiza = false;
+				flag = false;
 				erro = true;
 			}
 			if (!this.novaSenha.matches(this.confirmacaoNovaSenha)) {
 				tipoMensagem = 2;
+				atualiza = false;
+				flag = false;
 				erro = true;
 			}
 			if (this.novaSenha.length() < 6) {
 				tipoMensagem = 3;
+				atualiza = false;
+				flag = false;
 				erro = true;
 			}
 		} else {
 			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
 					|| this.novoTelefone.matches("")) {
 				tipoMensagem = 1;
+				atualiza = false;
+				flag = false;
 				erro = true;
 			}
 		}
 		if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
 			tipoMensagem = 4;
+			atualiza = false;
+			flag = false;
 			erro = true;
 		}
 		/*
@@ -252,6 +262,8 @@ public class EditarCadastroProprioMB {
 		 */
 		if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
 			tipoMensagem = 6;
+			atualiza = false;
+			flag = false;
 			erro = true;
 		}
 		if (erro == false) {
@@ -265,8 +277,6 @@ public class EditarCadastroProprioMB {
 							getId(), getNovoEmail(), getNovoNomeCompleto(),
 							getNovoTelefone());
 				tipoMensagem = 7;
-				atualiza = false;
-				flag = true;
 				/* Salva na sessão */
 				HttpServletRequest request = (HttpServletRequest) FacesContext
 						.getCurrentInstance().getExternalContext().getRequest();
@@ -274,8 +284,6 @@ public class EditarCadastroProprioMB {
 						this.usuario.clone());
 			} catch (Exception e) {
 				tipoMensagem = 8;
-				atualiza = false;
-				flag = true;
 				// carregarDados();
 			}
 		}
