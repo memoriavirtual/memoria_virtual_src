@@ -28,20 +28,40 @@
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoNome}</h:outputLabel>
 							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.instituicao.getNome()}</h:outputLabel>
-
-
+						</div>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoJustificativa}</h:outputLabel>
+							<h:inputTextarea class="caixadetexto" value="#{excluirInstituicaoMB.justificativa}" 
+							   maxlength="3" >
+							<f:ajax event="blur" execute="@this" render="validacaoJustificativa"
+									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
+							</h:inputTextarea>
+							<div></div>
+							<h:message id="validacaoJustificativa" for="validacaoJustificativa"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoValidade}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.getValidadecomdias()}</h:outputLabel>
 						</div>
 					</fieldset>
 					<div class="botao">
-						<h:commandButton id="botaoCadastrar"
-							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
-							action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
+						<h:commandButton id="botaoExcluir"
+							value="#{mensagens.excluirInstituicaoBotaoExcluir}"
+							action="#{excluirInstituicaoMB.confirmarexcluirInstituicao}">
+
+						</h:commandButton>
+						
+						<h:commandButton id="botaoVoltar"
+							value="#{mensagens.excluirInstituicaoBotaoVoltar}"
+							action="#{excluirInstituicaoMB.voltar}">
 
 						</h:commandButton>
 
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.cadastrarInstituicaoBotaoResetar}"
-							action="#{cadastrarInstituicaoMB.resetCadastrarinstituicao}">
+							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
+							action="#{editarInstituicaoMB.cancelar}">
 						</h:commandButton>
 
 					</div>

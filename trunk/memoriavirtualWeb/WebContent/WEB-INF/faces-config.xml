@@ -91,8 +91,8 @@
 		<display-name>excluirInstituicao</display-name>
 		<from-view-id>/restrito/excluirInstituicao.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>sim</from-outcome>
-			<to-view-id>/restrito/excluirInstituiçaoXHTMLfiles/selecionarExcluirinstituicao.xhtml</to-view-id>
+			<from-outcome>Instselecionada</from-outcome>
+			<to-view-id>/restrito/excluirInstituiçaoXHTMLfiles/confirmarExcluirInstituicao.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>cancelar</from-outcome>
@@ -102,18 +102,23 @@
 	
 	<navigation-rule>
 		<display-name>excluirInstituicao</display-name>
-		<from-view-id>/restrito/excluirInstituiçaoXHTMLfiles/selecionarExcluirinstituicao.xhtml</from-view-id>
+		<from-view-id>/restrito/excluirInstituiçaoXHTMLfiles/confirmarExcluirInstituicao.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>Instselecionada</from-outcome>
-			<to-view-id>/restrito/excluirInstituiçaoXHTMLfiles/confirmarExcluirInstituicao.xhtml</to-view-id>
+			<from-outcome>confirmarexcluir</from-outcome>
+			<to-view-id>/restrito/excluirInstituiçaoXHTMLfiles/emailExcluirInstituicao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>voltar</from-outcome>
+			<to-view-id>/restrito/excluirInstituicao.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>cancelar</from-outcome>
 			<to-view-id>/restrito/index.xhtml</to-view-id>
 		</navigation-case>
-
-
 	</navigation-rule>
+
+
+	
 	<navigation-rule>
 		<display-name>cadastrarInstituicao</display-name>
 		<from-view-id>/restrito/cadastrarinstituicao.xhtml</from-view-id>

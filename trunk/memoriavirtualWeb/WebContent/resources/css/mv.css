@@ -284,7 +284,13 @@ h4 {
 	width: 250px;
 	height: 20px;
 }
-
+.options {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	padding: 1px;
+	width: 250px;
+	height: 20px;
+}
 .formulario fieldset div div {
 	color: #414141;
 	width: 45%;
@@ -414,3 +420,17 @@ h4 {
 	padding: 1px;
 	text-align: left;
 }
+.boxtext{
+	padding: 10px ;
+}
+.caixadetexto {
+background:#F7F7F7;
+border: #444 solid 1px;
+font-family: Arial, Helvetica, sans-serif;
+width:250px;
+height:80px;
+}
+textarea:focus {background:#fffff0;
+border:#222 2px solid;}
+
+
