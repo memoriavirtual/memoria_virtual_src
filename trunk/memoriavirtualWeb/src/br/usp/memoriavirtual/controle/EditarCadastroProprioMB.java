@@ -414,8 +414,33 @@ public class EditarCadastroProprioMB {
 			}
 		}
 	}
+	
+	public void validarAlteracao(AjaxBehaviorEvent event){
+		this.validarAlteracao();
+	}
 
-	public String validaAlteracao() {
+	public void validarAlteracao() {
+		Boolean erro = false;
+		if (this.senhaConfirmacao.matches("")) {
+			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
+					"resultado");
+			tipoMensagem = 9;
+			erro = true;
+		} else if (!Usuario.gerarHash(this.senhaConfirmacao).matches(
+				getAntigaSenha())) {
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroProprioSenhaInvalida", "resultado");
+			tipoMensagem = 10;
+			erro = true;
+		}
+		if (erro == false) {
+			flag = true;
+			setHabilitaAlteracao("false");
+		}
+		//return null;
+	}
+	
+	/*public String validaAlteracao() {
 		Boolean erro = false;
 		if (this.senhaConfirmacao.matches("")) {
 			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
@@ -434,6 +459,6 @@ public class EditarCadastroProprioMB {
 			setHabilitaAlteracao("false");
 		}
 		return null;
-	}
+	}*/
 
 }
