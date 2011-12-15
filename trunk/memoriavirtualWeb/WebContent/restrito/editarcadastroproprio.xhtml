@@ -20,7 +20,7 @@
 
 
 		<ui:define name="conteudo">
-			<div class="formulario" id="formulario">
+			<div class="formulario">
 
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
@@ -31,7 +31,7 @@
 				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
 
-				<h:form method="post" prependId="false">
+				<h:form method="post" id="formulario" prependId="false">
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
@@ -44,9 +44,10 @@
 					<div class="botao">
 						<h:commandButton id="botaoConfirmaSenha"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
-							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}"
-							action="#{editarCadastroProprioMB.validaAlteracao}">
-						</h:commandButton>
+							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}">
+							<f:ajax event="click" execute="formulario" render="formulario"
+							 listener="#{editarCadastroProprioMB.validarAlteracao}"/>
+ 						</h:commandButton>
 					</div>
 					<fieldset>
 						<div>
