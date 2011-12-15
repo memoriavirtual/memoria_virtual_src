@@ -35,6 +35,7 @@ public class EditarCadastroProprioMB {
 	public EditarCadastroProprioMB() {
 	}
 	
+	/*Executa toda vez que a pagina é renderizada*/
 	public void inicializa(ComponentSystemEvent event){
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
@@ -348,16 +349,5 @@ public class EditarCadastroProprioMB {
 		}
 		return null;
 	}
-
-	/*
-	 * public String validaAlteracao() { Boolean erro = false; if
-	 * (this.senhaConfirmacao.matches("")) {
-	 * MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
-	 * "resultado"); tipoMensagem = 9; erro = true; } else if
-	 * (!Usuario.gerarHash(this.senhaConfirmacao).matches( getAntigaSenha())) {
-	 * MensagensDeErro.getErrorMessage( "editarCadastroProprioSenhaInvalida",
-	 * "resultado"); tipoMensagem = 10; erro = true; } if (erro == false) { flag
-	 * = true; setHabilitaAlteracao("false"); } return null; }
-	 */
 
 }
