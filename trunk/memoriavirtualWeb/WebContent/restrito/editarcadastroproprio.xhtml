@@ -45,10 +45,11 @@
 						<h:commandButton id="botaoConfirmaSenha"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
 							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}">
-							<f:ajax event="click"  execute="@all" render="form"
+							<f:ajax event="click"  execute="@all" render="painel"
 							 listener="#{editarCadastroProprioMB.validarAlteracao}"/>
  						</h:commandButton>
 					</div>
+					<h:panelGroup id="painel">
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
@@ -141,6 +142,7 @@
 							</h:message>
 						</div>
 					</fieldset>
+					</h:panelGroup>
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
@@ -150,7 +152,7 @@
 						<h:commandButton id="botaoDescartar"
 							value="#{mensagens.editarCadastroProprioBotaoDescartar}"
 							disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
-							<f:ajax event="click"  execute="@all" render="form"
+							<f:ajax event="click"  execute="@this" render="form"
 							 listener="#{editarCadastroProprioMB.descartar2}"/>
 						</h:commandButton>
 						<h:message id="validacaoCadastro" for="validacaoCadastro"
