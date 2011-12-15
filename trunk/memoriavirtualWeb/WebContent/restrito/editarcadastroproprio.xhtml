@@ -146,10 +146,12 @@
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
+							disabled="#{editarCadastroProprioMB.habilitaAlteracao}"
 							action="#{editarCadastroProprioMB.editarCadastroProprio}">
 						</h:commandButton>
 						<h:commandButton id="botaoDescartar"
 							value="#{mensagens.editarCadastroProprioBotaoDescartar}"
+							disabled="#{editarCadastroProprioMB.habilitaAlteracao}"
 							action="#{editarCadastroProprioMB.descartar}">
 						</h:commandButton>
 						<h:message id="validacaoCadastro" for="validacaoCadastro"
