@@ -5,9 +5,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<!--  <f:metadata>
-	<f:event listener="#{editarCadastroProprioMB.carregarDados2}" type="postValidate" />
-</f:metadata>-->
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{editarCadastroProprioMB.inicializa}" />
+</f:metadata>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Alterar Cadastro</title>
@@ -31,7 +32,7 @@
 				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
 
-				<h:form method="post" id="form">
+				<h:form method="post" prependId="false">
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
@@ -44,19 +45,18 @@
 					<div class="botao">
 						<h:commandButton id="botaoConfirmaSenha"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
-							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}">
-							<f:ajax event="click"  execute="@all" render="painel"
-							 listener="#{editarCadastroProprioMB.validarAlteracao}"/>
- 						</h:commandButton>
+							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}"
+							action="#{editarCadastroProprioMB.validarAlteracao}">
+						</h:commandButton>
 					</div>
-					<h:panelGroup id="painel">
+
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioNome}</h:outputLabel>
 							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
 								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 								<f:ajax event="blur" execute="@this"
-									render="validacaoNomeCompleto" 
+									render="validacaoNomeCompleto"
 									listener="#{editarCadastroProprioMB.validateNomeCompleto}" />
 							</h:inputText>
 							<div></div>
@@ -142,18 +142,15 @@
 							</h:message>
 						</div>
 					</fieldset>
-					</h:panelGroup>
+
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
 							action="#{editarCadastroProprioMB.editarCadastroProprio}">
-							<!--  disabled="#{editarCadastroProprioMB.habilitaAlteracao}">-->
 						</h:commandButton>
 						<h:commandButton id="botaoDescartar"
 							value="#{mensagens.editarCadastroProprioBotaoDescartar}"
-							disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
-							<f:ajax event="click"  execute="@this" render="form"
-							 listener="#{editarCadastroProprioMB.descartar2}"/>
+							action="#{editarCadastroProprioMB.descartar}">
 						</h:commandButton>
 						<h:message id="validacaoCadastro" for="validacaoCadastro"
 							infoClass="sucesso" errorClass="erro" warnClass="aviso">
