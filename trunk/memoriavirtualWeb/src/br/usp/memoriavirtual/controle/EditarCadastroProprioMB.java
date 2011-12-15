@@ -26,16 +26,17 @@ public class EditarCadastroProprioMB {
 	private String novoTelefone;
 	private String novaSenha;
 	private String confirmacaoNovaSenha;
-	private String mudaSenha;
-	private String habilitaAlteracao;
+	private String mudaSenha = "true";
+	private String habilitaAlteracao = "true";
 	private String senhaConfirmacao;
 	private String id;
 	private String antigaSenha;
-	private Boolean atualiza = true;
+	private Boolean atualiza = false;
 	private Boolean flag = false;
 	private int tipoMensagem = 0;
 
 	public EditarCadastroProprioMB() {
+		
 
 	}
 
@@ -62,7 +63,7 @@ public class EditarCadastroProprioMB {
 	}
 
 	/* Método que é chamado toda vez que a página é carregada */
-	public void carregarDados2(ComponentSystemEvent event) {
+	/*public void carregarDados2(ComponentSystemEvent event) {
 		if (atualiza == true) {
 			HttpServletRequest request = (HttpServletRequest) FacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
@@ -134,11 +135,14 @@ public class EditarCadastroProprioMB {
 			break;
 		}
 		tipoMensagem = 0;
+	}*/
+	
+	public void descartar2(AjaxBehaviorEvent event){
+		this.descartar2();
 	}
 
-	public String descartar(){
+	public void descartar2(){
 		carregarDados();
-		return null;
 	}
 	
 	public void teste(AjaxBehaviorEvent event){
@@ -424,20 +428,16 @@ public class EditarCadastroProprioMB {
 		if (this.senhaConfirmacao.matches("")) {
 			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
 					"resultado");
-			tipoMensagem = 9;
 			erro = true;
 		} else if (!Usuario.gerarHash(this.senhaConfirmacao).matches(
 				getAntigaSenha())) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroProprioSenhaInvalida", "resultado");
-			tipoMensagem = 10;
 			erro = true;
 		}
 		if (erro == false) {
-			flag = true;
 			setHabilitaAlteracao("false");
 		}
-		//return null;
 	}
 	
 	/*public String validaAlteracao() {
