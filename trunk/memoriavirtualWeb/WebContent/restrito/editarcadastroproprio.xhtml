@@ -31,7 +31,7 @@
 				<div class="conteudoTitulo">#{mensagens.editarCadastroProprioTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarCadastroProprioDescricao}</div>
 
-				<h:form method="post" id="formulario" prependId="false">
+				<h:form method="post" id="form">
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroProprioConfirmacaoSenha}</h:outputLabel>
@@ -45,7 +45,7 @@
 						<h:commandButton id="botaoConfirmaSenha"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
 							disabled="#{!editarCadastroProprioMB.habilitaAlteracao}">
-							<f:ajax event="click" execute="formulario" render="formulario"
+							<f:ajax event="click"  execute="@all" render="form"
 							 listener="#{editarCadastroProprioMB.validarAlteracao}"/>
  						</h:commandButton>
 					</div>
@@ -55,7 +55,7 @@
 							<h:inputText value="#{editarCadastroProprioMB.novoNomeCompleto}"
 								disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
 								<f:ajax event="blur" execute="@this"
-									render="validacaoNomeCompleto"
+									render="validacaoNomeCompleto" 
 									listener="#{editarCadastroProprioMB.validateNomeCompleto}" />
 							</h:inputText>
 							<div></div>
@@ -144,13 +144,14 @@
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.editarCadastroProprioBotaoAlterar}"
-							action="#{editarCadastroProprioMB.editarCadastroProprio}"
-							disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+							action="#{editarCadastroProprioMB.editarCadastroProprio}">
+							<!--  disabled="#{editarCadastroProprioMB.habilitaAlteracao}">-->
 						</h:commandButton>
-						<h:commandButton id="botaoDescartarr"
+						<h:commandButton id="botaoDescartar"
 							value="#{mensagens.editarCadastroProprioBotaoDescartar}"
-							action="#{editarCadastroProprioMB.descartar}"
 							disabled="#{editarCadastroProprioMB.habilitaAlteracao}">
+							<f:ajax event="click"  execute="@all" render="form"
+							 listener="#{editarCadastroProprioMB.descartar2}"/>
 						</h:commandButton>
 						<h:message id="validacaoCadastro" for="validacaoCadastro"
 							infoClass="sucesso" errorClass="erro" warnClass="aviso">
