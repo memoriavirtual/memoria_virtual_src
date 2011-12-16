@@ -33,57 +33,104 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-
 	private String nome;
-	private List<Instituicao> instituicoes;
-	private Instituicao instituicao;
+	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
+	private Instituicao instituicao = null;
 	private String validade = null;
 	private String justificativa = null;
-
+	private boolean flagInstituicao = false;
 
 	@SuppressWarnings("unused")
 	private List<SelectItem> ValidadeDias;
 
 
 	public void listarInstituicoes(AjaxBehaviorEvent event) {
-		List<Instituicao> auxinstituicoes;
-		auxinstituicoes = this.memoriaVirtualEJB.listarInstituicoes(this.nome);
-		this.setInstituicoes(auxinstituicoes);
+		this.instituicoes.clear();
+		List<Instituicao> listaInstituicoes = new ArrayList<Instituicao>();
+		listaInstituicoes = this.memoriaVirtualEJB.listarInstituicoes(this.nome);
+		this.setInstituicoes(listaInstituicoes);
+		this.validacaolista();
 		return;
 	}
-
+	private void validacaolista(){
+		if(this.instituicoes.isEmpty() )
+			if(this.nome != ""){
+				MensagensDeErro.getErrorMessage("excluirInstituicaoErrolistavazia",
+				"validacaoNome");
+				this.flagInstituicao = false;
+			}
+		if( this.nome == ""){
+			MensagensDeErro.getErrorMessage("excluirInstituicaoInstituicaoVazia",
+			"validacaoNome");	
+			this.flagInstituicao = false;
+		}else
+			this.flagInstituicao = true;
+	}
 	public void selecionarInstituicoes ( Instituicao pinstituicao ){
 		this.setNome(pinstituicao.getNome());
 		this.setInstituicao(pinstituicao);
+		this.flagInstituicao = true;
 		this.instituicoes.clear();
 		return ;
 	}
 	public String selecionarInstituicoes (){
-
-		try {
-			this.setInstituicao ( editarInstituicaoEJB
-					.getInstituicao(this.nome));
-			this.instituicoes.clear();
+		if(this.instituicao == null && this.flagInstituicao){
+			try {this.setInstituicao ( editarInstituicaoEJB.getInstituicao(this.nome));
+			} catch (ModeloException e) {
+				e.printStackTrace();
+				this.flagInstituicao = false;
+			}
+		}
+		if ( validateValidade() && this.flagInstituicao){
 			return "Instselecionada";
-		} catch (ModeloException e) {
-			e.printStackTrace();
+		}else{	
+			if(!this.flagInstituicao){
+				MensagensDeErro.getErrorMessage("excluirInstituicaoInstituicaoErro","validacaoNome");	
+			}
 		}
 
 		return "erro";
 	}
+	/**
+	 * @param event
+	 * Método de validação do imput validade do pedido de exclusão 
+	 */
+	public void validadeValidade(AjaxBehaviorEvent event){
+		validateValidade();
+		return;
+	}
+	/**
+	 * Método de validação do imput validade do pedido de exclusão
+	 * Utilizado pelo vallidador do evento e pelo validador do botão
+	 */
+	public boolean validateValidade(){
 
+		if (this.validade == null) {
+			MensagensDeErro.getErrorMessage("enviarconvite_validadevazia",
+			"validacaoValidade");
+			return false;
+		} 
+		return true;
+	}
 	public String confirmarexcluirInstituicao() {
 		return "confirmarexcluir";
 	}
 	public String voltar() {
+		this.nome= "";
+		this.instituicoes.clear();
+		this.instituicao = null;
+		this.validade = "";
+		this.justificativa = "";
+		this.flagInstituicao = false;
 		return "voltar";
 	}
 	public String cancelar() {
-		nome= "";
-		instituicoes.clear();
-		instituicao = null;
-		validade = "";
-		justificativa = "";
+		this.nome= "";
+		this.instituicoes.clear();
+		this.instituicao = null;
+		this.validade = "";
+		this.justificativa = "";
+		this.flagInstituicao = false;
 		return "cancelar";
 	}
 
@@ -168,5 +215,17 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public String getJustificativa() {
 		return justificativa;
+	}
+	/**
+	 * @param flagInstituicao the flagInstituicao to set
+	 */
+	public void setFlagInstituicao(boolean flagInstituicao) {
+		this.flagInstituicao = flagInstituicao;
+	}
+	/**
+	 * @return the flagInstituicao
+	 */
+	public boolean isFlagInstituicao() {
+		return flagInstituicao;
 	}
 }

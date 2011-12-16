@@ -30,15 +30,27 @@
 							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.instituicao.getNome()}</h:outputLabel>
 						</div>
 						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoGerentes}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.instituicao.getNome()}</h:outputLabel>
+						</div>
+						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoJustificativa}</h:outputLabel>
-							<h:inputTextarea class="caixadetexto" value="#{excluirInstituicaoMB.justificativa}" 
-							   maxlength="3" >
-							<f:ajax event="blur" execute="@this" render="validacaoJustificativa"
-									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
+							<h:inputTextarea class="caixadetexto"
+								value="#{excluirInstituicaoMB.justificativa}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoJustificativa"
+									listener="#{excluirInstituicaoMB.validateJustificativa}" />
+								<f:ajax event="keyup" execute="@this"
+									render="contagemJustificativa"
+									listener="#{excluirInstituicaoMB.contagemJustificativa}" />
 							</h:inputTextarea>
 							<div></div>
-							<h:message id="validacaoJustificativa" for="validacaoJustificativa"
+							<h:message id="contagemJustificativa" for="contagemJustificativa"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+							<h:message id="validacaoJustificativa"
+								for="validacaoJustificativa" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
 						<div>
@@ -52,7 +64,7 @@
 							action="#{excluirInstituicaoMB.confirmarexcluirInstituicao}">
 
 						</h:commandButton>
-						
+
 						<h:commandButton id="botaoVoltar"
 							value="#{mensagens.excluirInstituicaoBotaoVoltar}"
 							action="#{excluirInstituicaoMB.voltar}">

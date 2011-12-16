@@ -26,7 +26,7 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 /**
- * EJB Sem estado e singleton que contÃ©m mÃ©todos comuns ao sistema todo.
+ * EJB Sem estado e singleton que contém métodos comuns ao sistema todo.
  */
 @Singleton(mappedName = "MemoriaVirtual")
 public class MemoriaVirtual implements MemoriaVirtualRemote {
@@ -45,7 +45,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * Retorna o endereÃ§o fÃ­sico do servidor.
+	 * Retorna o endereço físico do servidor.
 	 * 
 	 * @throws IOException
 	 * 
@@ -131,7 +131,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * MÃ©todo para embaralhar a validade e email do caso de uso Enviar Convite
+	 * Método para embaralhar a validade e email do caso de uso Enviar Convite
 	 * 
 	 * @param mensagemOriginal
 	 * @return
@@ -174,7 +174,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		return msgNova;
 	}
-	
+
 	/**
 	 * listarInstituicoes(pnome, grupo, usuario)
 	 * @param String pnome todo ou parte do nome da instituicao a ser procurada
@@ -189,7 +189,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		Query query;
 
 		query = entityManager
-				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like nome% ");
+		.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like nome% ");
 		query.setParameter("nome", pnome);
 		query.setParameter("grupo", grupo);
 		query.setParameter("usuario", usuario);
@@ -197,7 +197,6 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			ins = (List<Instituicao>) query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 
 		return ins;
@@ -214,16 +213,16 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	public List<Instituicao> listarInstituicoes(String pnome) {
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 		Query query;
+		if(!(pnome =="")){
+			query = entityManager.createQuery("SELECT a FROM Instituicao a  WHERE a.nome LIKE :padrao ORDER BY a.nome");
 
-		query = entityManager.createQuery("SELECT a FROM Instituicao a  WHERE a.nome LIKE :padrao ORDER BY a.nome");
-
-		query.setParameter("padrao", "%" + pnome + "%");
-		try {
-			instituicoes = (List<Instituicao>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
+			query.setParameter("padrao", "%" + pnome + "%");
+			try {
+				instituicoes = (List<Instituicao>) query.getResultList();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
 		return instituicoes;
 	}
 
