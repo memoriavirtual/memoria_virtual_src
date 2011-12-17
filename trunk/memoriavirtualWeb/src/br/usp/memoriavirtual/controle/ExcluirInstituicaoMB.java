@@ -17,6 +17,14 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
+/**
+ * @author MAC
+ *
+ */
+/**
+ * @author MAC
+ *
+ */
 @ManagedBean(name = "excluirInstituicaoMB")
 @SessionScoped
 public class ExcluirInstituicaoMB implements Serializable {
@@ -38,12 +46,18 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private Instituicao instituicao = null;
 	private String validade = null;
 	private String justificativa = null;
+	private String justificativa1 = null;
 	private boolean flagInstituicao = false;
 
 	@SuppressWarnings("unused")
 	private List<SelectItem> ValidadeDias;
 
 
+	/**
+	 * @param event
+	 * Encontra uma lista de instituições que correspondem ao nome
+	 * que está sendo digitado no campo
+	 */
 	public void listarInstituicoes(AjaxBehaviorEvent event) {
 		this.instituicoes.clear();
 		List<Instituicao> listaInstituicoes = new ArrayList<Instituicao>();
@@ -52,6 +66,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 		this.validacaolista();
 		return;
 	}
+	/**
+	 * Testa a se lista é vazia  e envia as mensagens corretas
+	 */
 	private void validacaolista(){
 		if(this.instituicoes.isEmpty() )
 			if(this.nome != ""){
@@ -66,6 +83,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 		}else
 			this.flagInstituicao = true;
 	}
+	/**
+	 * @param pinstituicao
+	 * Seleciona uma instituição escolhida na lista
+	 */
 	public void selecionarInstituicoes ( Instituicao pinstituicao ){
 		this.setNome(pinstituicao.getNome());
 		this.setInstituicao(pinstituicao);
@@ -73,6 +94,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 		this.instituicoes.clear();
 		return ;
 	}
+	/**
+	 * @return
+	 * Trata das validações quando o botão confirmar é pressionado
+	 * Se todas as validações retornarem true return a Sting Instselecionada
+	 * Que é interpretada pelo faces-config chamando a nova página.
+	 */
 	public String selecionarInstituicoes (){
 		if(this.instituicao == null && this.flagInstituicao){
 			try {this.setInstituicao ( editarInstituicaoEJB.getInstituicao(this.nome));
@@ -111,6 +138,35 @@ public class ExcluirInstituicaoMB implements Serializable {
 			return false;
 		} 
 		return true;
+	}
+	public void validateJustificativa (AjaxBehaviorEvent event) {
+		validateJustificativa ();		
+	}
+	public void validateJustificativa () {
+		if(this.justificativa.length() == 0 ){
+			MensagensDeErro.getErrorMessage("excluirInstituicaoInstituicaoJustificativa",
+			"validacaoJustificativa");
+	
+		}else{
+			
+		}
+		
+	}
+	public void contagemJustificativa (AjaxBehaviorEvent event) {
+		contagemJustificativa ();
+	}
+	public void contagemJustificativa (){
+		
+		if(this.justificativa.length() > 300){
+			MensagensDeErro.getErrorMessage("excluirInstituicaoInstituicaoJustificativa300",
+					"validacaoJustificativa");
+			this.justificativa = this.justificativa1;
+		}else{
+			this.justificativa1 = this.justificativa;
+			FacesContext.getCurrentInstance().addMessage("validacaoJustificativa",
+					new FacesMessage(FacesMessage.SEVERITY_WARN, this.justificativa.length() + "/300", null));
+		}
+		
 	}
 	public String confirmarexcluirInstituicao() {
 		return "confirmarexcluir";

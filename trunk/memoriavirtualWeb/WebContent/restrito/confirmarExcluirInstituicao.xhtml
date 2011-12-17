@@ -41,17 +41,19 @@
 									render="validacaoJustificativa"
 									listener="#{excluirInstituicaoMB.validateJustificativa}" />
 								<f:ajax event="keyup" execute="@this"
-									render="contagemJustificativa"
+									render="validacaoJustificativa"
 									listener="#{excluirInstituicaoMB.contagemJustificativa}" />
+								
+								
 							</h:inputTextarea>
 							<div></div>
-							<h:message id="contagemJustificativa" for="contagemJustificativa"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
+
 							<h:message id="validacaoJustificativa"
 								for="validacaoJustificativa" infoClass="sucesso"
 								errorClass="erro" warnClass="aviso">
+								
 							</h:message>
+							
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoValidade}</h:outputLabel>
