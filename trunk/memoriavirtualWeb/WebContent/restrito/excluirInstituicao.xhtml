@@ -36,7 +36,7 @@
 								<f:ajax event="keyup" execute="@this" render="validacaoNome"
 									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
 							</h:inputText>
-							<div></div>
+							
 							<h:message id="validacaoNome" for="validacaoNome"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -58,7 +58,7 @@
 									<f:ajax event="blur" execute="@this" render="validacaoValidade"
 									listener="#{excluirInstituicaoMB.validateValidade}" />
 							</h:selectOneMenu>
-							<div></div>
+							
 							<h:message id="validacaoValidade" for="validacaoValidade"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
