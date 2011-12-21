@@ -3,6 +3,8 @@ package br.usp.memoriavirtual.controle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,8 +34,8 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 @SessionScoped
 public class ExcluirInstituicaoMB implements Serializable {
 
-	//@EJB
-	//private ExcluirInstituicaoRemote excluirInstituicaoEJB;
+	@EJB
+	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
 
 
 	/**
@@ -44,10 +46,17 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
+	
+	private FacesContext context = FacesContext.getCurrentInstance();;
+	private String bundleName = "mensagens";
+	ResourceBundle bundle = context.getApplication().getResourceBundle(
+			context, bundleName);
+
+	
 	private String nome;
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private Instituicao instituicao = null;
+	private Usuario administradorValidador = null;
 	private String validade = null;
 	private String justificativa = null;
 	private String justificativa1 = null;
@@ -58,12 +67,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 	
 	public String getNomeGerente(){
 		Usuario gerente;
-		Grupo grupo = new Grupo("Gerente") ;
 		
 		try{
-			gerente = excluirInstituicaoEJB.getUsuarioInstituicao
-					(instituicao, grupo);
-			return "ok";
+			gerente = memoriaVirtualEJB.getGerentesdaInstituicao
+					(instituicao);
+			return gerente.getNomeCompleto();
 		}
 		catch (ModeloException e){
 			
@@ -151,7 +159,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public boolean validateValidade(){
 
-		if (this.validade == null) {
+		if (this.validade == bundle.getString("excluirInstituicaoSelecioneValidade")) {
 			MensagensDeErro.getErrorMessage("enviarconvite_validadevazia",
 			"validacaoValidade");
 			return false;
@@ -187,6 +195,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		}
 		
 	}
+	
 	public String confirmarexcluirInstituicao() {
 		return "confirmarexcluir";
 	}
@@ -270,14 +279,42 @@ public class ExcluirInstituicaoMB implements Serializable {
 	public List<SelectItem> getValidadeDias() {
 
 		List<SelectItem> diasValidade = new ArrayList<SelectItem>();
+		
+		
+		diasValidade.add(new SelectItem(bundle.getString("excluirInstituicaoSelecioneValidade"), bundle.getString("excluirInstituicaoSelecioneValidade")));
 
-		diasValidade.add(new SelectItem(null, ""));
 		for (int i = 1; i<= 30; i++) {
 			diasValidade.add(new SelectItem(i, i + " dias"));
 		}
 		return diasValidade;
 	}
+	/**
+	 * @return the validadeDias
+	 */
+	public List<SelectItem> getListaValidadores() {
 
+		List<SelectItem> validadoreslista = new ArrayList<SelectItem>();
+		List<Usuario> listaAdministradores = new ArrayList<Usuario>();
+		
+		
+		
+		
+		validadoreslista.add(new SelectItem(bundle.getString("excluirInstituicaoSelecioneValidador"), bundle.getString("excluirInstituicaoSelecioneValidador")));
+		try {
+			listaAdministradores = memoriaVirtualEJB.listarAdministradores();
+			for(Usuario c : listaAdministradores) {   
+				validadoreslista.add(new SelectItem(c.getNomeCompleto(), c.getNomeCompleto()));   
+				}
+			
+			return validadoreslista;
+		} catch (ModeloException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return validadoreslista;
+	}
 	/**
 	 * @param justificativa the justificativa to set
 	 */
@@ -302,5 +339,17 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public boolean isFlagInstituicao() {
 		return flagInstituicao;
+	}
+	/**
+	 * @param administradorValidador the administradorValidador to set
+	 */
+	public void setAdministradorValidador(Usuario administradorValidador) {
+		this.administradorValidador = administradorValidador;
+	}
+	/**
+	 * @return the administradorValidador
+	 */
+	public Usuario getAdministradorValidador() {
+		return administradorValidador;
 	}
 }

@@ -407,6 +407,11 @@ h4 {
 	border: #CBBC07 solid 1px;
 	color: #7B7802;
 }
+.mensagenavisoexcluirred{
+	background: #F4D2D2;
+	border: #EAA8A8 solid 1px;
+	color: #BE4741;
+}
 .mensagenavisoexcluir div{
 	padding: 10px;
 }

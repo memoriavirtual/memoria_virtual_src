@@ -1,5 +1,7 @@
 package br.usp.memoriavirtual.modelo.fachadas.remoto;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 
@@ -29,6 +31,7 @@ public interface ExcluirInstituicaoRemote{
 	 */
 	public Usuario getUsuarioInstituicao(Instituicao instituicao, Grupo grupo)
 			throws ModeloException ;
-	
+	public List<Usuario> listarAdministradores()
+	throws ModeloException;
 
 }

@@ -19,7 +19,7 @@
 
 
 				<div class="conteudoTitulo">#{mensagens.excluirInstituicaoTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoDescricao}</div>
+				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoPassoPrimeiro}</div>
 				
 					<div class="avisoexcluir">
 						<div class="mensagenavisoexcluir">
@@ -36,7 +36,7 @@
 								<f:ajax event="keyup" execute="@this" render="validacaoNome"
 									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
 							</h:inputText>
-							
+							<div></div>
 							<h:message id="validacaoNome" for="validacaoNome"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -52,13 +52,13 @@
 						</div>
 					
 						<div>
-							<h:outputLabel class="labels">#{mensagens.enviarconvite_validade}</h:outputLabel>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoValidade}</h:outputLabel>
 							<h:selectOneMenu class="options" value="#{excluirInstituicaoMB.validade}">
 									<f:selectItems value="#{excluirInstituicaoMB.validadeDias}"  />
 									<f:ajax event="blur" execute="@this" render="validacaoValidade"
 									listener="#{excluirInstituicaoMB.validateValidade}" />
 							</h:selectOneMenu>
-							
+							<div></div>
 							<h:message id="validacaoValidade" for="validacaoValidade"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
