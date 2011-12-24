@@ -29,6 +29,24 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	}
 
+
+	@SuppressWarnings("unchecked")
+	public List<Usuario> listarAdministradores()
+	throws ModeloException {
+
+		List<Usuario> administradores;
+		Query query;
+		query = this.entityManager
+		.createQuery("SELECT a FROM Usuario a WHERE a.administrador = TRUE ORDER BY a.id ");
+		
+		try {
+			administradores = (List<Usuario>) query.getResultList();
+			return administradores ;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
+	}
 	/**
 	 * Metodo auxiliar para recuperar usuario ligado a determinada instituição
 	 * 
@@ -40,9 +58,9 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	 * @throws ModeloException
 	 *             Em caso de erro
 	 */
-	public Usuario getUsuarioInstituicao(Instituicao instituicao, Grupo grupo)
+	public Usuario getGerentesdaInstituicao(Instituicao instituicao)
 	throws ModeloException {
-
+		Grupo grupo = new Grupo("Gerente") ;
 		Acesso acesso;
 		Query query;
 		query = this.entityManager
@@ -57,23 +75,4 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	@SuppressWarnings("unchecked")
-	public List<Usuario> listarAdministradores()
-	throws ModeloException {
-
-		List<Usuario> administradores;
-		Query query;
-		query = this.entityManager
-		.createQuery("SELECT a FROM Usuario a ORDER BY a.id ");
-		
-		try {
-			administradores = (List<Usuario>) query.getResultList();
-			return administradores ;
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
-
-	}
-
-
 }

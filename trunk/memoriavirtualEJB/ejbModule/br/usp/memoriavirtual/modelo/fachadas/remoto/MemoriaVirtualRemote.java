@@ -24,6 +24,4 @@ public interface MemoriaVirtualRemote {
 	public boolean verificarDisponibilidadeEmail(String email);
 	public boolean verificarDisponibilidadeNomeInstituicao(String Nome);
 	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException;
-	public List<Usuario> listarAdministradores() throws ModeloException;
-	public Usuario getGerentesdaInstituicao(Instituicao instituicao)throws ModeloException;
-}
+	}

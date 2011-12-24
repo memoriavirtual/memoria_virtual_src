@@ -29,9 +29,6 @@ public interface ExcluirInstituicaoRemote{
 	 * @throws ModeloException
 	 *             Em caso de erro
 	 */
-	public Usuario getUsuarioInstituicao(Instituicao instituicao, Grupo grupo)
-			throws ModeloException ;
-	public List<Usuario> listarAdministradores()
-	throws ModeloException;
-
+	public List<Usuario> listarAdministradores() throws ModeloException;
+	public Usuario getGerentesdaInstituicao(Instituicao instituicao)throws ModeloException;
 }

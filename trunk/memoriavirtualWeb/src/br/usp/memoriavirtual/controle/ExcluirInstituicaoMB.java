@@ -46,39 +46,42 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-	
+
 	private FacesContext context = FacesContext.getCurrentInstance();;
 	private String bundleName = "mensagens";
 	ResourceBundle bundle = context.getApplication().getResourceBundle(
 			context, bundleName);
 
-	
+
 	private String nome;
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private Instituicao instituicao = null;
 	private Usuario administradorValidador = null;
 	private String validade = null;
 	private String justificativa = null;
+	private String menssagemValidade = null ;
+	private String mensagemValidador = null;
 	private String justificativa1 = null;
 	private boolean flagInstituicao = false;
+	private String validador = null;
 
 	@SuppressWarnings("unused")
 	private List<SelectItem> ValidadeDias;
-	
+
 	public String getNomeGerente(){
 		Usuario gerente;
-		
+
 		try{
-			gerente = memoriaVirtualEJB.getGerentesdaInstituicao
-					(instituicao);
+			gerente = excluirInstituicaoEJB.getGerentesdaInstituicao
+			(instituicao);
 			return gerente.getNomeCompleto();
 		}
 		catch (ModeloException e){
-			
+
 			return "fail";
 		}
-		
-		
+
+
 	}
 	/**
 	 * @param event
@@ -139,7 +142,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 			return "Instselecionada";
 		}else{	
 			if(!this.flagInstituicao){
-				MensagensDeErro.getErrorMessage("excluirInstituicaoInstituicaoErro","validacaoNome");	
+				MensagensDeErro.getErrorMessage("excluirInstituicaoErroNaoSelecionou","validacaoNome");	
 			}
 		}
 
@@ -159,9 +162,30 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public boolean validateValidade(){
 
-		if (this.validade == bundle.getString("excluirInstituicaoSelecioneValidade")) {
+		if (this.validade == null ) {
 			MensagensDeErro.getErrorMessage("enviarconvite_validadevazia",
 			"validacaoValidade");
+			return false;
+		} 
+		return true;
+	}
+	/**
+	 * @param event
+	 * Método de validação do imput gerente validador 
+	 */
+	public void validadeValidador(AjaxBehaviorEvent event){
+		validateValidador();
+		return;
+	}
+	/**
+	 * Método de validação do imput validador do pedido de exclusão
+	 * Utilizado pelo vallidador do evento e pelo validador do botão
+	 */
+	public boolean validateValidador(){
+
+		if (this.validador == null ) {
+			MensagensDeErro.getErrorMessage("excluirInstituicaoErroValidador",
+			"validacaoValidador");
 			return false;
 		} 
 		return true;
@@ -169,35 +193,41 @@ public class ExcluirInstituicaoMB implements Serializable {
 	public void validateJustificativa (AjaxBehaviorEvent event) {
 		validateJustificativa ();		
 	}
-	public void validateJustificativa () {
+	public boolean validateJustificativa () {
 		if(this.justificativa.length() == 0 ){
 			MensagensDeErro.getErrorMessage("excluirInstituicaoInstituicaoJustificativa",
 			"validacaoJustificativa");
-	
-		}else{
-			
+			return false;
+		}else{if(contagemJustificativa ())
+			return true;
+		else return false;
 		}
-		
+
 	}
 	public void contagemJustificativa (AjaxBehaviorEvent event) {
 		contagemJustificativa ();
 	}
-	public void contagemJustificativa (){
-		
+	public boolean contagemJustificativa (){
+
 		if(this.justificativa.length() > 300){
 			MensagensDeErro.getErrorMessage("excluirInstituicaoInstituicaoJustificativa300",
-					"validacaoJustificativa");
+			"validacaoJustificativa");
 			this.justificativa = this.justificativa1;
+			return false;
 		}else{
 			this.justificativa1 = this.justificativa;
 			FacesContext.getCurrentInstance().addMessage("validacaoJustificativa",
 					new FacesMessage(FacesMessage.SEVERITY_WARN, this.justificativa.length() + "/300", null));
+			return true;
 		}
-		
+
 	}
-	
+
 	public String confirmarexcluirInstituicao() {
-		return "confirmarexcluir";
+		if(validateJustificativa ()){
+			return "confirmarexcluir";
+		}
+		return null;
 	}
 	public String voltar() {
 		this.nome= "";
@@ -279,9 +309,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	public List<SelectItem> getValidadeDias() {
 
 		List<SelectItem> diasValidade = new ArrayList<SelectItem>();
-		
-		
-		diasValidade.add(new SelectItem(bundle.getString("excluirInstituicaoSelecioneValidade"), bundle.getString("excluirInstituicaoSelecioneValidade")));
+		this.menssagemValidade = bundle.getString("excluirInstituicaoSelecioneValidadE");
+
+		diasValidade.add(new SelectItem(null, this.menssagemValidade));
 
 		for (int i = 1; i<= 30; i++) {
 			diasValidade.add(new SelectItem(i, i + " dias"));
@@ -295,24 +325,23 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 		List<SelectItem> validadoreslista = new ArrayList<SelectItem>();
 		List<Usuario> listaAdministradores = new ArrayList<Usuario>();
-		
-		
-		
-		
-		validadoreslista.add(new SelectItem(bundle.getString("excluirInstituicaoSelecioneValidador"), bundle.getString("excluirInstituicaoSelecioneValidador")));
+
+
+		this.mensagemValidador = bundle.getString("excluirInstituicaoSelecioneValidadOr");
+
+		validadoreslista.add(new SelectItem(null, this.mensagemValidador));
 		try {
-			listaAdministradores = memoriaVirtualEJB.listarAdministradores();
+			listaAdministradores = excluirInstituicaoEJB.listarAdministradores();
 			for(Usuario c : listaAdministradores) {   
 				validadoreslista.add(new SelectItem(c.getNomeCompleto(), c.getNomeCompleto()));   
-				}
-			
+			}
+
 			return validadoreslista;
 		} catch (ModeloException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 		return validadoreslista;
 	}
 	/**
