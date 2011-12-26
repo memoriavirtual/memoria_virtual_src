@@ -99,7 +99,7 @@
 			<to-view-id>/restrito/index.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>excluirInstituicao</display-name>
 		<from-view-id>/restrito/confirmarExcluirInstituicao.xhtml</from-view-id>
@@ -118,7 +118,7 @@
 	</navigation-rule>
 
 
-	
+
 	<navigation-rule>
 		<display-name>cadastrarInstituicao</display-name>
 		<from-view-id>/restrito/cadastrarinstituicao.xhtml</from-view-id>
@@ -136,6 +136,19 @@
 			<from-outcome>sucesso</from-outcome>
 			<to-view-id>/login.xhtml</to-view-id>
 			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<display-name>selecionarUsuario</display-name>
+		<from-view-id>/restrito/selecionarusuario.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/restrito/editarcadastrousuario.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

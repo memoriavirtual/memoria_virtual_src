@@ -27,7 +27,7 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 /**
- * EJB Sem estado e singleton que contém métodos comuns ao sistema todo.
+ * EJB Sem estado e singleton que contï¿½m mï¿½todos comuns ao sistema todo.
  */
 @Singleton(mappedName = "MemoriaVirtual")
 public class MemoriaVirtual implements MemoriaVirtualRemote {
@@ -46,7 +46,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * Retorna o endereço físico do servidor.
+	 * Retorna o endereï¿½o fï¿½sico do servidor.
 	 * 
 	 * @throws IOException
 	 * 
@@ -132,7 +132,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * Método para embaralhar a validade e email do caso de uso Enviar Convite
+	 * Metodo para embaralhar a validade e email do caso de uso Enviar Convite
 	 * 
 	 * @param mensagemOriginal
 	 * @return

@@ -8,12 +8,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
+import javax.mail.MessagingException;
+
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
@@ -26,123 +29,193 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-	private String velhoNome;
-	private String novoNome;
-	private String novoTelefone;
-	private List<Acesso> acesso;
+	private String nome;
+	private String telefone;
 	private List<Usuario> usuarios;
-
-	public String editarCadastroUsuario() {
-
-		if (this.validateId() && this.validateNome() && this.validateTelefone()) {
-
-			try {
-
-				this.editarCadastroUsuarioEJB.editarCadastroUsuario(
-						this.velhoNome, this.novoNome, this.novoTelefone,
-						this.acesso);
-			} catch (ModeloException e) {
-				MensagensDeErro.getErrorMessage(
-						"editarInstituicaoErroEditarFalha", "resutado");
-			} catch (RuntimeException e) {
-				MensagensDeErro.getErrorMessage(
-						"editarInstituicaoErroEditarFalha", "resultado");
-			}
-			this.velhoNome = "";
-			this.novoNome = "";
-			this.novoTelefone = "";
-			this.acesso.clear();
-
-			MensagensDeErro.getSucessMessage("editarInstituicaoSucessoEditar",
-					"resultado");
-		}
-		return "falha";
-
-	}
+	private List<Usuario> administradores;
+	private Usuario usuario;
+	private String administrador;
+	private String justificativa;
+	private Integer validade;
+	private List<Acesso> acessos;
 
 	public String cancelar() {
 		return "cancelar";
 	}
 
-	public void usuariosSugeridos(AjaxBehaviorEvent event) {
+	public void listarUsuarios(AjaxBehaviorEvent event) {
 
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
-		// Lista de instituicoes que o usuario pertence
-		List<Acesso> usuariosLista = new ArrayList<Acesso>();
-
 		if (usuario.isAdministrador()) {
-			usuariosLista = this.editarCadastroUsuarioEJB
-					.getUsuariosSugeridos(this.velhoNome);
-		} else {
-			Grupo grupo = new Grupo("Gerente");
-			usuariosLista = this.editarCadastroUsuarioEJB.getUsuariosSugeridos(
-					this.velhoNome, grupo, usuario);
+			this.usuarios = this.editarCadastroUsuarioEJB
+					.listarUsuarios(this.nome);
 		}
-
-		for (Acesso a : usuariosLista)
-			if (a.getUsuario().getNomeCompleto().equalsIgnoreCase(velhoNome))
-				this.usuarios.add(a.getUsuario());
 	}
 
-	void validateId(AjaxBehaviorEvent e) {
-		this.validateId();
+	public String selecionarUsuario(Usuario usuario) {
+
+		Usuario requerente = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+
+		this.usuario = usuario;
+		this.nome = usuario.getNomeCompleto();
+		this.telefone = usuario.getTelefone();
+		this.acessos = this.editarCadastroUsuarioEJB.getAcessos(usuario);
+		this.administradores = this.editarCadastroUsuarioEJB
+				.getAdministradores(requerente);
+		this.usuarios.clear();
+		return "sucesso";
 	}
 
-	boolean validateId() {
-		if (this.velhoNome.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuario.erroIdVazio", "validacaoId");
-			return false;
-		} else if (memoriaVirtualEJB.verificarDisponibilidadeIdUsuario(this.velhoNome)) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuario.erroIdInvalida", "validacaoId");
-			return false;
+	public String selecionarUsuario() {
+
+		boolean existe = false;
+		Usuario selecionado = null;
+		Usuario requerente = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+
+		for (Usuario u : this.usuarios) {
+			if (u.getNomeCompleto().equals(this.nome)) {
+				existe = true;
+				selecionado = u;
+			}
 		}
-		return true;
+		if (existe) {
+			this.usuario = selecionado;
+			this.telefone = selecionado.getTelefone();
+			this.acessos = this.editarCadastroUsuarioEJB
+					.getAcessos(selecionado);
+			this.administradores = this.editarCadastroUsuarioEJB
+					.getAdministradores(requerente);
+			this.usuarios.clear();
+			return "sucesso";
+		}
+		MensagensDeErro.getErrorMessage("editarCadastroUsuarioUsuarioInvalido",
+				"validacaoUsuario");
+		return null;
 	}
 
-	void validateNome(AjaxBehaviorEvent e) {
+	public void validateNome(AjaxBehaviorEvent e) {
 		this.validateNome();
 	}
 
-	boolean validateNome() {
-		if (this.novoNome.equals("")) {
+	public boolean validateNome() {
+		if (this.nome.equals("")) {
 			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuario.erroNomeVazio", "validacaoNome");
+					"editarCadastroUsuarioErroNomeVazio", "validacaoNome");
 			return false;
-		} else if (!memoriaVirtualEJB.verificarDisponibilidadeIdUsuario(this.velhoNome)
-				&& !this.velhoNome.equals(this.novoNome)) {
+		} else if (this.nome.length() < 4) {
 			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuario.erroNomeInvalido", "validacaoNome");
+					"editarCadastroUsuarioErroNomeCurto", "validacaoNome");
 			return false;
 		}
 		return true;
 	}
 
-	public void validateTelefone(AjaxBehaviorEvent event) {
+	public void validateTelefone(AjaxBehaviorEvent e) {
 		this.validateTelefone();
 	}
 
 	public boolean validateTelefone() {
-		if (this.novoTelefone.equals("")) {
+		if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
 			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuario.telefoneVazio", "validacaoTelefone");
-			return false;
-		} else if (!ValidacoesDeCampos
-				.validarFormatoTelefone(this.novoTelefone)) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuario.telefoneFormatoIncorreto",
+					"editarCadastroUsuarioErroTelefoneInvalido",
 					"validacaoTelefone");
 			return false;
 		}
-		
+		return true;
+	}
+
+	public void validateJustificativa(AjaxBehaviorEvent e) {
+		this.validateJustificativa();
+	}
+
+	public boolean validateJustificativa() {
+		if (this.justificativa.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroUsuarioErroJustificativaVazia",
+					"validacaoJustificativa");
+			return false;
+		}
+		return true;
+	}
+
+	public String excluirAcesso(Acesso acesso) {
+		if (this.acessos.contains(acesso)) {
+			this.acessos.remove(acesso);
+		}
+		return null;
+	}
+
+	public String adicionarAcesso() {
+		Instituicao instituicao = new Instituicao();
+		Grupo grupo = new Grupo();
+		Acesso acesso = new Acesso();
+		acesso.setGrupo(grupo);
+		acesso.setInstituicao(instituicao);
+		acesso.setUsuario(this.usuario);
+		this.acessos.add(acesso);
+		return null;
+	}
+
+	public String editarCadastroUsuario() {
+		try {
+			this.memoriaVirtualEJB.enviarEmail("coccktailmolotov@gmail.com",
+					"memoria", "Saaaaalveeee");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<SelectItem> getAdm() {
+		List<SelectItem> adm = new ArrayList<SelectItem>();
+		for (Usuario u : this.administradores) {
+			adm.add(new SelectItem(u.getEmail(), u.getNomeCompleto()));
+		}
+		return adm;
+	}
+
+	public List<SelectItem> getValidades() {
+		List<SelectItem> validades = new ArrayList<SelectItem>();
+		for (int i = 1; i <= 30; ++i) {
+			validades.add(new SelectItem(i, i + " dias"));
+		}
+		return validades;
+	}
+
+	public void validateInstituicao(AjaxBehaviorEvent e) {
+		this.validateInstituicao();
+	}
+
+	public boolean validateInstituicao() {
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+		boolean existe;
+
+		if (usuario.isAdministrador()) {
+			for (Acesso a : this.acessos) {
+				System.out.println(a.getInstituicao().getNome());
+				existe = this.memoriaVirtualEJB
+						.verificarDisponibilidadeNomeInstituicao(a
+								.getInstituicao().getNome());
+				if (!existe) {
+					MensagensDeErro.getErrorMessage(
+							"editarCadastroUsuarioErroInstituicaoInvalida",
+							"validacaoInstituicao");
+					System.out.println("NAAOAAAAAAAAAAAAAAAAAAA");
+					return false;
+				}
+			}
+		}
+
 		return true;
 	}
 
 	/**
-	 * @return editarCadastroUsuarioEJB
+	 * @return the editarCadastroUsuarioEJB
 	 */
 	public EditarCadastroUsuarioRemote getEditarCadastroUsuarioEJB() {
 		return editarCadastroUsuarioEJB;
@@ -150,7 +223,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	/**
 	 * @param editarCadastroUsuarioEJB
-	 *            , editarCadastroUsuarioEJB a ser configurado
+	 *            the editarCadastroUsuarioEJB to set
 	 */
 	public void setEditarCadastroUsuarioEJB(
 			EditarCadastroUsuarioRemote editarCadastroUsuarioEJB) {
@@ -158,82 +231,37 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	/**
-	 * @return memoriaVirtualEJB
+	 * @return the nome
 	 */
-	public MemoriaVirtualRemote getMemoriaVirtualEJB() {
-		return memoriaVirtualEJB;
+	public String getNome() {
+		return nome;
 	}
 
 	/**
-	 * @param memoriaVirtualEJB
-	 *            , memoriaVirtualEJB a ser configurado
+	 * @param nome
+	 *            the nome to set
 	 */
-	public void setMemoriaVirtualEJB(MemoriaVirtualRemote memoriaVirtualEJB) {
-		this.memoriaVirtualEJB = memoriaVirtualEJB;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	/**
-	 * @return velhoNome
+	 * @return the telefone
 	 */
-	public String getVelhoNome() {
-		return velhoNome;
+	public String getTelefone() {
+		return telefone;
 	}
 
 	/**
-	 * @param velhoNome
-	 *            , velhoNome a ser configurado
+	 * @param telefone
+	 *            the telefone to set
 	 */
-	public void setVelhoNome(String velhoNome) {
-		this.velhoNome = velhoNome;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	/**
-	 * @return novoNome
-	 */
-	public String getNovoNome() {
-		return novoNome;
-	}
-
-	/**
-	 * @param novoNome
-	 *            , novoNome a ser configurado
-	 */
-	public void setNovoNome(String novoNome) {
-		this.novoNome = novoNome;
-	}
-
-	/**
-	 * @return novoTelefone
-	 */
-	public String getNovoTelefone() {
-		return novoTelefone;
-	}
-
-	/**
-	 * @param novoTelefone
-	 *            , novoTelefone a ser configurado
-	 */
-	public void setNovoTelefone(String novoTelefone) {
-		this.novoTelefone = novoTelefone;
-	}
-
-	/**
-	 * @return acesso
-	 */
-	public List<Acesso> getAcesso() {
-		return acesso;
-	}
-
-	/**
-	 * @param acesso
-	 *            , acesso a ser configurado
-	 */
-	public void setAcesso(List<Acesso> acesso) {
-		this.acesso = acesso;
-	}
-
-	/**
-	 * @return usuarios
+	 * @return the usuarios
 	 */
 	public List<Usuario> getUsuarios() {
 		return usuarios;
@@ -241,9 +269,100 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	/**
 	 * @param usuarios
-	 *            , usuarios a ser configurado
+	 *            the usuarios to set
 	 */
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+
+	/**
+	 * @return the administradores
+	 */
+	public List<Usuario> getAdministradores() {
+		return administradores;
+	}
+
+	/**
+	 * @param administradores
+	 *            the administradores to set
+	 */
+	public void setAdministradores(List<Usuario> administradores) {
+		this.administradores = administradores;
+	}
+
+	/**
+	 * @return the usuario
+	 */
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	/**
+	 * @param usuario
+	 *            the usuario to set
+	 */
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	/**
+	 * @return the administrador
+	 */
+	public String getAdministrador() {
+		return administrador;
+	}
+
+	/**
+	 * @param administrador
+	 *            the administrador to set
+	 */
+	public void setAdministrador(String administrador) {
+		this.administrador = administrador;
+	}
+
+	/**
+	 * @return the acessos
+	 */
+	public List<Acesso> getAcessos() {
+		return acessos;
+	}
+
+	/**
+	 * @param acessos
+	 *            the acessos to set
+	 */
+	public void setAcessos(List<Acesso> acessos) {
+		this.acessos = acessos;
+	}
+
+	/**
+	 * @return the justificativa
+	 */
+	public String getJustificativa() {
+		return justificativa;
+	}
+
+	/**
+	 * @param justificativa
+	 *            the justificativa to set
+	 */
+	public void setJustificativa(String justificativa) {
+		this.justificativa = justificativa;
+	}
+
+	/**
+	 * @return the validade
+	 */
+	public Integer getValidade() {
+		return validade;
+	}
+
+	/**
+	 * @param validade
+	 *            the validade to set
+	 */
+	public void setValidade(Integer validade) {
+		this.validade = validade;
+	}
+
 }

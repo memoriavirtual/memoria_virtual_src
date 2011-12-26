@@ -28,16 +28,14 @@
 				<h:form method="post" prependId="false">
 					<fieldset>
 						<div>
-							<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioID}</h:outputLabel>
-							<h:inputText value="#{editareditarCadastroUsuarioMB.Id}"
+							<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioNome}</h:outputLabel>
+							<h:inputText value="#{editarCadastroUsuarioMB.nome}"
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{editarCadastroUsuarioMB.usuariosSugeridos}" />
-								<f:ajax event="blur" execute="@this" render="validacaoId"
-									listener="#{editarCadastroUsuarioMB.validateId}" />
+									listener="#{editarCadastroUsuarioMB.listarUsuarios}" />
 							</h:inputText>
 							<div></div>
-							<h:message id="validacaoId" for="validacaoId" infoClass="sucesso"
+							<h:message id="validacaoUsuario" for="validacaoUsuario" infoClass="sucesso"
 								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
@@ -46,7 +44,7 @@
 								value="#{editarCadastroUsuarioMB.usuarios}">
 								<h:column>
 									<h:commandLink
-										action="#{editarCadastroUsuarioMB.selecionarUsuario(usuario)}">#{usuario.nome}</h:commandLink>
+										action="#{editarCadastroUsuarioMB.selecionarUsuario(usuario)}">#{usuario.nomeCompleto}</h:commandLink>
 								</h:column>
 							</h:dataTable>
 						</div>
@@ -55,7 +53,7 @@
 					<div class="botao">
 						<h:commandButton id="botaoEditar"
 							value="#{mensagens.editarCadastroUsuarioBotaoEditar}"
-							action="#{editarCadastroUsuarioMB.editar}">
+							action="#{editarCadastroUsuarioMB.selecionarUsuario}">
 						</h:commandButton>
 						<h:commandButton id="botaoCancelar"
 							value="#{mensagens.editarCadastroUsuarioBotaoCancelar}"

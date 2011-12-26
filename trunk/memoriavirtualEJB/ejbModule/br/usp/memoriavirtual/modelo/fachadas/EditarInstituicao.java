@@ -65,8 +65,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		Instituicao instituicao;
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Acesso a WHERE a.nome =: nome AND a.grupo =: grupo AND a.usuario =: usuario");
-		query.setParameter("nome", pnome);
+				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =: grupo AND a.usuario =: usuario");
 		query.setParameter("grupo", grupo);
 		query.setParameter("usuario", usuario);
 		try {
