@@ -117,6 +117,23 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<display-name>excluirInstituicao</display-name>
+		<from-view-id>/restrito/emailExcluirInstituicao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>confirmarexcluir</from-outcome>
+			<to-view-id>/restrito/excluirInstituicao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>voltar</from-outcome>
+			<to-view-id>/restrito/excluirInstituicao.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 
 
 	<navigation-rule>
