@@ -1,6 +1,9 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,6 +19,7 @@ import javax.faces.model.SelectItem;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
+import br.usp.memoriavirtual.modelo.fachadas.MemoriaVirtual;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
@@ -53,31 +57,67 @@ public class ExcluirInstituicaoMB implements Serializable {
 			context, bundleName);
 
 
-	private String nome;
+	private String nome = null;
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private Instituicao instituicao = null;
 	private Usuario administradorValidador = null;
+	private Usuario gerenteInstituicao = null;
+	private Usuario requisitor = null;
 	private String validade = null;
 	private String justificativa = null;
 	private String menssagemValidade = null ;
 	private String mensagemValidador = null;
 	private String justificativa1 = null;
 	private boolean flagInstituicao = false;
-	private String validador = null;
-
 	@SuppressWarnings("unused")
 	private List<SelectItem> ValidadeDias;
+	
+	
+	
+	
+	public void enviarPedidoExclusao()  {
+
+		if(validateValidador()){
+
+			
+				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
+				String assunto = bundle.getString("excluirInstituicaoEmailTitulo");
+				String textoEmail = bundle.getString("excluirInstituicaoEmailMensagem")
+				+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()
+				+ bundle.getString("excluirInstituicaoGerentes") + this.gerenteInstituicao.getNomeCompleto()
+				+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()
+				+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(this.getValidade())
+				+ bundle.getString("excluirInstituicaoEmilMensagemURL")
+				+ "/validarExclusao.jsf?requisitor="
+				+ memoriaVirtualEJB.embaralhar(this.requisitor.getId())
+				+ "&instituicao="
+				+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
+				+ "&justificativa="
+				+ memoriaVirtualEJB.embaralhar(this.justificativa1)
+				+ "&validade="
+				+ memoriaVirtualEJB.embaralhar(formatoData.format(this.getValidade()))
+				+ bundle.getString("excluirInstituicaoEmailMensagemFim");
+ 
+				
+				
+				MensagensDeErro.getErrorMessage("excluirInstituicaoErroValidador",
+				"resultado");	
+		
+		}
+	}
+
+	
+	
+	
 
 	public String getNomeGerente(){
-		Usuario gerente;
-
 		try{
-			gerente = excluirInstituicaoEJB.getGerentesdaInstituicao
+			this.gerenteInstituicao = excluirInstituicaoEJB.getGerentesdaInstituicao
 			(instituicao);
-			return gerente.getNomeCompleto();
+			return gerenteInstituicao.getNomeCompleto();
 		}
 		catch (ModeloException e){
-
+			e.printStackTrace();
 			return "fail";
 		}
 
@@ -183,7 +223,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public boolean validateValidador(){
 
-		if (this.validador == null ) {
+		if (this.administradorValidador == null ) {
 			MensagensDeErro.getErrorMessage("excluirInstituicaoErroValidador",
 			"validacaoValidador");
 			return false;

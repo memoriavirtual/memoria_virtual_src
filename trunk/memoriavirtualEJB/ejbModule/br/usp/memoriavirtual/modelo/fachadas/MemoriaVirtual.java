@@ -137,7 +137,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	 * @param mensagemOriginal
 	 * @return
 	 */
-	public static String embaralhar(String mensagemOriginal) {
+	public  String embaralhar(String mensagemOriginal) {
 
 		String msgNova = "";
 

@@ -16,6 +16,10 @@
 		<ui:define name="titulo">#{mensagens.excluirInstituicaoTitle}</ui:define>
 		<ui:define name="conteudo">
 			<div class="formulario">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
 
 
 				<div class="conteudoTitulo">#{mensagens.excluirInstituicaoTitle}</div>
@@ -29,7 +33,8 @@
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoNomedoAdministradorValidador}</h:outputLabel>
-							<h:selectOneMenu class="options" value="#{excluirInstituicaoMB.administradorValidador}">
+							<h:selectOneMenu class="options"
+								value="#{excluirInstituicaoMB.administradorValidador}">
 								<f:selectItems value="#{excluirInstituicaoMB.listaValidadores}" />
 								<f:ajax event="blur" execute="@this" render="validacaoValidador"
 									listener="#{excluirInstituicaoMB.validateValidador}" />
@@ -39,17 +44,26 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 					</fieldset>
 					<div class="botao">
-						<h:commandButton id="botaoSelecionar"
-							value="#{mensagens.excluirInstituicaoBotaoSelecionar}"
-							action="#{excluirInstituicaoMB.selecionarInstituicoes}">
+						<h:commandButton id="botaoExcluir"
+							value="#{mensagens.excluirInstituicaoBotaoEmail}"
+							action="#{excluirInstituicaoMB.enviarPedidoExclusao}">
+
 						</h:commandButton>
-						<h:commandButton id="botaoCancelar"
+
+						<h:commandButton id="botaoVoltar"
+							value="#{mensagens.excluirInstituicaoBotaoVoltar}"
+							action="#{excluirInstituicaoMB.voltar}">
+
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
 							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
 							action="#{editarInstituicaoMB.cancelar}">
 						</h:commandButton>
+
 					</div>
 				</h:form>
 

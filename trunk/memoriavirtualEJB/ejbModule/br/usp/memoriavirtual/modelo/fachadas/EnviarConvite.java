@@ -72,9 +72,9 @@ public class EnviarConvite implements EnviarConviteRemote {
 						+ memoriaVirtual.getEnderecoServidor()
 								.getCanonicalHostName()
 						+ "/fazerCadastro.jsf?Validacao="
-						+ MemoriaVirtual.embaralhar(this.usuario.getId())
+						+ memoriaVirtual.embaralhar(this.usuario.getId())
 						+ "&email="
-						+ MemoriaVirtual.embaralhar(this.usuario.getEmail())
+						+ memoriaVirtual.embaralhar(this.usuario.getEmail())
 						+ ".... Seu convite é valido ate "
 						+ formatoData.format(this.usuario.getValidade())
 						+ " ... Voce recebeu a seguinte mensagem: " + mensagem;

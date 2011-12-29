@@ -16,7 +16,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 public interface MemoriaVirtualRemote {
 
 	public InetAddress getEnderecoServidor() throws IOException;
-
+	public  String embaralhar (String mensagemOriginal);
 	public List<Instituicao> listarInstituicoes(String pnome);
 	public List<Instituicao> listarInstituicoes(String pnome,
 			Grupo grupo, Usuario usuario);
