@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.mail.MessagingException;
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -75,8 +76,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 	
 	
 	
-	public void enviarPedidoExclusao()  {
-
+	public void enviarPedidoExclusao()   {
+		
+		boolean flag;
+		
 		if(validateValidador()){
 
 			
@@ -99,10 +102,15 @@ public class ExcluirInstituicaoMB implements Serializable {
 				+ bundle.getString("excluirInstituicaoEmailMensagemFim");
  
 				
-				
-				MensagensDeErro.getErrorMessage("excluirInstituicaoErroValidador",
-				"resultado");	
-		
+				try {
+					
+					memoriaVirtualEJB.enviarEmail(this.administradorValidador.getEmail(), assunto, textoEmail);
+					
+				} catch (MessagingException e) {
+					
+					e.printStackTrace();
+				}	
+						
 		}
 	}
 
