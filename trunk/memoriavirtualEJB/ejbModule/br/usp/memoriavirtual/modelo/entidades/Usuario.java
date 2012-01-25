@@ -109,6 +109,9 @@ public class Usuario implements Serializable, Cloneable {
 	}
 
 	public Boolean isAdministrador() {
+		if(this.administrador == null){
+			return false;
+		}
 		return administrador;
 	}
 

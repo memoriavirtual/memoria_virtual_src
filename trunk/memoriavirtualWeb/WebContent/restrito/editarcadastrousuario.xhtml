@@ -13,10 +13,7 @@
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-
 		<ui:define name="titulo">#{mensagens.editarCadastroUsuarioTitle}</ui:define>
-
-
 
 		<ui:define name="conteudo">
 			<div class="formulario">
@@ -54,52 +51,69 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						<h:message id="validacaoInstituicao"
-							for="validacaoInstituicao" infoClass="sucesso"
-							errorClass="erro" warnClass="aviso" />
+
 						<h:dataTable id="acessos" var="acesso"
 							value="#{editarCadastroUsuarioMB.acessos}">
 							<h:column>
-								<h:outputLabel value="#{mensagens.editarCadastroUsuarioNivel}"></h:outputLabel>
+								<h:outputLabel class="labeltabela"
+									value="#{mensagens.editarCadastroUsuarioNivel}"></h:outputLabel>
 								<h:inputText value="#{acesso.grupo.id}"></h:inputText>
-								<h:outputLabel
+								<h:outputLabel class="labeltabela"
 									value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
 								<h:inputText value="#{acesso.instituicao.nome}">
 									<f:ajax execute="@this" event="blur"
 										render="validacaoInstituicao"
 										listener="#{editarCadastroUsuarioMB.validateInstituicao}"></f:ajax>
 								</h:inputText>
-								<h:commandButton
-									action="#{editarCadastroUsuarioMB.excluirAcesso(acesso)}"
-									value="#{mensagens.editarCadastroUsuarioExcluirAcesso}"></h:commandButton>
+								<h:commandLink
+									action="#{editarCadastroUsuarioMB.excluirAcesso(acesso)}">
+									<h:graphicImage library="imagens" name="delete.png"
+										class="delete">
+									</h:graphicImage>
+								</h:commandLink>
 							</h:column>
+							<div></div>
 							<h:message id="validacaoInstituicao" for="validacaoInstituicao"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso" />
 						</h:dataTable>
-						<h:commandButton
-							action="#{editarCadastroUsuarioMB.adicionarAcesso}"
-							value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"></h:commandButton>
 
-						<h:outputLabel
-							value="#{mensagens.editarCadastroUsuarioJustificativa}"></h:outputLabel>
-						<h:inputTextarea value="#{editarCadastroUsuarioMB.justificativa}">
-							<f:ajax event="blur" execute="@this"
-								render="validacaoJustificativa"
-								listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
-						</h:inputTextarea>
-						<h:message id="validacaoJustificativa"
-							for="validacaoJustificativa" infoClass="sucesso"
-							errorClass="erro" warnClass="aviso">
-						</h:message>
-						<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}">
-							<f:selectItems value="#{editarCadastroUsuarioMB.validades}"></f:selectItems>
-						</h:selectOneMenu>
-						<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}">
-							<f:selectItems value="#{editarCadastroUsuarioMB.adm}"></f:selectItems>
-						</h:selectOneMenu>
+						<div>
+							<h:outputLabel class="labels"
+								value="#{mensagens.editarCadastroUsuarioJustificativa}"></h:outputLabel>
+							<h:inputText value="#{editarCadastroUsuarioMB.justificativa}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoJustificativa"
+									listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoJustificativa"
+								for="validacaoJustificativa" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels"
+								value="#{mensagens.editarCadastroUsuarioValidade}">
+							</h:outputLabel>
+							<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}">
+								<f:selectItems value="#{editarCadastroUsuarioMB.validades}"></f:selectItems>
+							</h:selectOneMenu>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels"
+								value="#{mensagens.editarCadastroUsuarioAdministradores}"></h:outputLabel>
+							<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}">
+								<f:selectItems value="#{editarCadastroUsuarioMB.adm}"></f:selectItems>
+							</h:selectOneMenu>
+						</div>
 					</fieldset>
 
 					<div class="botao">
+						<h:commandButton
+							action="#{editarCadastroUsuarioMB.adicionarAcesso}"
+							value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"></h:commandButton>
 						<h:commandButton id="botaoEditar"
 							value="#{mensagens.editarCadastroUsuarioBotaoSalvar}"
 							action="#{editarCadastroUsuarioMB.editarCadastroUsuario}">

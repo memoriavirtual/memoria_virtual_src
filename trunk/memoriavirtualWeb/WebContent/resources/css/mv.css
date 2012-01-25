@@ -284,6 +284,7 @@ h4 {
 	width: 250px;
 	height: 20px;
 }
+
 .options {
 	background: #F7F7F7;
 	border: #444 solid 1px;
@@ -291,6 +292,7 @@ h4 {
 	width: 250px;
 	height: 20px;
 }
+
 .formulario fieldset div div {
 	color: #414141;
 	width: 45%;
@@ -349,7 +351,6 @@ h4 {
 	margin: 0 auto;
 	font-size: 12px;
 	text-indent: 5px;
-
 }
 
 .botao {
@@ -357,41 +358,39 @@ h4 {
 	padding: 10px;
 }
 
-
 #sugestoesId {
 	border-color: black;
 	border-width: 2px;
 	border-style: solid;
 	margin-left: 440px;
-	margin-top:-10px;
+	margin-top: -10px;
 	width: 250px;
 	z-index: -1;
 }
 
-#sugestoesId td:hover{
+#sugestoesId td:hover {
 	background-color: black;
 	color: white;
 	cursor: pointer;
 	cursor: hand;
 }
 
-#sugestoesId a{
-	color:black;
-	text-decoration:none;
-	display:block;
+#sugestoesId a {
+	color: black;
+	text-decoration: none;
+	display: block;
 }
 
-#sugestoesId a:hover{
-	color:white;
+#sugestoesId a:hover {
+	color: white;
 }
 /*************************************************************/
 /*                FIM CONTEUDO / FORMULARIO                   /
 /*************************************************************/
 
 /*************************************************************/
-/*              INICIO AVISO EXCLUIR INSTITUIÇÃO             /
+/*              INICIO AVISO EXCLUIR INSTITUIï¿½ï¿½O             /
 /*************************************************************/
-
 .avisoexcluir {
 	max-width: 70%;
 	text-align: center;
@@ -402,40 +401,65 @@ h4 {
 	text-indent: 5px;
 }
 
-.mensagenavisoexcluir{
+.mensagenavisoexcluir {
 	background: #FBF4AA;
 	border: #CBBC07 solid 1px;
 	color: #7B7802;
 }
-.mensagenavisoexcluirred{
+
+.mensagenavisoexcluirred {
 	background: #F4D2D2;
 	border: #EAA8A8 solid 1px;
 	color: #BE4741;
 }
-.mensagenavisoexcluir div{
+
+.mensagenavisoexcluir div {
 	padding: 10px;
 }
+
 .botaoavisoexcluir {
 	padding-bottom: 10px;
 	padding-top: 5px
 }
+
 .dadoinstituicao {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	padding: 1px;
 	text-align: left;
 }
-.boxtext{
-	padding: 10px ;
+
+.boxtext {
+	padding: 10px;
 }
+
 .caixadetexto {
-background:#F7F7F7;
-border: #444 solid 1px;
-font-family: Arial, Helvetica, sans-serif;
-width:250px;
-height:80px;
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 250px;
+	height: 80px;
 }
-textarea:focus {background:#fffff0;
-border:#222 2px solid;}
 
+textarea:focus {
+	background: #fffff0;
+	border: #222 2px solid;
+}
 
+.labeltabela {
+	font-size: 16px;
+	margin-right: 5px;
+}
+
+#acessos {
+	margin: auto;
+}
+
+#acessos td {
+	padding: 3px;
+}
+
+.delete {
+	margin-left:15px;
+	margin-bottom:-8px;
+}

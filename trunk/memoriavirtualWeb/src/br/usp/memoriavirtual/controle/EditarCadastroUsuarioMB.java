@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.MemoriaVirtual;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
@@ -38,12 +40,20 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private String justificativa;
 	private Integer validade;
 	private List<Acesso> acessos;
+	
+	public EditarCadastroUsuarioMB(){
+		
+	}
 
 	public String cancelar() {
 		return "cancelar";
 	}
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
+		this.listarUsuarios();
+	}
+
+	public void listarUsuarios() {
 
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
@@ -51,7 +61,12 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		if (usuario.isAdministrador()) {
 			this.usuarios = this.editarCadastroUsuarioEJB
 					.listarUsuarios(this.nome);
+		} else {
+			Grupo grupo = new Grupo("gerente");
+			this.usuarios = this.editarCadastroUsuarioEJB.listarUsuarios(
+					this.nome, usuario, grupo);
 		}
+
 	}
 
 	public String selecionarUsuario(Usuario usuario) {
@@ -76,6 +91,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		Usuario requerente = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
+		this.listarUsuarios();
+		
 		for (Usuario u : this.usuarios) {
 			if (u.getNomeCompleto().equals(this.nome)) {
 				existe = true;
@@ -161,11 +178,27 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public String editarCadastroUsuario() {
-		try {
-			this.memoriaVirtualEJB.enviarEmail("coccktailmolotov@gmail.com",
-					"memoria", "Saaaaalveeee");
-		} catch (MessagingException e) {
-			e.printStackTrace();
+		if (this.validateInstituicao() && this.validateJustificativa()
+				&& this.validateNome() && this.validateTelefone()) {
+			
+			String usuario = this.memoriaVirtualEJB.embaralhar(this.usuario.getId());
+			String nome = this.memoriaVirtualEJB.embaralhar(this.nome);
+			String acessos = this.memoriaVirtualEJB.embaralhar(this.acessos.toString());
+			String telefone = this.memoriaVirtualEJB.embaralhar(this.telefone);
+			
+			try {
+				String link = this.memoriaVirtualEJB.getEnderecoServidor().getCanonicalHostName() + "/editarCadastroUsuario.jsf?";
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			} 
+		
+			
+			try {
+				this.memoriaVirtualEJB.enviarEmail(this.administrador,
+						"edicao de cadastro", "lol");
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
@@ -180,7 +213,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public List<SelectItem> getValidades() {
 		List<SelectItem> validades = new ArrayList<SelectItem>();
-		for (int i = 1; i <= 30; ++i) {
+		validades.add(new SelectItem("1", "1 dia"));
+		for (int i = 2; i <= 30; ++i) {
 			validades.add(new SelectItem(i, i + " dias"));
 		}
 		return validades;
@@ -193,19 +227,17 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	public boolean validateInstituicao() {
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
-		boolean existe;
+		boolean existe = false;
 
 		if (usuario.isAdministrador()) {
 			for (Acesso a : this.acessos) {
-				System.out.println(a.getInstituicao().getNome());
 				existe = this.memoriaVirtualEJB
 						.verificarDisponibilidadeNomeInstituicao(a
 								.getInstituicao().getNome());
-				if (!existe) {
+				if (existe) {
 					MensagensDeErro.getErrorMessage(
 							"editarCadastroUsuarioErroInstituicaoInvalida",
-							"validacaoInstituicao");
-					System.out.println("NAAOAAAAAAAAAAAAAAAAAAA");
+							"resultado");
 					return false;
 				}
 			}

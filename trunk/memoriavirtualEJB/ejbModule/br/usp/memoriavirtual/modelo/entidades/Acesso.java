@@ -65,5 +65,10 @@ public class Acesso implements Serializable {
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
+	
+	@Override
+	public String toString(){
+		return (this.getUsuario().getId() + "," + this.getInstituicao().getNome() + "," + this.getGrupo().getId()); 
+	}
 
 }
