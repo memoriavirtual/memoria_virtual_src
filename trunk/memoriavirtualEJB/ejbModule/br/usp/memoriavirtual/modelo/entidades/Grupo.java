@@ -14,7 +14,6 @@ public class Grupo implements Serializable {
 	private static final long serialVersionUID = 9000706222936792545L;
 	@Id
 	private String id;
-
 	/**
 	 * Construtor padrão
 	 */

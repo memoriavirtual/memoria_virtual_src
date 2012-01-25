@@ -7,7 +7,6 @@ import javax.ejb.EJB;
 
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
-
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;

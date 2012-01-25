@@ -1,6 +1,5 @@
 package br.usp.memoriavirtual.controle;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,8 +18,6 @@ import javax.mail.MessagingException;
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.entidades.Grupo;
-import br.usp.memoriavirtual.modelo.fachadas.MemoriaVirtual;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
@@ -76,42 +73,28 @@ public class ExcluirInstituicaoMB implements Serializable {
 	
 	
 	
-	public void enviarPedidoExclusao()   {
-		
-		boolean flag;
-		
+	public String enviarPedidoExclusao()   {
 		if(validateValidador()){
-
-			
-				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
-				String assunto = bundle.getString("excluirInstituicaoEmailTitulo");
-				String textoEmail = bundle.getString("excluirInstituicaoEmailMensagem")
-				+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()
-				+ bundle.getString("excluirInstituicaoGerentes") + this.gerenteInstituicao.getNomeCompleto()
-				+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()
-				+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(this.getValidade())
-				+ bundle.getString("excluirInstituicaoEmilMensagemURL")
-				+ "/validarExclusao.jsf?requisitor="
-				+ memoriaVirtualEJB.embaralhar(this.requisitor.getId())
-				+ "&instituicao="
-				+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
-				+ "&justificativa="
-				+ memoriaVirtualEJB.embaralhar(this.justificativa1)
-				+ "&validade="
-				+ memoriaVirtualEJB.embaralhar(formatoData.format(this.getValidade()))
-				+ bundle.getString("excluirInstituicaoEmailMensagemFim");
- 
-				
-				try {
-					
-					memoriaVirtualEJB.enviarEmail(this.administradorValidador.getEmail(), assunto, textoEmail);
-					
-				} catch (MessagingException e) {
-					
-					e.printStackTrace();
-				}	
+			DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
+			return (excluirInstituicaoEJB.enviaremail(this.administradorValidador.getEmail(),bundle.getString("excluirInstituicaoEmailTitulo"),
+					bundle.getString("excluirInstituicaoEmailMensagem")
+					+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()
+					+ bundle.getString("excluirInstituicaoGerentes") + this.gerenteInstituicao.getNomeCompleto()
+					+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()
+					+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(this.getValidade())
+					+ bundle.getString("excluirInstituicaoEmilMensagemURL")
+					+ "/validarExclusao.jsf?requisitor="
+					+ memoriaVirtualEJB.embaralhar(this.requisitor.getId())
+					+ "&instituicao="
+					+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
+					+ "&justificativa="
+					+ memoriaVirtualEJB.embaralhar(this.justificativa1)
+					+ "&validade="
+					+ memoriaVirtualEJB.embaralhar(formatoData.format(this.getValidade()))
+					+ bundle.getString("excluirInstituicaoEmailMensagemFim")));	
 						
 		}
+		return null;
 	}
 
 	

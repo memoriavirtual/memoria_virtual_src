@@ -18,7 +18,6 @@ import javax.validation.constraints.Pattern;
 @NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
 @Entity
 public class Usuario implements Serializable, Cloneable {
-
 	/**
 	 * Serial Version UID
 	 */

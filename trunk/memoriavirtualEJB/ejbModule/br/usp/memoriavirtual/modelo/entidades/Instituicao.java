@@ -22,7 +22,6 @@ public class Instituicao implements Serializable {
    // @Pattern(regexp = "[0-9]{11}")
     private String cep;
     private String telefone;
-
     /**
      * Construtor padrão
      */

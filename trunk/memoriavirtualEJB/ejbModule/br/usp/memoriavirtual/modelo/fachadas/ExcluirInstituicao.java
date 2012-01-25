@@ -1,8 +1,10 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -38,7 +40,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		Query query;
 		query = this.entityManager
 		.createQuery("SELECT a FROM Usuario a WHERE a.administrador = TRUE ORDER BY a.id ");
-		
+
 		try {
 			administradores = (List<Usuario>) query.getResultList();
 			return administradores ;
@@ -74,5 +76,20 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 			throw new ModeloException(e);
 		}
 
+	}
+
+
+	public String enviaremail(String Email,String assunto,String textoEmail){
+
+		try {
+
+			memoriaVirtualEJB.enviarEmail(Email, assunto, textoEmail);
+			return "ok";
+
+		} catch (MessagingException e) {
+
+			e.printStackTrace();
+			return "fail";
+		}
 	}
 }
