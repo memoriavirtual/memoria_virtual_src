@@ -36,6 +36,12 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 @SessionScoped
 public class ExcluirInstituicaoMB implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1147425267036231710L;
+
+
 	@EJB
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
 
@@ -43,7 +49,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
