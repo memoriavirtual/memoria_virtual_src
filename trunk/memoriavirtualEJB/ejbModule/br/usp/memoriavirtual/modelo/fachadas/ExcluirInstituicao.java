@@ -78,15 +78,30 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	}
 
+	public Usuario getValidador(String nomeCompleto)
+	throws ModeloException {
+		Usuario usuario;
+		Query query;
+		query = this.entityManager
+		.createQuery("SELECT a FROM Usuario a WHERE  a.nomeCompleto = :nomeCompleto ");
+		query.setParameter("nomeCompleto", nomeCompleto);
+		try {
+			usuario = (Usuario) query.getSingleResult() ;
+			return usuario;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
 
+	}
+	
 	public String enviaremail(String Email,String assunto,String textoEmail){
 
 		try {
 
-			memoriaVirtualEJB.enviarEmail(Email, assunto, textoEmail);
+			this.memoriaVirtualEJB.enviarEmail(Email, assunto, textoEmail);
 			return "ok";
 
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 			return "fail";
