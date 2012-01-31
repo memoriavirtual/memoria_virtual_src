@@ -27,4 +27,8 @@ public interface ExcluirInstituicaoRemote{
 	public String enviaremail(String Email,String assunto,String textoEmail);
 	public Usuario getValidador(String nomeCompleto)
 	throws ModeloException;
+	public Usuario getRequisitor(String id)
+	throws ModeloException;
+	public void excluirInstituicao(String nome,Usuario requisitor,Usuario validador)
+	throws ModeloException;
 }

@@ -15,10 +15,8 @@ public class ItemAuditoria {
 	Date data;
 	String atributoSignificativo;
 	String notas;
-
 	Usuario autorAcao;
 	EnumTipoAcao tipoAcao;
-
 	/**
 	 * @return the data
 	 */

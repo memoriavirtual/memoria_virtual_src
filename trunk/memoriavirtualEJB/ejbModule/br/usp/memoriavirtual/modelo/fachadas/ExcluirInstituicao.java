@@ -1,6 +1,8 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,8 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 
@@ -93,7 +97,47 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	
+	public Usuario getRequisitor(String id)
+	throws ModeloException {
+		Usuario usuario;
+		Query query;
+		query = this.entityManager
+		.createQuery("SELECT a FROM Usuario a WHERE  a.id = :id ");
+		query.setParameter("id", id);
+		try {
+			usuario = (Usuario) query.getSingleResult() ;
+			return usuario;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
+	}
+	public void excluirInstituicao(String nome,Usuario requisitor,Usuario validador)
+	throws ModeloException {
+		Instituicao instituicao;
+		Query query; 
+		Date data = new Date();
+		ItemAuditoria itemAuditoria = new ItemAuditoria();
+		query = this.entityManager
+		.createQuery("SELECT a FROM Instituicao a WHERE  a.nome = :nome ");
+		query.setParameter("nome", nome);
+		try {
+			instituicao = (Instituicao) query.getSingleResult() ;
+			itemAuditoria.setAtributoSignificativo(nome);
+			itemAuditoria.setAutorAcao(requisitor);
+			itemAuditoria.setNotas("");
+			itemAuditoria.setTipoAcao(EnumTipoAcao.EXCLUIR_INSTITUICAO);
+			itemAuditoria.setData(data);
+			this.entityManager.persist(itemAuditoria);
+			itemAuditoria.setAutorAcao(requisitor);
+			itemAuditoria.setTipoAcao(EnumTipoAcao.AUTORIZAR_EXCLUIR_INSTITUICAO);
+			this.entityManager.persist(itemAuditoria);
+			this.entityManager.remove(instituicao);
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
+	}
 	public String enviaremail(String Email,String assunto,String textoEmail){
 
 		try {
