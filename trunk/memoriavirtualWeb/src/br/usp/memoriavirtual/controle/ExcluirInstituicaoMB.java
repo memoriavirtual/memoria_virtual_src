@@ -3,15 +3,12 @@ package br.usp.memoriavirtual.controle;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -21,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -85,7 +83,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 	private Usuario gerenteInstituicao = null;
 	private Usuario requisitor = (Usuario) FacesContext.getCurrentInstance()
-	.getExternalContext().getSessionMap().get("usuario");;
+	.getExternalContext().getSessionMap().get("usuario");
 	private String validade = null;
 	private String justificativa = null;
 	private String menssagemValidade = null ;
@@ -97,8 +95,36 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private List<Usuario> listaAdministradores = new ArrayList<Usuario>();
 
 	
-	
-	
+	/**
+	 * Método recupera os parametros da url e exclui a instiuição do sistema
+	 * Memoria Virtual, alem disso, salva no bando de dados, na tabela auditoria
+	 * os responsaveis pela exclusão
+	 * @param event - Evento onLoad da página alcançada pelo email de confirmação
+	 */
+	public void excluirInstituicao(AjaxBehaviorEvent event) {
+		
+		Usuario requisitor = null;
+		Usuario validador  = (Usuario) FacesContext.getCurrentInstance()
+		.getExternalContext().getSessionMap().get("usuario");
+		
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+        try {
+			requisitor = excluirInstituicaoEJB.getRequisitor( memoriaVirtualEJB.embaralhar(req.getParameter("requisitor")));
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		}
+        String dataValidade = memoriaVirtualEJB.embaralhar(req.getParameter("validade"));
+        
+        //aqui deve ser inserido um teste condicional a respeito da validade do pedido de exclusão
+        try {
+			excluirInstituicaoEJB.excluirInstituicao(memoriaVirtualEJB.embaralhar(req.getParameter("instituicao")),requisitor,validador);
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		}
+		
+    }
+
 	
 	public String enviarPedidoExclusao() throws IOException   {
 		if(validateValidador()){
@@ -115,22 +141,23 @@ public class ExcluirInstituicaoMB implements Serializable {
 							+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()+"\n"
 							+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
 							+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
+							+ "http://"
 							+ memoriaVirtualEJB.getEnderecoServidor()
-							+ "restrito/validarExclusao.jsf?requisitor="
+							+ "/restrito/validarExclusao.jsf?requisitor="
 							+ memoriaVirtualEJB.embaralhar(this.requisitor.getId())
 							+ "&instituicao="
 							+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
-							+ "&justificativa="
-							+ memoriaVirtualEJB.embaralhar(this.justificativa1)
 							+ "&validade="
 							+ memoriaVirtualEJB.embaralhar(formatoData.format(dataValidade))+"\n"+"\n"
 							+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
-				} catch (MessagingException e) {
+							MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
+							"resultado");
+			} catch (MessagingException e) {
 					e.printStackTrace();
 				}
 						
 		}
-		return "dskfsdf";
+		return "ooo";
 	}
 
 	
