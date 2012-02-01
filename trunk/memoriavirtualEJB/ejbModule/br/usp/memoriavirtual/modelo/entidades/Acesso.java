@@ -28,6 +28,8 @@ public class Acesso implements Serializable {
 	@JoinColumn(name = "GRUPO")
 	private Grupo grupo;
 
+	private Boolean validade;
+
 	/**
 	 * Construtor padrão
 	 */
@@ -65,10 +67,25 @@ public class Acesso implements Serializable {
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
-	
+
 	@Override
-	public String toString(){
-		return (this.getUsuario().getId() + "," + this.getInstituicao().getNome() + "," + this.getGrupo().getId()); 
+	public String toString() {
+		return (this.getUsuario().getId() + "," + this.getInstituicao().getNome() + "," + this.getGrupo().getId());
+	}
+
+	/**
+	 * @return the validade
+	 */
+	public Boolean getValidade() {
+		return validade;
+	}
+
+	/**
+	 * @param validade
+	 *            the validade to set
+	 */
+	public void setValidade(Boolean validade) {
+		this.validade = validade;
 	}
 
 }

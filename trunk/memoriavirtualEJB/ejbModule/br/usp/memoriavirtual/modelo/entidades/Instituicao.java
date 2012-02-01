@@ -22,6 +22,7 @@ public class Instituicao implements Serializable {
    // @Pattern(regexp = "[0-9]{11}")
     private String cep;
     private String telefone;
+    private Boolean validade;
     /**
      * Construtor padrão
      */
@@ -161,4 +162,20 @@ public class Instituicao implements Serializable {
     public void setTelefone(String telefone) {
     	this.telefone = telefone;
     }
+
+	/**
+	 * @return the validade
+	 */
+	public Boolean getValidade() {
+		return validade;
+	}
+
+	/**
+	 * @param validade the validade to set
+	 */
+	public void setValidade(Boolean validade) {
+		this.validade = validade;
+	}
+    
+    
 }
