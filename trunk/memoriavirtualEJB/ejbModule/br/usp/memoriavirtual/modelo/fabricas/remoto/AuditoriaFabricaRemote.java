@@ -7,9 +7,17 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 @Remote
 public interface AuditoriaFabricaRemote {
 	/**
-	 * 
+	 * Método insere uma linha na tabela ItemAuditoria, referente a o pedido
+	 * de exclusão da instituição
 	 * @param autorAcao
 	 * @param atributoSignificativo
 	 */
-	public void auditarExclusaoInstituicao(Usuario autorAcao,String atributoSignificativo);
+	public void auditarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo);
+	/**
+	 * Método insere uma linha na tabela ItemAuditoria, referente a a autorização
+	 * de um pedido de exclusão da instituição
+	 * @param autorAcao
+	 * @param atributoSignificativo
+	 */
+	public void auditarAutorizarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo);
 }
