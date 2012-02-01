@@ -10,7 +10,6 @@ import javax.mail.MessagingException;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
 @Remote
 public interface MemoriaVirtualRemote {

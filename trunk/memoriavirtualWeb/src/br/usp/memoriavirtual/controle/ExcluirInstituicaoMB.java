@@ -2,7 +2,6 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,55 +31,27 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  * @author MAC
  *
  */
-/**
- * @author MAC
- *
- */
 @ManagedBean(name = "excluirInstituicaoMB")
 @SessionScoped
 public class ExcluirInstituicaoMB implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1147425267036231710L;
-
-
 	@EJB
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
-
-
-	/**
-	 * 
-	 */
-	
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-
 	private FacesContext context = FacesContext.getCurrentInstance();;
 	private String bundleName = "mensagens";
-	ResourceBundle bundle = context.getApplication().getResourceBundle(
-			context, bundleName);
-
-
+	ResourceBundle bundle = context.getApplication().getResourceBundle(context, bundleName);
 	private String nome = null;
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private Instituicao instituicao = null;
 	private Usuario administradorValidador = null;
 	private String nomeValidador = null;
-	public String getNomeValidador() {
-		return nomeValidador;
-	}
-
-
-
-
-
-	public void setNomeValidador(String nomeValidador) {
-		this.nomeValidador = nomeValidador;
-	}
+	
 	private Usuario gerenteInstituicao = null;
 	private Usuario requisitor = (Usuario) FacesContext.getCurrentInstance()
 	.getExternalContext().getSessionMap().get("usuario");
@@ -114,8 +85,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
-        String dataValidade = memoriaVirtualEJB.embaralhar(req.getParameter("validade"));
-        
         //aqui deve ser inserido um teste condicional a respeito da validade do pedido de exclusão
         try {
 			excluirInstituicaoEJB.excluirInstituicao(memoriaVirtualEJB.embaralhar(req.getParameter("instituicao")),requisitor,validador);
@@ -361,7 +330,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 
 
-
+	public String getNomeValidador() {
+		return nomeValidador;
+	}
+	public void setNomeValidador(String nomeValidador) {
+		this.nomeValidador = nomeValidador;
+	}
 	public String getNome() {
 		return nome;
 	}
