@@ -39,7 +39,7 @@ public class CadastrarInstituicaoMB {
 
 	}
 
-	public String cadastrarInstituicao() {
+	public void cadastrarInstituicao() {
 
 		
 
@@ -53,6 +53,8 @@ public class CadastrarInstituicaoMB {
 				
 				//Cadastra a instituicao no banco de dados
 				cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
+				
+				// Testa se a instituição foi gravada
 				if (!memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(this.nome)) {
 
 					this.nome = "";
@@ -64,11 +66,9 @@ public class CadastrarInstituicaoMB {
 					this.telefone = "";
 
 					MensagensDeErro.getSucessMessage("cadastrarInstituicaoSucessocadastramento", "resultado");
-					return null;
+					
 				}
 			}
-			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErroUsuario", "resultado");
-			return null;
 		
 	}
 	
