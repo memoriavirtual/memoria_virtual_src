@@ -48,24 +48,4 @@
     <servlet-name>EditarCadastroUsuario</servlet-name>
     <url-pattern>/EditarCadastroUsuario</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>editarcadastrousuario</display-name>
-    <servlet-name>editarcadastrousuario</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.EditarCadastroUsuario</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>editarcadastrousuario</servlet-name>
-    <url-pattern>/editarcadastrousuario</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>editarusuario</display-name>
-    <servlet-name>editarusuario</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.EditarCadastroUsuario</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>editarusuario</servlet-name>
-    <url-pattern>/editarusuario</url-pattern>
-  </servlet-mapping>
 </web-app>

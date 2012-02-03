@@ -30,7 +30,7 @@
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioNome}</h:outputLabel>
-							<h:inputText value="#{editarCadastroUsuarioMB.nome}">
+							<h:inputText value="#{editarCadastroUsuarioMB.nomeCompleto}">
 								<f:ajax event="blur" execute="@this" render="validacaoNome"
 									listener="#{editarCadastroUsuarioMB.validateNome}" />
 							</h:inputText>

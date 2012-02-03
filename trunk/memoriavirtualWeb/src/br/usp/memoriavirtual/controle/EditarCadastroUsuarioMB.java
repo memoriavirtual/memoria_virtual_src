@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.controle;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +33,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private String nome;
+	private String nomeCompleto;
 	private String telefone;
 	private List<Usuario> usuarios;
 	private List<Usuario> administradores;
@@ -40,9 +42,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private String justificativa;
 	private Integer validade;
 	private List<Acesso> acessos;
-	
-	public EditarCadastroUsuarioMB(){
-		
+	private List<Acesso> acessosAntigos;
+
+	public EditarCadastroUsuarioMB() {
+
 	}
 
 	public String cancelar() {
@@ -78,9 +81,12 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.nome = usuario.getNomeCompleto();
 		this.telefone = usuario.getTelefone();
 		this.acessos = this.editarCadastroUsuarioEJB.getAcessos(usuario);
+		this.acessosAntigos = this.editarCadastroUsuarioEJB.getAcessos(usuario);
 		this.administradores = this.editarCadastroUsuarioEJB
 				.getAdministradores(requerente);
 		this.usuarios.clear();
+		this.setNome(null);
+		this.nomeCompleto = usuario.getNomeCompleto();
 		return "sucesso";
 	}
 
@@ -92,7 +98,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				.getExternalContext().getSessionMap().get("usuario");
 
 		this.listarUsuarios();
-		
+
 		for (Usuario u : this.usuarios) {
 			if (u.getNomeCompleto().equals(this.nome)) {
 				existe = true;
@@ -104,9 +110,12 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			this.telefone = selecionado.getTelefone();
 			this.acessos = this.editarCadastroUsuarioEJB
 					.getAcessos(selecionado);
+			this.acessosAntigos = this.editarCadastroUsuarioEJB.getAcessos(selecionado);
 			this.administradores = this.editarCadastroUsuarioEJB
 					.getAdministradores(requerente);
 			this.usuarios.clear();
+			this.setNome(null);
+			this.nomeCompleto = usuario.getNomeCompleto();
 			return "sucesso";
 		}
 		MensagensDeErro.getErrorMessage("editarCadastroUsuarioUsuarioInvalido",
@@ -119,11 +128,11 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public boolean validateNome() {
-		if (this.nome.equals("")) {
+		if (this.nomeCompleto.equals("")) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuarioErroNomeVazio", "validacaoNome");
 			return false;
-		} else if (this.nome.length() < 4) {
+		} else if (this.nomeCompleto.length() < 4) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuarioErroNomeCurto", "validacaoNome");
 			return false;
@@ -180,26 +189,31 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	public String editarCadastroUsuario() {
 		if (this.validateInstituicao() && this.validateJustificativa()
 				&& this.validateNome() && this.validateTelefone()) {
+
+			this.editarCadastroUsuarioEJB.editarCadastro(this.usuario,
+					this.nomeCompleto, this.telefone);
 			
-			String usuario = this.memoriaVirtualEJB.embaralhar(this.usuario.getId());
-			String nome = this.memoriaVirtualEJB.embaralhar(this.nome);
-			String acessos = this.memoriaVirtualEJB.embaralhar(this.acessos.toString());
-			String telefone = this.memoriaVirtualEJB.embaralhar(this.telefone);
-			
-			try {
-				String link = this.memoriaVirtualEJB.getEnderecoServidor().getCanonicalHostName() + "/editarCadastroUsuario.jsf?";
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			} 
-		
-			
-			try {
-				this.memoriaVirtualEJB.enviarEmail(this.administrador,
-						"edicao de cadastro", "lol");
-			} catch (MessagingException e) {
-				e.printStackTrace();
+			//remove os acessos que não foram modificados
+			for(Acesso a : this.acessosAntigos){
+				for(Acesso o : this.acessos){
+					if(a.equals(o)){
+						this.acessos.remove(a);
+					}
+				}
 			}
+			
+			for(Acesso a : this.acessos){
+				a.setValidade(false);
+			}
+			
+			//this.editarCadastroUsuarioEJB.editarAcessos(this.administrador, this.acessos, );
+			
 		}
+		
+		this.setNomeCompleto(null);
+		this.setTelefone(null);
+		this.setJustificativa(null);
+		this.setAcessos(null);
 		return null;
 	}
 
@@ -395,6 +409,50 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	 */
 	public void setValidade(Integer validade) {
 		this.validade = validade;
+	}
+
+	/**
+	 * @return the memoriaVirtualEJB
+	 */
+	public MemoriaVirtualRemote getMemoriaVirtualEJB() {
+		return memoriaVirtualEJB;
+	}
+
+	/**
+	 * @param memoriaVirtualEJB
+	 *            the memoriaVirtualEJB to set
+	 */
+	public void setMemoriaVirtualEJB(MemoriaVirtualRemote memoriaVirtualEJB) {
+		this.memoriaVirtualEJB = memoriaVirtualEJB;
+	}
+
+	/**
+	 * @return the nomeCompleto
+	 */
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+
+	/**
+	 * @param nomeCompleto
+	 *            the nomeCompleto to set
+	 */
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
+
+	/**
+	 * @return the acessosAntigos
+	 */
+	public List<Acesso> getAcessosAntigos() {
+		return acessosAntigos;
+	}
+
+	/**
+	 * @param acessosAntigos the acessosAntigos to set
+	 */
+	public void setAcessosAntigos(List<Acesso> acessosAntigos) {
+		this.acessosAntigos = acessosAntigos;
 	}
 
 }
