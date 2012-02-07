@@ -55,13 +55,13 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	}
 	/**
-	 * Metodo auxiliar para recuperar usuario ligado a determinada instituição
+	 * Metodo auxiliar para recuperar usuario ligado a determinada instituiï¿½ï¿½o
 	 * 
 	 * @param instituicao
 	 *            instituicao
 	 * @param grupo
 	 *            Grupo ao qual o usuario pertence
-	 * @return Usuario pertencente a referido grupo vinculado a referida instituição
+	 * @return Usuario pertencente a referido grupo vinculado a referida instituiï¿½ï¿½o
 	 * @throws ModeloException
 	 *             Em caso de erro
 	 */
@@ -151,7 +151,8 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade){
 		Date data = new Date();
-		Aprovacao aprovacao = new Aprovacao( data , validador , dataValidade , instituicao.getNome() , "Instituicao");
+		Usuario u = entityManager.find(Usuario.class, validador.getId());
+		Aprovacao aprovacao = new Aprovacao( data , u , dataValidade , instituicao.getNome() , "Instituicao");
 		this.entityManager.persist(aprovacao);
 	}
 }
