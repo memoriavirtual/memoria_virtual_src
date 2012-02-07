@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -12,6 +13,8 @@ import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+
 
 import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
@@ -131,17 +134,24 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	public String enviaremail(String Email,String assunto,String textoEmail){
+	public void enviaremail(String Email,String assunto,String textoEmail){
 
 		try {
 
 			this.memoriaVirtualEJB.enviarEmail(Email, assunto, textoEmail);
-			return "ok";
+			
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			return "fail";
+			
 		}
+	}
+	
+	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
+			Date dataValidade){
+		Date data = new Date();
+		Aprovacao aprovacao = new Aprovacao( data , validador , dataValidade , instituicao.getNome() , "Instituicao");
+		this.entityManager.persist(aprovacao);
 	}
 }
