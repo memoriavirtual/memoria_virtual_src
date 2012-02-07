@@ -27,6 +27,10 @@ public class Aprovacao {
 	@Id
 	private String tabelaEstrangeira;
 	
+	public Aprovacao(){
+		super();
+	}
+	
 	
 	/**
 	 * Construtor
