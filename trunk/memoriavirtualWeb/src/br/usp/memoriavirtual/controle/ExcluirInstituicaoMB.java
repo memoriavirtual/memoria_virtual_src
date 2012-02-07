@@ -138,6 +138,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ "&validade="
 						+ memoriaVirtualEJB.embaralhar(formatoData.format(dataValidade))+"\n"+"\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
+				this.excluirInstituicaoEJB()
 				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
 				"resultado");
 			} catch (MessagingException e) {

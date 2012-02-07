@@ -26,7 +26,24 @@ public class Aprovacao {
 	private String chaveEstrangeira;
 	@Id
 	private String tabelaEstrangeira;
-
+	
+	
+	/**
+	 * Construtor
+	 * @param data
+	 * @param aprovador
+	 * @param expiracao
+	 * @param chaveEstrangeira
+	 * @param tabelaEstrangeira
+	 */
+	public Aprovacao ( Date data, Usuario aprovador , Date expiracao , String chaveEstrangeira , String tabelaEstrangeira){
+		super();
+		this.data = data;
+		this.aprovador = aprovador;
+		this.expiracao = expiracao;
+		this.chaveEstrangeira = chaveEstrangeira;
+		this.tabelaEstrangeira = tabelaEstrangeira;
+	}
 	/**
 	 * @return the data
 	 */

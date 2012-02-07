@@ -1,7 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
