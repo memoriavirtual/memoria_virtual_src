@@ -19,7 +19,8 @@
 		<ui:define name="conteudo">
 			<div class="formulario">
 				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado" infoClass="sucesso"></h:message>
+					<h:messages id="resultado" infoClass="sucesso" errorClass="erro" warnClass="aviso"
+						globalOnly="true"></h:messages>
 				</div>
 
 				<div class="conteudoTitulo">#{mensagens.enviarconvite_title}</div>
@@ -29,31 +30,36 @@
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.enviarconvite_email}</h:outputLabel>
-							<h:inputText value="#{enviarConviteMB.emails}">
-								<f:ajax event="blur" execute="@this" render="validacaoEmail"
-									listener="#{enviarConviteMB.validateEmail}" />
-							</h:inputText>
-							<!-- AQUI COMECA O DATA TABLE -->
-							<h:dataTable var="text" value="#{enviarConviteMB.inputList}" prependId="false">
+							  
+							<h:dataTable id="dataTableEmails" var="email" value="#{enviarConviteMB.listaEmails}">
 								<h:column>
-									<h:inputText value="#{text.email}" />
-									<h:commandButton action="#{enviarConviteMB.deleteValue(text)}"
-											value="Delete Value">
+									<h:inputText id="campoEmail" value="#{email.email}"> 
+										<f:ajax event="blur" execute="@all" render="@all"
+											listener="#{enviarConviteMB.validateEmail}" />
+									</h:inputText>
+									<h:commandButton action="#{enviarConviteMB.deleteEmail(email)}"
+											value="Delete">
 									</h:commandButton>
 									<div></div>
-									<h:message id="#{text.numero}" for="validacaoEmail"
+									<h:message for="layout" forceId="true"
 										infoClass="sucesso" errorClass="erro" warnClass="aviso">
 									</h:message>
 								</h:column>
 							</h:dataTable>
-							<h:commandButton action="#{enviarConviteMB.addInput}" value="Add Textbox" />
+							<h:commandButton action="#{enviarConviteMB.addEmail}" value="Add Textbox" />
 							
-							<div></div>
-							<h:message id="validacaoEmail" for="validacaoEmail"
+							
+							
+							<div></div> 
+							<h:message for="validacaoEmails"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
-						</div>
+							
+							
 
+						</div>
+					
+					
 						<div>
 							<h:outputLabel class="labels">#{mensagens.enviarconvite_validade}</h:outputLabel>
 							<h:selectOneMenu value="#{enviarConviteMB.validade}">
@@ -66,8 +72,7 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-
-
+						
 						<div>
 							<h:outputLabel class="labels">#{mensagens.enviarconvite_niveldeacesso}</h:outputLabel>
 							<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}">	
@@ -81,7 +86,6 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-
 						<div>
 							<h:outputLabel class="labels">#{mensagens.enviarconvite_instituicao}</h:outputLabel>
 							<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
@@ -94,16 +98,25 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarConviteMensagem}</h:outputLabel>
+							<h:inputTextarea id="mensagemPersonalizada" cols="30" rows="10" 
+										value="#{enviarConviteMB.mensagem}"/> 
+							<div></div>
+							<h:message id="validacaoMensagem" for="validacaoMensagem"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+							
+						</div>
 					</fieldset>
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
-							value="#{mensagens.cadastrarUsuarioBotaoCadastrar}"
-							action="#{cadastrarUsuarioMB.completarCadastro}">
+							value="#{mensagens.enviarConviteEnviar}"
+							action="#{enviarConviteMB.enviarConvite}">
 						</h:commandButton>
 
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.cadastrarUsuarioBotaoResetar}" type="reset">
+							value="#{mensagens.enviarConviteResetar}" type="reset">
 						</h:commandButton>
 
 					</div>
