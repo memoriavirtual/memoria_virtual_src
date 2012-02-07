@@ -56,7 +56,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * @return <code>"Erro ao cadastrar no banco de dados: email"</code> Se
 	 *         houve algum erro ao incluir o email no banco de dados
 	 */
-	public void enviarConvite(ArrayList<String> emails, String mensagem,
+	public void enviarConvite(List<String> emails, String mensagem,
 			String validade, String instituicao, String nivelAcesso) throws ModeloException{
 
 		for (String mail:emails) {
@@ -77,7 +77,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 						+ memoriaVirtual.embaralhar(this.usuario.getEmail())
 						+ ".... Seu convite é valido ate "
 						+ formatoData.format(this.usuario.getValidade())
-						+ " ... Voce recebeu a seguinte mensagem: " + mensagem;
+						+ "... Voce recebeu a seguinte mensagem: " + mensagem;
 				enviarEmail(mail, assunto, textoEmail);
 				
 
@@ -218,7 +218,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 		List<Grupo> grupos = null;
 		Query query = this.entityManager.createQuery("Select g from Grupo g");
 		grupos = (List<Grupo>) query.getResultList();
-		return grupos;
+		return grupos; 
 	}
 
 	/**
@@ -229,10 +229,12 @@ public class EnviarConvite implements EnviarConviteRemote {
 	@SuppressWarnings("unchecked")
 	public List<Instituicao> getInstituicoes() {
 		List<Instituicao> instituicoes = null;
+
 		Query query = this.entityManager
 				.createQuery("select i from Instituicao i");
-		instituicoes = (List<Instituicao>) query.getResultList();
 
+		instituicoes = (List<Instituicao>) query.getResultList();
+		
 		return instituicoes;
 	}
 
