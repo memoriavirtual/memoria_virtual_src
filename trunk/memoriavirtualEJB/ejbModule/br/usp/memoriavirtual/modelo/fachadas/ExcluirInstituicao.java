@@ -116,7 +116,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	}
 
  
-	  public void excluirInstituicao(String nome,Usuario requisitor,Usuario validador)
+	  public void validarExclusaoInstituicao(String nome,Usuario requisitor,Usuario validador)
     	throws ModeloException {
 		Instituicao instituicao;
 		Query query; 

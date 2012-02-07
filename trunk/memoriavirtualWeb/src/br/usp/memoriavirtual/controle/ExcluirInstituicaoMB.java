@@ -88,7 +88,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * os responsaveis pela exclusão
 	 * @param event - Evento onLoad da página alcançada pelo email de confirmação
 	 */
-	public void excluirInstituicao(AjaxBehaviorEvent event) {
+	public void validarExclusaoInstituicao(AjaxBehaviorEvent event) {
 		Usuario requisitor = null;
 		Usuario validador  = (Usuario) FacesContext.getCurrentInstance()
 		.getExternalContext().getSessionMap().get("usuario");
@@ -102,7 +102,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		}
 		//aqui deve ser inserido um teste condicional a respeito da validade do pedido de exclusão
 		try {
-			excluirInstituicaoEJB.excluirInstituicao(memoriaVirtualEJB.embaralhar(req.getParameter("instituicao")),requisitor,validador);
+			excluirInstituicaoEJB.validarExclusaoInstituicao(memoriaVirtualEJB.embaralhar(req.getParameter("instituicao")),requisitor,validador);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}

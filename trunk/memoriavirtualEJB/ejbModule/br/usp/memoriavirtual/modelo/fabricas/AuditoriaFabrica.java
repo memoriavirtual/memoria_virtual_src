@@ -37,7 +37,7 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
 		itemAuditoria.setAutorAcao(autorAcao);
 		itemAuditoria.setNotas("");
-		itemAuditoria.setTipoAcao(EnumTipoAcao.AUTORIZAR_EXCLUIR_INSTITUICAO);
+		itemAuditoria.setTipoAcao(EnumTipoAcao.AUTORIZAR_EXCLUSAO);
 		itemAuditoria.setData(data);
 		entityManager.persist(itemAuditoria);
 	}
