@@ -136,9 +136,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ "&instituicao="
 						+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
 						+ "&validade="
-						+ memoriaVirtualEJB.embaralhar(formatoData.format(dataValidade))+"\n"+"\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
-				this.excluirInstituicaoEJB()
+				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
 				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
 				"resultado");
 			} catch (MessagingException e) {
@@ -152,6 +151,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 
 
+	
+
 	/**
 	 * Método retorna um administrador do banco de dados.
 	 * neste caso, o gerente a ser o Avaliador do pedido de exclusão
@@ -160,9 +161,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	private String getEmailAdminstrador(String nome) {
 		try {
-			Usuario validador = this.excluirInstituicaoEJB.getValidador(nome);
+			this.administradorValidador = this.excluirInstituicaoEJB.getValidador(nome);
 
-			return validador.getEmail();
+			return this.administradorValidador.getEmail();
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
