@@ -23,70 +23,95 @@ public class EnviarConviteMB {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private EnviarConviteRemote enviarConviteEJB;
-	private String emails = "";
 	private String mensagem = "";
 	private String validade = null;
 	private String instituicao = null;
 	private String nivelAcesso = null;
 
-	
-	
-	private ArrayList<Email> inputList;
-	
-	public EnviarConviteMB(){
-		inputList = new ArrayList<Email>();
+	private List<Email> listaEmails;
+
+	public List<Email> getListaEmails() {
+		return listaEmails;
 	}
-	
-	public void addInput() {
+
+	public void setListaEmails(List<Email> listaEmails) {
+		this.listaEmails = listaEmails;
+	}
+
+	public String addEmail() {
 		Email email = new Email();
-		email.setNumero(inputList.size()+"");
-		inputList.add(email);
-	}
-
-	public ArrayList<Email> getInputList() {
-		return inputList;
-	}
-
-	public void setInputList(ArrayList<Email> inputList) {
-		this.inputList = inputList;
-	}
-
-	public String deleteValue(Email element) {
-		inputList.remove(element);
+		listaEmails.add(email);
 		return null;
 	}
-	
-	public String enviarConvite(int i){
-		
+
+	public String deleteEmail(Email email) {
+		listaEmails.remove(email);
+		return null;
+	}
+
+	public EnviarConviteMB() {
+		listaEmails = new ArrayList<Email>();
+		Email mail = new Email();
+		listaEmails.add(mail);
+	}
+
+	public String enviarConvite() {
+
 		this.validateEmail();
 		this.validateInstituicao();
 		this.validateNivelAcesso();
 		this.validateValidade();
+
 		
-		
-		ArrayList<String> emails = new ArrayList<String>();
-		for(Email m:inputList){
-			emails.add(m.getEmail());
-		}
-		
-		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-			try{
-				this.enviarConviteEJB.enviarConvite(emails, mensagem,
-					validade, instituicao, nivelAcesso);
-				MensagensDeErro.getSucessMessage("convite_enviado", "resultado");
-			}catch(Exception e){
-				MensagensDeErro.getErrorMessage("erro_envio_convite", "resultado");
+		// Verifica se tem ao menos um email preenchido
+		if (listaEmails.size() < 1) {
+			MensagensDeErro.getErrorMessage(
+					"enviarConviteNenhumEmailPreenchido", null);
+			return "falha";
+		} else {
+			int count = 0;
+			for (Email mail : listaEmails) {
+				if (!mail.getEmail().equals("")) {
+					count++;
+				}
 			}
-		}		
-		return "falha";
+			if (count == 0) {
+				MensagensDeErro.getErrorMessage(
+						"enviarConviteNenhumEmailPreenchido", null);
+				return "falha";
+			}
+		}
+
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
+
+			List<String> stringsEmails = new ArrayList<String>();
+			for (Email mail : listaEmails) {
+				if (!mail.getEmail().equals(""))
+					stringsEmails.add(mail.getEmail());
+			}
+
+			try {
+				this.enviarConviteEJB.enviarConvite(stringsEmails, mensagem,
+						validade, instituicao, nivelAcesso);
+				MensagensDeErro.getSucessMessage("convite_enviado", null);
+				listaEmails = new ArrayList<Email>();
+				listaEmails.add(new Email());
+			} catch (Exception e) {
+				MensagensDeErro.getErrorMessage("erro_envio_convite", null);
+				e.printStackTrace();
+				return "falha";
+			}
+		}
+
+		return "sucesso";
 	}
-	
+
 	public List<SelectItem> getValidadeDias() {
 
 		List<SelectItem> diasValidade = new ArrayList<SelectItem>();
 
 		diasValidade.add(new SelectItem(null, ""));
-		for (int i = 1; i<= 30; i++) {
+		for (int i = 1; i <= 30; i++) {
 			diasValidade.add(new SelectItem(i, i + " dias"));
 		}
 		return diasValidade;
@@ -99,8 +124,8 @@ public class EnviarConviteMB {
 		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
 		List<Grupo> grupos = null;
 
-		niveisPermissao.add(new SelectItem(null,"----- Escolha o nivel ----"));
-		
+		niveisPermissao.add(new SelectItem(null, "----- Escolha o nivel ----"));
+
 		grupos = enviarConviteEJB.getGrupos();
 		for (Grupo grupo : grupos) {
 			niveisPermissao.add(new SelectItem(grupo.getId()));
@@ -128,7 +153,8 @@ public class EnviarConviteMB {
 			instituicoesUsuario = this.enviarConviteEJB.getInstituicoes(grupo,
 					usuario);
 		}
-		listaInstituicoes.add(new SelectItem(null,"--Escolha a instituicao--"));
+		listaInstituicoes
+				.add(new SelectItem(null, "--Escolha a instituicao--"));
 		for (Instituicao instituicao : instituicoesUsuario) {
 			listaInstituicoes.add(new SelectItem(instituicao.getNome(),
 					instituicao.getNome()));
@@ -136,38 +162,24 @@ public class EnviarConviteMB {
 		return listaInstituicoes;
 	}
 
-	/**
-	 * @return String contendo a lista de emails
-	 */
-	public String getEmails() {
-		return emails;
+	public void validateEmail(AjaxBehaviorEvent event) {
+		this.validateEmail();
 	}
 
-	/**
-	 * @param Define
-	 *            String contendo a lista de emails a enviar convite
-	 */
-	public void setEmails(String emails) {
-		this.emails = emails;
-	}
-	
-	public void validateEmail(){
-		if (this.emails.equals("")) {
-			MensagensDeErro.getErrorMessage("cadastrarUsuarioErroEmailVazio",
-					"validacaoEmail");
-		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.emails)) {
-			MensagensDeErro.getErrorMessage("cadastrarUsuarioErroEmailInvalido",
-					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.emails)) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarUsuarioErroEmailJaCadastrado", "validacaoEmail");
-		} else {
-			
+	public void validateEmail() {
+		for (Email email : this.listaEmails) {
+			if (!ValidacoesDeCampos.validarFormatoEmail(email.getEmail())
+					&& !email.getEmail().equals("")) {
+				String[] argumentos = { email.getEmail() };
+				MensagensDeErro.getErrorMessage(
+						"enviarConviteFormatoInvalidoEmail", argumentos, null);
+			} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(email
+					.getEmail())) {
+				String[] argumentos = { email.getEmail() };
+				MensagensDeErro.getErrorMessage(
+						"enviarConviteEmailJaCadastrado", argumentos, null);
+			}
 		}
-	}
-	
-	public void validateEmail(AjaxBehaviorEvent event){
-		this.validateEmail();
 	}
 
 	/**
@@ -200,17 +212,17 @@ public class EnviarConviteMB {
 	public void setValidade(String validade) {
 		this.validade = validade;
 	}
-	
-	public void validateValidade(){
-		
+
+	public void validateValidade(AjaxBehaviorEvent event) {
+		this.validateValidade();
+	}
+
+	public void validateValidade() {
+
 		if (this.validade == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_validadevazia",
 					"validacaoValidade");
-		} 
-	}
-	
-	public void validateValidade(AjaxBehaviorEvent event){
-		this.validateValidade();
+		}
 	}
 
 	/**
@@ -228,17 +240,17 @@ public class EnviarConviteMB {
 		this.nivelAcesso = nivelAcesso;
 	}
 
-	public void validateNivelAcesso(){
+	public void validateNivelAcesso(AjaxBehaviorEvent event) {
+		this.validateNivelAcesso();
+	}
+
+	public void validateNivelAcesso() {
 		if (this.nivelAcesso == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_nivelacessovazio",
 					"validacaoNivelAcesso");
-		} 
+		}
 	}
-	
-	public void validateNivelAcesso(AjaxBehaviorEvent event){
-		this.validateNivelAcesso();
-	}
-	
+
 	/**
 	 * @return A instituição
 	 */
@@ -254,18 +266,18 @@ public class EnviarConviteMB {
 		this.instituicao = instituicao;
 	}
 
-	public void validateInstituicao(){
+	public void validateInstituicao(AjaxBehaviorEvent event) {
+		this.validateInstituicao();
+	}
+
+	public void validateInstituicao() {
 		if (this.instituicao == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_instituicaovazia",
 					"validacaoInstituicao");
 		} else {
 			MensagensDeErro.getErrorMessage("enviarconvite_title",
-			"validacaoInstituicao");
+					"validacaoInstituicao");
 		}
 	}
-	
-	public void validateInstituicao(AjaxBehaviorEvent event){
-		this.validateInstituicao();
-	}
-	
+
 }
