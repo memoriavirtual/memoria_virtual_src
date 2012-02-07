@@ -31,8 +31,18 @@
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoGerentes}</h:outputLabel>
-							<h:outputLabel class="dadoInstituicao" >#{excluirInstituicaoMB.getNomeGerente()}</h:outputLabel>
+							<h:dataTable id="tabelagerente" var="gerente"
+								value="#{excluirInstituicaoMB.gerentesInstituicao}">
+								<h:column>
+								#{gerente.nomeCompleto}
+									
+								</h:column>
+							</h:dataTable>
+						
 						</div>
+						
+												
+						
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoJustificativa}</h:outputLabel>
 							<h:inputTextarea class="caixadetexto"
@@ -43,17 +53,17 @@
 								<f:ajax event="keyup" execute="@this"
 									render="validacaoJustificativa"
 									listener="#{excluirInstituicaoMB.contagemJustificativa}" />
-								
-								
+
+
 							</h:inputTextarea>
 							<div></div>
 
 							<h:message id="validacaoJustificativa"
 								for="validacaoJustificativa" infoClass="sucesso"
 								errorClass="erro" warnClass="aviso">
-								
+
 							</h:message>
-							
+
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoValidade}</h:outputLabel>

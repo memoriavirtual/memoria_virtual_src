@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -62,18 +63,19 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	 * @throws ModeloException
 	 *             Em caso de erro
 	 */
-	public Usuario getGerentesdaInstituicao(Instituicao instituicao)
+	@SuppressWarnings("unchecked")
+	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao)
 	throws ModeloException {
-		Grupo grupo = new Grupo("Gerente") ;
-		Acesso acesso;
+		Grupo grupo = new Grupo("GERENTE") ;
+		List<Acesso> objetosAcesso ;
 		Query query;
 		query = this.entityManager
 		.createQuery("SELECT a FROM Acesso a WHERE  a.grupo = :grupo AND a.instituicao = :instituicao");
 		query.setParameter("grupo", grupo);
 		query.setParameter("instituicao", instituicao);
 		try {
-			acesso = (Acesso) query.getSingleResult() ;
-			return acesso.getUsuario();
+			objetosAcesso = (List<Acesso>) query.getResultList() ;			
+			return objetosAcesso;
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}

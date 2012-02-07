@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,6 +21,7 @@ import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -52,7 +55,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private Usuario administradorValidador = null;
 	private String nomeValidador = null;
 	
-	private Usuario gerenteInstituicao = null;
+	private Usuario gerente = null;
 	private Usuario requisitor = (Usuario) FacesContext.getCurrentInstance()
 	.getExternalContext().getSessionMap().get("usuario");
 	private String validade = null;
@@ -64,7 +67,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 	@SuppressWarnings("unused")
 	private List<SelectItem> ValidadeDias;
 	private List<Usuario> listaAdministradores = new ArrayList<Usuario>();
-
+	private List<Usuario> gerentesInstituicao = new ArrayList<Usuario>();
+	
 	
 	/**
 	 * Método recupera os parametros da url e exclui a instiuição do sistema
@@ -73,7 +77,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * @param event - Evento onLoad da página alcançada pelo email de confirmação
 	 */
 	public void excluirInstituicao(AjaxBehaviorEvent event) {
-		
 		Usuario requisitor = null;
 		Usuario validador  = (Usuario) FacesContext.getCurrentInstance()
 		.getExternalContext().getSessionMap().get("usuario");
@@ -106,7 +109,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 					this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(),bundle.getString("excluirInstituicaoEmailTitulo"),
 							bundle.getString("excluirInstituicaoEmailMensagem")+"\n"+"\n"
 							+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
-							+ bundle.getString("excluirInstituicaoGerentes") + this.gerenteInstituicao.getNomeCompleto()+"\n"
+							+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
 							+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()+"\n"
 							+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
 							+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
@@ -150,18 +153,22 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 
 
-	public String getNomeGerente(){
+	public void Gerentes(){
+		List<Acesso> acessos = new ArrayList<Acesso>();
 		try{
-			this.gerenteInstituicao = excluirInstituicaoEJB.getGerentesdaInstituicao
+			acessos = excluirInstituicaoEJB.getGerentesdaInstituicao
 			(instituicao);
-			return gerenteInstituicao.getNomeCompleto();
+			for (Acesso a: acessos)
+			{
+			this.gerentesInstituicao.add(a.getUsuario());
+			}
+			
 		}
 		catch (ModeloException e){
 			e.printStackTrace();
-			return "fail";
 		}
 
-
+		
 	}
 	/**
 	 * @param event
@@ -211,8 +218,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * Que é interpretada pelo faces-config chamando a nova página.
 	 */
 	public String selecionarInstituicoes (){
+		this.Gerentes();
 		if(this.instituicao == null && this.flagInstituicao){
 			try {this.setInstituicao ( editarInstituicaoEJB.getInstituicao(this.nome));
+			
 			} catch (ModeloException e) {
 				e.printStackTrace();
 				this.flagInstituicao = false;
@@ -408,25 +417,51 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public List<SelectItem> getListaValidadores() {
 
-		List<SelectItem> validadoreslista = new ArrayList<SelectItem>();
-
+		List<String> validadoreslista = new ArrayList<String>();
+		List<SelectItem> lista = new ArrayList<SelectItem>();
 
 		this.mensagemValidador = bundle.getString("excluirInstituicaoSelecioneValidadOr");
 
-		validadoreslista.add(new SelectItem(null, this.mensagemValidador));
+		
 		try {
 			this.listaAdministradores = excluirInstituicaoEJB.listarAdministradores();
 			for(Usuario c : this.listaAdministradores) {   
-				validadoreslista.add(new SelectItem(c.getNomeCompleto(), c.getNomeCompleto()));   
+				validadoreslista.add(new String(c.getNomeCompleto()));   
 			}
-
-			return validadoreslista;
+			for(Usuario c : this.gerentesInstituicao) {   
+				validadoreslista.add(new String(c.getNomeCompleto()));   
+			}
+			MyStringComparable c = new MyStringComparable();
+			Collections.sort(validadoreslista,c);
+			for(int i=0 ; i != validadoreslista.size( ) - 1; i ++ ){
+				if(validadoreslista.get(i).compareTo(validadoreslista.get(i+1)) == 0){
+					validadoreslista.remove(i);
+				}
+				
+			}
+			//carregando lista select itens
+			lista.add(new SelectItem(null, this.mensagemValidador));
+			for(String i : validadoreslista) {   
+				lista.add(new SelectItem(i,i));   
+			}
+			return lista;
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
 
 
-		return validadoreslista;
+		return lista;
+	}
+	
+	
+	private class MyStringComparable implements Comparator<String>{  
+		
+		@Override    
+		public int compare(String o1, String o2) {
+			
+			return o1.compareToIgnoreCase(o2);    
+		}
+		
 	}
 	/**
 	 * @param justificativa the justificativa to set
@@ -464,5 +499,21 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public Usuario getAdministradorValidador() {
 		return administradorValidador;
+	}
+
+
+	/**
+	 * @param gerentesInstituicao the gerentesInstituicao to set
+	 */
+	public void setGerentesInstituicao(ArrayList<Usuario> gerentesInstituicao) {
+		this.gerentesInstituicao = gerentesInstituicao;
+	}
+
+
+	/**
+	 * @return the gerentesInstituicao
+	 */
+	public List<Usuario> getGerentesInstituicao() {
+		return gerentesInstituicao;
 	}
 }
