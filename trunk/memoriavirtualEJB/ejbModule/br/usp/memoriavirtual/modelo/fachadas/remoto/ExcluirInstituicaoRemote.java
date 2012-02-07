@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas.remoto;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Remote;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
@@ -12,11 +13,13 @@ public interface ExcluirInstituicaoRemote{
 	
 	public List<Usuario> listarAdministradores() throws ModeloException;
 	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao)throws ModeloException;
-	public String enviaremail(String Email,String assunto,String textoEmail);
+	public void enviaremail(String Email,String assunto,String textoEmail);
 	public Usuario getValidador(String nomeCompleto)
 	throws ModeloException;
 	public Usuario getRequisitor(String id)
 	throws ModeloException;
 	public void validarExclusaoInstituicao(String nome,Usuario requisitor,Usuario validador)
 	throws ModeloException;
+	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
+			Date dataValidade);
 }
