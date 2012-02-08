@@ -10,7 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@SequenceGenerator(name="INSTITUICAO_ID", sequenceName="INSTITUICAO_SEQ")
+@SequenceGenerator(name="INSTITUICAO_ID", sequenceName="INSTITUICAO_SEQ", allocationSize=1)
 
 public class Instituicao implements Serializable {
 
