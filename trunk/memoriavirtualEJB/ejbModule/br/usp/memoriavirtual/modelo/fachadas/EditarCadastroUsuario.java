@@ -1,24 +1,22 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TransactionRequiredException;
-import javax.validation.ConstraintViolationException;
-
-import com.sun.xml.ws.rx.rm.runtime.sequence.persistent.PersistenceException;
-
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 @Stateless(mappedName = "EditarCadastroUsuario")
 public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
@@ -26,13 +24,16 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
+	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
+
 	public EditarCadastroUsuario() {
 
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Acesso> getAcessos(Usuario usuario) {
+	public List<Acesso> getAcessos(Usuario usuario) throws ModeloException {
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		Query query = entityManager
 				.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = true");
@@ -42,29 +43,30 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			acessos = (List<Acesso>) query.getResultList();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ModeloException(e);
 		}
 		return acessos;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> listarUsuarios(String nome) {
+	public List<Usuario> listarUsuarios(String nome) throws ModeloException {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		Query query = entityManager
-				.createQuery("SELECT a FROM Usuario a WHERE a.ativo = true AND a.administrador IS NULL AND a.nomeCompleto LIKE :padrao ORDER BY a.nomeCompleto");
+				.createQuery("SELECT a FROM Usuario a WHERE a.ativo = true AND a.administrador = false AND a.nomeCompleto LIKE :padrao ORDER BY a.nomeCompleto");
 		query.setParameter("padrao", "%" + nome + "%");
 		try {
 			usuarios = (List<Usuario>) query.getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ModeloException(e);
 		}
 		return usuarios;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> getAdministradores(Usuario usuario) {
+	public List<Usuario> getAdministradores(Usuario usuario)
+			throws ModeloException {
 		List<Usuario> administradores = new ArrayList<Usuario>();
 
 		Query query = entityManager
@@ -73,7 +75,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		try {
 			administradores = (List<Usuario>) query.getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ModeloException(e);
 		}
 		return administradores;
 	}
@@ -81,7 +83,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> listarUsuarios(String nome, Usuario requerente,
-			Grupo grupo) {
+			Grupo grupo) throws ModeloException {
 
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
@@ -100,7 +102,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ModeloException(e);
 		}
 		for (Instituicao i : instituicoes) {
 			Query q = entityManager
@@ -119,45 +121,102 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new ModeloException(e);
 			}
 		}
 		return usuarios;
 	}
 
 	@Override
-	public void editarCadastro(Usuario usuario, String nomeCompleto, String telefone){
+	public void editarCadastro(Usuario usuario, String nomeCompleto,
+			String telefone) throws ModeloException {
 
-		Usuario usuarioAlterado = entityManager.find(usuario.getClass(), usuario.getId());
+		Usuario usuarioAlterado = entityManager.find(usuario.getClass(),
+				usuario.getId());
 
 		usuarioAlterado.setNomeCompleto(nomeCompleto);
 		usuarioAlterado.setTelefone(telefone);
-		
-		//problemas com constraints - administrador nao pode ser null
-		if(!usuarioAlterado.isAdministrador()){
+
+		// problemas com constraints - administrador nao pode ser null
+		if (!usuarioAlterado.isAdministrador()) {
 			usuarioAlterado.setAdministrador(false);
 		}
-		
-		try{
-		entityManager.flush();
+
+		try {
+			entityManager.flush();
+		} catch (Exception t) {
+			throw new ModeloException(t);
 		}
-		catch(Exception t){
-			t.printStackTrace();
-		}
-		
+
 	}
-	
+
 	@Override
-	public void editarAcessos(Usuario aprovador, List<Acesso> acessos, Date data, Date expiracao){
-		
-//		for(Acesso a : acessos){
-//			Aprovacao aprovacao = new Aprovacao();
-//			aprovacao.setAprovador(aprovador);
-//			aprovacao.setChaveEstrangeira(a.);
-//			aprovacao.setData(data);
-//			aprovacao.setExpiracao(expiracao);
-//			aprovacao.setTabelaEstrangeira("Acesso");
-//		}
-		
+	public void editarAcessos(String aprovadorId, List<Acesso> acessos,
+			Date data, Date expiracao) throws ModeloException {
+
+		try {
+			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
+
+			for (Acesso a : acessos) {
+
+				SimpleDateFormat formatoData = new SimpleDateFormat(
+						"dd/MM/yyyy HH:mm:ss:SSS");
+
+				String dataString = formatoData.format(data);
+				data = formatoData.parse(dataString);
+
+				String expiracaoString = formatoData.format(expiracao);
+				expiracao = formatoData.parse(expiracaoString);
+
+				String grupo = a.getGrupo().getId();
+				String usuario = a.getUsuario().getId();
+				String instituicao = a.getInstituicao().getNome();
+				String acesso = grupo + ";" + usuario + ";" + instituicao;
+
+				Aprovacao aprovacao = new Aprovacao();
+				aprovacao.setAprovador(aprovador);
+				aprovacao.setChaveEstrangeira(acesso);
+				aprovacao.setData(data);
+				aprovacao.setExpiracao(expiracao);
+				aprovacao.setTabelaEstrangeira("Acesso");
+
+				Instituicao i = entityManager.find(Instituicao.class, a
+						.getInstituicao().getNome());
+				Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
+				Usuario u = entityManager.find(Usuario.class, a.getUsuario()
+						.getId());
+
+				Acesso b = new Acesso();
+				b.setGrupo(g);
+				b.setInstituicao(i);
+				b.setUsuario(u);
+				b.setValidade(false);
+
+				entityManager.persist(b);
+				entityManager.persist(aprovacao);
+
+				String dataEmbaralhado = memoriaVirtualEJB
+						.embaralhar(dataString);
+				String aprovadorEmbaralhado = memoriaVirtualEJB
+						.embaralhar(aprovadorId);
+				String acessoEmbaralhado = memoriaVirtualEJB.embaralhar(acesso);
+
+				String link = memoriaVirtualEJB.getEnderecoServidor()
+						.getCanonicalHostName()
+						+ "/editarcadastrousuario.jsf?Data="
+						+ dataEmbaralhado
+						+ "&Aprovador="
+						+ aprovadorEmbaralhado
+						+ "&Acesso="
+						+ acessoEmbaralhado;
+
+				System.out.println(link);
+
+			}
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
 	}
+
 }
