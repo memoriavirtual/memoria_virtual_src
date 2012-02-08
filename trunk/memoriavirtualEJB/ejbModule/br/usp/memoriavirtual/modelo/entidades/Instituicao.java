@@ -21,7 +21,6 @@ public class Instituicao implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="INSTITUICAO_ID")
 	private long id;
     private static final long serialVersionUID = -5996690587044446292L;
-    @Id
     private String nome;
     private String localizacao;
     private String endereco;
