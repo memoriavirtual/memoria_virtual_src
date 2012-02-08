@@ -4,43 +4,51 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@SequenceGenerator(name = "APROVACAO_ID", sequenceName = "APROVACAO_SEQ")
 public class Aprovacao {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "APROVACAO_ID")
+	private Long id;
+
 	@Temporal(TemporalType.DATE)
 	private Date data;
-	@Id
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "APROVADOR")
 	private Usuario aprovador;
+
 	@Temporal(TemporalType.DATE)
 	private Date expiracao;
-	@Id
+
 	private String chaveEstrangeira;
-	@Id
+
 	private String tabelaEstrangeira;
-	
-	public Aprovacao(){
+
+	public Aprovacao() {
 		super();
 	}
-	
-	
+
 	/**
 	 * Construtor
+	 * 
 	 * @param data
 	 * @param aprovador
 	 * @param expiracao
 	 * @param chaveEstrangeira
 	 * @param tabelaEstrangeira
 	 */
-	public Aprovacao ( Date data, Usuario aprovador , Date expiracao , String chaveEstrangeira , String tabelaEstrangeira){
+	public Aprovacao(Date data, Usuario aprovador, Date expiracao, String chaveEstrangeira, String tabelaEstrangeira) {
 		super();
 		this.data = data;
 		this.aprovador = aprovador;
@@ -48,6 +56,7 @@ public class Aprovacao {
 		this.chaveEstrangeira = chaveEstrangeira;
 		this.tabelaEstrangeira = tabelaEstrangeira;
 	}
+
 	/**
 	 * @return the data
 	 */
@@ -121,6 +130,13 @@ public class Aprovacao {
 	 */
 	public void setTabelaEstrangeira(String tabelaEstrangeira) {
 		this.tabelaEstrangeira = tabelaEstrangeira;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
 	}
 
 }
