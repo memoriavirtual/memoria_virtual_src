@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@SequenceGenerator(name = "APROVACAO_ID", sequenceName = "APROVACAO_SEQ")
+@SequenceGenerator(name = "APROVACAO_ID", sequenceName = "APROVACAO_SEQ", allocationSize = 1)
 public class Aprovacao {
 
 	@Id
