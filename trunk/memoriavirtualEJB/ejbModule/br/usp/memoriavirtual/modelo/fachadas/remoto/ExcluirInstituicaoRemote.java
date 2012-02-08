@@ -18,7 +18,7 @@ public interface ExcluirInstituicaoRemote{
 	throws ModeloException;
 	public Usuario getRequisitor(String id)
 	throws ModeloException;
-	public void validarExclusaoInstituicao(String nome,Usuario requisitor,Usuario validador)
+	public void validarExclusaoInstituicao(Instituicao instituicao,Usuario requisitor,Usuario validador)
 	throws ModeloException;
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade);

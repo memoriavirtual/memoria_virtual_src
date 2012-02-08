@@ -20,7 +20,7 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 	Date data = new Date();
 	ItemAuditoria itemAuditoria = new ItemAuditoria();
 	
-	@Override
+	
 	public void auditarExcluirInstituicao(Usuario autorAcao,
 			String atributoSignificativo) {
 		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
@@ -31,7 +31,7 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 		entityManager.persist(itemAuditoria);
 	}
 	
-	@Override
+	
 	public void auditarAutorizarExcluirInstituicao(Usuario autorAcao,
 			String atributoSignificativo) {
 		itemAuditoria.setAtributoSignificativo(atributoSignificativo);

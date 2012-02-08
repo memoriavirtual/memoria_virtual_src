@@ -116,17 +116,25 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-
- 
-	  public void validarExclusaoInstituicao(String nome,Usuario requisitor,Usuario validador)
-    	throws ModeloException {
-		Instituicao instituicao;
-		Query query; 
+	public Aprovacao getAprovacao(String tabela,String id,Usuario usuario)
+	throws ModeloException {
+		Aprovacao aprovacao;
+		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Instituicao a WHERE  a.nome = :nome ");
-		query.setParameter("nome", nome);
+		.createQuery("SELECT a FROM tabela a WHERE  a.id = :id ");
+		query.setParameter("id", id);
 		try {
-			instituicao = (Instituicao) query.getSingleResult() ;
+			aprovacao = (Aprovacao) query.getSingleResult() ;
+			return aprovacao;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
+	}
+ 
+	  public void validarExclusaoInstituicao(Instituicao instituicao,Usuario requisitor,Usuario validador)
+    	throws ModeloException {		
+		try {
 			autoriaFabricaEJB.auditarExcluirInstituicao(requisitor, instituicao.getNome());
 			this.entityManager.remove(instituicao);
 		} catch (Exception e) {
