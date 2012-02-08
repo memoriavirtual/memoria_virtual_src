@@ -88,29 +88,16 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * os responsaveis pela exclusão
 	 * @param event - Evento onLoad da página alcançada pelo email de confirmação
 	 */
-	public String validarExclusaoInstituicao() {
+	public void validarExclusaoInstituicao() {
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
-		Aprovacao aprovacao;
-		
-		this.administradorValidador  = (Usuario) FacesContext.getCurrentInstance()
-		.getExternalContext().getSessionMap().get("usuario");
-		
-		try {
-			this.requisitor = excluirInstituicaoEJB.getRequisitor( memoriaVirtualEJB.embaralhar(req.getParameter("requisitor")));
-		} catch (ModeloException e) {
-			e.printStackTrace();
-		}
+	
 		//aqui deve ser inserido um teste condicional a respeito da validade do pedido de exclusão
 		/*try {
 			excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,this.requisitor,this.administradorValidador);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}*/
-		this.Gerentes();
-		this.justificativa =  memoriaVirtualEJB.embaralhar(req.getParameter("justificativa"));
-		return this.instituicao.getNome();
+		
 	}
 
 	/**
@@ -131,6 +118,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
 						+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
 						+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()+"\n"
+						+ bundle.getString("excluirInstituicaoRequisitor") + this.getRequisitor()+"\n"
 						+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
 						+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
 						+ "http://"
@@ -138,6 +126,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ "/restrito/validarExclusao.jsf?"
 						+ "chaveEstrangeira="
 						+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
+						+ "requisitor="
+						+ memoriaVirtualEJB.embaralhar(this.requisitor.getId())
 						+ "&justificativa="
 						+ memoriaVirtualEJB.embaralhar(this.justificativa)+"\n\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
