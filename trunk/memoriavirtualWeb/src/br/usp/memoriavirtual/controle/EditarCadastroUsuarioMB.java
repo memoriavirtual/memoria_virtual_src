@@ -1,27 +1,24 @@
 package br.usp.memoriavirtual.controle;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
-import javax.mail.MessagingException;
 
-import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
-import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fachadas.MemoriaVirtual;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "editarCadastroUsuarioMB")
 @SessionScoped
