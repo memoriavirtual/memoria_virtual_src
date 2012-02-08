@@ -23,8 +23,65 @@
 						errorClass="erro"></h:message>
 				</div>
 				<h:form method="post" prependId="false">
-					
+					<fieldset>
 						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoNome}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.validarExclusaoInstituicao()}</h:outputLabel>
+						</div>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoRequisitor}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.requisitor.nomeCompleto}</h:outputLabel>
+						</div> 
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoGerentes}</h:outputLabel>
+							<h:dataTable id="tabelagerente" var="gerente"
+								value="#{excluirInstituicaoMB.gerentesInstituicao}">
+								<h:column>
+								#{gerente.nomeCompleto}
+									
+								</h:column>
+							</h:dataTable>
+
+						</div>
+
+
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoJustificativa}</h:outputLabel>
+							<h:inputTextarea class="caixadetexto" value="#{excluirInstituicaoMB.justificativa}" disabled="true">
+								
+
+
+							</h:inputTextarea>
+							<div></div>
+
+
+						</div>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoValidade}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.getValidadecomdias()}</h:outputLabel>
+						</div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoExcluir"
+							value="#{mensagens.excluirInstituicaoBotaoExcluir}"
+							action="#{excluirInstituicaoMB.confirmarexcluirInstituicao}">
+
+						</h:commandButton>
+
+						<h:commandButton id="botaoVoltar"
+							value="#{mensagens.excluirInstituicaoBotaoVoltar}"
+							action="#{excluirInstituicaoMB.voltar}">
+
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
+							action="#{editarInstituicaoMB.cancelar}">
+						</h:commandButton>
+
+					</div>
 				</h:form>
 			</div>
 			<!-- end .formulario-->

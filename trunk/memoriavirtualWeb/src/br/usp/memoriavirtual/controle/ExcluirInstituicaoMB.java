@@ -22,6 +22,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -76,7 +77,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 	//da infraestrutura
 	private String justificativa1 = null;
 	private boolean flagInstituicao = false;
-
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private List<Usuario> listaAdministradores = new ArrayList<Usuario>();
 	private List<Usuario> gerentesInstituicao = new ArrayList<Usuario>();
@@ -88,25 +88,29 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * os responsaveis pela exclusão
 	 * @param event - Evento onLoad da página alcançada pelo email de confirmação
 	 */
-	public void validarExclusaoInstituicao(AjaxBehaviorEvent event) {
-		Usuario requisitor = null;
-		Usuario validador  = (Usuario) FacesContext.getCurrentInstance()
-		.getExternalContext().getSessionMap().get("usuario");
+	public String validarExclusaoInstituicao() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+		Aprovacao aprovacao;
+		
+		this.administradorValidador  = (Usuario) FacesContext.getCurrentInstance()
+		.getExternalContext().getSessionMap().get("usuario");
+		
 		try {
-			requisitor = excluirInstituicaoEJB.getRequisitor( memoriaVirtualEJB.embaralhar(req.getParameter("requisitor")));
+			this.requisitor = excluirInstituicaoEJB.getRequisitor( memoriaVirtualEJB.embaralhar(req.getParameter("requisitor")));
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
 		//aqui deve ser inserido um teste condicional a respeito da validade do pedido de exclusão
-		try {
-			excluirInstituicaoEJB.validarExclusaoInstituicao(memoriaVirtualEJB.embaralhar(req.getParameter("instituicao")),requisitor,validador);
+		/*try {
+			excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,this.requisitor,this.administradorValidador);
 		} catch (ModeloException e) {
 			e.printStackTrace();
-		}
-
+		}*/
+		this.Gerentes();
+		this.justificativa =  memoriaVirtualEJB.embaralhar(req.getParameter("justificativa"));
+		return this.instituicao.getNome();
 	}
 
 	/**
@@ -130,12 +134,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
 						+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
 						+ "http://"
-						+ memoriaVirtualEJB.getEnderecoServidor()
-						+ "/restrito/validarExclusao.jsf?requisitor="
-						+ memoriaVirtualEJB.embaralhar(this.requisitor.getId())
-						+ "&instituicao="
+						+ memoriaVirtualEJB.getEnderecoServidor().getCanonicalHostName()
+						+ "/restrito/validarExclusao.jsf?"
+						+ "chaveEstrangeira="
 						+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
-						+ "&validade="
+						+ "&justificativa="
+						+ memoriaVirtualEJB.embaralhar(this.justificativa)+"\n\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
 				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
 				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
@@ -183,7 +187,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		try{
 			acessos = excluirInstituicaoEJB.getGerentesdaInstituicao
-			(instituicao);
+			(this.instituicao);
 			for (Acesso a: acessos)
 			{
 				this.gerentesInstituicao.add(a.getUsuario());
@@ -418,6 +422,20 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	
+	/**
+	 * @return the requisitor
+	 */
+	public Usuario getRequisitor() {
+		return requisitor;
+	}
+
+	/**
+	 * @param requisitor the requisitor to set
+	 */
+	public void setRequisitor(Usuario requisitor) {
+		this.requisitor = requisitor;
+	}
+
 	/**
 	 * @return the validadeDias
 	 */
