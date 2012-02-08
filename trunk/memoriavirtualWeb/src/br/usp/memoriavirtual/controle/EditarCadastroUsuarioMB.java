@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
@@ -59,12 +61,22 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				.getExternalContext().getSessionMap().get("usuario");
 
 		if (usuario.isAdministrador()) {
-			this.usuarios = this.editarCadastroUsuarioEJB
-					.listarUsuarios(this.nome);
+			try {
+				this.usuarios = this.editarCadastroUsuarioEJB
+						.listarUsuarios(this.nome);
+			} catch (ModeloException m) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroUsuarioErroListarUsuarios", "resultado");
+			}
 		} else {
 			Grupo grupo = new Grupo("gerente");
-			this.usuarios = this.editarCadastroUsuarioEJB.listarUsuarios(
-					this.nome, usuario, grupo);
+			try {
+				this.usuarios = this.editarCadastroUsuarioEJB.listarUsuarios(
+						this.nome, usuario, grupo);
+			} catch (ModeloException m) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroUsuarioErroListarUsuarios", "resultado");
+			}
 		}
 
 	}
@@ -77,10 +89,17 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.usuario = usuario;
 		this.nome = usuario.getNomeCompleto();
 		this.telefone = usuario.getTelefone();
-		this.acessos = this.editarCadastroUsuarioEJB.getAcessos(usuario);
-		this.acessosAntigos = this.editarCadastroUsuarioEJB.getAcessos(usuario);
-		this.administradores = this.editarCadastroUsuarioEJB
-				.getAdministradores(requerente);
+		try {
+			this.acessos = this.editarCadastroUsuarioEJB.getAcessos(usuario);
+			this.acessosAntigos = this.editarCadastroUsuarioEJB
+					.getAcessos(usuario);
+			this.administradores = this.editarCadastroUsuarioEJB
+					.getAdministradores(requerente);
+		} catch (ModeloException m) {
+			MensagensDeErro.getErrorMessage(
+					"editarCadastroUsuarioErroSelecaoUsuario", "resultado");
+			return "falha";
+		}
 		this.usuarios.clear();
 		this.setNome(null);
 		this.nomeCompleto = usuario.getNomeCompleto();
@@ -105,11 +124,18 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		if (existe) {
 			this.usuario = selecionado;
 			this.telefone = selecionado.getTelefone();
-			this.acessos = this.editarCadastroUsuarioEJB
-					.getAcessos(selecionado);
-			this.acessosAntigos = this.editarCadastroUsuarioEJB.getAcessos(selecionado);
-			this.administradores = this.editarCadastroUsuarioEJB
-					.getAdministradores(requerente);
+			try {
+				this.acessos = this.editarCadastroUsuarioEJB
+						.getAcessos(selecionado);
+				this.acessosAntigos = this.editarCadastroUsuarioEJB
+						.getAcessos(selecionado);
+				this.administradores = this.editarCadastroUsuarioEJB
+						.getAdministradores(requerente);
+			} catch (ModeloException m) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroUsuarioErroSelecao", "resultado");
+				return null;
+			}
 			this.usuarios.clear();
 			this.setNome(null);
 			this.nomeCompleto = usuario.getNomeCompleto();
@@ -187,37 +213,52 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		if (this.validateInstituicao() && this.validateJustificativa()
 				&& this.validateNome() && this.validateTelefone()) {
 
-			this.editarCadastroUsuarioEJB.editarCadastro(this.usuario,
-					this.nomeCompleto, this.telefone);
-			
-			//remove os acessos que não foram modificados
-			for(Acesso a : this.acessosAntigos){
-				for(Acesso o : this.acessos){
-					if(a.equals(o)){
+			try {
+				this.editarCadastroUsuarioEJB.editarCadastro(this.usuario,
+						this.nomeCompleto, this.telefone);
+			} catch (ModeloException m) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroUsuarioErroEdicao", "resultado");
+			}
+
+			// remove os acessos que não foram modificados
+			for (Acesso a : this.acessosAntigos) {
+				for (Acesso o : this.acessos) {
+					if (a.equals(o)) {
 						this.acessos.remove(a);
 					}
 				}
 			}
-			
-			for(Acesso a : this.acessos){
+
+			for (Acesso a : this.acessos) {
 				a.setValidade(false);
 			}
-			
-			//this.editarCadastroUsuarioEJB.editarAcessos(this.administrador, this.acessos, );
-			
+
+			Date data = new Date();
+			Date expiracao = new Date();
+
+			try {
+				this.editarCadastroUsuarioEJB.editarAcessos(this.administrador,
+						this.acessos, data, expiracao);
+			} catch (Exception e) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroUsuarioErroEdicao", "resultado");
+			}
+
 		}
-		
+
 		this.setNomeCompleto(null);
 		this.setTelefone(null);
 		this.setJustificativa(null);
 		this.setAcessos(null);
-		return null;
+		MensagensDeErro.getSucessMessage("editarCadastroUsuarioSucesso", "resultado");
+		return "sucesso";
 	}
 
 	public List<SelectItem> getAdm() {
 		List<SelectItem> adm = new ArrayList<SelectItem>();
 		for (Usuario u : this.administradores) {
-			adm.add(new SelectItem(u.getEmail(), u.getNomeCompleto()));
+			adm.add(new SelectItem(u.getId(), u.getNomeCompleto()));
 		}
 		return adm;
 	}
@@ -446,7 +487,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	/**
-	 * @param acessosAntigos the acessosAntigos to set
+	 * @param acessosAntigos
+	 *            the acessosAntigos to set
 	 */
 	public void setAcessosAntigos(List<Acesso> acessosAntigos) {
 		this.acessosAntigos = acessosAntigos;
