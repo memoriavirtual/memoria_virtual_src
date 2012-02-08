@@ -116,13 +116,14 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	public Aprovacao getAprovacao(String tabela,String id,Usuario usuario)
+	public Aprovacao getAprovacao(String tabela,String chave)
 	throws ModeloException {
 		Aprovacao aprovacao;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM tabela a WHERE  a.id = :id ");
-		query.setParameter("id", id);
+		.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveestrangeira = :chave AND a.tabelaestrangeira = :tabela  ");
+		query.setParameter("tabela", tabela);
+		query.setParameter("chave", chave);
 		try {
 			aprovacao = (Aprovacao) query.getSingleResult() ;
 			return aprovacao;
