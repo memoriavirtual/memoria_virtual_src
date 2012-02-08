@@ -19,10 +19,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
-import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -88,7 +86,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * os responsaveis pela exclusão
 	 * @param event - Evento onLoad da página alcançada pelo email de confirmação
 	 */
-	public void validarExclusaoInstituicao() {
+	public String validarExclusaoInstituicao() {
 
 	
 		//aqui deve ser inserido um teste condicional a respeito da validade do pedido de exclusão
@@ -97,7 +95,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}*/
-		
+		return null;
 	}
 
 	/**
@@ -105,8 +103,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * por enviar o mesmo
 	 * @throws IOException
 	 */
-	public void enviarPedidoExclusao() throws IOException   {
-		if(validateValidador()){
+	public String enviarPedidoExclusao() throws IOException   {
+		if(booleanValidador()){
 
 
 			SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
@@ -139,7 +137,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 			}
 
 		}
-		
+		return null;
 	}
 
 
@@ -224,12 +222,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * @param pinstituicao
 	 * Seleciona uma instituição escolhida na lista
 	 */
-	public void selecionarInstituicoes ( Instituicao pinstituicao ){
+	public String selecionarInstituicoes ( Instituicao pinstituicao ){
 		this.setNome(pinstituicao.getNome());
 		this.setInstituicao(pinstituicao);
 		this.flagInstituicao = true;
 		this.instituicoes.clear();
-		return ;
+		return null;
 	}
 	/**
 	 * @return
@@ -237,7 +235,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * Se todas as validações retornarem true return a Sting Instselecionada
 	 * Que é interpretada pelo faces-config chamando a nova página.
 	 */
-	public String selecionarInstituicoes (){
+	public String selecionarInstituicoe (){
 		this.Gerentes();
 		if(this.instituicao == null && this.flagInstituicao){
 			try {this.setInstituicao ( editarInstituicaoEJB.getInstituicao(this.nome));
@@ -283,14 +281,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * Método de validação do imput gerente validador 
 	 */
 	public void validadeValidador(AjaxBehaviorEvent event){
-		validateValidador();
+		booleanValidador();
 		return;
 	}
 	/**
 	 * Método de validação do imput validador do pedido de exclusão
 	 * Utilizado pelo vallidador do evento e pelo validador do botão
 	 */
-	public boolean validateValidador(){
+	public boolean booleanValidador(){
 
 		if (this.nomeValidador == null ) {
 			MensagensDeErro.getErrorMessage("excluirInstituicaoErroValidador",

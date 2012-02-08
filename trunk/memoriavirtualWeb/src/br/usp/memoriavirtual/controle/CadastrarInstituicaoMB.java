@@ -39,24 +39,17 @@ public class CadastrarInstituicaoMB {
 
 	}
 
-	public void cadastrarInstituicao() {
-
-		
-
+	public String cadastrarInstituicao() {
 			if (this.validateNome() && this.validateLocalizacao() && this.validateCep() && this.validateTelefone()) {
 				Instituicao instituicao = new Instituicao(this.nome, this.localizacao, this.endereco, this.cidade,
 						this.estado, this.cep, this.telefone);
-				
 				//Como não é necessario a aprovação de nenhum outro administrador
 				//A validade do registro já é setada como verdadeira.
 				instituicao.setValidade(true);
-				
 				//Cadastra a instituicao no banco de dados
 				cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
-				
 				// Testa se a instituição foi gravada
 				if (!memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(this.nome)) {
-
 					this.nome = "";
 					this.localizacao = "";
 					this.endereco = "";
@@ -64,12 +57,10 @@ public class CadastrarInstituicaoMB {
 					this.estado = "";
 					this.cep = "";
 					this.telefone = "";
-
 					MensagensDeErro.getSucessMessage("cadastrarInstituicaoSucessocadastramento", "resultado");
-					
 				}
 			}
-		
+		return null;
 	}
 	
 	public String resetCadastrarinstituicao() {

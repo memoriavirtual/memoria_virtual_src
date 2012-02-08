@@ -46,7 +46,7 @@
 								value="#{excluirInstituicaoMB.instituicoes}">
 								<h:column>
 									<h:commandLink
-										action="#{excluirInstituicaoMB.selecionarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
+									 	action="#{excluirInstituicaoMB.selecionarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
 								</h:column>
 							</h:dataTable>
 						</div>
@@ -56,7 +56,7 @@
 							<h:selectOneMenu class="options" value="#{excluirInstituicaoMB.validade}">
 									<f:selectItems value="#{excluirInstituicaoMB.validadeDias}"  />
 									<f:ajax event="blur" execute="@this" render="validacaoValidade"
-									listener="#{excluirInstituicaoMB.validateValidade}" />
+									listener="#{excluirInstituicaoMB.validadeValidade}" />
 							</h:selectOneMenu>
 							<div></div>
 							<h:message id="validacaoValidade" for="validacaoValidade"
@@ -67,7 +67,7 @@
 					<div class="botao">
 						<h:commandButton id="botaoSelecionar"
 							value="#{mensagens.excluirInstituicaoBotaoSelecionar}"
-							action="#{excluirInstituicaoMB.selecionarInstituicoes}">
+							action="#{excluirInstituicaoMB.selecionarInstituicoe}">
 						</h:commandButton>
 						<h:commandButton id="botaoCancelar"
 							value="#{mensagens.excluirInstituicaoBotaoCancelar}"

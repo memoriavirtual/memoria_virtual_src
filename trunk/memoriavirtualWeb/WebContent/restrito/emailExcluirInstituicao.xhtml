@@ -37,7 +37,7 @@
 								value="#{excluirInstituicaoMB.nomeValidador}">
 								<f:selectItems value="#{excluirInstituicaoMB.listaValidadores}" />
 								<f:ajax event="blur" execute="@this" render="validacaoValidador"
-									listener="#{excluirInstituicaoMB.validateValidador}" />
+		 	 	   					listener="#{excluirInstituicaoMB.validadeValidador}" />
 							</h:selectOneMenu>
 							<div></div>
 							<h:message id="validacaoValidador" for="validacaoValidador"
@@ -49,7 +49,7 @@
 					<div class="botao">
 						<h:commandButton id="EnviarEmail"
 							value="#{mensagens.excluirInstituicaoBotaoEmail}"
-							action="#{excluirInstituicaoMB.enviarPedidoExclusao}">
+					 		action="#{excluirInstituicaoMB.enviarPedidoExclusao}">
 
 						</h:commandButton>
 
