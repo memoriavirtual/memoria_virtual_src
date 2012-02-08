@@ -1,16 +1,25 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Pattern;
 
 @Entity
+@SequenceGenerator(name="INSTITUICAO_ID", sequenceName="INSTITUICAO_SEQ")
+
 public class Instituicao implements Serializable {
 
     /**
      * Serial Version UID
      */
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="INSTITUICAO_ID")
+	private long id;
     private static final long serialVersionUID = -5996690587044446292L;
     @Id
     private String nome;
@@ -175,6 +184,20 @@ public class Instituicao implements Serializable {
 	 */
 	public void setValidade(Boolean validade) {
 		this.validade = validade;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
 	}
     
     
