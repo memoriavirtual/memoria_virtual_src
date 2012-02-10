@@ -15,7 +15,7 @@ public interface ExcluirInstituicaoRemote{
 	public List<Usuario> listarAdministradores() throws ModeloException;
 	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao)throws ModeloException;
 	public void enviaremail(String Email,String assunto,String textoEmail);
-	public Aprovacao getAprovacao(String tabela,String chave)
+	public Aprovacao getAprovacao(String chave)
 	throws ModeloException;
 	public Usuario getValidador(String nomeCompleto)
 	throws ModeloException;

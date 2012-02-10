@@ -4,7 +4,7 @@ package br.usp.memoriavirtual.modelo.fachadas;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -21,7 +21,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 
-@Stateless (mappedName = "ExcluirInstituicao")
+@Singleton (mappedName = "ExcluirInstituicao")
 public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
@@ -116,13 +116,12 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	public Aprovacao getAprovacao(String tabela,String chave)
+	public Aprovacao getAprovacao(String chave)
 	throws ModeloException {
 		Aprovacao aprovacao;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveestrangeira = :chave AND a.tabelaestrangeira = :tabela  ");
-		query.setParameter("tabela", tabela);
+		.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveEstrangeira = :chave");
 		query.setParameter("chave", chave);
 		try {
 			aprovacao = (Aprovacao) query.getSingleResult() ;

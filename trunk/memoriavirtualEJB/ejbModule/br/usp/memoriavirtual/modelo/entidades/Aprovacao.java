@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,12 @@ import javax.persistence.TemporalType;
 
 @Entity
 @SequenceGenerator(name = "APROVACAO_ID", sequenceName = "APROVACAO_SEQ", allocationSize = 1)
-public class Aprovacao {
+public class Aprovacao implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7916023027694966362L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "APROVACAO_ID")
