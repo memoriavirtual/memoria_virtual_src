@@ -21,6 +21,7 @@ import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -120,14 +121,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
 						+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
 						+ "http://"
-						+ memoriaVirtualEJB.getEnderecoServidor().getCanonicalHostName()
-						+ "/restrito/validarExclusao.jsf?"
+						+ memoriaVirtualEJB.getEnderecoServidor()
+						+ "/excluir?"
 						+ "chaveEstrangeira="
-						+ memoriaVirtualEJB.embaralhar(this.instituicao.getNome())
-						+ "requisitor="
-						+ memoriaVirtualEJB.embaralhar(this.requisitor.getId())
+						+ this.instituicao.getNome()
+						+ "&requisitor="
+						+ this.requisitor.getId()
 						+ "&justificativa="
-						+ memoriaVirtualEJB.embaralhar(this.justificativa)+"\n\n"
+						+ this.justificativa+"\n\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
 				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
 				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
@@ -140,7 +141,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return null;
 	}
 
-
+	public void servetService(String chaveEstrangeira){
+		
+		
+	}
 
 
 	

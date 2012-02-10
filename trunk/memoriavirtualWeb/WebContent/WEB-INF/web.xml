@@ -59,6 +59,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ExcluirInstituicao</servlet-name>
-		<url-pattern>/validarExclusao</url-pattern>
+		<url-pattern>/excluir</url-pattern>
 	</servlet-mapping>
 </web-app>

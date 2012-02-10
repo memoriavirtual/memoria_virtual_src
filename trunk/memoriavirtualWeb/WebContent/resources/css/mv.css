@@ -422,8 +422,21 @@ h4 {
 	padding-top: 5px
 }
 #tabelagerente {
-	margin-left: 440px;
+		padding-top: 10px;
+	
 	width: 250px;
+min-width: 252px;
+max-width: 252px;
+min-height: 0px;
+float: left;
+	}
+	#meudiv{
+color: #000;
+	min-width: 468px;
+max-width: 252px;
+min-height: 0px;
+float: right;
+font-size: 13px;
 	}
 .dadoinstituicao {
 	font-family: Arial, Helvetica, sans-serif;

@@ -17,14 +17,18 @@
 		<ui:define name="conteudo">
 			<div class="formulario">
 				<div class="conteudoTitulo">#{mensagens.excluirInstituicaoTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoPassoSegundo}</div>
+				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoPassoUltimo}</div>
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro"></h:message>
 				</div>
+				<div class="avisoexcluir">
+						<div class="mensagenavisoexcluir">
+							#{mensagens.excluirInstituicaoAviso}</div>	
+					</div>
 				<h:form method="post" prependId="false">
 					<fieldset>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoNome}</h:outputLabel>
 							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.instituicao.getNome()}</h:outputLabel>
@@ -32,9 +36,10 @@
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoRequisitor}</h:outputLabel>
 							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.requisitor.nomeCompleto}</h:outputLabel>
-						</div> 
+						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoGerentes}</h:outputLabel>
+						<div id="meudiv">
 							<h:dataTable id="tabelagerente" var="gerente"
 								value="#{excluirInstituicaoMB.gerentesInstituicao}">
 								<h:column>
@@ -42,42 +47,23 @@
 									
 								</h:column>
 							</h:dataTable>
-
 						</div>
-
-
-
+						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoJustificativa}</h:outputLabel>
-							<h:inputTextarea class="caixadetexto" value="#{excluirInstituicaoMB.justificativa}" disabled="true">
-								
-
-
+							<h:inputTextarea class="caixadetexto"
+								value="#{excluirInstituicaoMB.justificativa}" disabled="true">
 							</h:inputTextarea>
 							<div></div>
-
-
-						</div>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoValidade}</h:outputLabel>
-							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.getValidadecomdias()}</h:outputLabel>
 						</div>
 					</fieldset>
 					<div class="botao">
 						<h:commandButton id="botaoExcluir"
-							value="#{mensagens.excluirInstituicaoBotaoExcluir}"
+							value="#{mensagens.excluirInstituicaoBotaoAprovar}"
 							action="#{excluirInstituicaoMB.confirmarexcluirInstituicao}">
-
 						</h:commandButton>
-
-						<h:commandButton id="botaoVoltar"
-							value="#{mensagens.excluirInstituicaoBotaoVoltar}"
-							action="#{excluirInstituicaoMB.voltar}">
-
-						</h:commandButton>
-
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
+							value="#{mensagens.excluirInstituicaoBotaoNegar}"
 							action="#{editarInstituicaoMB.cancelar}">
 						</h:commandButton>
 
