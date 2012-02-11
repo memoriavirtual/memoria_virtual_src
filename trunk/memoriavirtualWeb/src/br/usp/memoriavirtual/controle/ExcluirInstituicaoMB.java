@@ -23,7 +23,9 @@ import javax.mail.MessagingException;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
@@ -47,10 +49,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-	
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;// para utilizar o metodo getinstituicao()
-	
+	@EJB
+	private AuditoriaFabricaRemote auditoriaFabricaEJB;
 	
 	
 	//objetos gerais
@@ -72,13 +74,18 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private String validade = null;
 	private String justificativa = null;
 	private Usuario administradorValidador = null;
+	private ItemAuditoria itemAuditoria = null;
+	private Aprovacao aprovacao = null;
 	
-	//da infraestrutura
+	//da infraestrutura para as paginas
 	private String justificativa1 = null;
 	private boolean flagInstituicao = false;
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private List<Usuario> listaAdministradores = new ArrayList<Usuario>();
 	private List<Usuario> gerentesInstituicao = new ArrayList<Usuario>();
+
+
+	
 
 
 	/**
@@ -101,7 +108,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 	/**
 	 * Método constrói o texto do email, bem como chama o método responsavel
-	 * por enviar o mesmo
+	 * por enviar o mesmo.
+	 * Ainda registra um objeto Itemauditoria, registra um objeto aprovação e 
+	 * marca a instituição a ser excluida com o campo validade = false
 	 * @throws IOException
 	 */
 	public String enviarPedidoExclusao() throws IOException   {
@@ -111,8 +120,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 			SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
 			Date dataValidade = new Date();   
 			try {
-
-				this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(this.nomeValidador),bundle.getString("excluirInstituicaoEmailTitulo"),
+				this.getEmailAdminstrador(this.nomeValidador);
+				/*this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(this.nomeValidador),bundle.getString("excluirInstituicaoEmailTitulo"),
 						bundle.getString("excluirInstituicaoEmailMensagem")+"\n"+"\n"
 						+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
 						+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
@@ -125,18 +134,21 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ "/excluir?"
 						+ "chaveEstrangeira="
 						+ this.instituicao.getNome()
-						+ "&requisitor="
-						+ this.requisitor.getId()
-						+ "&justificativa="
-						+ this.justificativa+"\n\n"
-						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
+						+"\n\n"
+						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");*/
+				//registra a autoria do pedido de exclusão
+				this.auditoriaFabricaEJB.auditarExcluirInstituicao(this.requisitor, this.instituicao.getNome(),this.justificativa);
+				//registra um objeto Aprovação
 				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
+				//marca a instituição a ser excluida para que a mesma não seja mais utilizada 
 				this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao);
+				
+				//mensagem de sucesso 
 				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
 				"resultado");
-			} catch (MessagingException e) {
+			/*} catch (MessagingException e) {
 				e.printStackTrace();
-			} catch (ModeloException e) {
+			*/} catch (ModeloException e) {
 				e.printStackTrace();
 			}
 
@@ -370,6 +382,34 @@ public class ExcluirInstituicaoMB implements Serializable {
 	public void setNomeValidador(String nomeValidador) {
 		this.nomeValidador = nomeValidador;
 	}
+	/**
+	 * @return the itemAuditoria
+	 */
+	public ItemAuditoria getItemAuditoria() {
+		return itemAuditoria;
+	}
+
+	/**
+	 * @param itemAuditoria the itemAuditoria to set
+	 */
+	public void setItemAuditoria(ItemAuditoria itemAuditoria) {
+		this.itemAuditoria = itemAuditoria;
+	}
+
+	/**
+	 * @return the aprovacao
+	 */
+	public Aprovacao getAprovacao() {
+		return aprovacao;
+	}
+
+	/**
+	 * @param aprovacao the aprovacao to set
+	 */
+	public void setAprovacao(Aprovacao aprovacao) {
+		this.aprovacao = aprovacao;
+	}
+
 	public String getNome() {
 		return nome;
 	}

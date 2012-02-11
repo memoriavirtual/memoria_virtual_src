@@ -8,8 +8,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class ItemAuditoria {
+public class ItemAuditoria implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3086869717610845286L;
 	@Id
 	@Temporal(TemporalType.DATE)
 	Date data;

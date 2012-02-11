@@ -9,8 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
@@ -121,8 +123,11 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		Aprovacao aprovacao;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveEstrangeira = :chave");
+		.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveEstrangeira = :chave   AND a.tabelaEstrangeira = :instituicao" );
 		query.setParameter("chave", chave);
+		query.setParameter("instituicao", "Instituicao");
+
+
 		try {
 			aprovacao = (Aprovacao) query.getSingleResult() ;
 			return aprovacao;
@@ -135,7 +140,6 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	  public void validarExclusaoInstituicao(Instituicao instituicao,Usuario requisitor,Usuario validador)
     	throws ModeloException {		
 		try {
-			autoriaFabricaEJB.auditarExcluirInstituicao(requisitor, instituicao.getNome());
 			this.entityManager.remove(instituicao);
 		} catch (Exception e) {
 			throw new ModeloException(e);
@@ -156,6 +160,35 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 	
+	public ItemAuditoria getItemAuditoria(String pnome) throws ModeloException {
+		ItemAuditoria itemAuditoria;
+		Query query;
+		query = this.entityManager
+				.createQuery("SELECT a FROM ItemAuditoria a WHERE a.atributoSignificativo = :nome AND a.tipoAcao = :acao");
+		query.setParameter("nome", pnome);
+		query.setParameter("acao", EnumTipoAcao.EXCLUIR_INSTITUICAO);
+
+		try {
+			itemAuditoria = (ItemAuditoria) query.getSingleResult();
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+		return itemAuditoria;
+	}
+	
+	public Instituicao getInstituicaoFalse(String pnome) throws ModeloException {
+		Instituicao instituicao;
+		Query query;
+		query = this.entityManager
+				.createQuery("SELECT a FROM Instituicao a WHERE a.nome = :nome AND a.validade = FALSE");
+		query.setParameter("nome", pnome);
+		try {
+			instituicao = (Instituicao) query.getSingleResult();
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+		return instituicao;
+	}
 	
 	public void marcarInstituicaoExcluida(Instituicao instituicao)
 			throws ModeloException{

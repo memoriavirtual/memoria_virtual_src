@@ -12,7 +12,7 @@ public interface AuditoriaFabricaRemote {
 	 * @param autorAcao
 	 * @param atributoSignificativo
 	 */
-	public void auditarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo);
+	public void auditarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo,String justificativa);
 	/**
 	 * Método insere uma linha na tabela ItemAuditoria, referente a a autorização
 	 * de um pedido de exclusão da instituição
