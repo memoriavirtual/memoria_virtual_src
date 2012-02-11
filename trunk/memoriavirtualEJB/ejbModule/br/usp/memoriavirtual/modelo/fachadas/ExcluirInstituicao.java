@@ -156,6 +156,19 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 	
+	
+	public void marcarInstituicaoExcluida(Instituicao instituicao)
+			throws ModeloException{
+		
+		Query query;
+		query = this.entityManager
+		.createQuery("UPDATE Instituicao a SET a.validade = :validade WHERE  a.id = :id");
+		query.setParameter("id", instituicao.getId());
+		query.setParameter("validade", false );
+		query.executeUpdate();
+		
+		
+	}
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade){
 		Date data = new Date();

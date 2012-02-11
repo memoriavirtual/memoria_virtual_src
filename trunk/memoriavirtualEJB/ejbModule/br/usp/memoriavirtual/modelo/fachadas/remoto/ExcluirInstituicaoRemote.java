@@ -25,4 +25,7 @@ public interface ExcluirInstituicaoRemote{
 	throws ModeloException;
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade);
+	public void marcarInstituicaoExcluida(Instituicao instituicao)
+	throws ModeloException;
+
 }

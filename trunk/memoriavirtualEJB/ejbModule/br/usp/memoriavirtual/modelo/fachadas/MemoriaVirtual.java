@@ -214,7 +214,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 		Query query;
 		if(!(pnome =="")){
-			query = entityManager.createQuery("SELECT a FROM Instituicao a  WHERE a.nome LIKE :padrao ORDER BY a.nome");
+			query = entityManager.createQuery("SELECT a FROM Instituicao a  WHERE a.validade = TRUE AND a.nome LIKE :padrao ORDER BY a.nome");
 
 			query.setParameter("padrao", "%" + pnome + "%");
 			try {

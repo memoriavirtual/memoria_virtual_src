@@ -131,9 +131,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ this.justificativa+"\n\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
 				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
+				this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao);
 				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
 				"resultado");
 			} catch (MessagingException e) {
+				e.printStackTrace();
+			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
 
