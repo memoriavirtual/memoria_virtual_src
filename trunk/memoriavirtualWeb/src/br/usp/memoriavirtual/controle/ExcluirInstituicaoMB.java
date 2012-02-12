@@ -208,7 +208,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 				//registra um objeto Aprovação
 				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
 				//marca a instituição a ser excluida para que a mesma não seja mais utilizada 
-				this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao,true);
+				this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao,false);
 
 				//mensagem de sucesso 
 				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
