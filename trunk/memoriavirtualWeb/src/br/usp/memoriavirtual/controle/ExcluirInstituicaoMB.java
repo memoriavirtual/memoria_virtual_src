@@ -68,7 +68,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private Usuario gerente = new Usuario();
 	private boolean flagGerente = false;
 
-	//do pedido de exclusão
+	//do pedido de exclusï¿½o
 	private Usuario requisitor = (Usuario) FacesContext.getCurrentInstance()
 			.getExternalContext().getSessionMap().get("usuario");
 	private String nomeValidador = new String();
@@ -105,7 +105,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		this.gerente = new Usuario();
 		this.flagGerente = false;
 
-		//do pedido de exclusão
+		//do pedido de exclusï¿½o
 		this.requisitor = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 		this.nomeValidador = new String();
@@ -146,9 +146,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return null;
 	}
 	/**
-	 * Método  exclui a instiuição do sistema Memoria Virtual,bem como todos o objetos Acesso relacionados a ela
+	 * Mï¿½todo  exclui a instiuiï¿½ï¿½o do sistema Memoria Virtual,bem como todos o objetos Acesso relacionados a ela
 	 * , alem disso, salva no bando de dados, na tabela auditoria
-	 * os responsaveis pela exclusão
+	 * os responsaveis pela exclusï¿½o
 	 * 
 	 */
 	public String validarExclusaoInstituicao() {
@@ -157,7 +157,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 				.getExternalContext().getSessionMap().get("usuario");
 
 		if(this.administradorValidador.getId().equals(this.aprovacao.getAprovador().getId())){
-			System.out.print("O usuário da seção "+this.administradorValidador.getId()+"confere com o validador ..");
+			System.out.print("O usuï¿½rio da seï¿½ï¿½o "+this.administradorValidador.getId()+"confere com o validador ..");
 
 			try {
 				excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,true);
@@ -174,10 +174,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * Método constrói o texto do email, bem como chama o método responsavel
+	 * Mï¿½todo constrï¿½i o texto do email, bem como chama o mï¿½todo responsavel
 	 * por enviar o mesmo.
-	 * Ainda registra um objeto Itemauditoria, registra um objeto aprovação e 
-	 * marca a instituição a ser excluida e os objetos Acesso relacionados a ela com o campo validade = false
+	 * Ainda registra um objeto Itemauditoria, registra um objeto aprovaï¿½ï¿½o e 
+	 * marca a instituiï¿½ï¿½o a ser excluida e os objetos Acesso relacionados a ela com o campo validade = false
 	 * @throws IOException
 	 */
 	public String enviarPedidoExclusao() throws IOException   {
@@ -203,11 +203,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ this.instituicao.getNome()
 						+"\n\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");*/
-				//registra a autoria do pedido de exclusão
+				//registra a autoria do pedido de exclusï¿½o
 				this.auditoriaFabricaEJB.auditarExcluirInstituicao(this.requisitor, this.instituicao.getNome(),this.justificativa);
-				//registra um objeto Aprovação
+				//registra um objeto Aprovaï¿½ï¿½o
 				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
-				//marca a instituição a ser excluida para que a mesma não seja mais utilizada 
+				//marca a instituiï¿½ï¿½o a ser excluida para que a mesma nï¿½o seja mais utilizada 
 				this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao,false);
 
 				//mensagem de sucesso 
@@ -220,6 +220,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 				 }
 
 		}
+		this.zerarManegedBean();
 		return null;
 	}
 
@@ -228,8 +229,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 
 	/**
-	 * Método retorna um administrador do banco de dados.
-	 * neste caso, o gerente a ser o Avaliador do pedido de exclusão
+	 * Mï¿½todo retorna um administrador do banco de dados.
+	 * neste caso, o gerente a ser o Avaliador do pedido de exclusï¿½o
 	 * @param nome
 	 * @return
 	 */
@@ -250,7 +251,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 
 	/**
-	 * Método apenas transforma um lista de acessos em uma lista de usuarios
+	 * Mï¿½todo apenas transforma um lista de acessos em uma lista de usuarios
 	 * e seta como gerente da instituicao o primeiro usuario da lista
 	 */
 	public void Gerentes(boolean b){
@@ -274,8 +275,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 	/**
 	 * @param event
-	 * Encontra uma lista de instituições que correspondem ao nome
-	 * que está sendo digitado no campo
+	 * Encontra uma lista de instituiï¿½ï¿½es que correspondem ao nome
+	 * que estï¿½ sendo digitado no campo
 	 */
 	public void listarInstituicoes(AjaxBehaviorEvent event) {
 		this.instituicoes.clear();
@@ -286,7 +287,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return;
 	}
 	/**
-	 * Testa a se lista é vazia  e envia as mensagens corretas
+	 * Testa a se lista ï¿½ vazia  e envia as mensagens corretas
 	 */
 	private void validacaolista(){
 		if(this.instituicoes.isEmpty() )
@@ -303,7 +304,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 	/**
 	 * @param pinstituicao
-	 * Seleciona uma instituição escolhida na lista
+	 * Seleciona uma instituiï¿½ï¿½o escolhida na lista
 	 */
 	public String selecionarInstituicoes ( Instituicao pinstituicao ){ 
 		this.flagGerente = false;
@@ -316,9 +317,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 	/**
 	 * @return
-	 * Trata das validações quando o botão confirmar é pressionado
-	 * Se todas as validações retornarem true return a Sting Instselecionada
-	 * Que é interpretada pelo faces-config chamando a nova página.
+	 * Trata das validaï¿½ï¿½es quando o botï¿½o confirmar ï¿½ pressionado
+	 * Se todas as validaï¿½ï¿½es retornarem true return a Sting Instselecionada
+	 * Que ï¿½ interpretada pelo faces-config chamando a nova pï¿½gina.
 	 */
 	public String selecionarInstituicoe (){
 		if(this.instituicao == null && this.flagInstituicao){
@@ -342,15 +343,15 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 	/**
 	 * @param event
-	 * Método de validação do imput validade do pedido de exclusão 
+	 * Mï¿½todo de validaï¿½ï¿½o do imput validade do pedido de exclusï¿½o 
 	 */
 	public void validadeValidade(AjaxBehaviorEvent event){
 		validateValidade();
 		return;
 	}
 	/**
-	 * Método de validação do imput validade do pedido de exclusão
-	 * Utilizado pelo vallidador do evento e pelo validador do botão
+	 * Mï¿½todo de validaï¿½ï¿½o do imput validade do pedido de exclusï¿½o
+	 * Utilizado pelo vallidador do evento e pelo validador do botï¿½o
 	 */
 	public boolean validateValidade(){
 
@@ -363,15 +364,15 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 	/**
 	 * @param event
-	 * Método de validação do imput gerente validador 
+	 * Mï¿½todo de validaï¿½ï¿½o do imput gerente validador 
 	 */
 	public void validadeValidador(AjaxBehaviorEvent event){
 		booleanValidador();
 		return;
 	}
 	/**
-	 * Método de validação do imput validador do pedido de exclusão
-	 * Utilizado pelo vallidador do evento e pelo validador do botão
+	 * Mï¿½todo de validaï¿½ï¿½o do imput validador do pedido de exclusï¿½o
+	 * Utilizado pelo vallidador do evento e pelo validador do botï¿½o
 	 */
 	public boolean booleanValidador(){
 
@@ -383,7 +384,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return true;
 	}
 	/**
-	 * Métodos de validação da justificativa
+	 * Mï¿½todos de validaï¿½ï¿½o da justificativa
 	 * @param event
 	 */
 	public void validateJustificativa (AjaxBehaviorEvent event) {
@@ -401,7 +402,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 	}
 	/**
-	 * Métodos para contagem don numero de caracteres no campo justificativa 
+	 * Mï¿½todos para contagem don numero de caracteres no campo justificativa 
 	 * @param event
 	 */
 	public void contagemJustificativa (AjaxBehaviorEvent event) {
