@@ -41,12 +41,12 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	@SuppressWarnings("unchecked")
 	public List<Usuario> listarAdministradores()
-	throws ModeloException {
+			throws ModeloException {
 
 		List<Usuario> administradores;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Usuario a WHERE a.administrador = TRUE ORDER BY a.id ");
+				.createQuery("SELECT a FROM Usuario a WHERE a.administrador = TRUE ORDER BY a.id ");
 
 		try {
 			administradores = (List<Usuario>) query.getResultList();
@@ -68,15 +68,17 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	 *             Em caso de erro
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao)
-	throws ModeloException {
+	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao,boolean b)
+			throws ModeloException {
 		Grupo grupo = new Grupo("GERENTE") ;
 		List<Acesso> objetosAcesso ;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Acesso a WHERE  a.grupo = :grupo AND a.instituicao = :instituicao");
+				.createQuery("SELECT a FROM Acesso a WHERE  a.grupo = :grupo AND a.instituicao = :instituicao AND a.validade = :b");
 		query.setParameter("grupo", grupo);
 		query.setParameter("instituicao", instituicao);
+		query.setParameter("b", b);
+
 		try {
 			objetosAcesso = (List<Acesso>) query.getResultList() ;			
 			return objetosAcesso;
@@ -85,13 +87,13 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	
+
 	public Usuario getValidador(String nomeCompleto)
-	throws ModeloException {
+			throws ModeloException {
 		Usuario usuario;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Usuario a WHERE  a.nomeCompleto = :nomeCompleto ");
+				.createQuery("SELECT a FROM Usuario a WHERE  a.nomeCompleto = :nomeCompleto ");
 		query.setParameter("nomeCompleto", nomeCompleto);
 		try {
 			usuario = (Usuario) query.getSingleResult() ;
@@ -101,14 +103,14 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	
-	
+
+
 	public Usuario getRequisitor(String id)
-	throws ModeloException {
+			throws ModeloException {
 		Usuario usuario;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Usuario a WHERE  a.id = :id ");
+				.createQuery("SELECT a FROM Usuario a WHERE  a.id = :id ");
 		query.setParameter("id", id);
 		try {
 			usuario = (Usuario) query.getSingleResult() ;
@@ -119,11 +121,11 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	}
 	public Aprovacao getAprovacao(String chave)
-	throws ModeloException {
+			throws ModeloException {
 		Aprovacao aprovacao;
 		Query query;
 		query = this.entityManager
-		.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveEstrangeira = :chave   AND a.tabelaEstrangeira = :instituicao" );
+				.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveEstrangeira = :chave   AND a.tabelaEstrangeira = :instituicao" );
 		query.setParameter("chave", chave);
 		query.setParameter("instituicao", "Instituicao");
 
@@ -136,30 +138,56 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
- 
-	  public void validarExclusaoInstituicao(Instituicao instituicao,Usuario requisitor,Usuario validador)
-    	throws ModeloException {		
-		try {
-			this.entityManager.remove(instituicao);
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
+	
+	
+	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao,
+			ItemAuditoria itemAuditoria){
+		Query query;
+		query = this.entityManager
+				.createQuery("DELETE  FROM Aprovacao a WHERE a = :aprovacao ");
+		query.setParameter("aprovacao", aprovacao);
+		query.executeUpdate();	
+		query = this.entityManager
+				.createQuery("DELETE  FROM ItemAuditoria a WHERE a = :itemAuditoria ");
+		query.setParameter("itemAuditoria", itemAuditoria);
+		query.executeUpdate();
+		
+	}
+	
+	public void validarExclusaoInstituicao(Instituicao instituicao,boolean acao)
+			throws ModeloException {
+		//Se acao verdadeira a instituicao e definitivamente excluida do sistema
+		if(acao){
+			instituicao = this.entityManager.find(Instituicao.class, instituicao.getId());
+			Query query;
+			query = this.entityManager
+					.createQuery("DELETE  FROM Acesso a WHERE a.instituicao = :instituicao ");
+			query.setParameter("instituicao", instituicao);
+			query.executeUpdate();		
 
+			try {
+				this.entityManager.remove(instituicao);
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}else{//Caso Acao falso a instituicao volta a funcionar normalmente
+			this.marcarInstituicaoExcluida(instituicao, acao);
+		}
 	}
 	public void enviaremail(String Email,String assunto,String textoEmail){
 
 		try {
 
 			this.memoriaVirtualEJB.enviarEmail(Email, assunto, textoEmail);
-			
+
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			
+
 		}
 	}
-	
+
 	public ItemAuditoria getItemAuditoria(String pnome) throws ModeloException {
 		ItemAuditoria itemAuditoria;
 		Query query;
@@ -175,7 +203,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 		return itemAuditoria;
 	}
-	
+
 	public Instituicao getInstituicaoFalse(String pnome) throws ModeloException {
 		Instituicao instituicao;
 		Query query;
@@ -189,18 +217,22 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 		return instituicao;
 	}
-	
-	public void marcarInstituicaoExcluida(Instituicao instituicao)
+
+	public void marcarInstituicaoExcluida(Instituicao instituicao,boolean marca)
 			throws ModeloException{
-		
+
 		Query query;
 		query = this.entityManager
-		.createQuery("UPDATE Instituicao a SET a.validade = :validade WHERE  a.id = :id");
+				.createQuery("UPDATE Instituicao a SET a.validade = :validade WHERE  a.id = :id");
 		query.setParameter("id", instituicao.getId());
-		query.setParameter("validade", false );
+		query.setParameter("validade", marca );
 		query.executeUpdate();
-		
-		
+		query = this.entityManager
+				.createQuery("UPDATE Acesso a SET a.validade = :validade WHERE  a.instituicao = :id");
+		query.setParameter("id", instituicao);
+		query.setParameter("validade", marca );
+		query.executeUpdate();
+
 	}
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade){

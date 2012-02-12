@@ -16,7 +16,7 @@ public interface ExcluirInstituicaoRemote{
 	public List<Usuario> listarAdministradores() throws ModeloException;
 	public Instituicao getInstituicaoFalse(String pnome) throws ModeloException ;
 	public ItemAuditoria getItemAuditoria(String pnome) throws ModeloException;
-	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao)throws ModeloException;
+	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao, boolean b)throws ModeloException;
 	public void enviaremail(String Email,String assunto,String textoEmail);
 	public Aprovacao getAprovacao(String chave)
 	throws ModeloException;
@@ -24,11 +24,13 @@ public interface ExcluirInstituicaoRemote{
 	throws ModeloException;
 	public Usuario getRequisitor(String id)
 	throws ModeloException;
-	public void validarExclusaoInstituicao(Instituicao instituicao,Usuario requisitor,Usuario validador)
+	public void validarExclusaoInstituicao(Instituicao instituicao, boolean b)
 	throws ModeloException;
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade);
-	public void marcarInstituicaoExcluida(Instituicao instituicao)
+	public void marcarInstituicaoExcluida(Instituicao instituicao, boolean b)
 	throws ModeloException;
+	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao,
+			ItemAuditoria itemAuditoria);
 
 }

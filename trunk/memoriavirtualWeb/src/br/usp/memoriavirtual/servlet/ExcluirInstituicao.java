@@ -44,12 +44,6 @@ public class ExcluirInstituicao extends HttpServlet {
 		ELResolver resolver = facesContext.getApplication().getELResolver();   
 		ExcluirInstituicaoMB  bean = (ExcluirInstituicaoMB) resolver.getValue(facesContext.getELContext(), null, "excluirInstituicaoMB"); 
 		
-		//Usuario atual deve ser o mesmo que está registrado no item aprovacao
-		Usuario aprovador = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
-		
-		
-		
 		
 		//Recuperando Objetos Aprovação, Instituicao, ItemAuditoria
 		try {
@@ -69,13 +63,12 @@ public class ExcluirInstituicao extends HttpServlet {
 		}
 		
 		//setando valores no ManegedBean
-		bean.setAdministradorValidador(aprovador);
 		bean.setInstituicao(instituicao);
 		bean.setItemAuditoria(itemAuditoria);
 		bean.setAprovacao(aprovacao);
 		bean.setRequisitor(itemAuditoria.getAutorAcao());
 		bean.setJustificativa(itemAuditoria.getNotas());
-		bean.Gerentes();	
+		bean.Gerentes(false);	
 		response.sendRedirect("restrito/validarExclusao.jsf");
 		
 	}

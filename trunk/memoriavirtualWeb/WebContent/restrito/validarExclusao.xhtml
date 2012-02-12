@@ -23,9 +23,9 @@
 						errorClass="erro"></h:message>
 				</div>
 				<div class="avisoexcluir">
-						<div class="mensagenavisoexcluir">
-							#{mensagens.excluirInstituicaoAviso}</div>	
-					</div>
+					<div class="mensagenavisoexcluir">
+						#{mensagens.excluirInstituicaoAviso}</div>
+				</div>
 				<h:form method="post" prependId="false">
 					<fieldset>
 
@@ -39,15 +39,15 @@
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoGerentes}</h:outputLabel>
-						<div id="tabeladiv">
-							<h:dataTable id="tabelagerente" var="gerente"
-								value="#{excluirInstituicaoMB.gerentesInstituicao}">
-								<h:column>
+							<div id="tabeladiv">
+								<h:dataTable id="tabelagerente" var="gerente"
+									value="#{excluirInstituicaoMB.gerentesInstituicao}">
+									<h:column>
 								#{gerente.nomeCompleto}
 									
 								</h:column>
-							</h:dataTable>
-						</div>
+								</h:dataTable>
+							</div>
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoJustificativa}</h:outputLabel>
@@ -60,11 +60,11 @@
 					<div class="botao">
 						<h:commandButton id="botaoExcluir"
 							value="#{mensagens.excluirInstituicaoBotaoAprovar}"
-							action="#{excluirInstituicaoMB.confirmarexcluirInstituicao}">
+							action="#{excluirInstituicaoMB.validarExclusaoInstituicao}">
 						</h:commandButton>
 						<h:commandButton id="botaoResetar"
 							value="#{mensagens.excluirInstituicaoBotaoNegar}"
-							action="#{editarInstituicaoMB.cancelar}">
+							action="#{excluirInstituicaoMB.negarExclusaoInstituicao}">
 						</h:commandButton>
 
 					</div>
