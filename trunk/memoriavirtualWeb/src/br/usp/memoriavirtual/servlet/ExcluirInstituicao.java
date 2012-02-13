@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.ExcluirInstituicaoMB;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -29,23 +30,23 @@ public class ExcluirInstituicao extends HttpServlet {
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
 	public void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException, ServletException {
 		
-		//Objeto Aprovação sera utilizado para testar a data de validade do pedido de exclusão
+		//Objeto Aprovaï¿½ï¿½o sera utilizado para testar a data de validade do pedido de exclusï¿½o
 		Aprovacao aprovacao = new Aprovacao();
-		//Objeto ItemAuditoria sera utilizado para recuperar o requerente do pedido de exclusão
+		//Objeto ItemAuditoria sera utilizado para recuperar o requerente do pedido de exclusï¿½o
 		ItemAuditoria itemAuditoria = new ItemAuditoria();
 		Instituicao instituicao = new Instituicao();
-		//parametros recuperados da URL, como chave estrangeira está embaralhado sera desenbaralhado
+		//parametros recuperados da URL, como chave estrangeira estï¿½ embaralhado sera desenbaralhado
 		String chaveEstrangeira = req.getParameter("chaveEstrangeira");
 		
 		
 		
-		//Antecipando a instancia do ManegedBean antes mesmo que a página esteja carregada
+		//Antecipando a instancia do ManegedBean antes mesmo que a pï¿½gina esteja carregada
 		FacesContext facesContext = FacesUtil.getFacesContext(req, response);
 		ELResolver resolver = facesContext.getApplication().getELResolver();   
 		ExcluirInstituicaoMB  bean = (ExcluirInstituicaoMB) resolver.getValue(facesContext.getELContext(), null, "excluirInstituicaoMB"); 
 		
 		
-		//Recuperando Objetos Aprovação, Instituicao, ItemAuditoria
+		//Recuperando Objetos Aprovaï¿½ï¿½o, Instituicao, ItemAuditoria
 		try {
 			instituicao = this.excluirInstituicaoEJB.getInstituicaoFalse(chaveEstrangeira);
 		} catch (ModeloException e) {
@@ -57,7 +58,7 @@ public class ExcluirInstituicao extends HttpServlet {
 		}
 		
 		try {
-			itemAuditoria = this.excluirInstituicaoEJB.getItemAuditoria(aprovacao.getChaveEstrangeira());
+			itemAuditoria = this.excluirInstituicaoEJB.getItemAuditoria(aprovacao.getChaveEstrangeira(),EnumTipoAcao.EXCLUIR_INSTITUICAO);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}

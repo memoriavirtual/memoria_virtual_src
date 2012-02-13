@@ -139,7 +139,15 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	}
 	
-	
+	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao){
+		Query query;
+		query = this.entityManager
+				.createQuery("DELETE  FROM Aprovacao a WHERE a = :aprovacao ");
+		query.setParameter("aprovacao", aprovacao);
+		query.executeUpdate();	
+		
+		
+	}
 	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao,
 			ItemAuditoria itemAuditoria){
 		Query query;
@@ -188,13 +196,13 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 
-	public ItemAuditoria getItemAuditoria(String pnome) throws ModeloException {
+	public ItemAuditoria getItemAuditoria(String pnome,EnumTipoAcao enumTipoAcao) throws ModeloException {
 		ItemAuditoria itemAuditoria;
 		Query query;
 		query = this.entityManager
 				.createQuery("SELECT a FROM ItemAuditoria a WHERE a.atributoSignificativo = :nome AND a.tipoAcao = :acao");
 		query.setParameter("nome", pnome);
-		query.setParameter("acao", EnumTipoAcao.EXCLUIR_INSTITUICAO);
+		query.setParameter("acao", enumTipoAcao);
 
 		try {
 			itemAuditoria = (ItemAuditoria) query.getSingleResult();

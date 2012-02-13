@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Remote;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -15,7 +16,7 @@ public interface ExcluirInstituicaoRemote{
 	
 	public List<Usuario> listarAdministradores() throws ModeloException;
 	public Instituicao getInstituicaoFalse(String pnome) throws ModeloException ;
-	public ItemAuditoria getItemAuditoria(String pnome) throws ModeloException;
+	public ItemAuditoria getItemAuditoria(String pnome,EnumTipoAcao enumTipoAcao) throws ModeloException;
 	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao, boolean b)throws ModeloException;
 	public void enviaremail(String Email,String assunto,String textoEmail);
 	public Aprovacao getAprovacao(String chave)
@@ -32,5 +33,5 @@ public interface ExcluirInstituicaoRemote{
 	throws ModeloException;
 	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao,
 			ItemAuditoria itemAuditoria);
-
+	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao);
 }

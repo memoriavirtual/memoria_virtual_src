@@ -17,13 +17,13 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 	
-	Date data = new Date();
+	
 	
 	
 	public void auditarExcluirInstituicao(Usuario autorAcao,
 			String atributoSignificativo, String justificativa) {
 		ItemAuditoria itemAuditoria = new ItemAuditoria();
-
+		Date data = new Date();
 		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
 		itemAuditoria.setAutorAcao(autorAcao);
 		itemAuditoria.setNotas(justificativa);
@@ -34,12 +34,12 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 	
 	
 	public void auditarAutorizarExcluirInstituicao(Usuario autorAcao,
-			String atributoSignificativo) {
+			String atributoSignificativo, String justificativa) {
 		ItemAuditoria itemAuditoria = new ItemAuditoria();
-
+		Date data = new Date();
 		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
 		itemAuditoria.setAutorAcao(autorAcao);
-		itemAuditoria.setNotas("");
+		itemAuditoria.setNotas(justificativa);
 		itemAuditoria.setTipoAcao(EnumTipoAcao.AUTORIZAR_EXCLUSAO);
 		itemAuditoria.setData(data);
 		entityManager.persist(itemAuditoria);

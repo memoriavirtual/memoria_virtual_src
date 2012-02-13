@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -121,28 +123,34 @@ public class ExcluirInstituicaoMB implements Serializable {
 		this.instituicoes = new ArrayList<Instituicao>();
 		this.listaAdministradores = new ArrayList<Usuario>();
 	}
-	
-	
-	
-	public String negarExclusaoInstituicao(){
-		this.administradorValidador =  (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
 
-		if(this.administradorValidador.getId().equals(this.aprovacao.getAprovador().getId())){
-			
-			try {
-				excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,false);
-				excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(this.aprovacao,this.itemAuditoria);
-				MensagensDeErro.getSucessMessage("excluirInstituicaoExcluida", "resultado");
-			} catch (ModeloException e) {
-				e.printStackTrace();
+
+
+	public String negarExclusaoInstituicao(){
+		if(this.instituicao.getNome() != null){
+			this.administradorValidador =  (Usuario) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap().get("usuario");
+
+			if(this.administradorValidador.getId().equals(this.aprovacao.getAprovador().getId())){
+				if(this.aprovacao.getExpiracao().after(new Date())){
+
+					try {
+						excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,false);
+						excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(this.aprovacao,this.itemAuditoria);
+						MensagensDeErro.getSucessMessage("excluirInstituicaoNegado", "resultado");
+					} catch (ModeloException e) {
+						e.printStackTrace();
+					}
+				}else{ 
+					MensagensDeErro.getErrorMessage("excluirInstituicaoErroData", "resultado");
+				}
+			}else{ 
+				MensagensDeErro.getErrorMessage("excluirInstituicaoErroUsuarioValidador", "resultado");
 			}
-			
-		}else{ 
-			MensagensDeErro.getErrorMessage("excluirInstituicaoErroUsuarioValidador", "resultado");
+			this.zerarManegedBean();
+		}else{
+			MensagensDeErro.getErrorMessage("excluirInstituicaoErrolistavazia", "resultado");
 		}
-		this.zerarManegedBean();
-		
 		return null;
 	}
 	/**
@@ -152,24 +160,32 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 */
 	public String validarExclusaoInstituicao() {
+		if(this.instituicao.getNome() != null){
 
-		this.administradorValidador =  (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
+			this.administradorValidador =  (Usuario) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap().get("usuario");
 
-		if(this.administradorValidador.getId().equals(this.aprovacao.getAprovador().getId())){
-			System.out.print("O usu�rio da se��o "+this.administradorValidador.getId()+"confere com o validador ..");
-
-			try {
-				excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,true);
-				System.out.print("A instituicao "+this.instituicao+"foi excluida ..");
-				MensagensDeErro.getSucessMessage("excluirInstituicaoExcluida", "resultado");
-			} catch (ModeloException e) {
-				e.printStackTrace();
+			if(this.administradorValidador.getId().equals(this.aprovacao.getAprovador().getId())){
+				if(this.aprovacao.getExpiracao().after(new Date())){
+					try {
+						this.excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,true);
+						//this.auditoriaFabricaEJB.auditarAutorizarExcluirInstituicao(this.aprovacao.getAprovador(), this.instituicao.getNome(),this.justificativa);
+						this.excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(aprovacao);
+						System.out.print("A instituicao "+this.instituicao+"foi excluida ..");
+						MensagensDeErro.getSucessMessage("excluirInstituicaoExcluida", "resultado");
+					} catch (ModeloException e) {
+						e.printStackTrace();
+					}
+				}else{ 
+					MensagensDeErro.getErrorMessage("excluirInstituicaoErroData", "resultado");
+				}
+			}else{
+				MensagensDeErro.getErrorMessage("excluirInstituicaoErroUsuarioValidador", "resultado");
 			}
+			this.zerarManegedBean();
 		}else{
-			MensagensDeErro.getErrorMessage("excluirInstituicaoErroUsuarioValidador", "resultado");
+			MensagensDeErro.getErrorMessage("excluirInstituicaoErrolistavazia", "resultado");
 		}
-		this.zerarManegedBean();
 		return null;
 	}
 
@@ -181,14 +197,20 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * @throws IOException
 	 */
 	public String enviarPedidoExclusao() throws IOException   {
-		if(booleanValidador()){
+		if(this.instituicao != new Instituicao()){
+
+			if(booleanValidador()){
+
+				Date dataValidade = new Date();   
+				int a = Integer.parseInt(this.validade,10);
 
 
-			SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
-			Date dataValidade = new Date();   
-			try {
-				this.getEmailAdminstrador(this.nomeValidador);
-				/*this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(this.nomeValidador),bundle.getString("excluirInstituicaoEmailTitulo"),
+				GregorianCalendar gc=new GregorianCalendar();
+				gc.add(GregorianCalendar.HOUR, 24*a);
+				dataValidade = gc.getTime();
+				try {
+					this.getEmailAdminstrador(this.nomeValidador);
+					/*this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(this.nomeValidador),bundle.getString("excluirInstituicaoEmailTitulo"),
 						bundle.getString("excluirInstituicaoEmailMensagem")+"\n"+"\n"
 						+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
 						+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
@@ -203,24 +225,27 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ this.instituicao.getNome()
 						+"\n\n"
 						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");*/
-				//registra a autoria do pedido de exclus�o
-				this.auditoriaFabricaEJB.auditarExcluirInstituicao(this.requisitor, this.instituicao.getNome(),this.justificativa);
-				//registra um objeto Aprova��o
-				this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
-				//marca a institui��o a ser excluida para que a mesma n�o seja mais utilizada 
-				this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao,false);
+					//registra a autoria do pedido de exclus�o
+					this.auditoriaFabricaEJB.auditarExcluirInstituicao(this.requisitor, this.instituicao.getNome(),this.justificativa);
+					//registra um objeto Aprova��o
+					this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
+					//marca a institui��o a ser excluida para que a mesma n�o seja mais utilizada 
+					this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao,false);
 
-				//mensagem de sucesso 
-				MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
-						"resultado");
-				/*} catch (MessagingException e) {
+					//mensagem de sucesso 
+					MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
+							"resultado");
+					/*} catch (MessagingException e) {
 				e.printStackTrace();
-				 */} catch (ModeloException e) {
-					 e.printStackTrace();
-				 }
+					 */} catch (ModeloException e) {
+						 e.printStackTrace();
+					 }
 
+			}
+			this.zerarManegedBean();
+		}else{
+			MensagensDeErro.getErrorMessage("excluirInstituicaoErrolistavazia", "resultado");
 		}
-		this.zerarManegedBean();
 		return null;
 	}
 
@@ -425,8 +450,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	public String confirmarexcluirInstituicao() {
-		if(validateJustificativa ()){
-			return "confirmarexcluir";
+		if(this.instituicao.getNome() != null){
+			if(validateJustificativa ()){
+				return "confirmarexcluir";
+			}
+		}else{
+			MensagensDeErro.getErrorMessage("excluirInstituicaoErrolistavazia", "resultado");
 		}
 		return null;
 	}
@@ -551,7 +580,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		diasValidade.add(new SelectItem(null, bundle.getString("excluirInstituicaoSelecioneValidadE")));
 
 		for (int i = 1; i<= 30; i++) {
-			diasValidade.add(new SelectItem(i, i + " dias"));
+			diasValidade.add(new SelectItem(i, i + "   dias"));
 		}
 		return diasValidade;
 	}
