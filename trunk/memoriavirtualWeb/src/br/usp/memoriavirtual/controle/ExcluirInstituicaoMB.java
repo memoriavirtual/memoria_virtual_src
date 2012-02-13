@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -169,7 +170,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 				if(this.aprovacao.getExpiracao().after(new Date())){
 					try {
 						this.excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,true);
-						//this.auditoriaFabricaEJB.auditarAutorizarExcluirInstituicao(this.aprovacao.getAprovador(), this.instituicao.getNome(),this.justificativa);
+						this.auditoriaFabricaEJB.auditarAutorizarExcluirInstituicao(this.aprovacao.getAprovador(), this.instituicao.getNome(),this.justificativa);
 						this.excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(aprovacao);
 						System.out.print("A instituicao "+this.instituicao+"foi excluida ..");
 						MensagensDeErro.getSucessMessage("excluirInstituicaoExcluida", "resultado");
@@ -204,13 +205,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 				Date dataValidade = new Date();   
 				int a = Integer.parseInt(this.validade,10);
 
-
+				DateFormat formatoData = DateFormat.getDateInstance();
 				GregorianCalendar gc=new GregorianCalendar();
 				gc.add(GregorianCalendar.HOUR, 24*a);
 				dataValidade = gc.getTime();
 				try {
-					this.getEmailAdminstrador(this.nomeValidador);
-					/*this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(this.nomeValidador),bundle.getString("excluirInstituicaoEmailTitulo"),
+					
+					//this.getEmailAdminstrador(this.nomeValidador);
+					this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(this.nomeValidador),bundle.getString("excluirInstituicaoEmailTitulo"),
 						bundle.getString("excluirInstituicaoEmailMensagem")+"\n"+"\n"
 						+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
 						+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
@@ -224,7 +226,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 						+ "chaveEstrangeira="
 						+ this.instituicao.getNome()
 						+"\n\n"
-						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");*/
+						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
 					//registra a autoria do pedido de exclus�o
 					this.auditoriaFabricaEJB.auditarExcluirInstituicao(this.requisitor, this.instituicao.getNome(),this.justificativa);
 					//registra um objeto Aprova��o
@@ -235,9 +237,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 					//mensagem de sucesso 
 					MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
 							"resultado");
-					/*} catch (MessagingException e) {
+					} catch (MessagingException e) {
 				e.printStackTrace();
-					 */} catch (ModeloException e) {
+					 } catch (ModeloException e) {
 						 e.printStackTrace();
 					 }
 
