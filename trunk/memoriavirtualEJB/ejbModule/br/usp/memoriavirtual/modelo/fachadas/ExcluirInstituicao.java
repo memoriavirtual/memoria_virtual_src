@@ -23,8 +23,14 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 
+/**
+ * @author MAC
+ */
+
 @Singleton (mappedName = "ExcluirInstituicao")
 public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
+	
+
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;

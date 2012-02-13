@@ -11,8 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
-public class FacesUtil {
 
+
+/**
+ * @author MAC
+ */
+public class FacesUtil {
+	/**
+	 * @param request
+	 * @param response
+	 * @return
+	 */
     // Getters -----------------------------------------------------------------------------------
 
     public static FacesContext getFacesContext(

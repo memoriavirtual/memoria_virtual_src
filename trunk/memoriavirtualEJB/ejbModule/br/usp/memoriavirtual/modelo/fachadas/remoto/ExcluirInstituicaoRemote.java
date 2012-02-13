@@ -11,8 +11,14 @@ import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
+
+/**
+ * @author MAC
+ */
 @Remote
 public interface ExcluirInstituicaoRemote{
+	
+	
 	
 	public List<Usuario> listarAdministradores() throws ModeloException;
 	public Instituicao getInstituicaoFalse(String pnome) throws ModeloException ;

@@ -4,8 +4,17 @@ import javax.ejb.Remote;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
+
+/**
+ * @author MAC
+ */
+
 @Remote
 public interface AuditoriaFabricaRemote {
+	
+	
+	
+	
 	/**
 	 * M�todo insere uma linha na tabela ItemAuditoria, referente a o pedido
 	 * de exclus�o da institui��o

@@ -11,8 +11,16 @@ import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 
+/**
+ * @author MAC
+ */
+
+
 @Singleton(mappedName = "AuditoriaFabrica")
 public class AuditoriaFabrica implements AuditoriaFabricaRemote {
+	
+	
+
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
