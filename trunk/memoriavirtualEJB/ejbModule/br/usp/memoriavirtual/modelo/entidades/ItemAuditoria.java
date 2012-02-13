@@ -3,18 +3,26 @@ package br.usp.memoriavirtual.modelo.entidades;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@SequenceGenerator(name = "ITEMAUDITORIA_ID", sequenceName = "ITEMAUDITORIA_SEQ", allocationSize = 1)
 public class ItemAuditoria implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3086869717610845286L;
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITEMAUDITORIA_ID")
+	private Long id;
+	
 	@Temporal(TemporalType.DATE)
 	Date data;
 	String atributoSignificativo;
@@ -94,6 +102,14 @@ public class ItemAuditoria implements java.io.Serializable {
 	 */
 	public void setTipoAcao(EnumTipoAcao tipoAcao) {
 		this.tipoAcao = tipoAcao;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
