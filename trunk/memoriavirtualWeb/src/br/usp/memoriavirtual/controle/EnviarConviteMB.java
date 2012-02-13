@@ -274,10 +274,7 @@ public class EnviarConviteMB {
 		if (this.instituicao == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_instituicaovazia",
 					"validacaoInstituicao");
-		} else {
-			MensagensDeErro.getErrorMessage("enviarconvite_title",
-					"validacaoInstituicao");
-		}
+		} 
 	}
 
 }
