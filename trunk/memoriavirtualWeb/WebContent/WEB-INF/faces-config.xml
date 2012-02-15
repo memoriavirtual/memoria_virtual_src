@@ -133,6 +133,10 @@
 			<from-outcome>cancelar</from-outcome>
 			<to-view-id>/restrito/index.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>restrito</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>

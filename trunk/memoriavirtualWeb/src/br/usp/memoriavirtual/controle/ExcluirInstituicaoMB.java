@@ -68,6 +68,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private List<Usuario> gerentesInstituicao = new ArrayList<Usuario>();
 	private Usuario gerente = new Usuario();
 	private boolean flagGerente = false;
+	private boolean flagAcesso = false;
 
 	//do pedido de exclus�o
 	private Usuario requisitor = (Usuario) FacesContext.getCurrentInstance()
@@ -105,6 +106,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		this.gerentesInstituicao = new ArrayList<Usuario>();
 		this.gerente = new Usuario();
 		this.flagGerente = false;
+		this.flagAcesso = false;
 
 		//do pedido de exclus�o
 		this.requisitor = (Usuario) FacesContext.getCurrentInstance()
@@ -134,7 +136,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 				if(this.aprovacao.getExpiracao().after(new Date())){
 
 					try {
-						excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,false);
+						excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,false,this.flagAcesso);
 						excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(this.aprovacao,this.itemAuditoria);
 						MensagensDeErro.getSucessMessage("excluirInstituicaoNegado", "resultado");
 					} catch (ModeloException e) {
@@ -167,7 +169,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 			if(this.administradorValidador.getId().equals(this.aprovacao.getAprovador().getId())){
 				if(this.aprovacao.getExpiracao().after(new Date())){
 					try {
-						this.excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,true);
+						this.excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,true,this.flagAcesso);
 						this.auditoriaFabricaEJB.auditarAutorizarExcluirInstituicao(this.aprovacao.getAprovador(), this.instituicao.getNome(),this.justificativa);
 						this.excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(aprovacao);
 						System.out.print("A instituicao "+this.instituicao+"foi excluida ..");
@@ -208,38 +210,38 @@ public class ExcluirInstituicaoMB implements Serializable {
 				gc.add(GregorianCalendar.HOUR, 24*a);
 				dataValidade = gc.getTime();
 				try {
-					
+
 					//this.getEmailAdminstrador(this.nomeValidador);
 					this.memoriaVirtualEJB.enviarEmail(this.getEmailAdminstrador(this.nomeValidador),bundle.getString("excluirInstituicaoEmailTitulo"),
-						bundle.getString("excluirInstituicaoEmailMensagem")+"\n"+"\n"
-						+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
-						+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
-						+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()+"\n"
-						+ bundle.getString("excluirInstituicaoRequisitor") + this.getRequisitor()+"\n"
-						+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
-						+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
-						+ "http://"
-						+ memoriaVirtualEJB.getEnderecoServidor()
-						+ "/excluir?"
-						+ "chaveEstrangeira="
-						+ this.instituicao.getNome()
-						+"\n\n"
-						+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
+							bundle.getString("excluirInstituicaoEmailMensagem")+"\n"+"\n"
+									+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
+									+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
+									+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()+"\n"
+									+ bundle.getString("excluirInstituicaoRequisitor") + this.getRequisitor()+"\n"
+									+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
+									+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
+									+ "http://"
+									+ memoriaVirtualEJB.getEnderecoServidor()
+									+ "/excluir?"
+									+ "chaveEstrangeira="
+									+ this.instituicao.getNome()
+									+"\n\n"
+									+ bundle.getString("excluirInstituicaoEmailMensagemFim")+"\n"+"\n");
 					//registra a autoria do pedido de exclus�o
 					this.auditoriaFabricaEJB.auditarExcluirInstituicao(this.requisitor, this.instituicao.getNome(),this.justificativa);
 					//registra um objeto Aprova��o
 					this.excluirInstituicaoEJB.registrarAprovacao(this.administradorValidador,this.instituicao,dataValidade);
 					//marca a institui��o a ser excluida para que a mesma n�o seja mais utilizada 
-					this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao,false);
+					this.excluirInstituicaoEJB.marcarInstituicaoExcluida(this.instituicao,false,this.flagAcesso);
 
 					//mensagem de sucesso 
 					MensagensDeErro.getSucessMessage("excluirInstituicaoEnviandoEmail",
 							"resultado");
-					} catch (MessagingException e) {
-				e.printStackTrace();
-					 } catch (ModeloException e) {
-						 e.printStackTrace();
-					 }
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				} catch (ModeloException e) {
+					e.printStackTrace();
+				}
 
 			}
 			this.zerarManegedBean();
@@ -289,8 +291,17 @@ public class ExcluirInstituicaoMB implements Serializable {
 				{
 					this.gerentesInstituicao.add(a.getUsuario());
 				}
-				this.gerente = this.gerentesInstituicao.get(0);
+				if(this.gerentesInstituicao.isEmpty()){
+					Usuario e = new Usuario();
+					e.setNomeCompleto(this.bundle.getString("excluirInstituicaoSemGerente"));
+					this.gerentesInstituicao.add(e);
+					this.flagAcesso = false;
+				}else{
+					this.gerente = this.gerentesInstituicao.get(0);
+					this.flagAcesso = true;
+				}
 				this.flagGerente = true;
+
 			}
 			catch (ModeloException e){
 				e.printStackTrace();
@@ -600,19 +611,23 @@ public class ExcluirInstituicaoMB implements Serializable {
 			for(Usuario c : this.listaAdministradores) {   
 
 				for(Usuario x : this.gerentesInstituicao) {   
-					if(c.getId().compareTo( x.getId()) ==  0){
-						flag = false;
+					if(this.flagAcesso){
+						if(c.getId().compareTo( x.getId()) ==  0){
+							flag = false;
+						}
 					}
-				}
-				if(flag && (c.getId().compareTo( this.requisitor.getId()) !=  0)){
-					validadoreslista.add(new String(c.getNomeCompleto()));
+					if(flag && (c.getId().compareTo( this.requisitor.getId()) !=  0)){
+						validadoreslista.add(new String(c.getNomeCompleto()));
+					}
 				}
 				flag = true;
 
 			}
-			for(Usuario x : this.gerentesInstituicao) {   
-				if(x.getId().compareTo( this.requisitor.getId()) !=  0){
-					validadoreslista.add(new String(x.getNomeCompleto()));  
+			if(this.flagAcesso){
+				for(Usuario x : this.gerentesInstituicao) {   
+					if(x.getId().compareTo( this.requisitor.getId()) !=  0){
+						validadoreslista.add(new String(x.getNomeCompleto()));  
+					}
 				}
 			}
 			this.listaAdministradores.clear();

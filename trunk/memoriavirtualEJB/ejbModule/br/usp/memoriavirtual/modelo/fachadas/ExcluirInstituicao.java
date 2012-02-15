@@ -29,7 +29,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 @Singleton (mappedName = "ExcluirInstituicao")
 public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
-	
+
 
 
 	@PersistenceContext(unitName = "memoriavirtual")
@@ -144,15 +144,15 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 
 	}
-	
+
 	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao){
 		Query query;
 		query = this.entityManager
 				.createQuery("DELETE  FROM Aprovacao a WHERE a = :aprovacao ");
 		query.setParameter("aprovacao", aprovacao);
 		query.executeUpdate();	
-		
-		
+
+
 	}
 	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao,
 			ItemAuditoria itemAuditoria){
@@ -165,27 +165,28 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 				.createQuery("DELETE  FROM ItemAuditoria a WHERE a = :itemAuditoria ");
 		query.setParameter("itemAuditoria", itemAuditoria);
 		query.executeUpdate();
-		
+
 	}
-	
-	public void validarExclusaoInstituicao(Instituicao instituicao,boolean acao)
+
+	public void validarExclusaoInstituicao(Instituicao instituicao,boolean acao,boolean flagAcesso)
 			throws ModeloException {
 		//Se acao verdadeira a instituicao e definitivamente excluida do sistema
 		if(acao){
 			instituicao = this.entityManager.find(Instituicao.class, instituicao.getId());
-			Query query;
-			query = this.entityManager
-					.createQuery("DELETE  FROM Acesso a WHERE a.instituicao = :instituicao ");
-			query.setParameter("instituicao", instituicao);
-			query.executeUpdate();		
-
+			if(flagAcesso){
+				Query query;
+				query = this.entityManager
+						.createQuery("DELETE  FROM Acesso a WHERE a.instituicao = :instituicao ");
+				query.setParameter("instituicao", instituicao);
+				query.executeUpdate();		
+			}
 			try {
 				this.entityManager.remove(instituicao);
 			} catch (Exception e) {
 				throw new ModeloException(e);
 			}
 		}else{//Caso Acao falso a instituicao volta a funcionar normalmente
-			this.marcarInstituicaoExcluida(instituicao,! acao);
+			this.marcarInstituicaoExcluida(instituicao,! acao,flagAcesso);
 		}
 	}
 	public void enviaremail(String Email,String assunto,String textoEmail){
@@ -232,7 +233,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		return instituicao;
 	}
 
-	public void marcarInstituicaoExcluida(Instituicao instituicao,boolean marca)
+	public void marcarInstituicaoExcluida(Instituicao instituicao,boolean marca,boolean flagAcesso)
 			throws ModeloException{
 		Query query;
 		query = this.entityManager
@@ -240,12 +241,13 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		query.setParameter("id", instituicao.getId());
 		query.setParameter("validade", marca );
 		query.executeUpdate();
-		query = this.entityManager
-				.createQuery("UPDATE Acesso a SET a.validade = :validade WHERE  a.instituicao = :id");
-		query.setParameter("id", instituicao);
-		query.setParameter("validade", marca );
-		query.executeUpdate();
-
+		if(flagAcesso){
+			query = this.entityManager
+					.createQuery("UPDATE Acesso a SET a.validade = :validade WHERE  a.instituicao = :id");
+			query.setParameter("id", instituicao);
+			query.setParameter("validade", marca );
+			query.executeUpdate();
+		}
 	}
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade){

@@ -31,11 +31,11 @@ public interface ExcluirInstituicaoRemote{
 	throws ModeloException;
 	public Usuario getRequisitor(String id)
 	throws ModeloException;
-	public void validarExclusaoInstituicao(Instituicao instituicao, boolean b)
+	public void validarExclusaoInstituicao(Instituicao instituicao, boolean acao,boolean flagAcesso)
 	throws ModeloException;
 	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade);
-	public void marcarInstituicaoExcluida(Instituicao instituicao, boolean b)
+	public void marcarInstituicaoExcluida(Instituicao instituicao, boolean acao,boolean flagAcesso)
 	throws ModeloException;
 	public void excluirAprovacaoItemAuditoria(Aprovacao aprovacao,
 			ItemAuditoria itemAuditoria);
