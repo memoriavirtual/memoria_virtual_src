@@ -4,20 +4,18 @@ package br.usp.memoriavirtual.modelo.fachadas;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.entidades.Acesso;
-import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
-
-
 import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
@@ -27,7 +25,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
  * @author MAC
  */
 
-@Singleton (mappedName = "ExcluirInstituicao")
+@Stateless (mappedName = "ExcluirInstituicao")
 public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 
