@@ -65,8 +65,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> getAdministradores(Usuario usuario)
-			throws ModeloException {
+	public List<Usuario> getAdministradores(Usuario usuario) throws ModeloException {
 		List<Usuario> administradores = new ArrayList<Usuario>();
 
 		Query query = entityManager
@@ -82,8 +81,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> listarUsuarios(String nome, Usuario requerente,
-			Grupo grupo) throws ModeloException {
+	public List<Usuario> listarUsuarios(String nome, Usuario requerente, Grupo grupo) throws ModeloException {
 
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
@@ -114,8 +112,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 					// Os usuarios listados não podem ser administradores, não
 					// podem ser repetidos, nem podem ser o proprio usuario que
 					// faz a requisicao
-					if (!a.getUsuario().isAdministrador()
-							&& !usuarios.contains(a.getUsuario())
+					if (!a.getUsuario().isAdministrador() && !usuarios.contains(a.getUsuario())
 							&& (a.getUsuario().getId() != requerente.getId())) {
 						usuarios.add(a.getUsuario());
 					}
@@ -128,11 +125,9 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	}
 
 	@Override
-	public void editarCadastro(Usuario usuario, String nomeCompleto,
-			String telefone) throws ModeloException {
+	public void editarCadastro(Usuario usuario, String nomeCompleto, String telefone) throws ModeloException {
 
-		Usuario usuarioAlterado = entityManager.find(usuario.getClass(),
-				usuario.getId());
+		Usuario usuarioAlterado = entityManager.find(usuario.getClass(), usuario.getId());
 
 		usuarioAlterado.setNomeCompleto(nomeCompleto);
 		usuarioAlterado.setTelefone(telefone);
@@ -151,16 +146,15 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	}
 
 	@Override
-	public void editarAcessos(String aprovadorId, List<Acesso> acessos,
-			Date data, Date expiracao) throws ModeloException {
+	public void editarAcessos(String aprovadorId, List<Acesso> acessos, Date data, Date expiracao)
+			throws ModeloException {
 
 		try {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
 
 			for (Acesso a : acessos) {
 
-				SimpleDateFormat formatoData = new SimpleDateFormat(
-						"dd/MM/yyyy HH:mm:ss:SSS");
+				SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSS");
 
 				String dataString = formatoData.format(data);
 				data = formatoData.parse(dataString);
@@ -180,11 +174,9 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				aprovacao.setExpiracao(expiracao);
 				aprovacao.setTabelaEstrangeira("Acesso");
 
-				Instituicao i = entityManager.find(Instituicao.class, a
-						.getInstituicao().getNome());
+				Instituicao i = entityManager.find(Instituicao.class, a.getInstituicao().getNome());
 				Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
-				Usuario u = entityManager.find(Usuario.class, a.getUsuario()
-						.getId());
+				Usuario u = entityManager.find(Usuario.class, a.getUsuario().getId());
 
 				Acesso b = new Acesso();
 				b.setGrupo(g);
@@ -195,20 +187,14 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				entityManager.persist(b);
 				entityManager.persist(aprovacao);
 
-				String dataEmbaralhado = memoriaVirtualEJB
-						.embaralhar(dataString);
-				String aprovadorEmbaralhado = memoriaVirtualEJB
-						.embaralhar(aprovadorId);
+				String dataEmbaralhado = memoriaVirtualEJB.embaralhar(dataString);
+				String aprovadorEmbaralhado = memoriaVirtualEJB.embaralhar(aprovadorId);
 				String acessoEmbaralhado = memoriaVirtualEJB.embaralhar(acesso);
 
-				String link = memoriaVirtualEJB.getEnderecoServidor()
-						.getCanonicalHostName()
-						+ "/editarcadastrousuario.jsf?Data="
-						+ dataEmbaralhado
-						+ "&Aprovador="
-						+ aprovadorEmbaralhado
-						+ "&Acesso="
-						+ acessoEmbaralhado;
+				String link = memoriaVirtualEJB.getURLServidor()
+
+				+ "/editarcadastrousuario.jsf?Data=" + dataEmbaralhado + "&Aprovador=" + aprovadorEmbaralhado
+						+ "&Acesso=" + acessoEmbaralhado;
 
 				System.out.println(link);
 

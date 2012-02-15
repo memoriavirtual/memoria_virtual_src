@@ -1,6 +1,5 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
-import java.io.IOException;
 import java.util.Random;
 
 import javax.ejb.EJB;
@@ -45,28 +44,21 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 				String assunto = "Recuperação de senha do Memoria Virtual";
 				String mensagem = "Você foi solicitou uma nova senha do Memoria Virtual.  "
 						+ "Para cadastrar uma nova senha, entre no link a seguir: "
-						+ this.memoriaVirtual.getEnderecoServidor().getCanonicalHostName()							
-						+ "/cadastrarnovasenha.jsf?email="
-						+ email
-						+ "&validacao="
-						+ usuario.getSenha();
+						+ this.memoriaVirtual.getURLServidor() + "/cadastrarnovasenha.jsf?email=" + email
+						+ "&validacao=" + usuario.getSenha();
 				this.memoriaVirtual.enviarEmail(email, assunto, mensagem);
-			} catch (IOException e) {
-				e.printStackTrace();
-				throw new ModeloException("Erro no servidor!");
 			} catch (MessagingException e) {
 				e.printStackTrace();
 				throw new ModeloException("Erro ao enviar o email!");
 			}
-			
+
 			throw new ModeloException("Email enviado com sucesso!");
 
 		} else
 			throw new ModeloException("Email não encontrado!");
 	}
 
-	public void cadastrarNovaSenha(String email, String token, String novaSenha)
-			throws ModeloException {
+	public void cadastrarNovaSenha(String email, String token, String novaSenha) throws ModeloException {
 		Usuario usuario = null;
 
 		usuario = recuperarUsuario(email, token);
@@ -81,13 +73,12 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 	 * 
 	 * @param email
 	 * @return Usuario com o email fornecido
-	 * @throws ModeloException 
+	 * @throws ModeloException
 	 */
 	private Usuario recuperarUsuario(String email) throws ModeloException {
 		Usuario usuario = null;
 
-		Query query = this.entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+		Query query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
 		query.setParameter("email", email);
 		try {
 			usuario = (Usuario) query.getSingleResult();
@@ -101,10 +92,9 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 	 * 
 	 * @param email
 	 * @param senha
-	 * @return Usuario com o email e senha fornecidos (A senha sera comparada
-	 *         com a senha armazenada no banco, sem calcular hash, pois é apenas
-	 *         um token para a recuperçao da senha)
-	 * @throws ModeloException 
+	 * @return Usuario com o email e senha fornecidos (A senha sera comparada com a senha armazenada no banco, sem
+	 *         calcular hash, pois é apenas um token para a recuperçao da senha)
+	 * @throws ModeloException
 	 * 
 	 */
 	private Usuario recuperarUsuario(String email, String senha) throws ModeloException {

@@ -1,12 +1,9 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
@@ -15,6 +12,9 @@ import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -31,7 +31,6 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 @Singleton(mappedName = "MemoriaVirtual")
 public class MemoriaVirtual implements MemoriaVirtualRemote {
 
-	private static InetAddress enderecoServidor = null;
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 	@Resource(name = "mail/memoriavirtual")
@@ -45,32 +44,26 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * Retorna o endereï¿½o fï¿½sico do servidor.
-	 * 
-	 * @throws IOException
+	 * Retorna o endereço do servidor.
 	 * 
 	 */
-	public InetAddress getEnderecoServidor() throws IOException {
+	public String getURLServidor() throws ModeloException {
 
-		if (enderecoServidor == null) {
-			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-
-			while (interfaces.hasMoreElements()) {
-				NetworkInterface interfaceRede = (NetworkInterface) interfaces.nextElement();
-				if (interfaceRede.isUp()) {
-					Enumeration<InetAddress> enderecosRede = interfaceRede.getInetAddresses();
-					while (enderecosRede.hasMoreElements()) {
-						InetAddress enderecoRede = (InetAddress) enderecosRede.nextElement();
-						if (enderecoRede.isReachable(10) && !enderecoRede.isLoopbackAddress()
-								&& !enderecoRede.isAnyLocalAddress()) {
-							enderecoServidor = enderecoRede;
-							return enderecoServidor;
-						}
-					}
-				}
-			}
+		Context context = null;
+		try {
+			context = new InitialContext();
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
 		}
-		return enderecoServidor;
+		Properties propriedades = null;
+		try {
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}		
+		return (String) propriedades.get("hostname");
 	}
 
 	public boolean verificarDisponibilidadeIdUsuario(String id) {
@@ -136,7 +129,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	 * @param mensagemOriginal
 	 * @return
 	 */
-	public  String embaralhar(String mensagemOriginal) {
+	public String embaralhar(String mensagemOriginal) {
 
 		String msgNova = "";
 
@@ -177,19 +170,22 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	/**
 	 * listarInstituicoes(pnome, grupo, usuario)
-	 * @param String pnome todo ou parte do nome da instituicao a ser procurada
-	 * @param Grupo grupo Grupo do usuario que faz o pedido
-	 * @param Usuario usuario usuario que faz o pedido
-	 * @return List<Instituicao>  Lista de instituicoes cujo nome comeca com pnome, e podem ser acessadas pelo 
+	 * 
+	 * @param String
+	 *            pnome todo ou parte do nome da instituicao a ser procurada
+	 * @param Grupo
+	 *            grupo Grupo do usuario que faz o pedido
+	 * @param Usuario
+	 *            usuario usuario que faz o pedido
+	 * @return List<Instituicao> Lista de instituicoes cujo nome comeca com pnome, e podem ser acessadas pelo
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Instituicao> listarInstituicoes(String pnome,
-			Grupo grupo, Usuario usuario) {
+	public List<Instituicao> listarInstituicoes(String pnome, Grupo grupo, Usuario usuario) {
 		List<Instituicao> ins = new ArrayList<Instituicao>();
 		Query query;
 
 		query = entityManager
-		.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like nome% ");
+				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like nome% ");
 		query.setParameter("nome", pnome);
 		query.setParameter("grupo", grupo);
 		query.setParameter("usuario", usuario);
@@ -213,8 +209,9 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	public List<Instituicao> listarInstituicoes(String pnome) {
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 		Query query;
-		if(!(pnome =="")){
-			query = entityManager.createQuery("SELECT a FROM Instituicao a  WHERE a.validade = TRUE AND a.nome LIKE :padrao ORDER BY a.nome");
+		if (!(pnome == "")) {
+			query = entityManager
+					.createQuery("SELECT a FROM Instituicao a  WHERE a.validade = TRUE AND a.nome LIKE :padrao ORDER BY a.nome");
 
 			query.setParameter("padrao", "%" + pnome + "%");
 			try {

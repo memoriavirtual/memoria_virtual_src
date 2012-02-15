@@ -221,7 +221,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 									+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
 									+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
 									+ "http://"
-									+ memoriaVirtualEJB.getEnderecoServidor()
+									+ memoriaVirtualEJB.getURLServidor()
 									+ "/excluir?"
 									+ "chaveEstrangeira="
 									+ this.instituicao.getNome()
