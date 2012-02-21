@@ -217,7 +217,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 									+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
 									+ bundle.getString("excluirInstituicaoGerentes") + this.gerente.getNomeCompleto()+"\n"
 									+ bundle.getString("excluirInstituicaoJustificativa") + this.getJustificativa()+"\n"
-									+ bundle.getString("excluirInstituicaoRequisitor") + this.getRequisitor()+"\n"
+									+ bundle.getString("excluirInstituicaoRequisitor") + this.getRequisitor().getNomeCompleto()+"\n"
 									+ bundle.getString("excluirInstituicaoValidade") + formatoData.format(dataValidade)+"\n"
 									+ bundle.getString("excluirInstituicaoEmilMensagemURL")+"\n"+"\n"
 									+ "http://"
@@ -241,6 +241,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 					e.printStackTrace();
 				} catch (ModeloException e) {
 					e.printStackTrace();
+					e.getCause();
 				}
 
 			}
@@ -281,7 +282,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * M�todo apenas transforma um lista de acessos em uma lista de usuarios
 	 * e seta como gerente da instituicao o primeiro usuario da lista
 	 */
-	public void Gerentes(boolean b){
+	public void listarGerentes(boolean b){
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		if(!this.flagGerente){
 			try{
@@ -339,14 +340,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 		}
 	}
 	/**
-	 * @param pinstituicao
+	 * @param instituicao
 	 * Seleciona uma institui��o escolhida na lista
 	 */
-	public String selecionarInstituicoes ( Instituicao pinstituicao ){ 
+	public String selecionarInstituicoes ( Instituicao instituicao ){ 
 		this.flagGerente = false;
 		this.gerentesInstituicao.clear();
-		this.setNome(pinstituicao.getNome());
-		this.setInstituicao(pinstituicao);
+		this.setNome(instituicao.getNome());
+		this.setInstituicao(instituicao);
 		this.flagInstituicao = true;
 		this.instituicoes.clear();
 		return null;
@@ -367,7 +368,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 			}
 		}
 		if ( validateValidade() && this.flagInstituicao){
-			this.Gerentes(true);
+			this.listarGerentes(true);
 			return "Instselecionada";
 		}else{	
 			if(!this.flagInstituicao){
