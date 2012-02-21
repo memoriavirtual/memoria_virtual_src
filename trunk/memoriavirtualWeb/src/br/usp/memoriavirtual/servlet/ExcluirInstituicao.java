@@ -15,7 +15,6 @@ import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
-import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
@@ -69,7 +68,7 @@ public class ExcluirInstituicao extends HttpServlet {
 		bean.setAprovacao(aprovacao);
 		bean.setRequisitor(itemAuditoria.getAutorAcao());
 		bean.setJustificativa(itemAuditoria.getNotas());
-		bean.Gerentes(false);	
+		bean.listarGerentes(false);	
 		response.sendRedirect("restrito/validarExclusao.jsf");
 		
 	}
