@@ -49,7 +49,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>EditarCadastroUsuario</servlet-name>
-		<url-pattern>/EditarCadastroUsuario</url-pattern>
+		<url-pattern>/editarcadastrousuario</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<description>Servlet para exclusao de instituicao</description>

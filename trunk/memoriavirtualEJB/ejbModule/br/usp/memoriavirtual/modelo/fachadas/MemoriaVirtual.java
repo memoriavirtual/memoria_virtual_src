@@ -44,7 +44,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * Retorna o endereço do servidor.
+	 * Retorna o endereï¿½o do servidor.
 	 * 
 	 */
 	public String getURLServidor() throws ModeloException {

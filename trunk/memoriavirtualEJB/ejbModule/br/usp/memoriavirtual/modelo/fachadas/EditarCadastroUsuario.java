@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -65,7 +64,8 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> getAdministradores(Usuario usuario) throws ModeloException {
+	public List<Usuario> getAdministradores(Usuario usuario)
+			throws ModeloException {
 		List<Usuario> administradores = new ArrayList<Usuario>();
 
 		Query query = entityManager
@@ -81,7 +81,8 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> listarUsuarios(String nome, Usuario requerente, Grupo grupo) throws ModeloException {
+	public List<Usuario> listarUsuarios(String nome, Usuario requerente,
+			Grupo grupo) throws ModeloException {
 
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
@@ -112,7 +113,8 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 					// Os usuarios listados não podem ser administradores, não
 					// podem ser repetidos, nem podem ser o proprio usuario que
 					// faz a requisicao
-					if (!a.getUsuario().isAdministrador() && !usuarios.contains(a.getUsuario())
+					if (!a.getUsuario().isAdministrador()
+							&& !usuarios.contains(a.getUsuario())
 							&& (a.getUsuario().getId() != requerente.getId())) {
 						usuarios.add(a.getUsuario());
 					}
@@ -125,9 +127,11 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	}
 
 	@Override
-	public void editarCadastro(Usuario usuario, String nomeCompleto, String telefone) throws ModeloException {
+	public void editarCadastro(Usuario usuario, String nomeCompleto,
+			String telefone) throws ModeloException {
 
-		Usuario usuarioAlterado = entityManager.find(usuario.getClass(), usuario.getId());
+		Usuario usuarioAlterado = entityManager.find(usuario.getClass(),
+				usuario.getId());
 
 		usuarioAlterado.setNomeCompleto(nomeCompleto);
 		usuarioAlterado.setTelefone(telefone);
@@ -146,15 +150,16 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	}
 
 	@Override
-	public void editarAcessos(String aprovadorId, List<Acesso> acessos, Date data, Date expiracao)
-			throws ModeloException {
+	public void editarAcessos(String aprovadorId, List<Acesso> acessos,
+			Date data, Date expiracao) throws ModeloException {
 
 		try {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
 
 			for (Acesso a : acessos) {
 
-				SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSS");
+				SimpleDateFormat formatoData = new SimpleDateFormat(
+						"dd/MM/yyyy HH:mm:ss:SSS");
 
 				String dataString = formatoData.format(data);
 				data = formatoData.parse(dataString);
@@ -162,11 +167,22 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String expiracaoString = formatoData.format(expiracao);
 				expiracao = formatoData.parse(expiracaoString);
 
-				String grupo = a.getGrupo().getId();
-				String usuario = a.getUsuario().getId();
-				String instituicao = a.getInstituicao().getNome();
+				// Buscar no banco os objetos corretos para instanciar o aceso
+				Query q = entityManager
+						.createQuery("SELECT i FROM Instituicao i WHERE i.nome = :nome");
+				q.setParameter("nome", a.getInstituicao().getNome());
+				Instituicao i = (Instituicao) q.getSingleResult();
+				Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
+				Usuario u = entityManager.find(Usuario.class, a.getUsuario()
+						.getId());
+
+				// Preparar o objeto acesso para ser salvo na tabela aprovacao
+				String grupo = g.getId();
+				String usuario = u.getId();
+				long instituicao = i.getId();
 				String acesso = grupo + ";" + usuario + ";" + instituicao;
 
+				// Persistir a aprovacao
 				Aprovacao aprovacao = new Aprovacao();
 				aprovacao.setAprovador(aprovador);
 				aprovacao.setChaveEstrangeira(acesso);
@@ -174,10 +190,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				aprovacao.setExpiracao(expiracao);
 				aprovacao.setTabelaEstrangeira("Acesso");
 
-				Instituicao i = entityManager.find(Instituicao.class, a.getInstituicao().getNome());
-				Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
-				Usuario u = entityManager.find(Usuario.class, a.getUsuario().getId());
-
+				// Persistir o acesso
 				Acesso b = new Acesso();
 				b.setGrupo(g);
 				b.setInstituicao(i);
@@ -187,16 +200,14 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				entityManager.persist(b);
 				entityManager.persist(aprovacao);
 
-				String dataEmbaralhado = memoriaVirtualEJB.embaralhar(dataString);
-				String aprovadorEmbaralhado = memoriaVirtualEJB.embaralhar(aprovadorId);
-				String acessoEmbaralhado = memoriaVirtualEJB.embaralhar(acesso);
+				// Preparar o link
+				String idEmbaralhado = memoriaVirtualEJB.embaralhar(aprovacao
+						.getId().toString());
 
 				String link = memoriaVirtualEJB.getURLServidor()
+						+ "/editarcadastrousuario?Id=" + idEmbaralhado;
 
-				+ "/editarcadastrousuario.jsf?Data=" + dataEmbaralhado + "&Aprovador=" + aprovadorEmbaralhado
-						+ "&Acesso=" + acessoEmbaralhado;
-
-				System.out.println(link);
+				System.out.println("link: " + link);
 
 			}
 		} catch (Exception e) {
@@ -205,4 +216,78 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	}
 
+	@Override
+	public boolean isAprovacaoExpirada(String aprovacaoString)
+			throws ModeloException {
+		try {
+			long id = new Long(aprovacaoString).longValue();
+			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
+			Date data = new Date();
+			if (data.after(aprovacao.getData())) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
+	}
+
+	@Override
+	public Acesso getAcesso(String aprovacaoString) throws ModeloException {
+		try {
+			Aprovacao aprovacao = entityManager.find(Aprovacao.class,
+					aprovacaoString);
+			String acessoString[] = aprovacao.getChaveEstrangeira().split(";");
+			Long L = new Long(acessoString[2]);
+			long l = L.longValue();
+			System.out.println("looooooong " + l);
+			Grupo g = entityManager.find(Grupo.class, acessoString[0]);
+			Usuario u = entityManager.find(Usuario.class, acessoString[1]);
+			Instituicao i = entityManager.find(Instituicao.class, l);
+
+			Acesso acesso = new Acesso();
+			acesso.setGrupo(g);
+			acesso.setUsuario(u);
+			acesso.setInstituicao(i);
+			acesso.setValidade(false);
+
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public void remover(String aprovacaoString) throws ModeloException{
+		try{
+			long id = new Long(aprovacaoString).longValue();
+			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
+			String acessoString[] = aprovacao.getChaveEstrangeira().split(";");
+			
+			long instituicaoId = new Long(acessoString[2]).longValue();
+			Grupo g = entityManager.find(Grupo.class, acessoString[0]);
+			Usuario u = entityManager.find(Usuario.class, acessoString[1]);
+			Instituicao i = entityManager.find(Instituicao.class, instituicaoId);
+			
+			Acesso a = new Acesso();
+			a.setGrupo(g);
+			a.setUsuario(u);
+			a.setInstituicao(i);
+			a.setValidade(false);
+			
+			Query query = entityManager.createQuery("SELECT a FROM Acesso a WHERE a = :parametro");
+			query.setParameter("parametro", a);
+			Acesso acesso = (Acesso) query.getSingleResult();
+			
+			entityManager.remove(aprovacao);
+			entityManager.remove(acesso);
+			
+			
+		}
+		catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
 }

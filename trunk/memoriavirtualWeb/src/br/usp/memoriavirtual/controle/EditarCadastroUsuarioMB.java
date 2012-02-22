@@ -31,6 +31,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
+	private Acesso acesso;
+	private Acesso acessoAntigo;
 	private String nome;
 	private String nomeCompleto;
 	private String telefone;
@@ -251,7 +253,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.setTelefone(null);
 		this.setJustificativa(null);
 		this.setAcessos(null);
-		MensagensDeErro.getSucessMessage("editarCadastroUsuarioSucesso", "resultado");
+		MensagensDeErro.getSucessMessage("editarCadastroUsuarioSucesso",
+				"resultado");
 		return "sucesso";
 	}
 
@@ -492,6 +495,22 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	 */
 	public void setAcessosAntigos(List<Acesso> acessosAntigos) {
 		this.acessosAntigos = acessosAntigos;
+	}
+
+	public Acesso getAcesso() {
+		return acesso;
+	}
+
+	public void setAcesso(Acesso acesso) {
+		this.acesso = acesso;
+	}
+
+	public void setAcesso(String aprovacao) {
+		try {
+			this.acesso = this.editarCadastroUsuarioEJB.getAcesso(aprovacao);
+		} catch (ModeloException m) {
+			m.printStackTrace();
+		}
 	}
 
 }

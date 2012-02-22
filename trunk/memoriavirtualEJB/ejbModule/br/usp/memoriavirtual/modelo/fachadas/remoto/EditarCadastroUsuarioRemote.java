@@ -91,5 +91,25 @@ public interface EditarCadastroUsuarioRemote {
 	 */
 	public void editarAcessos(String aprovador, List<Acesso> acessos,
 			Date data, Date expiracao) throws ModeloException;
+	
+	/**
+	 * Verifica se a operacao ainda esta na validade
+	 * 
+	 * @param aprovacao Id da aprovacao a ser verificada
+	 * @return true se a aprovacaoesta expirada e false c.c
+	 * @throws ModeloException
+	 */
+	public boolean isAprovacaoExpirada(String aprovacao) throws ModeloException;
+	
+	/**
+	 * Busca o acesso a ser aprovado
+	 * 
+	 * @param aprovacao Id da aprovacao
+	 * @return Acesso a ser aprovado
+	 * @throws ModeloException 
+	 */
+	public Acesso getAcesso(String aprovacao) throws ModeloException;
+	
+	public void remover(String aprovacao) throws ModeloException;
 
 }
