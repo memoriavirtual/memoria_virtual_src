@@ -249,21 +249,21 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 
 		try {
-			boolean flagExixteNasDuasListas = true;
+			boolean flagExisteNasDuasListas = true;
 			this.listaAdministradores = excluirInstituicaoEJB.listarAdministradores();
 			for(Usuario c : this.listaAdministradores) {   
 
 				for(Usuario x : this.gerentesInstituicao) {   
 					if(this.gerente != null){
 						if(c.getId().compareTo( x.getId()) ==  0){
-							flagExixteNasDuasListas = false;
+							flagExisteNasDuasListas = false;
 						}
 					}
-					if(flagExixteNasDuasListas && (c.getId().compareTo( this.requisitor.getId()) !=  0)){
+					if(flagExisteNasDuasListas && (c.getId().compareTo( this.requisitor.getId()) !=  0)){
 						validadoreslista.add(new String(c.getNomeCompleto()));
 					}
 				}
-				flagExixteNasDuasListas = true;
+				flagExisteNasDuasListas = true;
 
 			}
 			if(this.gerente != null){
@@ -319,7 +319,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 				try {
 
 
-					this.administradorValidador = this.excluirInstituicaoEJB.getValidador(this.nomeValidador);
+					this.administradorValidador = this.excluirInstituicaoEJB.getUsuario("nomeCompleto",this.nomeValidador);
 					this.memoriaVirtualEJB.enviarEmail(this.administradorValidador.getEmail(),bundle.getString("excluirInstituicaoEmailTitulo"),
 							bundle.getString("excluirInstituicaoEmailMensagem")+"\n"+"\n"
 									+ bundle.getString("excluirInstituicaoNome") + this.instituicao.getNome()+"\n"
@@ -376,10 +376,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 			if(this.administradorValidador.getId().equals(this.aprovacao.getAprovador().getId())){
 				if(this.aprovacao.getExpiracao().after(new Date())){
-
 					try {
-						excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,false,this.gerente != null);
-						excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(this.aprovacao,this.itemAuditoria);
+						this.excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,false,this.gerente != null);
+						this.excluirInstituicaoEJB.excluirAprovacao(this.aprovacao);
+						this.auditoriaFabricaEJB.auditarNegarExcluirInstituicao(this.aprovacao.getAprovador(), this.instituicao.getNome(),this.justificativa);
 						MensagensDeErro.getSucessMessage("excluirInstituicaoNegado", "resultado");
 					} catch (ModeloException e) {
 						e.printStackTrace();
@@ -415,7 +415,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 					try {
 						this.excluirInstituicaoEJB.validarExclusaoInstituicao(this.instituicao,true,this.gerente != null);
 						this.auditoriaFabricaEJB.auditarAutorizarExcluirInstituicao(this.aprovacao.getAprovador(), this.instituicao.getNome(),this.justificativa);
-						this.excluirInstituicaoEJB.excluirAprovacaoItemAuditoria(aprovacao);
+						this.excluirInstituicaoEJB.excluirAprovacao(aprovacao);
 						System.out.print("A instituicao "+this.instituicao+"foi excluida ..");
 						MensagensDeErro.getSucessMessage("excluirInstituicaoExcluida", "resultado");
 					} catch (ModeloException e) {

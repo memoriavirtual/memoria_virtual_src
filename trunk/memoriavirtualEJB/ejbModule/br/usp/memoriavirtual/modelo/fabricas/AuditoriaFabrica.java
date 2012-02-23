@@ -52,5 +52,17 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 		itemAuditoria.setData(data);
 		entityManager.persist(itemAuditoria);
 	}
+	
+	public void auditarNegarExcluirInstituicao(Usuario autorAcao,
+			String atributoSignificativo, String justificativa) {
+		ItemAuditoria itemAuditoria = new ItemAuditoria();
+		Date data = new Date();
+		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
+		itemAuditoria.setAutorAcao(autorAcao);
+		itemAuditoria.setNotas(justificativa);
+		itemAuditoria.setTipoAcao(EnumTipoAcao.NEGAR_EXCLUSAO);
+		itemAuditoria.setData(data);
+		entityManager.persist(itemAuditoria);
+	}
 
 }

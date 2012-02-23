@@ -29,27 +29,27 @@ public class ExcluirInstituicao extends HttpServlet {
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
 	public void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException, ServletException {
 		
-		//Objeto Aprovaï¿½ï¿½o sera utilizado para testar a data de validade do pedido de exclusï¿½o
+		//Objeto Aprovação sera utilizado para testar a data de validade do pedido de exclusão
 		Aprovacao aprovacao = new Aprovacao();
-		//Objeto ItemAuditoria sera utilizado para recuperar o requerente do pedido de exclusï¿½o
+		//Objeto ItemAuditoria sera utilizado para recuperar o requerente do pedido de exclusão
 		ItemAuditoria itemAuditoria = new ItemAuditoria();
 		Instituicao instituicao = new Instituicao();
-		//parametros recuperados da URL, como chave estrangeira estï¿½ embaralhado sera desenbaralhado
 		String chaveEstrangeira = req.getParameter("chaveEstrangeira");
 		
 		
 		
-		//Antecipando a instancia do ManegedBean antes mesmo que a pï¿½gina esteja carregada
+		//Antecipando a instancia do ManegedBean antes mesmo que a página esteja carregada
 		FacesContext facesContext = FacesUtil.getFacesContext(req, response);
 		ELResolver resolver = facesContext.getApplication().getELResolver();   
 		ExcluirInstituicaoMB  bean = (ExcluirInstituicaoMB) resolver.getValue(facesContext.getELContext(), null, "excluirInstituicaoMB"); 
 		
 		
-		//Recuperando Objetos Aprovaï¿½ï¿½o, Instituicao, ItemAuditoria
+		//Recuperando Objetos Aprovação, Instituição, ItemAuditoria
 		try {
 			instituicao = this.excluirInstituicaoEJB.getInstituicaoFalse(chaveEstrangeira);
 		} catch (ModeloException e) {
 			e.printStackTrace();
+			return;
 		}try {
 			 aprovacao = this.excluirInstituicaoEJB.getAprovacao(instituicao.getNome());
 		} catch (ModeloException e) {

@@ -16,18 +16,26 @@ public interface AuditoriaFabricaRemote {
 	
 	
 	/**
-	 * Mï¿½todo insere uma linha na tabela ItemAuditoria, referente a o pedido
-	 * de exclusï¿½o da instituiï¿½ï¿½o
+	 * Método insere uma linha na tabela ItemAuditoria, referente a o pedido
+	 * de exclusão da instituição
 	 * @param autorAcao
 	 * @param atributoSignificativo
 	 */
 	public void auditarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo,String justificativa);
 	/**
-	 * Mï¿½todo insere uma linha na tabela ItemAuditoria, referente a a autorizaï¿½ï¿½o
-	 * de um pedido de exclusï¿½o da instituiï¿½ï¿½o
+	 * Método insere uma linha na tabela ItemAuditoria, referente a a autorização
+	 * de um pedido de exclusão da instituição
 	 * @param autorAcao
 	 * @param atributoSignificativo
 	 * @param justificativa 
 	 */
 	public void auditarAutorizarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo, String justificativa);
+	/**
+	 * Método insere uma linha na tabela ItemAuditoria, referente a a autorização
+	 * de um pedido de exclusão da instituição
+	 * @param autorAcao
+	 * @param atributoSignificativo
+	 * @param justificativa 
+	 */
+	public void auditarNegarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo, String justificativa);
 }
