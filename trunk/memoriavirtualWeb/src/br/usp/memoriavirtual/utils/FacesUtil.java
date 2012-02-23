@@ -27,38 +27,38 @@ public class FacesUtil {
     public static FacesContext getFacesContext(
         HttpServletRequest request, HttpServletResponse response)
     {
-        // Get current FacesContext.
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+        // Pega o  FacesContext atual.
+        FacesContext contexto = FacesContext.getCurrentInstance();
 
-        // Check current FacesContext.
-        if (facesContext == null) {
+        // checa FacesContext atual.
+        if (contexto == null) {
 
-            // Create new Lifecycle.
-            LifecycleFactory lifecycleFactory = (LifecycleFactory)
+            // Cria novo ciclo de vida .
+            LifecycleFactory fatorCicloVida = (LifecycleFactory)
                 FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY); 
-            Lifecycle lifecycle = lifecycleFactory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
+            Lifecycle cicloVida = fatorCicloVida.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
 
-            // Create new FacesContext.
+            // Cria novo FacesContext.
             FacesContextFactory contextFactory  = (FacesContextFactory)
                 FactoryFinder.getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
-            facesContext = contextFactory.getFacesContext(
-                request.getSession().getServletContext(), request, response, lifecycle);
+            contexto = contextFactory.getFacesContext(
+                request.getSession().getServletContext(), request, response, cicloVida);
 
-            // Create new View.
-            UIViewRoot view = facesContext.getApplication().getViewHandler().createView(
-                facesContext, "");
-            facesContext.setViewRoot(view);                
+            // Cria novo view.
+            UIViewRoot view = contexto.getApplication().getViewHandler().createView(
+                contexto, "");
+            contexto.setViewRoot(view);                
 
-            // Set current FacesContext.
-            FacesContextWrapper.setCurrentInstance(facesContext);
+            // Seta o contexto atual com o novo contexto.
+            FacesContextWrapper.setCurrentInstance(contexto);
         }
 
-        return facesContext;
+        return contexto;
     }
 
     // Helpers -----------------------------------------------------------------------------------
 
-    // Wrap the protected FacesContext.setCurrentInstance() in a inner class.
+    
     private static abstract class FacesContextWrapper extends FacesContext {
         protected static void setCurrentInstance(FacesContext facesContext) {
             FacesContext.setCurrentInstance(facesContext);
