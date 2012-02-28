@@ -58,6 +58,11 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.ExcluirUsuarioMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>renderizarMenuMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.RenderizarMenuMB</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 
 	<navigation-rule>
