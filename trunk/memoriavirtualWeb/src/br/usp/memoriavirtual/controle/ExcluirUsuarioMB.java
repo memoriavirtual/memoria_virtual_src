@@ -1,61 +1,95 @@
 package br.usp.memoriavirtual.controle;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
+
 public class ExcluirUsuarioMB {
-	
+
+	@EJB
+	private ExcluirUsuarioRemote excluirUsuarioEJB;
+	@EJB
+	private AuditoriaFabricaRemote auditoriaFabricaEJB;
+
 	private String nomeExcluir;
 	private int prazoValidade;
 	private String instuicaoPertencente;
 	private String nivelPermissao;
 	private String justificativa;
 	private String excluir;
-	
-	
-	public void setNomeExcluir(String nomeExcluir){
+
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
+
+	public void setNomeExcluir(String nomeExcluir) {
 		this.nomeExcluir = nomeExcluir;
 	}
-	
-	public void setPrazoValidade(int prazoValidade){
+
+	public void setPrazoValidade(int prazoValidade) {
 		this.prazoValidade = prazoValidade;
 	}
-	
-	public void setInstituicaoPertencente(String instituicaoPertencente){
+
+	public void setInstituicaoPertencente(String instituicaoPertencente) {
 		this.instuicaoPertencente = instituicaoPertencente;
 	}
 
-	public void setNivelPermissao(String nivelPermissao){
+	public void setNivelPermissao(String nivelPermissao) {
 		this.nivelPermissao = nivelPermissao;
 	}
-	
-	public void setJustificativa(String justificativa){
+
+	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
-	
-	public void setExcluir(String excluir){
+
+	public void setExcluir(String excluir) {
 		this.excluir = excluir;
 	}
-	
-	public String getNomeExcluir(){
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public String getNomeExcluir() {
 		return this.nomeExcluir;
 	}
-	
-	public int getPrazoValidade(){
+
+	public int getPrazoValidade() {
 		return this.prazoValidade;
 	}
-	
-	public String getInstituicaoPertencente(){
+
+	public String getInstituicaoPertencente() {
 		return this.instuicaoPertencente;
 	}
-	
-	public String getNivelPermissao(){
+
+	public String getNivelPermissao() {
 		return this.nivelPermissao;
 	}
-	
-	public String getJustificativa(){
+
+	public String getJustificativa() {
 		return this.justificativa;
 	}
-	
-	public String getExcluir(){
+
+	public String getExcluir() {
 		return this.excluir;
 	}
-	
+
+	public List<Usuario> getUsuarios() {
+		return this.usuarios;
+	}
+
+	public void listarUsuarios(AjaxBehaviorEvent event) {
+		usuarios.clear();
+		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir);
+		setUsuarios(listaUsuarios);
+		usuarios = null;
+		return;
+	}
+
 }
