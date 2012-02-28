@@ -3,7 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/componente">
 <body>
 	<ui:composition>
 		<h:outputScript library="javascript" name="jquery.js" />
@@ -12,41 +13,7 @@
 
 		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
 
-		<div id="menuRecipiente">
-			<ul id="menuNavegacao">
-				<li><a class="linkPrincipal" href="#">Descritor</a>
-					<ul class="linkSecundario">
-					</ul></li>
-				<li><a class="linkPrincipal" href="#">Autoria</a>
-					<ul class="linkSecundario">
-					</ul></li>
-				<li><a class="linkPrincipal" href="#">Bem Patrimonial</a>
-					<ul class="linkSecundario">
-					</ul></li>
-				<li><a class="linkPrincipal" href="#">Administra&ccedil;&atilde;o</a>
-					<ul class="linkSecundario">
-						<li><a href="enviarconvite.jsf">Enviar Convite</a></li>
-					</ul></li>
-				<li><a class="linkPrincipal" href="#">Institui&ccedil;&atilde;o</a>
-					<ul class="linkSecundario">
-						<li><a href="cadastrarinstituicao.jsf">Cadastrar
-								Institui&ccedil;&atilde;o</a></li>
-						<li><a href="selecionarinstituicao.jsf">Editar
-								Institui&ccedil;&atilde;o</a></li>
-						<li><a href="excluirInstituicao.jsf">Excluir
-								Institui&ccedil;&atilde;o</a></li>
-					</ul></li>
-				<li><a class="linkPrincipal" href="#">Usuario</a>
-					<ul class="linkSecundario">
-						<li><a href="editarcadastroproprio.jsf">Alterar Cadastro</a>
-						</li>
-						<li><a href="selecionarusuario.jsf">Editar Cadastro
-								Usuario</a></li>
-						<li><a href="excluirusuario_etapa1.jsf">Excluir Usuario</a></li>
-					</ul></li>
-			</ul>
-
-		</div>
+		<mv:menu/>
 		<!-- fim #menuRecipiente -->
 
 		<div id="linkSecundarioRecipiente"></div>
