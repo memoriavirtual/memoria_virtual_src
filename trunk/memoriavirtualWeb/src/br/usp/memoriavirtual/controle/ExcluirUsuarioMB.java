@@ -9,6 +9,7 @@ public class ExcluirUsuarioMB {
 	private String justificativa;
 	private String excluir;
 	
+	
 	public void setNomeExcluir(String nomeExcluir){
 		this.nomeExcluir = nomeExcluir;
 	}
