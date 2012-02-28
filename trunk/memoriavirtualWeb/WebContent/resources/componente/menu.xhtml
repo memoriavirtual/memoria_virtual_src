@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+<composite:interface>
+	<composite:attribute name="permissao" />
+</composite:interface>
+
+<composite:implementation>
+
+
+	<f:event listener="#{renderizarMenuMB.verificarAcessos}" type="preRenderView">
+	</f:event>
+
+
+	<div id="menuRecipiente">
+		<ul id="menuNavegacao">
+			<li><h:outputLink class="linkPrincipal" rendered="#{renderizarMenuMB.administrador}">Descritor</h:outputLink>
+				<ul class="linkSecundario">
+				</ul></li>
+			<li><h:outputLink class="linkPrincipal" rendered="true">Autoria</h:outputLink>
+				<ul class="linkSecundario">
+				</ul></li>
+			<li><h:outputLink class="linkPrincipal" rendered="true">Bem Patrimonial</h:outputLink>
+				<ul class="linkSecundario">
+				</ul></li>
+			<li><h:outputLink class="linkPrincipal" rendered="true">Administracao</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="true" value="enviarconvite.jsf">Enviar Convite</h:outputLink>
+					</li>
+				</ul></li>
+			<li><h:outputLink class="linkPrincipal" rendered="true">Instituicao</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="true"
+							value="cadastrarinstituicao.jsf">Cadastrar
+								Instituicao</h:outputLink></li>
+					<li><h:outputLink rendered="true"
+							value="selecionarinstituicao.jsf">Editar
+							Instituicao</h:outputLink></li>
+					<li><h:outputLink rendered="true"
+							value="excluirInstituicao.jsf">Excluir
+							Instituicao</h:outputLink></li>
+				</ul></li>
+			<li><h:outputLink class="linkPrincipal" rendered="true">Usuario</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="true"
+							value="editarcadastroproprio.jsf">Alterar Cadastro</h:outputLink>
+					</li>
+					<li><h:outputLink rendered="true"
+							value="selecionarusuario.jsf">Editar Cadastro
+							Usuario</h:outputLink></li>
+					<li><h:outputLink rendered="true"
+							value="excluirusuario_etapa1.jsf">Excluir Usuario</h:outputLink>
+					</li>
+				</ul></li>
+		</ul>
+
+	</div>
+
+</composite:implementation>
+
+</html>
