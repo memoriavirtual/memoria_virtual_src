@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.controle;
 
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -48,9 +49,20 @@ public class RealizarLoginMB {
 
 		if (usuarioAutenticado != null) {
 			autenticado = true;
+			
+			/*
+			 * Coloca o usuario autenticado no sessao.
+			 */
 			HttpServletRequest request = (HttpServletRequest) FacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
 			request.getSession().setAttribute("usuario", usuarioAutenticado);
+			
+			/*
+			 * Coloca a lista de acessos do usuario no sessao.
+			 */
+			List lista = realizarLoginEJB.pegarAcessos(usuarioAutenticado);
+			request.getSession().setAttribute("acesso", lista);
+			
 		} else {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.invalidateSession();
