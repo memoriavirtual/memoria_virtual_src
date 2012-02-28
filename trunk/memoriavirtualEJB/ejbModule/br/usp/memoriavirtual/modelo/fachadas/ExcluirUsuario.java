@@ -10,15 +10,14 @@ import javax.persistence.Query;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 
-
-@Stateless (mappedName = "ExcluirUsuario")
+@Stateless(mappedName = "ExcluirUsuario")
 public class ExcluirUsuario implements ExcluirUsuarioRemote {
-	
+
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String parteNome) throws ModeloException {
+	public List<Usuario> listarUsuarios(String parteNome) {
 
 		List<Usuario> usuarios;
 		Query query;
@@ -29,7 +28,8 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			usuarios = (List<Usuario>) query.getResultList();
 			return usuarios;
 		} catch (Exception e) {
-			throw new ModeloException(e);
+			e.printStackTrace();
+			return null;
 		}
 
 	}
