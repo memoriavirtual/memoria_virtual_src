@@ -24,6 +24,7 @@ public class ExcluirUsuarioMB {
 	private String nivelPermissao;
 	private String justificativa;
 	private String excluir;
+	private Usuario usuario;
 
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 
@@ -54,6 +55,10 @@ public class ExcluirUsuarioMB {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+	
+	public void setUsuario(Usuario usuario){
+		this.usuario = usuario;
+	}
 
 	public String getNomeExcluir() {
 		return this.nomeExcluir;
@@ -82,14 +87,23 @@ public class ExcluirUsuarioMB {
 	public List<Usuario> getUsuarios() {
 		return this.usuarios;
 	}
+	
+	public Usuario getUsuario(){
+		return this.usuario;
+	}
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
 		usuarios.clear();
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir);
 		setUsuarios(listaUsuarios);
-		usuarios = null;
+		usuario = null;
 		return;
+	}
+	
+	public String selecionarUsuarios(Usuario usuario){ 
+		this.setUsuario(usuario);
+		return null;
 	}
 
 }
