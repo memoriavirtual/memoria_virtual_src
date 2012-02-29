@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
-@NamedQuery(name = "acesso", query = "SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = true")
+@NamedQuery(name = "acessos", query = "SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = true")
 @Entity
 public class Acesso implements Serializable {
 
