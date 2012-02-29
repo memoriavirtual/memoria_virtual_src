@@ -27,13 +27,13 @@ public class RenderizarMenuMB {
 		List<Acesso> listaAcessos = (List<Acesso>) request.getSession().getAttribute("acessos");
 
 
-		for(Acesso acesso:listaAcessos){
-			
+		for(Acesso acesso:listaAcessos){			
 			if(acesso.getUsuario().isAdministrador()){
-				this.administrador= this.gerente = true;
+				this.administrador=this.gerente = true;
 				break;
 			}
-			else if(acesso.getGrupo().getId().equalsIgnoreCase("Gerente")){
+			else if(acesso.getGrupo().getId().equalsIgnoreCase("Gerente") &&
+						acesso.getValidade()){
 				this.gerente = true;
 			}
 		}
