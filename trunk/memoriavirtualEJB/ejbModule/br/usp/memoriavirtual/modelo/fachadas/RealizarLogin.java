@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,7 +14,8 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
 /**
- * EJB de Sessão sem estado responsável por implementar o caso de uso Realizar Login.
+ * EJB de Sessão sem estado responsável por implementar o caso de uso Realizar
+ * Login.
  */
 @Stateless(mappedName = "RealizarLogin")
 public class RealizarLogin implements RealizarLoginRemote {
@@ -32,7 +34,8 @@ public class RealizarLogin implements RealizarLoginRemote {
 	 * @return resultado Resultado da validação do login
 	 * 
 	 */
-	public Usuario realizarLogin(String usuario, String senha) throws ModeloException {
+	public Usuario realizarLogin(String usuario, String senha)
+			throws ModeloException {
 
 		Usuario usuarioAutenticado = null;
 		Usuario usuarioClone = null;
@@ -54,18 +57,24 @@ public class RealizarLogin implements RealizarLoginRemote {
 		}
 		return usuarioClone;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
-	public List pegarAcessos(Usuario usuario){
-		
+	public List<Acesso> pegarAcessos(Usuario usuario) {
+
 		Query query;
-		
-		query = this.entityManager.createNamedQuery("acesso", Acesso.class);
+
+		query = this.entityManager.createNamedQuery("acessos", Acesso.class);
 		query.setParameter("usuario", usuario);
-		
-		List lista = (List)query.getResultList();
-		
-		return lista;
+
+		List lista = (List) query.getResultList();
+
+		List<Acesso> listaAcessos = new ArrayList<Acesso>();
+
+		for (Object o : lista) {
+			listaAcessos.add((Acesso) o);
+		}
+
+		return listaAcessos;
 	}
 
 }
