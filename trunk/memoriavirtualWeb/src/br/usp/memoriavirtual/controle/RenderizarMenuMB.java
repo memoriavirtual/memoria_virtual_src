@@ -7,38 +7,40 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
 public class RenderizarMenuMB {
-	
+
 	public boolean administrador = false;
 	public boolean gerente = false;
 
-	
 	@SuppressWarnings("unchecked")
-	public void verificarAcessos(ComponentSystemEvent event){
-		
+	public void verificarAcessos(ComponentSystemEvent event) {
+
 		/*
 		 * Pega a lista de acessos do usuario na sessao.
 		 */
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
-		
 
-		List<Acesso> listaAcessos = (List<Acesso>) request.getSession().getAttribute("acessos");
+		List<Acesso> listaAcessos = (List<Acesso>) request.getSession()
+				.getAttribute("acessos");
 
+		Usuario usuario = (Usuario) request.getSession()
+				.getAttribute("usuario");
 
-		for(Acesso acesso:listaAcessos){			
-			if(acesso.getUsuario().isAdministrador()){
-				this.administrador=this.gerente = true;
-				break;
-			}
-			else if(acesso.getGrupo().getId().equalsIgnoreCase("Gerente") &&
-						acesso.getValidade()){
-				this.gerente = true;
+		if (usuario.isAdministrador() && usuario.isAtivo()) {
+			this.administrador = this.gerente = true;
+		} else {
+
+			for (Acesso acesso : listaAcessos) {
+				if (acesso.getGrupo().getId().equalsIgnoreCase("Gerente")
+						&& acesso.getValidade()) {
+					this.gerente = true;
+				}
 			}
 		}
-
-	  }	
+	}
 
 	public boolean isAdministrador() {
 		return administrador;
@@ -56,5 +58,4 @@ public class RenderizarMenuMB {
 		this.gerente = gerente;
 	}
 
-	
 }
