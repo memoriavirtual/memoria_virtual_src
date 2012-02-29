@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
@@ -12,5 +13,5 @@ public interface RealizarLoginRemote {
 
 	public Usuario realizarLogin(String usuario, String senha) throws ModeloException;
 
-	public List pegarAcessos(Usuario usuario);
+	public List<Acesso> pegarAcessos(Usuario usuario);
 }
