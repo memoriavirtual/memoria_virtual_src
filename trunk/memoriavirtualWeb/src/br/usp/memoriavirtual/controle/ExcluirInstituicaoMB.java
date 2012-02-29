@@ -60,7 +60,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private String bundleName = "mensagens";
 	private ResourceBundle bundle = context.getApplication().getResourceBundle(context, bundleName);
 
-	//da instituicao a ser excluida
+	//da instituição a ser excluída
 	private Instituicao instituicao = null;
 	private String nome = null;
 	private List<Usuario> gerentesInstituicao = new ArrayList<Usuario>();
