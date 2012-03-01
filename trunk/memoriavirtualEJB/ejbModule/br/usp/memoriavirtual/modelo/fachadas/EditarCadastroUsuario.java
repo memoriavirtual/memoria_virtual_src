@@ -1,14 +1,15 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
@@ -151,21 +152,17 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@Override
 	public void editarAcessos(String aprovadorId, List<Acesso> acessos,
-			Date data, Date expiracao) throws ModeloException {
+			List<String> situacoes, Date data, Date expiracao)
+			throws ModeloException {
 
 		try {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
 
 			for (Acesso a : acessos) {
 
-				SimpleDateFormat formatoData = new SimpleDateFormat(
-						"dd/MM/yyyy HH:mm:ss:SSS");
-
-				String dataString = formatoData.format(data);
-				data = formatoData.parse(dataString);
-
-				String expiracaoString = formatoData.format(expiracao);
-				expiracao = formatoData.parse(expiracaoString);
+				System.out.println(a.getInstituicao().getNome()
+						+ a.getGrupo().getId()
+						+ a.getUsuario().getNomeCompleto());
 
 				// Buscar no banco os objetos corretos para instanciar o aceso
 				Query q = entityManager
@@ -180,7 +177,10 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String grupo = g.getId();
 				String usuario = u.getId();
 				long instituicao = i.getId();
-				String acesso = grupo + ";" + usuario + ";" + instituicao;
+				String acesso = grupo + ";" + usuario + ";" + instituicao + ";"
+						+ situacoes.get(0);
+
+				situacoes.remove(0);
 
 				// Persistir a aprovacao
 				Aprovacao aprovacao = new Aprovacao();
@@ -190,14 +190,6 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				aprovacao.setExpiracao(expiracao);
 				aprovacao.setTabelaEstrangeira("Acesso");
 
-				// Persistir o acesso
-				Acesso b = new Acesso();
-				b.setGrupo(g);
-				b.setInstituicao(i);
-				b.setUsuario(u);
-				b.setValidade(false);
-
-				entityManager.persist(b);
 				entityManager.persist(aprovacao);
 
 				// Preparar o link
@@ -207,7 +199,8 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String link = memoriaVirtualEJB.getURLServidor()
 						+ "/editarcadastrousuario?Id=" + idEmbaralhado;
 
-				System.out.println("link: " + link);
+				// this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(),
+				// "mv", mensagem);
 
 			}
 		} catch (Exception e) {
@@ -223,7 +216,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			long id = new Long(aprovacaoString).longValue();
 			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
 			Date data = new Date();
-			if (data.after(aprovacao.getData())) {
+			if (data.after(aprovacao.getExpiracao())) {
 				return true;
 			} else {
 				return false;
@@ -237,56 +230,95 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	@Override
 	public Acesso getAcesso(String aprovacaoString) throws ModeloException {
 		try {
-			Aprovacao aprovacao = entityManager.find(Aprovacao.class,
-					aprovacaoString);
+
+			long id = new Long(aprovacaoString).longValue();
+
+			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
+
 			String acessoString[] = aprovacao.getChaveEstrangeira().split(";");
-			Long L = new Long(acessoString[2]);
-			long l = L.longValue();
-			System.out.println("looooooong " + l);
+
 			Grupo g = entityManager.find(Grupo.class, acessoString[0]);
 			Usuario u = entityManager.find(Usuario.class, acessoString[1]);
-			Instituicao i = entityManager.find(Instituicao.class, l);
+			long instituicaoId = new Long(acessoString[2]).longValue();
+			Instituicao i = entityManager
+					.find(Instituicao.class, instituicaoId);
 
 			Acesso acesso = new Acesso();
+
 			acesso.setGrupo(g);
-			acesso.setUsuario(u);
 			acesso.setInstituicao(i);
-			acesso.setValidade(false);
+			acesso.setUsuario(u);
+
+			return acesso;
 
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
-		return null;
+
 	}
 
 	@Override
-	public void remover(String aprovacaoString) throws ModeloException{
-		try{
+	public Aprovacao getAprovacao(String aprovacaoString)
+			throws ModeloException {
+
+		try {
 			long id = new Long(aprovacaoString).longValue();
+			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class, id);
+			return aprovacao;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
+
+	@Override
+	public void persistir(long id) throws ModeloException {
+
+		try {
 			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
 			String acessoString[] = aprovacao.getChaveEstrangeira().split(";");
-			
+
 			long instituicaoId = new Long(acessoString[2]).longValue();
 			Grupo g = entityManager.find(Grupo.class, acessoString[0]);
 			Usuario u = entityManager.find(Usuario.class, acessoString[1]);
-			Instituicao i = entityManager.find(Instituicao.class, instituicaoId);
-			
+			Instituicao i = entityManager
+					.find(Instituicao.class, instituicaoId);
+
 			Acesso a = new Acesso();
 			a.setGrupo(g);
 			a.setUsuario(u);
 			a.setInstituicao(i);
-			a.setValidade(false);
-			
-			Query query = entityManager.createQuery("SELECT a FROM Acesso a WHERE a = :parametro");
-			query.setParameter("parametro", a);
-			Acesso acesso = (Acesso) query.getSingleResult();
-			
+			a.setValidade(true);
+
 			entityManager.remove(aprovacao);
-			entityManager.remove(acesso);
-			
-			
+			entityManager.persist(a);
+
+		} catch (Exception e) {
+			throw new ModeloException(e);
 		}
-		catch (Exception e) {
+	}
+
+	@Override
+	public void remover(long id) throws ModeloException {
+
+		try {
+
+			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
+			entityManager.remove(aprovacao);
+
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
+
+	@Override
+	public void removerAprovacao(String aprovacaoString) throws ModeloException {
+		try {
+
+			long id = new Long(aprovacaoString).longValue();
+			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
+			entityManager.remove(aprovacao);
+
+		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
 	}
