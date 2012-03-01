@@ -7,15 +7,12 @@ import javax.ejb.EJB;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 
 public class ExcluirUsuarioMB {
 
 	@EJB
 	private ExcluirUsuarioRemote excluirUsuarioEJB;
-	@EJB
-	private AuditoriaFabricaRemote auditoriaFabricaEJB;
 
 	private String nomeExcluir;
 	private int prazoValidade;
