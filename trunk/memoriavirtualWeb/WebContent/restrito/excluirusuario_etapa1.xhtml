@@ -34,20 +34,22 @@
 								autoComplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{excluirUsuarioMB.listarUsuarios}" />
-								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{editarCadastroUsuarioMB.validateNome}" />
+								<!--  <f:ajax event="keyup" execute="@this" render="validacaoNome"
+									listener="#{editarCadastroUsuarioMB.validateNome}" />-->
 							</h:inputText>
 							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome"
+							<!--<h:message id="validacaoNome" for="validacaoNome"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
+							</h:message>-->
 						</div>
 						<div id="sugestoes">
 							<h:dataTable id="sugestoesId" var="usuario"
 								value="#{excluirUsuarioMB.usuarios}">
 								<h:column>
-									<h:commandLink
+								#{usuario.id}
+									<!--  <h:commandLink
 										action="#{excluirUsuarioMB.selecionarUsuarios(usuario)}">#{usuario.id}</h:commandLink>
+								-->
 								</h:column>
 							</h:dataTable>
 						</div>
