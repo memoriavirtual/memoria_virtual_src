@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -32,7 +34,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private Acesso acesso;
-	private Acesso acessoAntigo;
 	private String nome;
 	private String nomeCompleto;
 	private String telefone;
@@ -44,9 +45,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private Integer validade;
 	private List<Acesso> acessos;
 	private List<Acesso> acessosAntigos;
+	private Aprovacao aprovacao;
 
 	public EditarCadastroUsuarioMB() {
-
+		super();
 	}
 
 	public String cancelar() {
@@ -55,6 +57,17 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
 		this.listarUsuarios();
+	}
+
+	public String getInformacaoAcesso() {
+
+		String chave[] = this.aprovacao.getChaveEstrangeira().split(";");
+
+		return "Voce deseja " + chave[3] + " o seguinte acesso: Usuario: "
+				+ this.acesso.getUsuario().getNomeCompleto() + " Instituicao "
+				+ this.acesso.getInstituicao().getNome() + " Nivel: "
+				+ this.acesso.getGrupo().getId() + " ?";
+
 	}
 
 	public void listarUsuarios() {
@@ -102,9 +115,12 @@ public class EditarCadastroUsuarioMB implements Serializable {
 					"editarCadastroUsuarioErroSelecaoUsuario", "resultado");
 			return "falha";
 		}
+
+		this.justificativa = null;
 		this.usuarios.clear();
 		this.setNome(null);
 		this.nomeCompleto = usuario.getNomeCompleto();
+
 		return "sucesso";
 	}
 
@@ -138,6 +154,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 						"editarCadastroUsuarioErroSelecao", "resultado");
 				return null;
 			}
+
+			this.justificativa = null;
 			this.usuarios.clear();
 			this.setNome(null);
 			this.nomeCompleto = usuario.getNomeCompleto();
@@ -201,12 +219,15 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public String adicionarAcesso() {
+
 		Instituicao instituicao = new Instituicao();
 		Grupo grupo = new Grupo();
+
 		Acesso acesso = new Acesso();
 		acesso.setGrupo(grupo);
 		acesso.setInstituicao(instituicao);
 		acesso.setUsuario(this.usuario);
+
 		this.acessos.add(acesso);
 		return null;
 	}
@@ -214,6 +235,9 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	public String editarCadastroUsuario() {
 		if (this.validateInstituicao() && this.validateJustificativa()
 				&& this.validateNome() && this.validateTelefone()) {
+
+			List<Acesso> pendentes = new ArrayList<Acesso>();
+			List<String> situacoes = new ArrayList<String>();
 
 			try {
 				this.editarCadastroUsuarioEJB.editarCadastro(this.usuario,
@@ -223,25 +247,74 @@ public class EditarCadastroUsuarioMB implements Serializable {
 						"editarCadastroUsuarioErroEdicao", "resultado");
 			}
 
-			// remove os acessos que não foram modificados
-			for (Acesso a : this.acessosAntigos) {
-				for (Acesso o : this.acessos) {
-					if (a.equals(o)) {
-						this.acessos.remove(a);
+			// adiciona a lista pendentes os acessos que foram modificados, ou
+			// seja os acessos que estao em apenas uma das listas
+			for (Acesso a : this.acessos) {
+				for (Acesso o : this.acessosAntigos) {
+
+					String nome1 = a.getInstituicao().getNome();
+					String nome2 = o.getInstituicao().getNome();
+					String id1 = a.getGrupo().getId();
+					String id2 = o.getGrupo().getId();
+
+					if (((nome1.equals(nome2)) && (id1.equals(id2)))) {
+						pendentes.add(a);
+						pendentes.add(o);
 					}
 				}
 			}
+			
+			for (Acesso a : this.acessos) {
+				System.out.println("atuais" + a.getInstituicao().getNome()
+						+ a.getGrupo().getId());
+			}
+
+			for (Acesso a : this.acessosAntigos) {
+				System.out.println("antigos" + a.getInstituicao().getNome()
+						+ a.getGrupo().getId());
+			}
+
+			for (Acesso a : pendentes) {
+				this.acessos.remove(a);
+				this.acessosAntigos.remove(a);
+			}
+
+			for (Acesso a : pendentes) {
+				System.out.println("pendentes" + a.getInstituicao().getNome()
+						+ a.getGrupo().getId());
+			}
+
+			pendentes.clear();
 
 			for (Acesso a : this.acessos) {
-				a.setValidade(false);
+				pendentes.add(a);
+				situacoes.add("adicionar");
+			}
+
+			for (Acesso a : this.acessosAntigos) {
+				pendentes.add(a);
+				situacoes.add("excluir");
+			}
+
+			for (Acesso a : this.acessos) {
+				System.out.println("atuais" + a.getInstituicao().getNome()
+						+ a.getGrupo().getId());
+			}
+
+			for (Acesso a : this.acessosAntigos) {
+				System.out.println("antigos" + a.getInstituicao().getNome()
+						+ a.getGrupo().getId());
 			}
 
 			Date data = new Date();
-			Date expiracao = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(data);
+			calendar.add(Calendar.DAY_OF_MONTH, this.validade.intValue());
+			Date expiracao = calendar.getTime();
 
 			try {
 				this.editarCadastroUsuarioEJB.editarAcessos(this.administrador,
-						this.acessos, data, expiracao);
+						pendentes, situacoes, data, expiracao);
 			} catch (Exception e) {
 				MensagensDeErro.getErrorMessage(
 						"editarCadastroUsuarioErroEdicao", "resultado");
@@ -253,25 +326,33 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.setTelefone(null);
 		this.setJustificativa(null);
 		this.setAcessos(null);
+
 		MensagensDeErro.getSucessMessage("editarCadastroUsuarioSucesso",
 				"resultado");
 		return "sucesso";
 	}
 
-	public List<SelectItem> getAdm() {
+	public List<SelectItem> getAdmnistradores() {
+
 		List<SelectItem> adm = new ArrayList<SelectItem>();
+
 		for (Usuario u : this.administradores) {
 			adm.add(new SelectItem(u.getId(), u.getNomeCompleto()));
 		}
+
 		return adm;
 	}
 
 	public List<SelectItem> getValidades() {
+
 		List<SelectItem> validades = new ArrayList<SelectItem>();
+
 		validades.add(new SelectItem("1", "1 dia"));
+
 		for (int i = 2; i <= 30; ++i) {
 			validades.add(new SelectItem(i, i + " dias"));
 		}
+
 		return validades;
 	}
 
@@ -299,6 +380,27 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		}
 
 		return true;
+	}
+
+	public String confirmar() {
+
+		String acao[] = this.aprovacao.getChaveEstrangeira().split(";");
+
+		if (acao[3].equals("adicionar")) {
+			try {
+				this.editarCadastroUsuarioEJB.persistir(this.aprovacao.getId());
+			} catch (ModeloException m) {
+				m.printStackTrace();
+			}
+		} else if (acao[3].equals("excluir")) {
+			try {
+				this.editarCadastroUsuarioEJB.remover(this.aprovacao.getId());
+			} catch (ModeloException m) {
+				m.printStackTrace();
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -511,6 +613,14 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		} catch (ModeloException m) {
 			m.printStackTrace();
 		}
+	}
+
+	public Aprovacao getAprovacao() {
+		return aprovacao;
+	}
+
+	public void setAprovacao(Aprovacao aprovacao) {
+		this.aprovacao = aprovacao;
 	}
 
 }
