@@ -289,8 +289,12 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			a.setInstituicao(i);
 			a.setValidade(true);
 
-			entityManager.remove(aprovacao);
 			entityManager.persist(a);
+
+			Query query = this.entityManager
+					.createQuery("DELETE  FROM Aprovacao a WHERE a = :aprovacao ");
+			query.setParameter("aprovacao", aprovacao);
+			query.executeUpdate();
 
 		} catch (Exception e) {
 			throw new ModeloException(e);
