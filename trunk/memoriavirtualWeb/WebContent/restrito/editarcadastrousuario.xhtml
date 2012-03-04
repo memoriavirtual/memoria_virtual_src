@@ -19,8 +19,8 @@
 			<div class="formulario">
 
 				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado" infoClass="sucesso"
-						errorClass="erro"></h:message>
+					<h:messages id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro" globalOnly="true"></h:messages>
 				</div>
 
 				<div class="conteudoTitulo">#{mensagens.editarCadastroUsuarioTitle}</div>
@@ -52,8 +52,16 @@
 							</h:message>
 						</div>
 
+						<div>
+							<h:commandLink class="labels" rendered="#{editarCadastroUsuarioMB.mostrarLink}"
+								value="#{mensagens.editarCadastroUsuarioLinkEditar}"
+								action="#{editarCadastroUsuarioMB.mostrar}"></h:commandLink>
+						</div>
+
+
 						<h:dataTable id="acessos" var="acesso"
-							value="#{editarCadastroUsuarioMB.acessos}">
+							value="#{editarCadastroUsuarioMB.acessos}"
+							rendered="#{editarCadastroUsuarioMB.mostrar}">
 							<h:column>
 								<h:outputLabel class="labeltabela"
 									value="#{mensagens.editarCadastroUsuarioNivel}"></h:outputLabel>
@@ -61,9 +69,6 @@
 								<h:outputLabel class="labeltabela"
 									value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
 								<h:inputText value="#{acesso.instituicao.nome}">
-									<f:ajax execute="@this" event="blur"
-										render="validacaoInstituicao"
-										listener="#{editarCadastroUsuarioMB.validateInstituicao}"></f:ajax>
 								</h:inputText>
 								<h:commandLink
 									action="#{editarCadastroUsuarioMB.excluirAcesso(acesso)}">
@@ -78,9 +83,18 @@
 						</h:dataTable>
 
 						<div>
+							<h:commandLink class="labels"
+								action="#{editarCadastroUsuarioMB.adicionarAcesso}"
+								value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"
+								rendered="#{editarCadastroUsuarioMB.mostrar}"></h:commandLink>
+						</div>
+
+						<div>
 							<h:outputLabel class="labels"
-								value="#{mensagens.editarCadastroUsuarioJustificativa}"></h:outputLabel>
-							<h:inputText value="#{editarCadastroUsuarioMB.justificativa}">
+								value="#{mensagens.editarCadastroUsuarioJustificativa}"
+								rendered="#{editarCadastroUsuarioMB.mostrar}"></h:outputLabel>
+							<h:inputText value="#{editarCadastroUsuarioMB.justificativa}"
+								rendered="#{editarCadastroUsuarioMB.mostrar}">
 								<f:ajax event="blur" execute="@this"
 									render="validacaoJustificativa"
 									listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
@@ -94,26 +108,29 @@
 
 						<div>
 							<h:outputLabel class="labels"
-								value="#{mensagens.editarCadastroUsuarioValidade}">
+								value="#{mensagens.editarCadastroUsuarioValidade}"
+								rendered="#{editarCadastroUsuarioMB.mostrar}">
 							</h:outputLabel>
-							<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}">
+							<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}"
+								rendered="#{editarCadastroUsuarioMB.mostrar}">
 								<f:selectItems value="#{editarCadastroUsuarioMB.validades}"></f:selectItems>
 							</h:selectOneMenu>
 						</div>
 
 						<div>
 							<h:outputLabel class="labels"
-								value="#{mensagens.editarCadastroUsuarioAdministradores}"></h:outputLabel>
-							<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}">
+								value="#{mensagens.editarCadastroUsuarioAdministradores}"
+								rendered="#{editarCadastroUsuarioMB.mostrar}"></h:outputLabel>
+							<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}"
+								rendered="#{editarCadastroUsuarioMB.mostrar}">
 								<f:selectItems value="#{editarCadastroUsuarioMB.admnistradores}"></f:selectItems>
 							</h:selectOneMenu>
 						</div>
+
+
 					</fieldset>
 
 					<div class="botao">
-						<h:commandButton
-							action="#{editarCadastroUsuarioMB.adicionarAcesso}"
-							value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"></h:commandButton>
 						<h:commandButton id="botaoEditar"
 							value="#{mensagens.editarCadastroUsuarioBotaoSalvar}"
 							action="#{editarCadastroUsuarioMB.editarCadastroUsuario}">

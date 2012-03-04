@@ -199,8 +199,8 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String link = memoriaVirtualEJB.getURLServidor()
 						+ "/editarcadastrousuario?Id=" + idEmbaralhado;
 
-				// this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(),
-				// "mv", mensagem);
+				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
+						link);
 
 			}
 		} catch (Exception e) {
@@ -307,7 +307,25 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		try {
 
 			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
-			entityManager.remove(aprovacao);
+			String acessoString[] = aprovacao.getChaveEstrangeira().split(";");
+
+			long instituicaoId = new Long(acessoString[2]).longValue();
+			Grupo g = entityManager.find(Grupo.class, acessoString[0]);
+			Usuario u = entityManager.find(Usuario.class, acessoString[1]);
+			Instituicao i = entityManager
+					.find(Instituicao.class, instituicaoId);
+
+			Query removeAcesso = this.entityManager
+					.createQuery("DELETE FROM Acesso a WHERE a.grupo = :grupo AND a.instituicao = :instituicao AND a.usuario = :usuario AND a.validade = true");
+			removeAcesso.setParameter("instituicao", i);
+			removeAcesso.setParameter("usuario", u);
+			removeAcesso.setParameter("grupo", g);
+			removeAcesso.executeUpdate();
+
+			Query query = this.entityManager
+					.createQuery("DELETE FROM Aprovacao a WHERE a.id = :id");
+			query.setParameter("id", aprovacao.getId());
+			query.executeUpdate();
 
 		} catch (Exception e) {
 			throw new ModeloException(e);
@@ -320,7 +338,11 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 			long id = new Long(aprovacaoString).longValue();
 			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
-			entityManager.remove(aprovacao);
+
+			Query query = this.entityManager
+					.createQuery("DELETE FROM Aprovacao a WHERE a =: parametro");
+			query.setParameter("parametro", aprovacao);
+			query.executeUpdate();
 
 		} catch (Exception e) {
 			throw new ModeloException(e);

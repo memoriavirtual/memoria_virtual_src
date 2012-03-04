@@ -63,7 +63,7 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.RenderizarMenuMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 
 	<navigation-rule>
 		<display-name>login</display-name>
@@ -76,6 +76,26 @@
 		<navigation-case>
 			<from-outcome>falha</from-outcome>
 			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<display-name>editarCadastroUsuario</display-name>
+		<from-view-id>/restrito/validaredicao.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<display-name>editarCadastroUsuario</display-name>
+		<from-view-id>/restrito/editarcadastrousuario.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 
@@ -135,7 +155,7 @@
 	<navigation-rule>
 		<display-name>excluirInstituicao</display-name>
 		<from-view-id>/restrito/emailExcluirInstituicao.xhtml</from-view-id>
-		
+
 		<navigation-case>
 			<from-outcome>voltar1</from-outcome>
 			<to-view-id>/restrito/confirmarExcluirInstituicao.xhtml</to-view-id>
