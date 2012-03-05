@@ -251,25 +251,25 @@ public class ExcluirInstituicaoMB implements Serializable {
 		try {
 			boolean flagExisteNasDuasListas = true;
 			this.listaAdministradores = excluirInstituicaoEJB.listarAdministradores();
-			for(Usuario c : this.listaAdministradores) {   
+			for(Usuario administradores : this.listaAdministradores) {   
 
-				for(Usuario x : this.gerentesInstituicao) {   
+				for(Usuario gerentes : this.gerentesInstituicao) {   
 					if(this.gerente != null){
-						if(c.getId().compareTo( x.getId()) ==  0){
+						if(administradores.getId().compareTo( gerentes.getId()) ==  0){
 							flagExisteNasDuasListas = false;
 						}
 					}
-					if(flagExisteNasDuasListas && (c.getId().compareTo( this.requisitor.getId()) !=  0)){
-						validadoreslista.add(new String(c.getNomeCompleto()));
+					if(flagExisteNasDuasListas && (administradores.getId().compareTo( this.requisitor.getId()) !=  0)){
+						validadoreslista.add(new String(administradores.getNomeCompleto()));
 					}
 				}
 				flagExisteNasDuasListas = true;
 
 			}
 			if(this.gerente != null){
-				for(Usuario x : this.gerentesInstituicao) {   
-					if(x.getId().compareTo( this.requisitor.getId()) !=  0){
-						validadoreslista.add(new String(x.getNomeCompleto()));  
+				for(Usuario validadores : this.gerentesInstituicao) {   
+					if(validadores.getId().compareTo( this.requisitor.getId()) !=  0){
+						validadoreslista.add(new String(validadores.getNomeCompleto()));  
 					}
 				}
 			}
@@ -309,11 +309,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 			if(booleanValidador()){
 
 				Date dataValidade = new Date();   
-				int a = Integer.parseInt(this.validade,10);
+				int numeroDieas = Integer.parseInt(this.validade,10);
 
 				DateFormat formatoData = DateFormat.getDateInstance();
 				GregorianCalendar gc=new GregorianCalendar();
-				gc.add(GregorianCalendar.HOUR, 24*a);
+				gc.add(GregorianCalendar.HOUR, 24*numeroDieas);
 				dataValidade = gc.getTime();
 				String gerente = (this.gerente == null )? this.bundle.getString("excluirInstituicaoSemGerente") : this.gerente.getNomeCompleto() ;
 				try {
