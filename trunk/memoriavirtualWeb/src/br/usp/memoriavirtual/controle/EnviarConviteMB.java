@@ -44,6 +44,11 @@ public class EnviarConviteMB {
 		return null;
 	}
 
+	public String deleteEmail() {
+
+		return null;
+	}
+	
 	public String deleteEmail(Email email) {
 		listaEmails.remove(email);
 		return null;
