@@ -22,7 +22,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		List<Usuario> usuarios;
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Usuario a WHERE a.administrador = FALSE a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
+				.createQuery("SELECT a FROM Usuario a WHERE a.administrador = FALSE AND a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
 		query.setParameter("parteNome", "%" + parteNome + "%");
 		try {
 			usuarios = (List<Usuario>) query.getResultList();
