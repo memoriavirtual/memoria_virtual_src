@@ -97,8 +97,7 @@ public class ExcluirUsuarioMB {
 		return;
 	}
 	
-	public String selecionarUsuarios(Usuario usuario){ 
-		this.setUsuario(usuario);
+	public String selecionarUsuario(){ 
 		return null;
 	}
 
