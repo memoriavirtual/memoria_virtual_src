@@ -9,6 +9,6 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 @Remote
 public interface ExcluirUsuarioRemote {
 
-	public List<Usuario> listarUsuarios(String parteNome);
+	public List<Usuario> listarUsuarios(String parteNome, Boolean isAdministrador);
 
 }
