@@ -17,13 +17,20 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String parteNome) {
+	public List<Usuario> listarUsuarios(String parteNome,
+			Boolean isAdministrador) {
 
 		List<Usuario> usuarios;
 		Query query;
-		query = this.entityManager
-				.createQuery("SELECT a FROM Usuario a WHERE a.administrador = FALSE AND a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
-		query.setParameter("parteNome", "%" + parteNome + "%");
+		if (isAdministrador) {
+			query = this.entityManager
+					.createQuery("SELECT a FROM Usuario a WHERE a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
+			query.setParameter("parteNome", "%" + parteNome + "%");
+		} else {
+			query = this.entityManager
+					.createQuery("SELECT a FROM Usuario a WHERE a.administrador = FALSE AND a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
+			query.setParameter("parteNome", "%" + parteNome + "%");
+		}
 		try {
 			usuarios = (List<Usuario>) query.getResultList();
 			return usuarios;
