@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
@@ -21,6 +23,7 @@ public class ExcluirUsuarioMB {
 	private String justificativa;
 	private String excluir;
 	private Usuario usuario;
+	private Usuario eliminador;
 
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 
@@ -89,15 +92,19 @@ public class ExcluirUsuarioMB {
 	}
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		this.eliminador = (Usuario) request.getSession().getAttribute("usuario");
 		usuarios.clear();
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir);
+		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir, this.eliminador.isAdministrador());
 		setUsuarios(listaUsuarios);
 		usuario = null;
 		return;
 	}
 	
-	public String selecionarUsuario(){ 
+	public String selecionarUsuario(Usuario usuario){ 
+		setNomeExcluir(usuario.getNomeCompleto());
 		return null;
 	}
 
