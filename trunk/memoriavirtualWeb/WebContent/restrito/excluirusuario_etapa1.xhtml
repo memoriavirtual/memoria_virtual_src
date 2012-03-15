@@ -46,7 +46,7 @@
 							<h:dataTable id="sugestoesId" var="usuario"
 								value="#{excluirUsuarioMB.usuarios}">
 								<h:column>
-									  <h:commandLink
+									<h:commandLink
 										action="#{excluirUsuarioMB.selecionarUsuario(usuario)}">#{usuario.nomeCompleto}</h:commandLink>
 								</h:column>
 							</h:dataTable>
@@ -99,7 +99,8 @@
 					</fieldset>
 
 					<div class="botao">
-						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}">
+						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}"
+							action="#{excluirUsuarioMB.excluirEtapa1}">
 						</h:commandButton>
 						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}">
 						</h:commandButton>
