@@ -104,8 +104,14 @@ public class ExcluirUsuarioMB {
 	}
 	
 	public String selecionarUsuario(Usuario usuario){ 
+		this.usuario = usuario;
 		setNomeExcluir(usuario.getNomeCompleto());
 		return null;
+	}
+	
+	public String excluirEtapa1(){
+		this.nivelPermissao = this.usuario.getEmail();
+		return "etapa2";
 	}
 
 }
