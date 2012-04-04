@@ -7,6 +7,7 @@ import javax.ejb.Remote;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
@@ -122,4 +123,6 @@ public interface EditarCadastroUsuarioRemote {
 
 	public void persistir(long id) throws ModeloException;
 
+	public List<Grupo> getGrupos() throws ModeloException;
+	public List<Instituicao> listarInstituicoes(String instituicao) throws ModeloException;
 }

@@ -359,13 +359,15 @@ h4 {
 }
 
 #sugestoesId {
+	position: absolute;
 	border-color: black;
 	border-width: 2px;
 	border-style: solid;
 	margin-left: 440px;
 	margin-top: 0px;
 	width: 250px;
-	z-index: -1;
+	z-index: 100;
+	border-color: black;
 }
 
 #sugestoesId td:hover {
@@ -382,6 +384,35 @@ h4 {
 }
 
 #sugestoesId a:hover {
+	color: white;
+}
+
+table[id *=instituicoes] {
+	background-color: white;
+	position: absolute;
+	border-color: black;
+	border-width: 2px;
+	border-style: solid;
+	margin-left: 476px;
+	margin-top: -8px;
+	width: 250px;
+	z-index: 100;
+}
+
+table[id *=instituicoes] td:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
+	cursor: hand;
+}
+
+table[id *=instituicoes] a {
+	color: black;
+	text-decoration: none;
+	display: block;
+}
+
+table[id *=instituicoes] a:hover {
 	color: white;
 }
 /*************************************************************/
@@ -467,6 +498,7 @@ textarea:focus {
 .labeltabela {
 	font-size: 16px;
 	margin-right: 5px;
+	margin-left: 10px;
 }
 
 #acessos {
@@ -483,6 +515,6 @@ textarea:focus {
 }
 
 .delete {
-	margin-left: 15px;
+	margin-left: 10px;
 	margin-bottom: -8px;
 }

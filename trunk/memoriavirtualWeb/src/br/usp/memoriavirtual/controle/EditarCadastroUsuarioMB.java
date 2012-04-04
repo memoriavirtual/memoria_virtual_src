@@ -39,15 +39,18 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private String telefone;
 	private List<Usuario> usuarios;
 	private List<Usuario> administradores;
+	private List<Instituicao> instituicoes;
 	private Usuario usuario;
 	private String administrador;
 	private String justificativa;
+	private String instituicao;
 	private Integer validade;
 	private List<Acesso> acessos;
 	private List<Acesso> acessosAntigos;
 	private Aprovacao aprovacao;
 	private boolean mostrar = false;
 	private boolean mostrarLink = true;
+	private boolean renderInstituicoes = false;
 
 	public EditarCadastroUsuarioMB() {
 		super();
@@ -171,10 +174,24 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			return "sucesso";
 		}
 
-		MensagensDeErro.getErrorMessage("editarCadastroUsuarioUsuarioInvalido",
-				"validacaoUsuario");
+		MensagensDeErro.getErrorMessage(
+				"editarCadastroUsuarioErroUsuarioInvalido", "resultado");
 
 		return null;
+	}
+
+	public String selecionarInstituicao(Acesso acesso, Instituicao i) {
+
+		if (acesso != null && i != null) {
+			if (this.acessos.contains(acesso) && this.instituicoes.contains(i))
+				this.acessos.get(this.acessos.indexOf(acesso))
+						.setInstituicao(i);
+			this.instituicoes.clear();
+			return null;
+		} else {
+			return null;
+		}
+
 	}
 
 	public void validateNome(AjaxBehaviorEvent e) {
@@ -238,6 +255,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		acesso.setGrupo(grupo);
 		acesso.setInstituicao(instituicao);
 		acesso.setUsuario(this.usuario);
+		this.instituicoes.clear();
 
 		this.acessos.add(acesso);
 		return null;
@@ -346,6 +364,41 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public List<Instituicao> listarInstituicoes(String instituicao) {
+
+		try {
+			this.instituicoes = editarCadastroUsuarioEJB
+					.listarInstituicoes(instituicao);
+			if (this.instituicoes.size() > 0)
+				this.renderInstituicoes = true;
+			else
+				this.renderInstituicoes = false;
+		} catch (ModeloException m) {
+			m.printStackTrace();
+		}
+
+		return this.instituicoes;
+	}
+
+	public List<SelectItem> getNivel() {
+
+		List<SelectItem> niveis = new ArrayList<SelectItem>();
+		List<Grupo> grupos = new ArrayList<Grupo>();
+
+		try {
+			grupos = this.editarCadastroUsuarioEJB.getGrupos();
+		} catch (ModeloException m) {
+			m.printStackTrace();
+		}
+
+		for (Grupo g : grupos) {
+			niveis.add(new SelectItem(g.getId(), g.getId()));
+		}
+
+		return niveis;
+
 	}
 
 	public List<SelectItem> getAdmnistradores() {
@@ -692,6 +745,30 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public void setMostrarLink(boolean mostrarLink) {
 		this.mostrarLink = mostrarLink;
+	}
+
+	public List<Instituicao> getInstituicoes() {
+		return instituicoes;
+	}
+
+	public void setInstituicoes(List<Instituicao> instituicoes) {
+		this.instituicoes = instituicoes;
+	}
+
+	public String getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(String instituicao) {
+		this.instituicao = instituicao;
+	}
+
+	public boolean isRenderInstituicoes() {
+		return renderInstituicoes;
+	}
+
+	public void setRenderInstituicoes(boolean renderInstituicoes) {
+		this.renderInstituicoes = renderInstituicoes;
 	}
 
 }

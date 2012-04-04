@@ -33,6 +33,22 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Grupo> getGrupos() throws ModeloException {
+
+		List<Grupo> grupos = new ArrayList<Grupo>();
+
+		try {
+			Query query = this.entityManager
+					.createQuery("SELECT g FROM Grupo g");
+			grupos = (List<Grupo>) query.getResultList();
+			return grupos;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Acesso> getAcessos(Usuario usuario) throws ModeloException {
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		Query query = entityManager
@@ -345,6 +361,22 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			query.executeUpdate();
 
 		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Instituicao> listarInstituicoes(String instituicao) throws ModeloException{
+		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
+
+		try{
+			Query query = entityManager.createQuery("SELECT i FROM Instituicao i WHERE i.nome LIKE :padrao ORDER BY i.nome");
+			query.setParameter("padrao", "%" + instituicao + "%");
+			instituicoes = (List<Instituicao>)query.getResultList();
+			return instituicoes;
+		}
+		catch(Exception e){
 			throw new ModeloException(e);
 		}
 	}
