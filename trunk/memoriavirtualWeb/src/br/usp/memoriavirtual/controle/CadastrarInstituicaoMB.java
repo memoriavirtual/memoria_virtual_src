@@ -70,6 +70,13 @@ public class CadastrarInstituicaoMB {
 	}
 
 	public String resetCadastrarinstituicao() {
+		this.nome = "";
+		this.localizacao = "";
+		this.endereco = "";
+		this.cidade = "";
+		this.estado = "";
+		this.cep = "";
+		this.telefone = "";
 		return "reset";
 	}
 

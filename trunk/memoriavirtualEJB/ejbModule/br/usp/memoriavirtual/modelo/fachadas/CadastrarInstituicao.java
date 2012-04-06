@@ -13,9 +13,7 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	public CadastrarInstituicao(){
-		System.out.println("antes");
-	}
+	
 	
 	public void cadastrarInstituicao(Instituicao instituicao)
 	 {
