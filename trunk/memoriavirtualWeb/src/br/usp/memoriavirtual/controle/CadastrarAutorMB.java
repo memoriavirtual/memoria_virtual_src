@@ -35,6 +35,16 @@ public class CadastrarAutorMB {
 	private String atividade = "";
 	private String tipoAutoria = "";
 
+	private boolean outroTipoAutoria = false;
+
+	private boolean normalTipoAutoria = true;
+
+	private boolean outroAtividade = false;
+
+	private boolean normalAtividade = true;
+	
+	
+
 	/**
 	 * Construtor Padrão
 	 */
@@ -49,6 +59,8 @@ public class CadastrarAutorMB {
 	public String cadastrarAutor() {
 		String retorno = null;
 
+		
+		
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		if (this.validateNome() && this.validateSobrenome()
 				&& this.validateNascimento() && this.validateObito()
@@ -63,6 +75,17 @@ public class CadastrarAutorMB {
 								.parse(this.obito)));
 				MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
 						"resultado");
+				this.nome = "";
+				this.sobrenome = "";
+				this.codinome = "";
+				this.nascimento = "";
+				this.obito = "";
+				this.atividade = "";
+				this.tipoAutoria = "";
+				this.outroTipoAutoria = false;
+				this.normalTipoAutoria = true;
+				this.outroAtividade = false;
+				this.normalAtividade = true;
 			} catch (ParseException e) {
 				MensagensDeErro.getErrorMessage("cadastrarAutorFalha",
 						"resultado");
@@ -119,8 +142,7 @@ public class CadastrarAutorMB {
 				.getString("cadastrarAutorListaTipoAutoria17")));
 		tiposAutoria.add(new SelectItem(bundle
 				.getString("cadastrarAutorListaTipoAutoria18")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria19")));
+
 		return tiposAutoria;
 	}
 
@@ -176,20 +198,61 @@ public class CadastrarAutorMB {
 				.getString("cadastrarAutorListaAtividade21")));
 		atividades.add(new SelectItem(bundle
 				.getString("cadastrarAutorListaAtividade22")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade23")));
 
 		return atividades;
 	}
 
+	public String abrirAtividadeOutro() {
+		this.atividade = "";
+		this.outroAtividade = !this.outroAtividade;
+		this.normalAtividade = !this.normalAtividade;
+		return null;
+	}
+
+	public String getOutroLinkAtividade() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (this.normalAtividade) {
+			return bundle.getString("cadastrarAutorEspecificar");
+		} else {
+			return bundle.getString("cadastrarAutorSelecionar");
+		}
+
+	}
+	public String abrirAutoriaOutro() {
+		this.tipoAutoria = "";
+		this.outroTipoAutoria = !this.outroTipoAutoria;
+		this.normalTipoAutoria = !this.normalTipoAutoria;
+		return null;
+	}
+
+	public String getOutroLink() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (this.normalTipoAutoria) {
+			return bundle.getString("cadastrarAutorEspecificar");
+		} else {
+			return bundle.getString("cadastrarAutorSelecionar");
+		}
+
+	}
+	
 	public String resetCadastrarAutor() {
 		this.nome = "";
-		this.atividade = "";
+		this.sobrenome = "";
 		this.codinome = "";
 		this.nascimento = "";
 		this.obito = "";
-		this.sobrenome = "";
+		this.atividade = "";
 		this.tipoAutoria = "";
+		this.outroTipoAutoria = false;
+		this.normalTipoAutoria = true;
+		this.outroAtividade = false;
+		this.normalAtividade = true;
 		return "reset";
 	}
 
@@ -285,11 +348,54 @@ public class CadastrarAutorMB {
 			format.setLenient(false);
 			format.parse(this.obito);
 		} catch (ParseException e) {
-			MensagensDeErro.getErrorMessage("cadastrarAutorObitoIncorreto",
-					"validacaoObito");
+			MensagensDeErro.getErrorMessage(
+					"cadastrarAutorNascimentoIncorreto", "validacaoObito");
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the outroAtividade
+	 */
+	public boolean isOutroAtividade() {
+		return outroAtividade;
+	}
+
+	/**
+	 * @return the normalAtividade
+	 */
+	public boolean isNormalAtividade() {
+		return normalAtividade;
+	}
+
+	/**
+	 * @param outroAtividade the outroAtividade to set
+	 */
+	public void setOutroAtividade(boolean outroAtividade) {
+		this.outroAtividade = outroAtividade;
+	}
+
+	/**
+	 * @param normalAtividade the normalAtividade to set
+	 */
+	public void setNormalAtividade(boolean normalAtividade) {
+		this.normalAtividade = normalAtividade;
+	}
+
+	/**
+	 * @return the outroTipoAutoria
+	 */
+	public boolean isOutroTipoAutoria() {
+		return outroTipoAutoria;
+	}
+
+	/**
+	 * @param outroTipoAutoria
+	 *            the outroTipoAutoria to set
+	 */
+	public void setOutroTipoAutoria(boolean outroTipoAutoria) {
+		this.outroTipoAutoria = outroTipoAutoria;
 	}
 
 	/**
@@ -396,5 +502,21 @@ public class CadastrarAutorMB {
 	public void setAtividade(String atividade) {
 		this.atividade = atividade;
 	}
+
+	/**
+	 * @return the normaltipoAutoria
+	 */
+	public boolean isNormalTipoAutoria() {
+		return normalTipoAutoria;
+	}
+
+	/**
+	 * @param normaltipoAutoria
+	 *            the normaltipoAutoria to set
+	 */
+	public void setNormalTipoAutoria(boolean normalTipoAutoria) {
+		this.normalTipoAutoria = normalTipoAutoria;
+	}
+
 
 }

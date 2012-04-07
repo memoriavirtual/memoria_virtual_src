@@ -359,6 +359,8 @@ h4 {
 }
 
 #sugestoesId {
+	background-color: #F7F7F7;
+	paddinh: 0px;
 	position: absolute;
 	border-color: black;
 	border-width: 2px;
@@ -414,6 +416,15 @@ table[id *=instituicoes] a {
 
 table[id *=instituicoes] a:hover {
 	color: white;
+}
+
+.outraAutoria {
+	color: black;
+	padding: 7px;
+}
+
+.outraAutoria:hover {
+	color:silver;
 }
 /*************************************************************/
 /*                FIM CONTEUDO / FORMULARIO                   /

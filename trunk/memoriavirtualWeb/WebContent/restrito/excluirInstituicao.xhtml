@@ -17,7 +17,9 @@
 		<ui:define name="conteudo">
 			<div class="formulario">
 
-
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso" errorClass="erro"></h:message>
+				</div>
 				<div class="conteudoTitulo">#{mensagens.excluirInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoPassoPrimeiro}</div>
 
@@ -33,13 +35,10 @@
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
-								<f:ajax event="keyup" execute="@this" render="validacaoNome"
-									listener="#{excluirInstituicaoMB.validadeNome}" />
+								
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
+							
+							
 						</div>
 						<div id="sugestoes">
 							<h:dataTable id="sugestoesId" var="instituicao"
@@ -49,6 +48,7 @@
 										action="#{excluirInstituicaoMB.selecionarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
 								</h:column>
 							</h:dataTable>
+							<div></div>
 						</div>
 
 						<div>

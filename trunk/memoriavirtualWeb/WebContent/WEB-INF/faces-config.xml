@@ -206,6 +206,8 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	
+	
 	<navigation-rule>
 		<display-name>cadastrarAutor</display-name>
 		<from-view-id>/restrito/cadastrarautor.xhtml</from-view-id>

@@ -28,20 +28,21 @@
 				<div class="conteudoTitulo">#{mensagens.cadastrarAutorTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarAutorDescricao}</div>
 
-				<h:form method="post" prependId="false">
+				<h:form method="post"  prependId="false">
 					<fieldset>
 						
-						<div>
+						<div  >
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorTipoAutoria}</h:outputLabel>
-							<h:selectOneMenu value="#{cadastrarAutorMB.tipoAutoria}">
-									<f:selectItems value="#{cadastrarAutorMB.listaTipoAutoria}" />
-									<f:ajax event="blur" execute="@this" render="validacaoTipoAutoria"
-									listener="#{cadastrarAutorMB.validateTipoAutoria}" />
+							<h:selectOneMenu rendered="#{cadastrarAutorMB.normalTipoAutoria}"  value="#{cadastrarAutorMB.tipoAutoria}">
+									<f:selectItems	 value="#{cadastrarAutorMB.listaTipoAutoria}"  ></f:selectItems>
+									
 							</h:selectOneMenu>
+							
+							<h:inputText rendered="#{cadastrarAutorMB.outroTipoAutoria}" value="#{cadastrarAutorMB.tipoAutoria}"/>
+							<h:commandLink class="outraAutoria" value ="#{cadastrarAutorMB.outroLink}"
+										action="#{cadastrarAutorMB.abrirAutoriaOutro}"/>
 							<div></div>
-							<h:message id="validacaoTipoAutoria" for="validacaoTipoAutoria"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
+							
 						</div>
 						
 						<div>
@@ -79,15 +80,14 @@
 						
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorAtividade}</h:outputLabel>
-							<h:selectOneMenu value="#{cadastrarAutorMB.atividade}">
+							<h:selectOneMenu rendered="#{cadastrarAutorMB.normalAtividade}" value="#{cadastrarAutorMB.atividade}">
 									<f:selectItems value="#{cadastrarAutorMB.listaAtividade}" />
-									<f:ajax event="blur" execute="@this" render="validacaoAtividade"
-									listener="#{cadastrarAutorMB.validateAtividade}" />
 							</h:selectOneMenu>
+							<h:inputText rendered="#{cadastrarAutorMB.outroAtividade}" value="#{cadastrarAutorMB.atividade}"/>
+							<h:commandLink class="outraAutoria" value ="#{cadastrarAutorMB.outroLinkAtividade}"
+										action="#{cadastrarAutorMB.abrirAtividadeOutro}"/>
 							<div></div>
-							<h:message id="validacaoAtividade" for="validacaoAtividade"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
+							
 						</div>
 						
 						

@@ -98,7 +98,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 		List<Instituicao> listaInstituicoes = new ArrayList<Instituicao>();
 		listaInstituicoes = this.memoriaVirtualEJB.listarInstituicoes(this.nome);
 		this.setInstituicoes(listaInstituicoes);
-		this.instituicao = null;
+		if(this.instituicoes.isEmpty()){
+			Instituicao inst = new Instituicao();
+			inst.setNome(this.bundle.getString("excluirInstituicaoErrolistavazia"));
+			this.instituicoes.add(inst);
+		}
 		return;
 	}
 
@@ -113,8 +117,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 *  Que é interpretada pelo facesConfig chamando a próxima página do CDU ExcluirInstituicao
 	 */
 	public String selecionarInstituicoes (){
-		if(this.instituicao == null)
-			this.instituicoes.clear();
 		if( this.validateNome()  && this.validateValidade()) {
 			this.listarGerentes(true);
 			return "Instselecionada";
@@ -134,8 +136,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 */
 	public String selecionarInstituicoes ( Instituicao instituicao ){ 
-		this.setInstituicao(instituicao);
-		this.setNome(instituicao.getNome());
+		if (!instituicao.getNome().equals(this.bundle.getString("excluirInstituicaoErrolistavazia"))){
+			this.setInstituicao(instituicao);
+			this.setNome(instituicao.getNome());
+		}
 		return null;
 	}
 
@@ -534,15 +538,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * Utilizado pelo validador do evento e pelo validador do botão
 	 */
 	public boolean validateNome(){
-		if(  this.instituicoes.isEmpty() ){
-			MensagensDeErro.getErrorMessage("excluirInstituicaoErrolistavazia",
-					"validacaoNome");
+		
+		if(!this.memoriaVirtualEJB.verificarDisponibilidadeNomeInstituicao(this.nome) )
+			return true;
+		else{
+			MensagensDeErro.getErrorMessage("excluirInstituicaoDescricaocampo1",
+					"resultado");
 			return false;
 		}
-
-
-
-		return true;
 	}
 
 	/**
