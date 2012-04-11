@@ -115,10 +115,11 @@ public class ExcluirUsuarioMB {
 		try {
 			this.usuario = (Usuario) this.excluirUsuarioEJB
 					.recuperarDadosUsuario(getNomeExcluir());
+			this.nivelPermissao = this.usuario.getEmail();
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.nivelPermissao = this.usuario.getEmail();
-		return "etapa2";
+		return null;
 	}
 }
