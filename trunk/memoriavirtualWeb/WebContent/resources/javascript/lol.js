@@ -1,15 +1,16 @@
-$(document).ready(function(){
+$(document).ready(function() {
 	$("#sugestoesId").hide();
-	$("#input").keyup(function(){
-		if(this.value != ""){
-			//$("#sugestoesId").show();
+
+	$("input").keyup(function() {
+		if ($("#sugestoesId > tbody > tr > td:empty ").size() > 0) {
+			$("div #sugestoes").hide();
 		}
-		else{
-			$("#sugestoesId").hide();
-		}
+		else
+			$("div #sugestoes").show();
 	});
-	$("#sugestao").click(function(){
-		alert(this.size());
-	});
+
+	
 });
 
+function opa() {
+}

@@ -50,20 +50,21 @@ public class RealizarLoginMB {
 
 		if (usuarioAutenticado != null) {
 			autenticado = true;
-			
+
 			/*
 			 * Coloca o usuario autenticado no sessao.
 			 */
 			HttpServletRequest request = (HttpServletRequest) FacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
 			request.getSession().setAttribute("usuario", usuarioAutenticado);
-			
+
 			/*
 			 * Coloca a lista de acessos do usuario no sessao.
 			 */
-			List<Acesso> listaAcessos = realizarLoginEJB.pegarAcessos(usuarioAutenticado);
+			List<Acesso> listaAcessos = realizarLoginEJB
+					.pegarAcessos(usuarioAutenticado);
 			request.getSession().setAttribute("acessos", listaAcessos);
-			
+
 		} else {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.invalidateSession();

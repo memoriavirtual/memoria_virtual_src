@@ -32,9 +32,10 @@
 							<h:inputText value="#{editarCadastroUsuarioMB.nome}"
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{editarCadastroUsuarioMB.listarUsuarios}" />
+									listener="#{editarCadastroUsuarioMB.listarUsuarios}"
+									onevent="opa()" />
 							</h:inputText>
-						
+
 						</div>
 						<div id="sugestoes">
 							<h:dataTable id="sugestoesId" var="usuario"
