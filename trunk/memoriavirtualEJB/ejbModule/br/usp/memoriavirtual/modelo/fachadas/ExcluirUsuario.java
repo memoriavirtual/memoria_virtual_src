@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -39,5 +40,19 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			return null;
 		}
 
+	}
+	
+	public Usuario recuperarDadosUsuario(String nome) throws ModeloException {
+		Query query = entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.nomeCompleto = :nome");
+		query.setParameter("nome", nome);
+		Usuario usuario = null;
+		try {
+			usuario = (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			throw new ModeloException("Erro ao carregar os dados!");
+		}
+
+		return usuario;
 	}
 }
