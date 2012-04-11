@@ -54,8 +54,8 @@ public class ExcluirUsuarioMB {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
-	public void setUsuario(Usuario usuario){
+
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
@@ -86,32 +86,39 @@ public class ExcluirUsuarioMB {
 	public List<Usuario> getUsuarios() {
 		return this.usuarios;
 	}
-	
-	public Usuario getUsuario(){
+
+	public Usuario getUsuario() {
 		return this.usuario;
 	}
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
-		this.eliminador = (Usuario) request.getSession().getAttribute("usuario");
+		this.eliminador = (Usuario) request.getSession()
+				.getAttribute("usuario");
 		usuarios.clear();
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir, this.eliminador.isAdministrador());
+		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir,
+				this.eliminador.isAdministrador());
 		setUsuarios(listaUsuarios);
 		usuario = null;
 		return;
 	}
-	
-	public String selecionarUsuario(Usuario usuario){ 
+
+	public String selecionarUsuario(Usuario usuario) {
 		this.usuario = usuario;
 		setNomeExcluir(usuario.getNomeCompleto());
 		return null;
 	}
-	
-	public String excluirEtapa1(){
+
+	public String excluirEtapa1() {
+		try {
+			this.usuario = (Usuario) this.excluirUsuarioEJB
+					.recuperarDadosUsuario(getNomeExcluir());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.nivelPermissao = this.usuario.getEmail();
 		return "etapa2";
 	}
-
 }
