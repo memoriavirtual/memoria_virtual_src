@@ -116,7 +116,8 @@ public class ExcluirUsuarioMB {
 			this.usuario = (Usuario) this.excluirUsuarioEJB
 					.recuperarDadosUsuario(getNomeExcluir());
 			this.nivelPermissao = this.usuario.getEmail();
-			return null;
+			setNomeExcluir(usuario.getNomeCompleto());
+			return "etapa2";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
