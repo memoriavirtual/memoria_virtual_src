@@ -98,8 +98,10 @@ public class ExcluirUsuarioMB {
 				.getAttribute("usuario");
 		usuarios.clear();
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir,
+		listaUsuarios = this.excluirUsuarioEJB.listarSemelhantes(this.eliminador.getId(),
 				this.eliminador.isAdministrador());
+		/*listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir,
+				this.eliminador.isAdministrador());*/
 		setUsuarios(listaUsuarios);
 		usuario = null;
 		return;
@@ -123,4 +125,5 @@ public class ExcluirUsuarioMB {
 		}
 		return null;
 	}
+	
 }
