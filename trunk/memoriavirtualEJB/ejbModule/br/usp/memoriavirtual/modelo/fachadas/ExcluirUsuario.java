@@ -55,4 +55,29 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 
 		return usuario;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> listarSemelhantes(String eliminador, Boolean isAdministrador){
+		List<Usuario> usuarios;
+		Query query;
+		if (isAdministrador) {
+			query = this.entityManager
+					.createQuery("SELECT a FROM Usuario a WHERE a.id <> :eliminador AND a.administrador = TRUE ORDER BY a.id ");
+			query.setParameter("eliminador", eliminador);
+		} else {
+			query = this.entityManager
+					.createQuery("SELECT a FROM Usuario a WHERE a.administrador = FALSE AND a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
+			query.setParameter("eliminador", eliminador);
+		}
+		try {
+			usuarios = (List<Usuario>) query.getResultList();
+			return usuarios;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	
 }
