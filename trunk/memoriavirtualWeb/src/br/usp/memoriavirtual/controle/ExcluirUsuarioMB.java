@@ -1,6 +1,10 @@
 package br.usp.memoriavirtual.controle;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,11 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 public class ExcluirUsuarioMB {
 
 	@EJB
 	private ExcluirUsuarioRemote excluirUsuarioEJB;
+	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
 
 	private String nomeExcluir;
 	private int prazoValidade;
@@ -65,17 +73,17 @@ public class ExcluirUsuarioMB {
 	public void setSemelhantes(List<Usuario> semelhantes) {
 		this.semelhantes = semelhantes;
 		List<String> aux = new ArrayList<String>();
-		for (Usuario u : semelhantes) {  
-	        aux.add(u.getNomeCompleto());
-	     } 
+		for (Usuario u : semelhantes) {
+			aux.add(u.getNomeCompleto());
+		}
+		Collections.sort(aux);
 		setNomeSemelhantes(aux);
 	}
-	
 
 	public void setSemelhante(String semelhante) {
 		this.semelhante = semelhante;
 	}
-	
+
 	public void setNomeSemelhantes(List<String> nomeSemelhantes) {
 		this.nomeSemelhantes = nomeSemelhantes;
 	}
@@ -119,7 +127,7 @@ public class ExcluirUsuarioMB {
 	public String getSemelhante() {
 		return this.semelhante;
 	}
-	
+
 	public List<String> getNomeSemelhantes() {
 		return this.nomeSemelhantes;
 	}
@@ -149,7 +157,9 @@ public class ExcluirUsuarioMB {
 			this.usuario = (Usuario) this.excluirUsuarioEJB
 					.recuperarDadosUsuario(getNomeExcluir());
 		} catch (Exception e) {
-			e.printStackTrace();
+			MensagensDeErro.getErrorMessage(
+					"excluiroUsuarioErroUsuarioNaoEncontrado",
+					"resultado");
 			return null;
 		}
 		setNomeExcluir(usuario.getNomeCompleto());
@@ -174,6 +184,11 @@ public class ExcluirUsuarioMB {
 	}
 
 	public String excluirEtapa3() {
+		Date dataValidade = new Date();
+		DateFormat formatoData = DateFormat.getDateInstance();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.add(GregorianCalendar.HOUR, 24 * this.prazoValidade);
+		dataValidade = gc.getTime();
 		return null;
 	}
 
@@ -189,6 +204,25 @@ public class ExcluirUsuarioMB {
 		this.semelhante = "";
 		this.instuicaoPertencente = "";
 		return "cancelar";
+	}
+
+	public void validateJustificativa(AjaxBehaviorEvent e) {
+		this.validateJustificativa();
+	}
+
+	public boolean validateJustificativa() {
+		if (this.justificativa.equals("")) {
+			MensagensDeErro.getErrorMessage(
+					"excluirUsuarioErroJustificativaVazia",
+					"validacaoJustificativa");
+			return false;
+		} else if (this.justificativa.length() < 10) {
+			MensagensDeErro.getErrorMessage(
+					"excluiroUsuarioErroJustificativaCurta",
+					"validacaoJustificativa");
+			return false;
+		}
+		return true;
 	}
 
 }
