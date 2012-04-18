@@ -24,6 +24,7 @@ public class ExcluirUsuarioMB {
 	private String excluir;
 	private Usuario usuario;
 	private Usuario eliminador;
+	private String semelhante;
 
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	private List<Usuario> semelhantes = new ArrayList<Usuario>();
@@ -59,8 +60,13 @@ public class ExcluirUsuarioMB {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
 	public void setSemelhantes(List<Usuario> semelhantes){
 		this.semelhantes = semelhantes;
+	}
+	
+	public void setSemelhante(String semelhante){
+		this.semelhante = semelhante;
 	}
 
 	public String getNomeExcluir() {
@@ -96,7 +102,13 @@ public class ExcluirUsuarioMB {
 	}
 	
 	public List<Usuario> getSemelhantes(){
+		semelhantes = this.excluirUsuarioEJB.listarSemelhantes(this.eliminador.getId(),
+				this.eliminador.isAdministrador());
 		return this.semelhantes;
+	}
+	
+	public String getSemelhante(){
+		return this.semelhante;
 	}
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
