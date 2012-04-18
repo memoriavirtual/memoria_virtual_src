@@ -96,14 +96,15 @@
 								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 					</fieldset>
 
 					<div class="botao">
 						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}"
 							action="#{excluirUsuarioMB.excluirEtapa1}">
 						</h:commandButton>
-						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}">
+						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}"
+							action="#{excluirUsuarioMB.cancelar}">
 						</h:commandButton>
 					</div>
 
