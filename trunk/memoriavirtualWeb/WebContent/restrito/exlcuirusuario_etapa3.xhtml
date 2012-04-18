@@ -29,14 +29,25 @@
 				<h:form method="post" prependId="false">
 					<fieldset>
 
-						
+						</div>
+						<div id="sugestoes">
+							<h:dataTable id="sugestoesId" var="usuario"
+								value="#{excluirUsuarioMB.semelhantes}">
+								<h:column>
+									<h:commandLink>
+										#{usuario.nomeCompleto}</h:commandLink>
+								</h:column>
+							</h:dataTable>
+						</div>
 						
 					</fieldset>
 
 					<div class="botao">
-						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}">
+						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}"
+							action="#{excluirUsuarioMB.excluirEtapa3}">
 						</h:commandButton>
-						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}">
+						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}"
+							action="#{excluirUsuarioMB.cancelar}">
 						</h:commandButton>
 					</div>
 
