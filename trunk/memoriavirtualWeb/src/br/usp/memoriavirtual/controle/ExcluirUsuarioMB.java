@@ -26,6 +26,7 @@ public class ExcluirUsuarioMB {
 	private Usuario eliminador;
 
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	private List<Usuario> semelhantes = new ArrayList<Usuario>();
 
 	public void setNomeExcluir(String nomeExcluir) {
 		this.nomeExcluir = nomeExcluir;
@@ -57,6 +58,9 @@ public class ExcluirUsuarioMB {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	public void setSemelhantes(List<Usuario> semelhantes){
+		this.semelhantes = semelhantes;
 	}
 
 	public String getNomeExcluir() {
@@ -90,6 +94,10 @@ public class ExcluirUsuarioMB {
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
+	
+	public List<Usuario> getSemelhantes(){
+		return this.semelhantes;
+	}
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -98,8 +106,6 @@ public class ExcluirUsuarioMB {
 				.getAttribute("usuario");
 		usuarios.clear();
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		/*listaUsuarios = this.excluirUsuarioEJB.listarSemelhantes(this.eliminador.getId(),
-				this.eliminador.isAdministrador());*/
 		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir,
 				this.eliminador.isAdministrador());
 		setUsuarios(listaUsuarios);
@@ -117,13 +123,34 @@ public class ExcluirUsuarioMB {
 		try {
 			this.usuario = (Usuario) this.excluirUsuarioEJB
 					.recuperarDadosUsuario(getNomeExcluir());
-			this.nivelPermissao = this.usuario.getEmail();
-			setNomeExcluir(usuario.getNomeCompleto());
-			return "etapa2";
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
+		setNomeExcluir(usuario.getNomeCompleto());
+		if(usuario.isAdministrador()){
+			this.nivelPermissao = "Administrador";
+		}
+		return "etapa2";
+	}
+	
+	public String excluirEtapa2(){
+		semelhantes = this.excluirUsuarioEJB.listarSemelhantes(this.eliminador.getId(),
+				this.eliminador.isAdministrador());
+		return "etapa3";
+	}
+	
+	public String excluirEtapa3(){
 		return null;
 	}
+	
+	public String voltarEtapa1(){
+		return "etapa1";
+	}
+	
+	public String cancelar(){
+		return "cancelar";
+	}
+	
 	
 }
