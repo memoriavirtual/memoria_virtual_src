@@ -28,6 +28,7 @@ public class ExcluirUsuarioMB {
 
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	private List<Usuario> semelhantes = new ArrayList<Usuario>();
+	private List<String> nomeSemelhantes = new ArrayList<String>();
 
 	public void setNomeExcluir(String nomeExcluir) {
 		this.nomeExcluir = nomeExcluir;
@@ -60,13 +61,23 @@ public class ExcluirUsuarioMB {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	public void setSemelhantes(List<Usuario> semelhantes){
+
+	public void setSemelhantes(List<Usuario> semelhantes) {
 		this.semelhantes = semelhantes;
+		List<String> aux = new ArrayList<String>();
+		for (Usuario u : semelhantes) {  
+	        aux.add(u.getNomeCompleto());
+	     } 
+		setNomeSemelhantes(aux);
 	}
 	
-	public void setSemelhante(String semelhante){
+
+	public void setSemelhante(String semelhante) {
 		this.semelhante = semelhante;
+	}
+	
+	public void setNomeSemelhantes(List<String> nomeSemelhantes) {
+		this.nomeSemelhantes = nomeSemelhantes;
 	}
 
 	public String getNomeExcluir() {
@@ -100,15 +111,17 @@ public class ExcluirUsuarioMB {
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
-	
-	public List<Usuario> getSemelhantes(){
-		semelhantes = this.excluirUsuarioEJB.listarSemelhantes(this.eliminador.getId(),
-				this.eliminador.isAdministrador());
+
+	public List<Usuario> getSemelhantes() {
 		return this.semelhantes;
 	}
-	
-	public String getSemelhante(){
+
+	public String getSemelhante() {
 		return this.semelhante;
+	}
+	
+	public List<String> getNomeSemelhantes() {
+		return this.nomeSemelhantes;
 	}
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
@@ -140,29 +153,42 @@ public class ExcluirUsuarioMB {
 			return null;
 		}
 		setNomeExcluir(usuario.getNomeCompleto());
-		if(usuario.isAdministrador()){
+		if (usuario.isAdministrador()) {
 			this.nivelPermissao = "Administrador";
 		}
 		return "etapa2";
 	}
-	
-	public String excluirEtapa2(){
-		semelhantes = this.excluirUsuarioEJB.listarSemelhantes(this.eliminador.getId(),
-				this.eliminador.isAdministrador());
+
+	public String excluirEtapa2() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		this.eliminador = (Usuario) request.getSession()
+				.getAttribute("usuario");
+		usuarios.clear();
+		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		listaUsuarios = this.excluirUsuarioEJB.listarSemelhantes(
+				this.eliminador.getId(), this.eliminador.isAdministrador());
+		setSemelhantes(listaUsuarios);
+		usuario = null;
 		return "etapa3";
 	}
-	
-	public String excluirEtapa3(){
+
+	public String excluirEtapa3() {
 		return null;
 	}
-	
-	public String voltarEtapa1(){
+
+	public String voltarEtapa1() {
 		return "etapa1";
 	}
-	
-	public String cancelar(){
+
+	public String cancelar() {
+		this.usuario = null;
+		this.nomeExcluir = "";
+		this.nivelPermissao = "";
+		this.justificativa = "";
+		this.semelhante = "";
+		this.instuicaoPertencente = "";
 		return "cancelar";
 	}
-	
-	
+
 }
