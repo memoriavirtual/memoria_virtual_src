@@ -58,9 +58,14 @@
 					</fieldset>
 
 					<div class="botao">
-						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}">
+						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}"
+							action="#{excluirUsuarioMB.excluirEtapa2}">
 						</h:commandButton>
-						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}">
+						<h:commandButton value="#{mensagens.excluirUsuarioVoltar}"
+							action="#{excluirUsuarioMB.voltaEtapa1}">
+						</h:commandButton>
+						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}"
+							action="#{excluirUsuarioMB.cancelar}">
 						</h:commandButton>
 					</div>
 
