@@ -29,9 +29,10 @@
 				<h:form method="post" prependId="false">
 					<fieldset>
 						<div>
+						<h:outputLabel class="labels">#{mensagens.excluirUsuarioSemelhante}</h:outputLabel>
 						<h:selectOneMenu class="options"
-								value="#{excluirInstituicaoMB.validadeDias}" >
-								<f:selectItems value="#{excluirInstituicaoMB.validadeDias}" />
+								value="#{excluirUsuarioMB.semelhante}" >
+								<f:selectItems value="#{excluirUsuarioMB.nomeSemelhantes}" />
 						</h:selectOneMenu>
 						</div>
 	
