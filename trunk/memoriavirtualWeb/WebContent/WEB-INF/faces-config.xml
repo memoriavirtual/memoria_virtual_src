@@ -253,6 +253,23 @@
 			<to-view-id>/restrito/excluirusuario_etapa2.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>excluirUsuario</display-name>
+		<from-view-id>/restrito/excluirusuario_etapa2.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>etapa1</from-outcome>
+			<to-view-id>/restrito/excluirusuario_etapa1.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>etapa3</from-outcome>
+			<to-view-id>/restrito/excluirusuario_etapa3.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<application>
 		<resource-bundle>
