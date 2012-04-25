@@ -35,7 +35,6 @@ public class EnviarConvite implements EnviarConviteRemote {
 	private EntityManager entityManager;
 	@Resource(name = "mail/memoriavirtual")
 	private javax.mail.Session mailSession;
-	private Usuario usuario;
 	private Instituicao instituicao;
 
 	/**
@@ -56,23 +55,43 @@ public class EnviarConvite implements EnviarConviteRemote {
 	public void enviarConvite(List<String> emails, String mensagem, String validade, String instituicao,
 			String nivelAcesso) throws ModeloException {
 
+		Date dataAtual = new Date();
+		Date vencimento = new Date(dataAtual.getTime() + (long) Integer.parseInt(validade) * Timer.ONE_DAY);
+		
 		for (String mail : emails) {
+
+			String id;
+			Usuario user = new Usuario();
+			Random generator = new Random(); // Usado para gerar o hash do convite
+
+			// Gera o id do usuario calculando o hash com base no email + um numero
+			// aleatorio.
+			// Se ja existir o id, calcula outro numero aleatorio ate que o id seja
+			// unico
+			// id será usado para verificação do convite enviado via email
+			do {
+				id = Usuario.gerarHash(mail + Integer.toString(generator.nextInt()));
+			} while (entityManager.find(Usuario.class, id) != null);
+
+			user.setId(id);
+			user.setValidade(vencimento);
+			user.setEmail(mail);
+			user.setAtivo(false);
 
 			try {
 				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
 				String assunto = "Convite para o Memoria Virtual";
+				
 				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como " + nivelAcesso
-						+ "na instituicao: " + this.instituicao.getNome()
+						+ "na instituicao: " + instituicao
 						+ ". Para concluir seu cadastro entre no link a seguir: " + memoriaVirtual.getURLServidor()
-
-						+ "/fazerCadastro.jsf?Validacao=" + memoriaVirtual.embaralhar(this.usuario.getId()) + "&email="
-						+ memoriaVirtual.embaralhar(this.usuario.getEmail()) + ".... Seu convite é valido ate "
-						+ formatoData.format(this.usuario.getValidade()) + "... Voce recebeu a seguinte mensagem: "
+						+ "/fazercadastro?Validacao=" + memoriaVirtual.embaralhar(user.getId()) + "&email="
+						+ memoriaVirtual.embaralhar(user.getEmail()) + ".... Seu convite é valido ate "
+						+ formatoData.format(user.getValidade()) + "... Voce recebeu a seguinte mensagem: "
 						+ mensagem;
+				
 				enviarEmail(mail, assunto, textoEmail);
-
-				cadastrarUsuarioBD(mail, validade, instituicao, nivelAcesso);
-
+				cadastrarUsuarioBD(user, instituicao, nivelAcesso);
 			} catch (Exception e) {
 				throw new ModeloException("Erro ao enviar convite", e);
 			}
@@ -97,63 +116,59 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * @throws ModeloException
 	 */
 
-	private void cadastrarUsuarioBD(String email, String validade, String instituicaoId, String nivelAcesso)
+	private void cadastrarUsuarioBD(Usuario usuario, String instituicaoNome, String nivelAcesso)
 			throws ModeloException {
 
-		Date dataAtual = new Date();
-		Date vencimento = new Date(dataAtual.getTime() + (long) Integer.parseInt(validade) * Timer.ONE_DAY);
-		String id;
-		this.usuario = new Usuario();
-		Random generator = new Random(); // Usado para gerar o hash do convite
-
-		// Gera o id do usuario calculando o hash com base no email + um numero
-		// aleatorio.
-		// Se ja existir o id, calcula outro numero aleatorio ate que o id seja
-		// unico
-		// id será usado para verificação do convite enviado via email
-		do {
-			id = Usuario.gerarHash(email + Integer.toString(generator.nextInt()));
-		} while (entityManager.find(Usuario.class, id) != null);
-
-		this.usuario.setId(id);
-		this.usuario.setValidade(vencimento);
-		this.usuario.setEmail(email);
-		this.usuario.setAtivo(false);
 
 		if (nivelAcesso.toUpperCase().equals("ADMINISTRADOR"))
-			this.usuario.setAdministrador(true);
+			usuario.setAdministrador(true);
 		else
-			this.usuario.setAdministrador(false);
+			usuario.setAdministrador(false);
 
-		if (!this.entityManager.contains(this.usuario)) {
+		if (!this.entityManager.contains(usuario)) {
 			// Persiste usuario na base
 			try {
-				this.entityManager.persist(this.usuario);
+				this.entityManager.persist(usuario);
 			} catch (Exception e) {
 				throw new ModeloException("Erro ao persistir email", e);
 				// Na hora de persisitir o usuario, se o
 				// email estiver errado � gerada uma
 				// exce�ao
 			}
-			if (this.entityManager.contains(this.usuario)) {
+			/* Por que essa verificacao?????
+			if (this.entityManager.contains(usuario)) {
 				throw new ModeloException("Erro no banco de dados", null);
 			}
+			*/
 			// Se nao foi convidado para ser Administrador, inclui em um grupo
+			
 			if (!nivelAcesso.toUpperCase().equals("ADMINISTRADOR")) {
 				Acesso acesso = new Acesso();
 				Grupo grupo = null;
-
-				this.instituicao = (Instituicao) entityManager.find(Instituicao.class, instituicaoId);
+				//this.instituicao = (Instituicao) entityManager.find(Instituicao.class, instituicaoNome);
+				
+				Query query1 = this.entityManager
+						.createQuery("select i from Instituicao i where i.nome = :nome");
+				query1.setParameter("nome", instituicaoNome);
+				
+				@SuppressWarnings("unchecked")
+				List<Instituicao> instList = (List<Instituicao>) query1.getResultList();
+				
+				if(!instList.isEmpty())
+					this.instituicao = instList.get(0);
+				
+				
 				if (this.instituicao == null)
-					throw new ModeloException("Erro no banco de dados", null);
+					throw new ModeloException("Instituicao nao encontrada", null);
 
 				grupo = (Grupo) entityManager.find(Grupo.class, nivelAcesso);
 				if (grupo == null)
-					throw new ModeloException("Erro no banco de dados", null);
+					throw new ModeloException("Grupo nao encontrado", null);
 
 				acesso.setInstituicao(this.instituicao);
-				acesso.setUsuario(this.usuario);
+				acesso.setUsuario(usuario);
 				acesso.setGrupo(grupo);
+
 				try {
 					this.entityManager.persist(acesso);
 				} catch (Exception e) {
@@ -183,8 +198,11 @@ public class EnviarConvite implements EnviarConviteRemote {
 		query.setParameter("usuario", usuario);
 		query.setParameter("grupo", grupo);
 
+		
+		
 		@SuppressWarnings("unchecked")
 		List<Acesso> acessos = (List<Acesso>) query.getResultList();
+		System.out.println(acessos.size());
 		for (Acesso acesso : acessos) {
 			instituicoes.add(acesso.getInstituicao());
 		}
@@ -242,7 +260,6 @@ public class EnviarConvite implements EnviarConviteRemote {
 		message.setText(mensagem);
 		message.setHeader("X-Mailer", "Memoria virtual mailer");
 		message.setSentDate(timeStamp);
-		System.out.println(this.memoriaVirtual.getURLServidor());
 		// Send message
 		Transport.send(message);
 	}
