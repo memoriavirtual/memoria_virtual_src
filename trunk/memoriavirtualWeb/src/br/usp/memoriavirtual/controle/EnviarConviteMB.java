@@ -121,27 +121,7 @@ public class EnviarConviteMB {
 		}
 		return diasValidade;
 	}
-
-	public List<SelectItem> getNiveisPermitidos() {
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
-
-		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
-		List<Grupo> grupos = null;
-
-		niveisPermissao.add(new SelectItem(null, "----- Escolha o nivel ----"));
-
-		grupos = enviarConviteEJB.getGrupos();
-		for (Grupo grupo : grupos) {
-			niveisPermissao.add(new SelectItem(grupo.getId()));
-		}
-		if (usuario.isAdministrador()) {
-			niveisPermissao.add(new SelectItem("Administrador"));
-		}
-
-		return niveisPermissao;
-	}
-
+	
 	public List<SelectItem> getInstituicoesPermitidas() {
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
@@ -165,6 +145,45 @@ public class EnviarConviteMB {
 					instituicao.getNome()));
 		}
 		return listaInstituicoes;
+	}
+
+	public List<SelectItem> getNiveisPermitidos() {
+		
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+		
+		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
+		niveisPermissao.add(new SelectItem(null, "----- Escolha o nivel ----"));
+		
+		if(usuario.isAdministrador()){
+			niveisPermissao.add(new SelectItem("Gerente", "Gerente"));
+			niveisPermissao.add(new SelectItem("Catalogador", "Catalogador"));
+			niveisPermissao.add(new SelectItem("Revisor", "Revisor"));
+			
+		}else{
+			niveisPermissao.add(new SelectItem("Catalogador", "Catalogador"));
+			niveisPermissao.add(new SelectItem("Revisor", "Revisor"));
+		}
+		
+		/*
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+
+		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
+		List<Grupo> grupos = null;
+
+		niveisPermissao.add(new SelectItem(null, "----- Escolha o nivel ----"));
+
+		grupos = enviarConviteEJB.getGrupos();
+		for (Grupo grupo : grupos) {
+			niveisPermissao.add(new SelectItem(grupo.getId()));
+		}
+		if (usuario.isAdministrador()) {
+			niveisPermissao.add(new SelectItem("Administrador"));
+		}
+		*/
+
+		return niveisPermissao;
 	}
 
 	public void validateEmail(AjaxBehaviorEvent event) {
@@ -268,6 +287,12 @@ public class EnviarConviteMB {
 	 *            Define a instituição
 	 */
 	public void setInstituicao(String instituicao) {
+		/*Se mudou a instituicao selecionada apos escolher o nivel de acesso 
+		 * anulamos a escolha do nivel de acesso pois deve-se escolher um nivel 
+		 * de acesso que seja possivel para a instituicao escolhida.
+		 */
+		if(this.instituicao != instituicao)
+			this.nivelAcesso = null;
 		this.instituicao = instituicao;
 	}
 
@@ -279,7 +304,8 @@ public class EnviarConviteMB {
 		if (this.instituicao == null) {
 			MensagensDeErro.getErrorMessage("enviarconvite_instituicaovazia",
 					"validacaoInstituicao");
-		} 
+			this.nivelAcesso = null;
+		}
 	}
 
 }
