@@ -38,4 +38,9 @@ public interface AuditoriaFabricaRemote {
 	 * @param justificativa 
 	 */
 	public void auditarNegarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo, String justificativa);
+
+	public void auditarExcluirUsuario(Usuario autorAcao,String atributoSignificativo,String justificativa);
+	public void auditarAutorizarExcluirUsuario(Usuario autorAcao,String atributoSignificativo, String justificativa);
+	public void auditarNegarExcluirUsuario(Usuario autorAcao,String atributoSignificativo, String justificativa);
+
 }
