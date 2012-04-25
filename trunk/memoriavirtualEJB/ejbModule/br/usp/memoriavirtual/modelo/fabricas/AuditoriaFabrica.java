@@ -64,5 +64,42 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 		itemAuditoria.setData(data);
 		entityManager.persist(itemAuditoria);
 	}
+	
+	public void auditarExcluirUsuario(Usuario autorAcao,
+			String atributoSignificativo, String justificativa) {
+		ItemAuditoria itemAuditoria = new ItemAuditoria();
+		Date data = new Date();
+		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
+		itemAuditoria.setAutorAcao(autorAcao);
+		itemAuditoria.setNotas(justificativa);
+		itemAuditoria.setTipoAcao(EnumTipoAcao.EXCLUIR_USUARIO);
+		itemAuditoria.setData(data);
+		entityManager.persist(itemAuditoria);
+	}
+	
+	
+	public void auditarAutorizarExcluirUsuario(Usuario autorAcao,
+			String atributoSignificativo, String justificativa) {
+		ItemAuditoria itemAuditoria = new ItemAuditoria();
+		Date data = new Date();
+		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
+		itemAuditoria.setAutorAcao(autorAcao);
+		itemAuditoria.setNotas(justificativa);
+		itemAuditoria.setTipoAcao(EnumTipoAcao.AUTORIZAR_EXCLUSAO);
+		itemAuditoria.setData(data);
+		entityManager.persist(itemAuditoria);
+	}
+	
+	public void auditarNegarExcluirUsuario(Usuario autorAcao,
+			String atributoSignificativo, String justificativa) {
+		ItemAuditoria itemAuditoria = new ItemAuditoria();
+		Date data = new Date();
+		itemAuditoria.setAtributoSignificativo(atributoSignificativo);
+		itemAuditoria.setAutorAcao(autorAcao);
+		itemAuditoria.setNotas(justificativa);
+		itemAuditoria.setTipoAcao(EnumTipoAcao.NEGAR_EXCLUSAO);
+		itemAuditoria.setData(data);
+		entityManager.persist(itemAuditoria);
+	}
 
 }
