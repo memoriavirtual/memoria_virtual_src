@@ -62,7 +62,7 @@
 							<h:outputLabel class="labels">#{mensagens.enviarconvite_validade}</h:outputLabel>
 							<h:selectOneMenu value="#{enviarConviteMB.validade}">
 									<f:selectItems value="#{enviarConviteMB.validadeDias}" />
-									<f:ajax event="blur" execute="@this" render="validacaoValidade"
+									<f:ajax event="change" execute="@this" render="validacaoValidade"
 									listener="#{enviarConviteMB.validateValidade}" />
 							</h:selectOneMenu>
 							<div></div>
@@ -70,29 +70,28 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarconvite_instituicao}</h:outputLabel>
+							<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
+								<f:selectItems value="#{enviarConviteMB.instituicoesPermitidas}" />
+								<f:ajax event="change" execute="@form" render="@form"
+									listener="#{enviarConviteMB.validateInstituicao}" />
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoInstituicao" for="validacaoInstituicao"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.enviarconvite_niveldeacesso}</h:outputLabel>
 							<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}">	
 									<f:selectItems value="#{enviarConviteMB.niveisPermitidos}" />
-									<f:ajax event="blur" execute="@this"
+									<f:ajax event="change" execute="@this"
 										render="validacaoNivelAcesso"
 										listener="#{enviarConviteMB.validateNivelAcesso}" />
 							</h:selectOneMenu>
 							<div></div>
 							<h:message id="validacaoNivelAcesso" for="validacaoNivelAcesso"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.enviarconvite_instituicao}</h:outputLabel>
-							<h:selectOneMenu value="#{enviarConviteMB.instituicao}">
-								<f:selectItems value="#{enviarConviteMB.instituicoesPermitidas}" />
-								<f:ajax event="blur" execute="@this" render="validacaoInstituicao"
-									listener="#{enviarConviteMB.validateInstituicao}" />
-							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoInstituicao" for="validacaoInstituicao"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
