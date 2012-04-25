@@ -6,13 +6,16 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
@@ -33,6 +36,11 @@ public class ExcluirUsuarioMB {
 	private Usuario usuario;
 	private Usuario eliminador;
 	private String semelhante;
+
+	private FacesContext context = FacesContext.getCurrentInstance();
+	private String bundleName = "mensagens";
+	private ResourceBundle bundle = context.getApplication().getResourceBundle(
+			context, bundleName);
 
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	private List<Usuario> semelhantes = new ArrayList<Usuario>();
@@ -158,8 +166,7 @@ public class ExcluirUsuarioMB {
 					.recuperarDadosUsuario(getNomeExcluir());
 		} catch (Exception e) {
 			MensagensDeErro.getErrorMessage(
-					"excluiroUsuarioErroUsuarioNaoEncontrado",
-					"resultado");
+					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
 			return null;
 		}
 		setNomeExcluir(usuario.getNomeCompleto());
@@ -189,7 +196,56 @@ public class ExcluirUsuarioMB {
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.add(GregorianCalendar.HOUR, 24 * this.prazoValidade);
 		dataValidade = gc.getTime();
-		return null;
+		try {
+			this.memoriaVirtualEJB
+					.enviarEmail(
+							"diegominatel@gmail.com",
+							bundle.getString("excluirUsuarioEmailTitulo"),
+							bundle.getString("excluirUsuarioEmailMensagem")
+									+ "\n"
+									+ "\n"
+									+ bundle.getString("excluirUsuarioNome")
+									+ this.getNomeExcluir()
+									+ "\n"
+									+ bundle.getString("excluirUsuarioInstituicao")
+									+ this.getInstituicaoPertencente()
+									+ "\n"
+									+ bundle.getString("excluirUsuarioNivelPermissao")
+									+ this.getNivelPermissao()
+									+ "\n"
+									+ bundle.getString("excluirUsuarioJustificativa")
+									+ this.getJustificativa()
+									+ "\n"
+									+ bundle.getString("excluirUsuarioRequisitor")
+									+ this.eliminador.getNomeCompleto()
+									+ "\n"
+									+ bundle.getString("excluirUsuarioPrazoValidade")
+									+ formatoData.format(dataValidade)
+									+ "\n"
+									+ bundle.getString("excluirUsuarioEmailMensagemURL")
+									+ "\n"
+									+ "\n");
+									/*+ "http://"
+									+ memoriaVirtualEJB.getURLServidor()
+									+ "/excluir?"
+									+ "chaveEstrangeira="
+									+ this.usuario.getNomeCompleto()
+									+ "\n\n"
+									+ bundle.getString("excluirUsuarioEmailMensagemFim")
+									+ "\n" + "\n");*/
+			// mensagem de sucesso
+			MensagensDeErro.getSucessMessage("excluirUsuarioEnviandoEmail",
+					"resultado");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		/*} catch (ModeloException e) {
+			e.printStackTrace();
+			e.getCause();
+		} catch (NullPointerException e){
+			e.printStackTrace();*/
+		}
+		return "true";
+
 	}
 
 	public String voltarEtapa1() {
