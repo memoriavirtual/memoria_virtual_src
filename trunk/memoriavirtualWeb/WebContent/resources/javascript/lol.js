@@ -8,8 +8,6 @@ $(document).ready(function() {
 		else
 			$("div #sugestoes").show();
 	});
-
-	
 });
 
 function opa() {

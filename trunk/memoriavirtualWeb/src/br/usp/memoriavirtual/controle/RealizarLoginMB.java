@@ -5,7 +5,6 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +12,7 @@ import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 public class RealizarLoginMB {
 
@@ -22,17 +22,10 @@ public class RealizarLoginMB {
 	private String senha = "";
 
 	/**
-	 * html> <head> <meta http-equiv="Content-Type"
-	 * content="text/html; charset=ISO-8859-1"> <title>Logado com
-	 * sucesso</title> </head> <body>
+	 * Verifica as informacões de usuário e senha na base de dados.
 	 * 
-	 * <h1>Logado com sucesso</h1>
-	 * 
-	 * </body> </html> Verifica as informacões de usuário e senha na base de
-	 * dados.
-	 * 
-	 * @return <code>true</code> se o usuário foi autenticado com sucesso ou
-	 *         <code>false</code> caso contrário.
+	 * @return true se o usuário foi autenticado com sucesso ou false caso
+	 *         contrário.
 	 * @throws CloneNotSupportedException
 	 * @throws UnknownHostException
 	 * @throws SocketException
@@ -62,7 +55,7 @@ public class RealizarLoginMB {
 			 * Coloca a lista de acessos do usuario no sessao.
 			 */
 			List<Acesso> listaAcessos = realizarLoginEJB
-					.pegarAcessos(usuarioAutenticado);
+					.getAcessos(usuarioAutenticado);
 			request.getSession().setAttribute("acessos", listaAcessos);
 
 		} else {
@@ -71,8 +64,7 @@ public class RealizarLoginMB {
 		}
 
 		if (!autenticado)
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Usuário ou Senha incorretos."));
+			MensagensDeErro.getErrorMessage("realizarLoginErro", "resultado");
 
 		this.setSenha(null);
 

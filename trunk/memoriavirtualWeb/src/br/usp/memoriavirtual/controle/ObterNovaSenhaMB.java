@@ -38,8 +38,6 @@ public class ObterNovaSenhaMB {
 			this.obterNovaSenhaEJB.obterNovaSenha(this.email);
 		} catch (ModeloException e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(e.getMessage()));
 			return "falha";
 		}
 		return "sucesso";

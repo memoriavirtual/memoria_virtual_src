@@ -424,7 +424,7 @@ table[id *=instituicoes] a:hover {
 }
 
 .outraAutoria:hover {
-	color:silver;
+	color: silver;
 }
 /*************************************************************/
 /*                FIM CONTEUDO / FORMULARIO                   /
@@ -516,6 +516,10 @@ textarea:focus {
 	margin: auto;
 }
 
+#dataTableEmails {
+	margin: auto;
+}
+
 #paragrafo {
 	font-size: 16px;
 	margin-left: 20px;
@@ -528,8 +532,4 @@ textarea:focus {
 .delete {
 	margin-left: 10px;
 	margin-bottom: -8px;
-}
-
-.yellow {
-	display:none;
 }
