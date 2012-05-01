@@ -12,6 +12,5 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 public interface RealizarLoginRemote {
 
 	public Usuario realizarLogin(String usuario, String senha) throws ModeloException;
-
-	public List<Acesso> pegarAcessos(Usuario usuario);
+	public List<Acesso> getAcessos(Usuario usuario);
 }

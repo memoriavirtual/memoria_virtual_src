@@ -59,7 +59,7 @@ public class RealizarLogin implements RealizarLoginRemote {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public List<Acesso> pegarAcessos(Usuario usuario) {
+	public List<Acesso> getAcessos(Usuario usuario) {
 
 		Query query;
 

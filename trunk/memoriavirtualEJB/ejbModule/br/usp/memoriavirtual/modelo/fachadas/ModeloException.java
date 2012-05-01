@@ -3,7 +3,6 @@ package br.usp.memoriavirtual.modelo.fachadas;
 /**
  * Essa exceção deverá ser lançada por todos os métodos das fachadas.
  * 
- * @author tbianchi
  * 
  */
 public class ModeloException extends Exception {
