@@ -66,6 +66,26 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return (String) propriedades.get("hostname");
 	}
 
+	public String getIntervaloTimer() throws ModeloException {
+		
+		Context context = null;
+		try {
+			context = new InitialContext();
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		Properties propriedades = null;
+		try {
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}		
+		return (String) propriedades.get("timer");
+		
+	}
+	
 	public boolean verificarDisponibilidadeIdUsuario(String id) {
 
 		Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
