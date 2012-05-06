@@ -12,7 +12,6 @@ import javax.ejb.Timeout;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 
-import br.usp.memoriavirtual.modelo.fabricas.remoto.LimpezaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
 
@@ -24,8 +23,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtual;
-	@EJB
-	private LimpezaFabricaRemote limpezaFabrica;
+
 
 	private Logger logger = Logger
 			.getLogger("br.usp.memoriavirtual.modelo.fachadas.Timer");
