@@ -46,7 +46,7 @@ public class CadastrarAutorMB {
 	
 
 	/**
-	 * Construtor Padrão
+	 * Construtor Padrï¿½o
 	 */
 	public CadastrarAutorMB() {
 		super();
@@ -59,38 +59,27 @@ public class CadastrarAutorMB {
 	public String cadastrarAutor() {
 		String retorno = null;
 
-		
-		
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		if (this.validateNome() && this.validateSobrenome()
 				&& this.validateNascimento() && this.validateObito()
 				&& this.validateTipoAutoria() && this.validateAtividade()) {
-			format.setLenient(false);
+			
 
-			try {
-				this.cadastrarAutorEJB.cadastrarAutor(new Autor(
-						this.tipoAutoria, this.nome, this.sobrenome,
-						this.codinome, this.atividade, format
-								.parse(this.nascimento), format
-								.parse(this.obito)));
-				MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
-						"resultado");
-				this.nome = "";
-				this.sobrenome = "";
-				this.codinome = "";
-				this.nascimento = "";
-				this.obito = "";
-				this.atividade = "";
-				this.tipoAutoria = "";
-				this.outroTipoAutoria = false;
-				this.normalTipoAutoria = true;
-				this.outroAtividade = false;
-				this.normalAtividade = true;
-			} catch (ParseException e) {
-				MensagensDeErro.getErrorMessage("cadastrarAutorFalha",
-						"resultado");
-				e.printStackTrace();
-			}
+			this.cadastrarAutorEJB.cadastrarAutor(new Autor(
+					this.tipoAutoria, this.nome, this.sobrenome,
+					this.codinome, this.atividade, this.nascimento, this.obito));
+			MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
+					"resultado");
+			this.nome = "";
+			this.sobrenome = "";
+			this.codinome = "";
+			this.nascimento = "";
+			this.obito = "";
+			this.atividade = "";
+			this.tipoAutoria = "";
+			this.outroTipoAutoria = false;
+			this.normalTipoAutoria = true;
+			this.outroAtividade = false;
+			this.normalAtividade = true;
 
 		} else {
 			MensagensDeErro.getErrorMessage("cadastrarAutorFalha", "resultado");
@@ -340,9 +329,7 @@ public class CadastrarAutorMB {
 	}
 
 	public boolean validateObito() {
-		if (this.obito.equals("")) {
-			this.obito = "01/01/0001";
-		}
+		
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			format.setLenient(false);

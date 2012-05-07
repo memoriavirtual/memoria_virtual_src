@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>editarAutor</title>
+</head>
+
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+		<ui:define name="titulo">#{mensagens.editarAutorTitle}</ui:define>
+		<ui:define name="conteudo">
+			<div class="formulario">
+
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
+				<div class="conteudoTitulo">#{mensagens.editarAutorTitle}</div>
+				<div class="conteudoDescricao">
+					<h:outputLabel rendered="#{editarAutorMB.etapa1}">#{mensagens.editarAutorPassoPrimeiro}</h:outputLabel>
+				</div>
+				<div class="conteudoDescricao">
+					<h:outputLabel rendered="#{editarAutorMB.etapa2}">#{mensagens.editarAutorPassoSegundo}</h:outputLabel>
+				</div>
+
+				<h:form rendered="#{editarAutorMB.etapa1}" method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
+							<h:inputText value="#{excluirInstituicaoMB.nome}"
+								autocomplete="off">
+								<f:ajax event="keyup" execute="@this" render="sugestoesId"
+									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
+
+							</h:inputText>
+
+
+						</div>
+						<div id="sugestoes">
+							<h:dataTable id="sugestoesId" var="instituicao"
+								value="#{excluirInstituicaoMB.instituicoes}">
+								<h:column>
+									<h:commandLink
+										action="#{excluirInstituicaoMB.selecionarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
+								</h:column>
+							</h:dataTable>
+							<div></div>
+						</div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoSelecionar"
+							value="#{mensagens.editarAutorBotaoEditar}"
+							action="#{excluirInstituicaoMB.selecionarInstituicoes}">
+						</h:commandButton>
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
+							action="#{excluirInstituicaoMB.cancelar}">
+						</h:commandButton>
+					</div>
+				</h:form>
+				
+				
+				<h:form rendered="#{editarAutorMB.etapa2}" method="post" prependId="false">
+					<fieldset>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
+							<h:inputText value="#{cadastrarAutorMB.nome}">
+								<f:ajax event="blur" execute="@this" render="validacaoNome"
+									listener="#{cadastrarAutorMB.validateNome}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoNome"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarAutorSobrenome}</h:outputLabel>
+							<h:inputText value="#{cadastrarAutorMB.sobrenome}">
+								<f:ajax event="blur" execute="@this" render="validacaoSobrenome"
+									listener="#{cadastrarAutorMB.validateSobrenome}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoSobrenome" for="validacaoSobrenome"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarAutorCodinome}</h:outputLabel>
+							<h:inputText value="#{cadastrarAutorMB.codinome}">
+
+							</h:inputText>
+							<div></div>
+
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarAutorAtividade}</h:outputLabel>
+							<h:selectOneMenu rendered="#{cadastrarAutorMB.normalAtividade}"
+								value="#{cadastrarAutorMB.atividade}">
+								<f:selectItems value="#{cadastrarAutorMB.listaAtividade}" />
+							</h:selectOneMenu>
+							<h:inputText rendered="#{cadastrarAutorMB.outroAtividade}"
+								value="#{cadastrarAutorMB.atividade}" />
+							<h:commandLink class="outraAutoria"
+								value="#{cadastrarAutorMB.outroLinkAtividade}"
+								action="#{cadastrarAutorMB.abrirAtividadeOutro}" />
+							<div></div>
+
+						</div>
+
+
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNascimento}</h:outputLabel>
+							<h:inputText value="#{cadastrarAutorMB.nascimento}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoNascimento"
+									listener="#{cadastrarAutorMB.validateNascimento}" />
+							</h:inputText>
+							<div>dd/mm/aaaa</div>
+							<h:message id="validacaoNascimento" for="validacaoNascimento"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarAutorObito}</h:outputLabel>
+							<h:inputText value="#{cadastrarAutorMB.obito}">
+								<f:ajax event="blur" execute="@this" render="validacaoObito"
+									listener="#{cadastrarAutorMB.validateObito}" />
+							</h:inputText>
+							<div>dd/mm/aaaa</div>
+							<h:message id="validacaoObito" for="validacaoObito"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.editarCadastroUsuarioBotaoSalvar}"
+							action="#{cadastrarAutorMB.cadastrarAutor}">
+
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.cadastrarAutorBotaoResetar}"
+							action="#{cadastrarAutorMB.resetCadastrarAutor}">
+						</h:commandButton>
+
+					</div>
+				</h:form>
+
+				<!-- end .formulario-->
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

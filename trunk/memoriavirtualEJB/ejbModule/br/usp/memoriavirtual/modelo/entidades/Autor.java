@@ -4,15 +4,13 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 
 /**
  * @author bigmac
@@ -34,18 +32,24 @@ public class Autor implements Serializable {
 	private String sobrenome;
 	private String codinome;
 	private String atividade;
-	@Temporal(TemporalType.DATE)
-	private Date nascimento;
-	@Temporal(TemporalType.DATE)
-	private Date obito;
+	private String nascimento;
+	private String obito;
 	/**
 	 * 
 	 */
 	public Autor() {
 		
 	}
+	public Autor(Autor cp){
+		this.nome = cp.nome;
+		this.sobrenome = cp.sobrenome;
+		this.codinome = cp.codinome;
+		this.atividade = cp.atividade;
+		this.nascimento = cp.nascimento;
+		this.obito = cp.obito;
+	}
 	public Autor(String tipoAutoria, String nome, String sobrenome,
-			String codinome, String atividade, Date nascimento, Date obito) {
+			String codinome, String atividade, String nascimento, String obito) {
 		super();
 		this.tipoAutoria = tipoAutoria;
 		this.nome = nome;
@@ -94,13 +98,13 @@ public class Autor implements Serializable {
 	/**
 	 * @return the nascimento
 	 */
-	public Date getNascimento() {
+	public String getNascimento() {
 		return nascimento;
 	}
 	/**
 	 * @return the obito
 	 */
-	public Date getObito() {
+	public String getObito() {
 		return obito;
 	}
 	/**
@@ -136,13 +140,13 @@ public class Autor implements Serializable {
 	/**
 	 * @param nascimento the nascimento to set
 	 */
-	public void setNascimento(Date nascimento) {
+	public void setNascimento(String nascimento) {
 		this.nascimento = nascimento;
 	}
 	/**
 	 * @param obito the obito to set
 	 */
-	public void setObito(Date obito) {
+	public void setObito(String obito) {
 		this.obito = obito;
 	}
 

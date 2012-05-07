@@ -30,6 +30,11 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>editarAutorMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.EditarAutorMB</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>realizarLogoffMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.RealizarLogoffMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -214,6 +219,16 @@
 		<navigation-case>
 			<from-outcome>reset</from-outcome>
 			<to-view-id>/restrito/cadastrarautor.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>editarAutor</display-name>
+		<from-view-id>/restrito/editarautor.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>reset</from-outcome>
+			<to-view-id>/restrito/editarautor.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

@@ -15,7 +15,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
