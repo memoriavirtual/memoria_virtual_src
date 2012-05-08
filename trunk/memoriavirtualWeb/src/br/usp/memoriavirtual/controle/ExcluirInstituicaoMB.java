@@ -131,7 +131,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * Método é invocado quando ocorre um clique uma linha do DataTable que contém a lista 
 	 * de Instituições cujo nome corresponde em parte ao nome que está sendo digitado.
 	 * A instituição selecionada é passada como parâmetro, e utilizada para setar os argumentos 
-	 * this.nome com o nome da instituição e o this.instituicao com o próprio objeto Instituicao.
+	 * this.nome com o nome da instituição e o this.instituicao com o próprio objeto Instituição.
 	 * @param instituicao
 	 * 
 	 */

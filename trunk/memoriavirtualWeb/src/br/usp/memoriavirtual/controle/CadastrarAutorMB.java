@@ -42,8 +42,6 @@ public class CadastrarAutorMB {
 	private boolean outroAtividade = false;
 
 	private boolean normalAtividade = true;
-	
-	
 
 	/**
 	 * Construtor Padr�o
@@ -62,11 +60,10 @@ public class CadastrarAutorMB {
 		if (this.validateNome() && this.validateSobrenome()
 				&& this.validateNascimento() && this.validateObito()
 				&& this.validateTipoAutoria() && this.validateAtividade()) {
-			
 
-			this.cadastrarAutorEJB.cadastrarAutor(new Autor(
-					this.tipoAutoria, this.nome, this.sobrenome,
-					this.codinome, this.atividade, this.nascimento, this.obito));
+			this.cadastrarAutorEJB.cadastrarAutor(new Autor(this.tipoAutoria,
+					this.nome, this.sobrenome, this.codinome, this.atividade,
+					this.nascimento, this.obito));
 			MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
 					"resultado");
 			this.nome = "";
@@ -210,6 +207,7 @@ public class CadastrarAutorMB {
 		}
 
 	}
+
 	public String abrirAutoriaOutro() {
 		this.tipoAutoria = "";
 		this.outroTipoAutoria = !this.outroTipoAutoria;
@@ -229,7 +227,7 @@ public class CadastrarAutorMB {
 		}
 
 	}
-	
+
 	public String resetCadastrarAutor() {
 		this.nome = "";
 		this.sobrenome = "";
@@ -309,17 +307,17 @@ public class CadastrarAutorMB {
 	}
 
 	public boolean validateNascimento() {
-		if (this.nascimento.equals("")) {
-			this.nascimento = "01/01/0001";
-		}
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			format.setLenient(false);
-			format.parse(this.nascimento);
-		} catch (ParseException e) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarAutorNascimentoIncorreto", "validacaoNascimento");
-			return false;
+		if (!this.nascimento.equals("")) {
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				format.setLenient(false);
+				format.parse(this.nascimento);
+			} catch (ParseException e) {
+				MensagensDeErro.getErrorMessage(
+						"cadastrarAutorNascimentoIncorreto",
+						"validacaoNascimento");
+				return false;
+			}
 		}
 		return true;
 	}
@@ -329,15 +327,16 @@ public class CadastrarAutorMB {
 	}
 
 	public boolean validateObito() {
-		
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			format.setLenient(false);
-			format.parse(this.obito);
-		} catch (ParseException e) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarAutorNascimentoIncorreto", "validacaoObito");
-			return false;
+		if (!this.nascimento.equals("")) {
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				format.setLenient(false);
+				format.parse(this.obito);
+			} catch (ParseException e) {
+				MensagensDeErro.getErrorMessage(
+						"cadastrarAutorNascimentoIncorreto", "validacaoObito");
+				return false;
+			}
 		}
 		return true;
 	}
@@ -357,14 +356,16 @@ public class CadastrarAutorMB {
 	}
 
 	/**
-	 * @param outroAtividade the outroAtividade to set
+	 * @param outroAtividade
+	 *            the outroAtividade to set
 	 */
 	public void setOutroAtividade(boolean outroAtividade) {
 		this.outroAtividade = outroAtividade;
 	}
 
 	/**
-	 * @param normalAtividade the normalAtividade to set
+	 * @param normalAtividade
+	 *            the normalAtividade to set
 	 */
 	public void setNormalAtividade(boolean normalAtividade) {
 		this.normalAtividade = normalAtividade;
@@ -504,6 +505,5 @@ public class CadastrarAutorMB {
 	public void setNormalTipoAutoria(boolean normalTipoAutoria) {
 		this.normalTipoAutoria = normalTipoAutoria;
 	}
-
 
 }

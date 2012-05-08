@@ -33,36 +33,27 @@
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
-							<h:inputText value="#{excluirInstituicaoMB.nome}"
+							<h:inputText value="#{editarAutorMB.strDeBusca}"
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
+									listener="#{editarAutorMB.listarAutores}" />
 
 							</h:inputText>
 
 
 						</div>
 						<div id="sugestoes">
-							<h:dataTable id="sugestoesId" var="instituicao"
-								value="#{excluirInstituicaoMB.instituicoes}">
+							<h:dataTable id="sugestoesId" var="autor"
+								value="#{editarAutorMB.autores}">
 								<h:column>
 									<h:commandLink
-										action="#{excluirInstituicaoMB.selecionarInstituicoes(instituicao)}">#{instituicao.nome}</h:commandLink>
+										action="#{editarAutorMB.selecionarAutor(autor.nome)}">#{instituicao.nome}</h:commandLink>
 								</h:column>
 							</h:dataTable>
 							<div></div>
 						</div>
 					</fieldset>
-					<div class="botao">
-						<h:commandButton id="botaoSelecionar"
-							value="#{mensagens.editarAutorBotaoEditar}"
-							action="#{excluirInstituicaoMB.selecionarInstituicoes}">
-						</h:commandButton>
-						<h:commandButton id="botaoCancelar"
-							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
-							action="#{excluirInstituicaoMB.cancelar}">
-						</h:commandButton>
-					</div>
+					
 				</h:form>
 				
 				

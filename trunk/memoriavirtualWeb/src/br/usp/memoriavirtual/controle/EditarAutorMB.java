@@ -3,7 +3,17 @@
  */
 package br.usp.memoriavirtual.controle;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+
 import br.usp.memoriavirtual.modelo.entidades.Autor;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 
 /**
  * @author bigmac
@@ -11,8 +21,17 @@ import br.usp.memoriavirtual.modelo.entidades.Autor;
  */
 public class EditarAutorMB {
 	
+	@EJB
+	private EditarAutorRemote editarAutorEJB;
+	
 	private Autor autor;
 	
+	private String strDeBusca;
+	
+	private List<Autor> autores = new ArrayList<Autor>(); 
+	
+	
+
 	private boolean etapa1 = true;
 	private boolean etapa2= false;
 	
@@ -22,7 +41,61 @@ public class EditarAutorMB {
 	public EditarAutorMB(){
 		super();
 	}
+	/**
+	 * MÈtodo È chamado enquanto as letras s√£o inseridas
+	 * no campo de busca.
+	 */
+	public void listarAutores (AjaxBehaviorEvent event){
 		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(context, bundleName);
+		
+		this.autores.clear();
+		
+		
+		try {
+			this.autores = this.editarAutorEJB.listarAutores(this.strDeBusca);
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		}
+		
+		
+		if(this.autores.isEmpty()){
+			Autor aut = new Autor();
+			aut.setNome(bundle.getString("excluirInstituicaoErrolistavazia"));
+			this.autores.add(aut);
+		}
+		return;
+	}
+	
+	public String selecionarAutor(String string){
+		
+		return null;		
+	}
+	
+	
+	/**
+	 * @return the strBusca
+	 */
+	public String getStrDeBusca() {
+		return strDeBusca;
+	}
+
+	/**
+	 * @param strBusca the strBusca to set
+	 */
+	public void setStrDeBusca(String strBusca) {
+		this.strDeBusca = strBusca;
+	}
+
+	/**
+	 * @return the autores
+	 */
+	public List<Autor> getAutores() {
+		return autores;
+	}
+	
 	/**
 	 * @return the nome
 	 */
