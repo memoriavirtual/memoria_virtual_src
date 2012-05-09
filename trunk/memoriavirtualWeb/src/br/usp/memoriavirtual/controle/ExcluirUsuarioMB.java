@@ -15,6 +15,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
@@ -26,6 +27,8 @@ public class ExcluirUsuarioMB {
 	private ExcluirUsuarioRemote excluirUsuarioEJB;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
+	@EJB
+	private AuditoriaFabricaRemote auditoriaFabricaEJB;
 
 	private String nomeExcluir;
 	private int prazoValidade;
@@ -36,6 +39,7 @@ public class ExcluirUsuarioMB {
 	private Usuario usuario;
 	private Usuario eliminador;
 	private String semelhante;
+	private Usuario validador;
 
 	private FacesContext context = FacesContext.getCurrentInstance();
 	private String bundleName = "mensagens";
@@ -199,6 +203,14 @@ public class ExcluirUsuarioMB {
 		gc.add(GregorianCalendar.HOUR, 24 * this.prazoValidade);
 		dataValidade = gc.getTime();
 		try {
+			this.validador = (Usuario) this.excluirUsuarioEJB
+					.recuperarDadosUsuario(getSemelhante());
+		} catch (Exception e) {
+			MensagensDeErro.getErrorMessage(
+					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
+			return null;
+		}
+		try {
 			this.memoriaVirtualEJB
 					.enviarEmail(
 							"diegominatel@gmail.com",
@@ -241,6 +253,12 @@ public class ExcluirUsuarioMB {
 									+ "\n\n"
 									+ bundle.getString("excluirUsuarioEmailMensagemFim")
 									+ "\n" + "\n");
+			//registra a autoria do pedido de exclusão
+			this.auditoriaFabricaEJB.auditarExcluirUsuario(this.eliminador, this.usuario.getId(),this.justificativa);
+			//registra um objeto Aprovacao
+			this.excluirUsuarioEJB.registrarAprovacao(this.validador,this.usuario.getId(),dataValidade);
+			//marca a instituição a ser excluída para que a mesma não seja mais utilizada 
+			this.excluirUsuarioEJB.marcarUsuarioExcluido(this.usuario,false,false);
 			// mensagem de sucesso
 			MensagensDeErro.getSucessMessage("excluirUsuarioEnviandoEmail",
 					"resultado");
