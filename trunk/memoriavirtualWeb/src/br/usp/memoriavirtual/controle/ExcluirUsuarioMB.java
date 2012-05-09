@@ -15,6 +15,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
@@ -169,6 +170,9 @@ public class ExcluirUsuarioMB {
 			return null;
 		}
 		setNomeExcluir(usuario.getNomeCompleto());
+		try{
+		setNivelPermissao(memoriaVirtualEJB.getURLServidor());}
+		catch(ModeloException e){}
 		if (usuario.isAdministrador()) {
 			this.nivelPermissao = "Administrador";
 		}
@@ -185,7 +189,6 @@ public class ExcluirUsuarioMB {
 		listaUsuarios = this.excluirUsuarioEJB.listarSemelhantes(
 				this.eliminador.getId(), this.eliminador.isAdministrador());
 		setSemelhantes(listaUsuarios);
-		usuario = null;
 		return "etapa3";
 	}
 
@@ -204,44 +207,50 @@ public class ExcluirUsuarioMB {
 									+ "\n"
 									+ "\n"
 									+ bundle.getString("excluirUsuarioNome")
+									+ ": "
 									+ this.getNomeExcluir()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioInstituicao")
+									+ ": "
 									+ this.getInstituicaoPertencente()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioNivelPermissao")
+									+ ": "
 									+ this.getNivelPermissao()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioJustificativa")
+									+ ": "
 									+ this.getJustificativa()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioRequisitor")
+									+ ": "
 									+ this.eliminador.getNomeCompleto()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioPrazoValidade")
+									+ ": "
 									+ formatoData.format(dataValidade)
-									+ "\n"
+									+ "\n\n"
 									+ bundle.getString("excluirUsuarioEmailMensagemURL")
 									+ "\n"
-									+ "\n");
-									/*+ "http://"
+									+ "\n"
+									+ "http://"
 									+ memoriaVirtualEJB.getURLServidor()
 									+ "/excluir?"
 									+ "chaveEstrangeira="
-									+ this.usuario.getNomeCompleto()
+									+ this.usuario.getId()
 									+ "\n\n"
 									+ bundle.getString("excluirUsuarioEmailMensagemFim")
-									+ "\n" + "\n");*/
+									+ "\n" + "\n");
 			// mensagem de sucesso
 			MensagensDeErro.getSucessMessage("excluirUsuarioEnviandoEmail",
 					"resultado");
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		/*} catch (ModeloException e) {
+		} catch (ModeloException e) {
 			e.printStackTrace();
 			e.getCause();
 		} catch (NullPointerException e){
-			e.printStackTrace();*/
+			e.printStackTrace();
 		}
 		return "true";
 
