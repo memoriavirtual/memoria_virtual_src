@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 
@@ -41,7 +43,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		}
 
 	}
-	
+
 	public Usuario recuperarDadosUsuario(String nome) throws ModeloException {
 		Query query = entityManager
 				.createQuery("SELECT u FROM Usuario u WHERE u.nomeCompleto = :nome");
@@ -55,9 +57,10 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 
 		return usuario;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarSemelhantes(String eliminador, Boolean isAdministrador){
+	public List<Usuario> listarSemelhantes(String eliminador,
+			Boolean isAdministrador) {
 		List<Usuario> usuarios;
 		Query query;
 		if (isAdministrador) {
@@ -76,8 +79,33 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
-	
+
+	public void registrarAprovacao(Usuario validador, String idExcluido,
+			Date dataValidade) {
+		Date data = new Date();
+		Usuario u = entityManager.find(Usuario.class, validador.getId());
+		Aprovacao aprovacao = new Aprovacao(data, u, dataValidade, idExcluido,
+				"Usuario");
+		this.entityManager.persist(aprovacao);
+	}
+
+	public void marcarUsuarioExcluido(Usuario usuario, boolean marca,
+			boolean flagAcesso) throws ModeloException {
+		Query query;
+		query = this.entityManager
+				.createQuery("UPDATE Usuario a SET a.ativo = :validade WHERE  a.id = :id");
+		query.setParameter("id", usuario.getId());
+		query.setParameter("validade", marca);
+		query.executeUpdate();
+		if (flagAcesso) {
+			query = this.entityManager
+					.createQuery("UPDATE Acesso a SET a.validade = :validade WHERE  a.usuario = :id");
+			query.setParameter("id", usuario.getId());
+			query.setParameter("validade", marca);
+			query.executeUpdate();
+		}
+	}
+
 }
