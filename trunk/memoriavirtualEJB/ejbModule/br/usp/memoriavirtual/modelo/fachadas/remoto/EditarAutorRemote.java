@@ -14,4 +14,5 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
  */
 public interface EditarAutorRemote {
 	public List<Autor> listarAutores (String strDeBusca)throws ModeloException;
+	public void editarAutor (Autor autor)throws ModeloException;
 }

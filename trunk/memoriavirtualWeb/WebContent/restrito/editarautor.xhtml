@@ -47,7 +47,7 @@
 								value="#{editarAutorMB.autores}">
 								<h:column>
 									<h:commandLink
-										action="#{editarAutorMB.selecionarAutor(autor.nome)}">#{instituicao.nome}</h:commandLink>
+										action="#{editarAutorMB.selecionarAutor(autor)}">#{autor.nome}</h:commandLink>
 								</h:column>
 							</h:dataTable>
 							<div></div>
@@ -62,9 +62,9 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.nome}">
+							<h:inputText value="#{editarAutorMB.nome}">
 								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{cadastrarAutorMB.validateNome}" />
+									listener="#{editarAutorMB.validateNome}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoNome" for="validacaoNome"
@@ -74,9 +74,9 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorSobrenome}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.sobrenome}">
+							<h:inputText value="#{editarAutorMB.sobrenome}">
 								<f:ajax event="blur" execute="@this" render="validacaoSobrenome"
-									listener="#{cadastrarAutorMB.validateSobrenome}" />
+									listener="#{editarAutorMB.validateSobrenome}" />
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoSobrenome" for="validacaoSobrenome"
@@ -86,7 +86,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorCodinome}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.codinome}">
+							<h:inputText value="#{editarAutorMB.codinome}">
 
 							</h:inputText>
 							<div></div>
@@ -95,15 +95,15 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorAtividade}</h:outputLabel>
-							<h:selectOneMenu rendered="#{cadastrarAutorMB.normalAtividade}"
-								value="#{cadastrarAutorMB.atividade}">
-								<f:selectItems value="#{cadastrarAutorMB.listaAtividade}" />
+							<h:selectOneMenu rendered="#{editarAutorMB.normalAtividade}"
+								value="#{editarAutorMB.atividade}">
+								<f:selectItems value="#{editarAutorMB.listaAtividade}" />
 							</h:selectOneMenu>
-							<h:inputText rendered="#{cadastrarAutorMB.outroAtividade}"
-								value="#{cadastrarAutorMB.atividade}" />
+							<h:inputText rendered="#{editarAutorMB.outroAtividade}"
+								value="#{editarAutorMB.atividade}" />
 							<h:commandLink class="outraAutoria"
-								value="#{cadastrarAutorMB.outroLinkAtividade}"
-								action="#{cadastrarAutorMB.abrirAtividadeOutro}" />
+								value="#{editarAutorMB.outroLinkAtividade}"
+								action="#{editarAutorMB.abrirAtividadeOutro}" />
 							<div></div>
 
 						</div>
@@ -112,12 +112,15 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNascimento}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.nascimento}">
+							<h:inputText value="#{editarAutorMB.nascimento}">
 								<f:ajax event="blur" execute="@this"
 									render="validacaoNascimento"
-									listener="#{cadastrarAutorMB.validateNascimento}" />
+									listener="#{editarAutorMB.validateNascimento}" />
 							</h:inputText>
-							<div>dd/mm/aaaa</div>
+							<h:commandLink class="outraAutoria"
+								value="#{editarAutorMB.outroLinkNascimento}"
+								action="#{editarAutorMB.abrirNascimentoOutro}" />
+							<div><h:outputLabel rendered="#{editarAutorMB.normalNascimento}">dd/mm/aaaa</h:outputLabel></div>
 							<h:message id="validacaoNascimento" for="validacaoNascimento"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -126,11 +129,14 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorObito}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.obito}">
+							<h:inputText value="#{editarAutorMB.obito}">
 								<f:ajax event="blur" execute="@this" render="validacaoObito"
-									listener="#{cadastrarAutorMB.validateObito}" />
+									listener="#{editarAutorMB.validateObito}" />
 							</h:inputText>
-							<div>dd/mm/aaaa</div>
+							<h:commandLink class="outraAutoria"
+								value="#{editarAutorMB.outroLinkObito}"
+								action="#{editarAutorMB.abrirObitoOutro}" />
+							<div><h:outputLabel rendered="#{editarAutorMB.normalObito}">dd/mm/aaaa</h:outputLabel></div>
 							<h:message id="validacaoObito" for="validacaoObito"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -141,13 +147,13 @@
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.editarCadastroUsuarioBotaoSalvar}"
-							action="#{cadastrarAutorMB.cadastrarAutor}">
+							action="#{editarAutorMB.salvarEdicaoAutor}">
 
 						</h:commandButton>
 
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.cadastrarAutorBotaoResetar}"
-							action="#{cadastrarAutorMB.resetCadastrarAutor}">
+							value="#{mensagens.editarInstituicaoBotaoCancelar}"
+							action="#{editarAutorMB.resetEditarAutor()}">
 						</h:commandButton>
 
 					</div>

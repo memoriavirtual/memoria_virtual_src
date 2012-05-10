@@ -14,67 +14,106 @@ import javax.faces.event.AjaxBehaviorEvent;
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
+
 
 /**
  * @author bigmac
- *
+ * 
  */
-public class EditarAutorMB {
-	
+public class EditarAutorMB extends CadastrarAutorMB {
+
 	@EJB
 	private EditarAutorRemote editarAutorEJB;
-	
-	private Autor autor;
-	
 	private String strDeBusca;
-	
-	private List<Autor> autores = new ArrayList<Autor>(); 
-	
-	
-
+	private List<Autor> autores = new ArrayList<Autor>();
 	private boolean etapa1 = true;
-	private boolean etapa2= false;
-	
+	private boolean etapa2 = false;
+
 	/**
-	 * Construtor 
+	 * Construtor
 	 */
-	public EditarAutorMB(){
+	public EditarAutorMB() {
 		super();
 	}
+
 	/**
-	 * MÈtodo È chamado enquanto as letras s√£o inseridas
-	 * no campo de busca.
+	 * MÈtodo È chamado enquanto as letras s√£o inseridas no campo de busca.
 	 */
-	public void listarAutores (AjaxBehaviorEvent event){
-		
+	public void listarAutores(AjaxBehaviorEvent event) {
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(context, bundleName);
-		
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		this.autores.clear();
-		
-		
-		try {
-			this.autores = this.editarAutorEJB.listarAutores(this.strDeBusca);
-		} catch (ModeloException e) {
-			e.printStackTrace();
-		}
-		
-		
-		if(this.autores.isEmpty()){
+
+		if (!this.strDeBusca.equals(""))
+			try {
+				this.autores = this.editarAutorEJB
+						.listarAutores(this.strDeBusca);
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+
+		if (this.autores.isEmpty()) {
 			Autor aut = new Autor();
 			aut.setNome(bundle.getString("excluirInstituicaoErrolistavazia"));
 			this.autores.add(aut);
 		}
 		return;
 	}
-	
-	public String selecionarAutor(String string){
+
+	public String selecionarAutor() {
+		return null;
+	}
+
+	public String selecionarAutor(Autor autor) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (!autor.getNome().equals(
+				bundle.getString("excluirInstituicaoErrolistavazia"))) {
+			this.autor = autor;
+			this.etapa1 = false;
+			this.etapa2 = true;
+		}
+		return null;
+	}
+	public String salvarEdicaoAutor(){
 		
-		return null;		
+		if (this.validateNome() && this.validateSobrenome()
+				&& this.validateNascimento() && this.validateObito()
+				&& this.validateTipoAutoria() && this.validateAtividade()) {
+
+		try {
+			this.editarAutorEJB.editarAutor(this.autor);
+		} catch (ModeloException e) {
+			e.printStackTrace();
+			MensagensDeErro.getErrorMessage("editarAutorError",
+					"resultado");
+		}
+		MensagensDeErro.getSucessMessage("editarAutorSucesso",
+				"resultado");
+		this.resetEditarAutor();
+		}
+		return null;
 	}
 	
-	
+	/**
+	 * Volta os atributos a um estado original
+	 */
+	public String resetEditarAutor() {
+		super.resetCadastrarAutor();
+		this.strDeBusca = "";
+		this.autores.clear();
+		this.etapa1 = true;
+		this.etapa2 = false;
+		return null;
+	}
+
 	/**
 	 * @return the strBusca
 	 */
@@ -83,7 +122,8 @@ public class EditarAutorMB {
 	}
 
 	/**
-	 * @param strBusca the strBusca to set
+	 * @param strBusca
+	 *            the strBusca to set
 	 */
 	public void setStrDeBusca(String strBusca) {
 		this.strDeBusca = strBusca;
@@ -95,105 +135,36 @@ public class EditarAutorMB {
 	public List<Autor> getAutores() {
 		return autores;
 	}
-	
-	/**
-	 * @return the nome
-	 */
-	public String getNome() {
-		return autor.getNome();
-	}
 
 	/**
-	 * @return the sobrenome
+	 * @return the etapa1
 	 */
-	public String getSobrenome() {
-		return autor.getSobrenome();
-	}
-
-	/**
-	 * @return the codinome
-	 */
-	public String getCodinome() {
-		return autor.getCodinome();
-	}
-
-	/**
-	 * @return the nascimento
-	 */
-	public String getNascimento() {
-		return autor.getNascimento();
-	}
-
-	/**
-	 * @return the obito
-	 */
-	public String getObito() {
-		return autor.getObito();
-	}
-
-	/**
-	 * @return the atividade
-	 */
-	public String getAtividade() {
-		return autor.getAtividade();
-	}
-
-	/**
-	 * @param nome
-	 *            the nome to set
-	 */
-	public void setNome(String nome) {
-		this.autor.setNome(nome);
-	}
-
-	/**
-	 * @param sobrenome
-	 *            the sobrenome to set
-	 */
-	public void setSobrenome(String sobrenome) {
-		this.autor.setSobrenome(sobrenome);
-	}
-
-	/**
-	 * @param codinome
-	 *            the codinome to set
-	 */
-	public void setCodinome(String codinome) {
-		this.autor.setCodinome(codinome);
-	}
-
-	/**
-	 * @param nascimento
-	 *            the nascimento to set
-	 */
-	public void setNascimento(String nascimento) {
-		this.autor.setNascimento(nascimento);
-	}
-
-	/**
-	 * @param obito
-	 *            the obito to set
-	 */
-	public void setObito(String obito) {
-		this.autor.setObito(obito);
-	}
-
-	/**
-	 * @param atividade
-	 *            the atividade to set
-	 */
-	public void setAtividade(String atividade) {
-		this.autor.setAtividade(atividade);
-	}
-	
-	
 	public boolean isEtapa1() {
 		return etapa1;
 	}
 
+	/**
+	 * @param etapa1 the etapa1 to set
+	 */
+	public void setEtapa1(boolean etapa1) {
+		this.etapa1 = etapa1;
+	}
+
+	/**
+	 * @return the etapa2
+	 */
 	public boolean isEtapa2() {
 		return etapa2;
 	}
 
+	/**
+	 * @param etapa2 the etapa2 to set
+	 */
+	public void setEtapa2(boolean etapa2) {
+		this.etapa2 = etapa2;
+	}
+
+	
+	
 
 }

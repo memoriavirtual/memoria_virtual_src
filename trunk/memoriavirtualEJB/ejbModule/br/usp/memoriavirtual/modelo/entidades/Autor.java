@@ -110,7 +110,7 @@ public class Autor implements Serializable {
 	/**
 	 * @param tipoAuditoria the tipoAuditoria to set
 	 */
-	public void setTipoAuditoria(String tipoAutoria) {
+	public void setTipoAutoria(String tipoAutoria) {
 		this.tipoAutoria = tipoAutoria;
 	}
 	/**

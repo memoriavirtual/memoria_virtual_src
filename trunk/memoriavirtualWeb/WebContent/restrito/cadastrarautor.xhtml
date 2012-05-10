@@ -98,7 +98,10 @@
 								<f:ajax event="blur" execute="@this" render="validacaoNascimento"
 									listener="#{cadastrarAutorMB.validateNascimento}" />
 							</h:inputText>
-							<div>dd/mm/aaaa</div>
+							<h:commandLink class="outraAutoria"
+								value="#{editarAutorMB.outroLinkNascimento}"
+								action="#{editarAutorMB.abrirNascimentoOutro}" />
+							<div><h:outputLabel rendered="#{editarAutorMB.normalNascimento}">dd/mm/aaaa</h:outputLabel></div>
 							<h:message id="validacaoNascimento" for="validacaoNascimento"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -111,7 +114,10 @@
 								<f:ajax event="blur" execute="@this" render="validacaoObito"
 									listener="#{cadastrarAutorMB.validateObito}" />
 							</h:inputText>
-							<div>dd/mm/aaaa</div>
+							<h:commandLink class="outraAutoria"
+								value="#{editarAutorMB.outroLinkObito}"
+								action="#{editarAutorMB.abrirObitoOutro}" />
+							<div><h:outputLabel rendered="#{editarAutorMB.normalObito}">dd/mm/aaaa</h:outputLabel></div>
 							<h:message id="validacaoObito" for="validacaoObito"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>

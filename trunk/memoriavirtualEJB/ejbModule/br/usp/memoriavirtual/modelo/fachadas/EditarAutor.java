@@ -26,18 +26,42 @@ public class EditarAutor implements EditarAutorRemote {
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Autor> listarAutores (String strDeBusca) throws ModeloException {
 		List<Autor> lista ;
 
 		Query query;
 		query = this.entityManager
 				.createQuery("SELECT a FROM Autor a WHERE a.nome like :busca ");
-		query.setParameter("busca", strDeBusca + "%");
+		query.setParameter("busca", strDeBusca+"%");
 		try {
 			lista = ( List<Autor> ) query.getResultList();
 			return  lista ;
 		} catch (Exception e) {
 			throw new ModeloException(e);
+		}
+	}
+
+	@Override
+	public void editarAutor(Autor autor) throws ModeloException {
+		Autor autorAntigo;
+	
+		autorAntigo = this.entityManager.find(Autor.class,  autor.getId());
+		
+		if(autorAntigo != null){
+			autorAntigo.setAtividade(autor.getAtividade());
+			autorAntigo.setCodinome(autor.getCodinome());
+			autorAntigo.setNascimento(autor.getNascimento());
+			autorAntigo.setNome(autor.getNome());
+			autorAntigo.setObito(autor.getObito());
+			autorAntigo.setSobrenome(autor.getSobrenome());
+			autorAntigo.setTipoAutoria(autor.getTipoAutoria());
+		}
+		
+		try {
+			entityManager.flush();
+		} catch (Exception t) {
+			throw new ModeloException(t);
 		}
 	}
 }
