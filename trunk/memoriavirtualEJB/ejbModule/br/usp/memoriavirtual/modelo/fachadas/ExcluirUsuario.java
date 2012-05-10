@@ -45,15 +45,17 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			}*/
 			//for (Acesso acesso : acessos) {
 				query = this.entityManager
-						.createQuery("SELECT u FROM Usuario u, Acesso a WHERE a.usuario = u.id");
-				//query.setParameter("instituicao", acesso.getInstituicao());
+						.createQuery("SELECT u FROM Acesso a, Usuario u WHERE a.usuario.id = u.id AND u.NomeCompleto = usuario");
 				query.setParameter("usuario", "%" + parteNome + "%");
-				try {
+				System.out.print(query.getResultList());
+				//query.setParameter("instituicao", acesso.getInstituicao());
+				//query.setParameter("usuario", "%" + parteNome + "%");
+				/*try {
 					usuarios = (List<Usuario>) query.getResultList();
 					return usuarios;
 				} catch (Exception e) {
 					return null;
-				}
+				}*/
 			//}
 
 		}
