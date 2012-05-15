@@ -1,9 +1,15 @@
 package br.usp.memoriavirtual.controle;
 
+import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.HttpServletRequest;
+
+
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -24,12 +30,24 @@ public class CadastrarUsuarioMB {
 	private String telefone = "";
 	private String senha = "";
 	private String confirmacaoSenha = "";
-	private String validacao = "";
+	private Usuario convite = null;
+	
 
 	public CadastrarUsuarioMB() {
 
 	}
+	
+	@PostConstruct
+	public void inicializar(){
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		
+		Usuario convite = (Usuario) request.getSession().getAttribute("usuario");
+		this.convite = convite;
+		this.email = convite.getEmail();
+	}
 
+	
 	public String completarCadastro() {
 
 		/*
@@ -37,7 +55,6 @@ public class CadastrarUsuarioMB {
 		 * FacesMessage(FacesMessage.SEVERITY_INFO,
 		 * "Cadastro concluido com sucesso.", null));
 		 */
-
 		this.validateId();
 		this.validateEmail();
 		this.validateNomeCompleto();
@@ -48,10 +65,13 @@ public class CadastrarUsuarioMB {
 		Usuario usuario = new Usuario(this.id, this.email, this.nomeCompleto,
 				this.telefone, this.senha);
 
+		
 		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
 
+			String validacaoConvite = this.convite.getId();
+			
 			try {
-				cadastrarUsuarioEJB.cadastrarUsuario(usuario, validacao);
+				cadastrarUsuarioEJB.cadastrarUsuario(usuario, validacaoConvite);
 			} catch (ModeloException e) {
 				usuario = null;
 				MensagensDeErro
@@ -61,6 +81,7 @@ public class CadastrarUsuarioMB {
 				MensagensDeErro.getErrorMessage("erro_cadastramento",
 						"resultado");
 			}
+			
 			if (usuario != null) {
 				usuario = usuario.clone(); //Teste se isso nao altera o usuario ja persistido na banco
 				HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -74,20 +95,12 @@ public class CadastrarUsuarioMB {
 			this.telefone = "";
 			this.senha = "";
 			this.confirmacaoSenha = "";
-			this.validacao = "";
+			this.convite = null;
 
 			MensagensDeErro.getSucessMessage("cadastro_concluido", "resultado");
 
 		}
 		return "falhou";
-	}
-
-	public String getValidacao() {
-		return validacao;
-	}
-
-	public void setValidacao(String validacao) {
-		this.validacao = validacao;
 	}
 
 	public String getId() {
@@ -103,7 +116,6 @@ public class CadastrarUsuarioMB {
 	}
 
 	public void validateId() {
-
 		if (this.id.equals("")) {
 			String[] argumentos = { "id" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
@@ -141,7 +153,8 @@ public class CadastrarUsuarioMB {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
 					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.email)) {
+		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.email)
+				&& !this.email.equals(this.convite.getEmail())) {
 			String[] argumentos = { "email" };
 			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
 					"validacaoEmail");
