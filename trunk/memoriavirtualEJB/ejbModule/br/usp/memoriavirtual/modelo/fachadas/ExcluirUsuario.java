@@ -25,29 +25,37 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			Boolean isAdministrador) {
 
 		List<Usuario> usuarios;
-		//List<Acesso> acessos;
+		List<Acesso> acessos;
 		//Acesso acesso;
-		//List<Acesso> aux;
+		List<Usuario> aux;
 		Query query;
 		if (isAdministrador) {
 			query = this.entityManager
 					.createQuery("SELECT a FROM Usuario a WHERE a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
 			query.setParameter("parteNome", "%" + parteNome + "%");
 		} else {
-			/*query = this.entityManager
+			query = this.entityManager
 					.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :eliminador");
 			query.setParameter("eliminador", eliminador);
 			try {
-				acesso = (Acesso) query.getSingleResult();
+				acessos = (List<Acesso>) query.getResultList();
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
-			}*/
-			//for (Acesso acesso : acessos) {
+			}
+			aux = null;
+			for (Acesso acesso : acessos) {
 				query = this.entityManager
-						.createQuery("SELECT u FROM Acesso a, Usuario u WHERE a.usuario.id = u.id AND u.NomeCompleto = usuario");
-				query.setParameter("usuario", "%" + parteNome + "%");
+						.createQuery("SELECT u FROM Acesso a, Usuario u WHERE a.usuario.id = u.id AND u.nomeCompleto LIKE :parteNome");
+				query.setParameter("parteNome", "%" + parteNome + "%");
+				//query.setParameter("instituicao", acesso.getInstituicao());
 				System.out.print(query.getResultList());
+				try{
+				aux.addAll((List<Usuario>)query.getResultList());}
+				catch(Exception e){
+					System.out.print("entrei aqui");
+				}
+				//query.setParameter("instituicao", acesso.getInstituicao());
 				//query.setParameter("instituicao", acesso.getInstituicao());
 				//query.setParameter("usuario", "%" + parteNome + "%");
 				/*try {
@@ -56,9 +64,15 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 				} catch (Exception e) {
 					return null;
 				}*/
-			//}
-
+			}
+			//try {
+			//usuarios = (List<Usuario>) query.getResultList();
+			return aux;
+		//} catch (Exception e) {
+			//return null;
 		}
+
+		//}
 		try {
 			usuarios = (List<Usuario>) query.getResultList();
 			return usuarios;
