@@ -151,7 +151,7 @@ public class ExcluirUsuarioMB {
 				.getAttribute("usuario");
 		usuarios.clear();
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir,
+		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir,this.eliminador,
 				this.eliminador.isAdministrador());
 		setUsuarios(listaUsuarios);
 		usuario = null;
