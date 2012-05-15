@@ -46,7 +46,7 @@ public class CadastrarUsuario extends HttpServlet {
 		}
 
 		if (usuarioAutenticado != null) {
-			response.sendRedirect("restrito/cadastrarusuario.jsf?validacao=" + validacao + "&email=" + email);
+			response.sendRedirect("restrito/cadastrarusuario.jsf");
 			// Caso queria fazer por foward para n�o mudar a url usar c�digo
 			// abaixo:
 			// javax.servlet.RequestDispatcher dispatcher =
