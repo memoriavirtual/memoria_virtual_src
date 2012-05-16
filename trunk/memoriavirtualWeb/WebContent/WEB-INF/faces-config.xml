@@ -49,14 +49,6 @@
 		<managed-bean-name>cadastrarUsuarioMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarUsuarioMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>validacao</property-name>
-			<value>#{param.validacao}</value>
-		</managed-property>
-		<managed-property>
-			<property-name>email</property-name>
-			<value>#{param.email}</value>
-		</managed-property>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>editarCadastroProprioMB</managed-bean-name>
