@@ -226,7 +226,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		Date data = new Date();
 		instituicao = this.entityManager.find(Instituicao.class, instituicao.getId());
 		Usuario u = entityManager.find(Usuario.class, validador.getId());
-		Aprovacao aprovacao = new Aprovacao( data , u , dataValidade , instituicao.getNome() , "Instituicao");
+		Aprovacao aprovacao = new Aprovacao( data , u , dataValidade , instituicao.getNome() , Instituicao.class.getName());
 		this.entityManager.persist(aprovacao);
 	}
 }
