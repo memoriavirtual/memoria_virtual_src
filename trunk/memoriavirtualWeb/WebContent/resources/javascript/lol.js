@@ -1,14 +1,23 @@
 $(document).ready(function() {
-	$("#sugestoesId").hide();
-
+	if ($("#sugestoesId > tbody > tr > td:empty ").size() > 0) {
+		$("div #sugestoes").hide();
+	}
+	else
+		$("div #sugestoes").show();
+	
+	$("input").click(function() {
+		$("div #sugestoes").show();
+	});
+	
 	$("input").keyup(function() {
 		if ($("#sugestoesId > tbody > tr > td:empty ").size() > 0) {
 			$("div #sugestoes").hide();
 		}
 		else
 			$("div #sugestoes").show();
-	});
+		});
+	
+		
 });
 
-function opa() {
-}
+

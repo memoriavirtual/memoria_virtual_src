@@ -35,8 +35,9 @@
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
-								
-							</h:inputText>
+								<f:ajax event="focus" execute="@this" render="sugestoesId"
+									listener="#{excluirInstituicaoMB.listarInstituicoes}" />
+								</h:inputText>
 							
 							
 						</div>

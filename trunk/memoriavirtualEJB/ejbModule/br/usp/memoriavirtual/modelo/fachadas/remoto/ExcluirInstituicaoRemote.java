@@ -18,7 +18,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface ExcluirInstituicaoRemote{
 	
-	
+	public List<Instituicao> listarTodasInstituicoes() throws ModeloException;
 	/**
 	 * Métodos faz uma requisição no banco de dados afim de encontrar todos 
 	 * os usuários do memória virtual que são administradores.

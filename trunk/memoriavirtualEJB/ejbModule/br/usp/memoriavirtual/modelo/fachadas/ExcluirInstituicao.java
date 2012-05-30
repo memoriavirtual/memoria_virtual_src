@@ -229,4 +229,22 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		Aprovacao aprovacao = new Aprovacao( data , u , dataValidade , instituicao.getNome() , Instituicao.class.getName());
 		this.entityManager.persist(aprovacao);
 	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Instituicao> listarTodasInstituicoes() throws ModeloException {
+		List<Instituicao> lista ;
+		Query query;
+		query = this.entityManager
+				.createQuery("SELECT a FROM Instituicao a");
+		try {
+			lista = (List<Instituicao>) query.getResultList();
+			return lista ;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+		
+		
+	}
 }
