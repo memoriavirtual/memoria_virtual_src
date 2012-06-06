@@ -29,8 +29,6 @@ public class CadastrarAutorMB{
 
 	Autor autor = new Autor ("","","","","","","");
 
-	private boolean outroTipoAutoria = false;
-	private boolean normalTipoAutoria = true;
 	private boolean outroAtividade = false;
 	private boolean normalAtividade = true;
 	private boolean outroNascimento = false;
@@ -68,9 +66,6 @@ public class CadastrarAutorMB{
 			this.autor.setNascimento("");
 			this.autor.setObito("");
 			this.autor.setAtividade("");
-			this.autor.setTipoAutoria("");
-			this.outroTipoAutoria = false;
-			this.normalTipoAutoria = true;
 			this.outroAtividade = false;
 			this.normalAtividade = true;
 
@@ -80,53 +75,7 @@ public class CadastrarAutorMB{
 		return retorno;
 	}
 
-	public List<SelectItem> getListaTipoAutoria() {
-		List<SelectItem> tiposAutoria = new ArrayList<SelectItem>();
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria0")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria1")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria2")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria3")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria4")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria5")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria6")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria7")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria8")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria9")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria10")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria11")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria12")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria13")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria14")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria15")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria16")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria17")));
-		tiposAutoria.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaTipoAutoria18")));
-
-		return tiposAutoria;
-	}
+	
 
 	public List<SelectItem> getListaAtividade() {
 		List<SelectItem> atividades = new ArrayList<SelectItem>();
@@ -204,25 +153,6 @@ public class CadastrarAutorMB{
 
 	}
 
-	public String abrirAutoriaOutro() {
-		this.setTipoAutoria("");
-		this.outroTipoAutoria = !this.outroTipoAutoria;
-		this.normalTipoAutoria = !this.normalTipoAutoria;
-		return null;
-	}
-
-	public String getOutroLink() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (this.normalTipoAutoria) {
-			return bundle.getString("cadastrarAutorEspecificar");
-		} else {
-			return bundle.getString("cadastrarAutorSelecionar");
-		}
-
-	}
 
 
 	public String abrirNascimentoOutro() {
@@ -275,8 +205,6 @@ public class CadastrarAutorMB{
 		this.autor.setObito("");
 		this.autor.setAtividade("");
 		this.autor.setTipoAutoria("");
-		this.outroTipoAutoria = false;
-		this.normalTipoAutoria = true;
 		this.outroAtividade = false;
 		this.normalAtividade = true;
 		return "reset";
@@ -410,35 +338,6 @@ public class CadastrarAutorMB{
 		this.normalAtividade = normalAtividade;
 	}
 
-	/**
-	 * @return the outroTipoAutoria
-	 */
-	public boolean isOutroTipoAutoria() {
-		return outroTipoAutoria;
-	}
-
-	/**
-	 * @param outroTipoAutoria
-	 *            the outroTipoAutoria to set
-	 */
-	public void setOutroTipoAutoria(boolean outroTipoAutoria) {
-		this.outroTipoAutoria = outroTipoAutoria;
-	}
-
-	/**
-	 * @return the tipoAutoria
-	 */
-	public String getTipoAutoria() {
-		return autor.getTipoAutoria();
-	}
-
-	/**
-	 * @param tipoAutoria
-	 *            the tipoAutoria to set
-	 */
-	public void setTipoAutoria(String tipoAutoria) {
-		autor.setTipoAutoria( tipoAutoria );
-	}
 
 	/**
 	 * @return the nome
@@ -533,17 +432,6 @@ public class CadastrarAutorMB{
 	/**
 	 * @return the normaltipoAutoria
 	 */
-	public boolean isNormalTipoAutoria() {
-		return normalTipoAutoria;
-	}
-
-	/**
-	 * @param normaltipoAutoria
-	 *            the normaltipoAutoria to set
-	 */
-	public void setNormalTipoAutoria(boolean normalTipoAutoria) {
-		this.normalTipoAutoria = normalTipoAutoria;
-	}
 
 	/**
 	 * @return the outroNascimento

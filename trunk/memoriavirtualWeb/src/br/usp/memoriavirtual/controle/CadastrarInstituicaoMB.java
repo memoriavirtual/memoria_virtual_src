@@ -2,9 +2,13 @@ package br.usp.memoriavirtual.controle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
@@ -15,7 +19,7 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 /**
- * Mananged Bean responsável pelo controle do cadatro de uma nova instituição
+ * Mananged Bean responsável pelo controle do cadaStro de uma nova instituição
  */
 
 public class CadastrarInstituicaoMB {
@@ -29,9 +33,16 @@ public class CadastrarInstituicaoMB {
 	private String endereco = "";
 	private String cidade = "";
 	private String estado = "";
+	private String pais = "";
 	private String cep = "";
 	private String telefone = "";
-
+	private String caixaPostal = "";
+	private String email = "";
+	private String URL = "";
+	private String identificacaoProprietario = "";
+	private String administradorPropriedade = "";
+	private String latitude = "";
+	private String longitude = "";
 	/**
 	 * Construtor padrão
 	 */
@@ -45,7 +56,8 @@ public class CadastrarInstituicaoMB {
 			Instituicao instituicao = new Instituicao(this.nome,
 					this.localizacao, this.endereco, this.cidade, this.estado,
 					this.cep, this.telefone);
-			// Como n�o � necessario a aprova��o de nenhum outro administrador
+			// Como n�o � necessario a aprova��o de nenhum outro
+			// administrador
 			// A validade do registro j� � setada como verdadeira.
 			instituicao.setValidade(true);
 			// Cadastra a instituicao no banco de dados
@@ -150,9 +162,15 @@ public class CadastrarInstituicaoMB {
 	 */
 	public List<SelectItem> getEstadoSigla() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 
-		estados.add(new SelectItem(null, "--Escolha o estado--"));
+		estados.add(new SelectItem(null, bundle
+				.getString("cadastrarInstituicaoEscolhaEstado")));
 		estados.add(new SelectItem("AL", "AL"));
 		estados.add(new SelectItem("AM", "AM"));
 		estados.add(new SelectItem("AP", "AP"));
@@ -181,6 +199,124 @@ public class CadastrarInstituicaoMB {
 		estados.add(new SelectItem("TO", "TO"));
 
 		return estados;
+	}
+
+	/**
+	 * @return the pais
+	 */
+	public String getPais() {
+		return pais;
+	}
+
+	/**
+	 * @return the caixaPostal
+	 */
+	public String getCaixaPostal() {
+		return caixaPostal;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	
+	/**
+	 * @return the uRL
+	 */
+	public String getURL() {
+		return URL;
+	}
+	
+	
+	/**
+	 * @return the identificacaoProprietario
+	 */
+	public String getIdentificacaoProprietario() {
+		return identificacaoProprietario;
+	}
+
+	
+	/**
+	 * @return the administradorPropriedade
+	 */
+	public String getAdministradorPropriedade() {
+		return administradorPropriedade;
+	}
+
+	/**
+	 * @return the latitude
+	 */
+	public String getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * @return the longitude
+	 */
+	public String getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @param longitude the longitude to set
+	 */
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	/**
+	 * @param latitude the latitude to set
+	 */
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	/**
+	 * @param administradorPropriedade the administradorPropriedade to set
+	 */
+	public void setAdministradorPropriedade(String administradorPropriedade) {
+		this.administradorPropriedade = administradorPropriedade;
+	}
+
+	/**
+	 * @param identificacaoProprietario the identificacaoProprietario to set
+	 */
+	public void setIdentificacaoProprietario(String identificacaoProprietario) {
+		this.identificacaoProprietario = identificacaoProprietario;
+	}
+
+	/**
+	 * @param uRL the uRL to set
+	 */
+	public void setURL(String uRL) {
+		URL = uRL;
+	}
+
+	/**
+	 * @param email
+	 *            the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @param caixaPostal
+	 *            the caixaPostal to set
+	 */
+	public void setCaixaPostal(String caixaPostal) {
+		this.caixaPostal = caixaPostal;
+	}
+
+	/**
+	 * @param pais
+	 *            the pais to set
+	 */
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
 
 	/**
@@ -312,6 +448,22 @@ public class CadastrarInstituicaoMB {
 	}
 
 	/**
+	 * Validacao do pais
+	 */
+	public void validatePais(AjaxBehaviorEvent event) {
+		this.validatePais();
+	}
+
+	public boolean validatePais() {
+		if (this.pais.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroPaisVazio", "validacaoPais");
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Validacao do estado
 	 */
 	public void validateEstado(AjaxBehaviorEvent event) {
@@ -347,6 +499,40 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
+	
+	/**
+	 * Validacao do URL
+	 */
+	public void validateURL(AjaxBehaviorEvent event) {
+		this.validateURL();
+	}
+
+	public boolean validateURL() {
+		if (this.URL.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroURLVazio",
+					"validacaoURL");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validacao do Caixa Postal
+	 */
+	public void validateCaixaPostal(AjaxBehaviorEvent event) {
+		this.validateCaixaPostal();
+	}
+
+	public boolean validateCaixaPostal() {
+		if (this.caixaPostal.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroCaixaPostalVazio",
+					"validacaoCaixaPostal");
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Validacao do Telefone
@@ -367,6 +553,97 @@ public class CadastrarInstituicaoMB {
 					"cadastrarInstituicaoErroTelefoneInvalido",
 					"validacaoTelefone");
 			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Validacao do IdentificacaoProprietario
+	 */
+	public void validateIdentificacaoProprietario(AjaxBehaviorEvent event) {
+		this.validateIdentificacaoProprietario();
+	}
+
+	public boolean validateIdentificacaoProprietario() {
+		if (this.identificacaoProprietario.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroIdentificacaoProprietarioVazio",
+					"validacaoIdentificacaoProprietario");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Validacao do AdministradorPropriedade
+	 */
+	public void validateAdministradorPropriedade(AjaxBehaviorEvent event) {
+		this.validateAdministradorPropriedade();
+	}
+
+	public boolean validateAdministradorPropriedade() {
+		if (this.administradorPropriedade.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroAdministradorPropriedadeVazio",
+					"validacaoAdministradorPropriedade");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Validacao do Latitude
+	 */
+	public void validateLatitude(AjaxBehaviorEvent event) {
+		this.validateLatitude();
+	}
+
+	public boolean validateLatitude() {
+		if (this.latitude.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroLatitudeVazio",
+					"validacaoLatitude");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Validacao do Longitude
+	 */
+	public void validateLongitude(AjaxBehaviorEvent event) {
+		this.validateLongitude();
+	}
+
+	public boolean validateLongitude() {
+		if (this.longitude.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroLongitudeVazio",
+					"validacaoLongitude");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validacao do email
+	 */
+	public void validateEmail(AjaxBehaviorEvent event) {
+		this.validateEmail();
+	}
+
+	public boolean validateEmail() {
+		if (this.email.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroEmailVazio", "validacaoEmail");
+			return false;
+		} else {
+			Pattern padrao = Pattern.compile(".+@.+\\.[a-z]+");
+			Matcher pesquisa = padrao.matcher(this.email);
+			if(!pesquisa.matches()){
+				MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroEmailInvalido", "validacaoEmail");
+			}
 		}
 		return true;
 	}

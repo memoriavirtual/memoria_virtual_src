@@ -21,7 +21,7 @@ public class Instituicao implements Serializable {
 	private long id;
 	private static final long serialVersionUID = -5996690587044446292L;
 	private String nome;
-	private String localizacao;
+	private String localidade;
 	private String endereco;
 	private String cidade;
 	@Pattern(regexp = "[A-Z]{2}", message = "Estado no formato incorreto (ex: SP e não sp)")
@@ -29,6 +29,14 @@ public class Instituicao implements Serializable {
 	// @Pattern(regexp = "[0-9]{11}")
 	private String cep;
 	private String telefone;
+	private String caixaPostal;
+	private String pais;
+	private String email;
+	private String url;
+	private String identificacaoProprietario;
+	private String administradorPropriedade;
+	private String latitude;
+	private String longitude;
 	private Boolean validade;
 
 	/**
@@ -57,7 +65,7 @@ public class Instituicao implements Serializable {
 	public Instituicao(String Nome, String Local, String End, String Cidade, String Est, String Cep, String Tel) {
 		super();
 		this.nome = Nome;
-		this.localizacao = Local;
+		this.localidade = Local;
 		this.endereco = End;
 		this.cidade = Cidade;
 		this.estado = Est;
@@ -81,20 +89,6 @@ public class Instituicao implements Serializable {
 		this.nome = nome;
 	}
 
-	/**
-	 * @return A localizacao da instituição
-	 */
-	public String getLocalizacao() {
-		return localizacao;
-	}
-
-	/**
-	 * @param localizacao
-	 *            Define a localizacao da instituição
-	 */
-	public void setLocalizacao(String localizacao) {
-		this.localizacao = localizacao;
-	}
 
 	/**
 	 * @return O endereco da instituição
@@ -191,6 +185,132 @@ public class Instituicao implements Serializable {
 	 */
 	public long getId() {
 		return id;
+	}
+
+	/**
+	 * @return the caixaPostal
+	 */
+	public String getCaixaPostal() {
+		return caixaPostal;
+	}
+
+	/**
+	 * @param caixaPostal the caixaPostal to set
+	 */
+	public void setCaixaPostal(String caixaPostal) {
+		this.caixaPostal = caixaPostal;
+	}
+
+	/**
+	 * @return the pais
+	 */
+	public String getPais() {
+		return pais;
+	}
+
+	/**
+	 * @param pais the pais to set
+	 */
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/**
+	 * @return the identificacaoProprietario
+	 */
+	public String getIdentificacaoProprietario() {
+		return identificacaoProprietario;
+	}
+
+	/**
+	 * @param identificacaoProprietario the identificacaoProprietario to set
+	 */
+	public void setIdentificacaoProprietario(String identificacaoProprietario) {
+		this.identificacaoProprietario = identificacaoProprietario;
+	}
+
+	/**
+	 * @return the administradorPropriedade
+	 */
+	public String getAdministradorPropriedade() {
+		return administradorPropriedade;
+	}
+
+	/**
+	 * @param administradorPropriedade the administradorPropriedade to set
+	 */
+	public void setAdministradorPropriedade(String administradorPropriedade) {
+		this.administradorPropriedade = administradorPropriedade;
+	}
+
+	/**
+	 * @return the latitude
+	 */
+	public String getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * @param latitude the latitude to set
+	 */
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	/**
+	 * @return the longitude
+	 */
+	public String getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @param longitude the longitude to set
+	 */
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	/**
+	 * @return the localidade
+	 */
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	/**
+	 * @param localidade the localidade to set
+	 */
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 
 }
