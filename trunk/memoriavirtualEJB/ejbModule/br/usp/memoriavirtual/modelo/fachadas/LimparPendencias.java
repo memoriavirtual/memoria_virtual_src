@@ -1,7 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -12,8 +11,8 @@ import javax.ejb.Timeout;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 
-import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 
 @Singleton
