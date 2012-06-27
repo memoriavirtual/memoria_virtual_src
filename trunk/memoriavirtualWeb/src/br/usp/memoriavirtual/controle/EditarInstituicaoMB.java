@@ -103,7 +103,7 @@ public class EditarInstituicaoMB implements Serializable {
 		this.cidade = instituicao.getCidade();
 		this.endereco = instituicao.getEndereco();
 		this.estado = instituicao.getEstado();
-		this.localizacao = instituicao.getLocalizacao();
+		this.localizacao = instituicao.getLocalidade();
 		this.telefone = instituicao.getTelefone();
 		this.instituicao = instituicao;
 		this.instituicoes.clear();
@@ -125,7 +125,7 @@ public class EditarInstituicaoMB implements Serializable {
 					this.cidade = instituicao.getCidade();
 					this.endereco = instituicao.getEndereco();
 					this.estado = instituicao.getEstado();
-					this.localizacao = instituicao.getLocalizacao();
+					this.localizacao = instituicao.getLocalidade();
 					this.telefone = instituicao.getTelefone();
 					this.instituicao = instituicao;
 					this.instituicoes.clear();
@@ -143,7 +143,7 @@ public class EditarInstituicaoMB implements Serializable {
 					this.cidade = instituicao.getCidade();
 					this.endereco = instituicao.getEndereco();
 					this.estado = instituicao.getEstado();
-					this.localizacao = instituicao.getLocalizacao();
+					this.localizacao = instituicao.getLocalidade();
 					this.telefone = instituicao.getTelefone();
 					this.instituicao = instituicao;
 					this.instituicoes.clear();
