@@ -96,7 +96,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 
 		if (instituicao != null) {
 			instituicao.setNome(nome);
-			instituicao.setLocalizacao(localizacao);
+			instituicao.setLocalidade(localizacao);
 			instituicao.setEndereco(endereco);
 			instituicao.setCidade(cidade);
 			instituicao.setEstado(estado);
