@@ -86,7 +86,7 @@ public class EditarAutorMB extends CadastrarAutorMB {
 		
 		if (this.validateNome() && this.validateSobrenome()
 				&& this.validateNascimento() && this.validateObito()
-				&& this.validateTipoAutoria() && this.validateAtividade()) {
+				&& this.validateAtividade()) {
 
 		try {
 			this.editarAutorEJB.editarAutor(this.autor);

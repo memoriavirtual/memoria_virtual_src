@@ -216,6 +216,44 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoAltitude}</h:outputLabel>
+							<h:inputText value="#{cadastrarInstituicaoMB.altitude}">
+								<f:ajax event="blur" execute="@this" render="validacaoAltitude"
+									listener="#{cadastrarInstituicaoMB.validateAltitude}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoAltitude" for="validacaoAltitude"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoTipoPropriedade}</h:outputLabel>
+							<h:selectOneMenu value="#{cadastrarInstituicaoMB.tipoPropriedade}">
+									<f:selectItems value="#{cadastrarInstituicaoMB.tipoPropriedadeLista}" /> 
+									<f:ajax event="blur" execute="@this" render="validacaoTipoPropriedade"
+									listener="#{cadastrarInstituicaoMB.validateTipoPropriedade}" />
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoTipoPropriedade" for="validacaoTipoPropriedade"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoProtecaoExistente}</h:outputLabel>
+							<h:selectOneMenu value="#{cadastrarInstituicaoMB.protecaoExistente}">
+									<f:selectItems value="#{cadastrarInstituicaoMB.protecaoExistenteLista}" /> 
+									<f:ajax event="blur" execute="@this" render="validacaoProtecaoExistente"
+									listener="#{cadastrarInstituicaoMB.validateProtecaoExistente}" /> 
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoProtecaoExistente" for="validacaoProtecaoExistente"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
 
 					</fieldset>
 					<div class="botao">

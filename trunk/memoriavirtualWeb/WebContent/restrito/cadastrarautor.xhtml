@@ -31,20 +31,7 @@
 				<h:form method="post"  prependId="false">
 					<fieldset>
 						
-						<div  >
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorTipoAutoria}</h:outputLabel>
-							<h:selectOneMenu rendered="#{cadastrarAutorMB.normalTipoAutoria}"  value="#{cadastrarAutorMB.tipoAutoria}">
-									<f:selectItems	 value="#{cadastrarAutorMB.listaTipoAutoria}"  ></f:selectItems>
-									
-							</h:selectOneMenu>
-							
-							<h:inputText rendered="#{cadastrarAutorMB.outroTipoAutoria}" value="#{cadastrarAutorMB.tipoAutoria}"/>
-							<h:commandLink class="outraAutoria" value ="#{cadastrarAutorMB.outroLink}"
-										action="#{cadastrarAutorMB.abrirAutoriaOutro}"/>
-							<div></div>
-							
-						</div>
-						
+											
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
 							<h:inputText value="#{cadastrarAutorMB.nome}">

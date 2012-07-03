@@ -27,7 +27,7 @@ public class CadastrarAutorMB{
 	@EJB
 	private CadastrarAutorRemote cadastrarAutorEJB;
 
-	Autor autor = new Autor ("","","","","","","");
+	protected Autor autor = new Autor ("","","","","","");
 
 	private boolean outroAtividade = false;
 	private boolean normalAtividade = true;
@@ -53,9 +53,9 @@ public class CadastrarAutorMB{
 
 		if (this.validateNome() && this.validateSobrenome()
 				&& this.validateNascimento() && this.validateObito()
-				&& this.validateTipoAutoria() && this.validateAtividade()) {
+				&& this.validateAtividade()) {
 
-			this.cadastrarAutorEJB.cadastrarAutor(new Autor("",
+			this.cadastrarAutorEJB.cadastrarAutor(new Autor(
 					this.autor.getNome(), this.autor.getSobrenome(), this.autor.getCodinome(), this.autor.getAtividade(),
 					this.autor.getNascimento(), this.autor.getObito()));
 			MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
@@ -204,27 +204,11 @@ public class CadastrarAutorMB{
 		this.autor.setNascimento("");
 		this.autor.setObito("");
 		this.autor.setAtividade("");
-		this.autor.setTipoAutoria("");
 		this.outroAtividade = false;
 		this.normalAtividade = true;
 		return "reset";
 	}
 
-	public void validateTipoAutoria(AjaxBehaviorEvent event) {
-		this.validateTipoAutoria();
-	}
-
-	public boolean validateTipoAutoria() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (this.autor.getTipoAutoria().equals(bundle
-				.getString("cadastrarAutorListaTipoAutoria" + 0))) {
-			this.autor.setTipoAutoria("");
-		}
-		return true;
-	}
 
 	public void validateNome(AjaxBehaviorEvent event) {
 		this.validateNome();

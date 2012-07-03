@@ -27,7 +27,6 @@ public class Autor implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTOR_ID")
 	private long id;
-	private String tipoAutoria;
 	private String nome;
 	private String sobrenome;
 	private String codinome;
@@ -48,10 +47,9 @@ public class Autor implements Serializable {
 		this.nascimento = cp.nascimento;
 		this.obito = cp.obito;
 	}
-	public Autor(String tipoAutoria, String nome, String sobrenome,
+	public Autor(String nome, String sobrenome,
 			String codinome, String atividade, String nascimento, String obito) {
 		super();
-		this.tipoAutoria = tipoAutoria;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.codinome = codinome;
@@ -65,12 +63,7 @@ public class Autor implements Serializable {
 	public long getId() {
 		return id;
 	}
-	/**
-	 * @return the tipoAuditoria
-	 */
-	public String getTipoAutoria() {
-		return tipoAutoria;
-	}
+	
 	/**
 	 * @return the nome
 	 */
@@ -107,12 +100,7 @@ public class Autor implements Serializable {
 	public String getObito() {
 		return obito;
 	}
-	/**
-	 * @param tipoAuditoria the tipoAuditoria to set
-	 */
-	public void setTipoAutoria(String tipoAutoria) {
-		this.tipoAutoria = tipoAutoria;
-	}
+	
 	/**
 	 * @param nome the nome to set
 	 */

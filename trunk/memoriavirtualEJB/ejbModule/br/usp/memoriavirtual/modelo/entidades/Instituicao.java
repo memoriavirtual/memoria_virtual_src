@@ -37,6 +37,9 @@ public class Instituicao implements Serializable {
 	private String administradorPropriedade;
 	private String latitude;
 	private String longitude;
+	private String altitude;
+	private String tipoPropriedade;
+	private String protecaoExistente;
 	private Boolean validade;
 
 	/**
@@ -62,7 +65,9 @@ public class Instituicao implements Serializable {
 	 * @param Tel
 	 *            Telefone
 	 */
-	public Instituicao(String Nome, String Local, String End, String Cidade, String Est, String Cep, String Tel) {
+	public Instituicao(String Nome, String Local, String End, String Cidade, String Est, String Cep, String Tel,
+			String caixaPostal, String email, String url,String identificacaoProprietario, String administradorPropriedade,
+			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente) {
 		super();
 		this.nome = Nome;
 		this.localidade = Local;
@@ -71,7 +76,16 @@ public class Instituicao implements Serializable {
 		this.estado = Est;
 		this.cep = Cep;
 		this.telefone = Tel;
-
+		this.caixaPostal = caixaPostal;
+		this.email=email;
+		this.url=url;
+		this.identificacaoProprietario=identificacaoProprietario;
+		this.administradorPropriedade = administradorPropriedade;
+		this.latitude=latitude;
+		this.longitude=longitude;
+		this.altitude=altitude;
+		this.tipoPropriedade=tipoPropriedade;
+		this.protecaoExistente=protecaoExistente;
 	}
 
 	/**
@@ -214,6 +228,48 @@ public class Instituicao implements Serializable {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
+	/**
+	 * @return the altitude
+	 */
+	public String getAltitude() {
+		return altitude;
+	}
+
+	/**
+	 * @param altitude the altitude to set
+	 */
+	public void setAltitude(String altitude) {
+		this.altitude = altitude;
+	}
+
+	/**
+	 * @return the tipoPropriedade
+	 */
+	public String getTipoPropriedade() {
+		return tipoPropriedade;
+	}
+
+	/**
+	 * @param tipoPropriedade the tipoPropriedade to set
+	 */
+	public void setTipoPropriedade(String tipoPropriedade) {
+		this.tipoPropriedade = tipoPropriedade;
+	}
+
+	/**
+	 * @return the protecaoExistente
+	 */
+	public String getProtecaoExistente() {
+		return protecaoExistente;
+	}
+
+	/**
+	 * @param protecaoExistente the protecaoExistente to set
+	 */
+	public void setProtecaoExistente(String protecaoExistente) {
+		this.protecaoExistente = protecaoExistente;
+	}
+
 
 	/**
 	 * @return the email

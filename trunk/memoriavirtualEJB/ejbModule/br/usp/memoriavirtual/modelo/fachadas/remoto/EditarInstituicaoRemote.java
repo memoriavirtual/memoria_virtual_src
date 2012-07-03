@@ -35,9 +35,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface EditarInstituicaoRemote {
 
-	public void editarInstituicao(Instituicao instituicao, String nome,
-			String novoLocalizacao, String novoEndereco, String novoCidade,
-			String novoEstado, String novoCep, String novoTelefone)
+	public void editarInstituicao(Instituicao instituicao)
 			throws ModeloException;
 
 	public Instituicao getInstituicao(String pnome) throws ModeloException;

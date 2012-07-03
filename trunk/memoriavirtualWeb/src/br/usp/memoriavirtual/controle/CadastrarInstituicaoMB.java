@@ -25,24 +25,27 @@ import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 public class CadastrarInstituicaoMB {
 
 	@EJB
-	private MemoriaVirtualRemote memoriaVirtualEJB;
+	protected MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
-	private String nome = "";
-	private String localizacao = "";
-	private String endereco = "";
-	private String cidade = "";
-	private String estado = "";
-	private String pais = "";
-	private String cep = "";
-	private String telefone = "";
-	private String caixaPostal = "";
-	private String email = "";
-	private String URL = "";
-	private String identificacaoProprietario = "";
-	private String administradorPropriedade = "";
-	private String latitude = "";
-	private String longitude = "";
+	protected String nome = "";
+	protected String localizacao = "";
+	protected String endereco = "";
+	protected String cidade = "";
+	protected String estado = "";
+	protected String pais = "";
+	protected String cep = "";
+	protected String telefone = "";
+	protected String caixaPostal = "";
+	protected String email = "";
+	protected String URL = "";
+	protected String identificacaoProprietario = "";
+	protected String administradorPropriedade = "";
+	protected String latitude = "";
+	protected String longitude = "";
+	protected String altitude = ""; 
+	protected String tipoPropriedade = "";
+	protected String protecaoExistente = "";
 	/**
 	 * Construtor padrão
 	 */
@@ -55,7 +58,9 @@ public class CadastrarInstituicaoMB {
 				&& this.validateCep() && this.validateTelefone()) {
 			Instituicao instituicao = new Instituicao(this.nome,
 					this.localizacao, this.endereco, this.cidade, this.estado,
-					this.cep, this.telefone);
+					this.cep, this.telefone, this.caixaPostal, this.email, this.URL,
+					this.identificacaoProprietario, this.administradorPropriedade,
+					this.latitude, this.longitude, this.altitude,this.tipoPropriedade, this.protecaoExistente);
 			// Como n�o � necessario a aprova��o de nenhum outro
 			// administrador
 			// A validade do registro j� � setada como verdadeira.
@@ -259,6 +264,91 @@ public class CadastrarInstituicaoMB {
 	public String getLongitude() {
 		return longitude;
 	}
+	
+
+	/**
+	 * @return the altitude
+	 */
+	public String getAltitude() {
+		return altitude;
+	}
+
+	/**
+	 * Getter dos tipos de Propriedade (Usado no form de cadastro)
+	 * 
+	 * @return (List<String>) tipos de Propriedade
+	 */
+	public List<SelectItem> getTipoPropriedadeLista() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		List<SelectItem> tiposPropriedade = new ArrayList<SelectItem>();
+
+		tiposPropriedade.add(new SelectItem(null, bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedade")));
+		tiposPropriedade.add(new SelectItem("Publica", bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedadePublica")));
+		tiposPropriedade.add(new SelectItem("Privada", bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedadePrivada")));
+		tiposPropriedade.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeMista")));
+		tiposPropriedade.add(new SelectItem("Outra", bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeOutra")));
+		
+		return tiposPropriedade;
+	}
+	
+	/**
+	 * Getter dos tipos de protecaoExistente (Usado no form de cadastro)
+	 * 
+	 * @return (List<String>) protecao existente
+	 */
+	public List<SelectItem> getProtecaoExistenteLista() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		List<SelectItem> protecaoExistentes = new ArrayList<SelectItem>();
+
+		protecaoExistentes.add(new SelectItem(null, bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistente")));
+		protecaoExistentes.add(new SelectItem("Publica", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMundial")));
+		protecaoExistentes.add(new SelectItem("Privada", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalI")));
+		protecaoExistentes.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalC")));
+		protecaoExistentes.add(new SelectItem("Outra", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualI")));
+		protecaoExistentes.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualC")));
+		protecaoExistentes.add(new SelectItem("Outra", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalI")));
+		protecaoExistentes.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalC")));
+		protecaoExistentes.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteDecreto")));
+		protecaoExistentes.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEntorno")));
+		protecaoExistentes.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteNenhuma")));
+		
+		return protecaoExistentes;
+	}
+
+
+
+	/**
+	 * @param altitude the altitude to set
+	 */
+	public void setAltitude(String altitude) {
+		this.altitude = altitude;
+	}
 
 	/**
 	 * @param longitude the longitude to set
@@ -287,6 +377,8 @@ public class CadastrarInstituicaoMB {
 	public void setIdentificacaoProprietario(String identificacaoProprietario) {
 		this.identificacaoProprietario = identificacaoProprietario;
 	}
+	
+
 
 	/**
 	 * @param uRL the uRL to set
@@ -317,6 +409,22 @@ public class CadastrarInstituicaoMB {
 	 */
 	public void setPais(String pais) {
 		this.pais = pais;
+	}
+	
+	
+
+	/**
+	 * @return the protecaoExistente
+	 */
+	public String getProtecaoExistente() {
+		return protecaoExistente;
+	}
+
+	/**
+	 * @param protecaoExistente the protecaoExistente to set
+	 */
+	public void setProtecaoExistente(String protecaoExistente) {
+		this.protecaoExistente = protecaoExistente;
 	}
 
 	/**
@@ -366,6 +474,21 @@ public class CadastrarInstituicaoMB {
 	 */
 	public void setTelefone(String pTelefone) {
 		this.telefone = pTelefone;
+	}
+
+	
+	/**
+	 * @return the tipoPropriedade
+	 */
+	public String getTipoPropriedade() {
+		return tipoPropriedade;
+	}
+
+	/**
+	 * @param tipoPropriedade the tipoPropriedade to set
+	 */
+	public void setTipoPropriedade(String tipoPropriedade) {
+		this.tipoPropriedade = tipoPropriedade;
 	}
 
 	/**
@@ -471,7 +594,7 @@ public class CadastrarInstituicaoMB {
 	}
 
 	public boolean validateEstado() {
-		if (this.estado.equals("--Escolha o estado--")) {
+		if (this.estado.equals(null)) {
 			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroEstadoVazio", "validacaoEstado");
 			return false;
@@ -623,6 +746,64 @@ public class CadastrarInstituicaoMB {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Validacao do Altitude
+	 */
+	public void validateAltitude(AjaxBehaviorEvent event) {
+		this.validateAltitude();
+	}
+
+	public boolean validateAltitude() {
+		if (this.altitude.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroAltitudeVazio",
+					"validacaoAltitude");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Validacao do TipoPropriedade
+	 */
+	public void validateTipoPropriedade(AjaxBehaviorEvent event) {
+		this.validateTipoPropriedade();
+	}
+
+	public boolean validateTipoPropriedade() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (this.tipoPropriedade.equals(bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedade"))) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroTipoPropriedadeVazio", "validacaoTipoPropriedade");
+			return false;
+		}
+		return false;
+	}
+	/**
+	 * Validacao do ProtecaoExistente
+	 */
+	public void validateProtecaoExistente(AjaxBehaviorEvent event) {
+		this.validateProtecaoExistente();
+	}
+
+	public boolean validateProtecaoExistente() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (this.protecaoExistente.equals(bundle
+				.getString("cadastrarInstituicaoProtecaoExistente"))) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroTipoPropriedadeVazio", "validacaoTipoPropriedade");
+			return false;
+		}
+		return false;
 	}
 
 	/**

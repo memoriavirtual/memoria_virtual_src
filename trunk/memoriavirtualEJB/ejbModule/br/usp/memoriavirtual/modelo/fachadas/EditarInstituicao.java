@@ -77,16 +77,14 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 	}
 
 	@Override
-	public void editarInstituicao(Instituicao instituicao, String nome,
-			String localizacao, String endereco, String cidade, String estado,
-			String cep, String telefone) throws ModeloException {
+	public void editarInstituicao(Instituicao instituicao) throws ModeloException {
 
 		Instituicao managedInstituicao;
 
 		try {
 			// Verifica a existencia da instituicao a ser alterada
 			managedInstituicao = this.entityManager.find(Instituicao.class,
-					instituicao);
+					instituicao.getId());
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
@@ -95,13 +93,23 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		}
 
 		if (instituicao != null) {
-			instituicao.setNome(nome);
-			instituicao.setLocalidade(localizacao);
-			instituicao.setEndereco(endereco);
-			instituicao.setCidade(cidade);
-			instituicao.setEstado(estado);
-			instituicao.setCep(cep);
-			instituicao.setTelefone(telefone);
+			instituicao.setNome(instituicao.getNome());
+			instituicao.setLocalidade(instituicao.getLocalidade());
+			instituicao.setEndereco(instituicao.getEndereco());
+			instituicao.setCidade(instituicao.getCidade());
+			instituicao.setEstado(instituicao.getEstado());
+			instituicao.setCep(instituicao.getCep());
+			instituicao.setTelefone(instituicao.getTelefone());
+			instituicao.setCaixaPostal(instituicao.getCaixaPostal());
+			instituicao.setEmail(instituicao.getEmail());
+			instituicao.setUrl(instituicao.getUrl());
+			instituicao.setIdentificacaoProprietario(instituicao.getIdentificacaoProprietario());
+			instituicao.setAdministradorPropriedade(instituicao.getAdministradorPropriedade());
+			instituicao.setLatitude(instituicao.getLatitude());
+			instituicao.setLongitude(instituicao.getLongitude());
+			instituicao.setAltitude(instituicao.getAltitude());
+			instituicao.setTipoPropriedade(instituicao.getTipoPropriedade());
+			instituicao.setProtecaoExistente(instituicao.getProtecaoExistente());
 		}
 	}
 }

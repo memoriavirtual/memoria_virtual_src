@@ -55,7 +55,6 @@ public class EditarAutor implements EditarAutorRemote {
 			autorAntigo.setNome(autor.getNome());
 			autorAntigo.setObito(autor.getObito());
 			autorAntigo.setSobrenome(autor.getSobrenome());
-			autorAntigo.setTipoAutoria(autor.getTipoAutoria());
 		}
 		
 		try {

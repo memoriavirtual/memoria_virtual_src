@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.controle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,38 +18,30 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+
 
 @ManagedBean(name = "editarInstituicaoMB")
 @SessionScoped
-public class EditarInstituicaoMB implements Serializable {
+public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Serializable {
 
 	private static final long serialVersionUID = -2609697377310497761L;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-	@EJB
-	private MemoriaVirtualRemote memoriaVirtualEJB;
-	private String nome;
-	private String localizacao;
-	private String endereco;
-	private String cidade;
-	private String estado;
-	private String cep;
-	private String telefone;
 	private List<Instituicao> instituicoes;
 	private Instituicao instituicao;
 
 	public String editarInstituicao() {
 
-		if (this.validateCep() && this.validateCidade()
-				&& this.validateendereco() && this.validatelocalizacao()
-				&& this.validateNome() && this.validateTelefone()) {
+		if (this.validateLocalizacao()
+				&& this.validateNome() ) {
 
 			try {
-
-				this.editarInstituicaoEJB.editarInstituicao(this.instituicao,
-						this.nome, this.localizacao, this.endereco,
-						this.cidade, this.estado, this.cep, this.telefone);
+				Instituicao novaInstituicao = new Instituicao(this.nome,
+						this.localizacao, this.endereco, this.cidade, this.estado,
+						this.cep, this.telefone, this.caixaPostal, this.email, this.URL,
+						this.identificacaoProprietario, this.administradorPropriedade,
+						this.latitude, this.longitude, this.altitude,this.tipoPropriedade, this.protecaoExistente);
+				this.editarInstituicaoEJB.editarInstituicao(novaInstituicao);
 			} catch (ModeloException e) {
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroEditarFalha", "resutado");
@@ -71,6 +64,7 @@ public class EditarInstituicaoMB implements Serializable {
 		return "falha";
 
 	}
+	
 
 	public String cancelar() {
 		return "cancelar";
@@ -175,24 +169,7 @@ public class EditarInstituicaoMB implements Serializable {
 		return true;
 	}
 
-	public void validateLocaliacao(AjaxBehaviorEvent event) {
-		this.validatelocalizacao();
-	}
-
-	public boolean validatelocalizacao() {
-		if (this.localizacao.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErrolocalizacaoVazio",
-					"validacaolocalizacao");
-			return false;
-		} else if (!ValidacoesDeCampos
-				.validarFormatoLocalizacao(this.localizacao)) {
-			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErrolocalizacaoInvalido",
-					"validacaolocalizacao");
-		}
-		return true;
-	}
+	
 
 	public void validateendereco(AjaxBehaviorEvent event) {
 		this.validateendereco();
@@ -255,14 +232,13 @@ public class EditarInstituicaoMB implements Serializable {
 		return true;
 	}
 
-	public SelectItem getestadoSigla() {
-		SelectItem estado = new SelectItem(this.estado, this.estado);
-		return estado;
-	}
 
 	public List<SelectItem> getEstadoSigla() {
 
+
 		List<SelectItem> estados = new ArrayList<SelectItem>();
+
+		estados.add(new SelectItem(null, this.estado));
 		estados.add(new SelectItem("AL", "AL"));
 		estados.add(new SelectItem("AM", "AM"));
 		estados.add(new SelectItem("AP", "AP"));
