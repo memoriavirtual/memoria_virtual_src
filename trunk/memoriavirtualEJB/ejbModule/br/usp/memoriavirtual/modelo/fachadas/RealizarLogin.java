@@ -46,6 +46,7 @@ public class RealizarLogin implements RealizarLoginRemote {
 		query.setParameter("usuario", usuario);
 		query.setParameter("senha", Usuario.gerarHash(senha));
 
+
 		try {
 			usuarioAutenticado = (Usuario) query.getSingleResult();
 			if (usuarioAutenticado.isAtivo()) {
