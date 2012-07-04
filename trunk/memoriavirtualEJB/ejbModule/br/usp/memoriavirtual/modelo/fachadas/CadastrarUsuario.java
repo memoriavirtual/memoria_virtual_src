@@ -72,6 +72,7 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 		
 		for(Acesso acesso:acessos){
 			Acesso novoAcesso = new Acesso(usuario, acesso.getInstituicao(), acesso.getGrupo());
+			novoAcesso.setValidade(true);
 			entityManager.persist(novoAcesso);
 		}
 	}
