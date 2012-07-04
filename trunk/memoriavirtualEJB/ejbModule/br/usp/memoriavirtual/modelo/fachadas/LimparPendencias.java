@@ -1,6 +1,9 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+import java.lang.reflect.Constructor;
 import java.util.Collection;
+import java.util.List;
+import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -10,9 +13,15 @@ import javax.ejb.Singleton;
 import javax.ejb.Timeout;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
+import br.usp.memoriavirtual.modelo.comandos.Comando;
+import br.usp.memoriavirtual.modelo.comandos.ControleComandos;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
 
 
 @Singleton
@@ -23,6 +32,8 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtual;
 
+	@PersistenceContext(unitName = "memoriavirtual")
+	private EntityManager entityManager;
 
 	private Logger logger = Logger
 			.getLogger("br.usp.memoriavirtual.modelo.fachadas.Timer");
@@ -48,9 +59,48 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		}
 		logger.info("Ocorreu o timer programado e foi programado outro para :" + intervalo + "segundos");
 		/*Passa para hora o tempo de intervalo entre disparos*/
-		this.criarTimer(intervalo * 1000 * 60 * 60);
+		this.criarTimer(intervalo ); //* 1000 * 60 * 60
 		
-		/*Realiza chamada aos métodos de limpeza*/
+		/*Realizar os procedimentos de limpeza*/
+		ControleComandos controle = new ControleComandos();
+		
+		Query query = entityManager
+				.createQuery("SELECT a FROM Aprovacao a");
+		
+		@SuppressWarnings("unchecked")
+		List<Aprovacao> aprovacoes = (List<Aprovacao>) query.getResultList();
+		for(Aprovacao aprov : aprovacoes){
+			
+			String name = aprov.getTabelaEstrangeira();
+			
+			StringTokenizer strToken = new StringTokenizer(name, ".");
+			while(strToken.hasMoreTokens()){
+				name = strToken.nextToken();
+			}
+			
+			try {
+				Class<?> cls = Class.forName(this.getClass().getPackage() + name);
+				
+				Class<?> parameter[] = new Class[1];  
+	            parameter[0] = Aprovacao.class;  
+	           
+	            Constructor<?> ct = cls.getConstructor(parameter);  
+	            
+	            Object arglist[] = new Object[1];
+	            arglist[0] = aprov;
+	            
+	            Object retobj = ct.newInstance(arglist);  
+	            
+	            controle.adicionar((Comando)retobj);
+	            
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		
+		controle.executeAll();
+		
 		//limpezaFabrica.limparConvites();
 	}
 
@@ -74,7 +124,5 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		}else{
 			logger.info("Nenhum timer criado.");
 		}
-
 	}
-
 }
