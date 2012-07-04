@@ -84,9 +84,9 @@ public class EnviarConvite implements EnviarConviteRemote {
 				
 				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como " + nivelAcesso
 						+ "na instituicao: " + instituicao
-						+ ". Para concluir seu cadastro entre no link a seguir: " + memoriaVirtual.getURLServidor()
+						+ ".\n Para concluir seu cadastro entre no link a seguir: \n" + memoriaVirtual.getURLServidor()
 						+ "/fazercadastro?Validacao=" + memoriaVirtual.embaralhar(user.getId()) + "&email="
-						+ memoriaVirtual.embaralhar(user.getEmail()) + ".... Seu convite é valido ate "
+						+ memoriaVirtual.embaralhar(user.getEmail()) + " \n.... Seu convite é valido ate "
 						+ formatoData.format(user.getValidade()) + "... Voce recebeu a seguinte mensagem: "
 						+ mensagem;
 				
