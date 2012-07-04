@@ -303,6 +303,7 @@ h4 {
 }
 
 .formulario fieldset div span {
+	text-align: -webkit-center;
 	min-width: 252px;
 	max-width: 252px;
 	min-height: 0px;
@@ -380,6 +381,7 @@ h4 {
 }
 
 #sugestoesId a {
+	text-align: -webkit-center;
 	color: black;
 	text-decoration: none;
 	display: block;

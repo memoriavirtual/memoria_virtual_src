@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.controle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -11,7 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
-import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
@@ -19,29 +19,47 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 
-
 @ManagedBean(name = "editarInstituicaoMB")
 @SessionScoped
-public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Serializable {
+public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
+		Serializable {
 
 	private static final long serialVersionUID = -2609697377310497761L;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
 	private List<Instituicao> instituicoes;
 	private Instituicao instituicao;
+	private long id;
 
 	public String editarInstituicao() {
 
-		if (this.validateLocalizacao()
-				&& this.validateNome() ) {
+		if (this.validateNome()&&this.validateLocalizacao() ) {
 
+			
+				Instituicao instituicao = new Instituicao(
+						this.id, this.nome, this.localizacao,
+						this.endereco, this.cidade, this.estado, this.pais,
+						this.cep, this.telefone, this.caixaPostal, this.email,
+						this.URL, this.identificacaoProprietario,
+						this.administradorPropriedade, this.latitude,
+						this.longitude, this.altitude, this.tipoPropriedade,
+						this.protecaoExistente, this.legislacao);
+				
+				FacesContext context = FacesContext.getCurrentInstance();
+				String bundleName = "mensagens";
+				ResourceBundle bundle = context.getApplication().getResourceBundle(
+						context, bundleName);
+
+				if (bundle.getString("cadastrarInstituicaoEscolhaEstado").equals(instituicao.getEstado()))
+					instituicao.setEstado("");
+				if (bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade").equals(instituicao
+						.getTipoPropriedade()))
+					instituicao.setTipoPropriedade("");
+				if (bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente").equals(instituicao
+						.getProtecaoExistente()))
+					instituicao.setProtecaoExistente("");
 			try {
-				Instituicao novaInstituicao = new Instituicao(this.nome,
-						this.localizacao, this.endereco, this.cidade, this.estado,
-						this.cep, this.telefone, this.caixaPostal, this.email, this.URL,
-						this.identificacaoProprietario, this.administradorPropriedade,
-						this.latitude, this.longitude, this.altitude,this.tipoPropriedade, this.protecaoExistente);
-				this.editarInstituicaoEJB.editarInstituicao(novaInstituicao);
+				this.editarInstituicaoEJB.editarInstituicao(instituicao);
 			} catch (ModeloException e) {
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroEditarFalha", "resutado");
@@ -50,13 +68,25 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 						"editarInstituicaoErroEditarFalha", "resultado");
 			}
 
-			this.cep = "";
-			this.cidade = "";
-			this.endereco = "";
-			this.estado = "";
-			this.localizacao = "";
 			this.nome = "";
+			this.localizacao = "";
+			this.endereco = "";
+			this.cidade = "";
+			this.estado = "";
+			this.pais = "";
+			this.cep = "";
 			this.telefone = "";
+			this.caixaPostal = "";
+			this.email = "";
+			this.URL = "";
+			this.identificacaoProprietario = "";
+			this.administradorPropriedade = "";
+			this.latitude = "";
+			this.longitude = "";
+			this.altitude = "";
+			this.tipoPropriedade = "";
+			this.protecaoExistente = "";
+			this.legislacao = "";
 
 			MensagensDeErro.getSucessMessage("editarInstituicaoSucessoEditar",
 					"resultado");
@@ -64,9 +94,9 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 		return "falha";
 
 	}
-	
 
 	public String cancelar() {
+		this.resetCadastrarinstituicao();
 		return "cancelar";
 	}
 
@@ -91,7 +121,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 	}
 
 	public String selecionarInstituicao(Instituicao instituicao) {
-
+		this.id = instituicao.getId();
 		this.nome = instituicao.getNome();
 		this.cep = instituicao.getCep();
 		this.cidade = instituicao.getCidade();
@@ -99,6 +129,20 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 		this.estado = instituicao.getEstado();
 		this.localizacao = instituicao.getLocalidade();
 		this.telefone = instituicao.getTelefone();
+
+		this.administradorPropriedade = instituicao
+				.getAdministradorPropriedade();
+		this.altitude = instituicao.getAltitude();
+		this.caixaPostal = instituicao.getCaixaPostal();
+		this.email = instituicao.getEmail();
+		this.identificacaoProprietario = instituicao
+				.getIdentificacaoProprietario();
+		this.latitude = instituicao.getLatitude();
+		this.longitude = instituicao.getLongitude();
+		this.protecaoExistente = instituicao.getProtecaoExistente();
+		this.tipoPropriedade = instituicao.getTipoPropriedade();
+		this.URL = instituicao.getUrl();
+		this.legislacao = instituicao.getLegislacaoExistente();
 		this.instituicao = instituicao;
 		this.instituicoes.clear();
 		return "sucesso";
@@ -115,15 +159,29 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 				try {
 					instituicao = editarInstituicaoEJB
 							.getInstituicao(this.nome);
+
 					this.cep = instituicao.getCep();
 					this.cidade = instituicao.getCidade();
 					this.endereco = instituicao.getEndereco();
 					this.estado = instituicao.getEstado();
 					this.localizacao = instituicao.getLocalidade();
 					this.telefone = instituicao.getTelefone();
+
+					this.administradorPropriedade = instituicao
+							.getAdministradorPropriedade();
+					this.altitude = instituicao.getAltitude();
+					this.caixaPostal = instituicao.getCaixaPostal();
+					this.email = instituicao.getEmail();
+					this.identificacaoProprietario = instituicao
+							.getIdentificacaoProprietario();
+					this.latitude = instituicao.getLatitude();
+					this.longitude = instituicao.getLongitude();
+					this.protecaoExistente = instituicao.getProtecaoExistente();
+					this.tipoPropriedade = instituicao.getTipoPropriedade();
+					this.URL = instituicao.getUrl();
+					this.legislacao = instituicao.getLegislacaoExistente();
 					this.instituicao = instituicao;
 					this.instituicoes.clear();
-					System.out.println("akie");
 					return "sucesso";
 				} catch (ModeloException e) {
 					e.printStackTrace();
@@ -133,12 +191,27 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 				try {
 					instituicao = editarInstituicaoEJB.getInstituicao(
 							this.nome, grupo, usuario);
+
 					this.cep = instituicao.getCep();
 					this.cidade = instituicao.getCidade();
 					this.endereco = instituicao.getEndereco();
 					this.estado = instituicao.getEstado();
 					this.localizacao = instituicao.getLocalidade();
 					this.telefone = instituicao.getTelefone();
+
+					this.administradorPropriedade = instituicao
+							.getAdministradorPropriedade();
+					this.altitude = instituicao.getAltitude();
+					this.caixaPostal = instituicao.getCaixaPostal();
+					this.email = instituicao.getEmail();
+					this.identificacaoProprietario = instituicao
+							.getIdentificacaoProprietario();
+					this.latitude = instituicao.getLatitude();
+					this.longitude = instituicao.getLongitude();
+					this.protecaoExistente = instituicao.getProtecaoExistente();
+					this.tipoPropriedade = instituicao.getTipoPropriedade();
+					this.URL = instituicao.getUrl();
+					this.legislacao = instituicao.getLegislacaoExistente();
 					this.instituicao = instituicao;
 					this.instituicoes.clear();
 					return "sucesso";
@@ -170,75 +243,19 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 	}
 
 	
-
-	public void validateendereco(AjaxBehaviorEvent event) {
-		this.validateendereco();
-	}
-
-	public boolean validateendereco() {
-		if (this.endereco.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroenderecoVazio", "validacaoendereco");
-			return false;
-		}
-		return true;
-	}
-
-	public void validateCidade(AjaxBehaviorEvent event) {
-		this.validateCidade();
-	}
-
-	public boolean validateCidade() {
-		if (this.cidade.equals("")) {
-			MensagensDeErro.getErrorMessage("editarInstituicaoErroCidadeVazio",
-					"validacaoCidade");
-			return false;
-		}
-		return true;
-	}
-
-	public void validateCep(AjaxBehaviorEvent event) {
-		this.validateCep();
-	}
-
-	public boolean validateCep() {
-		if (this.cep.equals("")) {
-			MensagensDeErro.getErrorMessage("editarInstituicaoErroCepVazio",
-					"validacaoCep");
-			return false;
-		} else if (!ValidacoesDeCampos.validarFormatoCep(this.cep)) {
-			MensagensDeErro.getErrorMessage("editarInstituicaoErroCepInvalido",
-					"validacaoCep");
-			return false;
-		}
-		return true;
-	}
-
-	public void validateTelefone(AjaxBehaviorEvent event) {
-		this.validateCep();
-	}
-
-	public boolean validateTelefone() {
-		if (this.telefone.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroTelefoneVazio", "validacaoTelefone");
-			return false;
-		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
-			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroTelefoneInvalido",
-					"validacaoTelefone");
-			return false;
-		}
-		return true;
-	}
-
-
 	public List<SelectItem> getEstadoSigla() {
-
-
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 
-		estados.add(new SelectItem(null, this.estado));
+		estados.add(new SelectItem(this.estado, this.estado));
+		estados.add(new SelectItem(bundle
+				.getString("cadastrarInstituicaoEscolhaEstado"), bundle
+				.getString("cadastrarInstituicaoEscolhaEstado")));
 		estados.add(new SelectItem("AL", "AL"));
 		estados.add(new SelectItem("AM", "AM"));
 		estados.add(new SelectItem("AP", "AP"));
@@ -267,6 +284,114 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements Seria
 		estados.add(new SelectItem("TO", "TO"));
 
 		return estados;
+	}
+
+	/**
+	 * Getter dos tipos de Propriedade (Usado no form de cadastro)
+	 * 
+	 * @return (List<String>) tipos de Propriedade
+	 */
+	public List<SelectItem> getTipoPropriedadeLista() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		List<SelectItem> tiposPropriedade = new ArrayList<SelectItem>();
+
+		tiposPropriedade.add(new SelectItem(this.tipoPropriedade,
+				this.tipoPropriedade));
+		tiposPropriedade
+		.add(new SelectItem(
+				bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade"),
+				bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade")));
+		tiposPropriedade
+				.add(new SelectItem(
+						"Publica",
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedadePublica")));
+		tiposPropriedade
+				.add(new SelectItem(
+						"Privada",
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedadePrivada")));
+		tiposPropriedade.add(new SelectItem("Mista", bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeMista")));
+		tiposPropriedade.add(new SelectItem("Outra", bundle
+				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeOutra")));
+
+		return tiposPropriedade;
+	}
+
+	
+	/**
+	 * Getter dos tipos de protecaoExistente (Usado no form de cadastro)
+	 * 
+	 * @return (List<String>) protecao existente
+	 */
+	public List<SelectItem> getProtecaoExistenteLista() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		List<SelectItem> protecaoExistentes = new ArrayList<SelectItem>();
+
+		protecaoExistentes
+				.add(new SelectItem(this.protecaoExistente,this.protecaoExistente));
+		protecaoExistentes
+		.add(new SelectItem(
+				bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente"),
+				bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Publica",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMundial")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Privada",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalI")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalC")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Outra",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualI")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualC")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Outra",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalI")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalC")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteDecreto")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEntorno")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteNenhuma")));
+
+		return protecaoExistentes;
+	}
+	public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
 	}
 
 	/**

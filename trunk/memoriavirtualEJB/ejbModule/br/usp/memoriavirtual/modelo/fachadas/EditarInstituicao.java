@@ -93,23 +93,29 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		}
 
 		if (instituicao != null) {
-			instituicao.setNome(instituicao.getNome());
-			instituicao.setLocalidade(instituicao.getLocalidade());
-			instituicao.setEndereco(instituicao.getEndereco());
-			instituicao.setCidade(instituicao.getCidade());
-			instituicao.setEstado(instituicao.getEstado());
-			instituicao.setCep(instituicao.getCep());
-			instituicao.setTelefone(instituicao.getTelefone());
-			instituicao.setCaixaPostal(instituicao.getCaixaPostal());
-			instituicao.setEmail(instituicao.getEmail());
-			instituicao.setUrl(instituicao.getUrl());
-			instituicao.setIdentificacaoProprietario(instituicao.getIdentificacaoProprietario());
-			instituicao.setAdministradorPropriedade(instituicao.getAdministradorPropriedade());
-			instituicao.setLatitude(instituicao.getLatitude());
-			instituicao.setLongitude(instituicao.getLongitude());
-			instituicao.setAltitude(instituicao.getAltitude());
-			instituicao.setTipoPropriedade(instituicao.getTipoPropriedade());
-			instituicao.setProtecaoExistente(instituicao.getProtecaoExistente());
+			managedInstituicao.setNome(instituicao.getNome());
+			managedInstituicao.setLocalidade(instituicao.getLocalidade());
+			managedInstituicao.setEndereco(instituicao.getEndereco());
+			managedInstituicao.setCidade(instituicao.getCidade());
+			managedInstituicao.setEstado(instituicao.getEstado());
+			managedInstituicao.setCep(instituicao.getCep());
+			managedInstituicao.setTelefone(instituicao.getTelefone());
+			managedInstituicao.setCaixaPostal(instituicao.getCaixaPostal());
+			managedInstituicao.setEmail(instituicao.getEmail());
+			managedInstituicao.setUrl(instituicao.getUrl());
+			managedInstituicao.setIdentificacaoProprietario(instituicao.getIdentificacaoProprietario());
+			managedInstituicao.setAdministradorPropriedade(instituicao.getAdministradorPropriedade());
+			managedInstituicao.setLatitude(instituicao.getLatitude());
+			managedInstituicao.setLongitude(instituicao.getLongitude());
+			managedInstituicao.setAltitude(instituicao.getAltitude());
+			managedInstituicao.setTipoPropriedade(instituicao.getTipoPropriedade());
+			managedInstituicao.setProtecaoExistente(instituicao.getProtecaoExistente());
+		}
+		
+		try {
+			entityManager.flush();
+		} catch (Exception t) {
+			throw new ModeloException(t);
 		}
 	}
 }

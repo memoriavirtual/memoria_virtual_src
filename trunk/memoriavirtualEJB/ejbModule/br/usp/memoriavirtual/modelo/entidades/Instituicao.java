@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.Pattern;
 
 @Entity
 @SequenceGenerator(name = "INSTITUICAO_ID", sequenceName = "INSTITUICAO_SEQ", allocationSize = 1)
@@ -24,7 +23,7 @@ public class Instituicao implements Serializable {
 	private String localidade;
 	private String endereco;
 	private String cidade;
-	@Pattern(regexp = "[A-Z]{2}", message = "Estado no formato incorreto (ex: SP e não sp)")
+	//@Pattern(regexp = "[A-Z]{2}", message = "Estado no formato incorreto (ex: SP e não sp)")
 	private String estado;
 	// @Pattern(regexp = "[0-9]{11}")
 	private String cep;
@@ -40,6 +39,7 @@ public class Instituicao implements Serializable {
 	private String altitude;
 	private String tipoPropriedade;
 	private String protecaoExistente;
+	private String legislacaoIncidente;
 	private Boolean validade;
 
 	/**
@@ -65,15 +65,16 @@ public class Instituicao implements Serializable {
 	 * @param Tel
 	 *            Telefone
 	 */
-	public Instituicao(String Nome, String Local, String End, String Cidade, String Est, String Cep, String Tel,
+	public Instituicao(String Nome, String Local, String End, String Cidade, String Est,String pais, String Cep, String Tel,
 			String caixaPostal, String email, String url,String identificacaoProprietario, String administradorPropriedade,
-			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente) {
+			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente, String legislacao) {
 		super();
 		this.nome = Nome;
 		this.localidade = Local;
 		this.endereco = End;
 		this.cidade = Cidade;
 		this.estado = Est;
+		this.pais = pais;
 		this.cep = Cep;
 		this.telefone = Tel;
 		this.caixaPostal = caixaPostal;
@@ -86,8 +87,38 @@ public class Instituicao implements Serializable {
 		this.altitude=altitude;
 		this.tipoPropriedade=tipoPropriedade;
 		this.protecaoExistente=protecaoExistente;
+		this.legislacaoIncidente = legislacao;
 	}
-
+	/**
+	 * Cosntrutor com id.
+	 * 
+	 */
+	public Instituicao(long id, String Nome, String Local, String End, String Cidade, String Est, String pais,String Cep, String Tel,
+			String caixaPostal, String email, String url,String identificacaoProprietario, String administradorPropriedade,
+			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente ,String legislacao) {
+		super();
+		this.id = id;
+		this.nome = Nome;
+		this.localidade = Local;
+		this.endereco = End;
+		this.cidade = Cidade;
+		this.estado = Est;
+		this.pais = pais;
+		this.cep = Cep;
+		this.telefone = Tel;
+		this.caixaPostal = caixaPostal;
+		this.email=email;
+		this.url=url;
+		this.identificacaoProprietario=identificacaoProprietario;
+		this.administradorPropriedade = administradorPropriedade;
+		this.latitude=latitude;
+		this.longitude=longitude;
+		this.altitude=altitude;
+		this.tipoPropriedade=tipoPropriedade;
+		this.protecaoExistente=protecaoExistente;
+		this.legislacaoIncidente = legislacao;
+	}
+	
 	/**
 	 * @return O nome da instituição
 	 */
@@ -367,6 +398,20 @@ public class Instituicao implements Serializable {
 	 */
 	public void setLocalidade(String localidade) {
 		this.localidade = localidade;
+	}
+
+	/**
+	 * @return the legislacaoExistente
+	 */
+	public String getLegislacaoExistente() {
+		return legislacaoIncidente;
+	}
+
+	/**
+	 * @param legislacaoExistente the legislacaoExistente to set
+	 */
+	public void setLegislacaoExistente(String legislacaoExistente) {
+		this.legislacaoIncidente = legislacaoExistente;
 	}
 
 }

@@ -19,7 +19,8 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 /**
- * Mananged Bean responsável pelo controle do cadaStro de uma nova instituição
+ * Mananged Bean responsável pelo controle do cadaStro de uma nova
+ * instituição
  */
 
 public class CadastrarInstituicaoMB {
@@ -43,9 +44,11 @@ public class CadastrarInstituicaoMB {
 	protected String administradorPropriedade = "";
 	protected String latitude = "";
 	protected String longitude = "";
-	protected String altitude = ""; 
+	protected String altitude = "";
 	protected String tipoPropriedade = "";
 	protected String protecaoExistente = "";
+	protected String legislacao = "";
+
 	/**
 	 * Construtor padrão
 	 */
@@ -57,14 +60,35 @@ public class CadastrarInstituicaoMB {
 		if (this.validateNome() && this.validateLocalizacao()
 				&& this.validateCep() && this.validateTelefone()) {
 			Instituicao instituicao = new Instituicao(this.nome,
-					this.localizacao, this.endereco, this.cidade, this.estado,
-					this.cep, this.telefone, this.caixaPostal, this.email, this.URL,
-					this.identificacaoProprietario, this.administradorPropriedade,
-					this.latitude, this.longitude, this.altitude,this.tipoPropriedade, this.protecaoExistente);
-			// Como n�o � necessario a aprova��o de nenhum outro
+					this.localizacao, this.endereco, this.cidade, this.estado,this.pais,
+					this.cep, this.telefone, this.caixaPostal, this.email,
+					this.URL, this.identificacaoProprietario,
+					this.administradorPropriedade, this.latitude,
+					this.longitude, this.altitude, this.tipoPropriedade,
+					this.protecaoExistente, this.legislacao);
+			// como n�o � necessario a aprova��o de nenhum outro
 			// administrador
 			// A validade do registro j� � setada como verdadeira.
 			instituicao.setValidade(true);
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			String bundleName = "mensagens";
+			ResourceBundle bundle = context.getApplication().getResourceBundle(
+					context, bundleName);
+
+			if (instituicao.getEstado().equals(
+					bundle.getString("cadastrarInstituicaoEscolhaEstado")))
+				instituicao.setEstado("");
+			if (instituicao
+					.getTipoPropriedade()
+					.equals(bundle
+							.getString("cadastrarInstituicaoEscolhaTipoPropriedade")))
+				instituicao.setTipoPropriedade("");
+			if (instituicao
+					.getProtecaoExistente()
+					.equals(bundle
+							.getString("cadastrarInstituicaoEscolhaProtecaoExistente")))
+				instituicao.setProtecaoExistente("");
 			// Cadastra a instituicao no banco de dados
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
 			// Testa se a institui��o foi gravada
@@ -75,8 +99,20 @@ public class CadastrarInstituicaoMB {
 				this.endereco = "";
 				this.cidade = "";
 				this.estado = "";
+				this.pais = "";
 				this.cep = "";
 				this.telefone = "";
+				this.caixaPostal = "";
+				this.email = "";
+				this.URL = "";
+				this.identificacaoProprietario = "";
+				this.administradorPropriedade = "";
+				this.latitude = "";
+				this.longitude = "";
+				this.altitude = "";
+				this.tipoPropriedade = "";
+				this.protecaoExistente = "";
+				this.legislacao = "";
 				MensagensDeErro
 						.getSucessMessage(
 								"cadastrarInstituicaoSucessocadastramento",
@@ -92,8 +128,20 @@ public class CadastrarInstituicaoMB {
 		this.endereco = "";
 		this.cidade = "";
 		this.estado = "";
+		this.pais = "";
 		this.cep = "";
 		this.telefone = "";
+		this.caixaPostal = "";
+		this.email = "";
+		this.URL = "";
+		this.identificacaoProprietario = "";
+		this.administradorPropriedade = "";
+		this.latitude = "";
+		this.longitude = "";
+		this.altitude = "";
+		this.tipoPropriedade = "";
+		this.protecaoExistente = "";
+		this.legislacao = "";
 		return "reset";
 	}
 
@@ -174,7 +222,8 @@ public class CadastrarInstituicaoMB {
 
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 
-		estados.add(new SelectItem(null, bundle
+		estados.add(new SelectItem(bundle
+				.getString("cadastrarInstituicaoEscolhaEstado"), bundle
 				.getString("cadastrarInstituicaoEscolhaEstado")));
 		estados.add(new SelectItem("AL", "AL"));
 		estados.add(new SelectItem("AM", "AM"));
@@ -227,15 +276,13 @@ public class CadastrarInstituicaoMB {
 		return email;
 	}
 
-	
 	/**
 	 * @return the uRL
 	 */
 	public String getURL() {
 		return URL;
 	}
-	
-	
+
 	/**
 	 * @return the identificacaoProprietario
 	 */
@@ -243,7 +290,6 @@ public class CadastrarInstituicaoMB {
 		return identificacaoProprietario;
 	}
 
-	
 	/**
 	 * @return the administradorPropriedade
 	 */
@@ -264,7 +310,6 @@ public class CadastrarInstituicaoMB {
 	public String getLongitude() {
 		return longitude;
 	}
-	
 
 	/**
 	 * @return the altitude
@@ -287,20 +332,26 @@ public class CadastrarInstituicaoMB {
 
 		List<SelectItem> tiposPropriedade = new ArrayList<SelectItem>();
 
-		tiposPropriedade.add(new SelectItem(null, bundle
-				.getString("cadastrarInstituicaoEscolhaTipoPropriedade")));
-		tiposPropriedade.add(new SelectItem("Publica", bundle
-				.getString("cadastrarInstituicaoEscolhaTipoPropriedadePublica")));
-		tiposPropriedade.add(new SelectItem("Privada", bundle
-				.getString("cadastrarInstituicaoEscolhaTipoPropriedadePrivada")));
+		tiposPropriedade
+				.add(new SelectItem(
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade"),
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade")));
+		tiposPropriedade
+				.add(new SelectItem(
+						"Publica",
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedadePublica")));
+		tiposPropriedade
+				.add(new SelectItem(
+						"Privada",
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedadePrivada")));
 		tiposPropriedade.add(new SelectItem("Mista", bundle
 				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeMista")));
 		tiposPropriedade.add(new SelectItem("Outra", bundle
 				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeOutra")));
-		
+
 		return tiposPropriedade;
 	}
-	
+
 	/**
 	 * Getter dos tipos de protecaoExistente (Usado no form de cadastro)
 	 * 
@@ -315,73 +366,97 @@ public class CadastrarInstituicaoMB {
 
 		List<SelectItem> protecaoExistentes = new ArrayList<SelectItem>();
 
-		protecaoExistentes.add(new SelectItem(null, bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistente")));
-		protecaoExistentes.add(new SelectItem("Publica", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMundial")));
-		protecaoExistentes.add(new SelectItem("Privada", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalI")));
-		protecaoExistentes.add(new SelectItem("Mista", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalC")));
-		protecaoExistentes.add(new SelectItem("Outra", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualI")));
-		protecaoExistentes.add(new SelectItem("Mista", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualC")));
-		protecaoExistentes.add(new SelectItem("Outra", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalI")));
-		protecaoExistentes.add(new SelectItem("Mista", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalC")));
-		protecaoExistentes.add(new SelectItem("Mista", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteDecreto")));
-		protecaoExistentes.add(new SelectItem("Mista", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEntorno")));
-		protecaoExistentes.add(new SelectItem("Mista", bundle
-				.getString("cadastrarInstituicaoEscolhaProtecaoExistenteNenhuma")));
-		
+		protecaoExistentes
+				.add(new SelectItem(
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente"),
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Publica",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMundial")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Privada",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalI")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalC")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Outra",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualI")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualC")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Outra",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalI")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalC")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteDecreto")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEntorno")));
+		protecaoExistentes
+				.add(new SelectItem(
+						"Mista",
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteNenhuma")));
+
 		return protecaoExistentes;
 	}
 
-
-
 	/**
-	 * @param altitude the altitude to set
+	 * @param altitude
+	 *            the altitude to set
 	 */
 	public void setAltitude(String altitude) {
 		this.altitude = altitude;
 	}
 
 	/**
-	 * @param longitude the longitude to set
+	 * @param longitude
+	 *            the longitude to set
 	 */
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
 	/**
-	 * @param latitude the latitude to set
+	 * @param latitude
+	 *            the latitude to set
 	 */
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
 	/**
-	 * @param administradorPropriedade the administradorPropriedade to set
+	 * @param administradorPropriedade
+	 *            the administradorPropriedade to set
 	 */
 	public void setAdministradorPropriedade(String administradorPropriedade) {
 		this.administradorPropriedade = administradorPropriedade;
 	}
 
 	/**
-	 * @param identificacaoProprietario the identificacaoProprietario to set
+	 * @param identificacaoProprietario
+	 *            the identificacaoProprietario to set
 	 */
 	public void setIdentificacaoProprietario(String identificacaoProprietario) {
 		this.identificacaoProprietario = identificacaoProprietario;
 	}
-	
-
 
 	/**
-	 * @param uRL the uRL to set
+	 * @param uRL
+	 *            the uRL to set
 	 */
 	public void setURL(String uRL) {
 		URL = uRL;
@@ -410,8 +485,6 @@ public class CadastrarInstituicaoMB {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
-	
-	
 
 	/**
 	 * @return the protecaoExistente
@@ -421,7 +494,8 @@ public class CadastrarInstituicaoMB {
 	}
 
 	/**
-	 * @param protecaoExistente the protecaoExistente to set
+	 * @param protecaoExistente
+	 *            the protecaoExistente to set
 	 */
 	public void setProtecaoExistente(String protecaoExistente) {
 		this.protecaoExistente = protecaoExistente;
@@ -476,7 +550,6 @@ public class CadastrarInstituicaoMB {
 		this.telefone = pTelefone;
 	}
 
-	
 	/**
 	 * @return the tipoPropriedade
 	 */
@@ -485,10 +558,19 @@ public class CadastrarInstituicaoMB {
 	}
 
 	/**
-	 * @param tipoPropriedade the tipoPropriedade to set
+	 * @param tipoPropriedade
+	 *            the tipoPropriedade to set
 	 */
 	public void setTipoPropriedade(String tipoPropriedade) {
 		this.tipoPropriedade = tipoPropriedade;
+	}
+
+	public String getLegislacao() {
+		return legislacao;
+	}
+
+	public void setLegislacao(String legislacao) {
+		this.legislacao = legislacao;
 	}
 
 	/**
@@ -594,7 +676,13 @@ public class CadastrarInstituicaoMB {
 	}
 
 	public boolean validateEstado() {
-		if (this.estado.equals(null)) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (this.estado.equals(bundle
+				.getString("cadastrarInstituicaoEscolhaEstado"))) {
+			this.estado = "";
 			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroEstadoVazio", "validacaoEstado");
 			return false;
@@ -622,7 +710,7 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do URL
 	 */
@@ -633,8 +721,7 @@ public class CadastrarInstituicaoMB {
 	public boolean validateURL() {
 		if (this.URL.equals("")) {
 			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroURLVazio",
-					"validacaoURL");
+					"cadastrarInstituicaoErroURLVazio", "validacaoURL");
 			return false;
 		}
 		return true;
@@ -679,7 +766,7 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do IdentificacaoProprietario
 	 */
@@ -696,7 +783,7 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do AdministradorPropriedade
 	 */
@@ -713,7 +800,7 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do Latitude
 	 */
@@ -730,7 +817,7 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do Longitude
 	 */
@@ -747,7 +834,7 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do Altitude
 	 */
@@ -764,7 +851,7 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do TipoPropriedade
 	 */
@@ -780,11 +867,13 @@ public class CadastrarInstituicaoMB {
 		if (this.tipoPropriedade.equals(bundle
 				.getString("cadastrarInstituicaoEscolhaTipoPropriedade"))) {
 			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroTipoPropriedadeVazio", "validacaoTipoPropriedade");
+					"cadastrarInstituicaoErroTipoPropriedadeVazio",
+					"validacaoTipoPropriedade");
 			return false;
 		}
 		return false;
 	}
+
 	/**
 	 * Validacao do ProtecaoExistente
 	 */
@@ -798,9 +887,10 @@ public class CadastrarInstituicaoMB {
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 		if (this.protecaoExistente.equals(bundle
-				.getString("cadastrarInstituicaoProtecaoExistente"))) {
+				.getString("cadastrarInstituicaoEscolhaProtecaoExistente"))) {
 			MensagensDeErro.getWarningMessage(
-					"cadastrarInstituicaoErroTipoPropriedadeVazio", "validacaoTipoPropriedade");
+					"cadastrarInstituicaoErroProtecaoVazio",
+					"validacaoProtecaoExistente");
 			return false;
 		}
 		return false;
@@ -821,10 +911,28 @@ public class CadastrarInstituicaoMB {
 		} else {
 			Pattern padrao = Pattern.compile(".+@.+\\.[a-z]+");
 			Matcher pesquisa = padrao.matcher(this.email);
-			if(!pesquisa.matches()){
+			if (!pesquisa.matches()) {
 				MensagensDeErro.getErrorMessage(
-					"cadastrarInstituicaoErroEmailInvalido", "validacaoEmail");
+						"cadastrarInstituicaoErroEmailInvalido",
+						"validacaoEmail");
 			}
+		}
+		return true;
+	}
+
+	/**
+	 * Validacao do Legislacao
+	 */
+	public void validateLegislacao(AjaxBehaviorEvent event) {
+		this.validateLegislacao();
+	}
+
+	public boolean validateLegislacao() {
+		if (this.legislacao.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroLegislacaoVazio",
+					"validacaoLegislacao");
+			return false;
 		}
 		return true;
 	}

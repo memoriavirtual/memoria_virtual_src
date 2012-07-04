@@ -254,6 +254,18 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
+						
+						<div>
+							<h:outputLabel class="labels" style="float:left" >#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
+							<h:inputTextarea class="caixadetexto" value="#{cadastrarInstituicaoMB.legislacao}">
+								<f:ajax event="blur" execute="@this" render="validacaoLegislacao"
+									listener="#{cadastrarInstituicaoMB.validateLegislacao}" />
+							</h:inputTextarea>
+							<div></div>
+							<h:message id="validacaoLegislacao" for="validacaoLegislacao"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
 
 					</fieldset>
 					<div class="botao">

@@ -25,6 +25,11 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>editarInstituicaoMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.EditarInstituicaoMB</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>cadastrarAutorMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarAutorMB</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
@@ -123,9 +128,17 @@
 			<from-outcome>sucesso</from-outcome>
 			<to-view-id>/restrito/editarinstituicao.xhtml</to-view-id>
 		</navigation-case>
+		</navigation-rule>
+		<navigation-rule>
+		<display-name>editarInstituicao</display-name>
+		<from-view-id>/restrito/editarinstituicao.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>cancelar</from-outcome>
 			<to-view-id>/restrito/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>reset</from-outcome>
+			<to-view-id>/restrito/editarinstituicao.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

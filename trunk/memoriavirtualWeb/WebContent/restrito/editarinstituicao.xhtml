@@ -241,7 +241,18 @@
 								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.legislacao}">
+								<f:ajax event="blur" execute="@this" render="validacaoLegislacao"
+									listener="#{editarInstituicaoMB.validateLegislacao}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoLegislacao" for="validacaoLegislacao"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
 
 					</fieldset>
 
@@ -255,7 +266,8 @@
 							action="#{editarInstituicaoMB.cancelar}">
 						</h:commandButton>
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.editarInstituicaoBotaoResetar}" type="reset">
+							value="#{mensagens.editarInstituicaoBotaoResetar}" 
+							action="#{editarInstituicaoMB.resetCadastrarinstituicao}">
 						</h:commandButton>
 					</div>
 				</h:form>
