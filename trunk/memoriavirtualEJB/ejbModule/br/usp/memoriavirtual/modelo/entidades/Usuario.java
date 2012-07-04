@@ -51,7 +51,7 @@ public class Usuario implements Serializable, Cloneable {
 		this.email = email;
 		this.nomeCompleto = nomeCompleto;
 		this.telefone = telefone;
-		this.senha = senha;
+		this.senha = Usuario.gerarHash(senha);
 	}
 	/**
 	 * @return the login
