@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Cadastrar Instituicao</title>
@@ -27,7 +28,7 @@
 
 				<div class="conteudoTitulo">#{mensagens.cadastrarInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarInstituicaoDescricao}</div>
-
+				<mv:uploadFile nomeBotao="Enviar Foto" nameRequest="#{cadastrarInstituicaoMB.slot}" vincularImage="#{cadastrarInstituicaoMB.vincularImagem}" ></mv:uploadFile>
 				<h:form method="post" prependId="false">
 					<fieldset>
 						
@@ -266,8 +267,9 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-
+						
 					</fieldset>
+					
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"

@@ -8,9 +8,13 @@ import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
@@ -29,6 +33,10 @@ public class CadastrarInstituicaoMB {
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
+	protected String slot = "arquivo0";
+	
+	
+
 	protected String nome = "";
 	protected String localizacao = "";
 	protected String endereco = "";
@@ -121,7 +129,19 @@ public class CadastrarInstituicaoMB {
 		}
 		return null;
 	}
-
+	
+	
+	public void vincularImagem(){
+		try {  
+	          ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();  
+	          HttpServletRequest request = (HttpServletRequest)context.getRequest();  
+	          ServletInputStream in = request.getInputStream(); 
+	          int a = in.read();
+	          System.out.println(a);
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        } 
+	}
 	public String resetCadastrarinstituicao() {
 		this.nome = "";
 		this.localizacao = "";
@@ -919,7 +939,14 @@ public class CadastrarInstituicaoMB {
 		}
 		return true;
 	}
+	
+	public String getSlot() {
+		return slot;
+	}
 
+	public void setSlot(String slot) {
+		this.slot = slot;
+	}
 	/**
 	 * Validacao do Legislacao
 	 */
