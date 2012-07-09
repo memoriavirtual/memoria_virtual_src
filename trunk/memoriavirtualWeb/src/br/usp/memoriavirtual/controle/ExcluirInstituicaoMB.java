@@ -8,8 +8,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,6 +26,7 @@ import javax.mail.MessagingException;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -77,7 +82,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 	// da infraestrutura para as paginas
 	private String justificativa1 = null;
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
-	private List<Usuario> listaAdministradores = new ArrayList<Usuario>();
 
 	/**
 	 * Método é invocado a cada evento Ajax KeyUp no campo Nome da Instituição
@@ -91,11 +95,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public void listarInstituicoes(AjaxBehaviorEvent event) {
 		this.instituicoes.clear();
-		if (this.nome != "" ) {
-			
+		if (this.nome != "") {
+
 			List<Instituicao> listaInstituicoes = new ArrayList<Instituicao>();
-			listaInstituicoes = this.memoriaVirtualEJB
-					.listarInstituicoes(this.nome);
+			listaInstituicoes = this.memoriaVirtualEJB.listarInstituicoes(
+					this.nome, new Grupo("GERENTE"), requisitor);
 			this.setInstituicoes(listaInstituicoes);
 			if (this.instituicoes.isEmpty()) {
 				Instituicao inst = new Instituicao();
@@ -150,9 +154,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 				this.setNome(instituicao.getNome());
 				this.instituicoes.clear();
 			}
-		}else{
+		} else {
 			try {
-				this.instituicoes = this.excluirInstituicaoEJB.listarTodasInstituicoes();
+				this.instituicoes = this.excluirInstituicaoEJB
+						.listarTodasInstituicoes(new Grupo("GERENTE"),
+								requisitor);
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
@@ -176,7 +182,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		if (this.gerentesInstituicao.isEmpty()) {
 			try {
-				acessos = excluirInstituicaoEJB.getGerentesdaInstituicao(
+				acessos = excluirInstituicaoEJB.recuperarGerentesdaInstituicao(
 						this.instituicao, b);
 				for (Acesso a : acessos) {
 					this.gerentesInstituicao.add(a.getUsuario());
@@ -263,58 +269,43 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 * @return lista de validadores.
 	 */
-	public List<SelectItem> getListaValidadores() {
+	public List<SelectItem> recuperarPossiveisAprovadores() {
 
-		List<String> validadoreslista = new ArrayList<String>();
+		Map<String, String> validadoreslista = new HashMap<String, String>();
 		List<SelectItem> lista = new ArrayList<SelectItem>();
 
 		try {
-			boolean flagExisteNasDuasListas = true;
-			this.listaAdministradores = excluirInstituicaoEJB
-					.listarAdministradores();
-			for (Usuario administradores : this.listaAdministradores) {
-
-				for (Usuario gerentes : this.gerentesInstituicao) {
-					if (this.gerente != null) {
-						if (administradores.getId().compareTo(gerentes.getId()) == 0) {
-							flagExisteNasDuasListas = false;
-						}
-					}
-					if (flagExisteNasDuasListas
-							&& (administradores.getId().compareTo(
-									this.requisitor.getId()) != 0)) {
-						validadoreslista.add(new String(administradores
-								.getNomeCompleto()));
-					}
-				}
-				flagExisteNasDuasListas = true;
-
+			for (Usuario administradores : excluirInstituicaoEJB
+					.listarAdministradores()) {// para cada administrador do
+												// sistema
+				validadoreslista.put(administradores.getId(),
+						administradores.getNomeCompleto());
 			}
-			if (this.gerente != null) {
-				for (Usuario validadores : this.gerentesInstituicao) {
-					if (validadores.getId().compareTo(this.requisitor.getId()) != 0) {
-						validadoreslista.add(new String(validadores
-								.getNomeCompleto()));
-					}
-				}
+			for (Usuario gerentes : this.gerentesInstituicao) {// para cada
+																// gerente da
+																// instituição
+				validadoreslista.put(gerentes.getId(),
+						gerentes.getNomeCompleto());
 			}
-			this.listaAdministradores.clear();
-			// this.gerentesInstituicao.clear();
-			MyStringComparable c = new MyStringComparable();
-			Collections.sort(validadoreslista, c);
-
-			// carregando lista select itens
-			lista.add(new SelectItem(null, bundle
-					.getString("excluirInstituicaoSelecioneValidadOr")));
-			for (String i : validadoreslista) {
-				lista.add(new SelectItem(i, i));
-			}
-			return lista;
-		} catch (ModeloException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		validadoreslista.remove(requisitor.getId());
+		List<String> listaTemp = new ArrayList<String>();
 
+		listaTemp.addAll(validadoreslista.values());
+
+		MyStringComparable c = new MyStringComparable();
+		Collections.sort(listaTemp, c);
+
+		// carregando lista select itens
+		lista.add(new SelectItem(null, bundle
+				.getString("excluirInstituicaoSelecioneValidadOr")));
+		for (String i : listaTemp) {
+			lista.add(new SelectItem(i, i));
+		}
 		return lista;
+
 	}
 
 	/**
@@ -541,7 +532,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		// da infraestrutura para as paginas
 		this.justificativa1 = null;
 		this.instituicoes = new ArrayList<Instituicao>();
-		this.listaAdministradores = new ArrayList<Usuario>();
+
 	}
 
 	/* Métodos dos botões voltar e cancelar */

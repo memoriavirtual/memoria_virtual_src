@@ -205,8 +205,8 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		Query query;
 
 		query = entityManager
-				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao like nome% ");
-		query.setParameter("nome", pnome);
+				.createQuery("SELECT a.instituicao FROM Acesso a WHERE a.grupo = :grupo AND a.usuario = :usuario AND a.instituicao.nome like :padrao ");
+		query.setParameter("padrao", "%" + pnome + "%");
 		query.setParameter("grupo", grupo);
 		query.setParameter("usuario", usuario);
 		try {
@@ -214,7 +214,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+ 
 		return ins;
 	}
 

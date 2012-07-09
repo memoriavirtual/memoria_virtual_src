@@ -72,7 +72,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	 *             Em caso de erro
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao,boolean b)
+	public List<Acesso> recuperarGerentesdaInstituicao(Instituicao instituicao,boolean b)
 			throws ModeloException {
 		Grupo grupo = new Grupo("GERENTE") ;
 		List<Acesso> objetosAcesso ;
@@ -110,14 +110,14 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 
 	
-	public Aprovacao getAprovacao(String chave)
+	public Aprovacao recuperarAprovacao(String chave , String canonicalName)
 			throws ModeloException {
 		Aprovacao aprovacao;
 		Query query;
 		query = this.entityManager
 				.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveEstrangeira = :chave   AND a.tabelaEstrangeira = :instituicao" );
 		query.setParameter("chave", chave);
-		query.setParameter("instituicao", "Instituicao");
+		query.setParameter("instituicao", canonicalName);
 
 
 		try {
@@ -175,7 +175,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 
-	public ItemAuditoria getItemAuditoria(String nomeInstituicao,EnumTipoAcao enumTipoAcao) throws ModeloException {
+	public ItemAuditoria recuperarItemAuditoria(String nomeInstituicao,EnumTipoAcao enumTipoAcao) throws ModeloException {
 		ItemAuditoria itemAuditoria;
 		Query query;
 		query = this.entityManager
@@ -191,7 +191,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		return itemAuditoria;
 	}
 
-	public Instituicao getInstituicaoFalse(String pnome) throws ModeloException {
+	public Instituicao recuperarInstituicaoFalse(String pnome) throws ModeloException {
 		Instituicao instituicao;
 		Query query;
 		query = this.entityManager
@@ -226,18 +226,20 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		Date data = new Date();
 		instituicao = this.entityManager.find(Instituicao.class, instituicao.getId());
 		Usuario u = entityManager.find(Usuario.class, validador.getId());
-		Aprovacao aprovacao = new Aprovacao( data , u , dataValidade , instituicao.getNome() , Instituicao.class.getName());
+		Aprovacao aprovacao = new Aprovacao( data , u , dataValidade , instituicao.getNome() , Instituicao.class.getCanonicalName());
 		this.entityManager.persist(aprovacao);
 	}
 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Instituicao> listarTodasInstituicoes() throws ModeloException {
+	public List<Instituicao> listarTodasInstituicoes(Grupo grupo  , Usuario usuario) throws ModeloException {
 		List<Instituicao> lista ;
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Instituicao a");
+				.createQuery("SELECT a.instituicao FROM Acesso a WHERE  a.instituicao.validade = TRUE AND a.grupo = :grupo AND a.usuario = :usuario");
+		query.setParameter("grupo", grupo);
+		query.setParameter("usuario", usuario);
 		try {
 			lista = (List<Instituicao>) query.getResultList();
 			return lista ;

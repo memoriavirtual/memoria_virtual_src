@@ -46,18 +46,18 @@ public class ExcluirInstituicao extends HttpServlet {
 		
 		//Recuperando Objetos Aprovação, Instituição, ItemAuditoria
 		try {
-			instituicao = this.excluirInstituicaoEJB.getInstituicaoFalse(chaveEstrangeira);
+			instituicao = this.excluirInstituicaoEJB.recuperarInstituicaoFalse(chaveEstrangeira);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 			return;
 		}try {
-			 aprovacao = this.excluirInstituicaoEJB.getAprovacao(instituicao.getNome());
-		} catch (ModeloException e) {
+			 aprovacao = this.excluirInstituicaoEJB.recuperarAprovacao(instituicao.getNome() , instituicao.getClass().getCanonicalName());
+		} catch (ModeloException e) { 
 			e.printStackTrace();
 		}
 		
 		try {
-			itemAuditoria = this.excluirInstituicaoEJB.getItemAuditoria(aprovacao.getChaveEstrangeira(),EnumTipoAcao.EXCLUIR_INSTITUICAO);
+			itemAuditoria = this.excluirInstituicaoEJB.recuperarItemAuditoria(aprovacao.getChaveEstrangeira(),EnumTipoAcao.EXCLUIR_INSTITUICAO);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}

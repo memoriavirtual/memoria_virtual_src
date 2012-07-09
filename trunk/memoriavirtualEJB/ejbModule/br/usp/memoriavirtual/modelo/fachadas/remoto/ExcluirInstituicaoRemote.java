@@ -6,6 +6,7 @@ import javax.ejb.Remote;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
+import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -18,7 +19,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface ExcluirInstituicaoRemote{
 	
-	public List<Instituicao> listarTodasInstituicoes() throws ModeloException;
+	public List<Instituicao> listarTodasInstituicoes(Grupo grupo, Usuario usuario) throws ModeloException;
 	/**
 	 * Métodos faz uma requisição no banco de dados afim de encontrar todos 
 	 * os usuários do memória virtual que são administradores.
@@ -40,7 +41,7 @@ public interface ExcluirInstituicaoRemote{
 	 * Retorna Objeto Instituicao cujo nome coincide com o parâmetro passado.
 	 * @throws ModeloException
 	 */
-	public Instituicao getInstituicaoFalse(String nomeInstituicao) throws ModeloException ;
+	public Instituicao recuperarInstituicaoFalse(String nomeInstituicao) throws ModeloException ;
 	
 	
 	/**
@@ -56,7 +57,7 @@ public interface ExcluirInstituicaoRemote{
 	 * Objeto ItemAuditoria.
 	 * @throws ModeloException
 	 */
-	public ItemAuditoria getItemAuditoria(String nomeInstituicao,EnumTipoAcao enumTipoAcao) throws ModeloException;
+	public ItemAuditoria recuperarItemAuditoria(String nomeInstituicao,EnumTipoAcao enumTipoAcao) throws ModeloException;
 	
 	
 	/**
@@ -71,7 +72,7 @@ public interface ExcluirInstituicaoRemote{
 	 * Objeto List<Acesso>
 	 * @throws ModeloException
 	 */
-	public List<Acesso> getGerentesdaInstituicao(Instituicao instituicao, boolean validade)throws ModeloException;
+	public List<Acesso> recuperarGerentesdaInstituicao(Instituicao instituicao, boolean validade)throws ModeloException;
 	
 	
 	/**
@@ -92,7 +93,7 @@ public interface ExcluirInstituicaoRemote{
 	 * Objeto Aprovacao
 	 * @throws ModeloException
 	 */
-	public Aprovacao getAprovacao(String chave)
+	public Aprovacao recuperarAprovacao(String chave, String canonicalName)
 	throws ModeloException;
 	
 	

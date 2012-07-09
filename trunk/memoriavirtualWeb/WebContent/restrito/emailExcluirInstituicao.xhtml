@@ -35,7 +35,7 @@
 							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoNomedoAdministradorValidador}</h:outputLabel>
 							<h:selectOneMenu class="options"
 								value="#{excluirInstituicaoMB.nomeValidador}">
-								<f:selectItems value="#{excluirInstituicaoMB.listaValidadores}" />
+								<f:selectItems value="#{excluirInstituicaoMB.recuperarPossiveisAprovadores()}" />
 								<f:ajax event="blur" execute="@this" render="validacaoValidador"
 		 	 	   					listener="#{excluirInstituicaoMB.validadeValidador}" />
 							</h:selectOneMenu>
