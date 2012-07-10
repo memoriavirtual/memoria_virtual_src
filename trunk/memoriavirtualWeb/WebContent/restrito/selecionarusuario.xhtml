@@ -7,7 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Editar Cadastro Usuario</title>
+<title>Selecionar Usuario</title>
 </head>
 <h:body>
 	<ui:composition
@@ -32,8 +32,7 @@
 							<h:inputText value="#{editarCadastroUsuarioMB.nome}"
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{editarCadastroUsuarioMB.listarUsuarios}"
-									onevent="opa()" />
+									listener="#{editarCadastroUsuarioMB.listarUsuarios}" />
 							</h:inputText>
 
 						</div>

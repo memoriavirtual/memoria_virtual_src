@@ -33,9 +33,9 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-	private Acesso acesso;
-	private String nome;
-	private String nomeCompleto;
+	private Acesso acesso; // acesso do
+	private String nome; // nome a ser buscado para oferecer sugestoes
+	private String nomeCompleto; // nome a ser exibido na visão de edição
 	private String telefone;
 	private List<Usuario> usuarios;
 	private List<Usuario> administradores;
@@ -48,21 +48,34 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private List<Acesso> acessos;
 	private List<Acesso> acessosAntigos;
 	private Aprovacao aprovacao;
-	private boolean mostrar = false;
-	private boolean mostrarLink = true;
+	private boolean exibirAcessos = false; // exibir a tabela de acessos
+	private boolean mostrarLink = true; // renderizar link para exibir a tabela de acessos
 	private boolean renderInstituicoes = false;
 
 	public EditarCadastroUsuarioMB() {
 		super();
 	}
 
-	public String cancelar() {
-		this.limpar();
-		return "cancelar";
-	}
-
 	public void listarUsuarios(AjaxBehaviorEvent event) {
 		this.listarUsuarios();
+	}
+
+	public void listarUsuarios() {
+
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+
+		if (usuario.isAdministrador()) {
+
+			try {
+				this.usuarios = this.memoriaVirtualEJB
+						.listarUsuarios(this.nome);
+			} catch (ModeloException m) {
+				MensagensDeErro.getErrorMessage(
+						"editarCadastroUsuarioErroListarUsuarios", "resultado");
+			}
+		}
+
 	}
 
 	public String getInformacaoAcesso() {
@@ -76,58 +89,62 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	}
 
+	public String cancelar() {
+		this.limpar();
+		return "cancelar";
+	}
+
 	public String mostrar() {
-		this.mostrar = true;
+		this.exibirAcessos = true;
 		this.mostrarLink = false;
 		return null;
 	}
 
-	public void listarUsuarios() {
-
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
-
-		if (usuario.isAdministrador()) {
-			try {
-				this.usuarios = this.editarCadastroUsuarioEJB
-						.listarUsuarios(this.nome);
-			} catch (ModeloException m) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroUsuarioErroListarUsuarios", "resultado");
-			}
-		} else {
-			Grupo grupo = new Grupo("gerente");
-			try {
-				this.usuarios = this.editarCadastroUsuarioEJB.listarUsuarios(
-						this.nome, usuario, grupo);
-			} catch (ModeloException m) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroUsuarioErroListarUsuarios", "resultado");
-			}
-		}
-
-	}
-
+	/**
+	 * Método a ser chamado quando o usuário clica em um dos nomes da lista
+	 * 
+	 * @param usuario
+	 *            Usuario a ser editado
+	 * @return
+	 */
 	public String selecionarUsuario(Usuario usuario) {
 
+		// pega o usuário requerente
 		Usuario requerente = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
+		// se for a opção para listar todos os usuários, refaz a busca no banco
+		if (usuario.getId().equals("listartodos")) {
+			this.nome = "";
+			this.listarUsuarios();
+			this.usuarios.remove(0);
+			return null;
+		}
+
+		// usuario a ser editado
 		this.usuario = usuario;
+
+		// nome do usuario a ser editado
 		this.nome = usuario.getNomeCompleto();
+
+		// telefone do usuario a ser editado
 		this.telefone = usuario.getTelefone();
+
+		// tenta buscar os acessos para um usuario e uma lista de aprovadores
+		// validos
 		try {
-			this.acessos = this.editarCadastroUsuarioEJB.getAcessos(usuario);
+			this.acessos = this.editarCadastroUsuarioEJB.listarAcessos(usuario);
 			this.acessosAntigos = this.editarCadastroUsuarioEJB
-					.getAcessos(usuario);
+					.listarAcessos(usuario);
 			this.administradores = this.editarCadastroUsuarioEJB
-					.getAdministradores(requerente);
+					.listarAprovadores(requerente);
 		} catch (ModeloException m) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuarioErroSelecaoUsuario", "resultado");
 			return "falha";
 		}
 
+		// limpa os dados da sessão
 		this.justificativa = null;
 		this.usuarios.clear();
 		this.nome = null;
@@ -156,11 +173,11 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			this.telefone = selecionado.getTelefone();
 			try {
 				this.acessos = this.editarCadastroUsuarioEJB
-						.getAcessos(selecionado);
+						.listarAcessos(selecionado);
 				this.acessosAntigos = this.editarCadastroUsuarioEJB
-						.getAcessos(selecionado);
+						.listarAcessos(selecionado);
 				this.administradores = this.editarCadastroUsuarioEJB
-						.getAdministradores(requerente);
+						.listarAprovadores(requerente);
 			} catch (ModeloException m) {
 				MensagensDeErro.getErrorMessage(
 						"editarCadastroUsuarioErroSelecao", "resultado");
@@ -248,6 +265,9 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public String adicionarAcesso() {
 
+		if (this.instituicoes == null)
+			this.instituicoes = new ArrayList<Instituicao>();
+
 		Instituicao instituicao = new Instituicao();
 		Grupo grupo = new Grupo();
 
@@ -271,7 +291,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			try {
 				this.editarCadastroUsuarioEJB.editarCadastro(this.usuario,
 						this.nomeCompleto, this.telefone);
-				if (mostrar == false) {
+				if (exibirAcessos == false) {
 					MensagensDeErro.getSucessMessage(
 							"editarCadastroUsuarioSucesso", "resultado");
 				}
@@ -281,7 +301,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				m.printStackTrace();
 			}
 
-			if (mostrar && validateInstituicao()) {
+			if (exibirAcessos && validateInstituicao()) {
 				// adiciona a lista pendentes os acessos que foram modificados,
 				// ou seja os acessos que estao em apenas uma das listas
 				for (Acesso a : this.acessos) {
@@ -299,25 +319,9 @@ public class EditarCadastroUsuarioMB implements Serializable {
 					}
 				}
 
-				for (Acesso a : this.acessos) {
-					System.out.println("atuais" + a.getInstituicao().getNome()
-							+ a.getGrupo().getId());
-				}
-
-				for (Acesso a : this.acessosAntigos) {
-					System.out.println("antigos" + a.getInstituicao().getNome()
-							+ a.getGrupo().getId());
-				}
-
 				for (Acesso a : pendentes) {
 					this.acessos.remove(a);
 					this.acessosAntigos.remove(a);
-				}
-
-				for (Acesso a : pendentes) {
-					System.out.println("pendentes"
-							+ a.getInstituicao().getNome()
-							+ a.getGrupo().getId());
 				}
 
 				pendentes.clear();
@@ -330,16 +334,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				for (Acesso a : this.acessosAntigos) {
 					pendentes.add(a);
 					situacoes.add("excluir");
-				}
-
-				for (Acesso a : this.acessos) {
-					System.out.println("atuais" + a.getInstituicao().getNome()
-							+ a.getGrupo().getId());
-				}
-
-				for (Acesso a : this.acessosAntigos) {
-					System.out.println("antigos" + a.getInstituicao().getNome()
-							+ a.getGrupo().getId());
 				}
 
 				Date data = new Date();
@@ -388,7 +382,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		List<Grupo> grupos = new ArrayList<Grupo>();
 
 		try {
-			grupos = this.editarCadastroUsuarioEJB.getGrupos();
+			grupos = this.editarCadastroUsuarioEJB.listarGrupos();
 		} catch (ModeloException m) {
 			m.printStackTrace();
 		}
@@ -430,7 +424,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public boolean validateInstituicao() {
-		if (mostrar) {
+		if (exibirAcessos) {
 			Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 					.getExternalContext().getSessionMap().get("usuario");
 			boolean existe = false;
@@ -721,12 +715,12 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.aprovacao = aprovacao;
 	}
 
-	public boolean isMostrar() {
-		return mostrar;
+	public boolean isExibirAcessos() {
+		return exibirAcessos;
 	}
 
-	public void setMostrar(boolean mostrar) {
-		this.mostrar = mostrar;
+	public void setExibirAcessos(boolean mostrar) {
+		this.exibirAcessos = mostrar;
 	}
 
 	public void limpar() {
@@ -735,7 +729,12 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.acessosAntigos.clear();
 		this.administradores.clear();
 		this.usuarios.clear();
-		this.mostrarLink = false;
+		this.nome = null;
+		this.nomeCompleto = null;
+		this.telefone = null;
+		this.mostrarLink = true;
+		this.justificativa = null;
+		this.exibirAcessos = false;
 
 	}
 

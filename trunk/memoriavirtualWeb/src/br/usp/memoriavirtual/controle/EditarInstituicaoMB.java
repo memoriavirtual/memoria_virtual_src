@@ -33,31 +33,31 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 
 	public String editarInstituicao() {
 
-		if (this.validateNome()&&this.validateLocalizacao() ) {
+		if (this.validateNome() && this.validateLocalizacao()) {
 
-			
-				Instituicao instituicao = new Instituicao(
-						this.id, this.nome, this.localizacao,
-						this.endereco, this.cidade, this.estado, this.pais,
-						this.cep, this.telefone, this.caixaPostal, this.email,
-						this.URL, this.identificacaoProprietario,
-						this.administradorPropriedade, this.latitude,
-						this.longitude, this.altitude, this.tipoPropriedade,
-						this.protecaoExistente, this.legislacao);
-				
-				FacesContext context = FacesContext.getCurrentInstance();
-				String bundleName = "mensagens";
-				ResourceBundle bundle = context.getApplication().getResourceBundle(
-						context, bundleName);
+			Instituicao instituicao = new Instituicao(this.id, this.nome,
+					this.localizacao, this.endereco, this.cidade, this.estado,
+					this.pais, this.cep, this.telefone, this.caixaPostal,
+					this.email, this.URL, this.identificacaoProprietario,
+					this.administradorPropriedade, this.latitude,
+					this.longitude, this.altitude, this.tipoPropriedade,
+					this.protecaoExistente, this.legislacao);
 
-				if (bundle.getString("cadastrarInstituicaoEscolhaEstado").equals(instituicao.getEstado()))
-					instituicao.setEstado("");
-				if (bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade").equals(instituicao
-						.getTipoPropriedade()))
-					instituicao.setTipoPropriedade("");
-				if (bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente").equals(instituicao
-						.getProtecaoExistente()))
-					instituicao.setProtecaoExistente("");
+			FacesContext context = FacesContext.getCurrentInstance();
+			String bundleName = "mensagens";
+			ResourceBundle bundle = context.getApplication().getResourceBundle(
+					context, bundleName);
+
+			if (bundle.getString("cadastrarInstituicaoEscolhaEstado").equals(
+					instituicao.getEstado()))
+				instituicao.setEstado("");
+			if (bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade")
+					.equals(instituicao.getTipoPropriedade()))
+				instituicao.setTipoPropriedade("");
+			if (bundle
+					.getString("cadastrarInstituicaoEscolhaProtecaoExistente")
+					.equals(instituicao.getProtecaoExistente()))
+				instituicao.setProtecaoExistente("");
 			try {
 				this.editarInstituicaoEJB.editarInstituicao(instituicao);
 			} catch (ModeloException e) {
@@ -102,8 +102,18 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
+		this.listarInstituicoes();
+
+	}
+
+	public void listarInstituicoes() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		Usuario usuario = (Usuario) context.getExternalContext()
+				.getSessionMap().get("usuario");
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
 
 		// Lista de instituicoes que o usuario pertence
 		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
@@ -111,16 +121,33 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		if (usuario.isAdministrador()) {
 			instituicoesUsuario = this.memoriaVirtualEJB
 					.listarInstituicoes(this.nome);
+
 		} else {
 			Grupo grupo = new Grupo("Gerente");
 			instituicoesUsuario = this.memoriaVirtualEJB.listarInstituicoes(
 					this.nome, grupo, usuario);
+		}
+		if (!instituicoesUsuario.isEmpty()) {
+			Instituicao ins = new Instituicao();
+			ins.setNome(bundle.getString("listarTodos"));
+			instituicoesUsuario.add(0, ins);
 		}
 
 		this.instituicoes = instituicoesUsuario;
 	}
 
 	public String selecionarInstituicao(Instituicao instituicao) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		if(instituicao.getNome().equals(bundle.getString("listarTodos"))){
+			this.nome = "";
+			this.listarInstituicoes();
+			this.instituicoes.remove(0);
+			return null;
+		}
 		this.id = instituicao.getId();
 		this.nome = instituicao.getNome();
 		this.cep = instituicao.getCep();
@@ -242,14 +269,12 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		return true;
 	}
 
-	
 	public List<SelectItem> getEstadoSigla() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
-		
+
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 
 		estados.add(new SelectItem(this.estado, this.estado));
@@ -303,9 +328,9 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		tiposPropriedade.add(new SelectItem(this.tipoPropriedade,
 				this.tipoPropriedade));
 		tiposPropriedade
-		.add(new SelectItem(
-				bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade"),
-				bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade")));
+				.add(new SelectItem(
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade"),
+						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade")));
 		tiposPropriedade
 				.add(new SelectItem(
 						"Publica",
@@ -322,7 +347,6 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		return tiposPropriedade;
 	}
 
-	
 	/**
 	 * Getter dos tipos de protecaoExistente (Usado no form de cadastro)
 	 * 
@@ -337,12 +361,12 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 
 		List<SelectItem> protecaoExistentes = new ArrayList<SelectItem>();
 
+		protecaoExistentes.add(new SelectItem(this.protecaoExistente,
+				this.protecaoExistente));
 		protecaoExistentes
-				.add(new SelectItem(this.protecaoExistente,this.protecaoExistente));
-		protecaoExistentes
-		.add(new SelectItem(
-				bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente"),
-				bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente")));
+				.add(new SelectItem(
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente"),
+						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente")));
 		protecaoExistentes
 				.add(new SelectItem(
 						"Publica",
@@ -386,6 +410,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 
 		return protecaoExistentes;
 	}
+
 	public Instituicao getInstituicao() {
 		return instituicao;
 	}

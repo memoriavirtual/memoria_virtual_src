@@ -62,7 +62,7 @@
 						<div id="sugestoes">
 							<h:dataTable id="acessos" var="acesso"
 								value="#{editarCadastroUsuarioMB.acessos}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}">
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
 								<h:column>
 									<h:outputLabel class="labeltabela"
 										value="#{mensagens.editarCadastroUsuarioNivel}"></h:outputLabel>
@@ -102,15 +102,15 @@
 							<h:commandLink class="labels"
 								action="#{editarCadastroUsuarioMB.adicionarAcesso}"
 								value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}"></h:commandLink>
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:commandLink>
 						</div>
 
 						<div>
 							<h:outputLabel class="labels"
 								value="#{mensagens.editarCadastroUsuarioJustificativa}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}"></h:outputLabel>
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
 							<h:inputText value="#{editarCadastroUsuarioMB.justificativa}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}">
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
 								<f:ajax event="blur" execute="@this"
 									render="validacaoJustificativa"
 									listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
@@ -125,10 +125,10 @@
 						<div>
 							<h:outputLabel class="labels"
 								value="#{mensagens.editarCadastroUsuarioValidade}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}">
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
 							</h:outputLabel>
 							<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}">
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
 								<f:selectItems value="#{editarCadastroUsuarioMB.validades}"></f:selectItems>
 							</h:selectOneMenu>
 						</div>
@@ -136,9 +136,9 @@
 						<div>
 							<h:outputLabel class="labels"
 								value="#{mensagens.editarCadastroUsuarioAdministradores}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}"></h:outputLabel>
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
 							<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}"
-								rendered="#{editarCadastroUsuarioMB.mostrar}">
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
 								<f:selectItems value="#{editarCadastroUsuarioMB.admnistradores}"></f:selectItems>
 							</h:selectOneMenu>
 						</div>

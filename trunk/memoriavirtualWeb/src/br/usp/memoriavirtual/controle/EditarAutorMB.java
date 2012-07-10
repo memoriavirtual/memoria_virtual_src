@@ -16,7 +16,6 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-
 /**
  * @author bigmac
  * 
@@ -38,10 +37,13 @@ public class EditarAutorMB extends CadastrarAutorMB {
 	}
 
 	/**
-	 * Método é chamado enquanto as letras sÃ£o inseridas no campo de busca.
+	 * Mï¿½todo ï¿½ chamado enquanto as letras sÃ£o inseridas no campo de busca.
 	 */
 	public void listarAutores(AjaxBehaviorEvent event) {
+		this.listarAutores();
+	}
 
+	public String listarAutores() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
@@ -49,20 +51,25 @@ public class EditarAutorMB extends CadastrarAutorMB {
 
 		this.autores.clear();
 
-		if (!this.strDeBusca.equals(""))
+	//	if (!this.strDeBusca.equals("")) {
 			try {
 				this.autores = this.editarAutorEJB
 						.listarAutores(this.strDeBusca);
+				Autor autor = new Autor();
+				autor.setNome(bundle.getString("listarTodos"));
+				this.autores.add(0, autor);
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
 
-		if (this.autores.isEmpty()) {
-			Autor aut = new Autor();
-			aut.setNome(bundle.getString("excluirInstituicaoErrolistavazia"));
-			this.autores.add(aut);
-		}
-		return;
+//			if (this.autores.isEmpty()) {
+//				Autor aut = new Autor();
+//				aut.setNome(bundle
+//						.getString("excluirInstituicaoErrolistavazia"));
+//				this.autores.add(aut);
+//			}
+	//	}
+		return null;
 	}
 
 	public String selecionarAutor() {
@@ -75,33 +82,38 @@ public class EditarAutorMB extends CadastrarAutorMB {
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 		if (!autor.getNome().equals(
-				bundle.getString("excluirInstituicaoErrolistavazia"))) {
+				bundle.getString("listarTodos"))) {
 			this.autor = autor;
 			this.etapa1 = false;
 			this.etapa2 = true;
 		}
+		else{
+			this.strDeBusca = "";
+			this.listarAutores();
+			this.autores.remove(0);
+		}
 		return null;
 	}
-	public String salvarEdicaoAutor(){
-		
+
+	public String salvarEdicaoAutor() {
+
 		if (this.validateNome() && this.validateSobrenome()
 				&& this.validateNascimento() && this.validateObito()
 				&& this.validateAtividade()) {
 
-		try {
-			this.editarAutorEJB.editarAutor(this.autor);
-		} catch (ModeloException e) {
-			e.printStackTrace();
-			MensagensDeErro.getErrorMessage("editarAutorError",
-					"resultado");
-		}
-		MensagensDeErro.getSucessMessage("editarAutorSucesso",
-				"resultado");
-		this.resetEditarAutor();
+			try {
+				this.editarAutorEJB.editarAutor(this.autor);
+			} catch (ModeloException e) {
+				e.printStackTrace();
+				MensagensDeErro
+						.getErrorMessage("editarAutorError", "resultado");
+			}
+			MensagensDeErro.getSucessMessage("editarAutorSucesso", "resultado");
+			this.resetEditarAutor();
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Volta os atributos a um estado original
 	 */
@@ -144,7 +156,8 @@ public class EditarAutorMB extends CadastrarAutorMB {
 	}
 
 	/**
-	 * @param etapa1 the etapa1 to set
+	 * @param etapa1
+	 *            the etapa1 to set
 	 */
 	public void setEtapa1(boolean etapa1) {
 		this.etapa1 = etapa1;
@@ -158,13 +171,11 @@ public class EditarAutorMB extends CadastrarAutorMB {
 	}
 
 	/**
-	 * @param etapa2 the etapa2 to set
+	 * @param etapa2
+	 *            the etapa2 to set
 	 */
 	public void setEtapa2(boolean etapa2) {
 		this.etapa2 = etapa2;
 	}
-
-	
-	
 
 }
