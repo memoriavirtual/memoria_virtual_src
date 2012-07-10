@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import br.usp.memoriavirtual.modelo.entidades.Autoria;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -35,6 +37,7 @@ public class BemPatrimonial implements Serializable {
 		this.descritores = new TreeSet <String>();
 		this.fontesInformacao = new TreeSet <String>();
 		this.titulos =   new TreeSet <Titulo>();
+		this.autorias = new TreeSet <Autoria>();
 		this.audioVisuals =   new TreeSet <AudioVisual>();
 		this.intervencoes =  new TreeSet <Intervencao>();
 		this.pesquisadores =  new TreeSet <Pesquisador>();
@@ -53,13 +56,20 @@ public class BemPatrimonial implements Serializable {
 	protected String caracteristicasFisTecExec;
 	protected String conteudo;
 	protected String meioDeAcesso;
+	@ElementCollection
 	protected Set<String> descritores;
+	@ElementCollection
 	protected Set<String> fontesInformacao;
 	
 	@ElementCollection
 	@Embedded
 	@OneToMany
 	protected Set<Titulo> titulos;
+	
+	@ElementCollection
+	@OneToMany
+	protected Set<Autoria> autorias;
+	
 	
 	@Embedded
 	@OneToOne
@@ -71,7 +81,6 @@ public class BemPatrimonial implements Serializable {
 	protected Set<AudioVisual> audioVisuals;
 	
 	@Embedded
-	@OneToOne
 	protected  DisponibilidadeUsoProtecao disponibilidadeUsoProtecao;
 	
 	@Embedded
