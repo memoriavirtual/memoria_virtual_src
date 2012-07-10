@@ -33,7 +33,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Grupo> getGrupos() throws ModeloException {
+	public List<Grupo> listarGrupos() throws ModeloException {
 
 		List<Grupo> grupos = new ArrayList<Grupo>();
 
@@ -49,7 +49,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Acesso> getAcessos(Usuario usuario) throws ModeloException {
+	public List<Acesso> listarAcessos(Usuario usuario) throws ModeloException {
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		Query query = entityManager
 				.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = true");
@@ -64,24 +64,17 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		return acessos;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Usuario> listarUsuarios(String nome) throws ModeloException {
-		List<Usuario> usuarios = new ArrayList<Usuario>();
-		Query query = entityManager
-				.createQuery("SELECT a FROM Usuario a WHERE a.ativo = true AND a.administrador = false AND a.nomeCompleto LIKE :padrao ORDER BY a.nomeCompleto");
-		query.setParameter("padrao", "%" + nome + "%");
-		try {
-			usuarios = (List<Usuario>) query.getResultList();
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
-		return usuarios;
-	}
+	
 
+	/**
+	 * Método usado para listar os possíveis aprovadores
+	 * de uma edição de acessos de usuário. Esses aprovadores
+	 * são os administradores do sistema..
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> getAdministradores(Usuario usuario)
+	public List<Usuario> listarAprovadores(Usuario usuario)
 			throws ModeloException {
 		List<Usuario> administradores = new ArrayList<Usuario>();
 
@@ -96,52 +89,6 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		return administradores;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Usuario> listarUsuarios(String nome, Usuario requerente,
-			Grupo grupo) throws ModeloException {
-
-		List<Acesso> acessos = new ArrayList<Acesso>();
-		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
-		List<Usuario> usuarios = new ArrayList<Usuario>();
-
-		Query query = entityManager
-				.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.grupo = :grupo AND a.validade = true");
-		query.setParameter("usuario", requerente);
-		query.setParameter("grupo", grupo);
-
-		try {
-
-			acessos = (List<Acesso>) query.getResultList();
-			for (Acesso a : acessos) {
-				instituicoes.add(a.getInstituicao());
-
-			}
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
-		for (Instituicao i : instituicoes) {
-			Query q = entityManager
-					.createQuery("SELECT a FROM Acesso a WHERE a.instituicao = :instituicao AND a.validade = true");
-			q.setParameter("instituicao", i);
-			try {
-				acessos = q.getResultList();
-				for (Acesso a : acessos) {
-					// Os usuarios listados não podem ser administradores, não
-					// podem ser repetidos, nem podem ser o proprio usuario que
-					// faz a requisicao
-					if (!a.getUsuario().isAdministrador()
-							&& !usuarios.contains(a.getUsuario())
-							&& (a.getUsuario().getId() != requerente.getId())) {
-						usuarios.add(a.getUsuario());
-					}
-				}
-			} catch (Exception e) {
-				throw new ModeloException(e);
-			}
-		}
-		return usuarios;
-	}
 
 	@Override
 	public void editarCadastro(Usuario usuario, String nomeCompleto,

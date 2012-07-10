@@ -15,33 +15,6 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 public interface EditarCadastroUsuarioRemote {
 
 	/**
-	 * Lista os Usuarios cujos nomes contem a string passada (inicio, meio ou
-	 * fim)
-	 * 
-	 * @param nome
-	 *            Nome ou parte do nome do usuario buscado
-	 * @return Lista de usuarios cujo nome contem a string passada
-	 * @throws ModeloException
-	 */
-	public List<Usuario> listarUsuarios(String nome) throws ModeloException;
-
-	/**
-	 * Lista os usuarios ligados as instituicoes cujo requrente tem nivel de
-	 * acesso e nomes contem a string passada (inicio e fim)
-	 * 
-	 * @param nome
-	 *            Nome ou parte do nome do usuario buscado
-	 * @param requerente
-	 *            Usuario que faz a requisicao da lista
-	 * @param grupo
-	 *            Grupo ao qual pertence o requerente
-	 * @return Lista dos usuario cujo nome contem a string passada
-	 * @throws ModeloException
-	 */
-	public List<Usuario> listarUsuarios(String nome, Usuario requerente,
-			Grupo grupo) throws ModeloException;
-
-	/**
 	 * Obtem uma lista dos administradores do sistema
 	 * 
 	 * @param requrente
@@ -50,7 +23,7 @@ public interface EditarCadastroUsuarioRemote {
 	 *         requisicao, caso o mesmo seja administrador)
 	 * @throws ModeloException
 	 */
-	public List<Usuario> getAdministradores(Usuario usuario)
+	public List<Usuario> listarAprovadores(Usuario usuario)
 			throws ModeloException;
 
 	/**
@@ -61,7 +34,7 @@ public interface EditarCadastroUsuarioRemote {
 	 * @return Lista dos acessos do usuario passado
 	 * @throws ModeloException
 	 */
-	public List<Acesso> getAcessos(Usuario usuario) throws ModeloException;
+	public List<Acesso> listarAcessos(Usuario usuario) throws ModeloException;
 
 	/**
 	 * Altera o nome e o telefone do usuario passado
@@ -123,6 +96,6 @@ public interface EditarCadastroUsuarioRemote {
 
 	public void persistir(long id) throws ModeloException;
 
-	public List<Grupo> getGrupos() throws ModeloException;
+	public List<Grupo> listarGrupos() throws ModeloException;
 	public List<Instituicao> listarInstituicoes(String instituicao) throws ModeloException;
 }

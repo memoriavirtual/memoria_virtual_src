@@ -44,7 +44,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	}
 
 	/**
-	 * Retorna o endere�o do servidor.
+	 * Retorna o endereco do servidor.
 	 * 
 	 */
 	public String getURLServidor() throws ModeloException {
@@ -58,16 +58,17 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		Properties propriedades = null;
 		try {
-			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
+			propriedades = (Properties) context
+					.lookup("memoriavirtual.propriedades");
 		} catch (NamingException e) {
 			new ModeloException(e);
 			return null;
-		}		
+		}
 		return (String) propriedades.get("hostname");
 	}
 
 	public String getIntervaloTimer() throws ModeloException {
-		
+
 		Context context = null;
 		try {
 			context = new InitialContext();
@@ -77,18 +78,20 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		Properties propriedades = null;
 		try {
-			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
+			propriedades = (Properties) context
+					.lookup("memoriavirtual.propriedades");
 		} catch (NamingException e) {
 			new ModeloException(e);
 			return null;
-		}		
+		}
 		return (String) propriedades.get("timer");
-		
+
 	}
-	
+
 	public boolean verificarDisponibilidadeIdUsuario(String id) {
 
-		Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
+		Query query = entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
 		query.setParameter("id", id);
 
 		try {
@@ -103,7 +106,8 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	public boolean verificarDisponibilidadeNomeInstituicao(String Nome) {
 
-		Query query = entityManager.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
+		Query query = entityManager
+				.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
 		query.setParameter("nome", Nome);
 
 		try {
@@ -118,7 +122,8 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	public boolean verificarDisponibilidadeEmail(String email) {
 
-		Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+		Query query = entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
 		query.setParameter("email", email);
 
 		try {
@@ -130,10 +135,12 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return true;
 	}
 
-	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException {
+	public void enviarEmail(String destinatario, String assunto, String mensagem)
+			throws MessagingException {
 		Message message = new MimeMessage(this.mailSession);
 		message.setFrom();
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario, false));
+		message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(destinatario, false));
 		message.setSubject(assunto);
 		Date timeStamp = new Date();
 		message.setText(mensagem);
@@ -156,7 +163,9 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		if (mensagemOriginal.length() % 2 != 0) {
 			for (int i = 0; i < mensagemOriginal.length(); i++) {
 				if ((i + 1) % 2 != 0) {
-					msgNova = msgNova.concat("" + mensagemOriginal.charAt(mensagemOriginal.length() - 1 - i));
+					msgNova = msgNova.concat(""
+							+ mensagemOriginal.charAt(mensagemOriginal.length()
+									- 1 - i));
 				} else {
 					msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
 				}
@@ -166,19 +175,26 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			for (int i = 0; i < mensagemOriginal.length(); i++) {
 				if (i + 1 != mensagemOriginal.length() - 1 - i) {
 					if ((i + 1 - aux) % 2 != 0) {
-						msgNova = msgNova.concat("" + mensagemOriginal.charAt(mensagemOriginal.length() - 1 - i));
+						msgNova = msgNova.concat(""
+								+ mensagemOriginal.charAt(mensagemOriginal
+										.length() - 1 - i));
 					} else {
-						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
+						msgNova = msgNova.concat(""
+								+ mensagemOriginal.charAt(i));
 					}
 				} else {
 					if (mensagemOriginal.length() % 4 == 0) {
-						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
-						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i + 1));
+						msgNova = msgNova.concat(""
+								+ mensagemOriginal.charAt(i));
+						msgNova = msgNova.concat(""
+								+ mensagemOriginal.charAt(i + 1));
 						aux++;
 						i++;
 					} else {
-						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i + 1));
-						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
+						msgNova = msgNova.concat(""
+								+ mensagemOriginal.charAt(i + 1));
+						msgNova = msgNova.concat(""
+								+ mensagemOriginal.charAt(i));
 						aux++;
 						i++;
 					}
@@ -197,16 +213,20 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	 *            grupo Grupo do usuario que faz o pedido
 	 * @param Usuario
 	 *            usuario usuario que faz o pedido
-	 * @return List<Instituicao> Lista de instituicoes cujo nome comeca com pnome, e podem ser acessadas pelo
+	 * @return List<Instituicao> Lista de instituicoes cujo nome comeca com
+	 *         pnome, e podem ser acessadas pelo
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Instituicao> listarInstituicoes(String pnome, Grupo grupo, Usuario usuario) {
+	public List<Instituicao> listarInstituicoes(String pnome, Grupo grupo,
+			Usuario usuario) {
 		List<Instituicao> ins = new ArrayList<Instituicao>();
 		Query query;
 
 		query = entityManager
-				.createQuery("SELECT a.instituicao FROM Acesso a WHERE a.grupo = :grupo AND a.usuario = :usuario AND a.instituicao.nome like :padrao ");
-		query.setParameter("padrao", "%" + pnome + "%");
+				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao LIKE :nome ");
+		query.setParameter("nome", "%" + pnome + "%");
+
+
 		query.setParameter("grupo", grupo);
 		query.setParameter("usuario", usuario);
 		try {
@@ -229,18 +249,65 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	public List<Instituicao> listarInstituicoes(String pnome) {
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 		Query query;
-		if (!(pnome == "")) {
-			query = entityManager
-					.createQuery("SELECT a FROM Instituicao a  WHERE a.validade = TRUE AND a.nome LIKE :padrao ORDER BY a.nome");
+		query = entityManager
+				.createQuery("SELECT a FROM Instituicao a  WHERE a.validade = TRUE AND a.nome LIKE :padrao ORDER BY a.nome");
 
-			query.setParameter("padrao", "%" + pnome + "%");
-			try {
-				instituicoes = (List<Instituicao>) query.getResultList();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		query.setParameter("padrao", "%" + pnome + "%");
+		try {
+			instituicoes = (List<Instituicao>) query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 		return instituicoes;
+	}
+
+	/**
+	 * Método para sugestão de usuários retorna todos os usuários do banco cujo
+	 * nome contém o padrão
+	 * 
+	 * @param pnome
+	 *            String a ser comparada com os nomes
+	 * @return Lista de usuários
+	 * @throws ModeloException
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Usuario> listarUsuarios(String pnome) throws ModeloException {
+
+		// Lista de usuarios a ser retornada
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		// Query reposavel pela busca no banco
+		Query query = null;
+
+		// Só busca se o nome não for nulo
+		if (!pnome.equals(null)) {
+
+			// query busca todos os usuarios ativos, não administradores
+			// cujo nome contém a string fornecida em ordem alfabética
+			query = this.entityManager
+					.createQuery("SELECT u FROM Usuario u WHERE u.ativo = TRUE "
+							+ "AND u.administrador = FALSE "
+							+ "AND u.nomeCompleto LIKE :padrao "
+							+ "ORDER BY u.nomeCompleto");
+			query.setParameter("padrao", "%" + pnome + "%");
+		}
+		try {
+
+			// tenta pegar a lista de resultados
+			usuarios = (List<Usuario>) query.getResultList();
+
+			// Cria um usuario para a opcao de listar todos os usuários
+			Usuario opcaoListarTodos = new Usuario();
+			opcaoListarTodos.setNomeCompleto("Listar Todos");
+			opcaoListarTodos.setId("listartodos");
+			usuarios.add(0, opcaoListarTodos);
+
+		} catch (Exception e) {
+			// em caso de erro, joga uma exceção
+			throw new ModeloException(e);
+		}
+		return usuarios;
 	}
 
 }
