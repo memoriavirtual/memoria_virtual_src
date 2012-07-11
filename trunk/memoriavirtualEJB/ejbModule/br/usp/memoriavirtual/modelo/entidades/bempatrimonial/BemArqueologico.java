@@ -2,6 +2,8 @@ package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+@Entity
 public class BemArqueologico extends BemPatrimonial implements Serializable {
 
 	/**

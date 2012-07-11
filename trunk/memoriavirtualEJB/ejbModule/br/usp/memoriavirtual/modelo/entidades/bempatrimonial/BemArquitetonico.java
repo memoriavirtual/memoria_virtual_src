@@ -17,7 +17,7 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 	
 	private String condicaoTopografia;
 	private String sudo;
-	private String numeroDePavimentos;
+	private String numeroDePavimentos; 
 	private String numeroDeAmbientes;
 	private String alcova;
 	private String porao;
