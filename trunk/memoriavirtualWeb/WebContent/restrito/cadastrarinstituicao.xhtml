@@ -28,7 +28,6 @@
 
 				<div class="conteudoTitulo">#{mensagens.cadastrarInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarInstituicaoDescricao}</div>
-				<mv:uploadFile nomeBotao="Enviar Foto" nameRequest="#{cadastrarInstituicaoMB.slot}" vincularImage="#{cadastrarInstituicaoMB.vincularImagem}" ></mv:uploadFile>
 				<h:form method="post" prependId="false">
 					<fieldset>
 						
@@ -267,7 +266,7 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+						<mv:uploadFile id="component"  ></mv:uploadFile>
 					</fieldset>
 					
 					<div class="botao">
@@ -284,6 +283,7 @@
 
 					</div>
 				</h:form>
+				
 			</div>
 			<!-- end .formulario-->
 

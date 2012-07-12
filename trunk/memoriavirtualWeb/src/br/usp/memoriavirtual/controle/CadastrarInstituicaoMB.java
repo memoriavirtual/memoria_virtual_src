@@ -1,7 +1,9 @@
 package br.usp.memoriavirtual.controle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +37,7 @@ public class CadastrarInstituicaoMB {
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
 	protected String slot = "arquivo0";
 	
-	
+	protected Map<String , byte[]> arquivos = new HashMap<String , byte[]>();
 
 	protected String nome = "";
 	protected String localizacao = "";
@@ -130,18 +132,11 @@ public class CadastrarInstituicaoMB {
 		return null;
 	}
 	
-	
-	public void vincularImagem(){
-		try {  
-	          ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();  
-	          HttpServletRequest request = (HttpServletRequest)context.getRequest();  
-	          ServletInputStream in = request.getInputStream(); 
-	          int a = in.read();
-	          System.out.println(a);
-	        } catch (Exception e) {  
-	            e.printStackTrace();  
-	        } 
+	public void adicionarArquivo (String name , byte[] bytes){
+		this.arquivos.put(name, bytes);
 	}
+	
+	
 	public String resetCadastrarinstituicao() {
 		this.nome = "";
 		this.localizacao = "";

@@ -2,27 +2,32 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
 <html xmlns="http://www.w3.org/1999/xhtml"  
    xmlns:cc="http://java.sun.com/jsf/composite"  
-   xmlns:h="http://java.sun.com/jsf/html"  
+   xmlns:h="http://java.sun.com/jsf/html"
    xmlns:f="http://java.sun.com/jsf/core">  
   
  <cc:interface>  
-     <cc:attribute name="nomeBotao" required="true"/>  
-     <cc:attribute name="nameRequest" required="true" />  
-     <cc:attribute name="vincularImage" method-signature="void action()" required="true"/>
-      
+    
  </cc:interface>  
   
  <cc:implementation>  
-    <h:form action="excluir" method="post" enctype="multipart/form-data">
-    
-         <input  type="file" name="nameRequest"/>  
-        
-   
-  
-         <h:commandButton type="submit"    value="#{cc.attrs.nomeBotao}" >  
-             
-         </h:commandButton>  
-   
-     </h:form>  
+ <h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"  media="all" rel="stylesheet" type="text/css"  />
+	<h:outputScript name="uploadFile.js" library="mvjsfcomponent"></h:outputScript>
+ 
+ <div id="example-content">
+
+      <div id="frame">
+
+        <div id="image-area" >
+
+          <span id="drop-message" > Blabla</span>
+
+        </div>
+
+        <span id="title"></span>
+      </div>
+
+    </div>
+	<script>init(); </script>
  </cc:implementation>  
+ 
 </html> 

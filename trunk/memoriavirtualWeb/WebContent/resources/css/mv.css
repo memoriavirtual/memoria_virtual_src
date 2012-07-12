@@ -231,6 +231,7 @@ h4 {
 }
 
 .formulario {
+	padding: 2%;
 	background: #FFF;
 	border: #000 2px solid;
 	border-top: none;
@@ -251,6 +252,7 @@ h4 {
 }
 
 .formulario fieldset div {
+	
 	clear: both;
 	display: block;
 }
