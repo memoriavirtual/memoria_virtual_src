@@ -89,7 +89,6 @@ function FileFrame(fileArea, fileTitle ) {
 		var f = new FormData();
 		// Passando o arquivo para o formulário
 		f.append("file", file);
-		f.append("fileName",file.name);
 		// Chamada async para realizar o upload da imagem
 		var request = new XMLHttpRequest();
 		request.open("POST", "/memoriavirtual/carregarfotoinstituicao", true);

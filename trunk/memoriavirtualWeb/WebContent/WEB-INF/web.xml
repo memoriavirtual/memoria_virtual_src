@@ -61,4 +61,14 @@
 		<servlet-name>ExcluirInstituicao</servlet-name>
 		<url-pattern>/excluir</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description>Servlet para upload de fotos de Instituicao</description>
+		<display-name>CadastrarInstituicaoUpload</display-name>
+		<servlet-name>CadastrarInstituicaoUpload</servlet-name>
+		<servlet-class>br.usp.memoriavirtual.servlet.CadastrarInstituicaoUpload</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CadastrarInstituicaoUpload</servlet-name>
+		<url-pattern>/carregarfotoinstituicao</url-pattern>
+	</servlet-mapping>
 </web-app>

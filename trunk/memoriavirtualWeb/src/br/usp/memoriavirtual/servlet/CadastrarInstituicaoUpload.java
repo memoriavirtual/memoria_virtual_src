@@ -31,7 +31,7 @@ public class CadastrarInstituicaoUpload  extends HttpServlet {
 		
 		if((content !=  null )&& (content.indexOf("multipart/form-data")>= 0 )){
 			
-			String name = req.getParameter("fileName");
+			
 			DataInputStream stream = new DataInputStream(req.getInputStream()); 
 			
 			int tamanho = req.getContentLength();
@@ -54,7 +54,7 @@ public class CadastrarInstituicaoUpload  extends HttpServlet {
 			ELResolver resolver = facesContext.getApplication().getELResolver();   
 			CadastrarInstituicaoMB  bean = (CadastrarInstituicaoMB) resolver.getValue(facesContext.getELContext(), null, "cadastrarInstituicaoMB");		
 			
-			bean.adicionarArquivo(name, bytes);
+			bean.adicionarArquivo("Foto"+ ++num, bytes);
 			
 		}
 	}
