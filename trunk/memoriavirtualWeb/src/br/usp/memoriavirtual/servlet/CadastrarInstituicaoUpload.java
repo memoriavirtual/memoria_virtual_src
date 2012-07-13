@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.CadastrarInstituicaoMB;
-import br.usp.memoriavirtual.controle.ExcluirInstituicaoMB;
 import br.usp.memoriavirtual.utils.FacesUtil;
 
 public class CadastrarInstituicaoUpload  extends HttpServlet {
@@ -25,12 +24,14 @@ public class CadastrarInstituicaoUpload  extends HttpServlet {
 	
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse response) throws IOException, ServletException {
-		int num = 0;
+		
 		
 		String content = req.getContentType();
 		
 		if((content !=  null )&& (content.indexOf("multipart/form-data")>= 0 )){
 			
+			
+			String nomeArquivo = req.getParameter("fileName");
 			
 			DataInputStream stream = new DataInputStream(req.getInputStream()); 
 			
@@ -54,7 +55,7 @@ public class CadastrarInstituicaoUpload  extends HttpServlet {
 			ELResolver resolver = facesContext.getApplication().getELResolver();   
 			CadastrarInstituicaoMB  bean = (CadastrarInstituicaoMB) resolver.getValue(facesContext.getELContext(), null, "cadastrarInstituicaoMB");		
 			
-			bean.adicionarArquivo("Foto"+ ++num, bytes);
+			bean.adicionarArquivo(bytes);
 			
 		}
 	}

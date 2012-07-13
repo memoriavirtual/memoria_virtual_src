@@ -1,33 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
-<html xmlns="http://www.w3.org/1999/xhtml"  
-   xmlns:cc="http://java.sun.com/jsf/composite"  
-   xmlns:h="http://java.sun.com/jsf/html"
-   xmlns:f="http://java.sun.com/jsf/core">  
-  
- <cc:interface>  
-    
- </cc:interface>  
-  
- <cc:implementation>  
- <h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"  media="all" rel="stylesheet" type="text/css"  />
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<cc:interface>
+	<cc:attribute name="acao" method-signature="java.lang.String action()"></cc:attribute>
+	
+</cc:interface>
+
+<cc:implementation>
+	<h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"
+		media="all" rel="stylesheet" type="text/css" />
 	<h:outputScript name="uploadFile.js" library="mvjsfcomponent"></h:outputScript>
- 
- <div id="example-content">
+	<h:dataTable id="tabelaFotos" var="instituicao"
+		value="#{excluirInstituicaoMB.instituicoes}">
+		
+	</h:dataTable>
+	<div id="example-content">
 
-      <div id="frame">
+		<div id="frame">
 
-        <div id="image-area" >
+			<div id="image-area">
 
-          <span id="drop-message" > Blabla</span>
+				<span id="drop-message"> Blabla</span>
 
-        </div>
+			</div>
 
-        <span id="title"></span>
-      </div>
+			<span id="title"></span>
+		</div>
 
-    </div>
-	<script>init(); </script>
- </cc:implementation>  
- 
-</html> 
+	</div>
+	<h:commandButton id="#{cc.id}" action="#{cc.attrs.acao}"
+		style=" display: none;">
+	</h:commandButton>
+	<script>
+		init("#{cc.id}");
+	</script>
+</cc:implementation>
+
+</html>

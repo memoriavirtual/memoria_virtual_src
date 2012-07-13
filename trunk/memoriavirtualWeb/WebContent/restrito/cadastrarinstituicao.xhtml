@@ -266,7 +266,10 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						<mv:uploadFile id="component"  ></mv:uploadFile>
+						
+						<h:graphicImage value="./instituicao1"></h:graphicImage>
+						
+						<mv:uploadFile id="component" acao="#{cadastrarInstituicaoMB.cadastrarInstituicao}" ></mv:uploadFile>
 					</fieldset>
 					
 					<div class="botao">

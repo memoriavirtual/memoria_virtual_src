@@ -1,7 +1,10 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +44,8 @@ public class Instituicao implements Serializable {
 	private String protecaoExistente;
 	private String legislacaoIncidente;
 	private Boolean validade;
+	@ElementCollection
+	private List<byte[]> imagens = new ArrayList<byte[]>();
 
 	/**
 	 * Construtor padrão
@@ -412,6 +417,14 @@ public class Instituicao implements Serializable {
 	 */
 	public void setLegislacaoExistente(String legislacaoExistente) {
 		this.legislacaoIncidente = legislacaoExistente;
+	}
+
+	public List<byte[]> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(List<byte[]> imagens) {
+		this.imagens = imagens;
 	}
 
 }

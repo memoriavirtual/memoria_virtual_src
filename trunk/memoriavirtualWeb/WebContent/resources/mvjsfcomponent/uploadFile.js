@@ -5,12 +5,12 @@
 // acredite nele. Javascript é uma linguagem prototipada.
 // Essa maneira de programar javascript é uma preferencia
 // minha. Prefiro este estilo a criar várias funções perdidas.
-function FileFrame(fileArea, fileTitle ) {
+function FileFrame(fileArea, fileTitle , botao ) {
 	var self = this;
 
 	this.fileArea = fileArea;
 	this.fileTitle = fileTitle;
-	
+	this.botao = botao;
 	
 	
 	this.init = function() {
@@ -39,10 +39,8 @@ function FileFrame(fileArea, fileTitle ) {
 		// porém neste exemplo iremos tratar apenas
 		// o primeiro arquivo
 		self.file = e.dataTransfer.files[0];
-
 		// Recupera nome do arquivo
 		self.fileTitle.innerHTML = self.file.name;
-
 		self.read(self.file);
 
 		// Neste ponto podemos implementar uma função para
@@ -51,8 +49,8 @@ function FileFrame(fileArea, fileTitle ) {
 		// que utilize o sistema de comentários do site.
 		
 		
-		  self.sendFile(self.file); 
-		  
+		  self.sendFile(self.file , self.file.name); 
+		  self.botao.click();
 		 
 	};
 
@@ -83,12 +81,13 @@ function FileFrame(fileArea, fileTitle ) {
 	};
 
 	// Essa função pode ser utilizada como 
-	this.sendFile = function(file) {
+	this.sendFile = function(file , name) {
 
 		// Criaremos um formulário
 		var f = new FormData();
 		// Passando o arquivo para o formulário
 		f.append("file", file);
+		f.append("fileName", name);
 		// Chamada async para realizar o upload da imagem
 		var request = new XMLHttpRequest();
 		request.open("POST", "/memoriavirtual/carregarfotoinstituicao", true);
@@ -101,13 +100,14 @@ function FileFrame(fileArea, fileTitle ) {
 	};
 	
 }
-init = (function() {
+init = (function(ccid) {
 // Recupera a div que conterá a imagem
 // e o span com o título de nosso arquivo
 var area = document.getElementById("image-area");
 var title = document.getElementById("title");
+var botao = document.getElementById(ccid+":"+ccid); 
+var fileFrameArea = new FileFrame(area, title, botao);
 
-var fileFrameArea = new FileFrame(area, title);
 fileFrameArea.init();
 
 });

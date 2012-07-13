@@ -1,5 +1,8 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,12 +13,10 @@ import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
+
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 
@@ -31,6 +32,9 @@ import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 public class CadastrarInstituicaoMB {
 
+	private  int numero = 0;
+
+	
 	@EJB
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
@@ -132,8 +136,26 @@ public class CadastrarInstituicaoMB {
 		return null;
 	}
 	
-	public void adicionarArquivo (String name , byte[] bytes){
-		this.arquivos.put(name, bytes);
+	public void adicionarArquivo (byte[] bytes) {
+		
+		this.numero++;
+		
+		java.io.File file = new java.io.File("./instituicao"+numero);  
+		FileOutputStream out;
+		try {
+			out = new FileOutputStream(file);
+			out.write(bytes); 
+			out.flush();
+			out.close();
+			
+			System.out.println(new String (bytes));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}    
+		
+		this.arquivos.put("./instituicao"+numero, bytes);
 	}
 	
 	
