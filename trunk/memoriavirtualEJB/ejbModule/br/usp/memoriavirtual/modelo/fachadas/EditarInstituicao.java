@@ -80,7 +80,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 	public void editarInstituicao(Instituicao instituicao) throws ModeloException {
 
 		Instituicao managedInstituicao;
-
+		
 		try {
 			// Verifica a existencia da instituicao a ser alterada
 			managedInstituicao = this.entityManager.find(Instituicao.class,

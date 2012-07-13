@@ -19,6 +19,7 @@ import javax.faces.model.SelectItem;
 
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
@@ -41,7 +42,7 @@ public class CadastrarInstituicaoMB {
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
 	protected String slot = "arquivo0";
 	
-	protected Map<String , byte[]> arquivos = new HashMap<String , byte[]>();
+	protected List<Multimidia> arquivos = new ArrayList<Multimidia>();
 
 	protected String nome = "";
 	protected String localizacao = "";
@@ -103,6 +104,9 @@ public class CadastrarInstituicaoMB {
 					.equals(bundle
 							.getString("cadastrarInstituicaoEscolhaProtecaoExistente")))
 				instituicao.setProtecaoExistente("");
+			
+			//indesando os arquivos a instituicao
+			cadastrarInstituicaoEJB.vincularArquivos(instituicao , (ArrayList<Multimidia>) this.arquivos);
 			// Cadastra a instituicao no banco de dados
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
 			// Testa se a institui��o foi gravada
@@ -136,26 +140,9 @@ public class CadastrarInstituicaoMB {
 		return null;
 	}
 	
-	public void adicionarArquivo (byte[] bytes) {
-		
-		this.numero++;
-		
-		java.io.File file = new java.io.File("./instituicao"+numero);  
-		FileOutputStream out;
-		try {
-			out = new FileOutputStream(file);
-			out.write(bytes); 
-			out.flush();
-			out.close();
-			
-			System.out.println(new String (bytes));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}    
-		
-		this.arquivos.put("./instituicao"+numero, bytes);
+	public void adicionarArquivo (Multimidia imagem) {
+		System.out.println(imagem.getId());
+		this.arquivos.add(imagem);
 	}
 	
 	

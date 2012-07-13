@@ -45,7 +45,7 @@ public class Instituicao implements Serializable {
 	private String legislacaoIncidente;
 	private Boolean validade;
 	@ElementCollection
-	private List<byte[]> imagens = new ArrayList<byte[]>();
+	private List<Integer> imagens = new ArrayList<Integer>();
 
 	/**
 	 * Construtor padrão
@@ -419,11 +419,11 @@ public class Instituicao implements Serializable {
 		this.legislacaoIncidente = legislacaoExistente;
 	}
 
-	public List<byte[]> getImagens() {
+	public List<Integer> getImagens() {
 		return imagens;
 	}
 
-	public void setImagens(List<byte[]> imagens) {
+	public void setImagens(List<Integer> imagens) {
 		this.imagens = imagens;
 	}
 

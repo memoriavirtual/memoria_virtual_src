@@ -49,7 +49,7 @@ function FileFrame(fileArea, fileTitle , botao ) {
 		// que utilize o sistema de comentários do site.
 		
 		
-		  self.sendFile(self.file , self.file.name); 
+		  self.sendFile(self.file ); 
 		  self.botao.click();
 		 
 	};
@@ -81,20 +81,22 @@ function FileFrame(fileArea, fileTitle , botao ) {
 	};
 
 	// Essa função pode ser utilizada como 
-	this.sendFile = function(file , name) {
+	this.sendFile = function(file) {
 
 		// Criaremos um formulário
 		var f = new FormData();
 		// Passando o arquivo para o formulário
 		f.append("file", file);
-		f.append("fileName", name);
+		
 		// Chamada async para realizar o upload da imagem
 		var request = new XMLHttpRequest();
 		request.open("POST", "/memoriavirtual/carregarfotoinstituicao", true);
 		request.send(f);
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
-			if (request.readyState == 4) {
+			if(request.readyState == 4 && request.status == 200) {
+				alert(request.responseText);
+			
 			}
 		};
 	};
@@ -103,7 +105,7 @@ function FileFrame(fileArea, fileTitle , botao ) {
 init = (function(ccid) {
 // Recupera a div que conterá a imagem
 // e o span com o título de nosso arquivo
-var area = document.getElementById("image-area");
+var area = document.getElementById("image-area"); 
 var title = document.getElementById("title");
 var botao = document.getElementById(ccid+":"+ccid); 
 var fileFrameArea = new FileFrame(area, title, botao);
