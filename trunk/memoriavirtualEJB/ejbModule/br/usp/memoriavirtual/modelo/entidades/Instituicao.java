@@ -1,27 +1,21 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "INSTITUICAO_ID", sequenceName = "INSTITUICAO_SEQ", allocationSize = 1)
-public class Instituicao implements Serializable {
+public class Instituicao  extends EntidadeComMidia implements Serializable {
+	
+	
+	private static final long serialVersionUID = -5996690587044446292L;
 
+	
 	/**
 	 * Serial Version UID
 	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INSTITUICAO_ID")
-	private long id;
-	private static final long serialVersionUID = -5996690587044446292L;
+   
+	
 	private String nome;
 	private String localidade;
 	private String endereco;
@@ -44,14 +38,14 @@ public class Instituicao implements Serializable {
 	private String protecaoExistente;
 	private String legislacaoIncidente;
 	private Boolean validade;
-	@ElementCollection
-	private List<Integer> imagens = new ArrayList<Integer>();
+	
 
 	/**
 	 * Construtor padrão
 	 */
 	public Instituicao() {
 		super();
+
 	}
 
 	/**
@@ -419,12 +413,7 @@ public class Instituicao implements Serializable {
 		this.legislacaoIncidente = legislacaoExistente;
 	}
 
-	public List<Integer> getImagens() {
-		return imagens;
-	}
+	
 
-	public void setImagens(List<Integer> imagens) {
-		this.imagens = imagens;
-	}
-
+	
 }

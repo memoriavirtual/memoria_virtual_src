@@ -1,28 +1,31 @@
 package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn; 
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
+import br.usp.memoriavirtual.modelo.entidades.EntidadeComMidia;
+
 
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@SequenceGenerator(name = "BEMPATRIMONIAL_ID", sequenceName = "BEMPATRIMONIAL_SEQ", allocationSize = 1)
-public class BemPatrimonial implements Serializable {
+public class BemPatrimonial extends EntidadeComMidia implements Serializable {
 
 	/**
 	 * 
@@ -36,75 +39,70 @@ public class BemPatrimonial implements Serializable {
 		super();
 		this.descritores = new TreeSet <String>();
 		this.fontesInformacao = new TreeSet <String>();
-		this.titulos =   new TreeSet <Titulo>();
-		this.autorias = new TreeSet <Autoria>();
-		this.audioVisuals =   new TreeSet <AudioVisual>();
-		this.intervencoes =  new TreeSet <Intervencao>();
-		this.pesquisadores =  new TreeSet <Pesquisador>();
-		this.bensrelacionados =  new TreeSet <BemPatrimonial>();
+		this.titulos =   new ArrayList <Titulo>();
+		this.autorias = new ArrayList <Autoria>();
+		this.intervencoes =  new ArrayList <Intervencao>();
+		this.pesquisadores =  new ArrayList <Pesquisador>();
+		this.bensrelacionados =  new ArrayList <BemPatrimonial>();
 	}
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
-	protected long id;
+	
 	protected boolean externo;
 	protected String tipoDoBemPatrimonial;
 	protected String numeroDeRegistro;
-	protected String colecao;
+	protected String colecao; 
 	protected String localizacaoFisica;
 	protected String latitude;
 	protected String longitude;
 	protected String caracteristicasFisTecExec;
 	protected String conteudo;
 	protected String meioDeAcesso;
-	@ElementCollection
+	
+	
+	@ElementCollection(fetch=FetchType.EAGER )
+	@CollectionTable(name="BEMPATRIMONIAL_DESCRITORES" , joinColumns=@JoinColumn(name="BEMPATRIMONIAL_ID"))
 	protected Set<String> descritores;
-	@ElementCollection
+	
+	@ElementCollection(fetch=FetchType.EAGER )
+	@CollectionTable(name="BEMPATRIMONIAL_FONTESINFORMACAO", joinColumns=@JoinColumn(name="BEMPATRIMONIAL_ID"))
 	protected Set<String> fontesInformacao;
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER )
 	@Embedded
-	@OneToMany
-	protected Set<Titulo> titulos;
+	@CollectionTable(name="BEMPATRIMONIAL_TITULOS", joinColumns=@JoinColumn(name="BEMPATRIMONIAL_ID"))
+	protected List<Titulo> titulos;
 	
-	@ElementCollection
-	@OneToMany
-	protected Set<Autoria> autorias;
+	
+	@OneToMany(fetch = FetchType.EAGER , mappedBy="bemPatrimonial", cascade=CascadeType.ALL )
+	protected List<Autoria> autorias;
 	
 	
 	@Embedded
-	@OneToOne
 	protected  Producao producao;
 	
-	@ElementCollection
-	@Embedded
-	@OneToMany
-	protected Set<AudioVisual> audioVisuals;
+	
 	
 	@Embedded
 	protected  DisponibilidadeUsoProtecao disponibilidadeUsoProtecao;
 	
 	@Embedded
-	@OneToOne
 	protected  HistoricoProcedencia histtoricoProcedencia;
 	
 	@Embedded
-	@OneToOne
 	protected  Diagnostico diagnostico;
 	
 	@ElementCollection
 	@Embedded
-	@OneToMany
-	protected Set<Intervencao> intervencoes;
+	@CollectionTable(name="BEMPATRIMONIAL_INTERVENCOES", joinColumns=@JoinColumn(name="BEMPATRIMONIAL_ID"))
+	protected List<Intervencao> intervencoes;
 	
 	@ElementCollection
 	@Embedded
-	@OneToMany
-	protected Set<Pesquisador> pesquisadores;
+	@CollectionTable(name="BEMPATRIMONIAL_PESQUISADORES", joinColumns=@JoinColumn(name="BEMPATRIMONIAL_ID"))
+	protected List<Pesquisador> pesquisadores;
 	
-	@ElementCollection
-	@Embedded
 	@OneToMany
-	protected Set<BemPatrimonial> bensrelacionados;
+	@JoinTable(name="BEMPATRIMONIAL_BENSRELACIONADOS",inverseJoinColumns=@JoinColumn(name="BENSRELACIONADOS_ID"), joinColumns=@JoinColumn(name="BEMPATRIMONIAL_ID"))
+	protected List<BemPatrimonial> bensrelacionados;
 }
 
 

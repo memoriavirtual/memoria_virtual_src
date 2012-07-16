@@ -1,28 +1,21 @@
 package br.usp.memoriavirtual.controle;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
-
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
-
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
-
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.BeanComMidia;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
@@ -31,10 +24,9 @@ import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
  * instituição
  */
 
-public class CadastrarInstituicaoMB {
+public class CadastrarInstituicaoMB implements BeanComMidia{
 
-	private  int numero = 0;
-
+	
 	
 	@EJB
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
@@ -106,7 +98,9 @@ public class CadastrarInstituicaoMB {
 				instituicao.setProtecaoExistente("");
 			
 			//indesando os arquivos a instituicao
-			cadastrarInstituicaoEJB.vincularArquivos(instituicao , (ArrayList<Multimidia>) this.arquivos);
+			for(Multimidia i : arquivos){
+				instituicao.addReferenciaMultimidia(i);
+			}
 			// Cadastra a instituicao no banco de dados
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
 			// Testa se a institui��o foi gravada
@@ -141,7 +135,6 @@ public class CadastrarInstituicaoMB {
 	}
 	
 	public void adicionarArquivo (Multimidia imagem) {
-		System.out.println(imagem.getId());
 		this.arquivos.add(imagem);
 	}
 	
@@ -966,5 +959,12 @@ public class CadastrarInstituicaoMB {
 			return false;
 		}
 		return true;
+	}
+
+	
+	
+	@Override
+	public List<Multimidia> recuperaColecaoMidia() {
+		return this.arquivos;
 	}
 }

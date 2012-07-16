@@ -58,7 +58,6 @@ public class Autoria implements Serializable{
 	@Id
 	private TipoAutoria tipoAutoria;
 	@Id
-	@ManyToOne
 	private Autor autor;
 	@Id
 	@ManyToOne
