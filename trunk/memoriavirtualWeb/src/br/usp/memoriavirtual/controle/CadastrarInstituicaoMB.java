@@ -134,8 +134,8 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 		return null;
 	}
 	
-	public void adicionarArquivo (Multimidia imagem) {
-		this.arquivos.add(imagem);
+	public void adicionarMidia (Multimidia midia) {
+		this.arquivos.add(midia);
 	}
 	
 	

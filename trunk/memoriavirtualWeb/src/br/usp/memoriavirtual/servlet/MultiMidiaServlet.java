@@ -82,7 +82,7 @@ public class MultiMidiaServlet extends HttpServlet {
 		response.reset();
 		response.setBufferSize(TAMANHO_PADRAO_BUFFER);
 		response.setContentType(getServletContext().getMimeType(midia.getNome()));
-		response.setHeader("Content-Length", String.valueOf(midia.getContent().length));
+		response.setHeader("Content-Length", String.valueOf(midia.getContent().length - 2 ));
 		response.setHeader("Content-Disposition", "inline; filename=\"" + midia.getNome() + "\"");
 		
 		//inicia os streams
@@ -91,10 +91,10 @@ public class MultiMidiaServlet extends HttpServlet {
 		
         try {
             // Começa os trabalhos
-        	InputStream byteInputStream = new ByteArrayInputStream(midia.getContent());
+        	InputStream byteInputStream = new ByteArrayInputStream(midia.getContent(), 0 ,midia.getContent().length-2 );
         	
-            in = new BufferedInputStream(  byteInputStream);
-            out = new BufferedOutputStream(response.getOutputStream());
+            in = new BufferedInputStream(  byteInputStream,TAMANHO_PADRAO_BUFFER);
+            out = new BufferedOutputStream(response.getOutputStream(),TAMANHO_PADRAO_BUFFER);
 
             // Enviando a midia
             byte[] buffer = new byte[TAMANHO_PADRAO_BUFFER];

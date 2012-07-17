@@ -5,11 +5,11 @@
 // acredite nele. Javascript é uma linguagem prototipada.
 // Essa maneira de programar javascript é uma preferencia
 // minha. Prefiro este estilo a criar várias funções perdidas.
-function FileFrame(fileArea, fileTitle , botao ) {
+function FileFrame(fileArea,  botao ) {
 	var self = this;
 
 	this.fileArea = fileArea;
-	this.fileTitle = fileTitle;
+	
 	this.botao = botao;
 	
 	
@@ -40,7 +40,7 @@ function FileFrame(fileArea, fileTitle , botao ) {
 		// o primeiro arquivo
 		self.file = e.dataTransfer.files[0];
 		// Recupera nome do arquivo
-		self.fileTitle.innerHTML = self.file.name;
+		
 		self.read(self.file);
 
 		// Neste ponto podemos implementar uma função para
@@ -95,8 +95,7 @@ function FileFrame(fileArea, fileTitle , botao ) {
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
 			if(request.readyState == 4 && request.status == 200) {
-				alert(request.responseText);
-			
+							
 			}
 		};
 	};
@@ -106,9 +105,9 @@ init = (function(ccid) {
 // Recupera a div que conterá a imagem
 // e o span com o título de nosso arquivo
 var area = document.getElementById("image-area"); 
-var title = document.getElementById("title");
+
 var botao = document.getElementById(ccid+":"+ccid); 
-var fileFrameArea = new FileFrame(area, title, botao);
+var fileFrameArea = new FileFrame(area,  botao);
 
 fileFrameArea.init();
 

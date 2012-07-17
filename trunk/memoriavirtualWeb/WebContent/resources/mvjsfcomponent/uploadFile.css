@@ -1,4 +1,43 @@
-#example-content { height:150px; text-align: center; }
-#frame { background-color: #000; color: #fff; margin: 2px; width: 120px; height: 100px; padding: 10px; }
-#image-area { width: 100%; height:100%; border: 1px dotted #fff;  margin: 2px; overflow:hidden; }
-.hover { border: 1px solid #fff !important; }
+#example-content {
+	background: #F7F7F7;
+	width: 240px;
+	height: 140px;
+	text-align: center;
+	display: inline-block;
+	float: none;
+	border: #444 1px solid;
+	margin: 0px;
+	margin-top: 5px;
+	padding: 10px
+}
+
+#frame {
+	
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#image-area {
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+	border: #777 1px dashed;
+	overflow: hidden;
+}
+
+.hover {
+	border: 1px solid #fff !important;
+}
+
+#drop-message {
+	text-align: center;
+	width: 100%;
+	max-width: none;
+	min-width: 0px;
+	float: right ;
+	margin: 0px;
+	padding-top: 25%;
+	padding-bottom: 25%;
+	
+}

@@ -286,10 +286,13 @@
 							</h:message>
 						</div>
 
-
-
-						<mv:uploadFile id="component"
+						<div>
+							<h:outputLabel class="labels" >#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
+							<mv:uploadFile id="component"
 							acao="#{cadastrarInstituicaoMB.cadastrarInstituicao}"></mv:uploadFile>
+						</div>
+
+						
 					</fieldset>
 
 					<div class="botao">
@@ -306,11 +309,7 @@
 
 					</div>
 				</h:form>
-				<form method="post" action="/memoriavirtual/carregarfotoinstituicao" name="submit"
-					enctype="multipart/form-data">
-					<input type="file" name="fileField"/><br/>
-					<br /> <input type="submit" name="submit" value="Submit"/>
-				</form>
+				
 				<h:graphicImage rendered="true"
 					url="/multimidia?bean=cadastrarInstituicaoMB&amp;indice=0"></h:graphicImage>
 			</div>
