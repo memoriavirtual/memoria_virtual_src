@@ -1,4 +1,4 @@
-package br.usp.memoriavirtual.utils;
+package br.usp.memoriavirtual.controle;
 
 import java.util.List;
 

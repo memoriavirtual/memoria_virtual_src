@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -17,8 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.usp.memoriavirtual.controle.BeanComMidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
-import br.usp.memoriavirtual.utils.BeanComMidia;
 import br.usp.memoriavirtual.utils.FacesUtil;
 /**
  * Servlet implementation class MultiMidiaServlet

@@ -26,11 +26,12 @@ public class Multimidia {
 	 * @param content
 	 * @param tamanho
 	 */
-	public Multimidia(String nome, byte[] content, String descricao) {
+	public Multimidia(String nome, byte[] content, String contentType , String descricao ) {
 		super();
 		this.nome = nome;
 		this.content = content;
 		this.descricao = descricao;
+		this.contentType = contentType;
 	}
 
 	@Id
@@ -40,12 +41,26 @@ public class Multimidia {
 	@JoinColumn(name="ENTIDADECOMMIDIA_ID")
 	private EntidadeComMidia entidadeComMidia;
 	private String nome; 
+	private String contentType;
 	private String descricao;
 	@Lob  
     @Column(columnDefinition = "BYTEA")
 	private byte[] content;
+	/**
+	 * @return the contentType
+	 */
+	public String getContentType() {
+		return contentType;
+	}
+
+	/**
+	 * @param contentType the contentType to set
+	 */
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
 		
-	
 	/**
 	 * @return the entidadeComMidia
 	 */

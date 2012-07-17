@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		List<Usuario> usuarios;
 		List<Acesso> acessos;
 		//Acesso acesso;
-		List<Usuario> aux;
+		List<Usuario> aux = new ArrayList<Usuario>();
 		Query query;
 		if (isAdministrador) {
 			query = this.entityManager
@@ -43,7 +44,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 				e.printStackTrace();
 				return null;
 			}
-			aux = null;
+			aux.clear();
 			for (Acesso acesso : acessos) {
 				query = this.entityManager
 						.createQuery("SELECT u FROM Acesso a, Usuario u WHERE a.usuario.id = u.id AND u.nomeCompleto LIKE :parteNome");

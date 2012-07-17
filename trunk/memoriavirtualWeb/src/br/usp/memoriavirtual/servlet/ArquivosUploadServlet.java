@@ -1,31 +1,22 @@
 package br.usp.memoriavirtual.servlet;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
 
 import javax.el.ELResolver;
 import javax.faces.context.FacesContext;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.usp.memoriavirtual.controle.BeanComMidia;
 import br.usp.memoriavirtual.controle.CadastrarInstituicaoMB;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
-import br.usp.memoriavirtual.utils.BeanComMidia;
 import br.usp.memoriavirtual.utils.FacesUtil;
 
-import com.sun.mail.iap.ByteArray;
-
-public class CadastrarInstituicaoUpload extends HttpServlet {
+public class ArquivosUploadServlet extends HttpServlet {
 
 	/**
 	 * 
@@ -72,7 +63,8 @@ public class CadastrarInstituicaoUpload extends HttpServlet {
 					novaLinha = new String(linha, 0, i);
 				}
 				bytes = buffer.toByteArray();
-				Multimidia multimidia = new Multimidia(nomeArquivo, bytes, null);
+				String contentType = getServletContext().getMimeType(nomeArquivo);
+				Multimidia multimidia = new Multimidia(nomeArquivo, bytes,contentType, null);
 
 				// Antecipando a instancia do ManegedBean antes mesmo que a
 				// página
