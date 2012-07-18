@@ -1,9 +1,11 @@
-function FileFrame(fileArea, botao) {
+function FileFrame(fileArea, botao , bean) {
 	var self = this;
 
 	this.fileArea = fileArea;
 
 	this.botao = botao;
+	
+	this.bean = bean;
 
 	this.init = function() {
 
@@ -30,19 +32,19 @@ function FileFrame(fileArea, botao) {
 		self.file = e.dataTransfer.files[0];
 
 		if (self.file.type.match('image.*')) {
-			self.sendFile(self.file);
+			self.sendFile(self.file , self.bean);
 			self.botao.click();
 		}
 	};
 
-	this.sendFile = function(file) {
+	this.sendFile = function(file , bean) {
 
 		var f = new FormData();
 
 		f.append("file", file);
 
 		var request = new XMLHttpRequest();
-		request.open("POST", "/memoriavirtual/uploadarquivo", true);
+		request.open("POST", "/memoriavirtual/uploadarquivo/"+"bean"+ bean, true);
 		request.send(f);
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
@@ -52,11 +54,11 @@ function FileFrame(fileArea, botao) {
 	};
 
 }
-init = (function(ccid) {
+init = (function(ccid , bean) {
 	// Recupera a div que conterá a imagem
 	var area = document.getElementById("image-area");
 	var botao = document.getElementById(ccid + ":" + ccid);
-	var fileFrameArea = new FileFrame(area, botao);
+	var fileFrameArea = new FileFrame(area, botao ,bean);
 
 	fileFrameArea.init();
 

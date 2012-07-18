@@ -27,6 +27,12 @@ public class ArquivosUploadServlet extends HttpServlet {
 			throws IOException, ServletException {
 		String nomeArquivo = "";// nome do arquivo
 		byte[] bytes = null;
+		
+		String nomeBean = request.getRequestURL().toString();
+		System.out.println(nomeBean);
+		nomeBean = nomeBean.substring(nomeBean.indexOf("bean") + 4, nomeBean.length() );
+		
+		System.out.println(nomeBean);
 		ServletInputStream in = request.getInputStream();
 		byte[] linha = new byte[128];
 		int i = in.readLine(linha, 0, 128);
@@ -90,7 +96,7 @@ public class ArquivosUploadServlet extends HttpServlet {
 						.getELResolver();
 				BeanComMidia bean = (CadastrarInstituicaoMB) resolver
 						.getValue(facesContext.getELContext(), null,
-								"cadastrarInstituicaoMB");
+								nomeBean);
 
 				bean.adicionarMidia(multimidia);
 				

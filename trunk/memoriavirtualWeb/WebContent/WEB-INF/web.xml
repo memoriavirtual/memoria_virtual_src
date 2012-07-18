@@ -22,6 +22,9 @@
     <servlet-name>Cadastro Servlet</servlet-name>
     <url-pattern>/fazercadastro</url-pattern>
   </servlet-mapping>
+   
+   
+  
   <filter>
     <filter-name>FiltroLogin</filter-name>
     <filter-class>br.usp.memoriavirtual.filtro.FiltroLogin</filter-class>
@@ -30,6 +33,7 @@
     <filter-name>FiltroLogin</filter-name>
     <url-pattern>/restrito/*</url-pattern>
   </filter-mapping>
+ 
   <context-param>
     <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
     <param-value>client</param-value>
@@ -66,7 +70,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ArquivosUploadServlet</servlet-name>
-    <url-pattern>/uploadarquivo</url-pattern>
+    <url-pattern>/uploadarquivo/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <description>Servlet para servir arquivos de midia</description>

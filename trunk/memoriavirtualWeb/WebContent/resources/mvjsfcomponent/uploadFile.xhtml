@@ -7,7 +7,7 @@
 
 <cc:interface>
 	<cc:attribute name="acao" method-signature="java.lang.String action()"></cc:attribute>
-	
+	<cc:attribute name="bean" ></cc:attribute>
 </cc:interface>
 
 <cc:implementation>
@@ -32,7 +32,7 @@
 		style=" display: none;">
 	</h:commandButton>
 	<script>
-		init("#{cc.id}");
+		init("#{cc.id}","#{cc.attrs.bean}");
 	</script>
 </cc:implementation>
 
