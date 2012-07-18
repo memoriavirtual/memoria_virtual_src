@@ -574,3 +574,14 @@ textarea:focus {
 	margin-right: 10%;
 	border: outset #777;
 }
+
+#tabela_imagens div a {
+	margin-top: 1em;
+	text-decoration: none;
+	color: #888;
+}
+
+#tabela_imagens div a:hover {
+	text-decoration: none;
+	color: #222;
+}

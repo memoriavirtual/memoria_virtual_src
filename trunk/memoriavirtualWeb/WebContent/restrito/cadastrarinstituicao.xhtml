@@ -300,9 +300,10 @@
 										<h:graphicImage
 											url="/multimidia?bean=cadastrarInstituicaoMB&amp;indice=#{cadastrarInstituicaoMB.midias.indexOf(multimidia)}"></h:graphicImage>
 										
-											<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
+											<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
 											<h:inputTextarea class="caixadetexto"
 												value="#{multimidia.descricao}"></h:inputTextarea>
+											<h:commandLink action="#{cadastrarInstituicaoMB.removeMidia(multimidia)}" value="#{mensagens.multimidiaRemover}"></h:commandLink>	
 										
 									</div>
 								</h:column>

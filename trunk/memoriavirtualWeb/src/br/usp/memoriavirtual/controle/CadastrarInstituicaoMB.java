@@ -154,7 +154,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 		return null;
 	}
 	
-	public String resetCadastrarinstituicao() {
+	public String resetCadastrarinstituicao() {	
 		this.nome = "";
 		this.localizacao = "";
 		this.endereco = "";
@@ -982,5 +982,13 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
 		return this.midias;
+	}
+	public String removeMidia(String midia) {
+		return null;
+	}
+	@Override
+	public String removeMidia(Multimidia midia) {
+		this.midias.remove(midia);
+		return null;
 	}
 }

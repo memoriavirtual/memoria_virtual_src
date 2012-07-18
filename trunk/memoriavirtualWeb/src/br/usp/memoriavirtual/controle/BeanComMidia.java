@@ -8,4 +8,5 @@ public interface BeanComMidia {
 	public List<Multimidia> recuperaColecaoMidia();
 	public void adicionarMidia (Multimidia midia);
 	public String nop();
+	public String removeMidia(Multimidia midia);
 }
