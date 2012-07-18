@@ -287,12 +287,28 @@
 						</div>
 
 						<div>
-							<h:outputLabel class="labels" >#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
-							<mv:uploadFile id="component"
-							acao="#{cadastrarInstituicaoMB.cadastrarInstituicao}"></mv:uploadFile>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
+							<mv:uploadFile id="component" 
+								acao="#{cadastrarInstituicaoMB.nop}"></mv:uploadFile>
 						</div>
 
-						
+						<div>
+							<h:dataTable id="tabela_imagens" var="multimidia"
+								value="#{cadastrarInstituicaoMB.midias}">
+								<h:column>
+									<div >
+										<h:graphicImage
+											url="/multimidia?bean=cadastrarInstituicaoMB&amp;indice=#{cadastrarInstituicaoMB.midias.indexOf(multimidia)}"></h:graphicImage>
+										
+											<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
+											<h:inputTextarea class="caixadetexto"
+												value="#{multimidia.descricao}"></h:inputTextarea>
+										
+									</div>
+								</h:column>
+							</h:dataTable>
+							<div></div>
+						</div>
 					</fieldset>
 
 					<div class="botao">
@@ -309,9 +325,7 @@
 
 					</div>
 				</h:form>
-				
-				<h:graphicImage rendered="true"
-					url="/multimidia?bean=cadastrarInstituicaoMB&amp;indice=0"></h:graphicImage>
+
 			</div>
 			<!-- end .formulario-->
 

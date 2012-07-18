@@ -59,13 +59,23 @@
     <url-pattern>/excluir</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description>Servlet para upload de fotos de Instituicao</description>
-    <display-name>CadastrarInstituicaoUpload</display-name>
-    <servlet-name>CadastrarInstituicaoUpload</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.CadastrarInstituicaoUpload</servlet-class>
+    <description>Servlet para upload de arquivos</description>
+    <display-name>ArquivosUploadServlet</display-name>
+    <servlet-name>ArquivosUploadServlet</servlet-name>
+    <servlet-class>br.usp.memoriavirtual.servlet.ArquivosUploadServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CadastrarInstituicaoUpload</servlet-name>
-    <url-pattern>/carregarfotoinstituicao</url-pattern>
+    <servlet-name>ArquivosUploadServlet</servlet-name>
+    <url-pattern>/uploadarquivo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Servlet para servir arquivos de midia</description>
+    <display-name>MultiMidiaServlet</display-name>
+    <servlet-name>MultiMidiaServlet</servlet-name>
+    <servlet-class>br.usp.memoriavirtual.servlet.MultiMidiaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MultiMidiaServlet</servlet-name>
+    <url-pattern>/multimidia</url-pattern>
   </servlet-mapping>
 </web-app>

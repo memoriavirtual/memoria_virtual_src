@@ -1,12 +1,18 @@
-package br.usp.memoriavirtual.servlet;
+package br.usp.memoriavirtual.filtro;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.el.ELResolver;
 import javax.faces.context.FacesContext;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +22,7 @@ import br.usp.memoriavirtual.controle.CadastrarInstituicaoMB;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.utils.FacesUtil;
 
-public class ArquivosUploadServlet extends HttpServlet {
+public class ArquivosUploadFiltro implements Filter ,Serializable{
 
 	/**
 	 * 
@@ -178,5 +184,21 @@ public class ArquivosUploadServlet extends HttpServlet {
 	 * 
 	 * bean.adicionarArquivo(multimidia);
 	 */
+
+	@Override
+	public void destroy() {
+		
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
+		
+	}
+
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		
+	}
 
 }

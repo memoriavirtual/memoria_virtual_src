@@ -33,7 +33,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
 	protected String slot = "arquivo0";
 	
-	protected List<Multimidia> arquivos = new ArrayList<Multimidia>();
+	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 
 	protected String nome = "";
 	protected String localizacao = "";
@@ -97,7 +97,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 				instituicao.setProtecaoExistente("");
 			
 			//indesando os arquivos a instituicao
-			for(Multimidia i : arquivos){
+			for(Multimidia i : midias){
 				instituicao.addReferenciaMultimidia(i);
 			}
 			// Cadastra a instituicao no banco de dados
@@ -133,10 +133,26 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 		return null;
 	}
 	
-	public void adicionarMidia (Multimidia midia) {
-		this.arquivos.add(midia);
+	/**
+	 * @return the midias
+	 */
+	public ArrayList<Multimidia> getMidias() {
+		return midias;
 	}
-	
+
+	/**
+	 * @param midias the midias to set
+	 */
+	public void setMidias(ArrayList<Multimidia> midias) {
+		this.midias = midias;
+	}
+
+	public void adicionarMidia (Multimidia midia) {
+		this.midias.add( midia);
+	}
+	public String nop(){
+		return null;
+	}
 	
 	public String resetCadastrarinstituicao() {
 		this.nome = "";
@@ -159,6 +175,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 		this.protecaoExistente = "";
 		this.legislacao = "";
 		return "reset";
+
 	}
 
 	/**
@@ -964,6 +981,6 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 	
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
-		return this.arquivos;
+		return this.midias;
 	}
 }
