@@ -48,8 +48,9 @@ function FileFrame(fileArea, botao , bean) {
 		request.send(f);
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
-			if(request.readyState==4) {
-		      }
+			if(request.readyState==4 && request.status == 200) {
+				
+		    }
 		};
 	};
 

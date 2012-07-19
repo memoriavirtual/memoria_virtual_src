@@ -75,8 +75,6 @@ public class ArquivosUploadServlet extends HttpServlet {
 				while (i != -1 && !novaLinha.startsWith(borda)) {
 					buffer.write(linha, 0, i);
 					i = in.readLine(linha, 0, 128);
-					if(i == -1)
-						break;
 					novaLinha = new String(linha, 0, i);
 					
 				}
