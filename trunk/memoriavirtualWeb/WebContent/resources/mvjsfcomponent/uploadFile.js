@@ -1,8 +1,8 @@
-function FileFrame(fileArea,  bean , tabela) {
+function FileFrame(fileArea,  bean , botao) {
 	var self = this;
 
 	this.fileArea = fileArea;
-	this.tabela = tabela;
+	this.botao = botao;
 	
 	
 	this.bean = bean;
@@ -33,7 +33,7 @@ function FileFrame(fileArea,  bean , tabela) {
 
 		if (self.file.type.match('image.*')) {
 			self.sendFile(self.file , self.bean);
-			$("div #tabela_imagens").show();
+			self.botao.click();
 		}
 	};
 
@@ -57,11 +57,11 @@ function FileFrame(fileArea,  bean , tabela) {
 	};
 
 }
-init = (function(bean ) {
+init = (function(bean , botaoid ) {
 	// Recupera a div que conterá a imagem
 	var area = document.getElementById("image-area");
-	var tabela = document.getElementById("tabela_imagens");
-	var fileFrameArea = new FileFrame(area ,bean , tabela );
+	var botao = document.getElementById(botaoid+":"+botaoid);
+	var fileFrameArea = new FileFrame(area ,bean , botao );
 
 	fileFrameArea.init();
 	

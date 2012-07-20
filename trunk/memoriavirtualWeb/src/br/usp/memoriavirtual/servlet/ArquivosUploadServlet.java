@@ -1,7 +1,12 @@
 package br.usp.memoriavirtual.servlet;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.el.ELResolver;
 import javax.faces.context.FacesContext;
@@ -13,8 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.sun.xml.messaging.saaj.util.ByteInputStream;
+
 import br.usp.memoriavirtual.controle.BeanComMidia;
-import br.usp.memoriavirtual.controle.CadastrarInstituicaoMB;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.utils.FacesUtil;
 
@@ -27,6 +33,8 @@ public class ArquivosUploadServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = -413155777348292080L;
 
+	private static final int TAMANHO_PADRAO_BUFFER = 8192;
+
 	public ArquivosUploadServlet() {
 		super();
 	}
@@ -37,35 +45,59 @@ public class ArquivosUploadServlet extends HttpServlet {
 		String nomeBean = request.getRequestURL().toString();
 		nomeBean = nomeBean.substring(nomeBean.indexOf("bean") + 4,
 				nomeBean.length());
-		
-		
+
 		for (Part part : request.getParts()) {
 
-			InputStream is = request.getPart(part.getName()).getInputStream();
-			int i = is.available();
+			BufferedInputStream in = new BufferedInputStream(request.getPart(
+					part.getName()).getInputStream(),
+					ArquivosUploadServlet.TAMANHO_PADRAO_BUFFER);
+
+			int i = in.available();
+
 			byte[] b = new byte[i];
-			is.read(b);
+			
+			int tamanhoBuffer = ArquivosUploadServlet.TAMANHO_PADRAO_BUFFER;
+			int totalBytelido = 0;
+			int tamanho = 0;
+			while (totalBytelido < i) {
+				try{
+					tamanho = in.read(b, totalBytelido,tamanhoBuffer );
+					totalBytelido += tamanho;
+				}
+				catch(IOException e){
+					tamanho = 0;
+					continue;
+				}catch (IndexOutOfBoundsException e){
+					tamanhoBuffer--;
+					if(tamanhoBuffer <0)
+						break;
+					tamanho = 0;
+					continue;
+				}
+					
+			}
+			
 
 			String nomeArquivo = getNome(part);
 			String tipoArquivo = part.getHeader("content-Type");
 
-			is.close();
-			
-			
-			 Multimidia multimidia = new Multimidia(nomeArquivo, b,
-			 tipoArquivo,
-			 null);
-			
-			 // Antecipando a instancia do ManegedBean antes mesmo que a
-			 // página
-			 // esteja carregada
-			 FacesContext facesContext = FacesUtil
-			 .getFacesContext(request, response);
-			 ELResolver resolver = facesContext.getApplication().getELResolver();
-			 BeanComMidia bean = (CadastrarInstituicaoMB) resolver.getValue(
-			 facesContext.getELContext(), null, nomeBean);
-			
-			 bean.adicionarMidia(multimidia);
+			in.close();
+
+			Multimidia multimidia = new Multimidia(nomeArquivo, b, tipoArquivo,
+					null);
+
+			// Antecipando a instancia do ManegedBean antes mesmo que a
+			// página
+			// esteja carregada
+			FacesContext facesContext = FacesUtil.getFacesContext(request,
+					response);
+			ELResolver resolver = facesContext.getApplication().getELResolver();
+			BeanComMidia bean = (BeanComMidia) resolver.getValue(
+					facesContext.getELContext(), null, nomeBean);
+
+			bean.adicionarMidia(multimidia);
+
+			response.setStatus(HttpServletResponse.SC_CREATED);
 		}
 
 	}

@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<div id="tabela_imagens">
-		<h:dataTable var="multimidia" value="#{cc.attrs.array}">
+		<h:dataTable  id="tabela" var="multimidia" value="#{cc.attrs.array}">
 			<h:column>
 				
 				<div>
@@ -51,10 +51,13 @@
 				</div>
 			</h:column>
 		</h:dataTable>
+		<h:commandButton id="#{cc.id}" type="button" style="display: none;" >
+			<f:ajax render="tabela" ></f:ajax>
+		</h:commandButton>
 	</div>
 
 	<script>
-		init("#{cc.attrs.nomebean}");
+		init("#{cc.attrs.nomebean}" , "#{cc.id}");
 	</script>
 </cc:implementation>
 
