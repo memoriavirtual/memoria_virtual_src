@@ -1,14 +1,14 @@
-function FileFrame(fileArea, botao , bean) {
+function FileFrame(fileArea,  bean , tabela) {
 	var self = this;
 
 	this.fileArea = fileArea;
-
-	this.botao = botao;
+	this.tabela = tabela;
+	
 	
 	this.bean = bean;
 
 	this.init = function() {
-
+		
 		this.fileArea.addEventListener("dragleave", self.dragHover, false);
 		self.fileArea.addEventListener("dragover", self.dragHover, false);
 		self.fileArea.addEventListener("drop", self.drop, false);
@@ -33,13 +33,15 @@ function FileFrame(fileArea, botao , bean) {
 
 		if (self.file.type.match('image.*')) {
 			self.sendFile(self.file , self.bean);
-			self.botao.click();
+			$("div #tabela_imagens").show();
 		}
 	};
 
 	this.sendFile = function(file , bean) {
 
 		var f = new FormData();
+		
+		f.enctype="multipart/form-data";
 
 		f.append("file", file);
 
@@ -48,19 +50,19 @@ function FileFrame(fileArea, botao , bean) {
 		request.send(f);
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
-			if(request.readyState==4 && request.status == 200) {
+			if(request.readyState==4 && request.status == 201) {
 				
 		    }
 		};
 	};
 
 }
-init = (function(ccid , bean) {
+init = (function(bean ) {
 	// Recupera a div que conterá a imagem
 	var area = document.getElementById("image-area");
-	var botao = document.getElementById(ccid + ":" + ccid);
-	var fileFrameArea = new FileFrame(area, botao ,bean);
+	var tabela = document.getElementById("tabela_imagens");
+	var fileFrameArea = new FileFrame(area ,bean , tabela );
 
 	fileFrameArea.init();
-
+	
 });

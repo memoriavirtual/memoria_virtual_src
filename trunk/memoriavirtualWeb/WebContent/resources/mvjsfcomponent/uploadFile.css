@@ -41,3 +41,50 @@
 	padding-bottom: 25%;
 	
 }
+
+#tabela_imagens table {
+	width: 100%;
+}
+
+#tabela_imagens table div {
+	width: 50%;
+	display: list-item;
+	border: #777 1px solid;
+	margin: 2em;
+	padding: 2em;
+	float: none;
+	background-color: #EEE;
+	margin-left: 25%;
+	margin-right: 25%;
+}
+
+#tabela_imagens table div label {
+	width: 100%;
+	text-align: center;
+}
+
+#tabela_imagens table div textarea {
+	resize: none;
+	width: 75%;
+	float: none;
+	margin-left: 12.5%;
+	margin-right: 12.5%;
+}
+
+#tabela_imagens table div img {
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: outset #777;
+}
+
+#tabela_imagens table div a {
+	margin-top: 1em;
+	text-decoration: none;
+	color: #888;
+}
+
+#tabela_imagens table div a:hover {
+	text-decoration: none;
+	color: #222;
+}

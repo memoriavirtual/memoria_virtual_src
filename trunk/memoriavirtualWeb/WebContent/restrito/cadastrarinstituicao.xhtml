@@ -8,6 +8,7 @@
 	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
 <title>Cadastrar Instituicao</title>
 </head>
 <h:body>
@@ -286,30 +287,15 @@
 							</h:message>
 						</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
-							<mv:uploadFile id="component" 
-								acao="#{cadastrarInstituicaoMB.nop}" bean="cadastrarInstituicaoMB"></mv:uploadFile>
-						</div>
+						
+							
+					
+							<mv:uploadFile   id="multimidia"  nomebean="cadastrarInstituicaoMB" array="#{cadastrarInstituicaoMB.midias}" bean="#{cadastrarInstituicaoMB}" >
+											
+							</mv:uploadFile>
+							
+						
 
-						<div>
-							<h:dataTable id="tabela_imagens" var="multimidia"
-								value="#{cadastrarInstituicaoMB.midias}">
-								<h:column>
-									<div >
-										<h:graphicImage
-											url="/multimidia?bean=cadastrarInstituicaoMB&amp;indice=#{cadastrarInstituicaoMB.midias.indexOf(multimidia)}"></h:graphicImage>
-										
-											<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
-											<h:inputTextarea class="caixadetexto"
-												value="#{multimidia.descricao}"></h:inputTextarea>
-											<h:commandLink action="#{cadastrarInstituicaoMB.removeMidia(multimidia)}" value="#{mensagens.multimidiaRemover}"></h:commandLink>	
-										
-									</div>
-								</h:column>
-							</h:dataTable>
-							<div></div>
-						</div>
 					</fieldset>
 
 					<div class="botao">

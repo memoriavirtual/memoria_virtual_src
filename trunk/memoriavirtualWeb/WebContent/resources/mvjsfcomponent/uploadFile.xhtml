@@ -6,33 +6,55 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <cc:interface>
-	<cc:attribute name="acao" method-signature="java.lang.String action()"></cc:attribute>
-	<cc:attribute name="bean" ></cc:attribute>
+	<cc:attribute name="nomebean"></cc:attribute>
+	<cc:attribute name="array"></cc:attribute>
+	<cc:attribute name="bean"></cc:attribute>
+
 </cc:interface>
 
 <cc:implementation>
-	<h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"
-		media="all" rel="stylesheet" type="text/css" />
-	<h:outputScript name="uploadFile.js" library="mvjsfcomponent"></h:outputScript>
-	<div id="example-content" >
+	<div>
+		<h:outputLabel class="labels">#{mensagens.multimidiaLabel}</h:outputLabel>
+		<h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"
+			media="all" rel="stylesheet" type="text/css" />
+		<h:outputScript name="uploadFile.js" library="mvjsfcomponent"></h:outputScript>
+		<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
+		<div id="example-content">
 
-		<div id="frame">
+			<div id="frame">
 
-			<div id="image-area">
+				<div id="image-area">
 
-				<span id="drop-message">#{mensagens.multimidiaArraste}</span>
+					<span id="drop-message">#{mensagens.multimidiaArraste}</span>
+
+				</div>
+
 
 			</div>
 
-			
 		</div>
-
 	</div>
-	<h:commandButton id="#{cc.id}" action="#{cc.attrs.acao}"
-		style=" display: none;">
-	</h:commandButton>
+	<div id="tabela_imagens">
+		<h:dataTable var="multimidia" value="#{cc.attrs.array}">
+			<h:column>
+				
+				<div>
+					<h:graphicImage
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
+
+					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						value="#{multimidia.descricao}"></h:inputTextarea>
+					<h:commandLink action="#{cc.attrs.bean.removeMidia(multimidia)}"
+						value="#{mensagens.multimidiaRemover}"></h:commandLink>
+
+				</div>
+			</h:column>
+		</h:dataTable>
+	</div>
+
 	<script>
-		init("#{cc.id}","#{cc.attrs.bean}");
+		init("#{cc.attrs.nomebean}");
 	</script>
 </cc:implementation>
 
