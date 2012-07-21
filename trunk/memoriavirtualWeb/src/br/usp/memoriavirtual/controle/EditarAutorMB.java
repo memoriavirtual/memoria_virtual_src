@@ -40,6 +40,8 @@ public class EditarAutorMB extends CadastrarAutorMB {
 	 * M�todo � chamado enquanto as letras são inseridas no campo de busca.
 	 */
 	public void listarAutores(AjaxBehaviorEvent event) {
+		
+		
 		this.listarAutores();
 	}
 

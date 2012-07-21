@@ -24,6 +24,7 @@ function FileFrame(fileArea,  bean , botao) {
 
 		// Quando o arquivo está sobre área alteramos o seu estilo
 		self.fileArea.className = (e.type == "dragover" ? "hover" : "");
+		
 	};
 
 	this.drop = function(e) {
@@ -32,11 +33,36 @@ function FileFrame(fileArea,  bean , botao) {
 		self.file = e.dataTransfer.files[0];
 
 		if (self.file.type.match('image.*')) {
+			self.read(self.file);
 			self.sendFile(self.file , self.bean);
-			self.botao.click();
+			
+			
 		}
 	};
 
+	this.read = function(file) {
+	    
+	   
+	      var reader = new FileReader();
+
+	      reader.onload = function(f) {
+	        //self.fileArea.innerHTML = "";
+	        //self.fileArea.setAttribute("style", "padding: 0px !important;");
+	        
+	        var img = document.getElementById("tag_imagem");
+	        img.setAttribute("src", f.target.result);
+	        var spam =  document.getElementById("drop-message");
+	        spam.setAttribute("style", "display: none;");
+	        img.setAttribute("style", "display: inline-block;");
+	        //img.setAttribute("id", "tag_imagem");
+
+	        //self.fileArea.appendChild(img);
+	      };
+
+	      reader.readAsDataURL(file);
+	    };
+	
+	
 	this.sendFile = function(file , bean) {
 
 		var f = new FormData();
@@ -50,8 +76,16 @@ function FileFrame(fileArea,  bean , botao) {
 		request.send(f);
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
-			if(request.readyState==4 && request.status == 201) {
-				
+			if(request.readyState==4 ){
+				if( request.status == 201) {
+					self.botao.click();
+					
+					
+					var img = document.getElementById("tag_imagem");
+			        var spam =  document.getElementById("drop-message");
+			        spam.setAttribute("style", "display: inline-block;");
+			        img.setAttribute("style", "display: none; ");
+				}
 		    }
 		};
 	};

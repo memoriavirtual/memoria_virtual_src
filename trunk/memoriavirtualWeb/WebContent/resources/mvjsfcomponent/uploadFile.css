@@ -11,6 +11,11 @@
 	padding: 10px
 }
 
+#tag_imagem{
+	display: none;
+	width: 100%;
+}
+
 #frame {
 	
 	margin: 0px;
