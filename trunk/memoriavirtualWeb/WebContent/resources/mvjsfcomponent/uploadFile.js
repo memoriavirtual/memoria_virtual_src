@@ -1,9 +1,9 @@
-function FileFrame(fileArea,  bean , botao) {
+function FileFrame(fileArea,  bean , botao , img) {
 	var self = this;
 
 	this.fileArea = fileArea;
 	this.botao = botao;
-	
+	this.img = img ;
 	
 	this.bean = bean;
 
@@ -43,23 +43,24 @@ function FileFrame(fileArea,  bean , botao) {
 	this.read = function(file) {
 	    
 	   
-	      var reader = new FileReader();
+	      //var reader = new FileReader();
 
-	      reader.onload = function(f) {
+	      //reader.onload = function(f) {
 	        //self.fileArea.innerHTML = "";
 	        //self.fileArea.setAttribute("style", "padding: 0px !important;");
 	        
-	        var img = document.getElementById("tag_imagem");
-	        img.setAttribute("src", f.target.result);
+	        //var img = document.getElementById("*tag_imagem");
+	        //img.setAttribute("src", f.target.result);
 	        var spam =  document.getElementById("drop-message");
 	        spam.setAttribute("style", "display: none;");
-	        img.setAttribute("style", "display: inline-block;");
+	        img.setAttribute("style", "display: inline-block;  margin-right: 30%; margin-left: 30%; margin-top: 9%; margin-bottom: 20%; ");
+	        self.fileArea.setAttribute("style", "background-color: #FFFFFF; ");
 	        //img.setAttribute("id", "tag_imagem");
 
 	        //self.fileArea.appendChild(img);
-	      };
+	    //  };
 
-	      reader.readAsDataURL(file);
+	     // reader.readAsDataURL(file);
 	    };
 	
 	
@@ -81,10 +82,11 @@ function FileFrame(fileArea,  bean , botao) {
 					self.botao.click();
 					
 					
-					var img = document.getElementById("tag_imagem");
+					//var img = document.getElementById("tag_imagem");
 			        var spam =  document.getElementById("drop-message");
 			        spam.setAttribute("style", "display: inline-block;");
 			        img.setAttribute("style", "display: none; ");
+					self.fileArea.setAttribute("style", "background-color: #F7F7F7;");
 				}
 		    }
 		};
@@ -95,8 +97,9 @@ init = (function(bean , botaoid ) {
 	// Recupera a div que conterá a imagem
 	var area = document.getElementById("image-area");
 	var botao = document.getElementById(botaoid+":"+botaoid);
-	var fileFrameArea = new FileFrame(area ,bean , botao );
-
+	 var img = document.getElementById(botaoid+":tag_imagem");
+	var fileFrameArea = new FileFrame(area ,bean , botao  , img);
+	
 	fileFrameArea.init();
 	
 });

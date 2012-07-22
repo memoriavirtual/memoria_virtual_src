@@ -279,7 +279,9 @@ h4 {
 
 .formulario fieldset option {
 	background: #F7F7F7;
-	border: #444 solid 1px;
+	border-left: #444 solid 1px;
+	border-top: #444 solid 1px;
+	border-right: #444 solid 1px;
 	padding: 1px;
 	width: 250px;
 	height: 20px;
@@ -381,7 +383,7 @@ h4 {
 }
 
 #sugestoesId a {
-	text-align: -webkit-center;
+	text-align: center;
 	color: black;
 	text-decoration: none;
 	display: block;

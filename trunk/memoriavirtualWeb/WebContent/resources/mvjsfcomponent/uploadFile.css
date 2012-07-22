@@ -29,6 +29,7 @@
 	height: 100%;
 	border: #777 1px dashed;
 	overflow: hidden;
+	background-color: 
 }
 
 .hover {
@@ -93,3 +94,4 @@
 	text-decoration: none;
 	color: #222;
 }
+
