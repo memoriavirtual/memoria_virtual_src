@@ -73,7 +73,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoEstado}</h:outputLabel>
-							<h:selectOneMenu value="#{cadastrarInstituicaoMB.estado}"   class="options">
+							<h:selectOneMenu value="#{cadastrarInstituicaoMB.estado}"
+								class="options">
 								<f:selectItems value="#{cadastrarInstituicaoMB.estadoSigla}" />
 								<f:ajax event="blur" execute="@this" render="validacaoEstado"
 									listener="#{cadastrarInstituicaoMB.validateEstado}" />
@@ -243,7 +244,7 @@
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoTipoPropriedade}</h:outputLabel>
 							<h:selectOneMenu class="options"
 								value="#{cadastrarInstituicaoMB.tipoPropriedade}">
-								<f:selectItems 
+								<f:selectItems
 									value="#{cadastrarInstituicaoMB.tipoPropriedadeLista}" />
 								<f:ajax event="blur" execute="@this"
 									render="validacaoTipoPropriedade"
@@ -260,7 +261,7 @@
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoProtecaoExistente}</h:outputLabel>
 							<h:selectOneMenu class="options"
 								value="#{cadastrarInstituicaoMB.protecaoExistente}">
-								<f:selectItems 
+								<f:selectItems
 									value="#{cadastrarInstituicaoMB.protecaoExistenteLista}" />
 								<f:ajax event="blur" execute="@this"
 									render="validacaoProtecaoExistente"
@@ -286,25 +287,29 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						<div>
-						<mv:expande>
-						
-							
-						
-						</mv:expande>
-						
-						
-						</div>
-						
-						<mv:uploadFile   id="multimidia"  nomebean="cadastrarInstituicaoMB" array="#{cadastrarInstituicaoMB.midias}" bean="#{cadastrarInstituicaoMB}" >
-											
-						</mv:uploadFile>
-							
-					
-							
-						
+
+
+
+						<mv:containerExpansivo id="expansivo" label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
+							<mv:uploadFile id="multimidia" nomebean="cadastrarInstituicaoMB"
+								array="#{cadastrarInstituicaoMB.midias}"
+								bean="#{cadastrarInstituicaoMB}"></mv:uploadFile>
+						</mv:containerExpansivo>
+
+
+
+
+
+
+
+
+
+
+
 
 					</fieldset>
+
+
 
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"

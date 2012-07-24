@@ -79,25 +79,32 @@ function FileFrame(fileArea,  bean , botao , img) {
 			// Término do envio do formulário
 			if(request.readyState==4 ){
 				if( request.status == 201) {
-					self.botao.click();
+							
+					window.setTimeout(self.voltar, 1000);
 					
-					
-					//var img = document.getElementById("tag_imagem");
-			        var spam =  document.getElementById("drop-message");
-			        spam.setAttribute("style", "display: inline-block;");
-			        img.setAttribute("style", "display: none; ");
-					self.fileArea.setAttribute("style", "background-color: #F7F7F7;");
 				}
 		    }
 		};
 	};
-
+	this.voltar = function(){
+        var spam =  document.getElementById("drop-message");
+        spam.setAttribute("style", "display: inline-block;");
+        img.setAttribute("style", "display: none; ");
+		self.fileArea.setAttribute("style", "background-color: #F7F7F7;");
+		self.botao.click();
+		self.botao.click();
+		self.botao.click();
+		self.botao.click();
+		self.botao.click();
+		self.botao.click();
+	};
 }
-init = (function(bean , botaoid ) {
+iniciarComponenteUpload = (function(bean , botaoid , idImagem ) {
 	// Recupera a div que conterá a imagem
+	//alert(idImagem);
 	var area = document.getElementById("image-area");
-	var botao = document.getElementById(botaoid+":"+botaoid);
-	 var img = document.getElementById(botaoid+":tag_imagem");
+	var botao = document.getElementById(botaoid);
+	 var img = document.getElementById(idImagem);
 	var fileFrameArea = new FileFrame(area ,bean , botao  , img);
 	
 	fileFrameArea.init();

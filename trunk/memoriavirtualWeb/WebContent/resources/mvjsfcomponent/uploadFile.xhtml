@@ -9,12 +9,11 @@
 	<cc:attribute name="nomebean"></cc:attribute>
 	<cc:attribute name="array"></cc:attribute>
 	<cc:attribute name="bean"></cc:attribute>
-
 </cc:interface>
 
 <cc:implementation>
-	<div>
-		<h:outputLabel class="labels" style="float:left">#{mensagens.multimidiaLabel}</h:outputLabel>
+	<div id="uploadComponente">
+		<h:outputLabel class="labels" >#{mensagens.multimidiaLabel}</h:outputLabel>
 		<h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"
 			media="all" rel="stylesheet" type="text/css" />
 		<h:outputScript name="uploadFile.js" library="mvjsfcomponent"></h:outputScript>
@@ -35,8 +34,13 @@
 			</div>
 
 		</div>
+		
+	<h:commandButton id="botaoEscondido" type="button" style="display: none;">
+			<f:ajax render="tabela" ></f:ajax>
+		</h:commandButton>
 	</div>
 	<div id="tabela_imagens">
+	
 		<h:dataTable id="tabela" var="multimidia" value="#{cc.attrs.array}">
 			<h:column>
 
@@ -55,17 +59,15 @@
 	height: 15px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none;">
 						</h:graphicImage>
 					</h:commandLink>
-
+					
 				</div>
 			</h:column>
 		</h:dataTable>
-		<h:commandButton id="#{cc.id}" type="button" style="display: none;">
-			<f:ajax render="tabela"></f:ajax>
-		</h:commandButton>
+		
 	</div>
 
 	<script>
-		init("#{cc.attrs.nomebean}", "#{cc.id}");
+		iniciarComponenteUpload("#{cc.attrs.nomebean}", "#{cc.clientId}:botaoEscondido" ,  "#{cc.clientId}:tag_imagem");
 	</script>
 </cc:implementation>
 

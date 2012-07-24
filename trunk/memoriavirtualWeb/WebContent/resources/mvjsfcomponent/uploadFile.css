@@ -1,23 +1,33 @@
+#uploadComponente {
+	margin: 0;
+	float: right;
+	margin-right: 15%;
+	color: black;
+}
+
+#uploadComponente label {
+	float: left;
+}
+
 #example-content {
 	background: #F7F7F7;
 	width: 240px;
 	height: 140px;
 	text-align: center;
-	display: inline-block;
 	float: none;
 	border: #444 1px solid;
 	margin: 0px;
 	margin-top: 5px;
+	margin-right: 50%;
 	padding: 10px
 }
 
-#tag_imagem{
+#tag_imagem {
 	display: none;
 	width: 100%;
 }
 
 #frame {
-	
 	margin: 0px;
 	width: 100%;
 	height: 100%;
@@ -29,7 +39,7 @@
 	height: 100%;
 	border: #777 1px dashed;
 	overflow: hidden;
-	background-color: 
+	background-color:
 }
 
 .hover {
@@ -41,11 +51,15 @@
 	width: 100%;
 	max-width: none;
 	min-width: 0px;
-	float: right ;
+	float: right;
 	margin: 0px;
 	padding-top: 25%;
 	padding-bottom: 25%;
-	
+}
+
+#tabela_imagens {
+	width: 100%;
+	margin: 0;
 }
 
 #tabela_imagens table {
@@ -54,12 +68,12 @@
 
 #tabela_imagens table div {
 	width: 50%;
-	display: list-item;
+	display: block;
 	border: #777 1px solid;
 	margin: 2em;
 	padding: 2em;
 	float: none;
-	background-color: #EEE;
+	background-color: #ddd;
 	margin-left: 25%;
 	margin-right: 25%;
 }
@@ -94,4 +108,3 @@
 	text-decoration: none;
 	color: #222;
 }
-

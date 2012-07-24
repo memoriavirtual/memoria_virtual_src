@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<cc:interface>
+	<cc:attribute name="label"></cc:attribute>
+</cc:interface>
+
+<cc:implementation>
+<div id="#{cc.id}:containerExpansivo" class="containerExpansivo">
+<h:outputScript name="containerExpansivo.js" library="mvjsfcomponent"></h:outputScript>
+<h:outputStylesheet name="containerExpansivo.css" library="mvjsfcomponent"
+			media="all" rel="stylesheet" type="text/css" />
+	<h:outputLabel value="#{cc.attrs.label}" ></h:outputLabel>
+	<h:graphicImage id="botaoMais"  library="imagens" name="plus.png">
+	</h:graphicImage>
+	<h:graphicImage id="botaoMenos"  library="imagens" name="minus.png">
+	</h:graphicImage>
+	<h:panelGrid id="containerDeExpansao"  class="containerDeExpansao">
+		<cc:insertChildren>
+			
+		</cc:insertChildren>
+	</h:panelGrid>
+	<script>
+		iniciarComponenteContainerExpansivo("#{cc.id}:containerDeExpansao", "#{cc.id}:"
+				+ "botaoMenos", "#{cc.id}:" + "botaoMais" , "#{cc.id}:containerExpansivo");
+	</script>
+	</div>
+</cc:implementation>
+
+</html>
