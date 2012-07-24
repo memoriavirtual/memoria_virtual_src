@@ -92,11 +92,6 @@ function FileFrame(fileArea,  bean , botao , img) {
         img.setAttribute("style", "display: none; ");
 		self.fileArea.setAttribute("style", "background-color: #F7F7F7;");
 		self.botao.click();
-		self.botao.click();
-		self.botao.click();
-		self.botao.click();
-		self.botao.click();
-		self.botao.click();
 	};
 }
 iniciarComponenteUpload = (function(bean , botaoid , idImagem ) {
