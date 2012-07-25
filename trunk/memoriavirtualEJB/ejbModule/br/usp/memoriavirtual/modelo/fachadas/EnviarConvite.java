@@ -198,6 +198,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 				this.entityManager.remove(usuario);
 				throw new ModeloException("Grupo nao encontrado", null);
 			}
+			acesso.setValidade(false);
 			acesso.setInstituicao(instituicao);
 			acesso.setUsuario(usuario);
 			acesso.setGrupo(grupo);

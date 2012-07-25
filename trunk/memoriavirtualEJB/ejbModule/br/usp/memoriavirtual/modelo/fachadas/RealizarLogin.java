@@ -1,15 +1,11 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
@@ -46,7 +42,6 @@ public class RealizarLogin implements RealizarLoginRemote {
 		query.setParameter("usuario", usuario);
 		query.setParameter("senha", Usuario.gerarHash(senha));
 
-
 		try {
 			usuarioAutenticado = (Usuario) query.getSingleResult();
 			if (usuarioAutenticado.isAtivo()) {
@@ -57,25 +52,6 @@ public class RealizarLogin implements RealizarLoginRemote {
 			throw new ModeloException(e);
 		}
 		return usuarioClone;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public List<Acesso> getAcessos(Usuario usuario) {
-
-		Query query;
-
-		query = this.entityManager.createNamedQuery("acessos", Acesso.class);
-		query.setParameter("usuario", usuario);
-
-		List lista = (List) query.getResultList();
-
-		List<Acesso> listaAcessos = new ArrayList<Acesso>();
-
-		for (Object o : lista) {
-			listaAcessos.add((Acesso) o);
-		}
-
-		return listaAcessos;
 	}
 
 }

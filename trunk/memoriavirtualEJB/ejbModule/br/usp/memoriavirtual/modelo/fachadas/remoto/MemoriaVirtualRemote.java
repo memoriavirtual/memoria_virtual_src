@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Remote;
 import javax.mail.MessagingException;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -19,6 +20,7 @@ public interface MemoriaVirtualRemote {
 	public List<Instituicao> listarInstituicoes(String pnome);
 	public List<Instituicao> listarInstituicoes(String pnome,
 			Grupo grupo, Usuario usuario);
+	public List<Acesso> listarAcessos(Usuario usuario);
 	public List<Usuario> listarUsuarios(String pnome) throws ModeloException;
 	public boolean verificarDisponibilidadeIdUsuario(String id);
 	public boolean verificarDisponibilidadeEmail(String email);

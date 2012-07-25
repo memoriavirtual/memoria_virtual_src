@@ -1,7 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,7 +19,8 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 	private EntityManager entityManager;
 
 	public Usuario verificarConvite(String convite) throws ModeloException {
-		Query query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
+		Query query = this.entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
 		query.setParameter("usuario", convite);
 
 		Usuario usuarioAutenticado = null;
@@ -35,17 +35,19 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 		return usuarioAutenticado;
 	}
 
-	
 	@SuppressWarnings("unchecked")
-	public void cadastrarUsuario(Usuario usuario, String validacao) throws ModeloException {
+	public void cadastrarUsuario(Usuario usuario, String validacao)
+			throws ModeloException {
 
 		/* Busco pelo convite usando o campo ID na tabela */
-		Query queryUsuario = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
+		Query queryUsuario = this.entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
 		queryUsuario.setParameter("usuario", validacao);
-		
+
 		Usuario convite = null;
 		/*
-		 * Insiro no banco de dados uma nova tupla com os dados cadastrados e deleto a tupla usada para enviar o convite
+		 * Insiro no banco de dados uma nova tupla com os dados cadastrados e
+		 * deleto a tupla usada para enviar o convite
 		 */
 		try {
 			convite = (Usuario) queryUsuario.getSingleResult();
@@ -53,25 +55,26 @@ public class CadastrarUsuario implements CadastrarUsuarioRemote {
 			throw new ModeloException("Convite invalido", e);
 		}
 		List<Acesso> acessos;
-		
-		Query queryAcesso = this.entityManager.createQuery("SELECT a FROM Acesso a Where a.usuario = :convite");
+
+		Query queryAcesso = this.entityManager
+				.createQuery("SELECT a FROM Acesso a Where a.usuario = :convite");
 		queryAcesso.setParameter("convite", convite);
-		
+
 		acessos = (List<Acesso>) queryAcesso.getResultList();
-		
-		for(Acesso acesso:acessos){
+
+		for (Acesso acesso : acessos) {
 			entityManager.remove(acesso);
 		}
-		
+
 		usuario.setAtivo(true);
 		usuario.setAdministrador(convite.isAdministrador());
 		convite.setEmail("");
 		entityManager.remove(convite);
 		entityManager.persist(usuario);
 
-		
-		for(Acesso acesso:acessos){
-			Acesso novoAcesso = new Acesso(usuario, acesso.getInstituicao(), acesso.getGrupo());
+		for (Acesso acesso : acessos) {
+			Acesso novoAcesso = new Acesso(usuario, acesso.getInstituicao(),
+					acesso.getGrupo());
 			novoAcesso.setValidade(true);
 			entityManager.persist(novoAcesso);
 		}

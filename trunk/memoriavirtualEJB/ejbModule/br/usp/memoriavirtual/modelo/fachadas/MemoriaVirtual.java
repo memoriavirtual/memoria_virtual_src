@@ -20,6 +20,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -310,4 +311,23 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return usuarios;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public List<Acesso> listarAcessos(Usuario usuario) {
+
+		Query query;
+
+		query = this.entityManager.createNamedQuery("acessos", Acesso.class);
+		query.setParameter("usuario", usuario);
+
+		List lista = (List) query.getResultList();
+
+		List<Acesso> listaAcessos = new ArrayList<Acesso>();
+
+		for (Object o : lista) {
+			listaAcessos.add((Acesso) o);
+		}
+
+		return listaAcessos;
+	}
+	
 }
