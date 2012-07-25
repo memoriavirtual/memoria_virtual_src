@@ -13,7 +13,6 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 public interface EnviarConviteRemote {
 
     public void enviarConvite(List<String> emails, String mensagem, String validade, String instituicao, String nivelAcesso) throws ModeloException;
-    public List<Instituicao> getInstituicoes(Grupo grupo, Usuario usuario);
-    public List<Instituicao> getInstituicoes();
-    public List<Grupo> getGrupos();
+    public List<Instituicao> getInstituicoesPermitidas(Usuario usuario, Grupo grupo);
+    public void enviarEmail(String destinatario, String assunto, String mensagem) throws ModeloException;
 }
