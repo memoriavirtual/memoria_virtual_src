@@ -2,16 +2,16 @@
 	width: 15px;
 	display: inline-block;
 	float: left;
-	margin-left: 20%;
-	margin-top: 3px;
+	margin-left: 10%;
+	margin-top: 4px;
 	
 }
 .botaoMaisMenosOver{
 	width: 15px;
 	display: inline-block;
 	float: left;
-	margin-left: 20%;
-	margin-top: 3px;
+	margin-left: 10%;
+	margin-top: 4px;
 	background-color: #999;
 }
 .botaoOculto{
@@ -21,8 +21,8 @@
 
 .containerExpansivo {
 	width: 100% !important;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .containerExpansivoEscuro {
@@ -50,17 +50,22 @@
 	margin-left: 20px;
 }
 .containerDeExpansao{
+	clear: both !important;
+	margin: 0px !important;
+	max-width: 100% !important;
 	display: inline-table;
-	padding-bottom:  20px !important;
 	padding-top:  20px !important;
+	padding-bottom:  20px !important;
 	width: 100% !important;
 	margin: 0  !important;
 	background-color: #EEE !important;
+	float: right !important;
+	width: 100% !important;
+	margin: 0  !important;
 }
 
-.containerDeExpansao td{
-	float: right;
+.espacador{
 	width: 100% !important;
-	margin: 0  !important;
-	background-color: #EEE !important;
+	height: 20px !important;
+	display: inline-block!important;;
 }

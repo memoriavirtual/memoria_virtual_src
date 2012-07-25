@@ -539,5 +539,22 @@ textarea:focus {
 }
 
 /*************************************************************/
-/*              Multimidia						            /
+/*              Bem Patrimonial						          /
 /*************************************************************/
+.checks {
+	display: inline-block;
+	margin: 7px;
+	/*padding-top: 16px;*/
+	
+	
+}
+.checks input{
+	height: 15px !important;
+	width: 15px !important;
+}
+
+
+.checks label{
+	margin-left: 0px !important;
+	margin-right: 30px !important;
+}

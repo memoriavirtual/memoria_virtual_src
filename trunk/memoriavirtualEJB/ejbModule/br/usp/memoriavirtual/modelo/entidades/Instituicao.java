@@ -37,6 +37,7 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 	private String tipoPropriedade;
 	private String protecaoExistente;
 	private String legislacaoIncidente;
+	private String sinteseHistorica;
 	private Boolean validade;
 	
 
@@ -66,7 +67,7 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 	 */
 	public Instituicao(String Nome, String Local, String End, String Cidade, String Est,String pais, String Cep, String Tel,
 			String caixaPostal, String email, String url,String identificacaoProprietario, String administradorPropriedade,
-			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente, String legislacao) {
+			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente, String legislacao , String sintese) {
 		super();
 		this.nome = Nome;
 		this.localidade = Local;
@@ -87,6 +88,7 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 		this.tipoPropriedade=tipoPropriedade;
 		this.protecaoExistente=protecaoExistente;
 		this.legislacaoIncidente = legislacao;
+		this.sinteseHistorica = sintese;
 	}
 	/**
 	 * Cosntrutor com id.
@@ -94,7 +96,7 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 	 */
 	public Instituicao(long id, String Nome, String Local, String End, String Cidade, String Est, String pais,String Cep, String Tel,
 			String caixaPostal, String email, String url,String identificacaoProprietario, String administradorPropriedade,
-			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente ,String legislacao) {
+			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente ,String legislacao , String sintese) {
 		super();
 		this.id = id;
 		this.nome = Nome;
@@ -116,8 +118,24 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 		this.tipoPropriedade=tipoPropriedade;
 		this.protecaoExistente=protecaoExistente;
 		this.legislacaoIncidente = legislacao;
+		this.sinteseHistorica = sintese;
+
 	}
 	
+	/**
+	 * @return the legislacaoIncidente
+	 */
+	public String getLegislacaoIncidente() {
+		return legislacaoIncidente;
+	}
+
+	/**
+	 * @param legislacaoIncidente the legislacaoIncidente to set
+	 */
+	public void setLegislacaoIncidente(String legislacaoIncidente) {
+		this.legislacaoIncidente = legislacaoIncidente;
+	}
+
 	/**
 	 * @return O nome da instituição
 	 */
@@ -411,6 +429,20 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 	 */
 	public void setLegislacaoExistente(String legislacaoExistente) {
 		this.legislacaoIncidente = legislacaoExistente;
+	}
+
+	/**
+	 * @return the sinteseHistorica
+	 */
+	public String getSinteseHistorica() {
+		return sinteseHistorica;
+	}
+
+	/**
+	 * @param sinteseHistorica the sinteseHistorica to set
+	 */
+	public void setSinteseHistorica(String sinteseHistorica) {
+		this.sinteseHistorica = sinteseHistorica;
 	}
 
 	

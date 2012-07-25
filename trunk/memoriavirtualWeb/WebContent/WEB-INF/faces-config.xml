@@ -75,7 +75,11 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.RenderizarMenuMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-
+	<managed-bean>
+		<managed-bean-name>cadastrarBemPatrimonialMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login</display-name>
@@ -213,6 +217,16 @@
 		<navigation-case>
 			<from-outcome>reset</from-outcome>
 			<to-view-id>/restrito/cadastrarinstituicao.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>cadastrarBemPatrimonial</display-name>
+		<from-view-id>/restrito/cadastrarbempatrimonial.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>reset</from-outcome>
+			<to-view-id>/restrito/cadastrarbempatrimonial.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

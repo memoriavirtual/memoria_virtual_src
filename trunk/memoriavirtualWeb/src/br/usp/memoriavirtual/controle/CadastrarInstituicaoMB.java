@@ -54,6 +54,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 	protected String tipoPropriedade = "";
 	protected String protecaoExistente = "";
 	protected String legislacao = "";
+	protected String sinteseHistorica = "";
 
 	/**
 	 * Construtor padrão
@@ -71,7 +72,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 					this.URL, this.identificacaoProprietario,
 					this.administradorPropriedade, this.latitude,
 					this.longitude, this.altitude, this.tipoPropriedade,
-					this.protecaoExistente, this.legislacao);
+					this.protecaoExistente, this.legislacao , this.sinteseHistorica);
 			// como n�o � necessario a aprova��o de nenhum outro
 			// administrador
 			// A validade do registro j� � setada como verdadeira.
@@ -98,32 +99,14 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 			
 			//indesando os arquivos a instituicao
 			for(Multimidia i : midias){
-				instituicao.addReferenciaMultimidia(i);
+				instituicao.addMultimidia(i);
 			}
 			// Cadastra a instituicao no banco de dados
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
 			// Testa se a institui��o foi gravada
 			if (!memoriaVirtualEJB
 					.verificarDisponibilidadeNomeInstituicao(this.nome)) {
-				this.nome = "";
-				this.localizacao = "";
-				this.endereco = "";
-				this.cidade = "";
-				this.estado = "";
-				this.pais = "";
-				this.cep = "";
-				this.telefone = "";
-				this.caixaPostal = "";
-				this.email = "";
-				this.URL = "";
-				this.identificacaoProprietario = "";
-				this.administradorPropriedade = "";
-				this.latitude = "";
-				this.longitude = "";
-				this.altitude = "";
-				this.tipoPropriedade = "";
-				this.protecaoExistente = "";
-				this.legislacao = "";
+				this.resetCadastrarinstituicao();
 				MensagensDeErro
 						.getSucessMessage(
 								"cadastrarInstituicaoSucessocadastramento",
@@ -150,10 +133,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 	public void adicionarMidia (Multimidia midia) {
 		this.midias.add( midia);
 	}
-	public String nop(){
-		return null;
-	}
-	
+		
 	public String resetCadastrarinstituicao() {	
 		this.nome = "";
 		this.localizacao = "";
@@ -174,6 +154,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 		this.tipoPropriedade = "";
 		this.protecaoExistente = "";
 		this.legislacao = "";
+		this.sinteseHistorica = "";
 		return "reset";
 
 	}
@@ -976,7 +957,23 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 		}
 		return true;
 	}
+	
+	/**
+	 * Validacao do Legislacao
+	 */
+	public void validateSinteseHistorica(AjaxBehaviorEvent event) {
+		this.validateSinteseHistorica();
+	}
 
+	public boolean validateSinteseHistorica() {
+		if (this.sinteseHistorica.equals("")) {
+			MensagensDeErro.getWarningMessage(
+					"cadastrarInstituicaoErroSinteseHistorica",
+					"validacaoSinteseHistorica");
+			return false;
+		}
+		return true;
+	}
 	
 	
 	@Override
@@ -990,5 +987,19 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
 		return null;
+	}
+
+	/**
+	 * @return the sinteseHistorica
+	 */
+	public String getSinteseHistorica() {
+		return sinteseHistorica;
+	}
+
+	/**
+	 * @param sinteseHistorica the sinteseHistorica to set
+	 */
+	public void setSinteseHistorica(String sinteseHistorica) {
+		this.sinteseHistorica = sinteseHistorica;
 	}
 }

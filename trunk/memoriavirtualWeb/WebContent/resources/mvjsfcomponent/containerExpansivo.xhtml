@@ -19,15 +19,18 @@
 	</h:graphicImage>
 	<h:graphicImage id="botaoMenos"  library="imagens" name="minus.png">
 	</h:graphicImage>
-	<h:panelGrid id="containerDeExpansao"  class="containerDeExpansao">
-		<cc:insertChildren>
+	<h:panelGroup id="containerDeExpansao"  class="containerDeExpansao" styleClass="containerDeExpansao" >
+	
+		<cc:insertChildren >
 			
 		</cc:insertChildren>
-	</h:panelGrid>
+	
+	</h:panelGroup>
 	<script>
 		iniciarComponenteContainerExpansivo("#{cc.id}:containerDeExpansao", "#{cc.id}:"
 				+ "botaoMenos", "#{cc.id}:" + "botaoMais" , "#{cc.id}:containerExpansivo");
 	</script>
+	<div class="espacador"></div>
 	</div>
 </cc:implementation>
 

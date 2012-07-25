@@ -41,7 +41,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 					this.email, this.URL, this.identificacaoProprietario,
 					this.administradorPropriedade, this.latitude,
 					this.longitude, this.altitude, this.tipoPropriedade,
-					this.protecaoExistente, this.legislacao);
+					this.protecaoExistente, this.legislacao , this.sinteseHistorica);
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			String bundleName = "mensagens";
@@ -68,25 +68,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 						"editarInstituicaoErroEditarFalha", "resultado");
 			}
 
-			this.nome = "";
-			this.localizacao = "";
-			this.endereco = "";
-			this.cidade = "";
-			this.estado = "";
-			this.pais = "";
-			this.cep = "";
-			this.telefone = "";
-			this.caixaPostal = "";
-			this.email = "";
-			this.URL = "";
-			this.identificacaoProprietario = "";
-			this.administradorPropriedade = "";
-			this.latitude = "";
-			this.longitude = "";
-			this.altitude = "";
-			this.tipoPropriedade = "";
-			this.protecaoExistente = "";
-			this.legislacao = "";
+			this.resetCadastrarinstituicao();
 
 			MensagensDeErro.getSucessMessage("editarInstituicaoSucessoEditar",
 					"resultado");

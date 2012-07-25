@@ -14,10 +14,7 @@ function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
 		classe.botaoMenos.addEventListener("mouseout", classe.hout, false);
 		classe.botaoMais.addEventListener("click", classe.clickMais, false);
 		classe.botaoMenos.addEventListener("click",classe.clickMenos, false);
-		if(ContainerExpansivo.getEstadoDeExpansao)
-			classe.clickMenos();
-		else
-			classe.clickMais();
+		classe.clickMenos();
 	};
 	
 	this.hover= function(e){
@@ -39,7 +36,6 @@ function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
 	};
 	
 	this.clickMais = function(e){
-		ContainerExpansivo.setEstadoDeExpansao(false);
 		botaoMaisAtivo = 1;
 		classe.botaoMais.setAttribute("class", "botaoOculto");
 		classe.botaoMenos.setAttribute("class", "botaoMaisMenos");
@@ -48,7 +44,6 @@ function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
 	};
 	;
 	this.clickMenos = function(e){
-		ContainerExpansivo.setEstadoDeExpansao(true);
 		botaoMaisAtivo = 0;
 		classe.botaoMais.setAttribute("class", "botaoMaisMenos");
 		classe.botaoMenos.setAttribute("class", "botaoOculto");
@@ -57,15 +52,7 @@ function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
 	};
 }
 
-ContainerExpansivo.estadoDeExpansao = false;
 
-ContainerExpansivo.setEstadoDeExpansao = function(estado){
-	ContainerExpansivo.estadoDeExpansao = estado;
-};
-
-ContainerExpansivo.getEstadoDeExpansao = function(estado){
-	return ContainerExpansivo.estadoDeExpansao;
-};
 iniciarComponenteContainerExpansivo = (function(idContainer, idMenos , idMais , idDivBotao) {
 	var container = document.getElementById(idContainer);
 	var botaoMenos = document.getElementById(idMenos);

@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Editar Instituicao</title>
@@ -250,6 +251,25 @@
 							</h:inputText>
 							<div></div>
 							<h:message id="validacaoLegislacao" for="validacaoLegislacao"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+						<mv:containerExpansivo id="expansivo"
+							label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
+							<mv:uploadFile id="multimidia" nomebean="editarInstituicaoMB"
+								array="#{editarInstituicaoMB.midias}"></mv:uploadFile>
+						</mv:containerExpansivo>
+						
+						<div>
+							<h:outputLabel class="labels" style="float:left;  heigth: 250px">#{mensagens.cadastrarInstituicaoSinteseHistorica}</h:outputLabel>
+							<h:inputTextarea class="caixadetexto"
+								value="#{editarInstituicaoMB.sinteseHistorica}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoSinteseHistorica"
+									listener="#{editarInstituicaoMB.validateSinteseHistorica}" />
+							</h:inputTextarea>
+							<div></div>
+							<h:message id="validacaoSinteseHistorica" for="validacaoSinteseHistorica"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
