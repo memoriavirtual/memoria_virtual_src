@@ -72,7 +72,7 @@ public interface ExcluirInstituicaoRemote{
 	 * Objeto List<Acesso>
 	 * @throws ModeloException
 	 */
-	public List<Acesso> recuperarGerentesdaInstituicao(Instituicao instituicao, boolean validade)throws ModeloException;
+	public List<Usuario> recuperarGerentesdaInstituicao(Instituicao instituicao, boolean validade)throws ModeloException;
 	
 	
 	/**
@@ -134,5 +134,6 @@ public interface ExcluirInstituicaoRemote{
 	public void marcarInstituicaoExcluida(Instituicao instituicao, boolean acao,boolean flagAcesso)
 	throws ModeloException;
 	public void excluirAprovacao(Aprovacao aprovacao);
+	List<Instituicao> listarTodasInstituicoes() throws ModeloException;
 	
 }

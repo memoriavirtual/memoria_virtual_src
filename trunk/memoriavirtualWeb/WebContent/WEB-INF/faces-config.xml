@@ -80,6 +80,11 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>containerExpansivoMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.ContainerExpansivoMB</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login</display-name>

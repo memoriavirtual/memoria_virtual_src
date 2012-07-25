@@ -1,10 +1,16 @@
-function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
+function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao ,estado){
 	var classe = this;
 	this.container = container;
 	this.botaoMenos = botaoMenos;
 	this.botaoMais = botaoMais;
 	this.divBotao = divBotao;
-	var botaoMaisAtivo = 0;
+	this.estado = estado;
+	this.botaoMaisAtivo;
+	window.alert(classe.estado.getAttribute("value"));
+	if ("plift" == classe.estado.getAttribute("value"))
+		classe.botaoMaisAtivo = 0;
+	else
+		classe.botaoMaisAtivo = 1;
 	
 	
 	this.inicio = function(){
@@ -14,11 +20,15 @@ function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
 		classe.botaoMenos.addEventListener("mouseout", classe.hout, false);
 		classe.botaoMais.addEventListener("click", classe.clickMais, false);
 		classe.botaoMenos.addEventListener("click",classe.clickMenos, false);
-		classe.clickMenos();
+		
+		if(classe.botaoMaisAtivo == 0)
+			classe.clickMenos();
+		else
+			classe.clickMais();
 	};
 	
 	this.hover= function(e){
-		if ( botaoMaisAtivo == 1){
+		if ( classe.botaoMaisAtivo == 1){
 			classe.botaoMenos.setAttribute("class", "botaoMaisMenosOver");
 		}else{
 			classe.botaoMais.setAttribute("class", "botaoMaisMenosOver");
@@ -28,7 +38,7 @@ function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
 	};
 	
 	this.hout= function(e){
-		if ( botaoMaisAtivo == 1){
+		if ( classe.botaoMaisAtivo == 1){
 			classe.botaoMenos.setAttribute("class", "botaoMaisMenos");
 		}else{
 			classe.botaoMais.setAttribute("class", "botaoMaisMenos");
@@ -36,31 +46,33 @@ function ContainerExpansivo(container , botaoMenos , botaoMais , divBotao){
 	};
 	
 	this.clickMais = function(e){
-		botaoMaisAtivo = 1;
+		classe.botaoMaisAtivo = 1;
 		classe.botaoMais.setAttribute("class", "botaoOculto");
 		classe.botaoMenos.setAttribute("class", "botaoMaisMenos");
 		classe.container.setAttribute("style", "display: inline-table;");
 		classe.divBotao.setAttribute("class" , "containerExpansivoEscuro");
+		classe.estado.setAttribute("value" , "ploft");
 	};
 	;
 	this.clickMenos = function(e){
-		botaoMaisAtivo = 0;
+		classe.botaoMaisAtivo = 0;
 		classe.botaoMais.setAttribute("class", "botaoMaisMenos");
 		classe.botaoMenos.setAttribute("class", "botaoOculto");
 		classe.container.setAttribute("style", "display: none;");
 		classe.divBotao.setAttribute("class" , "containerExpansivo");
+		classe.estado.setAttribute("value" , "plift");
 	};
 }
 
 
-iniciarComponenteContainerExpansivo = (function(idContainer, idMenos , idMais , idDivBotao) {
+iniciarComponenteContainerExpansivo = (function(idContainer, idMenos , idMais , idDivBotao ,idEstado) {
 	var container = document.getElementById(idContainer);
 	var botaoMenos = document.getElementById(idMenos);
 	var botaoMais = document.getElementById(idMais);
 	var divBotao = document.getElementById( idDivBotao);
+	var estado = document.getElementById( idEstado);
 	
-	
-	var containerExpansivo = new ContainerExpansivo(container , botaoMenos , botaoMais , divBotao);
+	var containerExpansivo = new ContainerExpansivo(container , botaoMenos , botaoMais , divBotao , estado);
 	
 	containerExpansivo.inicio();
 });

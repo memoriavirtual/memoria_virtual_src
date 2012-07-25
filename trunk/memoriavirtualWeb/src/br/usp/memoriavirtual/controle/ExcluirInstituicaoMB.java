@@ -95,9 +95,15 @@ public class ExcluirInstituicaoMB implements Serializable {
 		this.instituicoes.clear();
 		if (this.nome != "") {
 
-			List<Instituicao> listaInstituicoes = new ArrayList<Instituicao>();
-			listaInstituicoes = this.memoriaVirtualEJB.listarInstituicoes(
-					this.nome, new Grupo("GERENTE"), requisitor);
+			List<Instituicao> listaInstituicoes = null;
+			if (requisitor.isAdministrador()) {
+				listaInstituicoes = this.memoriaVirtualEJB
+						.listarInstituicoes(this.nome);
+			} else {
+				listaInstituicoes = this.memoriaVirtualEJB.listarInstituicoes(
+						this.nome, new Grupo("GERENTE"), requisitor);
+			}
+
 			this.setInstituicoes(listaInstituicoes);
 			if (this.instituicoes.isEmpty()) {
 				Instituicao inst = new Instituicao();
@@ -154,9 +160,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 			}
 		} else {
 			try {
-				this.instituicoes = this.excluirInstituicaoEJB
-						.listarTodasInstituicoes(new Grupo("GERENTE"),
-								requisitor);
+				if (requisitor.isAdministrador()) {
+					this.instituicoes = this.excluirInstituicaoEJB
+							.listarTodasInstituicoes();
+				} else {
+					this.instituicoes = this.excluirInstituicaoEJB
+							.listarTodasInstituicoes(new Grupo("GERENTE"),
+									requisitor);
+				}
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
@@ -177,14 +188,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 */
 	public void listarGerentes(boolean b) {
-		List<Acesso> acessos = new ArrayList<Acesso>();
+		
 		if (this.gerentesInstituicao.isEmpty()) {
 			try {
-				acessos = excluirInstituicaoEJB.recuperarGerentesdaInstituicao(
+				this.gerentesInstituicao = excluirInstituicaoEJB.recuperarGerentesdaInstituicao(
 						this.instituicao, b);
-				for (Acesso a : acessos) {
-					this.gerentesInstituicao.add(a.getUsuario());
-				}
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
 				if (this.gerentesInstituicao.isEmpty()) {
 					Usuario e = new Usuario();
 					e.setNomeCompleto(this.bundle
@@ -195,9 +206,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 					this.gerente = this.gerentesInstituicao.get(0);
 				}
 
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
+			
 		}
 
 	}
