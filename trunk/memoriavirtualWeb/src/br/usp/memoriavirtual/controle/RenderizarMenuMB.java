@@ -34,7 +34,7 @@ public class RenderizarMenuMB {
 		} else {
 
 			for (Acesso acesso : listaAcessos) {
-				if (acesso.getGrupo().getId().equalsIgnoreCase("Gerente")
+				if (acesso.getGrupo().getId().equalsIgnoreCase("GERENTE")
 						&& acesso.getValidade()) {
 					this.gerente = true;
 				}

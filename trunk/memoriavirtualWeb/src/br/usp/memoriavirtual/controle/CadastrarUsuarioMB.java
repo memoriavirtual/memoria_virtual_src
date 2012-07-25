@@ -45,11 +45,6 @@ public class CadastrarUsuarioMB {
 	
 	public String completarCadastro() {
 
-		/*
-		 * FacesContext.getCurrentInstance().addMessage( "resultado", new
-		 * FacesMessage(FacesMessage.SEVERITY_INFO,
-		 * "Cadastro concluido com sucesso.", null));
-		 */
 		this.validateId();
 		this.validateEmail();
 		this.validateNomeCompleto();
@@ -78,7 +73,7 @@ public class CadastrarUsuarioMB {
 			}
 			
 			if (usuario != null) {
-				usuario = usuario.clone(); //Teste se isso nao altera o usuario ja persistido na banco
+				usuario = usuario.clone();
 				HttpServletRequest request = (HttpServletRequest) FacesContext
 						.getCurrentInstance().getExternalContext().getRequest();
 				request.getSession().setAttribute("usuario", usuario);
