@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
@@ -18,6 +19,8 @@ public class RealizarLoginMB {
 
 	@EJB
 	private RealizarLoginRemote realizarLoginEJB;
+	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private String usuario = "";
 	private String senha = "";
 
@@ -54,8 +57,7 @@ public class RealizarLoginMB {
 			/*
 			 * Coloca a lista de acessos do usuario no sessao.
 			 */
-			List<Acesso> listaAcessos = realizarLoginEJB
-					.getAcessos(usuarioAutenticado);
+			List<Acesso> listaAcessos = memoriaVirtualEJB.listarAcessos(usuarioAutenticado);
 			request.getSession().setAttribute("acessos", listaAcessos);
 
 		} else {
