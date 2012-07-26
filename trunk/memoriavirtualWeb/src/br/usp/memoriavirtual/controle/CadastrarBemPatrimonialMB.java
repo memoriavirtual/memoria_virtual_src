@@ -78,52 +78,37 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade0")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade1")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade2")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade3")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade4")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade5")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade6")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade7")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade8")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade9")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade10")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade11")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade12")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade13")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade14")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade15")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade16")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade17")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade18")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade19")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade20")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade21")));
-		tipos.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade22")));
-
+				.getString("cadastrarBemTipoListaSelecione")));
+		if(this.naturezaBem == null){
+			tipos.clear();
+			return tipos;
+		}
+		if(this.naturezaBem.equalsIgnoreCase(bundle
+				.getString("cadastrarBemMaterial") )){
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista0")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista1")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista2")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista3")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista4")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista5")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista6")));
+		}else{
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista7")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista8")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista9")));
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista10")));
+		}
 		return tipos;
 		
 		

@@ -55,15 +55,16 @@
 								<h:selectOneRadio layout="lineDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.naturezaBem}">
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemImaterial}"
-										itemValue="imaterial" />
+										itemValue="#{mensagens.cadastrarBemImaterial}" />
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemMaterial}"
-										itemValue="material" />
+										itemValue="#{mensagens.cadastrarBemMaterial}" />
+										<f:ajax event="change"  render="tipodobem"></f:ajax>
 								</h:selectOneRadio>
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial}</h:outputLabel>
-								<h:selectOneMenu class="options"
+								<h:selectOneMenu id="tipodobem" class="options"
 									value="#{cadastrarBemPatrimonialMB.tipoDoBemPatrimonial}">
 									<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposBem}" />
 									<f:ajax event="blur" execute="@this" render="validacaoValidade"
