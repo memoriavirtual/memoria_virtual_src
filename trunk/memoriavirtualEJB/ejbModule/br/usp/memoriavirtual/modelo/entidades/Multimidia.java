@@ -38,8 +38,8 @@ public class Multimidia {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MULTIMIDIA_ID")
 	private long id;
 	@ManyToOne(cascade=CascadeType.ALL , fetch=FetchType.EAGER)
-	@JoinColumn(name="ENTIDADECOMMIDIA_ID")
-	private EntidadeComMidia entidadeComMidia;
+	@JoinColumn(name="CONTAINERMULTIMIDIA_ID")
+	private ContainerMultimidia containerMultimidia;
 	private String nome; 
 	private String contentType;
 	private String descricao;
@@ -64,15 +64,15 @@ public class Multimidia {
 	/**
 	 * @return the entidadeComMidia
 	 */
-	public EntidadeComMidia getEntidadeComMidia() {
-		return entidadeComMidia;
+	public ContainerMultimidia getEntidadeComMidia() {
+		return containerMultimidia;
 	}
 
 	/**
 	 * @param entidadeComMidia the entidadeComMidia to set
 	 */
-	public void setEntidadeComMidia(EntidadeComMidia entidadeComMidia) {
-		this.entidadeComMidia = entidadeComMidia;
+	public void setEntidadeComMidia(ContainerMultimidia entidadeComMidia) {
+		this.containerMultimidia = entidadeComMidia;
 	}
 
 	/**
@@ -125,13 +125,27 @@ public class Multimidia {
 		return id;
 	}
 
-	public EntidadeComMidia getChaveestrangeira() {
-		return entidadeComMidia;
+	/**
+	 * @return the containerMultimidia
+	 */
+	public ContainerMultimidia getContainerMultimidia() {
+		return containerMultimidia;
 	}
 
-	public void setChaveestrangeira(EntidadeComMidia chaveestrangeira) {
-		this.entidadeComMidia = chaveestrangeira;
+	/**
+	 * @param containerMultimidia the containerMultimidia to set
+	 */
+	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
+		this.containerMultimidia = containerMultimidia;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	
 	
 }

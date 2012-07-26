@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,22 +9,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@SequenceGenerator(name = "ENTIDADECOMMIDIA_ID", sequenceName = "ENTIDADECOMMIDIA_SEQ", allocationSize = 1)
-public class EntidadeComMidia {
+@SequenceGenerator(name = "CONTAINERMULTIMIDIA_ID", sequenceName = "CONTAINERMULTIMIDIA_SEQ", allocationSize = 1)
+public class ContainerMultimidia implements Serializable{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ENTIDADECOMMIDIA_ID")
-	protected long id;
-	@OneToMany(mappedBy = "entidadeComMidia", cascade = CascadeType.ALL)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7661055811957115846L;
+
+	@OneToMany(mappedBy = "containerMultimidia", cascade = CascadeType.ALL)
 	protected List<Multimidia> multimidia = new ArrayList<Multimidia>();
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTAINERMULTIMIDIA_ID")
+	protected long id;
+
+	
+	
+	
+	
+	
 	/**
 	 * @return the id
 	 */

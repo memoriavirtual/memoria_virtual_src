@@ -2,10 +2,19 @@ package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+
 
 @Entity
-public class Instituicao  extends EntidadeComMidia implements Serializable {
+@SequenceGenerator(name = "INSTITUICAO_ID", sequenceName = "INSTITUICAO_SEQ", allocationSize = 1)
+public class Instituicao  implements Serializable {
 	
 	
 	private static final long serialVersionUID = -5996690587044446292L;
@@ -14,8 +23,9 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 	/**
 	 * Serial Version UID
 	 */
-   
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INSTITUICAO_ID")
+	private long id;
 	private String nome;
 	private String localidade;
 	private String endereco;
@@ -40,7 +50,9 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 	private String sinteseHistorica;
 	private Boolean validade;
 	
-
+	
+	@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	private ContainerMultimidia containerMultimidia ;
 	/**
 	 * Construtor padrão
 	 */
@@ -122,6 +134,20 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 
 	}
 	
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the legislacaoIncidente
 	 */
@@ -242,12 +268,7 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 		this.validade = validade;
 	}
 
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
+	
 
 	/**
 	 * @return the caixaPostal
@@ -443,6 +464,20 @@ public class Instituicao  extends EntidadeComMidia implements Serializable {
 	 */
 	public void setSinteseHistorica(String sinteseHistorica) {
 		this.sinteseHistorica = sinteseHistorica;
+	}
+
+	/**
+	 * @return the containerMultimidia
+	 */
+	public ContainerMultimidia getContainerMultimidia() {
+		return containerMultimidia;
+	}
+
+	/**
+	 * @param containerMultimidia the containerMultimidia to set
+	 */
+	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
+		this.containerMultimidia = containerMultimidia;
 	}
 
 	

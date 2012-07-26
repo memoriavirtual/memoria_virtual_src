@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.ExcluirInstituicaoMB;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
-import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -34,9 +33,9 @@ public class ExcluirInstituicao extends HttpServlet {
 		//Objeto ItemAuditoria sera utilizado para recuperar o requerente do pedido de exclusão
 		ItemAuditoria itemAuditoria = new ItemAuditoria();
 		Instituicao instituicao = new Instituicao();
-		String chaveEstrangeira = req.getParameter("chaveEstrangeira");
-		
-		
+		Integer chaveEstrangeira = new Integer (req.getParameter("chaveEstrangeira"));
+		Integer auditoria = new Integer (req.getParameter("auditoria"));
+		System.out.println(auditoria);
 		
 		//Antecipando a instancia do ManegedBean antes mesmo que a página esteja carregada
 		FacesContext facesContext = FacesUtil.getFacesContext(req, response);
@@ -45,23 +44,24 @@ public class ExcluirInstituicao extends HttpServlet {
 		
 		
 		//Recuperando Objetos Aprovação, Instituição, ItemAuditoria
+		
 		try {
-			instituicao = this.excluirInstituicaoEJB.recuperarInstituicaoFalse(chaveEstrangeira);
-		} catch (ModeloException e) {
-			e.printStackTrace();
-			return;
-		}try {
-			 aprovacao = this.excluirInstituicaoEJB.recuperarAprovacao(instituicao.getNome() , instituicao.getClass().getCanonicalName());
+			 aprovacao = this.excluirInstituicaoEJB.recuperarAprovacao( (long)chaveEstrangeira);
 		} catch (ModeloException e) { 
 			e.printStackTrace();
 		}
 		
 		try {
-			itemAuditoria = this.excluirInstituicaoEJB.recuperarItemAuditoria(aprovacao.getChaveEstrangeira(),EnumTipoAcao.EXCLUIR_INSTITUICAO);
+			itemAuditoria = this.excluirInstituicaoEJB.recuperarItemAuditoria((long)auditoria);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
-		
+		try {
+			instituicao = this.excluirInstituicaoEJB.recuperarInstituicaoFalse(aprovacao.getChaveEstrangeira());
+		} catch (ModeloException e) {
+			e.printStackTrace();
+			return;
+		}
 		//setando valores no ManegedBean
 		bean.setInstituicao(instituicao);
 		bean.setItemAuditoria(itemAuditoria);

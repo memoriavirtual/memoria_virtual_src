@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
+import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
@@ -55,6 +56,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 	protected String protecaoExistente = "";
 	protected String legislacao = "";
 	protected String sinteseHistorica = "";
+	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
 
 	/**
 	 * Construtor padrão
@@ -99,8 +101,9 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 			
 			//indesando os arquivos a instituicao
 			for(Multimidia i : midias){
-				instituicao.addMultimidia(i);
+				this.containerMultimidia.addMultimidia(i);
 			}
+			instituicao.setContainerMultimidia(containerMultimidia);
 			// Cadastra a instituicao no banco de dados
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
 			// Testa se a institui��o foi gravada
@@ -113,6 +116,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 								"resultado");
 			}
 		}
+		this.resetCadastrarinstituicao();
 		return null;
 	}
 	
@@ -155,6 +159,7 @@ public class CadastrarInstituicaoMB implements BeanComMidia{
 		this.protecaoExistente = "";
 		this.legislacao = "";
 		this.sinteseHistorica = "";
+		this.midias.clear();
 		return "reset";
 
 	}

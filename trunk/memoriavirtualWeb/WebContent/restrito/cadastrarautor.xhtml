@@ -86,9 +86,9 @@
 									listener="#{cadastrarAutorMB.validateNascimento}" />
 							</h:inputText>
 							<h:commandLink class="outraAutoria"
-								value="#{editarAutorMB.outroLinkNascimento}"
-								action="#{editarAutorMB.abrirNascimentoOutro}" />
-							<div><h:outputLabel rendered="#{editarAutorMB.normalNascimento}">dd/mm/aaaa</h:outputLabel></div>
+								value="#{cadastrarAutorMB.outroLinkNascimento}"
+								action="#{cadastrarAutorMB.abrirNascimentoOutro}" />
+							<div><h:outputLabel rendered="#{cadastrarAutorMB.normalNascimento}">dd/mm/aaaa</h:outputLabel></div>
 							<h:message id="validacaoNascimento" for="validacaoNascimento"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -101,10 +101,10 @@
 								<f:ajax event="blur" execute="@this" render="validacaoObito"
 									listener="#{cadastrarAutorMB.validateObito}" />
 							</h:inputText>
-							<h:commandLink class="outraAutoria"
-								value="#{editarAutorMB.outroLinkObito}"
-								action="#{editarAutorMB.abrirObitoOutro}" />
-							<div><h:outputLabel rendered="#{editarAutorMB.normalObito}">dd/mm/aaaa</h:outputLabel></div>
+							<h:commandLink class="outraAutoria" 
+								value="#{cadastrarAutorMB.outroLinkObito}"
+								action="#{cadastrarAutorMB.abrirObitoOutro}" />
+							<div><h:outputLabel rendered="#{cadastrarAutorMB.normalObito}">dd/mm/aaaa</h:outputLabel></div>
 							<h:message id="validacaoObito" for="validacaoObito"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>

@@ -12,18 +12,24 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
-import br.usp.memoriavirtual.modelo.entidades.EntidadeComMidia;
+import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class BemPatrimonial extends EntidadeComMidia implements Serializable {
+@SequenceGenerator(name = "BEMPATRIMONIAL_ID", sequenceName = "BEMPATRIMONIAL_SEQ", allocationSize = 1)
+public class BemPatrimonial  implements Serializable {
 
 	/**
 	 * 
@@ -42,8 +48,12 @@ public class BemPatrimonial extends EntidadeComMidia implements Serializable {
 		this.intervencoes = new ArrayList<Intervencao>();
 		this.pesquisadores = new ArrayList<Pesquisador>();
 		this.bensrelacionados = new ArrayList<BemPatrimonial>();
+		
 	}
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
+	protected long id; 
 	protected boolean externo;
 	protected String tipoDoBemPatrimonial;
 	protected String numeroDeRegistro;
@@ -54,6 +64,10 @@ public class BemPatrimonial extends EntidadeComMidia implements Serializable {
 	protected String caracteristicasFisTecExec;
 	protected String conteudo;
 	protected String meioDeAcesso;
+	protected String idMidia;
+	
+	
+	
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_DESCRITORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
@@ -64,7 +78,6 @@ public class BemPatrimonial extends EntidadeComMidia implements Serializable {
 	protected Set<String> fontesInformacao;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@Embedded
 	@CollectionTable(name = "BEMPATRIMONIAL_TITULOS", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Titulo> titulos;
 
@@ -84,12 +97,10 @@ public class BemPatrimonial extends EntidadeComMidia implements Serializable {
 	protected Diagnostico diagnostico;
 
 	@ElementCollection
-	@Embedded
 	@CollectionTable(name = "BEMPATRIMONIAL_INTERVENCOES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Intervencao> intervencoes;
 
 	@ElementCollection
-	@Embedded
 	@CollectionTable(name = "BEMPATRIMONIAL_PESQUISADORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Pesquisador> pesquisadores;
 
@@ -97,6 +108,24 @@ public class BemPatrimonial extends EntidadeComMidia implements Serializable {
 	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", inverseJoinColumns = @JoinColumn(name = "BENSRELACIONADOS_ID"), joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<BemPatrimonial> bensrelacionados;
 
+	@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	protected ContainerMultimidia containerMultimidia;
+	
+	
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	/**
 	 * @return the externo
 	 */
@@ -365,4 +394,20 @@ public class BemPatrimonial extends EntidadeComMidia implements Serializable {
 	public List<BemPatrimonial> getBensrelacionados() {
 		return bensrelacionados;
 	}
+
+	/**
+	 * @return the containerMultimidia
+	 */
+	public ContainerMultimidia getContainerMultimidia() {
+		return containerMultimidia;
+	}
+
+	/**
+	 * @param containerMultimidia the containerMultimidia to set
+	 */
+	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
+		this.containerMultimidia = containerMultimidia;
+	}
+
+	
 }

@@ -2,10 +2,10 @@ package br.usp.memoriavirtual.modelo.fachadas.remoto;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.ejb.Remote;
-import br.usp.memoriavirtual.modelo.entidades.Acesso;
+
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
-import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
@@ -46,18 +46,12 @@ public interface ExcluirInstituicaoRemote{
 	
 	/**
 	 * Método faz uma requisição no banco de dados afim de encontrar um objeto ItemAuditoria
-	 * cujo a coluna chaveEstrangeira corresponde ao parâmetro nomeInstituicao, e que o tipo 
-	 * corresponde ao enunTipoAcao também passado como parâmetro. 
-	 * @param 
-	 * nomeInstituicao
-	 * @param 
-	 * enumTipoAcao
 	 * @return
 	 * Retorna 
 	 * Objeto ItemAuditoria.
 	 * @throws ModeloException
 	 */
-	public ItemAuditoria recuperarItemAuditoria(String nomeInstituicao,EnumTipoAcao enumTipoAcao) throws ModeloException;
+	public ItemAuditoria recuperarItemAuditoria(long chave) throws ModeloException;
 	
 	
 	/**
@@ -93,7 +87,7 @@ public interface ExcluirInstituicaoRemote{
 	 * Objeto Aprovacao
 	 * @throws ModeloException
 	 */
-	public Aprovacao recuperarAprovacao(String chave, String canonicalName)
+	public Aprovacao recuperarAprovacao(long chave)
 	throws ModeloException;
 	
 	
@@ -121,8 +115,9 @@ public interface ExcluirInstituicaoRemote{
 	 * @param validador
 	 * @param instituicao
 	 * @param dataValidade
+	 * @return 
 	 */
-	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
+	public Aprovacao registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade);
 	/**
 	 * Método marca uma instituição que deve ser aprovada para ser excluída

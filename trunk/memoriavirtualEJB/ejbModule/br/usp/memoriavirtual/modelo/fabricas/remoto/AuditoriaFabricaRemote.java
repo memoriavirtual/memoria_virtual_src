@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.modelo.fabricas.remoto;
 
 import javax.ejb.Remote;
 
+import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
 
@@ -20,8 +21,9 @@ public interface AuditoriaFabricaRemote {
 	 * de exclusão da instituição
 	 * @param autorAcao
 	 * @param atributoSignificativo
+	 * @return 
 	 */
-	public void auditarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo,String justificativa);
+	public ItemAuditoria auditarExcluirInstituicao(Usuario autorAcao,String atributoSignificativo,String justificativa);
 	/**
 	 * Método insere uma linha na tabela ItemAuditoria, referente a a autorização
 	 * de um pedido de exclusão da instituição

@@ -22,12 +22,12 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  * @author bigmac
  * 
  */
-public class CadastrarAutorMB{
+public class CadastrarAutorMB {
 
 	@EJB
 	private CadastrarAutorRemote cadastrarAutorEJB;
 
-	protected Autor autor = new Autor ("","","","","","");
+	protected Autor autor = new Autor("", "", "", "", "", "");
 
 	private boolean outroAtividade = false;
 	private boolean normalAtividade = true;
@@ -35,8 +35,7 @@ public class CadastrarAutorMB{
 	private boolean normalNascimento = true;
 	private boolean outroObito = false;
 	private boolean normalObito = true;
-	
-	
+
 	/**
 	 * Construtor Padr�o
 	 */
@@ -55,12 +54,13 @@ public class CadastrarAutorMB{
 				&& this.validateNascimento() && this.validateObito()
 				&& this.validateAtividade()) {
 
-			this.cadastrarAutorEJB.cadastrarAutor(new Autor(
-					this.autor.getNome(), this.autor.getSobrenome(), this.autor.getCodinome(), this.autor.getAtividade(),
-					this.autor.getNascimento(), this.autor.getObito()));
+			this.cadastrarAutorEJB.cadastrarAutor(new Autor(this.autor
+					.getNome(), this.autor.getSobrenome(), this.autor
+					.getCodinome(), this.autor.getAtividade(), this.autor
+					.getNascimento(), this.autor.getObito()));
 			MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
 					"resultado");
-			this.autor.setNome("")  ;
+			this.autor.setNome("");
 			this.autor.setSobrenome("");
 			this.autor.setCodinome("");
 			this.autor.setNascimento("");
@@ -68,14 +68,16 @@ public class CadastrarAutorMB{
 			this.autor.setAtividade("");
 			this.outroAtividade = false;
 			this.normalAtividade = true;
+			outroNascimento = false;
+			normalNascimento = true;
+			outroObito = false;
+			normalObito = true;
 
 		} else {
 			MensagensDeErro.getErrorMessage("cadastrarAutorFalha", "resultado");
 		}
 		return retorno;
 	}
-
-	
 
 	public List<SelectItem> getListaAtividade() {
 		List<SelectItem> atividades = new ArrayList<SelectItem>();
@@ -134,7 +136,7 @@ public class CadastrarAutorMB{
 	}
 
 	public String abrirAtividadeOutro() {
-		this.autor.setAtividade("") ;
+		this.autor.setAtividade("");
 		this.outroAtividade = !this.outroAtividade;
 		this.normalAtividade = !this.normalAtividade;
 		return null;
@@ -153,12 +155,10 @@ public class CadastrarAutorMB{
 
 	}
 
-
-
 	public String abrirNascimentoOutro() {
-		this.autor.setNascimento("") ;
-		this.outroNascimento = !this.outroNascimento;
-		this.normalNascimento = !this.normalNascimento;
+		this.autor.setNascimento("");
+		this.outroNascimento = (this.outroNascimento) ? false : true;
+		this.normalNascimento = (this.normalNascimento) ? false : true;
 		return null;
 	}
 
@@ -195,10 +195,8 @@ public class CadastrarAutorMB{
 
 	}
 
-
-	
 	public String resetCadastrarAutor() {
-		this.autor.setNome("") ;
+		this.autor.setNome("");
 		this.autor.setSobrenome("");
 		this.autor.setCodinome("");
 		this.autor.setNascimento("");
@@ -206,9 +204,12 @@ public class CadastrarAutorMB{
 		this.autor.setAtividade("");
 		this.outroAtividade = false;
 		this.normalAtividade = true;
+		outroNascimento = false;
+		normalNascimento = true;
+		outroObito = false;
+		normalObito = true;
 		return "reset";
 	}
-
 
 	public void validateNome(AjaxBehaviorEvent event) {
 		this.validateNome();
@@ -245,8 +246,8 @@ public class CadastrarAutorMB{
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		if (this.autor.getAtividade().equals(bundle
-				.getString("cadastrarAutorListaAtividade" + 0))) {
+		if (this.autor.getAtividade().equals(
+				bundle.getString("cadastrarAutorListaAtividade" + 0))) {
 			this.autor.setAtividade("");
 
 		}
@@ -258,18 +259,19 @@ public class CadastrarAutorMB{
 	}
 
 	public boolean validateNascimento() {
-		if (!this.autor.getNascimento().equals("") && this.isNormalNascimento()) {
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				format.setLenient(false);
-				format.parse(this.autor.getNascimento());
-			} catch (ParseException e) {
-				MensagensDeErro.getErrorMessage(
-						"cadastrarAutorNascimentoIncorreto",
-						"validacaoNascimento");
-				return false;
+		if ((!this.autor.getNascimento().equals("")))
+			if (this.normalNascimento == true) {
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+				try {
+					format.setLenient(false);
+					format.parse(this.autor.getNascimento());
+				} catch (ParseException e) {
+					MensagensDeErro.getErrorMessage(
+							"cadastrarAutorNascimentoIncorreto",
+							"validacaoNascimento");
+					return false;
+				}
 			}
-		}
 		return true;
 	}
 
@@ -278,15 +280,18 @@ public class CadastrarAutorMB{
 	}
 
 	public boolean validateObito() {
-		if (!this.autor.getObito().equals("")&& this.isNormalObito()) {
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				format.setLenient(false);
-				format.parse(this.autor.getObito());
-			} catch (ParseException e) {
-				MensagensDeErro.getErrorMessage(
-						"cadastrarAutorNascimentoIncorreto", "validacaoObito");
-				return false;
+		if ((!this.autor.getObito().equals(""))) {
+			if (this.normalObito == true) {
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+				try {
+					format.setLenient(false);
+					format.parse(this.autor.getObito());
+				} catch (ParseException e) {
+					MensagensDeErro.getErrorMessage(
+							"cadastrarAutorNascimentoIncorreto",
+							"validacaoObito");
+					return false;
+				}
 			}
 		}
 		return true;
@@ -321,7 +326,6 @@ public class CadastrarAutorMB{
 	public void setNormalAtividade(boolean normalAtividade) {
 		this.normalAtividade = normalAtividade;
 	}
-
 
 	/**
 	 * @return the nome
@@ -425,7 +429,8 @@ public class CadastrarAutorMB{
 	}
 
 	/**
-	 * @param outroNascimento the outroNascimento to set
+	 * @param outroNascimento
+	 *            the outroNascimento to set
 	 */
 	public void setOutroNascimento(boolean outroNascimento) {
 		this.outroNascimento = outroNascimento;
@@ -439,7 +444,8 @@ public class CadastrarAutorMB{
 	}
 
 	/**
-	 * @param normalNascimento the normalNascimento to set
+	 * @param normalNascimento
+	 *            the normalNascimento to set
 	 */
 	public void setNormalNascimento(boolean normalNascimento) {
 		this.normalNascimento = normalNascimento;
@@ -453,7 +459,8 @@ public class CadastrarAutorMB{
 	}
 
 	/**
-	 * @param outroObito the outroObito to set
+	 * @param outroObito
+	 *            the outroObito to set
 	 */
 	public void setOutroObito(boolean outroObito) {
 		this.outroObito = outroObito;
@@ -467,7 +474,8 @@ public class CadastrarAutorMB{
 	}
 
 	/**
-	 * @param normalObito the normalObito to set
+	 * @param normalObito
+	 *            the normalObito to set
 	 */
 	public void setNormalObito(boolean normalObito) {
 		this.normalObito = normalObito;

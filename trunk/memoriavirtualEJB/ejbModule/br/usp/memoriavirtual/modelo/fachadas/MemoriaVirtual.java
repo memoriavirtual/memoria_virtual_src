@@ -224,7 +224,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		Query query;
 
 		query = entityManager
-				.createQuery("SELECT a FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao LIKE :nome ");
+				.createQuery("SELECT a.instituicao FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao.nome LIKE :nome ");
 		query.setParameter("nome", "%" + pnome + "%");
 
 

@@ -28,7 +28,7 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 	
 	
 	
-	public void auditarExcluirInstituicao(Usuario autorAcao,
+	public ItemAuditoria auditarExcluirInstituicao(Usuario autorAcao,
 			String atributoSignificativo, String justificativa) {
 		ItemAuditoria itemAuditoria = new ItemAuditoria();
 		Date data = new Date();
@@ -38,6 +38,7 @@ public class AuditoriaFabrica implements AuditoriaFabricaRemote {
 		itemAuditoria.setTipoAcao(EnumTipoAcao.EXCLUIR_INSTITUICAO);
 		itemAuditoria.setData(data);
 		entityManager.persist(itemAuditoria);
+		return itemAuditoria;
 	}
 	
 	

@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
-import br.usp.memoriavirtual.modelo.entidades.EnumTipoAcao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
@@ -71,11 +70,14 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	@SuppressWarnings("unchecked")
 	public List<Usuario> recuperarGerentesdaInstituicao(Instituicao instituicao,
 			boolean b) throws ModeloException {
+		
+		
+		
 		Grupo grupo = new Grupo("GERENTE");
 		List<Usuario> usuarios;
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Acesso a WHERE  a.grupo = :grupo AND a.instituicao = :instituicao AND a.validade = :b");
+				.createQuery("SELECT a.usuario FROM Acesso a WHERE  a.grupo = :grupo AND a.instituicao = :instituicao AND a.validade = :b");
 		query.setParameter("grupo", grupo);
 		query.setParameter("instituicao", instituicao);
 		query.setParameter("b", b);
@@ -106,22 +108,13 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	}
 
-	public Aprovacao recuperarAprovacao(String chave, String canonicalName)
+	public Aprovacao recuperarAprovacao(long chave)
 			throws ModeloException {
 		Aprovacao aprovacao;
-		Query query;
-		query = this.entityManager
-				.createQuery("SELECT a FROM Aprovacao a WHERE  a.chaveEstrangeira = :chave   AND a.tabelaEstrangeira = :instituicao");
-		query.setParameter("chave", chave);
-		query.setParameter("instituicao", canonicalName);
-
-		try {
-			aprovacao = (Aprovacao) query.getSingleResult();
-			return aprovacao;
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
-
+		
+		aprovacao = this.entityManager.find(Aprovacao.class, chave);
+		
+		return aprovacao;
 	}
 
 	public void excluirAprovacao(Aprovacao aprovacao) {
@@ -170,20 +163,11 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 
-	public ItemAuditoria recuperarItemAuditoria(String nomeInstituicao,
-			EnumTipoAcao enumTipoAcao) throws ModeloException {
+	public ItemAuditoria recuperarItemAuditoria(long chave) throws ModeloException {
 		ItemAuditoria itemAuditoria;
-		Query query;
-		query = this.entityManager
-				.createQuery("SELECT a FROM ItemAuditoria a WHERE a.atributoSignificativo = :nome AND a.tipoAcao = :acao");
-		query.setParameter("nome", nomeInstituicao);
-		query.setParameter("acao", enumTipoAcao);
-
-		try {
-			itemAuditoria = (ItemAuditoria) query.getSingleResult();
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
+		
+		itemAuditoria = this.entityManager.find(ItemAuditoria.class, chave);
+				
 		return itemAuditoria;
 	}
 
@@ -195,7 +179,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 				.createQuery("SELECT a FROM Instituicao a WHERE a.nome = :nome AND a.validade = FALSE");
 		query.setParameter("nome", pnome);
 		try {
-			instituicao = (Instituicao) query.getSingleResult();
+			instituicao = (Instituicao) query.getResultList().get(0);
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
@@ -219,7 +203,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 
-	public void registrarAprovacao(Usuario validador, Instituicao instituicao,
+	public Aprovacao registrarAprovacao(Usuario validador, Instituicao instituicao,
 			Date dataValidade) {
 		Date data = new Date();
 		instituicao = this.entityManager.find(Instituicao.class,
@@ -228,6 +212,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		Aprovacao aprovacao = new Aprovacao(data, u, dataValidade,
 				instituicao.getNome(), Instituicao.class.getCanonicalName());
 		this.entityManager.persist(aprovacao);
+		return aprovacao;
 	}
 
 	@SuppressWarnings("unchecked")

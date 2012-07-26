@@ -22,7 +22,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
 
-import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
@@ -156,6 +155,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 					this.bundle.getString("excluirInstituicaoErrolistavazia"))) {
 				this.setInstituicao(instituicao);
 				this.setNome(instituicao.getNome());
+				// System.out.println(instituicao.getNome() +
+				// instituicao.getId() );
 				this.instituicoes.clear();
 			}
 		} else {
@@ -188,25 +189,24 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 */
 	public void listarGerentes(boolean b) {
-		
+
 		if (this.gerentesInstituicao.isEmpty()) {
 			try {
-				this.gerentesInstituicao = excluirInstituicaoEJB.recuperarGerentesdaInstituicao(
-						this.instituicao, b);
+				this.gerentesInstituicao = excluirInstituicaoEJB
+						.recuperarGerentesdaInstituicao(this.instituicao, b);
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-				if (this.gerentesInstituicao.isEmpty()) {
-					Usuario e = new Usuario();
-					e.setNomeCompleto(this.bundle
-							.getString("excluirInstituicaoSemGerente"));
-					this.gerentesInstituicao.add(e);
-					this.gerente = null;
-				} else {
-					this.gerente = this.gerentesInstituicao.get(0);
-				}
+			if (this.gerentesInstituicao.isEmpty()) {
+				Usuario e = new Usuario();
+				e.setNomeCompleto(this.bundle
+						.getString("excluirInstituicaoSemGerente"));
+				this.gerentesInstituicao.add(e);
+				this.gerente = null;
+			} else {
+				this.gerente = this.gerentesInstituicao.get(0);
+			}
 
-			
 		}
 
 	}
@@ -340,10 +340,27 @@ public class ExcluirInstituicaoMB implements Serializable {
 				String gerente = (this.gerente == null) ? this.bundle
 						.getString("excluirInstituicaoSemGerente")
 						: this.gerente.getNomeCompleto();
-				try {
 
+				try {
 					this.administradorValidador = this.excluirInstituicaoEJB
 							.getUsuario("nomeCompleto", this.nomeValidador);
+				} catch (ModeloException e2) {
+					e2.printStackTrace();
+				}
+				// registra um objeto Aprovacao
+				Aprovacao aprovacao = this.excluirInstituicaoEJB
+						.registrarAprovacao(this.administradorValidador,
+								this.instituicao, dataValidade);
+				// marca a instituição a ser excluída para que a mesma não
+				// seja mais utilizada
+
+				// registra a autoria do pedido de exclusão
+				ItemAuditoria i = this.auditoriaFabricaEJB.auditarExcluirInstituicao(
+						this.requisitor, this.instituicao.getNome(),
+						this.justificativa);
+
+				try {
+
 					this.memoriaVirtualEJB
 							.enviarEmail(
 									this.administradorValidador.getEmail(),
@@ -375,20 +392,21 @@ public class ExcluirInstituicaoMB implements Serializable {
 													.getURLServidor()
 											+ "/excluir?"
 											+ "chaveEstrangeira="
-											+ this.instituicao.getNome()
+											+ aprovacao.getId()
+											+"&auditoria="
+											+i.getId()
 											+ "\n\n"
 											+ bundle.getString("excluirInstituicaoEmailMensagemFim")
 											+ "\n" + "\n");
+
 					// registra a autoria do pedido de exclusão
 					this.auditoriaFabricaEJB.auditarExcluirInstituicao(
 							this.requisitor, this.instituicao.getNome(),
 							this.justificativa);
-					// registra um objeto Aprovacao
-					this.excluirInstituicaoEJB.registrarAprovacao(
-							this.administradorValidador, this.instituicao,
-							dataValidade);
+
 					// marca a instituição a ser excluída para que a mesma não
 					// seja mais utilizada
+
 					this.excluirInstituicaoEJB.marcarInstituicaoExcluida(
 							this.instituicao, false, this.gerente != null);
 
@@ -397,9 +415,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 							"excluirInstituicaoEnviandoEmail", "resultado");
 				} catch (MessagingException e) {
 					e.printStackTrace();
+					this.excluirInstituicaoEJB.excluirAprovacao(aprovacao);
 				} catch (ModeloException e) {
 					e.printStackTrace();
 					e.getCause();
+					this.excluirInstituicaoEJB.excluirAprovacao(aprovacao);
 				}
 
 			}
