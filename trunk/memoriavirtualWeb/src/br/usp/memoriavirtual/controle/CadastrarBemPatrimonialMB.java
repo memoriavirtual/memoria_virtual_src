@@ -97,7 +97,6 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.externo = externo;
 	}
 
-	
-	
+		
 	
 }
