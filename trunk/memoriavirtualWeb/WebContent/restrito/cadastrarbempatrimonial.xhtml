@@ -34,7 +34,7 @@
 
 
 
-				<div class="espacador"></div>
+					<div class="espacador"></div>
 
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemGeralInfo}">
 						<fieldset>
@@ -61,6 +61,19 @@
 								</h:selectOneRadio>
 							</div>
 
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial}</h:outputLabel>
+								<h:selectOneMenu class="options"
+									value="#{cadastrarBemPatrimonialMB.tipoDoBemPatrimonial}">
+									<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposBem}" />
+									<f:ajax event="blur" execute="@this" render="validacaoValidade"
+										listener="#{excluirInstituicaoMB.validadeValidade}" />
+								</h:selectOneMenu>
+								<div></div>
+								<h:message id="validacaoValidade" for="validacaoValidade"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								</h:message>
+							</div>
 						</fieldset>
 					</mv:containerExpansivo>
 
@@ -71,28 +84,39 @@
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
 
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemDescricaoGrupo}">
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemDescricaoGrupo}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemHistoricoProcedencia}">
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemHistoricoProcedencia}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemAssuntoDescritores}">
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemAssuntoDescritores}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemFontesInformacao}">
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemFontesInformacao}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemResponsavelPesquisa}">
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemResponsavelPesquisa}">
+						<fieldset></fieldset>
+					</mv:containerExpansivo>
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemRelacionarBemPatrimonial}">
 						<fieldset></fieldset>
 					</mv:containerExpansivo>
 
