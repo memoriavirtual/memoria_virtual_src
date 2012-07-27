@@ -3,6 +3,7 @@
  */
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +23,12 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  * @author bigmac
  * 
  */
-public class CadastrarAutorMB {
+public class CadastrarAutorMB implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5784819830194641882L;
 
 	@EJB
 	private CadastrarAutorRemote cadastrarAutorEJB;

@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,8 +22,12 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-public class ExcluirUsuarioMB {
+public class ExcluirUsuarioMB implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6957046653709643226L;
 	@EJB
 	private ExcluirUsuarioRemote excluirUsuarioEJB;
 	@EJB

@@ -3,6 +3,7 @@
  */
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,8 +21,12 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  * @author bigmac
  * 
  */
-public class EditarAutorMB extends CadastrarAutorMB {
+public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6035894025134227970L;
 	@EJB
 	private EditarAutorRemote editarAutorEJB;
 	private String strDeBusca;

@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,10 +25,14 @@ import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
  * instituição
  */
 
-public class CadastrarInstituicaoMB implements BeanComMidia{
+public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6620103410985404517L;
 	@EJB
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB

@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,12 @@ import br.usp.memoriavirtual.utils.Email;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
-public class EnviarConviteMB {
+public class EnviarConviteMB implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4054888655663667241L;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB

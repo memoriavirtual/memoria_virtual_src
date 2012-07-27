@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -15,8 +16,12 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-public class RealizarLoginMB {
+public class RealizarLoginMB implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1005061522826383091L;
 	@EJB
 	private RealizarLoginRemote realizarLoginEJB;
 	@EJB

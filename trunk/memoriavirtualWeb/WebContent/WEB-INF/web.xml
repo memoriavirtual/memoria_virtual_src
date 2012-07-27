@@ -1,85 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>memoriavirtualWeb</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.jsf</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>Cadastro Servlet</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.CadastrarUsuario</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Cadastro Servlet</servlet-name>
-    <url-pattern>/fazercadastro</url-pattern>
-  </servlet-mapping>
-   
-   
-  
-  <filter>
-    <filter-name>FiltroLogin</filter-name>
-    <filter-class>br.usp.memoriavirtual.filtro.FiltroLogin</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>FiltroLogin</filter-name>
-    <url-pattern>/restrito/*</url-pattern>
-  </filter-mapping>
- 
-  <context-param>
-    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-    <param-value>client</param-value>
-  </context-param>
-  <context-param>
-    <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-    <param-value>.jsf, .xhtml</param-value>
-  </context-param>
-  <servlet>
-    <description>Servlet para edicao de cadastro de usuarios</description>
-    <display-name>EditarCadastroUsuario</display-name>
-    <servlet-name>EditarCadastroUsuario</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.EditarCadastroUsuario</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EditarCadastroUsuario</servlet-name>
-    <url-pattern>/editarcadastrousuario</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description>Servlet para exclusao de instituicao</description>
-    <display-name>ExcluirInstituicao</display-name>
-    <servlet-name>ExcluirInstituicao</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.ExcluirInstituicao</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ExcluirInstituicao</servlet-name>
-    <url-pattern>/excluir</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description>Servlet para upload de arquivos</description>
-    <display-name>ArquivosUploadServlet</display-name>
-    <servlet-name>ArquivosUploadServlet</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.ArquivosUploadServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ArquivosUploadServlet</servlet-name>
-    <url-pattern>/uploadarquivo/*</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description>Servlet para servir arquivos de midia</description>
-    <display-name>MultiMidiaServlet</display-name>
-    <servlet-name>MultiMidiaServlet</servlet-name>
-    <servlet-class>br.usp.memoriavirtual.servlet.MultiMidiaServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MultiMidiaServlet</servlet-name>
-    <url-pattern>/multimidia</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>memoriavirtualWeb</display-name>
+	<distributable/>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Cadastro Servlet</servlet-name>
+		<servlet-class>br.usp.memoriavirtual.servlet.CadastrarUsuario</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Cadastro Servlet</servlet-name>
+		<url-pattern>/fazercadastro</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<filter-name>FiltroLogin</filter-name>
+		<filter-class>br.usp.memoriavirtual.filtro.FiltroLogin</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FiltroLogin</filter-name>
+		<url-pattern>/restrito/*</url-pattern>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.jsf, .xhtml</param-value>
+	</context-param>
+	<servlet>
+		<description>Servlet para edicao de cadastro de usuarios</description>
+		<display-name>EditarCadastroUsuario</display-name>
+		<servlet-name>EditarCadastroUsuario</servlet-name>
+		<servlet-class>br.usp.memoriavirtual.servlet.EditarCadastroUsuario</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditarCadastroUsuario</servlet-name>
+		<url-pattern>/editarcadastrousuario</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description>Servlet para exclusao de instituicao</description>
+		<display-name>ExcluirInstituicao</display-name>
+		<servlet-name>ExcluirInstituicao</servlet-name>
+		<servlet-class>br.usp.memoriavirtual.servlet.ExcluirInstituicao</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ExcluirInstituicao</servlet-name>
+		<url-pattern>/excluir</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description>Servlet para upload de arquivos</description>
+		<display-name>ArquivosUploadServlet</display-name>
+		<servlet-name>ArquivosUploadServlet</servlet-name>
+		<servlet-class>br.usp.memoriavirtual.servlet.ArquivosUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ArquivosUploadServlet</servlet-name>
+		<url-pattern>/uploadarquivo/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description>Servlet para servir arquivos de midia</description>
+		<display-name>MultiMidiaServlet</display-name>
+		<servlet-name>MultiMidiaServlet</servlet-name>
+		<servlet-class>br.usp.memoriavirtual.servlet.MultiMidiaServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MultiMidiaServlet</servlet-name>
+		<url-pattern>/multimidia</url-pattern>
+	</servlet-mapping>
 </web-app>

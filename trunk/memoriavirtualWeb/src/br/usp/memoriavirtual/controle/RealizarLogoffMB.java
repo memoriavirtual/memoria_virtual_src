@@ -1,11 +1,18 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
+
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-public class RealizarLogoffMB {
+public class RealizarLogoffMB implements Serializable{
 
-    public RealizarLogoffMB() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6409587570712439232L;
+
+	public RealizarLogoffMB() {
 
     }
 

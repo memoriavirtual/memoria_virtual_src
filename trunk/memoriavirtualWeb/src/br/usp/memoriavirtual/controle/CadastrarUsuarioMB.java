@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,8 +17,12 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
-public class CadastrarUsuarioMB {
+public class CadastrarUsuarioMB implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2202578392589624271L;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB

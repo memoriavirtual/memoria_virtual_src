@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 
 /**
  * @author bigmac
@@ -22,52 +23,29 @@ import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 @ManagedBean(name = "cadastrarBemPatrimonialMB")
 @SessionScoped
 public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7413170360811077491L;
-	
-	
-	
-	
-	
-	
-	
 	protected boolean externo;
 	protected String naturezaBem;
 	protected String tipoDoBemPatrimonial;
-	
-	
-	
-
+	protected String numeroRegistro;
+	protected List<Titulo> titulos = new ArrayList<Titulo>();
 	
 
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void adicionarMidia(Multimidia midia) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public String removeMidia(Multimidia midia) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -153,6 +131,20 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	 */
 	public void setTipoDoBemPatrimonial(String tipoDoBemPatrimonial) {
 		this.tipoDoBemPatrimonial = tipoDoBemPatrimonial;
+	}
+
+	/**
+	 * @return the numeroRegistro
+	 */
+	public String getNumeroRegistro() {
+		return numeroRegistro;
+	}
+
+	/**
+	 * @param numeroRegistro the numeroRegistro to set
+	 */
+	public void setNumeroRegistro(String numeroRegistro) {
+		this.numeroRegistro = numeroRegistro;
 	}
 
 		

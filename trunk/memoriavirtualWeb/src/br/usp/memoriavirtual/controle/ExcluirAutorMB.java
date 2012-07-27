@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,8 +15,12 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @SessionScoped
 @ManagedBean(name = "excluirAutorMB")
-public class ExcluirAutorMB {
+public class ExcluirAutorMB implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1769494097935536965L;
 	private String nome;
 	private List<Autor> autores;
 	@EJB

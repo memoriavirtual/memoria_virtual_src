@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -9,8 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
-public class RenderizarMenuMB {
+public class RenderizarMenuMB implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3767548433370852588L;
 	public boolean administrador = false;
 	public boolean gerente = false;
 

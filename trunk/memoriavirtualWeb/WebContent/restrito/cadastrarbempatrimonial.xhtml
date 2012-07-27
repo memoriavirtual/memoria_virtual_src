@@ -74,7 +74,22 @@
 								<h:message id="validacaoValidade" for="validacaoValidade"
 									infoClass="sucesso" errorClass="erro" warnClass="aviso">
 								</h:message>
+								
+								<h:panelGrid >
+								</h:panelGrid>
 							</div>
+							
+							<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro}</h:outputLabel>
+							<h:inputText value="#{cadastrarBemPatrimonialMB.numeroRegistro}">
+								<f:ajax event="blur" execute="@this" render="validacaoNome"
+									listener="#{cadastrarAutorMB.validateNome}" />
+							</h:inputText>
+							<div></div>
+							<h:message id="validacaoNome" for="validacaoNome" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
 						</fieldset>
 					</mv:containerExpansivo>
 
