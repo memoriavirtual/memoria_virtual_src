@@ -292,7 +292,7 @@ h4 {
 	border: #444 solid 1px;
 	padding: 1px;
 	width: 250px;
-	height: 20px;
+	height: 25px !important;
 }
 
 .formulario fieldset div div {

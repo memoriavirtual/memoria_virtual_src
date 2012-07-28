@@ -36,6 +36,7 @@
 		
 	<h:commandButton id="botaoEscondido" type="button" style="display: none;">
 			<f:ajax render="tabela" ></f:ajax>
+		
 		</h:commandButton>
 	</div>
 	<div id="tabela_imagens">
@@ -48,7 +49,7 @@
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
 
 					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
-					<h:inputTextarea class="caixadetexto"
+					<h:inputTextarea id="caixadescricao" class="caixadetexto"
 						value="#{multimidia.descricao}"></h:inputTextarea>
 					<h:commandLink
 						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
@@ -61,6 +62,7 @@
 					
 				</div>
 			</h:column>
+			
 		</h:dataTable>
 		
 	</div>

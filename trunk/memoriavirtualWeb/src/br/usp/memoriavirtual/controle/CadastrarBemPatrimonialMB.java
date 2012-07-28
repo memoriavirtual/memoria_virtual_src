@@ -33,6 +33,15 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String numeroRegistro;
 	protected List<Titulo> titulos = new ArrayList<Titulo>();
 	
+	
+
+	/**
+	 * 
+	 */
+	public CadastrarBemPatrimonialMB() {
+		super();
+		this.titulos.add(new Titulo());
+	}
 
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
@@ -145,6 +154,20 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	 */
 	public void setNumeroRegistro(String numeroRegistro) {
 		this.numeroRegistro = numeroRegistro;
+	}
+
+	/**
+	 * @return the titulos
+	 */
+	public List<Titulo> getTitulos() {
+		return titulos;
+	}
+
+	/**
+	 * @param titulos the titulos to set
+	 */
+	public void setTitulos(List<Titulo> titulos) {
+		this.titulos = titulos;
 	}
 
 		

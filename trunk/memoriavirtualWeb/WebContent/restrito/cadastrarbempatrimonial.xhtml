@@ -75,8 +75,15 @@
 									infoClass="sucesso" errorClass="erro" warnClass="aviso">
 								</h:message>
 								
-								<h:panelGrid >
-								</h:panelGrid>
+								<h:dataTable id="titulosBem" var="titulo"
+								value="#{cadastrarBemPatrimonialMB.titulos}">
+								<h:column>
+									<h:commandButton type="button" action="cadastrarBemPatrimonialMB.removerTitulo(Titulo)" >
+										<f:ajax event="click" execute="@this" render="titulosBem"
+										listener="#{excluirInstituicaoMB.validadeValidade}" />
+									</h:commandButton>
+								</h:column>
+							</h:dataTable>
 							</div>
 							
 							<div>
