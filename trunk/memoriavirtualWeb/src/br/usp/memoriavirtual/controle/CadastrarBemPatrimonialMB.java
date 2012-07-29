@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
@@ -18,10 +17,9 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 
 /**
  * @author bigmac
- *
+ * 
  */
-@ManagedBean(name = "cadastrarBemPatrimonialMB")
-@SessionScoped
+
 public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	/**
 	 * 
@@ -32,8 +30,6 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String tipoDoBemPatrimonial;
 	protected String numeroRegistro;
 	protected List<Titulo> titulos = new ArrayList<Titulo>();
-	
-	
 
 	/**
 	 * 
@@ -50,7 +46,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	@Override
 	public void adicionarMidia(Multimidia midia) {
-		
+
 	}
 
 	@Override
@@ -58,7 +54,50 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		return null;
 	}
 
-	public List<SelectItem> getTiposBem(){
+	public List<SelectItem> getTiposTitulo() {
+		List<SelectItem> tipos = new ArrayList<SelectItem>();
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		tipos.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTituloSelecione")));
+
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo0")));
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo1")));
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo2")));
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo3")));
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo4")));
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo5")));
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo6")));
+		tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo7")));
+
+		return tipos;
+
+	}
+	
+	public void botaoTitulo(AjaxBehaviorEvent event){
+				
+			
+			this.titulos.add(new Titulo());
+		
+	}
+	
+	
+	
+	public String getTextoBotao(Titulo o) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (this.titulos.indexOf(o) > 0) {
+			return bundle.getString("cadastrarBemTituloRemover");
+		} else
+			return bundle.getString("cadastrarBemTituloAdicionar");
+	}
+	
+
+	public List<SelectItem> getTiposBem() {
 		List<SelectItem> tipos = new ArrayList<SelectItem>();
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -66,41 +105,39 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 				context, bundleName);
 		tipos.add(new SelectItem(bundle
 				.getString("cadastrarBemTipoListaSelecione")));
-		if(this.naturezaBem == null){
+		if (this.naturezaBem == null) {
 			tipos.clear();
 			return tipos;
 		}
-		if(this.naturezaBem.equalsIgnoreCase(bundle
-				.getString("cadastrarBemMaterial") )){
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista0")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista1")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista2")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista3")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista4")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista5")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista6")));
-		}else{
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista7")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista8")));
-			tipos.add(new SelectItem(bundle
-					.getString("cadastrarBemTipoLista9")));
+		if (this.naturezaBem.equalsIgnoreCase(bundle
+				.getString("cadastrarBemMaterial"))) {
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista0")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista1")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista2")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista3")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista4")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista5")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista6")));
+		} else {
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista7")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista8")));
+			tipos.add(new SelectItem(bundle.getString("cadastrarBemTipoLista9")));
 			tipos.add(new SelectItem(bundle
 					.getString("cadastrarBemTipoLista10")));
 		}
 		return tipos;
-		
-		
+
 	}
-	
+
+	public String removerTitulo(String a) {
+		return null;
+	}
+
+	public String removerTitulo(Titulo t) {
+		this.titulos.remove(t);
+		return null;
+	}
+
 	/**
 	 * @return the naturezaBem
 	 */
@@ -109,11 +146,13 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	/**
-	 * @param naturezaBem the naturezaBem to set
+	 * @param naturezaBem
+	 *            the naturezaBem to set
 	 */
 	public void setNaturezaBem(String naturezaBem) {
 		this.naturezaBem = naturezaBem;
 	}
+
 	/**
 	 * @return the externo
 	 */
@@ -122,7 +161,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	/**
-	 * @param externo the externo to set
+	 * @param externo
+	 *            the externo to set
 	 */
 	public void setExterno(boolean externo) {
 		this.externo = externo;
@@ -136,7 +176,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	/**
-	 * @param tipoDoBemPatrimonial the tipoDoBemPatrimonial to set
+	 * @param tipoDoBemPatrimonial
+	 *            the tipoDoBemPatrimonial to set
 	 */
 	public void setTipoDoBemPatrimonial(String tipoDoBemPatrimonial) {
 		this.tipoDoBemPatrimonial = tipoDoBemPatrimonial;
@@ -150,7 +191,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	/**
-	 * @param numeroRegistro the numeroRegistro to set
+	 * @param numeroRegistro
+	 *            the numeroRegistro to set
 	 */
 	public void setNumeroRegistro(String numeroRegistro) {
 		this.numeroRegistro = numeroRegistro;
@@ -164,12 +206,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	/**
-	 * @param titulos the titulos to set
+	 * @param titulos
+	 *            the titulos to set
 	 */
 	public void setTitulos(List<Titulo> titulos) {
 		this.titulos = titulos;
 	}
 
-		
-	
 }

@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 
 @Embeddable
@@ -25,7 +26,8 @@ public class Titulo implements Serializable {
 	}
 	public Titulo() {
 	}
-	
+	@Transient
+	private String select;
 	private String tipo;	
 	private String valor;	
 	private String complemento;
@@ -64,5 +66,17 @@ public class Titulo implements Serializable {
 	 */
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+	/**
+	 * @return the select
+	 */
+	public String getSelect() {
+		return select;
+	}
+	/**
+	 * @param select the select to set
+	 */
+	public void setSelect(String select) {
+		this.select = select;
 	}
 }

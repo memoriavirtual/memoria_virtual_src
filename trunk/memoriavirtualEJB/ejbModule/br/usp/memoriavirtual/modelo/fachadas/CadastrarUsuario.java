@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,8 +14,12 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
 
 @Stateless(mappedName = "CadastrarUsuario")
-public class CadastrarUsuario implements CadastrarUsuarioRemote {
+public class CadastrarUsuario implements CadastrarUsuarioRemote , Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1389418898478564440L;
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 

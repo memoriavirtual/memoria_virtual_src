@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.servlet;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
-public class CadastrarUsuario extends HttpServlet {
+public class CadastrarUsuario extends HttpServlet implements Serializable {
 
 	/**
 	 * Serial Version UID

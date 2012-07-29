@@ -545,16 +545,76 @@ textarea:focus {
 	display: inline-block;
 	margin: 7px;
 	/*padding-top: 16px;*/
-	
-	
 }
-.checks input{
+
+.checks input {
 	height: 15px !important;
 	width: 15px !important;
 }
 
-
-.checks label{
+.checks label {
 	margin-left: 0px !important;
 	margin-right: 30px !important;
+}
+
+.titulos {
+	float: left;
+	width: 100% ;
+}
+.titulos textarea{
+	width: 35%;
+	resize: none;
+	
+	
+}
+
+.titulos input {
+	height: 16px !important;
+	width: 200px !important;
+}
+.titulos td {
+	height: auto !important;
+	padding: 30px;
+}
+.titulos div {
+	height: 10px !important;
+	width: 100% !important;
+}
+
+.titulos option {
+	height: 17px !important;
+	width: 200px !important;
+}
+
+.buttonTitulo{
+	margin-left: 20px;
+	display:inline-table;
+	height: auto !important;
+	width: auto !important;
+	background-color: buttonface;	
+	color: buttontext;
+	border: 2px outset buttonface;
+}
+.titulos td input[type=button]{
+	margin-left: 20px;
+	display:inline-table;
+	height: auto !important;
+	width: auto !important;
+	background-color: buttonface;	
+	color: buttontext;
+	border: 2px outset buttonface;
+	
+}
+
+.titulos td input[type=button]:active{
+	border-style: inset;
+}
+.titulos select {
+	height: 20px !important;
+	width: 200px !important;
+}
+.titulos label {
+	font-size: 13px !important;
+	width: auto;
+	float: inherit;
 }

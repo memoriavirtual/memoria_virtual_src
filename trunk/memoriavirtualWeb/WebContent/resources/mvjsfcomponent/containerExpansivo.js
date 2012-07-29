@@ -49,7 +49,7 @@ function ContainerExpansivo(container, botaoMenos, botaoMais, divBotao, estado) 
 		classe.botaoMaisAtivo = 1;
 		classe.botaoMais.setAttribute("class", "botaoOculto");
 		classe.botaoMenos.setAttribute("class", "botaoMaisMenos");
-		classe.container.setAttribute("style", "display: inline-table;");
+		fadeIn(classe.container);
 		classe.divBotao.setAttribute("class", "containerExpansivoEscuro");
 		setCoockie("estado"
 				+ classe.container.getAttribute("id"), "aberto");
@@ -59,7 +59,7 @@ function ContainerExpansivo(container, botaoMenos, botaoMais, divBotao, estado) 
 		classe.botaoMaisAtivo = 0;
 		classe.botaoMais.setAttribute("class", "botaoMaisMenos");
 		classe.botaoMenos.setAttribute("class", "botaoOculto");
-		classe.container.setAttribute("style", "display: none;");
+		fadeOut(classe.container);
 		classe.divBotao.setAttribute("class", "containerExpansivo");
 		setCoockie("estado"
 				+ classe.container.getAttribute("id"), "fechado");
@@ -67,15 +67,11 @@ function ContainerExpansivo(container, botaoMenos, botaoMais, divBotao, estado) 
 
 	
 }
-
-
-function setCoockie (id, estado) {
-
-	document.cookie = id + "=" + estado;
-};
-
-
-
+/**
+ * função recupera o estado salvo no cookie da página
+ * @param id
+ * @returns
+ */
 function getCookie(id) {
 	var i, x, y, cookiesMap = document.cookie.split(";");
 	for (i = 0; i < cookiesMap.length; i++) {
@@ -87,6 +83,79 @@ function getCookie(id) {
 		}
 	}
 };
+
+/**
+ * salva no cookie o estado do container
+ * @param id
+ * @param estado
+ */
+function setCoockie (id, estado) {
+
+	document.cookie = id + "=" + estado;
+};
+/**
+ * 
+ * @param id
+ */
+function fadeOut(e) {
+	var time = 0.5;
+	var ini = 100;
+	var fin = 0;
+    var target = e;
+    var alpha = ini;
+    var inc;
+    if (fin >= ini) { 
+        inc = 4; 
+    } else {
+        inc = -4;
+    }
+    timer = (time * 1000) / 25;
+    var i = setInterval(
+        function() {
+            if ((inc > 0 && alpha >= fin) || (inc < 0 && alpha <= fin)) {
+                clearInterval(i);
+                e.setAttribute("style", "display: none;");
+            }
+            setAlpha(target, alpha);
+            alpha += inc;
+        }, timer);
+}
+
+
+
+function fadeIn(e) {
+	e.style.opacity = 0/100;
+	e.setAttribute("style", "display: inline-table;");
+	var time = 0.3;
+	var ini = 0;
+	var fin = 100;
+    var target = e;
+    var alpha = ini;
+    var inc;
+    if (fin >= ini) { 
+        inc = 4; 
+    } else {
+        inc = -4;
+    }
+    timer = (time * 1000) /25;
+    var i = setInterval(
+        function() {
+            if ((inc > 0 && alpha >= fin) || (inc < 0 && alpha <= fin)) {
+                clearInterval(i);
+            }
+            setAlpha(target, alpha);
+            alpha += inc;
+        }, timer);
+    
+}
+
+function setAlpha(target, alpha) {
+	target.style.filter = "alpha(opacity="+ alpha +")";
+	target.style.opacity = alpha/100;
+}
+
+
+
 iniciarComponenteContainerExpansivo = (function(idContainer, idMenos, idMais,
 		idDivBotao) {
 	var container = document.getElementById(idContainer);

@@ -49,6 +49,7 @@
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
 										itemValue="false" />
 								</h:selectOneRadio>
+								<div></div>
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemNaturezaDoBem}</h:outputLabel>
@@ -58,8 +59,9 @@
 										itemValue="#{mensagens.cadastrarBemImaterial}" />
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemMaterial}"
 										itemValue="#{mensagens.cadastrarBemMaterial}" />
-										<f:ajax event="change"  render="tipodobem"></f:ajax>
+									<f:ajax event="change" render="tipodobem"></f:ajax>
 								</h:selectOneRadio>
+								<div></div>
 							</div>
 
 							<div>
@@ -67,36 +69,59 @@
 								<h:selectOneMenu id="tipodobem" class="options"
 									value="#{cadastrarBemPatrimonialMB.tipoDoBemPatrimonial}">
 									<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposBem}" />
-									<f:ajax event="blur" execute="@this" render="validacaoValidade"
-										listener="#{excluirInstituicaoMB.validadeValidade}" />
 								</h:selectOneMenu>
 								<div></div>
-								<h:message id="validacaoValidade" for="validacaoValidade"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
-								</h:message>
-								
-								<h:dataTable id="titulosBem" var="titulo"
-								value="#{cadastrarBemPatrimonialMB.titulos}">
-								<h:column>
-									<h:commandButton type="button" action="cadastrarBemPatrimonialMB.removerTitulo(Titulo)" >
-										<f:ajax event="click" execute="@this" render="titulosBem"
-										listener="#{excluirInstituicaoMB.validadeValidade}" />
+							</div>
+
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.numeroRegistro}">
+								</h:inputText>
+								<div></div>
+							</div>
+
+
+							<div style=" margin-top: 20px; ">
+								<h:outputLabel class="labels" style="float: left; width: 250px;  "
+									>#{mensagens.cadastrarBemTitulos}</h:outputLabel>
+
+								<div></div>
+								<h:commandButton type="button" 
+										value="#{cadastrarBemPatrimonialMB.getTextoBotao(titulo)}">
+										<f:ajax  listener="#{cadastrarBemPatrimonialMB.botaoTitulo}" render="titulosBem" ></f:ajax>
 									</h:commandButton>
+									<h:commandButton type="button" 
+										value="#{cadastrarBemPatrimonialMB.getTextoBotao(titulo)}">
+										<f:ajax  listener="#{cadastrarBemPatrimonialMB.botaoTitulo}" render="titulosBem" ></f:ajax>
+									</h:commandButton>
+							</div>
+
+
+							<h:dataTable id="titulosBem" var="titulo" class="titulos"
+								value="#{cadastrarBemPatrimonialMB.titulos}">
+								<h:column id="coluna">
+									<h:outputLabel class="labels" style="width: 15%;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
+									<h:inputText style="width: 45% !important;"
+										value="#{titulo.valor}">
+									</h:inputText>
+									<div></div>
+									<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
+									<h:selectOneMenu id="tipodobem" class="options"
+										value="#{titulo.tipo}">
+										<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposTitulo}" />
+									</h:selectOneMenu>
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
+									<h:inputTextarea value="#{titulo.complemento}">
+									</h:inputTextarea>
+
+
+
 								</h:column>
 							</h:dataTable>
-							</div>
 							
-							<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro}</h:outputLabel>
-							<h:inputText value="#{cadastrarBemPatrimonialMB.numeroRegistro}">
-								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{cadastrarAutorMB.validateNome}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
+ 
+
 						</fieldset>
 					</mv:containerExpansivo>
 
