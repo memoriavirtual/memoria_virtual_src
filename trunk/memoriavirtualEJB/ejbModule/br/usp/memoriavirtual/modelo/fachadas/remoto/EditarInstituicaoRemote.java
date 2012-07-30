@@ -1,5 +1,7 @@
 package br.usp.memoriavirtual.modelo.fachadas.remoto;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
@@ -42,5 +44,9 @@ public interface EditarInstituicaoRemote {
 
 	public Instituicao getInstituicao(String pnome, Grupo grupo, Usuario usuario)
 			throws ModeloException;
+	
+	public List<Instituicao> listarInstituicoes(String pnome) throws ModeloException;
+	public List<Instituicao> listarInstituicoes(String pnome,
+			Grupo grupo, Usuario usuario) throws ModeloException;
 
 }

@@ -33,7 +33,7 @@ public class EditarAutor implements EditarAutorRemote {
 		Query query;
 		query = this.entityManager
 				.createQuery("SELECT a FROM Autor a WHERE a.nome like :busca or a.sobrenome like :busca or a.codinome like :busca ORDER BY a.nome");
-		query.setParameter("busca", strDeBusca+"%");
+		query.setParameter("busca", "%"+strDeBusca+"%");
 		try {
 			lista = ( List<Autor> ) query.getResultList();
 			return  lista ;

@@ -21,8 +21,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
-import br.usp.memoriavirtual.modelo.entidades.Grupo;
-import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
@@ -205,63 +203,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return msgNova;
 	}
 
-	/**
-	 * listarInstituicoes(pnome, grupo, usuario)
-	 * 
-	 * @param String
-	 *            pnome todo ou parte do nome da instituicao a ser procurada
-	 * @param Grupo
-	 *            grupo Grupo do usuario que faz o pedido
-	 * @param Usuario
-	 *            usuario usuario que faz o pedido
-	 * @return List<Instituicao> Lista de instituicoes cujo nome comeca com
-	 *         pnome, e podem ser acessadas pelo
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Instituicao> listarInstituicoes(String pnome, Grupo grupo,
-			Usuario usuario) {
-		List<Instituicao> ins = new ArrayList<Instituicao>();
-		Query query;
 
-		query = entityManager
-				.createQuery("SELECT a.instituicao FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao.nome LIKE :nome ");
-		query.setParameter("nome", "%" + pnome + "%");
-
-
-		query.setParameter("grupo", grupo);
-		query.setParameter("usuario", usuario);
-		try {
-			ins = (List<Instituicao>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
- 
-		return ins;
-	}
-
-	/**
-	 * Metodo de sugestoes para instituicao
-	 * 
-	 * @param pnome
-	 *            String para a qual o sistema gera sugestoes
-	 * @return Lista de Instituicoes que comecam com a String de parametro
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Instituicao> listarInstituicoes(String pnome) {
-		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
-		Query query;
-		query = entityManager
-				.createQuery("SELECT a FROM Instituicao a  WHERE a.validade = TRUE AND a.nome LIKE :padrao ORDER BY a.nome");
-
-		query.setParameter("padrao", "%" + pnome + "%");
-		try {
-			instituicoes = (List<Instituicao>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return instituicoes;
-	}
 
 	/**
 	 * Método para sugestão de usuários retorna todos os usuários do banco cujo
