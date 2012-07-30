@@ -58,7 +58,6 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 
 		this.autores.clear();
 
-	//	if (!this.strDeBusca.equals("")) {
 			try {
 				this.autores = this.editarAutorEJB
 						.listarAutores(this.strDeBusca);
@@ -69,13 +68,6 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 				e.printStackTrace();
 			}
 
-//			if (this.autores.isEmpty()) {
-//				Autor aut = new Autor();
-//				aut.setNome(bundle
-//						.getString("excluirInstituicaoErrolistavazia"));
-//				this.autores.add(aut);
-//			}
-	//	}
 		return null;
 	}
 

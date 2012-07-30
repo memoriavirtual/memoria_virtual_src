@@ -41,7 +41,8 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 					this.email, this.URL, this.identificacaoProprietario,
 					this.administradorPropriedade, this.latitude,
 					this.longitude, this.altitude, this.tipoPropriedade,
-					this.protecaoExistente, this.legislacao , this.sinteseHistorica);
+					this.protecaoExistente, this.legislacao,
+					this.sinteseHistorica);
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			String bundleName = "mensagens";
@@ -89,7 +90,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	}
 
 	public void listarInstituicoes() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		Usuario usuario = (Usuario) context.getExternalContext()
 				.getSessionMap().get("usuario");
@@ -101,18 +102,29 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
 
 		if (usuario.isAdministrador()) {
-			instituicoesUsuario = this.memoriaVirtualEJB
-					.listarInstituicoes(this.nome);
+			try {
+				instituicoesUsuario = this.editarInstituicaoEJB
+						.listarInstituicoes(this.nome);
+				Instituicao ins = new Instituicao();
+				ins.setNome(bundle.getString("listarTodos"));
+				instituicoesUsuario.add(0, ins);
+			} catch (ModeloException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		} else {
 			Grupo grupo = new Grupo("Gerente");
-			instituicoesUsuario = this.memoriaVirtualEJB.listarInstituicoes(
-					this.nome, grupo, usuario);
-		}
-		if (!instituicoesUsuario.isEmpty()) {
-			Instituicao ins = new Instituicao();
-			ins.setNome(bundle.getString("listarTodos"));
-			instituicoesUsuario.add(0, ins);
+			try {
+				instituicoesUsuario = this.editarInstituicaoEJB
+						.listarInstituicoes(this.nome, grupo, usuario);
+				Instituicao ins = new Instituicao();
+				ins.setNome(bundle.getString("listarTodos"));
+				instituicoesUsuario.add(0, ins);
+			} catch (ModeloException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		this.instituicoes = instituicoesUsuario;
@@ -123,8 +135,8 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
-		if(instituicao.getNome().equals(bundle.getString("listarTodos"))){
+
+		if (instituicao.getNome().equals(bundle.getString("listarTodos"))) {
 			this.nome = "";
 			this.listarInstituicoes();
 			this.instituicoes.remove(0);
