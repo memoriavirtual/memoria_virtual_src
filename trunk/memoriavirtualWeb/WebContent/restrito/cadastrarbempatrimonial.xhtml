@@ -8,7 +8,7 @@
 	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+
 <title>Cadastrar Bem Patrimonial</title>
 </head>
 <h:body>
@@ -36,7 +36,7 @@
 
 					<div class="espacador"></div>
 
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemGeralInfo}">
+					<mv:containerExpansivo id="GeralInfo" label="#{mensagens.cadastrarBemGeralInfo}">
 						<fieldset>
 
 							<div>
@@ -82,21 +82,18 @@
 							</div>
 
 
-							<div style=" margin-top: 20px; ">
-								<h:outputLabel class="labels" style="float: left; width: 250px;  "
-									>#{mensagens.cadastrarBemTitulos}</h:outputLabel>
-
+							<div style="margin-top: 20px;">
+								<h:outputLabel class="labels"
+									style="float: left; width: 250px;  ">#{mensagens.cadastrarBemTitulos}</h:outputLabel>
+								
 								<div></div>
-								<h:commandButton type="button" 
-										value="#{cadastrarBemPatrimonialMB.getTextoBotao(titulo)}">
-										<f:ajax  listener="#{cadastrarBemPatrimonialMB.botaoTitulo}" render="titulosBem" ></f:ajax>
-									</h:commandButton>
-									<h:commandButton type="button" 
-										value="#{cadastrarBemPatrimonialMB.getTextoBotao(titulo)}">
-										<f:ajax  listener="#{cadastrarBemPatrimonialMB.botaoTitulo}" render="titulosBem" ></f:ajax>
-									</h:commandButton>
-							</div>
 
+								<h:outputScript name="mv.js" library="javascript"></h:outputScript>
+								
+							</div>
+							<h:inputText id="botaoEscondidoTitulo"   value="#{cadastrarBemPatrimonialMB.indiceTitulo}">
+								<f:ajax render="titulosBem"  event="change" listener="#{cadastrarBemPatrimonialMB.botaoTitulo}"></f:ajax>
+							</h:inputText>
 
 							<h:dataTable id="titulosBem" var="titulo" class="titulos"
 								value="#{cadastrarBemPatrimonialMB.titulos}">
@@ -105,11 +102,17 @@
 									<h:inputText style="width: 45% !important;"
 										value="#{titulo.valor}">
 									</h:inputText>
+									<h:commandButton type="button"
+										onclick="javascript: bemTituloBotaoJS(#{cadastrarBemPatrimonialMB.titulos.indexOf(titulo)})"
+										value="#{cadastrarBemPatrimonialMB.getTextoBotao(titulo)}">
+
+									</h:commandButton>
 									<div></div>
 									<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
 									<h:selectOneMenu id="tipodobem" class="options"
 										value="#{titulo.tipo}">
-										<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposTitulo}" />
+										<f:selectItems
+											value="#{cadastrarBemPatrimonialMB.tiposTitulo}" />
 									</h:selectOneMenu>
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
 									<h:inputTextarea value="#{titulo.complemento}">
@@ -119,8 +122,8 @@
 
 								</h:column>
 							</h:dataTable>
-							
- 
+
+
 
 						</fieldset>
 					</mv:containerExpansivo>

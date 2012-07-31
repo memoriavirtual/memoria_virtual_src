@@ -30,6 +30,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String tipoDoBemPatrimonial;
 	protected String numeroRegistro;
 	protected List<Titulo> titulos = new ArrayList<Titulo>();
+	protected Integer indiceTitulo;
 
 	/**
 	 * 
@@ -37,6 +38,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public CadastrarBemPatrimonialMB() {
 		super();
 		this.titulos.add(new Titulo());
+		
 	}
 
 	@Override
@@ -211,6 +213,14 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	 */
 	public void setTitulos(List<Titulo> titulos) {
 		this.titulos = titulos;
+	}
+
+	public Integer getIndiceTitulo() {
+		return indiceTitulo;
+	}
+
+	public void setIndiceTitulo(Integer indiceTitulo) {
+		this.indiceTitulo = indiceTitulo;
 	}
 
 }

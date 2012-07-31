@@ -586,15 +586,7 @@ textarea:focus {
 	width: 200px !important;
 }
 
-.buttonTitulo{
-	margin-left: 20px;
-	display:inline-table;
-	height: auto !important;
-	width: auto !important;
-	background-color: buttonface;	
-	color: buttontext;
-	border: 2px outset buttonface;
-}
+
 .titulos td input[type=button]{
 	margin-left: 20px;
 	display:inline-table;
@@ -603,7 +595,6 @@ textarea:focus {
 	background-color: buttonface;	
 	color: buttontext;
 	border: 2px outset buttonface;
-	
 }
 
 .titulos td input[type=button]:active{
