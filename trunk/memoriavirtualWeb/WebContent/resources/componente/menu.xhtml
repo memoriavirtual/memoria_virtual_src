@@ -26,7 +26,7 @@
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
 							value="cadastrarautor.jsf">#{mensagens.menuCadastrarAutor}</h:outputLink></li>
-							<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
 							value="editarautor.jsf">#{mensagens.menuEditarAutor}</h:outputLink></li>
 							<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
 							value="excluirautor.jsf">#{mensagens.menuExcluirAutor}</h:outputLink></li>
@@ -43,6 +43,9 @@
 							value="enviarconvite.jsf">#{mensagens.menuEnviarConvite}</h:outputLink></li>
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
 							value="selecionarusuario.jsf">#{mensagens.menuEditarCadastroUsuario}</h:outputLink></li>
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="excluirusuario_etapa1.jsf">#{mensagens.menuExcluirUsuario}</h:outputLink>
+					</li>
 				</ul></li>
 			<li><h:outputLink class="linkPrincipal"
 					rendered="#{renderizarMenuMB.gerente}">#{mensagens.instituicao}</h:outputLink>
@@ -58,9 +61,6 @@
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="true"
 							value="editarcadastroproprio.jsf">#{mensagens.menuAlterarCadastroProprio}</h:outputLink>
-					</li>
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="excluirusuario_etapa1.jsf">#{mensagens.menuExcluirUsuario}</h:outputLink>
 					</li>
 				</ul></li>
 		</ul>
