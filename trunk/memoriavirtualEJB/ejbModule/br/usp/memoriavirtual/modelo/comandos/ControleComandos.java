@@ -3,6 +3,9 @@ package br.usp.memoriavirtual.modelo.comandos;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.Singleton;
+
+@Singleton
 public class ControleComandos {
 
 	private List<Comando> comandos;
