@@ -49,7 +49,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-	
+
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
 
@@ -85,11 +85,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 
 	/**
-	 * M�todo � invocado a cada evento Ajax KeyUp no campo Nome da Institui��o
-	 * do formul�rio, tal campo est� associado ao atributo this.nome, este
-	 * atributo � utilizado para fazer uma busca no banco de dados, que retorna
-	 * uma lista em ordem alfab�tica, em rela��o ao nome, de todas as
-	 * institui��es cujo o nome corresponde em parte com o atributo this.nome.
+	 * M�todo � invocado a cada evento Ajax KeyUp no campo Nome da
+	 * Institui��o do formul�rio, tal campo est� associado ao atributo
+	 * this.nome, este atributo � utilizado para fazer uma busca no banco de
+	 * dados, que retorna uma lista em ordem alfab�tica, em rela��o ao
+	 * nome, de todas as institui��es cujo o nome corresponde em parte com o
+	 * atributo this.nome.
 	 * 
 	 * @param event
 	 *            Ajax KeyUp
@@ -109,8 +110,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 				}
 			} else {
 				try {
-					listaInstituicoes = this.editarInstituicaoEJB.listarInstituicoes(
-							this.nome, new Grupo("GERENTE"), requisitor);
+					listaInstituicoes = this.editarInstituicaoEJB
+							.listarInstituicoes(this.nome,
+									new Grupo("GERENTE"), requisitor);
 				} catch (ModeloException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -134,10 +136,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo � invocado quando � pressionado o bot�o Selecionar Institui��o,
-	 * Ele invoca os m�todos de valida��o do campos dos formul�rios, se estes
-	 * m�todo considerarem v�lidas as informa��es nos campos do formul�rio, o
-	 * m�todo this.listarGerentes() � invocado, e depois � retornado a String
+	 * M�todo � invocado quando � pressionado o bot�o Selecionar
+	 * Institui��o, Ele invoca os m�todos de valida��o do campos dos
+	 * formul�rios, se estes m�todo considerarem v�lidas as
+	 * informa��es nos campos do formul�rio, o m�todo
+	 * this.listarGerentes() � invocado, e depois � retornado a String
 	 * Instselecionada que ser� interpretada pelo facesConfig
 	 * 
 	 * @return Se todas as valida��es retornarem true retorna a Sting
@@ -154,10 +157,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 	/**
 	 * M�todo � invocado quando ocorre um clique uma linha do DataTable que
-	 * cont�m a lista de Institui��es cujo nome corresponde em parte ao nome que
-	 * est� sendo digitado. A institui��o selecionada � passada como par�metro,
-	 * e utilizada para setar os argumentos this.nome com o nome da institui��o
-	 * e o this.instituicao com o pr�prio objeto Institui��o.
+	 * cont�m a lista de Institui��es cujo nome corresponde em parte ao
+	 * nome que est� sendo digitado. A institui��o selecionada � passada
+	 * como par�metro, e utilizada para setar os argumentos this.nome com o
+	 * nome da institui��o e o this.instituicao com o pr�prio objeto
+	 * Institui��o.
 	 * 
 	 * @param instituicao
 	 * 
@@ -191,14 +195,15 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo invocado quando uma institui��o � selecionada, seja na p�gina do
-	 * CDU ou no servlet, o m�todo faz uma requisi��o no banco de dados de
-	 * objetos Acesso relacionados com a institui��o selecionada, caso exista
-	 * uma lista de objetos Acesso, ele transforma a lista em uma lista de
-	 * objetos Usuario e a atribui a this.gerentesInstituicao e seta o atributo
-	 * this.gerente com o primeiro usu�rio da lista. caso n�o exista uma lista
-	 * de objetos Acesso relacionados a Institui��o, um objeto Usuario � criado
-	 * mas este serve apenas para mostrar a mensagem na p�gina informando que a
+	 * M�todo invocado quando uma institui��o � selecionada, seja na
+	 * p�gina do CDU ou no servlet, o m�todo faz uma requisi��o no banco
+	 * de dados de objetos Acesso relacionados com a institui��o
+	 * selecionada, caso exista uma lista de objetos Acesso, ele transforma a
+	 * lista em uma lista de objetos Usuario e a atribui a
+	 * this.gerentesInstituicao e seta o atributo this.gerente com o primeiro
+	 * usu�rio da lista. caso n�o exista uma lista de objetos Acesso
+	 * relacionados a Institui��o, um objeto Usuario � criado mas este
+	 * serve apenas para mostrar a mensagem na p�gina informando que a
 	 * institui��o n�o tem gerentes.
 	 * 
 	 */
@@ -226,9 +231,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo invocado quando ocorre o evento Ajax KeyUp na caixa de texto, onde
-	 * o usu�rio preenche a justificativa.Este m�todo apenas invoca o m�todo
-	 * this.contarJustificativa
+	 * M�todo invocado quando ocorre o evento Ajax KeyUp na caixa de texto,
+	 * onde o usu�rio preenche a justificativa.Este m�todo apenas invoca o
+	 * m�todo this.contarJustificativa
 	 * 
 	 * @param event
 	 */
@@ -237,12 +242,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo faz analisa o tamanho da String exibe mensagens com o n�mero de
-	 * caracteres na p�gina do CDU, caso o n�mero de caracteres exceda 300, a
-	 * mensagem de erro tamb�m � exibida.
+	 * M�todo faz analisa o tamanho da String exibe mensagens com o n�mero
+	 * de caracteres na p�gina do CDU, caso o n�mero de caracteres exceda
+	 * 300, a mensagem de erro tamb�m � exibida.
 	 * 
-	 * @return True caso o n�mero de caracteres da justificativa seja inferior a
-	 *         300 caracteres, do contr�rio retorna falso.
+	 * @return True caso o n�mero de caracteres da justificativa seja inferior
+	 *         a 300 caracteres, do contr�rio retorna falso.
 	 */
 	public boolean contarJustificativa() {
 
@@ -284,9 +289,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	/**
 	 * M�todo � utilizado pela p�gina do CDU para exibir a lista de
 	 * administradores e/ou gerentes que est�o apitos a validarem o pedido de
-	 * exclus�o. o m�todo tamb�m trabalha para que a lista esteja lexamente
-	 * ordenada, para que o usuario da se��o n�o esteja na lista e para que n�o
-	 * contenha nomes repetidos
+	 * exclus�o. o m�todo tamb�m trabalha para que a lista esteja
+	 * lexamente ordenada, para que o usuario da se��o n�o esteja na lista
+	 * e para que n�o contenha nomes repetidos
 	 * 
 	 * @return lista de validadores.
 	 */
@@ -314,7 +319,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 		validadoreslista.remove(requisitor.getId());
 		List<String> listaTemp = new ArrayList<String>();
 
-		listaTemp.addAll(validadoreslista.values());
+		for (String i : validadoreslista.values()) {
+			listaTemp.add(i);
+		}
 
 		MyStringComparable c = new MyStringComparable();
 		Collections.sort(listaTemp, c);
@@ -330,12 +337,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo monta o texto do email, bem como chama o m�todo respons�vel por
-	 * enviar o mesmo. Ainda registra um objeto itemAuditoria, registra um
-	 * objeto aprova��o e marca a institui��o a ser exclu�da e os objetos Acesso
-	 * relacionados a ela com o campo validade = false tamb�m trabalha com o
-	 * objeto Date afim de encontrar a data de expira��o que fara parte do
-	 * objeto Aprova��o
+	 * M�todo monta o texto do email, bem como chama o m�todo respons�vel
+	 * por enviar o mesmo. Ainda registra um objeto itemAuditoria, registra um
+	 * objeto aprova��o e marca a institui��o a ser exclu�da e os
+	 * objetos Acesso relacionados a ela com o campo validade = false tamb�m
+	 * trabalha com o objeto Date afim de encontrar a data de expira��o que
+	 * fara parte do objeto Aprova��o
 	 * 
 	 * @throws IOException
 	 */
@@ -365,13 +372,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 				Aprovacao aprovacao = this.excluirInstituicaoEJB
 						.registrarAprovacao(this.administradorValidador,
 								this.instituicao, dataValidade);
-				// marca a institui��o a ser exclu�da para que a mesma n�o
+				// marca a institui��o a ser exclu�da para que a mesma
+				// n�o
 				// seja mais utilizada
 
 				// registra a autoria do pedido de exclus�o
-				ItemAuditoria i = this.auditoriaFabricaEJB.auditarExcluirInstituicao(
-						this.requisitor, this.instituicao.getNome(),
-						this.justificativa);
+				ItemAuditoria i = this.auditoriaFabricaEJB
+						.auditarExcluirInstituicao(this.requisitor,
+								this.instituicao.getNome(), this.justificativa);
 
 				try {
 
@@ -407,8 +415,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 											+ "/excluir?"
 											+ "chaveEstrangeira="
 											+ aprovacao.getId()
-											+"&auditoria="
-											+i.getId()
+											+ "&auditoria="
+											+ i.getId()
 											+ "\n\n"
 											+ bundle.getString("excluirInstituicaoEmailMensagemFim")
 											+ "\n" + "\n");
@@ -418,7 +426,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 							this.requisitor, this.instituicao.getNome(),
 							this.justificativa);
 
-					// marca a institui��o a ser exclu�da para que a mesma n�o
+					// marca a institui��o a ser exclu�da para que a mesma
+					// n�o
 					// seja mais utilizada
 
 					this.excluirInstituicaoEJB.marcarInstituicaoExcluida(
@@ -448,8 +457,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	/* M�todos que tratam do Pedido de Exclus�o */
 
 	/**
-	 * M�todo trata a��o do bot�o Negar Pedido da P�gina do caso de uso Nega o
-	 * pedido, reativa a Institui��o e todas as suas depend�ncias
+	 * M�todo trata a��o do bot�o Negar Pedido da P�gina do caso de
+	 * uso Nega o pedido, reativa a Institui��o e todas as suas
+	 * depend�ncias
 	 * 
 	 * @return
 	 */
@@ -494,9 +504,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo exclui a institui��o do sistema Mem�ria Virtual,bem como todos o
-	 * objetos Acesso relacionados a ela , al�m disso, salva no bando de dados,
-	 * na tabela auditoria os respons�veis pela exclus�o
+	 * M�todo exclui a institui��o do sistema Mem�ria Virtual,bem como
+	 * todos o objetos Acesso relacionados a ela , al�m disso, salva no bando
+	 * de dados, na tabela auditoria os respons�veis pela exclus�o
 	 * 
 	 */
 	public String validarExclusaoInstituicao() {
@@ -542,9 +552,9 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo reinicializa todos os atributos da classe ExcluirInstiuicaoMB. �
-	 * utilizado nos m�todos relacionados com os bot�es voltar das p�ginas do
-	 * CDU Excluir Institui��o
+	 * M�todo reinicializa todos os atributos da classe ExcluirInstiuicaoMB.
+	 * � utilizado nos m�todos relacionados com os bot�es voltar das
+	 * p�ginas do CDU Excluir Institui��o
 	 */
 	private void zerarManegedBean() {
 		// para construir as mensagens
@@ -597,7 +607,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 
 	/**
 	 * @param event
-	 *            M�todo de valida��o do imput validade do pedido de exclus�o
+	 *            M�todo de valida��o do imput validade do pedido de
+	 *            exclus�o
 	 */
 	public void validadeValidade(AjaxBehaviorEvent event) {
 		validateValidade();
@@ -605,8 +616,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo de valida��o do imput validade do pedido de exclus�o Utilizado
-	 * pelo validador do evento e pelo validador do bot�o
+	 * M�todo de valida��o do imput validade do pedido de exclus�o
+	 * Utilizado pelo validador do evento e pelo validador do bot�o
 	 */
 	public boolean validateValidade() {
 
@@ -629,8 +640,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo de valida��o do imput validade do pedido de exclus�o Utilizado
-	 * pelo validador do evento e pelo validador do bot�o
+	 * M�todo de valida��o do imput validade do pedido de exclus�o
+	 * Utilizado pelo validador do evento e pelo validador do bot�o
 	 */
 	public boolean validateNome() {
 
@@ -654,12 +665,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 	}
 
 	/**
-	 * M�todo de valida��o do imput validador do pedido de exclus�o Utilizado
-	 * pelo vallidador do evento e pelo validador do bot�o
+	 * M�todo de valida��o do imput validador do pedido de exclus�o
+	 * Utilizado pelo vallidador do evento e pelo validador do bot�o
 	 */
 	public boolean booleanValidador() {
 
-		if (this.nomeValidador == null) {
+		if (this.nomeValidador == null
+				|| this.nomeValidador.contains(this.bundle
+						.getString("excluirInstituicaoSemGerente"))) {
 			MensagensDeErro.getErrorMessage("excluirInstituicaoErroValidador",
 					"validacaoValidador");
 			return false;
