@@ -12,6 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
+import com.sun.faces.renderkit.html_basic.AjaxBehaviorRenderer;
+
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 
@@ -21,6 +23,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
  */
 
 public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
+	
 	/**
 	 * 
 	 */
@@ -30,7 +33,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String tipoDoBemPatrimonial;
 	protected String numeroRegistro;
 	protected List<Titulo> titulos = new ArrayList<Titulo>();
-	protected Integer indiceTitulo;
+	protected String inputEscondido = new String();
 
 	/**
 	 * 
@@ -78,13 +81,16 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	}
 	
-	public void botaoTitulo(AjaxBehaviorEvent event){
-				
-			
-			this.titulos.add(new Titulo());
-		
+	public void adicionaTitulo(AjaxBehaviorEvent event){
+		this.titulos.add(new Titulo());	
 	}
 	
+	public void removeTitulo(AjaxBehaviorEvent event){
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		this.titulos.remove(this.titulos.size()-1);
+		System.out.println(event.getComponent().getClientId());
+	}
 	
 	
 	public String getTextoBotao(Titulo o) {
@@ -215,12 +221,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.titulos = titulos;
 	}
 
-	public Integer getIndiceTitulo() {
-		return indiceTitulo;
-	}
+	
 
-	public void setIndiceTitulo(Integer indiceTitulo) {
-		this.indiceTitulo = indiceTitulo;
-	}
+	
 
 }

@@ -585,19 +585,27 @@ textarea:focus {
 	height: 17px !important;
 	width: 200px !important;
 }
+.botoesTituiloTLB{
+	height: auto;
+	float:right;
+	margin-right: 20%;
+	display: inline !important;
+}
 
-
-.titulos td input[type=button]{
-	margin-left: 20px;
+.botoesTituiloTLB  input[type=button]{
+	
+	font-size: 11px ;
+	margin: 10px;
 	display:inline-table;
 	height: auto !important;
 	width: auto !important;
 	background-color: buttonface;	
 	color: buttontext;
 	border: 2px outset buttonface;
+	margin-top: 10px;
 }
 
-.titulos td input[type=button]:active{
+.botoesTituiloTLB  input[type=button]:active{
 	border-style: inset;
 }
 .titulos select {

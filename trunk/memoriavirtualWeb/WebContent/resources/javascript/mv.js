@@ -3,8 +3,6 @@
  * 
  */
 
-bemTituloBotaoJS = (function (arg, arg2 ,arg3){
+bemTituloBotaoJS = (function (){
 	var botaoOculto = document.getElementById("GeralInfo:botaoEscondidoTitulo");
-	var indice = arg;
-	botaoOculto.setAttribute("value", indice );
-});
+	botaoOculto.click();});

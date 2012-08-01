@@ -36,7 +36,8 @@
 
 					<div class="espacador"></div>
 
-					<mv:containerExpansivo id="GeralInfo" label="#{mensagens.cadastrarBemGeralInfo}">
+					<mv:containerExpansivo id="GeralInfo"
+						label="#{mensagens.cadastrarBemGeralInfo}">
 						<fieldset>
 
 							<div>
@@ -76,7 +77,7 @@
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro}</h:outputLabel>
-								<h:inputText  value="#{cadastrarBemPatrimonialMB.numeroRegistro}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.numeroRegistro}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -85,28 +86,33 @@
 							<div style="margin-top: 20px;">
 								<h:outputLabel class="labels"
 									style="float: left; width: 250px;  ">#{mensagens.cadastrarBemTitulos}</h:outputLabel>
-								
-								<div></div>
+
+							
 
 								<h:outputScript name="mv.js" library="javascript"></h:outputScript>
-								
+
 							</div>
-							<h:inputText id="botaoEscondidoTitulo"   value="#{cadastrarBemPatrimonialMB.indiceTitulo}">
-								<f:ajax render="titulosBem"  event="change" listener="#{cadastrarBemPatrimonialMB.botaoTitulo}"></f:ajax>
-							</h:inputText>
+						<div class="botoesTituiloTLB">
+							<h:commandButton type="button"  value="#{mensagens.cadastrarBemTituloAdicionar}">
+								<f:ajax render="titulosBem"
+									listener="#{cadastrarBemPatrimonialMB.adicionaTitulo}"></f:ajax>
+							</h:commandButton>
+							<h:commandButton type="button" class="botoesTituiloTLB"
+								value="#{mensagens.cadastrarBemTituloRemover}">
+								<f:ajax render="titulosBem"
+									listener="#{cadastrarBemPatrimonialMB.removeTitulo}"></f:ajax>
+							</h:commandButton>
+						</div>
 
 							<h:dataTable id="titulosBem" var="titulo" class="titulos"
 								value="#{cadastrarBemPatrimonialMB.titulos}">
 								<h:column id="coluna">
-									<h:outputLabel class="labels" style="width: 15%;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
-									<h:inputText style="width: 45% !important;"
+								
+										
+									<h:outputLabel class="labels" style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
+									<h:inputText style="width: 78% !important;"
 										value="#{titulo.valor}">
 									</h:inputText>
-									<h:commandButton type="button"
-										onclick="javascript: bemTituloBotaoJS(#{cadastrarBemPatrimonialMB.titulos.indexOf(titulo)})"
-										value="#{cadastrarBemPatrimonialMB.getTextoBotao(titulo)}">
-
-									</h:commandButton>
 									<div></div>
 									<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
 									<h:selectOneMenu id="tipodobem" class="options"
