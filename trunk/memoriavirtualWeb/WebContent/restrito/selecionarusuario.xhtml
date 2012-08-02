@@ -33,6 +33,8 @@
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{editarCadastroUsuarioMB.listarUsuarios}" />
+									<f:ajax event="focus" execute="@this" render="sugestoesId"
+									listener="#{editarCadastroUsuarioMB.listarUsuariosFocus}" />
 							</h:inputText>
 
 						</div>

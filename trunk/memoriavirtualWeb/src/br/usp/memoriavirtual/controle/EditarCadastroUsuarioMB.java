@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -55,12 +56,25 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	public EditarCadastroUsuarioMB() {
 		super();
 	}
-
+	
+	public void listarUsuariosFocus(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		this.usuarios =  new ArrayList<Usuario>();
+		Usuario ins = new Usuario();
+		ins.setNomeCompleto(bundle.getString("listarTodos"));
+		this.usuarios.add(0, ins);
+	}
+	
 	public void listarUsuarios(AjaxBehaviorEvent event) {
 		this.listarUsuarios();
 	}
 
 	public void listarUsuarios() {
+		
 
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
@@ -108,13 +122,18 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	 * @return
 	 */
 	public String selecionarUsuario(Usuario usuario) {
-
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
 		// pega o usuário requerente
 		Usuario requerente = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
 		// se for a opção para listar todos os usuários, refaz a busca no banco
-		if (usuario.getId().equals("listartodos")) {
+		if (usuario.getNomeCompleto().equals(
+				bundle.getString("listarTodos"))) {
 			this.nome = "";
 			this.listarUsuarios();
 			this.usuarios.remove(0);

@@ -40,7 +40,7 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 	public EditarAutorMB() {
 		super();
 	}
-
+	
 	/**
 	 * M�todo � chamado enquanto as letras são inseridas no campo de busca.
 	 */

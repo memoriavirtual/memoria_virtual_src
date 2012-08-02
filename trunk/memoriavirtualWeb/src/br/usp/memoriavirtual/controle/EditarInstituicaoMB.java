@@ -27,7 +27,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	private static final long serialVersionUID = -2609697377310497761L;
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-	private List<Instituicao> instituicoes;
+	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private Instituicao instituicao;
 	private long id;
 
@@ -82,7 +82,18 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		this.resetCadastrarinstituicao();
 		return "cancelar";
 	}
+	public void instituicoesSugeridasFocus(AjaxBehaviorEvent event) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		Instituicao ins = new Instituicao();
+		ins.setNome(bundle.getString("listarTodos"));
+		this.instituicoes.add(0, ins);
 
+	}
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
 		this.listarInstituicoes();
