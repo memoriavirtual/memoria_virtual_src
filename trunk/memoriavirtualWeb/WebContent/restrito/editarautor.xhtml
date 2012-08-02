@@ -37,7 +37,8 @@
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{editarAutorMB.listarAutores}" />
-
+								<f:ajax event="focus" execute="@this" render="sugestoesId"
+									listener="#{editarAutorMB.listarAutores}" />
 							</h:inputText>
 
 

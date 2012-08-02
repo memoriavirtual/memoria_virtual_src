@@ -33,7 +33,7 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 	private List<Autor> autores = new ArrayList<Autor>();
 	private boolean etapa1 = true;
 	private boolean etapa2 = false;
-
+	private boolean listarTodos = false;
 	/**
 	 * Construtor
 	 */
@@ -46,8 +46,8 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 	 */
 	public void listarAutores(AjaxBehaviorEvent event) {
 		
+			this.listarAutores();
 		
-		this.listarAutores();
 	}
 
 	public String listarAutores() {
@@ -57,17 +57,19 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 				context, bundleName);
 
 		this.autores.clear();
-
+		if (!this.strDeBusca.equals("") || this.listarTodos) {
 			try {
 				this.autores = this.editarAutorEJB
 						.listarAutores(this.strDeBusca);
-				Autor autor = new Autor();
-				autor.setNome(bundle.getString("listarTodos"));
-				this.autores.add(0, autor);
+				
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-
+		}else{
+			Autor autor = new Autor();
+			autor.setNome(bundle.getString("listarTodos"));
+			this.autores.add(0, autor);
+		}
 		return null;
 	}
 
@@ -87,9 +89,15 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 			this.etapa2 = true;
 		}
 		else{
+			this.listarTodos = true;
 			this.strDeBusca = "";
-			this.listarAutores();
-			this.autores.remove(0);
+			try {
+				this.autores = this.editarAutorEJB
+						.listarAutores(this.strDeBusca);
+				
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
@@ -122,6 +130,7 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 		this.autores.clear();
 		this.etapa1 = true;
 		this.etapa2 = false;
+		this.listarTodos = false;
 		return null;
 	}
 

@@ -29,6 +29,6 @@ INSERT INTO INSTITUICAO values(3,'Maldonado','1000m','111111','11111-111','São C
 INSERT INTO AUTOR values(1, 'Escritor', 'Machado', '01/01/1900', 'Joaquim Maria', '01/01/2000', 'Machado de Assis','Autor');
 INSERT INTO AUTOR values(2, 'Desenhista', 'VanGogh', '01/01/1900', 'Vincent', '01/01/2000', 'Van Gogh','Autor');
 
-INSERT INTO GRUPO values('Catalogador');
-INSERT INTO GRUPO values('Revisor');
-INSERT INTO GRUPO values('Gerente');
+INSERT INTO GRUPO values('CATALOGADOR');
+INSERT INTO GRUPO values('REVISOR');
+INSERT INTO GRUPO values('GERENTE');

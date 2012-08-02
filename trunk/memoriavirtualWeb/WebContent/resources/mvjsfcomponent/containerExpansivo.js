@@ -22,10 +22,24 @@ function ContainerExpansivo(container, botaoMenos, botaoMais, divBotao, estado) 
 		classe.botaoMais.addEventListener("click", classe.clickMais, false);
 		classe.botaoMenos.addEventListener("click", classe.clickMenos, false);
 
-		if (classe.botaoMaisAtivo == 0)
-			classe.clickMenos();
-		else
-			classe.clickMais();
+		if (classe.botaoMaisAtivo == 0){
+			classe.botaoMaisAtivo = 0;
+		classe.botaoMais.setAttribute("class", "botaoMaisMenos");
+		classe.botaoMenos.setAttribute("class", "botaoOculto");
+		classe.divBotao.setAttribute("class", "containerExpansivo");
+		classe.container.setAttribute("style", "display: none;");
+		setCoockie("estado"
+				+ classe.container.getAttribute("id"), "fechado");
+		}
+		else{
+			classe.botaoMaisAtivo = 1;
+			classe.botaoMais.setAttribute("class", "botaoOculto");
+			classe.botaoMenos.setAttribute("class", "botaoMaisMenos");
+			classe.container.setAttribute("style", "display: inline-table;");
+			classe.divBotao.setAttribute("class", "containerExpansivoEscuro");
+			setCoockie("estado"
+					+ classe.container.getAttribute("id"), "aberto");
+		}
 	};
 
 	this.hover = function(e) {
