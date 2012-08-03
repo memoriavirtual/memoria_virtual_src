@@ -34,13 +34,13 @@
 							<h:outputLabel>#{excluirUsuarioMB.nomeExcluir}</h:outputLabel>
 							<div></div>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioNivelPermissao}</h:outputLabel>
 							<h:outputLabel>#{excluirUsuarioMB.nivelPermissao}</h:outputLabel>
 							<div></div>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioInstituicao}</h:outputLabel>
 							<h:outputLabel>#{excluirUsuarioMB.nomeExcluir}</h:outputLabel>
@@ -51,16 +51,43 @@
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioJustificativa}</h:outputLabel>
 							<h:inputTextarea class="caixadetexto"
 								value="#{excluirUsuarioMB.justificativa}" disabled="false">
-							<f:ajax event="blur" execute="@this"
+								<f:ajax event="blur" execute="@this"
 									render="validacaoJustificativa"
 									listener="#{excluirUsuarioMB.validateJustificativa}" />
 							</h:inputTextarea>
 							<div></div>
-							<h:message id="validacaoJustificativa" for="validacaoJustificativa"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							<h:message id="validacaoJustificativa"
+								for="validacaoJustificativa" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirUsuarioPrazoValidade}</h:outputLabel>
+							<h:selectOneMenu value="#{excluirUsuarioMB.prazoValidade}">
+								<f:selectItems value="#{excluirUsuarioMB.prazos}" />
+							</h:selectOneMenu>
+							<div>(dias)</div>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirUsuarioSemelhante}</h:outputLabel>
+							<h:selectOneMenu 
+								value="#{excluirUsuarioMB.semelhante}">
+								<f:selectItems value="#{excluirUsuarioMB.nomeSemelhantes}" />
+							</h:selectOneMenu>
+						</div>
+
+						<div>
+							<h:dataTable id="sugestoesId" var="usuario"
+								value="#{excluirUsuarioMB.semelhantes}">
+								<h:column>
+									<h:commandLink>
+										#{usuario.nomeCompleto}</h:commandLink>
+								</h:column>
+							</h:dataTable>
+						</div>
+
 					</fieldset>
 
 					<div class="botao">

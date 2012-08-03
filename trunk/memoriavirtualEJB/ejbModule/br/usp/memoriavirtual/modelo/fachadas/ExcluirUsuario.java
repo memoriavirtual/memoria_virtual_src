@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
@@ -22,65 +21,26 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String parteNome, Usuario eliminador,
-			Boolean isAdministrador) {
+	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente) throws ModeloException{
 
-		List<Usuario> usuarios;
-		List<Acesso> acessos;
-		//Acesso acesso;
-		List<Usuario> aux = new ArrayList<Usuario>();
-		Query query;
-		if (isAdministrador) {
-			query = this.entityManager
-					.createQuery("SELECT a FROM Usuario a WHERE a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
-			query.setParameter("parteNome", "%" + parteNome + "%");
-		} else {
-			query = this.entityManager
-					.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :eliminador");
-			query.setParameter("eliminador", eliminador);
-			try {
-				acessos = (List<Acesso>) query.getResultList();
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-			aux.clear();
-			for (Acesso acesso : acessos) {
-				query = this.entityManager
-						.createQuery("SELECT u FROM Acesso a, Usuario u WHERE a.usuario.id = u.id AND u.nomeCompleto LIKE :parteNome");
-				query.setParameter("parteNome", "%" + parteNome + "%");
-				//query.setParameter("instituicao", acesso.getInstituicao());
-				System.out.print(query.getResultList());
-				try{
-				aux.addAll((List<Usuario>)query.getResultList());}
-				catch(Exception e){
-					System.out.print("entrei aqui");
-				}
-				//query.setParameter("instituicao", acesso.getInstituicao());
-				//query.setParameter("instituicao", acesso.getInstituicao());
-				//query.setParameter("usuario", "%" + parteNome + "%");
-				/*try {
-					usuarios = (List<Usuario>) query.getResultList();
-					return usuarios;
-				} catch (Exception e) {
-					return null;
-				}*/
-			}
-			//try {
-			//usuarios = (List<Usuario>) query.getResultList();
-			return aux;
-		//} catch (Exception e) {
-			//return null;
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		
+		Query query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE " +
+				"u.ativo = TRUE AND "  +
+				"u.nomeCompleto LIKE :nome AND " +
+				"u <> :requerente" + 
+				" ORDER BY u.nomeCompleto ");
+		query.setParameter("requerente", requerente);
+		query.setParameter("nome", "%" + parteNome + "%");
+		
+		try{
+			usuarios = (List<Usuario>)query.getResultList();
 		}
-
-		//}
-		try {
-			usuarios = (List<Usuario>) query.getResultList();
-			return usuarios;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		catch(Exception e){
+			throw new ModeloException(e);
 		}
+		
+		return usuarios;
 
 	}
 

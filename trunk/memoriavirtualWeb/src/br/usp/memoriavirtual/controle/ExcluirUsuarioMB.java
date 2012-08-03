@@ -12,17 +12,19 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-public class ExcluirUsuarioMB implements Serializable{
+public class ExcluirUsuarioMB implements Serializable {
 
 	/**
 	 * 
@@ -34,15 +36,17 @@ public class ExcluirUsuarioMB implements Serializable{
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private AuditoriaFabricaRemote auditoriaFabricaEJB;
+	@EJB
+	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
 
-	private String nomeExcluir;
+	private String nome;
 	private int prazoValidade;
 	private String instuicaoPertencente;
 	private String nivelPermissao;
 	private String justificativa;
 	private String excluir;
 	private Usuario usuario;
-	private Usuario eliminador;
+	private Usuario requerente;
 	private String semelhante;
 	private Usuario validador;
 
@@ -55,8 +59,8 @@ public class ExcluirUsuarioMB implements Serializable{
 	private List<Usuario> semelhantes = new ArrayList<Usuario>();
 	private List<String> nomeSemelhantes = new ArrayList<String>();
 
-	public void setNomeExcluir(String nomeExcluir) {
-		this.nomeExcluir = nomeExcluir;
+	public void setNomeExcluir(String nome) {
+		this.nome = nome;
 	}
 
 	public void setPrazoValidade(int prazoValidade) {
@@ -106,7 +110,7 @@ public class ExcluirUsuarioMB implements Serializable{
 	}
 
 	public String getNomeExcluir() {
-		return this.nomeExcluir;
+		return this.nome;
 	}
 
 	public int getPrazoValidade() {
@@ -149,23 +153,79 @@ public class ExcluirUsuarioMB implements Serializable{
 		return this.nomeSemelhantes;
 	}
 
+	// public void listarUsuarios(AjaxBehaviorEvent event) {
+	// HttpServletRequest request = (HttpServletRequest) FacesContext
+	// .getCurrentInstance().getExternalContext().getRequest();
+	// this.requerente = (Usuario) request.getSession()
+	// .getAttribute("usuario");
+	// usuarios.clear();
+	// List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+	// listaUsuarios =
+	// this.excluirUsuarioEJB.listarUsuarios(this.nome,this.requerente,
+	// this.requerente.isAdministrador());
+	// setUsuarios(listaUsuarios);
+	// usuario = null;
+	// return;
+	// }
+
 	public void listarUsuarios(AjaxBehaviorEvent event) {
+
+		this.listarUsuarios();
+
+	}
+
+	public void listarUsuarios() {
+
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
-		this.eliminador = (Usuario) request.getSession()
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		this.usuarios = new ArrayList<Usuario>();
+
+		this.requerente = (Usuario) request.getSession()
 				.getAttribute("usuario");
-		usuarios.clear();
-		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		listaUsuarios = this.excluirUsuarioEJB.listarUsuarios(this.nomeExcluir,this.eliminador,
-				this.eliminador.isAdministrador());
-		setUsuarios(listaUsuarios);
-		usuario = null;
-		return;
+
+		if (this.requerente.isAdministrador()) {
+			try {
+				this.usuarios = this.excluirUsuarioEJB.listarUsuarios(
+						this.nome, this.requerente);
+			} catch (ModeloException m) {
+				MensagensDeErro.getErrorMessage(
+						"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
+				m.printStackTrace();
+			}
+		}
+		
+		if(this.usuarios.size() > 0){
+			Usuario todos = new Usuario();
+			todos.setId(bundle.getString("listarTodos"));
+			todos.setNomeCompleto(bundle.getString("listarTodos"));
+			this.usuarios.add(0, todos);
+		}
+
 	}
 
 	public String selecionarUsuario(Usuario usuario) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		if(usuario.getNomeCompleto().equals(bundle.getObject("listarTodos"))){
+			this.nome = "";
+			this.listarUsuarios();
+			this.usuarios.remove(0);
+			return null;
+		}
+		
 		this.usuario = usuario;
 		setNomeExcluir(usuario.getNomeCompleto());
+		this.usuarios.clear();
 		return null;
 	}
 
@@ -179,9 +239,10 @@ public class ExcluirUsuarioMB implements Serializable{
 			return null;
 		}
 		setNomeExcluir(usuario.getNomeCompleto());
-		try{
-		setNivelPermissao(memoriaVirtualEJB.getURLServidor());}
-		catch(ModeloException e){}
+		try {
+			setNivelPermissao(memoriaVirtualEJB.getURLServidor());
+		} catch (ModeloException e) {
+		}
 		if (usuario.isAdministrador()) {
 			this.nivelPermissao = "Administrador";
 		}
@@ -191,12 +252,12 @@ public class ExcluirUsuarioMB implements Serializable{
 	public String excluirEtapa2() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
-		this.eliminador = (Usuario) request.getSession()
+		this.requerente = (Usuario) request.getSession()
 				.getAttribute("usuario");
 		usuarios.clear();
 		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		listaUsuarios = this.excluirUsuarioEJB.listarSemelhantes(
-				this.eliminador.getId(), this.eliminador.isAdministrador());
+				this.requerente.getId(), this.requerente.isAdministrador());
 		setSemelhantes(listaUsuarios);
 		return "etapa3";
 	}
@@ -241,7 +302,7 @@ public class ExcluirUsuarioMB implements Serializable{
 									+ "\n"
 									+ bundle.getString("excluirUsuarioRequisitor")
 									+ ": "
-									+ this.eliminador.getNomeCompleto()
+									+ this.requerente.getNomeCompleto()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioPrazoValidade")
 									+ ": "
@@ -258,12 +319,16 @@ public class ExcluirUsuarioMB implements Serializable{
 									+ "\n\n"
 									+ bundle.getString("excluirUsuarioEmailMensagemFim")
 									+ "\n" + "\n");
-			//registra a autoria do pedido de exclusão
-			this.auditoriaFabricaEJB.auditarExcluirUsuario(this.eliminador, this.usuario.getId(),this.justificativa);
-			//registra um objeto Aprovacao
-			this.excluirUsuarioEJB.registrarAprovacao(this.validador,this.usuario.getId(),dataValidade);
-			//marca a instituição a ser excluída para que a mesma não seja mais utilizada 
-			this.excluirUsuarioEJB.marcarUsuarioExcluido(this.usuario,false,false);
+			// registra a autoria do pedido de exclusï¿½o
+			this.auditoriaFabricaEJB.auditarExcluirUsuario(this.requerente,
+					this.usuario.getId(), this.justificativa);
+			// registra um objeto Aprovacao
+			this.excluirUsuarioEJB.registrarAprovacao(this.validador,
+					this.usuario.getId(), dataValidade);
+			// marca a instituiï¿½ï¿½o a ser excluï¿½da para que a mesma nï¿½o seja mais
+			// utilizada
+			this.excluirUsuarioEJB.marcarUsuarioExcluido(this.usuario, false,
+					false);
 			// mensagem de sucesso
 			MensagensDeErro.getSucessMessage("excluirUsuarioEnviandoEmail",
 					"resultado");
@@ -272,7 +337,7 @@ public class ExcluirUsuarioMB implements Serializable{
 		} catch (ModeloException e) {
 			e.printStackTrace();
 			e.getCause();
-		} catch (NullPointerException e){
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 		return "true";
@@ -285,7 +350,7 @@ public class ExcluirUsuarioMB implements Serializable{
 
 	public String cancelar() {
 		this.usuario = null;
-		this.nomeExcluir = "";
+		this.nome = "";
 		this.nivelPermissao = "";
 		this.justificativa = "";
 		this.semelhante = "";
@@ -310,6 +375,21 @@ public class ExcluirUsuarioMB implements Serializable{
 			return false;
 		}
 		return true;
+	}
+
+	public List<SelectItem> getPrazos() {
+
+		List<SelectItem> prazos = new ArrayList<SelectItem>();
+
+		for (int i = 1; i <= 30; ++i) {
+			if (i == 1)
+				prazos.add(new SelectItem(i, String.valueOf(i) + " dia"));
+			else
+				prazos.add(new SelectItem(i, String.valueOf(i) + " dias"));
+		}
+
+		return prazos;
+
 	}
 
 }
