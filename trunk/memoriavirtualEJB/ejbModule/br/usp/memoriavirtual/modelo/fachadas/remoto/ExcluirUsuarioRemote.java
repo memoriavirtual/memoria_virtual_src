@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
@@ -17,5 +18,7 @@ public interface ExcluirUsuarioRemote {
 	public void registrarAprovacao(Usuario validador, String idExcluido,
 			Date dataValidade);
 	public void marcarUsuarioExcluido(Usuario usuario,boolean marca,boolean flagAcesso) throws ModeloException;
+	public List<Acesso> listarAcessos(Usuario usuario) throws ModeloException;
+	public List<Usuario> listarAprovadores(Usuario requerente, Usuario usuario) throws ModeloException;
 
 }

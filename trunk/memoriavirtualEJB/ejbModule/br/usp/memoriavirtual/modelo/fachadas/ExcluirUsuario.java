@@ -10,7 +10,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 
@@ -106,6 +108,77 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			query.setParameter("validade", marca);
 			query.executeUpdate();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Acesso> listarAcessos(Usuario usuario)
+			throws ModeloException {
+		
+		List<Acesso> acessos = new ArrayList<Acesso>();
+		
+		Query query = this.entityManager.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario");
+		query.setParameter("usuario", usuario);
+		
+		try{
+			acessos = (List<Acesso>)query.getResultList();
+		}
+		catch(Exception e){
+			throw new ModeloException(e);
+		}
+		
+		return acessos;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Usuario> listarAprovadores(Usuario requerente, Usuario usuario)
+			throws ModeloException {
+		
+		List<Acesso> acessos = new ArrayList<Acesso>();
+		List<Usuario> aprovadores = new ArrayList<Usuario>();
+		
+		Query listarAcessos = entityManager.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = TRUE");
+		listarAcessos.setParameter("usuario", usuario);
+		
+		try{
+			acessos = (List<Acesso>)listarAcessos.getResultList();
+		}
+		catch(Exception e){
+			throw new ModeloException();
+		}
+		
+		Query listarAdministradores = entityManager.createQuery("SELECT u FROM Usuario u WHERE " +
+				"u.ativo = TRUE AND u.administrador = TRUE AND u <> :usuario");
+		listarAdministradores.setParameter("usuario", requerente);
+		
+		try{
+			aprovadores = listarAdministradores.getResultList();
+		}
+		catch(Exception e){
+			throw new ModeloException();
+		}
+		
+		for(Acesso a : acessos){
+			Query listarAprovadores = entityManager.createQuery("SELECT a.usuario FROM Acesso a WHERE a.grupo = :grupo " +
+					"AND a.instituicao = :instituicao AND a.validade = TRUE AND a.usuario <> :requerente");
+			listarAprovadores.setParameter("grupo", new Grupo("gerente"));
+			listarAprovadores.setParameter("instituicao", a.getInstituicao());
+			listarAprovadores.setParameter("requerente", requerente);
+			
+			try{
+				List<Usuario> gerentes = listarAprovadores.getResultList();
+				System.out.println(gerentes.size());
+				for(Usuario u : gerentes){
+					aprovadores.add(u);
+				}
+			}
+			catch(Exception e){
+				throw new ModeloException();
+			}
+		}
+			
+		return aprovadores;
 	}
 
 }

@@ -16,6 +16,7 @@ import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -58,6 +59,7 @@ public class ExcluirUsuarioMB implements Serializable {
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	private List<Usuario> semelhantes = new ArrayList<Usuario>();
 	private List<String> nomeSemelhantes = new ArrayList<String>();
+	private List<Acesso> acessos;
 
 	public void setNomeExcluir(String nome) {
 		this.nome = nome;
@@ -178,16 +180,15 @@ public class ExcluirUsuarioMB implements Serializable {
 
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
-		
+		this.requerente = (Usuario) request.getSession()
+				.getAttribute("usuario");
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
-		this.usuarios = new ArrayList<Usuario>();
 
-		this.requerente = (Usuario) request.getSession()
-				.getAttribute("usuario");
+		this.usuarios = new ArrayList<Usuario>();
 
 		if (this.requerente.isAdministrador()) {
 			try {
@@ -199,8 +200,8 @@ public class ExcluirUsuarioMB implements Serializable {
 				m.printStackTrace();
 			}
 		}
-		
-		if(this.usuarios.size() > 0){
+
+		if (this.usuarios.size() > 0) {
 			Usuario todos = new Usuario();
 			todos.setId(bundle.getString("listarTodos"));
 			todos.setNomeCompleto(bundle.getString("listarTodos"));
@@ -210,23 +211,62 @@ public class ExcluirUsuarioMB implements Serializable {
 	}
 
 	public String selecionarUsuario(Usuario usuario) {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
-		if(usuario.getNomeCompleto().equals(bundle.getObject("listarTodos"))){
+
+		if (usuario.getNomeCompleto().equals(bundle.getObject("listarTodos"))) {
 			this.nome = "";
 			this.listarUsuarios();
 			this.usuarios.remove(0);
 			return null;
 		}
-		
+
 		this.usuario = usuario;
 		setNomeExcluir(usuario.getNomeCompleto());
 		this.usuarios.clear();
+		this.listarAcessos();
 		return null;
+	}
+
+	public void listarAcessos() {
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		this.requerente = (Usuario) request.getSession()
+				.getAttribute("usuario");
+
+		this.acessos = new ArrayList<Acesso>();
+
+		if (requerente.isAdministrador()) {
+			try {
+				this.acessos = excluirUsuarioEJB.listarAcessos(this.usuario);
+			} catch (ModeloException m) {
+				m.printStackTrace();
+			}
+		}
+
+	}
+
+	public List<SelectItem> getAprovadores() {
+
+		List<SelectItem> itens = new ArrayList<SelectItem>();
+		List<Usuario> aprovadores = new ArrayList<Usuario>();
+
+		try {
+			aprovadores = excluirUsuarioEJB.listarAprovadores(this.requerente,
+					this.usuario);
+		} catch (ModeloException m) {
+			m.printStackTrace();
+		}
+		
+		for(Usuario u : aprovadores){
+			itens.add(new SelectItem(u, u.getNomeCompleto()));
+		}
+		
+		return itens;
 	}
 
 	public String excluirEtapa1() {
@@ -390,6 +430,14 @@ public class ExcluirUsuarioMB implements Serializable {
 
 		return prazos;
 
+	}
+
+	public List<Acesso> getAcessos() {
+		return acessos;
+	}
+
+	public void setAcessos(List<Acesso> acessos) {
+		this.acessos = acessos;
 	}
 
 }

@@ -29,23 +29,9 @@
 				<h:form method="post" prependId="false">
 					<fieldset>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.excluirUsuarioNome}</h:outputLabel>
-							<h:outputLabel>#{excluirUsuarioMB.nomeExcluir}</h:outputLabel>
-							<div></div>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.excluirUsuarioNivelPermissao}</h:outputLabel>
-							<h:outputLabel>#{excluirUsuarioMB.nivelPermissao}</h:outputLabel>
-							<div></div>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.excluirUsuarioInstituicao}</h:outputLabel>
-							<h:outputLabel>#{excluirUsuarioMB.nomeExcluir}</h:outputLabel>
-							<div></div>
-						</div>
+						<h:dataTable var="acesso" value="#{excluirUsuarioMB.acessos}">
+							<h:column>#{acesso.grupo.id} em #{acesso.instituicao.nome}</h:column>
+						</h:dataTable>
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioJustificativa}</h:outputLabel>
@@ -72,20 +58,9 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioSemelhante}</h:outputLabel>
-							<h:selectOneMenu 
-								value="#{excluirUsuarioMB.semelhante}">
-								<f:selectItems value="#{excluirUsuarioMB.nomeSemelhantes}" />
+							<h:selectOneMenu value="#{excluirUsuarioMB.semelhante}">
+								<f:selectItems value="#{excluirUsuarioMB.aprovadores}" />
 							</h:selectOneMenu>
-						</div>
-
-						<div>
-							<h:dataTable id="sugestoesId" var="usuario"
-								value="#{excluirUsuarioMB.semelhantes}">
-								<h:column>
-									<h:commandLink>
-										#{usuario.nomeCompleto}</h:commandLink>
-								</h:column>
-							</h:dataTable>
 						</div>
 
 					</fieldset>
