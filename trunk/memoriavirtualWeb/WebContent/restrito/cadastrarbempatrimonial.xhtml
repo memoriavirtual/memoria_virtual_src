@@ -67,7 +67,8 @@
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial}</h:outputLabel>
-								<h:selectOneMenu id="tipodobem" class="options"
+								<h:selectOneMenu id="tipodobem" styleClass="options"
+									disabled="true"
 									value="#{cadastrarBemPatrimonialMB.tipoDoBemPatrimonial}">
 									<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposBem}" />
 								</h:selectOneMenu>
@@ -82,52 +83,92 @@
 								<div></div>
 							</div>
 
-
-							<div style="margin-top: 20px;">
-								<h:outputLabel class="labels"
-									style="float: left; width: 250px;  ">#{mensagens.cadastrarBemTitulos}</h:outputLabel>
-
 							
+								<div >
+									
+									<div class="botoesTituiloTLB">
+									<h:outputLabel class="labels"
+										>#{mensagens.cadastrarBemTitulos}</h:outputLabel>
+									<h:commandButton type="button" class="botoesTituiloTLB"
+										value="#{mensagens.cadastrarBemTituloAdicionar}">
+										<f:ajax render="titulosBem" execute="@all"
+											listener="#{cadastrarBemPatrimonialMB.adicionarTitulo}"></f:ajax>
+									</h:commandButton>
+									<h:commandButton type="button" class="botoesTituiloTLB"
+										value="#{mensagens.cadastrarBemTituloRemover}">
+										<f:ajax render="titulosBem" execute="@all"
+											listener="#{cadastrarBemPatrimonialMB.removeTitulo}"></f:ajax>
+									</h:commandButton>
+								</div>
 
-								<h:outputScript name="mv.js" library="javascript"></h:outputScript>
 
-							</div>
-						<div class="botoesTituiloTLB">
-							<h:commandButton type="button"  value="#{mensagens.cadastrarBemTituloAdicionar}">
-								<f:ajax render="titulosBem"
-									listener="#{cadastrarBemPatrimonialMB.adicionaTitulo}"></f:ajax>
-							</h:commandButton>
-							<h:commandButton type="button" class="botoesTituiloTLB"
-								value="#{mensagens.cadastrarBemTituloRemover}">
-								<f:ajax render="titulosBem"
-									listener="#{cadastrarBemPatrimonialMB.removeTitulo}"></f:ajax>
-							</h:commandButton>
-						</div>
+									<h:outputScript name="mv.js" library="javascript"></h:outputScript>
 
+								</div>
+								
+							
 							<h:dataTable id="titulosBem" var="titulo" class="titulos"
 								value="#{cadastrarBemPatrimonialMB.titulos}">
 								<h:column id="coluna">
-								
-										
-									<h:outputLabel class="labels" style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
-									<h:inputText style="width: 78% !important;"
+
+									<h:selectBooleanCheckbox value="titulo.select" >
+									<f:ajax render="@this" event="change" listener="#{cadastrarBemPatrimonialMB.setTituloSelect}">
+									</f:ajax></h:selectBooleanCheckbox>
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
+									<h:inputText style="width: 40% !important;"
 										value="#{titulo.valor}">
 									</h:inputText>
-									<div></div>
+
 									<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
-									<h:selectOneMenu id="tipodobem" class="options"
+									<h:selectOneMenu id="tipodotitulo" class="options"
 										value="#{titulo.tipo}">
 										<f:selectItems
-											value="#{cadastrarBemPatrimonialMB.tiposTitulo}" />
+											value="#{cadastrarBemPatrimonialMB.getTiposTitulo()}" />
 									</h:selectOneMenu>
-									<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
-									<h:inputTextarea value="#{titulo.complemento}">
-									</h:inputTextarea>
+
 
 
 
 								</h:column>
 							</h:dataTable>
+							
+							
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto">
+								</h:inputTextarea>
+								<div></div>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloColecao}</h:outputLabel>
+								<h:inputText value="#{cadastrarInstituicaoMB.latitude}">
+								</h:inputText>
+								<div></div>
+							</div>
+
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCoordenadasGeograficas}</h:outputLabel>
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
+								<h:inputText value="#{cadastrarInstituicaoMB.latitude}">
+
+								</h:inputText>
+								<div></div>
+
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
+								<h:inputText value="#{cadastrarInstituicaoMB.longitude}">
+
+								</h:inputText>
+								<div></div>
+
+							</div>
 
 
 

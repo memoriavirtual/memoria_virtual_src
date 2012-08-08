@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.servlet;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.el.ELResolver;
@@ -18,7 +19,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
 
-public class ExcluirInstituicao extends HttpServlet {
+public class ExcluirInstituicao extends HttpServlet implements Serializable{
 
 	/**
 	 * 
@@ -37,7 +38,7 @@ public class ExcluirInstituicao extends HttpServlet {
 		Integer auditoria = new Integer (req.getParameter("auditoria"));
 		System.out.println(auditoria);
 		
-		//Antecipando a instancia do ManegedBean antes mesmo que a página esteja carregada
+		//Referência no managed bean
 		FacesContext facesContext = FacesUtil.getFacesContext(req, response);
 		ELResolver resolver = facesContext.getApplication().getELResolver();   
 		ExcluirInstituicaoMB  bean = (ExcluirInstituicaoMB) resolver.getValue(facesContext.getELContext(), null, "excluirInstituicaoMB"); 

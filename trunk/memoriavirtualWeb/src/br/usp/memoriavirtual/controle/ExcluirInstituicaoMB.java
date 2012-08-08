@@ -38,8 +38,7 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  * @author MAC
  * 
  */
-@ManagedBean(name = "excluirInstituicaoMB")
-@SessionScoped
+
 public class ExcluirInstituicaoMB implements Serializable {
 
 	private static final long serialVersionUID = 1147425267036231710L;

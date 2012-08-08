@@ -507,7 +507,7 @@ table[id*=instituicoes] a:hover {
 
 textarea:focus {
 	background: #fffff0;
-	border: #222 1px solid;
+	
 }
 
 .labeltabela {
@@ -559,22 +559,37 @@ textarea:focus {
 
 .titulos {
 	float: left;
-	width: 100% ;
+	width: 100%;
+	margin-bottom:10px;
+	padding-left: 15%
+	
 }
-.titulos textarea{
+
+.titulos textarea {
 	width: 35%;
 	resize: none;
-	
-	
 }
+
+
 
 .titulos input {
 	height: 16px !important;
 	width: 200px !important;
 }
+.titulos input[type=checkbox] {
+	display: inline-block;
+	width: 15px !important;
+	height: 15px !important;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+}
 .titulos td {
 	height: auto !important;
-	padding: 30px;
+	padding: 2px;
+}
+.titulos td:HOVER{
+	background: #f5f1e1;
 }
 .titulos div {
 	height: 10px !important;
@@ -585,33 +600,44 @@ textarea:focus {
 	height: 17px !important;
 	width: 200px !important;
 }
-.botoesTituiloTLB{
-	height: auto;
-	float:right;
-	margin-right: 20%;
-	display: inline !important;
-}
 
-.botoesTituiloTLB  input[type=button]{
-	
-	font-size: 11px ;
-	margin: 10px;
-	display:inline-table;
+.botoesTituiloTLB {
+	margin:0 !important;
+	padding-top: 30px  !important;
+	padding-bottom: 10px  !important;
+	height: 20px !important;
+/* 	float: right !important; */
+	margin-right: 20%;
+	display: inline-table !important;
+	width: 100% !important;
+}
+.botoesTituiloTLB label{
+	float: left;
+	width: 15%;
+}
+.botoesTituiloTLB  input[type=button] {
+	float: left;
+	padding:0 !important;
+	font-size: 11px;
+	margin: 0;
+	margin-left: 20px !important;;
+	display: inline-table !important;
 	height: auto !important;
 	width: auto !important;
-	background-color: buttonface;	
+	background-color: buttonface;
 	color: buttontext;
 	border: 2px outset buttonface;
-	margin-top: 10px;
 }
 
-.botoesTituiloTLB  input[type=button]:active{
+.botoesTituiloTLB  input[type=button]:active {
 	border-style: inset;
 }
+
 .titulos select {
 	height: 20px !important;
 	width: 200px !important;
 }
+
 .titulos label {
 	font-size: 13px !important;
 	width: auto;

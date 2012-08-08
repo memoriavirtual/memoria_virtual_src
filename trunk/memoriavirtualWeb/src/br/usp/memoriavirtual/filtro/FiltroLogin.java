@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.filtro;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,7 +18,12 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class FiltroLogin
  */
 @WebFilter("/FiltroLogin")
-public class FiltroLogin implements Filter {
+public class FiltroLogin implements Filter ,  Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2872604550129629756L;
 
 	/**
 	 * Default constructor.

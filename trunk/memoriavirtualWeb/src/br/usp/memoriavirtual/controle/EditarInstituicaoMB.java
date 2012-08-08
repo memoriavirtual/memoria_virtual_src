@@ -88,7 +88,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
+		this.instituicoes.clear();
 		Instituicao ins = new Instituicao();
 		ins.setNome(bundle.getString("listarTodos"));
 		this.instituicoes.add(0, ins);

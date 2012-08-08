@@ -38,7 +38,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private String nome; // nome a ser buscado para oferecer sugestoes
 	private String nomeCompleto; // nome a ser exibido na visão de edição
 	private String telefone;
-	private List<Usuario> usuarios;
+	private List<Usuario> usuarios  =  new ArrayList<Usuario>();
 	private List<Usuario> administradores;
 	private List<Instituicao> instituicoes;
 	private Usuario usuario;
@@ -63,7 +63,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 		
-		this.usuarios =  new ArrayList<Usuario>();
+		this.usuarios.clear();
 		Usuario ins = new Usuario();
 		ins.setNomeCompleto(bundle.getString("listarTodos"));
 		this.usuarios.add(0, ins);

@@ -31,7 +31,8 @@
 							<h:inputText value="#{excluirAutorMB.nome}" autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{excluirAutorMB.listarAutores}" />
-
+								<f:ajax event="focus" execute="@this" render="sugestoesId"
+									listener="#{excluirAutorMB.listarAutoresFocus}" />
 							</h:inputText>
 
 

@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,7 +27,7 @@ public class ExcluirAutorMB implements Serializable {
 	 */
 	private static final long serialVersionUID = -1769494097935536965L;
 	private String nome;
-	private List<Autor> autores;
+	private List<Autor> autores = new ArrayList<Autor>();
 	@EJB
 	private ExcluirAutorRemote excluirAutorEJB;
 	@EJB
@@ -36,7 +37,19 @@ public class ExcluirAutorMB implements Serializable {
 	public ExcluirAutorMB() {
 
 	}
+	
 
+	public void listarAutoresFocus(AjaxBehaviorEvent e) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		this.autores.clear();
+		Autor autor = new Autor();
+		autor.setNome(bundle.getString("listarTodos"));
+		this.autores.add(0, autor);
+	}
+	
 	public void listarAutores(AjaxBehaviorEvent e) {
 		this.listarAutores();
 	}

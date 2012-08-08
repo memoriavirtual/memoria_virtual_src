@@ -22,15 +22,13 @@ public class Titulo implements Serializable {
 		super();
 		this.tipo = tipo;
 		this.valor = valor;
-		this.complemento = complemento;
 	}
 	public Titulo() {
 	}
 	@Transient
-	private String select;
+	private boolean select;
 	private String tipo;	
-	private String valor;	
-	private String complemento;
+	private String valor;
 	/**
 	 * @return the tipo
 	 */
@@ -55,28 +53,17 @@ public class Titulo implements Serializable {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
-	/**
-	 * @return the complemento
-	 */
-	public String getComplemento() {
-		return complemento;
-	}
-	/**
-	 * @param complemento the complemento to set
-	 */
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
+	
 	/**
 	 * @return the select
 	 */
-	public String getSelect() {
+	public boolean getSelect() {
 		return select;
 	}
 	/**
 	 * @param select the select to set
 	 */
-	public void setSelect(String select) {
+	public void setSelect(boolean select) {
 		this.select = select;
 	}
 }
