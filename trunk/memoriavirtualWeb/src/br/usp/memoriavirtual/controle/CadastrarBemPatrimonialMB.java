@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
@@ -30,23 +31,24 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.titulos.add(new Titulo());
 
 	}
-	
-	private static final long serialVersionUID = 7413170360811077491L;
 
-	
+	private static final long serialVersionUID = 7413170360811077491L;
+	private HtmlDataTable dataTable;
 
 	protected boolean externo;
 	protected String naturezaBem;
 	protected String tipoDoBemPatrimonial;
 	protected String numeroRegistro;
+	protected String colecao;
+	protected String complemento;
+	protected String latitude;
+	protected String longitude;
 	protected List<Titulo> titulos = new ArrayList<Titulo>();
-	
-	
+	protected boolean botaRemoverTitulo = false;
 
 	/**
 	 * 
 	 */
-	
 
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
@@ -68,20 +70,28 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
+
 		List<SelectItem> tiposTitulo = new ArrayList<SelectItem>();
-		
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTituloSelecione")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo0")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo1")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo2")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo3")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo4")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo5")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo6")));
-		tiposTitulo.add(new SelectItem(bundle.getString("cadastrarBemTipoTitulo7")));
-		
-		
+
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTituloSelecione")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo0")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo1")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo2")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo3")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo4")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo5")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo6")));
+		tiposTitulo.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoTitulo7")));
+
 		return tiposTitulo;
 	}
 
@@ -91,21 +101,18 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		}
 	}
 
-	public void removeTitulo(AjaxBehaviorEvent event) {
+	public void setTituloSelect(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
 
-		for(Titulo a : this.titulos){
-			
-			if ( a.getSelect()){
-				this.titulos.remove(a);
-			}
-		}
-		
-	}
-	public void setTituloSelect(AjaxBehaviorEvent event){
 		String[] list = event.getComponent().getClientId().split(":");
-		Integer index = new Integer (list[2]);
-		this.titulos.get(index).setSelect((Boolean) event.getComponent().getAttributes().get("value"));
+		Integer index = new Integer(list[2]);
+		System.out.println(index);
+		if (this.titulos.size() > 1) {
+			this.titulos.remove((int) index);
+		}
+		this.dataTable.processUpdates(context);
 	}
+
 	public String getTextoBotao(Titulo o) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -123,38 +130,40 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 		List<SelectItem> tiposBem = new ArrayList<SelectItem>();
-		tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoListaSelecione")));
+		tiposBem.add(new SelectItem(bundle
+				.getString("cadastrarBemTipoListaSelecione")));
 		if (this.naturezaBem == null) {
 			tiposBem.clear();
 			return tiposBem;
 		}
 		if (this.naturezaBem.equalsIgnoreCase(bundle
 				.getString("cadastrarBemMaterial"))) {
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista0")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista1")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista2")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista3")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista4")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista5")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista6")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista0")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista1")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista2")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista3")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista4")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista5")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista6")));
 		} else {
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista7")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista8")));
-			tiposBem.add(new SelectItem(bundle.getString("cadastrarBemTipoLista9")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista7")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista8")));
+			tiposBem.add(new SelectItem(bundle
+					.getString("cadastrarBemTipoLista9")));
 			tiposBem.add(new SelectItem(bundle
 					.getString("cadastrarBemTipoLista10")));
 		}
 		return tiposBem;
 
-	}
-
-	public String removerTitulo(String a) {
-		return null;
-	}
-
-	public String removerTitulo(Titulo t) {
-		this.titulos.remove(t);
-		return null;
 	}
 
 	/**
@@ -230,6 +239,54 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	 */
 	public void setTitulos(List<Titulo> titulos) {
 		this.titulos = titulos;
+	}
+
+	public boolean isBotaRemoverTitulo() {
+		return botaRemoverTitulo;
+	}
+
+	public void setBotaRemoverTitulo(boolean botaRemoverTitulo) {
+		this.botaRemoverTitulo = botaRemoverTitulo;
+	}
+
+	public String getColecao() {
+		return colecao;
+	}
+
+	public void setColecao(String colecao) {
+		this.colecao = colecao;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public HtmlDataTable getDataTable() {
+		return dataTable;
+	}
+
+	public void setDataTable(HtmlDataTable dataTable) {
+		this.dataTable = dataTable;
 	}
 
 }

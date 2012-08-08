@@ -68,7 +68,6 @@
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial}</h:outputLabel>
 								<h:selectOneMenu id="tipodobem" styleClass="options"
-									disabled="true"
 									value="#{cadastrarBemPatrimonialMB.tipoDoBemPatrimonial}">
 									<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposBem}" />
 								</h:selectOneMenu>
@@ -83,37 +82,36 @@
 								<div></div>
 							</div>
 
-							
-								<div >
-									
-									<div class="botoesTituiloTLB">
-									<h:outputLabel class="labels"
-										>#{mensagens.cadastrarBemTitulos}</h:outputLabel>
+
+							<div>
+
+								<div class="botoesTituiloTLB">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemTitulos}</h:outputLabel>
 									<h:commandButton type="button" class="botoesTituiloTLB"
 										value="#{mensagens.cadastrarBemTituloAdicionar}">
 										<f:ajax render="titulosBem" execute="@all"
 											listener="#{cadastrarBemPatrimonialMB.adicionarTitulo}"></f:ajax>
 									</h:commandButton>
-									<h:commandButton type="button" class="botoesTituiloTLB"
-										value="#{mensagens.cadastrarBemTituloRemover}">
-										<f:ajax render="titulosBem" execute="@all"
-											listener="#{cadastrarBemPatrimonialMB.removeTitulo}"></f:ajax>
-									</h:commandButton>
 								</div>
 
 
-									<h:outputScript name="mv.js" library="javascript"></h:outputScript>
+								<h:outputScript name="mv.js" library="javascript"></h:outputScript>
 
-								</div>
-								
-							
-							<h:dataTable id="titulosBem" var="titulo" class="titulos"
+							</div>
+
+
+							<h:dataTable id="titulosBem" var="titulo" class="titulos" binding="#{cadastrarBemPatrimonialMB.dataTable}"
 								value="#{cadastrarBemPatrimonialMB.titulos}">
 								<h:column id="coluna">
 
-									<h:selectBooleanCheckbox value="titulo.select" >
-									<f:ajax render="@this" event="change" listener="#{cadastrarBemPatrimonialMB.setTituloSelect}">
-									</f:ajax></h:selectBooleanCheckbox>
+									<h:graphicImage id="excluir" library="imagens"
+										name="delete.png"
+										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right;">
+
+										<f:ajax render="@all" event="click" execute="@all"
+											listener="#{cadastrarBemPatrimonialMB.setTituloSelect}">
+										</f:ajax>
+									</h:graphicImage>
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
 									<h:inputText style="width: 40% !important;"
@@ -127,23 +125,21 @@
 											value="#{cadastrarBemPatrimonialMB.getTiposTitulo()}" />
 									</h:selectOneMenu>
 
-
-
-
 								</h:column>
 							</h:dataTable>
-							
-							
+
+
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
-								<h:inputTextarea styleClass="caixadetexto">
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{cadastrarBemPatrimonialMB.complemento}">
 								</h:inputTextarea>
 								<div></div>
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloColecao}</h:outputLabel>
-								<h:inputText value="#{cadastrarInstituicaoMB.latitude}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.colecao}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -154,7 +150,7 @@
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-								<h:inputText value="#{cadastrarInstituicaoMB.latitude}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.latitude}">
 
 								</h:inputText>
 								<div></div>
@@ -163,7 +159,7 @@
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-								<h:inputText value="#{cadastrarInstituicaoMB.longitude}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.longitude}">
 
 								</h:inputText>
 								<div></div>
@@ -179,7 +175,35 @@
 
 
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAutoria}">
-						<fieldset></fieldset>
+						<fieldset>
+							<h:dataTable id="titulosBem" var="titulo" class="titulos" 
+								value="#{cadastrarBemPatrimonialMB.titulos}">
+								<h:column id="coluna">
+
+									<h:graphicImage id="excluir" library="imagens"
+										name="delete.png"
+										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right;">
+
+										<f:ajax render="@all" event="click" execute="@all"
+											listener="#{cadastrarBemPatrimonialMB.setTituloSelect}">
+										</f:ajax>
+									</h:graphicImage>
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
+									<h:inputText style="width: 40% !important;"
+										value="#{titulo.valor}">
+									</h:inputText>
+
+									<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
+									<h:selectOneMenu id="tipodotitulo" class="options"
+										value="#{titulo.tipo}">
+										<f:selectItems
+											value="#{cadastrarBemPatrimonialMB.getTiposTitulo()}" />
+									</h:selectOneMenu>
+
+								</h:column>
+							</h:dataTable>
+						</fieldset>
 					</mv:containerExpansivo>
 
 					<mv:containerExpansivo
