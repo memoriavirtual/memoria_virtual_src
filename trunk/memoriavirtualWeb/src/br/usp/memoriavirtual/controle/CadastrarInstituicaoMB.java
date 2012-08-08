@@ -71,8 +71,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	}
 
 	public String cadastrarInstituicao() {
-		if (this.validateNome() && this.validateLocalizacao()
-				&& this.validateCep() && this.validateTelefone()) {
+		if (this.validateNome() &&  this.validateCep() && this.validateTelefone()) {
 			Instituicao instituicao = new Instituicao(this.nome,
 					this.localizacao, this.endereco, this.cidade, this.estado,this.pais,
 					this.cep, this.telefone, this.caixaPostal, this.email,
@@ -630,7 +629,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 
 	public boolean validateLocalizacao() {
 		if (this.localizacao.equals("")) {
-			MensagensDeErro.getErrorMessage(
+			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroLocalizacaoVazio",
 					"validacaoLocalizacao");
 			return false;
