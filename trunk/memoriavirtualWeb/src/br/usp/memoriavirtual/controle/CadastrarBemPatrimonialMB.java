@@ -33,7 +33,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	private static final long serialVersionUID = 7413170360811077491L;
-	private HtmlDataTable dataTable;
+	//private HtmlDataTable dataTable = new HtmlDataTable();
 
 	protected boolean externo;
 	protected String naturezaBem;
@@ -110,7 +110,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		if (this.titulos.size() > 1) {
 			this.titulos.remove((int) index);
 		}
-		this.dataTable.processUpdates(context);
+		//this.dataTable.processUpdates(context);
 	}
 
 	public String getTextoBotao(Titulo o) {
@@ -281,12 +281,12 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.longitude = longitude;
 	}
 
-	public HtmlDataTable getDataTable() {
-		return dataTable;
-	}
-
-	public void setDataTable(HtmlDataTable dataTable) {
-		this.dataTable = dataTable;
-	}
+//	public HtmlDataTable getDataTable() {
+//		return dataTable;
+//	}
+//
+//	public void setDataTable(HtmlDataTable dataTable) {
+//		this.dataTable = dataTable;
+//	}
 
 }
