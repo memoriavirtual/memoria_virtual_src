@@ -92,11 +92,12 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 			/*Tenta-se criar um comando baseado na entidade que gerou a dependencia*/
 			try {
 				/*Esse eh o package onde se encontra as implementacoes da interface comandos*/
-				String nomeDaDependencia = "br.usp.memoriavirtual.modelo.comandos." + name;
+				String nomeDaDependencia = "br.usp.memoriavirtual.modelo.comandos.pendencias." + name;
 				
 				/*Aqui utiliza-se Java Reflection para criar a instancia de uma classe escolhida dinamicamente*/
 				Class<?> cls = Class.forName(nomeDaDependencia);
 
+				
 				Class<?> parameter[] = new Class[1];  
 	            parameter[0] = Aprovacao.class;  
 	           
@@ -107,8 +108,10 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	            
 	            Object retobj = ct.newInstance(arglist);  
 	            
+	            Comando cmd = (Comando)retobj;
+				
 	            /*Adiciona-se na lista de comandos a ser executados para exclusão da dependencia*/
-	            controle.adicionar((Comando)retobj);
+	            controle.adicionar(cmd);
 	            
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
