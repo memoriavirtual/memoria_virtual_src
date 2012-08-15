@@ -303,7 +303,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			Aprovacao aprovacao = entityManager.find(Aprovacao.class, id);
 
 			Query query = this.entityManager
-					.createQuery("DELETE FROM Aprovacao a WHERE a =: parametro");
+					.createQuery("DELETE FROM Aprovacao a WHERE a = :parametro");
 			query.setParameter("parametro", aprovacao);
 			query.executeUpdate();
 
@@ -326,5 +326,21 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		catch(Exception e){
 			throw new ModeloException(e);
 		}
+	}
+	
+	@Override
+	public boolean isAprovador(Usuario usuario, String aprovacaoId){
+		try{
+
+			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class, Long.valueOf(aprovacaoId));
+			if(aprovacao.getAprovador().getId() == usuario.getId())
+				return true;
+			else
+				return false;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

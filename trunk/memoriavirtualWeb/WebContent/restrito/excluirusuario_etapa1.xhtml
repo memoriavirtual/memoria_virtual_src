@@ -30,7 +30,7 @@
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioNome}</h:outputLabel>
-							<h:inputText value="#{excluirUsuarioMB.nomeExcluir}"
+							<h:inputText value="#{excluirUsuarioMB.nome}"
 								autoComplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{excluirUsuarioMB.listarUsuarios}" />
@@ -47,7 +47,7 @@
 
 					<div class="botao">
 						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}"
-							action="#{excluirUsuarioMB.excluirEtapa1}">
+							action="#{excluirUsuarioMB.selecionarUsuario}">
 						</h:commandButton>
 						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}"
 							action="#{excluirUsuarioMB.cancelar}">

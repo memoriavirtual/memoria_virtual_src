@@ -82,7 +82,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		this.resetCadastrarinstituicao();
 		return "cancelar";
 	}
-	public void instituicoesSugeridasFocus(AjaxBehaviorEvent event) {
+	public void listarTodos(AjaxBehaviorEvent event) {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";

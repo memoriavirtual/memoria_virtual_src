@@ -128,7 +128,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 		} else {
 			Instituicao inst = new Instituicao();
 			inst.setNome(this.bundle
-					.getString("excluirInstituicaoSugestaoTodas"));
+					.getString("listarTodos"));
 			this.instituicoes.add(inst);
 		}
 		return;
@@ -167,7 +167,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 */
 	public String selecionarInstituicoes(Instituicao instituicao) {
 		if (!instituicao.getNome().equals(
-				this.bundle.getString("excluirInstituicaoSugestaoTodas"))) {
+				this.bundle.getString("listarTodos"))) {
 			if (!instituicao.getNome().equals(
 					this.bundle.getString("excluirInstituicaoErrolistavazia"))) {
 				this.setInstituicao(instituicao);

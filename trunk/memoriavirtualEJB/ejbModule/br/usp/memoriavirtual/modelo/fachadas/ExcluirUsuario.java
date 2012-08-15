@@ -10,6 +10,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sun.tools.ws.processor.model.Model;
+
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
@@ -23,25 +25,25 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente) throws ModeloException{
+	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente)
+			throws ModeloException {
 
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		
-		Query query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE " +
-				"u.ativo = TRUE AND "  +
-				"u.nomeCompleto LIKE :nome AND " +
-				"u <> :requerente" + 
-				" ORDER BY u.nomeCompleto ");
+
+		Query query = this.entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE "
+						+ "u.ativo = TRUE AND "
+						+ "u.nomeCompleto LIKE :nome AND " + "u <> :requerente"
+						+ " ORDER BY u.nomeCompleto ");
 		query.setParameter("requerente", requerente);
 		query.setParameter("nome", "%" + parteNome + "%");
-		
-		try{
-			usuarios = (List<Usuario>)query.getResultList();
-		}
-		catch(Exception e){
+
+		try {
+			usuarios = (List<Usuario>) query.getResultList();
+		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
-		
+
 		return usuarios;
 
 	}
@@ -85,12 +87,16 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 	}
 
 	public void registrarAprovacao(Usuario validador, String idExcluido,
-			Date dataValidade) {
+			Date dataValidade) throws ModeloException {
 		Date data = new Date();
 		Usuario u = entityManager.find(Usuario.class, validador.getId());
 		Aprovacao aprovacao = new Aprovacao(data, u, dataValidade, idExcluido,
 				"Usuario");
-		this.entityManager.persist(aprovacao);
+		try {
+			this.entityManager.persist(aprovacao);
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
 	}
 
 	public void marcarUsuarioExcluido(Usuario usuario, boolean marca,
@@ -103,8 +109,8 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		query.executeUpdate();
 		if (flagAcesso) {
 			query = this.entityManager
-					.createQuery("UPDATE Acesso a SET a.validade = :validade WHERE  a.usuario = :id");
-			query.setParameter("id", usuario.getId());
+					.createQuery("UPDATE Acesso a SET a.validade = :validade WHERE  a.usuario = :usuario");
+			query.setParameter("usuario", usuario);
 			query.setParameter("validade", marca);
 			query.executeUpdate();
 		}
@@ -112,21 +118,20 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Acesso> listarAcessos(Usuario usuario)
-			throws ModeloException {
-		
+	public List<Acesso> listarAcessos(Usuario usuario) throws ModeloException {
+
 		List<Acesso> acessos = new ArrayList<Acesso>();
-		
-		Query query = this.entityManager.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario");
+
+		Query query = this.entityManager
+				.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario");
 		query.setParameter("usuario", usuario);
-		
-		try{
-			acessos = (List<Acesso>)query.getResultList();
-		}
-		catch(Exception e){
+
+		try {
+			acessos = (List<Acesso>) query.getResultList();
+		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
-		
+
 		return acessos;
 	}
 
@@ -134,51 +139,79 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 	@Override
 	public List<Usuario> listarAprovadores(Usuario requerente, Usuario usuario)
 			throws ModeloException {
-		
+
 		List<Acesso> acessos = new ArrayList<Acesso>();
 		List<Usuario> aprovadores = new ArrayList<Usuario>();
-		
-		Query listarAcessos = entityManager.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = TRUE");
+
+		Query listarAcessos = entityManager
+				.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = TRUE");
 		listarAcessos.setParameter("usuario", usuario);
-		
-		try{
-			acessos = (List<Acesso>)listarAcessos.getResultList();
-		}
-		catch(Exception e){
+
+		try {
+			acessos = (List<Acesso>) listarAcessos.getResultList();
+		} catch (Exception e) {
 			throw new ModeloException();
 		}
-		
-		Query listarAdministradores = entityManager.createQuery("SELECT u FROM Usuario u WHERE " +
-				"u.ativo = TRUE AND u.administrador = TRUE AND u <> :usuario");
+
+		Query listarAdministradores = entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE "
+						+ "u.ativo = TRUE AND u.administrador = TRUE AND u <> :usuario");
 		listarAdministradores.setParameter("usuario", requerente);
-		
-		try{
+
+		try {
 			aprovadores = listarAdministradores.getResultList();
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			throw new ModeloException();
 		}
-		
-		for(Acesso a : acessos){
-			Query listarAprovadores = entityManager.createQuery("SELECT a.usuario FROM Acesso a WHERE a.grupo = :grupo " +
-					"AND a.instituicao = :instituicao AND a.validade = TRUE AND a.usuario <> :requerente");
+
+		for (Acesso a : acessos) {
+			Query listarAprovadores = entityManager
+					.createQuery("SELECT a.usuario FROM Acesso a WHERE a.grupo = :grupo "
+							+ "AND a.instituicao = :instituicao AND a.validade = TRUE AND a.usuario <> :requerente");
 			listarAprovadores.setParameter("grupo", new Grupo("gerente"));
 			listarAprovadores.setParameter("instituicao", a.getInstituicao());
 			listarAprovadores.setParameter("requerente", requerente);
-			
-			try{
+
+			try {
 				List<Usuario> gerentes = listarAprovadores.getResultList();
 				System.out.println(gerentes.size());
-				for(Usuario u : gerentes){
+				for (Usuario u : gerentes) {
 					aprovadores.add(u);
 				}
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				throw new ModeloException();
 			}
 		}
-			
+
 		return aprovadores;
 	}
 
+	@Override
+	public Aprovacao recuperarDadosAprovacao(String id) throws ModeloException {
+		Aprovacao aprovacao = new Aprovacao();
+
+		Query query = this.entityManager
+				.createQuery("SELECT a FROM Aprovacao a WHERE a.id = :id");
+		query.setParameter("id", id);
+
+		try {
+			aprovacao = (Aprovacao) query.getSingleResult();
+		} catch (Exception e) {
+			throw new ModeloException();
+		}
+		return aprovacao;
+	}
+
+	@Override
+	public void excluirUsuario(String id) throws ModeloException {
+		try{
+			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class, Long.valueOf(id));
+			Usuario usuario = this.entityManager.find(Usuario.class, aprovacao.getChaveEstrangeira());
+			this.entityManager.remove(usuario);
+			this.entityManager.remove(aprovacao);
+		}
+		catch(Exception e){
+			throw new ModeloException(e);
+		}
+	}
 }

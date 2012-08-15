@@ -13,7 +13,6 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
@@ -61,7 +60,9 @@ public class ExcluirUsuarioMB implements Serializable {
 	private List<String> nomeSemelhantes = new ArrayList<String>();
 	private List<Acesso> acessos;
 
-	public void setNomeExcluir(String nome) {
+	private String aprovacao;
+
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
@@ -111,7 +112,7 @@ public class ExcluirUsuarioMB implements Serializable {
 		this.nomeSemelhantes = nomeSemelhantes;
 	}
 
-	public String getNomeExcluir() {
+	public String getNome() {
 		return this.nome;
 	}
 
@@ -154,21 +155,6 @@ public class ExcluirUsuarioMB implements Serializable {
 	public List<String> getNomeSemelhantes() {
 		return this.nomeSemelhantes;
 	}
-
-	// public void listarUsuarios(AjaxBehaviorEvent event) {
-	// HttpServletRequest request = (HttpServletRequest) FacesContext
-	// .getCurrentInstance().getExternalContext().getRequest();
-	// this.requerente = (Usuario) request.getSession()
-	// .getAttribute("usuario");
-	// usuarios.clear();
-	// List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-	// listaUsuarios =
-	// this.excluirUsuarioEJB.listarUsuarios(this.nome,this.requerente,
-	// this.requerente.isAdministrador());
-	// setUsuarios(listaUsuarios);
-	// usuario = null;
-	// return;
-	// }
 
 	public void listarUsuarios(AjaxBehaviorEvent event) {
 
@@ -225,10 +211,23 @@ public class ExcluirUsuarioMB implements Serializable {
 		}
 
 		this.usuario = usuario;
-		setNomeExcluir(usuario.getNomeCompleto());
+		setNome(usuario.getNomeCompleto());
 		this.usuarios.clear();
 		this.listarAcessos();
-		return null;
+		return "etapa2";
+	}
+
+	public String selecionarUsuario() {
+		Usuario usuario = new Usuario();
+		try {
+			usuario = excluirUsuarioEJB.recuperarDadosUsuario(nome);
+		} catch (ModeloException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return this.selecionarUsuario(usuario);
+
 	}
 
 	public void listarAcessos() {
@@ -261,53 +260,22 @@ public class ExcluirUsuarioMB implements Serializable {
 		} catch (ModeloException m) {
 			m.printStackTrace();
 		}
-		
-		for(Usuario u : aprovadores){
-			itens.add(new SelectItem(u, u.getNomeCompleto()));
+
+		for (Usuario u : aprovadores) {
+			itens.add(new SelectItem(u.getNomeCompleto(), u.getNomeCompleto()));
 		}
-		
+
 		return itens;
 	}
 
-	public String excluirEtapa1() {
-		try {
-			this.usuario = (Usuario) this.excluirUsuarioEJB
-					.recuperarDadosUsuario(getNomeExcluir());
-		} catch (Exception e) {
-			MensagensDeErro.getErrorMessage(
-					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
-			return null;
-		}
-		setNomeExcluir(usuario.getNomeCompleto());
-		try {
-			setNivelPermissao(memoriaVirtualEJB.getURLServidor());
-		} catch (ModeloException e) {
-		}
-		if (usuario.isAdministrador()) {
-			this.nivelPermissao = "Administrador";
-		}
-		return "etapa2";
-	}
+	public String marcarExclusao() {
 
-	public String excluirEtapa2() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		this.requerente = (Usuario) request.getSession()
-				.getAttribute("usuario");
-		usuarios.clear();
-		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		listaUsuarios = this.excluirUsuarioEJB.listarSemelhantes(
-				this.requerente.getId(), this.requerente.isAdministrador());
-		setSemelhantes(listaUsuarios);
-		return "etapa3";
-	}
-
-	public String excluirEtapa3() {
 		Date dataValidade = new Date();
 		DateFormat formatoData = DateFormat.getDateInstance();
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.add(GregorianCalendar.HOUR, 24 * this.prazoValidade);
 		dataValidade = gc.getTime();
+
 		try {
 			this.validador = (Usuario) this.excluirUsuarioEJB
 					.recuperarDadosUsuario(getSemelhante());
@@ -317,16 +285,17 @@ public class ExcluirUsuarioMB implements Serializable {
 			return null;
 		}
 		try {
+
 			this.memoriaVirtualEJB
 					.enviarEmail(
-							"diegominatel@gmail.com",
-							bundle.getString("excluirUsuarioEmailTitulo"),
+							this.validador.getEmail(),
+							"lol",
 							bundle.getString("excluirUsuarioEmailMensagem")
 									+ "\n"
 									+ "\n"
 									+ bundle.getString("excluirUsuarioNome")
 									+ ": "
-									+ this.getNomeExcluir()
+									+ this.getNome()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioInstituicao")
 									+ ": "
@@ -372,12 +341,7 @@ public class ExcluirUsuarioMB implements Serializable {
 			// mensagem de sucesso
 			MensagensDeErro.getSucessMessage("excluirUsuarioEnviandoEmail",
 					"resultado");
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (ModeloException e) {
-			e.printStackTrace();
-			e.getCause();
-		} catch (NullPointerException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "true";
@@ -438,6 +402,28 @@ public class ExcluirUsuarioMB implements Serializable {
 
 	public void setAcessos(List<Acesso> acessos) {
 		this.acessos = acessos;
+	}
+
+	public String getAprovacao() {
+		return aprovacao;
+	}
+
+	public void setAprovacao(String aprovacao) {
+		this.aprovacao = aprovacao;
+	}
+
+	public String excluirUsuario() {
+		try {
+			this.excluirUsuarioEJB.excluirUsuario(this.aprovacao);
+			MensagensDeErro.getSucessMessage("excluirUsuarioSucessoOperacao",
+					"resultado");
+		} catch (ModeloException m) {
+			m.printStackTrace();
+			MensagensDeErro.getErrorMessage("excluirUsuarioErroOperacao",
+					"resultado");
+		}
+
+		return null;
 	}
 
 }

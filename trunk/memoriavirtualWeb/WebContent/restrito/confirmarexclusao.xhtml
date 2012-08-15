@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Confirmar Exclusão</title>
+</head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+		<ui:define name="titulo">#{mensagens.excluirUsuarioTitle}</ui:define>
+
+		<ui:define name="conteudo">
+
+			<div class="formulario">
+
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
+
+				<div class="conteudoTitulo">#{mensagens.excluirUsuarioTitle}</div>
+				<div class="conteudoDescricao">#{mensagens.excluirUsuarioDescricao}</div>
+
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<h:outputLabel>#{mensagens.excluirUsuarioConfirmacao}</h:outputLabel>
+						<h:outputLabel>#{excluirUsuarioMB.nome}</h:outputLabel>
+						<h:dataTable var="acesso" value="#{excluirUsuarioMB.acessos}">
+						<h:column>#{acesso.grupo} em #{acesso.instituicao}</h:column>
+						</h:dataTable>
+					</fieldset>
+
+					<div class="botao">
+						<h:commandButton value="#{mensagens.excluirUsuarioConfirmar}"
+							action="#{excluirUsuarioMB.excluirUsuario}">
+						</h:commandButton>
+
+						<h:commandButton value="#{mensagens.excluirUsuarioCancelar}"
+							action="#{excluirUsuarioMB.cancelar}">
+						</h:commandButton>
+					</div>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

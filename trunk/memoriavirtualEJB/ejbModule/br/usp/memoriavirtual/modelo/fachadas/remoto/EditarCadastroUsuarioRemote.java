@@ -87,6 +87,8 @@ public interface EditarCadastroUsuarioRemote {
 	 * @throws ModeloException
 	 */
 	public Acesso getAcesso(String aprovacao) throws ModeloException;
+	
+	public boolean isAprovador(Usuario usuario, String aprovacaoId);
 
 	public Aprovacao getAprovacao(String aprovacao) throws ModeloException;
 
