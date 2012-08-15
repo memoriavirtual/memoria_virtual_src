@@ -8,13 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.ejb.EJB;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
+import br.usp.memoriavirtual.modelo.entidades.Autor;
+import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 
 /**
  * @author bigmac
@@ -29,11 +35,19 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public CadastrarBemPatrimonialMB() {
 		super();
 		this.titulos.add(new Titulo());
+		this.apresentaAutorias.add(new ApresentaAutoria());
+		this.autorias.add(new Autoria());
 
 	}
 
+	@EJB
+	private EditarAutorRemote editarAutorEJB;
+
 	private static final long serialVersionUID = 7413170360811077491L;
-	//private HtmlDataTable dataTable = new HtmlDataTable();
+	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
+	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
+	private boolean cadastrarAutor = false;
+	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
 
 	protected boolean externo;
 	protected String naturezaBem;
@@ -44,6 +58,9 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String latitude;
 	protected String longitude;
 	protected List<Titulo> titulos = new ArrayList<Titulo>();
+	protected List<Autoria> autorias = new ArrayList<Autoria>();
+	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
+	protected List<Autor> autores = new ArrayList<Autor>();
 	protected boolean botaRemoverTitulo = false;
 
 	/**
@@ -63,6 +80,22 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	@Override
 	public String removeMidia(Multimidia midia) {
 		return null;
+	}
+
+	public List<SelectItem> getTiposAutoria() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		List<SelectItem> tipos = new ArrayList<SelectItem>();
+
+		for (int i = 0; i < 19; i++) {
+			tipos.add(new SelectItem(bundle
+					.getString("cadastrarAutorListaTipoAutoria" + i)));
+		}
+
+		return tipos;
 	}
 
 	public List<SelectItem> getTiposTitulo() {
@@ -99,29 +132,122 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		if (this.titulos.size() < this.getTiposTitulo().size() - 1) {
 			this.titulos.add(new Titulo());
 		}
+
 	}
 
-	public void setTituloSelect(AjaxBehaviorEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-
-		String[] list = event.getComponent().getClientId().split(":");
-		Integer index = new Integer(list[2]);
-		System.out.println(index);
-		if (this.titulos.size() > 1) {
-			this.titulos.remove((int) index);
+	public void adicionarAutoria(AjaxBehaviorEvent event) {
+		if (this.autorias.size() < Autoria.TipoAutoria.values().length - 1) {
+			this.autorias.add(new Autoria());
+			this.apresentaAutorias.add(new ApresentaAutoria());
 		}
-		//this.dataTable.processUpdates(context);
 	}
 
-	public String getTextoBotao(Titulo o) {
+	public void listarSugestoesAutoresFocus(AjaxBehaviorEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		if (this.titulos.indexOf(o) > 0) {
-			return bundle.getString("cadastrarBemTituloRemover");
-		} else
-			return bundle.getString("cadastrarBemTituloAdicionar");
+
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer index = new Integer(list[2]);
+		this.autores.clear();
+		if (this.apresentaAutorias.get((int) index).getNomeAutor().equals("")) {
+			Autor a = new Autor();
+			a.setNome(bundle.getString("listarTodos"));
+			this.autores.add(a);
+			this.apresentaAutorias.get(index).setRederizaTabelaSugestoes(
+					true);
+			for(int i = 0 ; i < this.apresentaAutorias.size();i++){
+				if( index != i ){
+					this.apresentaAutorias.get(i).setRederizaTabelaSugestoes(
+							false);
+				}
+			}
+		}
+		this.dataTableAutoria.processUpdates(context);
+
+	}
+
+	public void listarSugestoesAutores(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer index = new Integer(list[2]);
+		if (!this.apresentaAutorias.get((int) index).getNomeAutor().equals("")) {
+			try {
+				this.autores = this.editarAutorEJB
+						.listarAutores(this.apresentaAutorias.get((int) index)
+								.getNomeAutor());
+				this.apresentaAutorias.get(index).setRederizaTabelaSugestoes(
+						true);
+				for(int i = 0 ; i < this.apresentaAutorias.size();i++){
+					if( index != i ){
+						this.apresentaAutorias.get(i).setRederizaTabelaSugestoes(
+								false);
+					}
+				}
+				this.dataTableAutoria.processUpdates(context);
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+		}else{
+			this.listarSugestoesAutoresFocus(event);
+		}
+	}
+
+	public void excluirTitulo(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer index = new Integer(list[2]);
+		if (this.titulos.size() > 1) {
+			this.titulos.remove((int) index);
+		}
+		this.dataTableTitulos.processUpdates(context);
+	}
+
+	public void selecionarAutoria(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer indexAutoria = new Integer(list[2]);
+		Integer indexAutor = new Integer(list[4]);
+		// System.out.println(event.getComponent().getClientId() + " "
+		// + indexAutor + " " + indexAutoria);
+		if (!this.autores.get(indexAutor).getNome()
+				.equals(bundle.getString("listarTodos"))) {
+			this.apresentaAutorias.get(indexAutor).setRederizaTabelaSugestoes(
+					false);
+			this.autorias.get(indexAutoria).setAutor(
+					(this.autores.get(indexAutor)));
+			this.apresentaAutorias
+					.get(indexAutoria)
+					.setNomeAutor(
+							(this.autores.get(indexAutor).getNome() + " " + this.autores
+									.get(indexAutor).getSobrenome()));
+
+			this.autores.clear();
+		} else {
+			try {
+				this.autores = this.editarAutorEJB.listarAutores("");
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+		}
+		this.dataTableAutoria.processUpdates(context);
+	}
+
+	public void excluirAutoria(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer index = new Integer(list[2]);
+		if (this.apresentaAutorias.size() > 1) {
+			this.apresentaAutorias.remove((int) index);
+		}
+		this.dataTableAutoria.processUpdates(context);
 	}
 
 	public List<SelectItem> getTiposBem() {
@@ -281,12 +407,96 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.longitude = longitude;
 	}
 
-//	public HtmlDataTable getDataTable() {
-//		return dataTable;
-//	}
-//
-//	public void setDataTable(HtmlDataTable dataTable) {
-//		this.dataTable = dataTable;
-//	}
+	public SerialHtmlDataTable getDataTableTitulos() {
+		return dataTableTitulos;
+	}
 
+	public void setDataTableTitulos(SerialHtmlDataTable dataTableTitulos) {
+		this.dataTableTitulos = dataTableTitulos;
+	}
+
+	public SerialHtmlDataTable getDataTableAutoria() {
+		return dataTableAutoria;
+	}
+
+	public void setDataTableAutoria(SerialHtmlDataTable datatableAutoria) {
+		this.dataTableAutoria = datatableAutoria;
+	}
+
+	public List<Autoria> getAutorias() {
+		return autorias;
+	}
+
+	public void setAutorias(List<Autoria> autorias) {
+		this.autorias = autorias;
+	}
+
+	public List<CadastrarBemPatrimonialMB.ApresentaAutoria> getApresentaAutorias() {
+		return apresentaAutorias;
+	}
+
+	public void setApresentaAutorias(
+			List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias) {
+		this.apresentaAutorias = apresentaAutorias;
+	}
+
+	public List<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
+	}
+
+	public boolean isCadastrarAutor() {
+		return cadastrarAutor;
+	}
+
+	public void setCadastrarAutor(boolean cadastrarAutor) {
+		this.cadastrarAutor = cadastrarAutor;
+	}
+
+	public class ApresentaAutoria implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private boolean rederizaTabelaSugestoes = false;
+		private String nomeAutor = "";
+		private String tipoAutoria = "";
+
+		public String getNomeAutor() {
+			return nomeAutor;
+		}
+
+		public void setNomeAutor(String nomeAutor) {
+			this.nomeAutor = nomeAutor;
+		}
+
+		public String getTipoAutoria() {
+			return tipoAutoria;
+		}
+
+		public void setTipoAutoria(String tipoAutoria) {
+			this.tipoAutoria = tipoAutoria;
+		}
+
+		public boolean isRederizaTabelaSugestoes() {
+			return rederizaTabelaSugestoes;
+		}
+
+		public void setRederizaTabelaSugestoes(boolean rederizaTabelaSugestoes) {
+			this.rederizaTabelaSugestoes = rederizaTabelaSugestoes;
+		}
+	}
+
+	public class SerialHtmlDataTable extends HtmlDataTable implements
+			Serializable {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+	}
 }

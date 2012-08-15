@@ -63,7 +63,9 @@ public class Autoria implements Serializable{
 	@ManyToOne
 	private BemPatrimonial bemPatrimonial;
 	
-	
+	public String getNomeAutor(){
+		return autor.getNome() + " " + autor.getSobrenome();
+	}
 	/**
 	 * @return the tipoAutoria
 	 */

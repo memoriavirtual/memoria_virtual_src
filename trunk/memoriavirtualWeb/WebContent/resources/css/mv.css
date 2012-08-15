@@ -507,7 +507,6 @@ table[id*=instituicoes] a:hover {
 
 textarea:focus {
 	background: #fffff0;
-	
 }
 
 .labeltabela {
@@ -560,8 +559,7 @@ textarea:focus {
 .titulos {
 	float: left;
 	width: 100%;
-	margin-bottom:10px;
-	padding-left: 15%
+	margin-bottom: 10px;
 	
 }
 
@@ -570,12 +568,11 @@ textarea:focus {
 	resize: none;
 }
 
-
-
 .titulos input {
 	height: 16px !important;
 	width: 200px !important;
 }
+
 .titulos input[type=checkbox] {
 	display: inline-block;
 	width: 15px !important;
@@ -584,13 +581,18 @@ textarea:focus {
 	padding: 0;
 	position: absolute;
 }
+
 .titulos td {
 	height: auto !important;
-	padding: 2px 5% 2px 2px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 15%
 }
-.titulos td:HOVER{
+
+.titulos td:HOVER {
 	background: #f5f1e1;
 }
+
 .titulos div {
 	height: 10px !important;
 	width: 100% !important;
@@ -602,22 +604,24 @@ textarea:focus {
 }
 
 .botoesTituiloTLB {
-	margin:0 !important;
-	padding-top: 30px  !important;
-	padding-bottom: 10px  !important;
+	margin: 0 !important;
+	padding-top: 30px !important;
+	padding-bottom: 10px !important;
 	height: 20px !important;
-/* 	float: right !important; */
+	/* 	float: right !important; */
 	margin-right: 20%;
 	display: inline-table !important;
 	width: 100% !important;
 }
-.botoesTituiloTLB label{
+
+.botoesTituiloTLB label {
 	float: left;
 	width: 15%;
 }
+
 .botoesTituiloTLB  input[type=button] {
 	float: left;
-	padding:0 !important;
+	padding: 0 !important;
 	font-size: 11px;
 	margin: 0;
 	margin-left: 20px !important;;
@@ -627,6 +631,7 @@ textarea:focus {
 	background-color: buttonface;
 	color: buttontext;
 	border: 2px outset buttonface;
+	border-radius: 4px;
 }
 
 .botoesTituiloTLB  input[type=button]:active {
@@ -639,7 +644,29 @@ textarea:focus {
 }
 
 .titulos label {
-	font-size: 13px !important;
+	font-size: 13px !important; 
 	width: auto;
 	float: inherit;
 }
+
+.buscarAutoria {
+	position: absolute;
+	width: 237px;
+	margin-left: 146px;
+	background: #F5F1E1;
+    border-radius: 0px 0px 7px 7px;
+    
+}
+.buscarAutoria td {
+	border-radius: 7px;
+	padding: 0px;
+}
+
+.buscarAutoria td:HOVER {
+	background: #E5E1D1;
+	border-radius: 7px;
+}
+.cadastroNovoAutor{
+	z-index: 400;
+}
+

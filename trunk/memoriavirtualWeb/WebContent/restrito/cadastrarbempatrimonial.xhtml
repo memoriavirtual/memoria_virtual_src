@@ -100,7 +100,8 @@
 							</div>
 
 
-							<h:dataTable id="titulosBem" var="titulo" class="titulos" binding="#{cadastrarBemPatrimonialMB.dataTable}"
+							<h:dataTable id="titulosBem" var="titulo" class="titulos"
+								binding="#{cadastrarBemPatrimonialMB.dataTableTitulos}"
 								value="#{cadastrarBemPatrimonialMB.titulos}">
 								<h:column id="coluna">
 
@@ -109,7 +110,7 @@
 										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right;">
 
 										<f:ajax render="@all" event="click" execute="@all"
-											listener="#{cadastrarBemPatrimonialMB.setTituloSelect}">
+											listener="#{cadastrarBemPatrimonialMB.excluirTitulo}">
 										</f:ajax>
 									</h:graphicImage>
 									<h:outputLabel class="labels"
@@ -176,33 +177,76 @@
 
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAutoria}">
 						<fieldset>
-							<h:dataTable id="titulosBem" var="titulo" class="titulos" 
-								value="#{cadastrarBemPatrimonialMB.titulos}">
+							<div>
+
+								<div class="botoesTituiloTLB">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemAutorias}</h:outputLabel>
+									<h:commandButton type="button" class="botoesTituiloTLB"
+										value="#{mensagens.cadastrarBemAutoriaAdcionar}">
+										<f:ajax render="autoriaBem" execute="@all"
+											listener="#{cadastrarBemPatrimonialMB.adicionarAutoria}"></f:ajax>
+									</h:commandButton>
+									<h:commandButton type="button" class="botoesTituiloTLB"
+										value="#{mensagens.cadastrarBemCadastrarNovoAutor}">
+										<f:ajax render="autoriaBem" execute="@all"
+											listener="#{cadastrarBemPatrimonialMB.adicionarAutoria}"></f:ajax>
+									</h:commandButton>
+								</div>
+
+
+
+
+							</div>
+							<h:panelGroup rendered="#{cadastrarBemPatrimonialMB.cadastrarAutor}" class="cadastroNovoAutor">
+								<div>
+									<iframe> </iframe>
+								</div>
+							</h:panelGroup>
+							<h:dataTable id="autoriaBem" var="autoria" class="titulos"
+								binding="#{cadastrarBemPatrimonialMB.dataTableAutoria}"
+								value="#{cadastrarBemPatrimonialMB.apresentaAutorias}">
 								<h:column id="coluna">
 
+
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarAutorNome}</h:outputLabel>
+									<h:inputText style="width: 230px !important;"
+										value="#{autoria.nomeAutor}" autocomplete="false">
+										<f:ajax render="@all" event="keyup"
+											listener="#{cadastrarBemPatrimonialMB.listarSugestoesAutores}"
+											execute="@all"></f:ajax>
+										<f:ajax render="@all" event="focus"
+											listener="#{cadastrarBemPatrimonialMB.listarSugestoesAutoresFocus}"
+											execute="@all"></f:ajax>
+									</h:inputText>
+									<h:dataTable id="sugestaoAutoria" class="buscarAutoria"
+										rendered="#{autoria.isRederizaTabelaSugestoes()}"
+										value="#{cadastrarBemPatrimonialMB.autores}" var="autor">
+										<h:column>
+											<h:outputLabel class="rowBuscarAutoria" style="width: 100%"
+												value="#{autor.nome}">
+												<f:ajax render="@all" execute="@all" event="click"
+													listener="#{cadastrarBemPatrimonialMB.selecionarAutoria}"></f:ajax>
+											</h:outputLabel>
+										</h:column>
+									</h:dataTable>
+									<h:outputLabel class="labels" style="margin-left: 20px;">#{mensagens.cadastrarAutorTipoAutoria}</h:outputLabel>
+									<h:selectOneMenu class="options" value="#{autoria.tipoAutoria}">
+										<f:selectItems
+											value="#{cadastrarBemPatrimonialMB.getTiposAutoria()}" />
+									</h:selectOneMenu>
 									<h:graphicImage id="excluir" library="imagens"
 										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right;">
+										style="width: 15px; height: 15px; margin: 0px 10px;  border: none; ">
 
 										<f:ajax render="@all" event="click" execute="@all"
-											listener="#{cadastrarBemPatrimonialMB.setTituloSelect}">
+											listener="#{cadastrarBemPatrimonialMB.excluirAutoria}">
 										</f:ajax>
 									</h:graphicImage>
-									<h:outputLabel class="labels"
-										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
-									<h:inputText style="width: 40% !important;"
-										value="#{titulo.valor}">
-									</h:inputText>
-
-									<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
-									<h:selectOneMenu id="tipodotitulo" class="options"
-										value="#{titulo.tipo}">
-										<f:selectItems
-											value="#{cadastrarBemPatrimonialMB.getTiposTitulo()}" />
-									</h:selectOneMenu>
-
 								</h:column>
 							</h:dataTable>
+
+
 						</fieldset>
 					</mv:containerExpansivo>
 

@@ -27,8 +27,8 @@ public class Autor implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTOR_ID")
 	private long id;
-	private String nome;
-	private String sobrenome;
+	private String nome = "";
+	private String sobrenome ="";
 	private String codinome;
 	private String atividade;
 	private String nascimento;
