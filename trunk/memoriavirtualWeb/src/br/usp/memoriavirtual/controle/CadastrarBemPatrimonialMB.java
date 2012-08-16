@@ -127,7 +127,12 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 		return tiposTitulo;
 	}
-
+	
+	
+	public void mostrarCadastrarAutor(AjaxBehaviorEvent event){
+		this.cadastrarAutor = true ; 
+	}
+	
 	public void adicionarTitulo(AjaxBehaviorEvent event) {
 		if (this.titulos.size() < this.getTiposTitulo().size() - 1) {
 			this.titulos.add(new Titulo());

@@ -12,15 +12,19 @@
 <title>Cadastrar Bem Patrimonial</title>
 </head>
 <h:body>
+
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
-
 
 		<ui:define name="titulo">#{mensagens.cadastrarBemTitulo}</ui:define>
 
 
 
 		<ui:define name="conteudo">
+
+
+
+
 			<div class="formulario">
 
 				<div class="erroPrincipal">
@@ -95,7 +99,7 @@
 								</div>
 
 
-								<h:outputScript name="mv.js" library="javascript"></h:outputScript>
+
 
 							</div>
 
@@ -178,7 +182,6 @@
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAutoria}">
 						<fieldset>
 							<div>
-
 								<div class="botoesTituiloTLB">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemAutorias}</h:outputLabel>
 									<h:commandButton type="button" class="botoesTituiloTLB"
@@ -187,21 +190,16 @@
 											listener="#{cadastrarBemPatrimonialMB.adicionarAutoria}"></f:ajax>
 									</h:commandButton>
 									<h:commandButton type="button" class="botoesTituiloTLB"
+										onclick="mostrarfundoNegro()"
 										value="#{mensagens.cadastrarBemCadastrarNovoAutor}">
-										<f:ajax render="autoriaBem" execute="@all"
-											listener="#{cadastrarBemPatrimonialMB.adicionarAutoria}"></f:ajax>
+
 									</h:commandButton>
 								</div>
-
-
-
-
 							</div>
-							<h:panelGroup rendered="#{cadastrarBemPatrimonialMB.cadastrarAutor}" class="cadastroNovoAutor">
-								<div>
-									<iframe> </iframe>
-								</div>
-							</h:panelGroup>
+
+							
+
+
 							<h:dataTable id="autoriaBem" var="autoria" class="titulos"
 								binding="#{cadastrarBemPatrimonialMB.dataTableAutoria}"
 								value="#{cadastrarBemPatrimonialMB.apresentaAutorias}">
