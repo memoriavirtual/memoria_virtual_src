@@ -207,8 +207,19 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		try{
 			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class, Long.valueOf(id));
 			Usuario usuario = this.entityManager.find(Usuario.class, aprovacao.getChaveEstrangeira());
+
+			Query removerAcessos = this.entityManager.createQuery("DELETE FROM Acesso a WHERE a.usuario = :usuario");
+			removerAcessos.setParameter("usuario", usuario);
+			removerAcessos.executeUpdate();
+			
 			this.entityManager.remove(usuario);
-			this.entityManager.remove(aprovacao);
+			
+			Query removerUsuario = this.entityManager.createQuery("DELETE FROM Aprovacao a WHERE a.id = :id");
+			removerUsuario.setParameter("id", Long.valueOf(id));
+			removerUsuario.executeUpdate();
+			
+
+
 		}
 		catch(Exception e){
 			throw new ModeloException(e);

@@ -45,6 +45,7 @@ public class ExcluirUsuario extends HttpServlet {
 		String usuarioNome = "user1";// request.getParameter("usuario");
 		// usuarioNome = this.memoriaVirtualEJB.embaralhar(usuarioNome);
 		
+		
 		Usuario usuario = (Usuario) request.getSession()
 				.getAttribute("usuario");
 		
@@ -92,6 +93,10 @@ public class ExcluirUsuario extends HttpServlet {
 							"excluirUsuarioMB");
 
 			managedBean.setAprovacao(aprovacaoId);
+			managedBean.setNome(usuarioNome);
+			managedBean.setUsuario(null);
+			managedBean.listarAcessos();
+			
 			response.sendRedirect("restrito/confirmarexclusao.jsf");
 		}
 

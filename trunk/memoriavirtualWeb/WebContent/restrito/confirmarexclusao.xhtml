@@ -32,7 +32,7 @@
 						<h:outputLabel>#{mensagens.excluirUsuarioConfirmacao}</h:outputLabel>
 						<h:outputLabel>#{excluirUsuarioMB.nome}</h:outputLabel>
 						<h:dataTable var="acesso" value="#{excluirUsuarioMB.acessos}">
-						<h:column>#{acesso.grupo} em #{acesso.instituicao}</h:column>
+						<h:column>#{acesso.grupo.id} em #{acesso.instituicao.nome}</h:column>
 						</h:dataTable>
 					</fieldset>
 

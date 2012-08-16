@@ -238,6 +238,15 @@ public class ExcluirUsuarioMB implements Serializable {
 				.getAttribute("usuario");
 
 		this.acessos = new ArrayList<Acesso>();
+		
+		if(this.usuario == null){
+			try {
+				this.usuario = this.excluirUsuarioEJB.recuperarDadosUsuario(nome);				
+			} catch (ModeloException e) {
+				MensagensDeErro.getErrorMessage("excluirUsuarioErroRecuperacao", "resultado");
+			}
+
+		}
 
 		if (requerente.isAdministrador()) {
 			try {
@@ -417,6 +426,7 @@ public class ExcluirUsuarioMB implements Serializable {
 			this.excluirUsuarioEJB.excluirUsuario(this.aprovacao);
 			MensagensDeErro.getSucessMessage("excluirUsuarioSucessoOperacao",
 					"resultado");
+			//this.auditoriaFabricaEJB.auditarAutorizarExcluirUsuario(autorAcao, atributoSignificativo, justificativa);
 		} catch (ModeloException m) {
 			m.printStackTrace();
 			MensagensDeErro.getErrorMessage("excluirUsuarioErroOperacao",
