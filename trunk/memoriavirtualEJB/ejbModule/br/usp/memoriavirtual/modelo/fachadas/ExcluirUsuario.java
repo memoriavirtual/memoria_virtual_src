@@ -167,14 +167,14 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		for (Acesso a : acessos) {
 			Query listarAprovadores = entityManager
 					.createQuery("SELECT a.usuario FROM Acesso a WHERE a.grupo = :grupo "
-							+ "AND a.instituicao = :instituicao AND a.validade = TRUE AND a.usuario <> :requerente");
+							+ "AND a.instituicao = :instituicao AND a.validade = TRUE AND a.usuario <> :requerente AND a.usuario <> :usuario");
 			listarAprovadores.setParameter("grupo", new Grupo("gerente"));
 			listarAprovadores.setParameter("instituicao", a.getInstituicao());
 			listarAprovadores.setParameter("requerente", requerente);
+			listarAprovadores.setParameter("usuario", usuario);
 
 			try {
 				List<Usuario> gerentes = listarAprovadores.getResultList();
-				System.out.println(gerentes.size());
 				for (Usuario u : gerentes) {
 					aprovadores.add(u);
 				}
@@ -204,24 +204,25 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 
 	@Override
 	public void excluirUsuario(String id) throws ModeloException {
-		try{
-			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class, Long.valueOf(id));
-			Usuario usuario = this.entityManager.find(Usuario.class, aprovacao.getChaveEstrangeira());
+		try {
+			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class,
+					Long.valueOf(id));
+			Usuario usuario = this.entityManager.find(Usuario.class,
+					aprovacao.getChaveEstrangeira());
 
-			Query removerAcessos = this.entityManager.createQuery("DELETE FROM Acesso a WHERE a.usuario = :usuario");
+			Query removerAcessos = this.entityManager
+					.createQuery("DELETE FROM Acesso a WHERE a.usuario = :usuario");
 			removerAcessos.setParameter("usuario", usuario);
 			removerAcessos.executeUpdate();
-			
+
 			this.entityManager.remove(usuario);
-			
-			Query removerUsuario = this.entityManager.createQuery("DELETE FROM Aprovacao a WHERE a.id = :id");
+
+			Query removerUsuario = this.entityManager
+					.createQuery("DELETE FROM Aprovacao a WHERE a.id = :id");
 			removerUsuario.setParameter("id", Long.valueOf(id));
 			removerUsuario.executeUpdate();
-			
 
-
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
 	}
