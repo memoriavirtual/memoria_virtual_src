@@ -670,13 +670,13 @@ textarea:focus {
 	z-index: 1000;
 	float: left;
 	position: fixed;
+	overflow: scroll; 
 }
 #cadastroNovoAutor div {
 	position: relative;
 	width: 925px;
 	height: 450px;
-	overflow-y: hidden;
-	overflow-x: scroll;
+	overflow: hidden;
 	margin-top: 10%;
 	margin-left: 15%;
 }

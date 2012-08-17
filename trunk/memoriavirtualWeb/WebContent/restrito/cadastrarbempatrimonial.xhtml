@@ -179,14 +179,14 @@
 
 
 
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemAutoria}">
+					<mv:containerExpansivo id="containerBemAutoria" label="#{mensagens.cadastrarBemAutoria}">
 						<fieldset>
 							<div>
 								<div class="botoesTituiloTLB">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemAutorias}</h:outputLabel>
 									<h:commandButton type="button" class="botoesTituiloTLB"
 										value="#{mensagens.cadastrarBemAutoriaAdcionar}">
-										<f:ajax render="autoriaBem" execute="@all"
+										<f:ajax render="autoriaBem" execute="@form"
 											listener="#{cadastrarBemPatrimonialMB.adicionarAutoria}"></f:ajax>
 									</h:commandButton>
 									<h:commandButton type="button" class="botoesTituiloTLB"
@@ -197,33 +197,35 @@
 								</div>
 							</div>
 
-							
 
 
-							<h:dataTable id="autoriaBem" var="autoria" class="titulos"
+
+							<h:dataTable id="autoriaBem" var="autoria" class="titulos" 
 								binding="#{cadastrarBemPatrimonialMB.dataTableAutoria}"
 								value="#{cadastrarBemPatrimonialMB.apresentaAutorias}">
 								<h:column id="coluna">
-
-
+								<script>
+									iniciaTabelas("containerBemAutoria:autoriaBem");
+								</script>
+									
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarAutorNome}</h:outputLabel>
 									<h:inputText style="width: 230px !important;"
 										value="#{autoria.nomeAutor}" autocomplete="false">
-										<f:ajax render="@all" event="keyup"
+										<f:ajax render="sugestaoAutoria" event="keyup"
 											listener="#{cadastrarBemPatrimonialMB.listarSugestoesAutores}"
-											execute="@all"></f:ajax>
-										<f:ajax render="@all" event="focus"
+											execute="@form"></f:ajax>
+										<f:ajax render="sugestaoAutoria" event="focus"
 											listener="#{cadastrarBemPatrimonialMB.listarSugestoesAutoresFocus}"
-											execute="@all"></f:ajax>
+											execute="@form"></f:ajax>
 									</h:inputText>
 									<h:dataTable id="sugestaoAutoria" class="buscarAutoria"
-										rendered="#{autoria.isRederizaTabelaSugestoes()}"
 										value="#{cadastrarBemPatrimonialMB.autores}" var="autor">
+										
 										<h:column>
 											<h:outputLabel class="rowBuscarAutoria" style="width: 100%"
 												value="#{autor.nome}">
-												<f:ajax render="@all" execute="@all" event="click"
+												<f:ajax render="@form" execute="@form" event="click" onevent="mostrarTableCorreta(this, 'containerBemAutoria:autoriaBem') "
 													listener="#{cadastrarBemPatrimonialMB.selecionarAutoria}"></f:ajax>
 											</h:outputLabel>
 										</h:column>

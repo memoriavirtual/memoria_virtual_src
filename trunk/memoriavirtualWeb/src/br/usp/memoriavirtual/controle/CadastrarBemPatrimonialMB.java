@@ -219,11 +219,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		String[] list = event.getComponent().getClientId().split(":");
 		Integer indexAutoria = new Integer(list[2]);
 		Integer indexAutor = new Integer(list[4]);
-		// System.out.println(event.getComponent().getClientId() + " "
-		// + indexAutor + " " + indexAutoria);
+		 System.out.println(event.getComponent().getClientId() + " "
+		 + indexAutor + " " + indexAutoria);
 		if (!this.autores.get(indexAutor).getNome()
 				.equals(bundle.getString("listarTodos"))) {
-			this.apresentaAutorias.get(indexAutor).setRederizaTabelaSugestoes(
+			this.apresentaAutorias.get(indexAutoria).setRederizaTabelaSugestoes(
 					false);
 			this.autorias.get(indexAutoria).setAutor(
 					(this.autores.get(indexAutor)));
