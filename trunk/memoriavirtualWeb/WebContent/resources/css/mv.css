@@ -503,6 +503,7 @@ table[id*=instituicoes] a:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	width: 250px;
 	height: 80px;
+	resize: none;
 }
 
 textarea:focus {

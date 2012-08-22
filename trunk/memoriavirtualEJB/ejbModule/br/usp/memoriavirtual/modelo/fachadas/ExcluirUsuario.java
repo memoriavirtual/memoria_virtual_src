@@ -10,11 +10,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.sun.tools.ws.processor.model.Model;
-
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
+
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 
@@ -25,23 +24,39 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente)
-			throws ModeloException {
+	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente,
+			boolean isAdministrador) throws ModeloException {
 
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 
-		Query query = this.entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE "
-						+ "u.ativo = TRUE AND "
-						+ "u.nomeCompleto LIKE :nome AND " + "u <> :requerente"
-						+ " ORDER BY u.nomeCompleto ");
-		query.setParameter("requerente", requerente);
-		query.setParameter("nome", "%" + parteNome + "%");
+		if (isAdministrador) {
+			Query query = this.entityManager
+					.createQuery("SELECT u FROM Usuario u WHERE "
+							+ "u.ativo = TRUE AND "
+							+ "u.nomeCompleto LIKE :nome AND "
+							+ "u <> :requerente" + " ORDER BY u.nomeCompleto ");
+			query.setParameter("requerente", requerente);
+			query.setParameter("nome", "%" + parteNome + "%");
+			try {
+				usuarios = (List<Usuario>) query.getResultList();
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		} else {
+			Query query = this.entityManager
+					.createQuery("SELECT b.usuario from Acesso a, Acesso b "
+							+ "WHERE a.usuario = :requerente AND a.grupo = :grupo "
+							+ "AND b.instituicao = a.instituicao AND b.usuario <> :requerente");
 
-		try {
-			usuarios = (List<Usuario>) query.getResultList();
-		} catch (Exception e) {
-			throw new ModeloException(e);
+			query.setParameter("grupo", new Grupo("GERENTE"));
+			query.setParameter("requerente", requerente);
+
+			try {
+				usuarios = query.getResultList();
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+
 		}
 
 		return usuarios;
@@ -155,8 +170,9 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 
 		Query listarAdministradores = entityManager
 				.createQuery("SELECT u FROM Usuario u WHERE "
-						+ "u.ativo = TRUE AND u.administrador = TRUE AND u <> :usuario");
-		listarAdministradores.setParameter("usuario", requerente);
+						+ "u.ativo = TRUE AND u.administrador = TRUE AND u <> :requerente AND u <> :usuario");
+		listarAdministradores.setParameter("usuario", usuario);
+		listarAdministradores.setParameter("requerente", requerente);
 
 		try {
 			aprovadores = listarAdministradores.getResultList();
@@ -226,4 +242,5 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			throw new ModeloException(e);
 		}
 	}
+
 }

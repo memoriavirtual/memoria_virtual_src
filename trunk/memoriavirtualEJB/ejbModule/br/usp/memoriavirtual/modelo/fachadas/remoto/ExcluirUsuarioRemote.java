@@ -13,7 +13,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface ExcluirUsuarioRemote {
 
-	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente) throws ModeloException;
+	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente, boolean isAdministrador) throws ModeloException;
 	public Usuario recuperarDadosUsuario(String nome) throws ModeloException;
 	public List<Usuario> listarSemelhantes(String eliminador, Boolean isAdministrador);
 	public void registrarAprovacao(Usuario validador, String idExcluido,

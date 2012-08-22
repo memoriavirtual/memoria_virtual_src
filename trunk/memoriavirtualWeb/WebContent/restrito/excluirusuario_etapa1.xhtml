@@ -32,7 +32,7 @@
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioNome}</h:outputLabel>
 							<h:inputText value="#{excluirUsuarioMB.nome}"
 								autoComplete="off">
-								<f:ajax event="keyup" execute="@this" render="sugestoesId"
+								<f:ajax event="focus" execute="@this" render="sugestoesId"
 									listener="#{excluirUsuarioMB.listarUsuarios}" />
 							</h:inputText>
 							<h:dataTable id="sugestoesId" var="usuario"

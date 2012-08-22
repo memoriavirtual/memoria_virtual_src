@@ -176,23 +176,19 @@ public class ExcluirUsuarioMB implements Serializable {
 
 		this.usuarios = new ArrayList<Usuario>();
 
-		if (this.requerente.isAdministrador()) {
-			try {
-				this.usuarios = this.excluirUsuarioEJB.listarUsuarios(
-						this.nome, this.requerente);
-			} catch (ModeloException m) {
-				MensagensDeErro.getErrorMessage(
-						"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
-				m.printStackTrace();
-			}
+		try {
+			this.usuarios = this.excluirUsuarioEJB.listarUsuarios(this.nome,
+					this.requerente, this.requerente.isAdministrador());
+		} catch (ModeloException m) {
+			MensagensDeErro.getErrorMessage(
+					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
+			m.printStackTrace();
 		}
 
-		if (this.usuarios.size() > 0) {
-			Usuario todos = new Usuario();
-			todos.setId(bundle.getString("listarTodos"));
-			todos.setNomeCompleto(bundle.getString("listarTodos"));
-			this.usuarios.add(0, todos);
-		}
+		Usuario todos = new Usuario();
+		todos.setId(bundle.getString("listarTodos"));
+		todos.setNomeCompleto(bundle.getString("listarTodos"));
+		this.usuarios.add(0, todos);
 
 	}
 
