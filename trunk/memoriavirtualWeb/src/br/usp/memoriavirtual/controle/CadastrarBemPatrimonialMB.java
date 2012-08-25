@@ -47,8 +47,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
 	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
 	private boolean cadastrarAutor = false;
-	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
+	protected boolean botaRemoverTitulo = false;
+	protected List<Autor> autores = new ArrayList<Autor>();
+	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
+	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
 	protected boolean externo;
 	protected String naturezaBem;
 	protected String tipoDoBemPatrimonial;
@@ -59,9 +62,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String longitude;
 	protected List<Titulo> titulos = new ArrayList<Titulo>();
 	protected List<Autoria> autorias = new ArrayList<Autoria>();
-	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
-	protected List<Autor> autores = new ArrayList<Autor>();
-	protected boolean botaRemoverTitulo = false;
+	protected String producaoLocal;
+	protected String producaoAno;
+	protected String producaoEdicao;
+	protected String producaoOutrasRes;
 
 	/**
 	 * 
@@ -127,12 +131,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 		return tiposTitulo;
 	}
-	
-	
-	public void mostrarCadastrarAutor(AjaxBehaviorEvent event){
-		this.cadastrarAutor = true ; 
+
+	public void mostrarCadastrarAutor(AjaxBehaviorEvent event) {
+		this.cadastrarAutor = true;
 	}
-	
+
 	public void adicionarTitulo(AjaxBehaviorEvent event) {
 		if (this.titulos.size() < this.getTiposTitulo().size() - 1) {
 			this.titulos.add(new Titulo());
@@ -160,14 +163,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			Autor a = new Autor();
 			a.setNome(bundle.getString("listarTodos"));
 			this.autores.add(a);
-			this.apresentaAutorias.get(index).setRederizaTabelaSugestoes(
-					true);
-			for(int i = 0 ; i < this.apresentaAutorias.size();i++){
-				if( index != i ){
-					this.apresentaAutorias.get(i).setRederizaTabelaSugestoes(
-							false);
-				}
-			}
+
 		}
 		this.dataTableAutoria.processUpdates(context);
 
@@ -182,19 +178,12 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 				this.autores = this.editarAutorEJB
 						.listarAutores(this.apresentaAutorias.get((int) index)
 								.getNomeAutor());
-				this.apresentaAutorias.get(index).setRederizaTabelaSugestoes(
-						true);
-				for(int i = 0 ; i < this.apresentaAutorias.size();i++){
-					if( index != i ){
-						this.apresentaAutorias.get(i).setRederizaTabelaSugestoes(
-								false);
-					}
-				}
+
 				this.dataTableAutoria.processUpdates(context);
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-		}else{
+		} else {
 			this.listarSugestoesAutoresFocus(event);
 		}
 	}
@@ -219,12 +208,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		String[] list = event.getComponent().getClientId().split(":");
 		Integer indexAutoria = new Integer(list[2]);
 		Integer indexAutor = new Integer(list[4]);
-		 System.out.println(event.getComponent().getClientId() + " "
-		 + indexAutor + " " + indexAutoria);
+		System.out.println(event.getComponent().getClientId() + " "
+				+ indexAutor + " " + indexAutoria);
 		if (!this.autores.get(indexAutor).getNome()
 				.equals(bundle.getString("listarTodos"))) {
-			this.apresentaAutorias.get(indexAutoria).setRederizaTabelaSugestoes(
-					false);
+
 			this.autorias.get(indexAutoria).setAutor(
 					(this.autores.get(indexAutor)));
 			this.apresentaAutorias
@@ -461,12 +449,43 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.cadastrarAutor = cadastrarAutor;
 	}
 
+	public String getProducaoLocal() {
+		return producaoLocal;
+	}
+
+	public void setProducaoLocal(String producaoLocal) {
+		this.producaoLocal = producaoLocal;
+	}
+
+	public String getProducaoAno() {
+		return producaoAno;
+	}
+
+	public void setProducaoAno(String producaoAno) {
+		this.producaoAno = producaoAno;
+	}
+
+	public String getProducaoEdicao() {
+		return producaoEdicao;
+	}
+
+	public void setProducaoEdicao(String producaoEdicao) {
+		this.producaoEdicao = producaoEdicao;
+	}
+
+	public String getProducaoOutrasRes() {
+		return producaoOutrasRes;
+	}
+
+	public void setProducaoOutrasRes(String producaoOutrasRes) {
+		this.producaoOutrasRes = producaoOutrasRes;
+	}
+
 	public class ApresentaAutoria implements Serializable {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private boolean rederizaTabelaSugestoes = false;
 		private String nomeAutor = "";
 		private String tipoAutoria = "";
 
@@ -486,13 +505,6 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			this.tipoAutoria = tipoAutoria;
 		}
 
-		public boolean isRederizaTabelaSugestoes() {
-			return rederizaTabelaSugestoes;
-		}
-
-		public void setRederizaTabelaSugestoes(boolean rederizaTabelaSugestoes) {
-			this.rederizaTabelaSugestoes = rederizaTabelaSugestoes;
-		}
 	}
 
 	public class SerialHtmlDataTable extends HtmlDataTable implements
@@ -504,4 +516,5 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		private static final long serialVersionUID = 1L;
 
 	}
+
 }

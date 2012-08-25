@@ -56,9 +56,13 @@ public class CadastrarAutorMB implements Serializable{
 	public String cadastrarAutor() {
 		String retorno = null;
 
-		if (this.validateNome() && this.validateSobrenome()
-				&& this.validateNascimento() && this.validateObito()
-				&& this.validateAtividade()) {
+		this.validateNome();
+		this.validateSobrenome();
+		this.validateNascimento();
+		this.validateObito();
+		this.validateAtividade();
+		
+		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
 
 			this.cadastrarAutorEJB.cadastrarAutor(new Autor(this.autor
 					.getNome(), this.autor.getSobrenome(), this.autor

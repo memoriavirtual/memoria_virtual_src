@@ -179,7 +179,8 @@
 
 
 
-					<mv:containerExpansivo id="containerBemAutoria" label="#{mensagens.cadastrarBemAutoria}">
+					<mv:containerExpansivo id="containerBemAutoria"
+						label="#{mensagens.cadastrarBemAutoria}">
 						<fieldset>
 							<div>
 								<div class="botoesTituiloTLB">
@@ -200,14 +201,14 @@
 
 
 
-							<h:dataTable id="autoriaBem" var="autoria" class="titulos" 
+							<h:dataTable id="autoriaBem" var="autoria" class="titulos"
 								binding="#{cadastrarBemPatrimonialMB.dataTableAutoria}"
 								value="#{cadastrarBemPatrimonialMB.apresentaAutorias}">
 								<h:column id="coluna">
-								<script>
-									iniciaTabelas("containerBemAutoria:autoriaBem");
-								</script>
-									
+									<script>
+										iniciaTabelas("containerBemAutoria:autoriaBem");
+									</script>
+
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarAutorNome}</h:outputLabel>
 									<h:inputText style="width: 230px !important;"
@@ -221,11 +222,12 @@
 									</h:inputText>
 									<h:dataTable id="sugestaoAutoria" class="buscarAutoria"
 										value="#{cadastrarBemPatrimonialMB.autores}" var="autor">
-										
+
 										<h:column>
 											<h:outputLabel class="rowBuscarAutoria" style="width: 100%"
 												value="#{autor.nome}">
-												<f:ajax render="@form" execute="@form" event="click" onevent="mostrarTableCorreta(this, 'containerBemAutoria:autoriaBem') "
+												<f:ajax render="@form" execute="@form" event="click"
+													onevent="mostrarTableCorreta(this, 'containerBemAutoria:autoriaBem') "
 													listener="#{cadastrarBemPatrimonialMB.selecionarAutoria}"></f:ajax>
 											</h:outputLabel>
 										</h:column>
@@ -250,9 +252,50 @@
 						</fieldset>
 					</mv:containerExpansivo>
 
+					<mv:containerExpansivo label="#{mensagens.cadastrarBemProducao}">
+						<fieldset>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoLocal}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.producaoLocal}">
+								</h:inputText>
+								<div></div>
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoAno}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.producaoAno}">
+								</h:inputText>
+								<div></div>
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoEdicao}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.producaoEdicao}">
+								</h:inputText>
+								<div></div>
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoOutrasRes}</h:outputLabel>
+								<h:inputText
+									value="#{cadastrarBemPatrimonialMB.producaoOutrasRes}">
+								</h:inputText>
+								<div></div>
+							</div>
+
+						</fieldset>
+					</mv:containerExpansivo>
+
+
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemDescricaoGrupo}">
-						<fieldset></fieldset>
+						<fieldset>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoCaracteristicasFisicas}</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{cadastrarBemPatrimonialMB.complemento}">
+								</h:inputTextarea>
+								<div></div>
+							</div>
+						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
 						<fieldset></fieldset>

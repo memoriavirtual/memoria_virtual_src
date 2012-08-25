@@ -104,9 +104,13 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 
 	public String salvarEdicaoAutor() {
 
-		if (this.validateNome() && this.validateSobrenome()
-				&& this.validateNascimento() && this.validateObito()
-				&& this.validateAtividade()) {
+		this.validateNome();
+		this.validateSobrenome();
+		this.validateNascimento();
+		this.validateObito();
+		this.validateAtividade();
+		
+		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
 
 			try {
 				this.editarAutorEJB.editarAutor(this.autor);

@@ -262,6 +262,7 @@ h4 {
 	margin-bottom:10px;
 }*/
 .labels {
+	float:left;
 	width: 45%;
 	display: inline-block;
 	margin: 0 10px;
@@ -507,7 +508,7 @@ table[id*=instituicoes] a:hover {
 }
 
 textarea:focus {
-	background: #fffff0;
+	background: #f5f5f5;
 }
 
 .labeltabela {
