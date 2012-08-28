@@ -291,12 +291,27 @@ public class ExcluirUsuarioMB implements Serializable {
 					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
 			return null;
 		}
+
 		try {
+
+			// registra a autoria do pedido de exclus�o
+			this.auditoriaFabricaEJB.auditarExcluirUsuario(this.requerente,
+					this.usuario.getId(), this.justificativa);
+			// registra um objeto Aprovacao
+			Long apr = this.excluirUsuarioEJB.registrarAprovacao(this.validador,
+					this.usuario.getId(), dataValidade);
+			// marca a institui��o a ser exclu�da para que a mesma n�o seja mais
+			// utilizada
+			this.excluirUsuarioEJB.marcarUsuarioExcluido(this.usuario, false,
+					false);
+			
+			String ap = this.memoriaVirtualEJB.embaralhar(String.valueOf(apr));
+			String us = this.memoriaVirtualEJB.embaralhar(this.usuario.getId());
 
 			this.memoriaVirtualEJB
 					.enviarEmail(
 							this.validador.getEmail(),
-							"lol",
+							bundle.getString("excluirUsuarioEmailAssunto"),
 							bundle.getString("excluirUsuarioEmailMensagem")
 									+ "\n"
 									+ "\n"
@@ -329,22 +344,15 @@ public class ExcluirUsuarioMB implements Serializable {
 									+ "\n"
 									+ "http://"
 									+ memoriaVirtualEJB.getURLServidor()
-									+ "/excluir?"
-									+ "chaveEstrangeira="
-									+ this.usuario.getId()
+									+ "/excluirusuario?"
+									+ "aprovacao="
+									+ ap
+									+ "&usuario="
+									+ us
 									+ "\n\n"
 									+ bundle.getString("excluirUsuarioEmailMensagemFim")
 									+ "\n" + "\n");
-			// registra a autoria do pedido de exclus�o
-			this.auditoriaFabricaEJB.auditarExcluirUsuario(this.requerente,
-					this.usuario.getId(), this.justificativa);
-			// registra um objeto Aprovacao
-			this.excluirUsuarioEJB.registrarAprovacao(this.validador,
-					this.usuario.getId(), dataValidade);
-			// marca a institui��o a ser exclu�da para que a mesma n�o seja mais
-			// utilizada
-			this.excluirUsuarioEJB.marcarUsuarioExcluido(this.usuario, false,
-					false);
+
 			// mensagem de sucesso
 			MensagensDeErro.getSucessMessage("excluirUsuarioEnviandoEmail",
 					"resultado");

@@ -101,7 +101,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 
 	}
 
-	public void registrarAprovacao(Usuario validador, String idExcluido,
+	public Long registrarAprovacao(Usuario validador, String idExcluido,
 			Date dataValidade) throws ModeloException {
 		Date data = new Date();
 		Usuario u = entityManager.find(Usuario.class, validador.getId());
@@ -112,6 +112,8 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
+		
+		return aprovacao.getId();
 	}
 
 	public void marcarUsuarioExcluido(Usuario usuario, boolean marca,

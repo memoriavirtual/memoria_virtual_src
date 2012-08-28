@@ -16,7 +16,7 @@ public interface ExcluirUsuarioRemote {
 	public List<Usuario> listarUsuarios(String parteNome, Usuario requerente, boolean isAdministrador) throws ModeloException;
 	public Usuario recuperarDadosUsuario(String nome) throws ModeloException;
 	public List<Usuario> listarSemelhantes(String eliminador, Boolean isAdministrador);
-	public void registrarAprovacao(Usuario validador, String idExcluido,
+	public Long registrarAprovacao(Usuario validador, String idExcluido,
 			Date dataValidade) throws ModeloException;
 	public void marcarUsuarioExcluido(Usuario usuario,boolean marca,boolean flagAcesso) throws ModeloException;
 	public List<Acesso> listarAcessos(Usuario usuario) throws ModeloException;

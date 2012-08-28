@@ -39,11 +39,12 @@ public class ExcluirUsuario extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String aprovacaoId = "4";// request.getParameter("aprovacao");
-		// aprovacaoId = this.memoriaVirtualEJB.embaralhar(aprovacaoId);
+		String aprovacaoId = request.getParameter("aprovacao");
+		aprovacaoId = this.memoriaVirtualEJB.embaralhar(aprovacaoId);
 
-		String usuarioNome = "user1";// request.getParameter("usuario");
-		// usuarioNome = this.memoriaVirtualEJB.embaralhar(usuarioNome);
+		String usuarioNome =  request.getParameter("usuario");
+		usuarioNome = this.memoriaVirtualEJB.embaralhar(usuarioNome);
+		
 		
 		
 		Usuario usuario = (Usuario) request.getSession()
