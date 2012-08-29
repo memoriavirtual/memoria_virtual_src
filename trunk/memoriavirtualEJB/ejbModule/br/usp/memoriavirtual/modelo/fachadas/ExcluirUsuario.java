@@ -106,7 +106,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		Date data = new Date();
 		Usuario u = entityManager.find(Usuario.class, validador.getId());
 		Aprovacao aprovacao = new Aprovacao(data, u, dataValidade, idExcluido,
-				"Usuario");
+				Usuario.class.getCanonicalName());
 		try {
 			this.entityManager.persist(aprovacao);
 		} catch (Exception e) {
@@ -245,4 +245,29 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		}
 	}
 
+	
+	
+	public Usuario recuperarUsuario(String id){
+		
+		Query query1 = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
+		query1.setParameter("usuario", id);
+		
+		Usuario usuario = null;
+		
+		try{
+		usuario = (Usuario) query1.getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return usuario;
+	}
+	
+	public void excluirAprovacao(Aprovacao aprovacao) {
+		Query query;
+		query = this.entityManager
+				.createQuery("DELETE  FROM Aprovacao a WHERE a = :aprovacao ");
+		query.setParameter("aprovacao", aprovacao);
+		query.executeUpdate();
+	}
 }
