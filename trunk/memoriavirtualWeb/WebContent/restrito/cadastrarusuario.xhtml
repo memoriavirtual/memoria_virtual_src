@@ -110,11 +110,11 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarUsuarioConfirmarSenha}</h:outputLabel>
-							<h:inputText value="#{cadastrarUsuarioMB.confirmacaoSenha}">
+							<h:inputSecret value="#{cadastrarUsuarioMB.confirmacaoSenha}">
 								<f:ajax event="blur" execute="@all"
 									render="validacaoConfirmacaoSenha"
 									listener="#{cadastrarUsuarioMB.validateConfirmacaoSenha}" />
-							</h:inputText>
+							</h:inputSecret>
 							<div></div>
 							<h:message id="validacaoConfirmacaoSenha"
 								for="validacaoConfirmacaoSenha" infoClass="sucesso"
