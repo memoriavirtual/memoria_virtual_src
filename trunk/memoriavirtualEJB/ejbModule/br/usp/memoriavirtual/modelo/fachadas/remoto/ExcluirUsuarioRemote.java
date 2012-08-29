@@ -23,5 +23,6 @@ public interface ExcluirUsuarioRemote {
 	public List<Usuario> listarAprovadores(Usuario requerente, Usuario usuario) throws ModeloException;
 	public Aprovacao recuperarDadosAprovacao(String id) throws ModeloException;
 	public void excluirUsuario(String aprovacao) throws ModeloException;
-
+	public void excluirAprovacao(Aprovacao aprovacao);
+	public Usuario recuperarUsuario(String id);
 }
