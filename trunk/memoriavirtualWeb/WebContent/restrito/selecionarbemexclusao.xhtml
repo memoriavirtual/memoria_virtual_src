@@ -7,12 +7,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Excluir Autor</title>
+<title>Excluir Bem Patrimonial</title>
 </head>
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
-		<ui:define name="titulo">#{mensagens.excluirAutorTitle}</ui:define>
+		<ui:define name="titulo">#{mensagens.excluirBemPatrimonialTitle}</ui:define>
 
 		<ui:define name="conteudo">
 			<div class="formulario">
@@ -22,42 +22,41 @@
 						errorClass="erro"></h:message>
 				</div>
 				<div class="avisoexcluir">
-					<div class="mensagenavisoexcluir">"#{mensagens.excluirAutorAviso}".</div>
+					<div class="mensagenavisoexcluir">"#{mensagens.excluirBemPatrimonialAviso}"</div>
 				</div>
 
-				<div class="conteudoTitulo">#{mensagens.excluirAutorTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.excluirAutorDescricao}</div>
+				<div class="conteudoTitulo">#{mensagens.excluirBemPatrimonialTitle}</div>
+				<div class="conteudoDescricao">#{mensagens.excluirBemPatrimonialDescricao}</div>
 
 				<h:form method="post" prependId="false">
 					<fieldset>
 						<div>
-							<h:outputLabel class="labels">#{mensagens.excluirAutorNome}</h:outputLabel>
-							<h:inputText value="#{excluirAutorMB.nome}" autocomplete="off">
-								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{excluirAutorMB.listarAutores}" />
+							<h:outputLabel class="labels">#{mensagens.excluirBemPatrimonialNome}</h:outputLabel>
+							<h:inputText value="#{excluirBemPatrimonialMB.nome}" autocomplete="off">
+								<f:ajax event="click" execute="@this" render="sugestoesId"
+									listener="#{excluirBemPatrimonialMB.listarBensPatrimoniais}" />
 							</h:inputText>
 
 						</div>
 						<div id="sugestoes">
-							<h:dataTable id="sugestoesId" var="autor"
-								value="#{excluirAutorMB.autores}">
+							<h:dataTable id="sugestoesId" var="bem"
+								value="#{excluirBemPatrimonialMB.bens}">
 								<h:column>
 									<h:commandLink
-										action="#{excluirAutorMB.selecionarAutor(autor)}">#{autor.nome}</h:commandLink>
+										action="#{excluirBemPatrimonialMB.selecionarBem(bem)}">#{bem.nome}</h:commandLink>
 								</h:column>
 							</h:dataTable>
 						</div>
 
-
 					</fieldset>
 					<div class="botao">
 						<h:commandButton id="botaoEditar"
-							value="#{mensagens.excluirAutorBotaoExcluir}"
-							action="#{excluirAutorMB.excluirAutor}">
+							value="#{mensagens.excluirBemPatrimonialBotaoExcluir}"
+							action="#{excluirBemPatrimonialMB.excluirBemPatrimonial}">
 						</h:commandButton>
 						<h:commandButton id="botaoCancelar"
-							value="#{mensagens.excluirAutorBotaoCancelar}"
-							action="#{excluirAutorMB.cancelar}">
+							value="#{mensagens.excluirBemPatrimonialBotaoCancelar}"
+							action="#{excluirBemPatrimonialMB.cancelar}">
 						</h:commandButton>
 					</div>
 				</h:form>
