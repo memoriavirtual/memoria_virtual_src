@@ -93,6 +93,15 @@
 						</div>
 
 						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoPais}</h:outputLabel>
+							<h:inputText value="#{editarInstituicaoMB.pais}"></h:inputText>
+							<div></div>
+							<h:message id="validacaoPais" for="validacaoPais"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
 							<h:inputText value="#{editarInstituicaoMB.cep}">
 								<f:ajax event="blur" execute="@this" render="validacaoCep"
@@ -115,7 +124,7 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoEmail}</h:outputLabel>
 							<h:inputText value="#{editarInstituicaoMB.email}">
@@ -211,8 +220,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoTipoPropriedade}</h:outputLabel>
-							<h:selectOneMenu
-								value="#{editarInstituicaoMB.tipoPropriedade}">
+							<h:selectOneMenu value="#{editarInstituicaoMB.tipoPropriedade}">
 								<f:selectItems
 									value="#{editarInstituicaoMB.tipoPropriedadeLista}" />
 								<f:ajax event="blur" execute="@this"
@@ -228,8 +236,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoProtecaoExistente}</h:outputLabel>
-							<h:selectOneMenu
-								value="#{editarInstituicaoMB.protecaoExistente}">
+							<h:selectOneMenu value="#{editarInstituicaoMB.protecaoExistente}">
 								<f:selectItems
 									value="#{editarInstituicaoMB.protecaoExistenteLista}" />
 								<f:ajax event="blur" execute="@this"
@@ -242,11 +249,12 @@
 								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
 							<h:inputText value="#{editarInstituicaoMB.legislacao}">
-								<f:ajax event="blur" execute="@this" render="validacaoLegislacao"
+								<f:ajax event="blur" execute="@this"
+									render="validacaoLegislacao"
 									listener="#{editarInstituicaoMB.validateLegislacao}" />
 							</h:inputText>
 							<div></div>
@@ -259,7 +267,7 @@
 							<mv:uploadFile id="multimidia" nomebean="editarInstituicaoMB"
 								array="#{editarInstituicaoMB.midias}"></mv:uploadFile>
 						</mv:containerExpansivo>
-						
+
 						<div>
 							<h:outputLabel class="labels" style="float:left;  heigth: 250px">#{mensagens.cadastrarInstituicaoSinteseHistorica}</h:outputLabel>
 							<h:inputTextarea class="caixadetexto"
@@ -269,8 +277,9 @@
 									listener="#{editarInstituicaoMB.validateSinteseHistorica}" />
 							</h:inputTextarea>
 							<div></div>
-							<h:message id="validacaoSinteseHistorica" for="validacaoSinteseHistorica"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							<h:message id="validacaoSinteseHistorica"
+								for="validacaoSinteseHistorica" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
 
@@ -286,7 +295,7 @@
 							action="#{editarInstituicaoMB.cancelar}">
 						</h:commandButton>
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.editarInstituicaoBotaoResetar}" 
+							value="#{mensagens.editarInstituicaoBotaoResetar}"
 							action="#{editarInstituicaoMB.resetCadastrarinstituicao}">
 						</h:commandButton>
 					</div>
