@@ -820,7 +820,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return diasValidade;
 	}
 
-	private class MyStringComparable implements Comparator<String> {
+	private class MyStringComparable implements Comparator<String> ,Serializable{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2796712418751984244L;
 
 		@Override
 		public int compare(String o1, String o2) {
