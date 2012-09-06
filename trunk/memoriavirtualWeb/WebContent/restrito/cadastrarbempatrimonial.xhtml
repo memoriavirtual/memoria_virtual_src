@@ -111,7 +111,7 @@
 
 									<h:graphicImage id="excluir" library="imagens"
 										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right;">
+										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
 
 										<f:ajax render="@all" event="click" execute="@all"
 											listener="#{cadastrarBemPatrimonialMB.excluirTitulo}">
@@ -342,7 +342,7 @@
 										itemLabel="#{mensagens.cadastrarBemDescricaoUso3}"
 										itemValue="#{mensagens.cadastrarBemDescricaoUso3}" />
 									<f:selectItem
-										itemLabel="#{mensagens.cadastrarBemDescricaoUso4}"
+										itemLabel="#{mensagens.cadastrarBemDescricaoUso4}" 
 										itemValue="#{mensagens.cadastrarBemDescricaoUso4}" />
 								</h:selectOneRadio>
 								<div></div>
@@ -542,7 +542,7 @@
 										#{mensagens.cadastrarBemDescricaoNotas}
 									</h:outputLabel>
 								<h:inputTextarea styleClass="caixadetexto"
-									value="#{cadastrarBemPatrimonialMB.descriaoNotas}">
+									value="#{cadastrarBemPatrimonialMB.descricaoNotas}">
 								</h:inputTextarea>
 								<div></div>
 							</div>
@@ -640,18 +640,11 @@
 							
 							<!-- medidas Arqueológicos -->
 							<div>
-								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoMedidasArquitetonico}</h:outputLabel>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoMedidasArqueologico}</h:outputLabel>
 
 								<div></div>
 							</div>
 							
-							<div>
-								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoComprimento}</h:outputLabel>
-								<h:inputText
-									value="#{cadastrarBemPatrimonialMB.comprimento}">
-								</h:inputText>
-								<div></div>
-							</div>
 							
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAreaTotal}</h:outputLabel>
