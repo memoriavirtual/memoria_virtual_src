@@ -6,6 +6,9 @@
 	<display-name>memoriavirtualWeb</display-name>
 	<distributable />
 	<session-config>
+	<cookie-config>
+	<domain>memoriavirtual</domain>
+	</cookie-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
 	<welcome-file-list>

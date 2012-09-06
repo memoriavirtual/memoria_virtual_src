@@ -70,7 +70,9 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	/**
 	 * 
 	 */
-
+	public String cadastrarBemPatrimonial(){
+		return null;
+	}
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
 		return null;
