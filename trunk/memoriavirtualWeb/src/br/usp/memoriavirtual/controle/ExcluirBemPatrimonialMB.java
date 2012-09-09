@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -21,7 +22,7 @@ public class ExcluirBemPatrimonialMB {
 
 	private String nome = "";
 	private BemPatrimonial bemPatrimonial = null;
-	private ArrayList<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
+	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	@EJB
 	private ExcluirBemPatrimonialRemote excluirBemPatrimonialEJB;
 
@@ -37,7 +38,7 @@ public class ExcluirBemPatrimonialMB {
 				context, bundleName);
 		
 		try {
-			this.bens = (ArrayList<BemPatrimonial>) excluirBemPatrimonialEJB
+			this.bens = excluirBemPatrimonialEJB
 					.listarBensPatrimoniais(this.nome);
 			
 			for(BemPatrimonial b : bens){
@@ -109,11 +110,11 @@ public class ExcluirBemPatrimonialMB {
 		this.bemPatrimonial = bemPatrimonial;
 	}
 
-	public ArrayList<BemPatrimonial> getBens() {
+	public List<BemPatrimonial> getBens() {
 		return bens;
 	}
 
-	public void setBens(ArrayList<BemPatrimonial> bens) {
+	public void setBens(List<BemPatrimonial> bens) {
 		this.bens = bens;
 	}
 
