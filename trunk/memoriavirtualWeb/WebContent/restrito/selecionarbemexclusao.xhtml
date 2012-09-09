@@ -43,7 +43,7 @@
 								value="#{excluirBemPatrimonialMB.bens}">
 								<h:column>
 									<h:commandLink
-										action="#{excluirBemPatrimonialMB.selecionarBem(bem)}">#{bem.nome}</h:commandLink>
+										action="#{excluirBemPatrimonialMB.selecionarBem(bem)}">#{bem.Titulos.get(0).getValor}</h:commandLink>
 								</h:column>
 							</h:dataTable>
 						</div>
@@ -52,7 +52,7 @@
 					<div class="botao">
 						<h:commandButton id="botaoEditar"
 							value="#{mensagens.excluirBemPatrimonialBotaoExcluir}"
-							action="#{excluirBemPatrimonialMB.excluirBemPatrimonial}">
+							action="#{excluirBemPatrimonialMB.selecionarBem()}">
 						</h:commandButton>
 						<h:commandButton id="botaoCancelar"
 							value="#{mensagens.excluirBemPatrimonialBotaoCancelar}"

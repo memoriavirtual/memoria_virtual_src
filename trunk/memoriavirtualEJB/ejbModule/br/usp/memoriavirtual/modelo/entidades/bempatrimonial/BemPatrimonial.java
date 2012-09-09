@@ -408,6 +408,10 @@ public class BemPatrimonial  implements Serializable {
 	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
 		this.containerMultimidia = containerMultimidia;
 	}
+	
+	public void adicionarTitulo(Titulo titulo){
+		this.titulos.add(titulo);
+	}
 
 	
 }

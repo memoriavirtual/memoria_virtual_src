@@ -36,9 +36,11 @@
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="true"
 							value="cadastrarbempatrimonial.jsf">#{mensagens.menuCadastrarBemPatrimonial}</h:outputLink></li>
+					<li><h:outputLink rendered="true"
+							value="selecionarbemexclusao.jsf">#{mensagens.menuExcluirBemPatrimonial}</h:outputLink></li>
 				</ul></li>
 
-			
+
 			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.autoria}</h:outputLink>
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
@@ -48,11 +50,11 @@
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
 							value="excluirautor.jsf">#{mensagens.menuExcluirAutor}</h:outputLink></li>
 				</ul></li>
-			
+
 			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.descritor}</h:outputLink>
 				<ul class="linkSecundario">
 				</ul></li>
-			
+
 			<li><h:outputLink class="linkPrincipal"
 					rendered="#{renderizarMenuMB.gerente}">#{mensagens.administracao}</h:outputLink>
 				<ul class="linkSecundario">
