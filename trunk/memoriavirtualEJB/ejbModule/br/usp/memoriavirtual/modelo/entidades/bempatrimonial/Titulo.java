@@ -3,19 +3,22 @@ package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
 public class Titulo implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TITULO_ID")
+	private long id;
 	@ManyToOne
-	private BemPatrimonial bempatrimonial;
+	private BemPatrimonial bemPatrimonial;
 	private String tipo;
 	private String valor;
 	@Transient
@@ -81,10 +84,18 @@ public class Titulo implements Serializable {
 	}
 
 	public BemPatrimonial getBempatrimonial() {
-		return bempatrimonial;
+		return bemPatrimonial;
 	}
 
 	public void setBempatrimonial(BemPatrimonial bempatrimonial) {
-		this.bempatrimonial = bempatrimonial;
+		this.bemPatrimonial = bempatrimonial;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

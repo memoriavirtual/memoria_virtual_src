@@ -77,8 +77,9 @@ public class BemPatrimonial  implements Serializable {
 	@CollectionTable(name = "BEMPATRIMONIAL_FONTESINFORMACAO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected Set<String> fontesInformacao;
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "BEMPATRIMONIAL_TITULOS", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
+	//@ElementCollection(fetch = FetchType.EAGER)
+	//@CollectionTable(name = "BEMPATRIMONIAL_TITULOS", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Titulo> titulos;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
