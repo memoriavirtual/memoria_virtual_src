@@ -11,5 +11,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 public interface ExcluirBemPatrimonialRemote {
 	
 	public List<BemPatrimonial> listarBensPatrimoniais(String nome) throws ModeloException;
+	public BemPatrimonial recuperarDados(BemPatrimonial bem) throws ModeloException;
+	public void excluirBem(BemPatrimonial bem) throws ModeloException;
 
 }

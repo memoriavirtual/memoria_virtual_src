@@ -81,16 +81,20 @@ public class ExcluirBemPatrimonialMB {
 	}
 
 	
-	public void selecionarBem(){
+	public String excluirBemPatrimonial(){
 		
-		if(this.nome.equals("") && this.bemPatrimonial == null){
-			MensagensDeErro.getErrorMessage("excluirBemPatrimonialErroNomeVazio", "resultado");
-			return;
+		try{
+			this.bemPatrimonial = this.excluirBemPatrimonialEJB.recuperarDados(this.bemPatrimonial);
+			this.excluirBemPatrimonialEJB.excluirBem(this.bemPatrimonial);
+		}
+		catch(ModeloException m){
+			MensagensDeErro.getErrorMessage("excluirBemPatrimonialErroBemInexistente", "resultado");
+			m.printStackTrace();
 		}
 		
-		this.listarBensPatrimoniais();
+		MensagensDeErro.getSucessMessage("excluirBemPatrimonialSucesso", "resultado");
 		
-		
+		return "sucesso";
 		
 	}
 

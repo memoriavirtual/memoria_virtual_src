@@ -37,5 +37,34 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 		return bens;
 
 	}
+	
+	@Override
+	public BemPatrimonial recuperarDados(BemPatrimonial bem) throws ModeloException{
+		try{
+			return this.entityManager.find(BemPatrimonial.class, bem.getId());
+		}
+		catch(Exception e){
+			throw new ModeloException(e);
+		}
+	}
+
+	@Override
+	public void excluirBem(BemPatrimonial bem) throws ModeloException {
+		
+		try{
+			
+			BemPatrimonial excluido = this.entityManager.find(BemPatrimonial.class, bem.getId());
+			
+			Query query = this.entityManager.createQuery("DELETE FROM Titulo t WHERE t.bemPatrimonial = :bempatrimonial");
+			query.setParameter("bempatrimonial", excluido);
+			query.executeUpdate();
+
+			this.entityManager.remove(excluido);
+		}
+		catch(Exception e){
+			throw new ModeloException(e);
+		}
+		
+	}
 
 }
