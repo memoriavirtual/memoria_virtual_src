@@ -659,6 +659,7 @@ textarea:focus {
 }
 
 .buscarAutoria td {
+	border-bottom: #999 1px solid;
 	border-radius: 7px;
 	padding: 0px;
 }

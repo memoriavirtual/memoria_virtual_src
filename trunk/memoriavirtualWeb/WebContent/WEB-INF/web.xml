@@ -6,8 +6,10 @@
 	<display-name>memoriavirtualWeb</display-name>
 	<distributable />
 	<session-config>
+		<session-timeout>20</session-timeout>
 		<cookie-config>
-			<http-only>true</http-only>
+			<name>mcCookie</name>
+			<path>/memoriavirtual</path>
 		</cookie-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>

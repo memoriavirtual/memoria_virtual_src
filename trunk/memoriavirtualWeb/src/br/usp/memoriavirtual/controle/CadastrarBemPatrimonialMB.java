@@ -54,7 +54,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
 	protected boolean externo;
 	protected String naturezaBem;
-	protected String tipoDoBemPatrimonial;
+	protected String tipoDoBemPatrimonial = "";
 	protected String numeroRegistro;
 	protected String colecao;
 	protected String complemento;
@@ -102,6 +102,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	 * 
 	 */
 	public String cadastrarBemPatrimonial(){
+		
 		return null;
 	}
 	@Override
@@ -118,7 +119,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public String removeMidia(Multimidia midia) {
 		return null;
 	}
-
+	
 	public List<SelectItem> getTiposAutoria() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -275,7 +276,29 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		}
 		this.dataTableAutoria.processUpdates(context);
 	}
-
+	public int classificarBemPatrimonial(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		if(this.tipoDoBemPatrimonial == null ||this.tipoDoBemPatrimonial.equals("") ){
+			return 0;
+		}
+		if(this.tipoDoBemPatrimonial.equals(bundle
+				.getString("cadastrarBemTipoLista0"))){
+			return 1;
+		}
+		if(this.tipoDoBemPatrimonial.equals(bundle
+				.getString("cadastrarBemTipoLista4"))){
+			return 2;
+		}
+		if(this.tipoDoBemPatrimonial.equals(bundle
+				.getString("cadastrarBemTipoLista6"))){
+			return 3;
+		}
+		return 0;
+	}
 	public List<SelectItem> getTiposBem() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
