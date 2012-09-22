@@ -16,11 +16,17 @@ import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 /**
  * @author bigmac
@@ -42,6 +48,12 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	@EJB
 	private EditarAutorRemote editarAutorEJB;
+	@EJB
+	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
+	@EJB
+	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
+	@EJB
+	private EditarInstituicaoRemote editarInstituicaoEJB;
 
 	private static final long serialVersionUID = 7413170360811077491L;
 	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
@@ -52,7 +64,9 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
 	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
+	
 	protected boolean externo;
+	protected String nomeInstituicao;
 	protected String naturezaBem;
 	protected String tipoDoBemPatrimonial = "";
 	protected String numeroRegistro;
@@ -71,7 +85,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String uso;
 	protected Integer numAmbientes;
 	protected Integer numPavimentos;
-	protected Boolean  alcova;
+	protected Boolean alcova;
 	protected Boolean porao;
 	protected Boolean sotao;
 	protected String descricaoOutros;
@@ -98,13 +112,30 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected Double altura;
 	protected String conteudo;
 	protected String meioDeAcesso;
+
 	/**
 	 * 
 	 */
-	public String cadastrarBemPatrimonial(){
-		
+	public String cadastrarBemPatrimonial() {
+		this.validacaoInstituicao();
+		this.validacaoTitulo();
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
+			try {
+				this.bemPatrimonial.setInstituicao(this.editarInstituicaoEJB.getInstituicao(nomeInstituicao));
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+			this.bemPatrimonial.setTitulos(titulos);
+			this.bemPatrimonial.setAutorias(null);
+			this.cadastrarBemPatrimonialEJB.cadastrarBemPatrimonial(this.bemPatrimonial);
+		} else {
+//			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
+//					"resultado");
+		}
 		return null;
+
 	}
+
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
 		return null;
@@ -119,7 +150,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public String removeMidia(Multimidia midia) {
 		return null;
 	}
-	
+
 	public List<SelectItem> getTiposAutoria() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -276,29 +307,73 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		}
 		this.dataTableAutoria.processUpdates(context);
 	}
-	public int classificarBemPatrimonial(){
+
+	public int classificarBemPatrimonial() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
-		if(this.tipoDoBemPatrimonial == null ||this.tipoDoBemPatrimonial.equals("") ){
+
+		if (this.tipoDoBemPatrimonial == null
+				|| this.tipoDoBemPatrimonial.equals("")) {
 			return 0;
 		}
-		if(this.tipoDoBemPatrimonial.equals(bundle
-				.getString("cadastrarBemTipoLista0"))){
+		if (this.tipoDoBemPatrimonial.equals(bundle
+				.getString("cadastrarBemTipoLista0"))) {
 			return 1;
 		}
-		if(this.tipoDoBemPatrimonial.equals(bundle
-				.getString("cadastrarBemTipoLista4"))){
+		if (this.tipoDoBemPatrimonial.equals(bundle
+				.getString("cadastrarBemTipoLista4"))) {
 			return 2;
 		}
-		if(this.tipoDoBemPatrimonial.equals(bundle
-				.getString("cadastrarBemTipoLista6"))){
+		if (this.tipoDoBemPatrimonial.equals(bundle
+				.getString("cadastrarBemTipoLista6"))) {
 			return 3;
 		}
 		return 0;
 	}
+
+	public List<SelectItem> recuperarInstituicoes() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		List<SelectItem> listaItens = new ArrayList<SelectItem>();
+		List<Instituicao> listaInstituicao = null;
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+		if (usuario.isAdministrador()) {
+			try {
+				listaInstituicao = this.excluirInstituicaoEJB
+						.listarTodasInstituicoes();
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+			for (Instituicao a : listaInstituicao) {
+				listaItens.add(new SelectItem(new String(a.getNome().getBytes())));
+			}
+
+		} else {
+			try {
+				listaInstituicao = this.cadastrarBemPatrimonialEJB
+						.listarInstituicao(usuario);
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+			for (Instituicao a : listaInstituicao) {
+				listaItens.add(new SelectItem(new String(a.getNome().getBytes())));
+			}
+		}
+		if(!(listaItens.size() == 1)){
+			listaItens.add(0,new SelectItem(bundle.getString("cadastrarBemInstituicaoSelecione")));
+		}
+		if(listaItens.size() == 0){
+			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
+					"resultado");
+		}
+		return listaItens;
+	}
+
 	public List<SelectItem> getTiposBem() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -339,6 +414,34 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		}
 		return tiposBem;
 
+	}
+
+	public void validacaoInstituicao(AjaxBehaviorEvent e) {
+		this.validacaoInstituicao();
+	}
+
+	public void validacaoInstituicao() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (this.nomeInstituicao.equals(bundle.getString("cadastrarBemInstituicaoSelecione"))) {
+			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
+					"validacaoInstituicao");
+			
+		}
+	}
+
+	public void validacaoTitulo(AjaxBehaviorEvent e) {
+		this.validacaoTitulo();
+	}
+
+	public void validacaoTitulo() {
+		if (this.titulos.get(0).getValor().equals("")) {
+			MensagensDeErro.getErrorMessage("cadastrarBemTituloErro",
+					"resultado");
+
+		}
 	}
 
 	/**
@@ -540,199 +643,272 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public String getCaracteristicasFisicas() {
 		return caracteristicasFisicas;
 	}
+
 	public void setCaracteristicasFisicas(String caracteristicasFisicas) {
 		this.caracteristicasFisicas = caracteristicasFisicas;
 	}
+
 	public String getCondicaoTopografica() {
 		return condicaoTopografica;
 	}
+
 	public void setCondicaoTopografica(String condicaoTopografica) {
 		this.condicaoTopografica = condicaoTopografica;
 	}
+
 	public String getUso() {
 		return uso;
 	}
+
 	public void setUso(String uso) {
 		this.uso = uso;
 	}
+
 	public Integer getNumAmbientes() {
 		return numAmbientes;
 	}
+
 	public void setNumAmbientes(Integer numAmbientes) {
 		this.numAmbientes = numAmbientes;
 	}
+
 	public Integer getNumPavimentos() {
 		return numPavimentos;
 	}
+
 	public void setNumPavimentos(Integer numPavimentos) {
 		this.numPavimentos = numPavimentos;
 	}
+
 	public Boolean getAlcova() {
 		return alcova;
 	}
+
 	public void setAlcova(Boolean alcova) {
 		this.alcova = alcova;
 	}
+
 	public Boolean getPorao() {
 		return porao;
 	}
+
 	public void setPorao(Boolean porao) {
 		this.porao = porao;
 	}
+
 	public Boolean getSotao() {
 		return sotao;
 	}
+
 	public void setSotao(Boolean sotao) {
 		this.sotao = sotao;
 	}
+
 	public String getDescricaoOutros() {
 		return descricaoOutros;
 	}
+
 	public void setDescricaoOutros(String descricaoOutros) {
 		this.descricaoOutros = descricaoOutros;
 	}
+
 	public String getRelevo() {
 		return relevo;
 	}
+
 	public void setRelevo(String relevo) {
 		this.relevo = relevo;
 	}
+
 	public String getCaracteristicasAmbientais() {
 		return caracteristicasAmbientais;
 	}
+
 	public void setCaracteristicasAmbientais(String caracteristicasAmbientais) {
 		this.caracteristicasAmbientais = caracteristicasAmbientais;
 	}
+
 	public String getCaracteristicasAntropico() {
 		return caracteristicasAntropico;
 	}
+
 	public void setCaracteristicasAntropico(String caracteristicasAntropico) {
 		this.caracteristicasAntropico = caracteristicasAntropico;
 	}
+
 	public String getSitioDaPaisagem() {
 		return sitioDaPaisagem;
 	}
+
 	public void setSitioDaPaisagem(String sitioDaPaisagem) {
 		this.sitioDaPaisagem = sitioDaPaisagem;
 	}
+
 	public String getAguaProxima() {
 		return aguaProxima;
 	}
+
 	public void setAguaProxima(String aguaProxima) {
 		this.aguaProxima = aguaProxima;
 	}
+
 	public String getPossuiVegetacao() {
 		return possuiVegetacao;
 	}
+
 	public void setPossuiVegetacao(String possuiVegetacao) {
 		this.possuiVegetacao = possuiVegetacao;
 	}
+
 	public String getExposicao() {
 		return exposicao;
 	}
+
 	public void setExposicao(String exposicao) {
 		this.exposicao = exposicao;
 	}
+
 	public String getUsoAtual() {
 		return usoAtual;
 	}
+
 	public void setUsoAtual(String usoAtual) {
 		this.usoAtual = usoAtual;
 	}
+
 	public String getDescricaoNotas() {
 		return descricaoNotas;
 	}
+
 	public void setDescricaoNotas(String descricaoNotas) {
 		this.descricaoNotas = descricaoNotas;
 	}
+
 	public String getDimensoesEQuantificacoes() {
 		return dimensoesEQuantificacoes;
 	}
+
 	public void setDimensoesEQuantificacoes(String dimensoesEQuantificacoes) {
 		this.dimensoesEQuantificacoes = dimensoesEQuantificacoes;
 	}
+
 	public Double getAreaTotal() {
 		return areaTotal;
 	}
+
 	public void setAreaTotal(Double areaTotal) {
 		this.areaTotal = areaTotal;
 	}
+
 	public Double getAlturaFachadaFrontal() {
 		return alturaFachadaFrontal;
 	}
+
 	public void setAlturaFachadaFrontal(Double alturaFachadaFrontal) {
 		this.alturaFachadaFrontal = alturaFachadaFrontal;
 	}
+
 	public Double getAlturaFachadaSuperior() {
 		return alturaFachadaSuperior;
 	}
+
 	public void setAlturaFachadaSuperior(Double alturaFachadaSuperior) {
 		this.alturaFachadaSuperior = alturaFachadaSuperior;
 	}
+
 	public Double getLargura() {
 		return largura;
 	}
+
 	public void setLargura(Double largura) {
 		this.largura = largura;
 	}
+
 	public Double getProfundidade() {
 		return profundidade;
 	}
+
 	public void setProfundidade(Double profundidade) {
 		this.profundidade = profundidade;
 	}
+
 	public Double getAlturaDaCumeeira() {
 		return alturaDaCumeeira;
 	}
+
 	public void setAlturaDaCumeeira(Double alturaDaCumeeira) {
 		this.alturaDaCumeeira = alturaDaCumeeira;
 	}
+
 	public Double getAlturaTotal() {
 		return alturaTotal;
 	}
+
 	public void setAlturaTotal(Double alturaTotal) {
 		this.alturaTotal = alturaTotal;
 	}
+
 	public Double getPeDireitoTerreo() {
 		return peDireitoTerreo;
 	}
+
 	public void setPeDireitoTerreo(Double peDireitoTerreo) {
 		this.peDireitoTerreo = peDireitoTerreo;
 	}
+
 	public String getPeDireitoTipo() {
 		return peDireitoTipo;
 	}
+
 	public void setPeDireitoTipo(String peDireitoTipo) {
 		this.peDireitoTipo = peDireitoTipo;
 	}
+
 	public Double getComprimento() {
 		return comprimento;
 	}
+
 	public void setComprimento(Double comprimento) {
 		this.comprimento = comprimento;
 	}
+
 	public Double getAltura() {
 		return altura;
 	}
+
 	public void setAltura(Double altura) {
 		this.altura = altura;
 	}
+
 	public String getConteudo() {
 		return conteudo;
 	}
+
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
 	}
+
 	public String getMeioDeAcesso() {
 		return meioDeAcesso;
 	}
+
 	public void setMeioDeAcesso(String meioDeAcesso) {
 		this.meioDeAcesso = meioDeAcesso;
 	}
+
+	public String getNomeInstituicao() {
+		return nomeInstituicao;
+	}
+
+	public void setNomeInstituicao(String nomeInstituicao) {
+		this.nomeInstituicao = nomeInstituicao;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+	
 	public class ApresentaAutoria implements Serializable {
 		/**
 		 * 

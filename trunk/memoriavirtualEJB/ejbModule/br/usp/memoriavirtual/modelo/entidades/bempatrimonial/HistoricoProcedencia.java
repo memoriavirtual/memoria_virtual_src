@@ -22,6 +22,18 @@ public class HistoricoProcedencia implements Serializable {
 	private String historico;
 	private String instrumentoPesquisa;
 
+	public HistoricoProcedencia(String tipoAquisicao,
+			String valorVenalTransacao, String dadosDocTransacao,
+			String primeiroProprietario, String historico,
+			String instrumentoPesquisa) {
+		super();
+		this.tipoAquisicao = tipoAquisicao;
+		this.valorVenalTransacao = valorVenalTransacao;
+		this.dadosDocTransacao = dadosDocTransacao;
+		this.primeiroProprietario = primeiroProprietario;
+		this.historico = historico;
+		this.instrumentoPesquisa = instrumentoPesquisa;
+	}
 	/**
 	 * @return the tipoAquisicao
 	 */

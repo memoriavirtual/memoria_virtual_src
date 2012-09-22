@@ -28,8 +28,8 @@
 			<div class="formulario">
 
 				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado" infoClass="sucesso"
-						errorClass="erro"></h:message>
+					<h:messages id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:messages>
 				</div>
 
 				<div class="conteudoTitulo">#{mensagens.cadastrarBemTitulo}</div>
@@ -37,27 +37,31 @@
 				<h:form method="post" prependId="false">
 
 
-
-					<div class="espacador"></div>
-
-
-					<div>
-						<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial}</h:outputLabel>
-						<h:selectOneMenu id="tipodobem" styleClass="options"
-							onchange="mostrarDescricao()"
-							value="#{cadastrarBemPatrimonialMB.tipoDoBemPatrimonial}">
-							<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposBem}" />
-							<f:ajax event="change" execute="@form"></f:ajax>
-						</h:selectOneMenu>
-						<div></div>
-					</div>
-
-
+					<fieldset>
+						<div class="espacador"></div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicao}</h:outputLabel>
+								<h:selectOneMenu class="options"
+									value="#{cadastrarBemPatrimonialMB.nomeInstituicao}">
+									<f:selectItems
+										value="#{cadastrarBemPatrimonialMB.recuperarInstituicoes()}" />
+										<f:ajax event="blur" execute="@this" render="validacaoInstituicao"
+		 	 	   					listener="#{cadastrarBemPatrimonialMB.validacaoInstituicao}" />
+								</h:selectOneMenu>
+								<div></div>
+								<h:message id="validacaoInstituicao" for="validacaoInstituicao"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+								
+							</div>
+							
+					</fieldset>
 					<mv:containerExpansivo id="GeralInfo"
 						label="#{mensagens.cadastrarBemGeralInfo}">
 						<fieldset>
-
+							
 							<div>
+
 								<h:selectOneRadio layout="lineDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.externo}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemExterno}</h:outputLabel>
@@ -122,6 +126,10 @@
 							<h:dataTable id="titulosBem" var="titulo" class="titulos"
 								binding="#{cadastrarBemPatrimonialMB.dataTableTitulos}"
 								value="#{cadastrarBemPatrimonialMB.titulos}">
+								<div></div>
+								<h:message id="validacaoTitulo" for="validacaoTitulo"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
 								<h:column id="coluna">
 
 									<h:graphicImage id="excluir" library="imagens"
@@ -144,10 +152,11 @@
 										<f:selectItems
 											value="#{cadastrarBemPatrimonialMB.getTiposTitulo()}" />
 									</h:selectOneMenu>
-
+									
 								</h:column>
-							</h:dataTable>
 
+								
+							</h:dataTable>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
@@ -765,8 +774,7 @@
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
-							action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
-
+							action="#{cadastrarBemPatrimonialMB.cadastrarBemPatrimonial()}">
 						</h:commandButton>
 
 						<h:commandButton id="botaoResetar"

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-@Entity
+@Entity(name="BEMPATRIMONIAL_TITULOS")
 public class Titulo implements Serializable {
 
 	private static final long serialVersionUID = 1L;

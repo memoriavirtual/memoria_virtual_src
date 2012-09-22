@@ -34,8 +34,23 @@ public class DisponibilidadeUsoProtecao implements Serializable {
 	private String notasUsoAproveitamento;
 	private String protecao;
 	private String legislacao;
-	private String instituicao;
+	private String protetoraInstituicao;
 
+	public DisponibilidadeUsoProtecao(String disponibilidade,
+			String condicoesAcesso, String condicoesReproducao,
+			String dataRetorno, String notasUsoAproveitamento, String protecao,
+			String legislacao, String instituicaoProtetora) {
+		super();
+		this.disponibilidade = disponibilidade;
+		this.condicoesAcesso = condicoesAcesso;
+		this.condicoesReproducao = condicoesReproducao;
+		this.dataRetorno = dataRetorno;
+		this.notasUsoAproveitamento = notasUsoAproveitamento;
+		this.protecao = protecao;
+		this.legislacao = legislacao;
+		this.protetoraInstituicao = instituicaoProtetora;
+	}
+	
 	/**
 	 * @return the disponibilidade
 	 */
@@ -123,14 +138,14 @@ public class DisponibilidadeUsoProtecao implements Serializable {
 	/**
 	 * @return the instituicao
 	 */
-	public String getInstituicao() {
-		return instituicao;
+	public String getProtetoraInstituicao() {
+		return protetoraInstituicao;
 	}
 	/**
 	 * @param instituicao the instituicao to set
 	 */
-	public void setInstituicao(String instituicao) {
-		this.instituicao = instituicao;
+	public void setProtetoraInstituicao(String instituicao) {
+		this.protetoraInstituicao = instituicao;
 	}
 	
 }

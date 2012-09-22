@@ -112,6 +112,6 @@ mostrarDescricao = (function() {
 
 	var menu = document.getElementById("GeralInfo:tipodobem");
 	tipoDobemfixo = menu.selectedIndex;
-	alert(tipoDobemfixo);
+	
 	organizarGrupoDescricao("grupoDescricao");
 });

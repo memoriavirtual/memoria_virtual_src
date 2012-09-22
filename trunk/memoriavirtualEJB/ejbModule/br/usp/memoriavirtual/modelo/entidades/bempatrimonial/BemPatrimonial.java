@@ -19,12 +19,14 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -53,18 +55,20 @@ public class BemPatrimonial  implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
-	protected long id; 
+	protected long id;
+	@ManyToOne
+	protected Instituicao instituicao;
 	protected boolean externo;
-	protected String tipoDoBemPatrimonial;
-	protected String numeroDeRegistro;
-	protected String colecao;
-	protected String localizacaoFisica;
-	protected String latitude;
-	protected String longitude;
-	protected String caracteristicasFisTecExec;
-	protected String conteudo;
-	protected String meioDeAcesso;
-	protected String idMidia;
+	protected String tipoDoBemPatrimonial= "";
+	protected String numeroDeRegistro= "";
+	protected String colecao= "";
+	protected String localizacaoFisica= "";
+	protected String latitude= "";
+	protected String longitude= "";
+	protected String caracteristicasFisTecExec= "";
+	protected String conteudo= "";
+	protected String meioDeAcesso= "";
+	protected String idMidia= "";
 	
 	
 	
@@ -86,16 +90,16 @@ public class BemPatrimonial  implements Serializable {
 	protected List<Autoria> autorias;
 
 	@Embedded
-	protected Producao producao;
+	protected Producao producao = new Producao("", "", "", "");
 
 	@Embedded
-	protected DisponibilidadeUsoProtecao disponibilidadeUsoProtecao;
+	protected DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao("", "", "", "", "", "", "", "");
 
 	@Embedded
-	protected HistoricoProcedencia histtoricoProcedencia;
+	protected HistoricoProcedencia histtoricoProcedencia = new HistoricoProcedencia("", "", "", "", "", "");
 
 	@Embedded
-	protected Diagnostico diagnostico;
+	protected Diagnostico diagnostico = new Diagnostico("", "", "");
 
 	@ElementCollection
 	@CollectionTable(name = "BEMPATRIMONIAL_INTERVENCOES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
@@ -410,8 +414,48 @@ public class BemPatrimonial  implements Serializable {
 		this.containerMultimidia = containerMultimidia;
 	}
 	
+	public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
+	}
+
+	public String getIdMidia() {
+		return idMidia;
+	}
+
+	public void setIdMidia(String idMidia) {
+		this.idMidia = idMidia;
+	}
+
 	public void adicionarTitulo(Titulo titulo){
 		this.titulos.add(titulo);
+	}
+
+	public void setDescritores(Set<String> descritores) {
+		this.descritores = descritores;
+	}
+
+	public void setFontesInformacao(Set<String> fontesInformacao) {
+		this.fontesInformacao = fontesInformacao;
+	}
+
+	public void setTitulos(List<Titulo> titulos) {
+		this.titulos = titulos;
+	}
+
+	public void setIntervencoes(List<Intervencao> intervencoes) {
+		this.intervencoes = intervencoes;
+	}
+
+	public void setPesquisadores(List<Pesquisador> pesquisadores) {
+		this.pesquisadores = pesquisadores;
+	}
+
+	public void setBensrelacionados(List<BemPatrimonial> bensrelacionados) {
+		this.bensrelacionados = bensrelacionados;
 	}
 
 	
