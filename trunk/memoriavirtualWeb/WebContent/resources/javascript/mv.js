@@ -114,4 +114,5 @@ mostrarDescricao = (function() {
 	tipoDobemfixo = menu.selectedIndex;
 	
 	organizarGrupoDescricao("grupoDescricao");
+	organizarGrupoDescricao("grupoIntervencao");
 });

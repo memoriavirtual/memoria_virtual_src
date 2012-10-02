@@ -20,6 +20,7 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Intervencao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
@@ -58,9 +59,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	private static final long serialVersionUID = 7413170360811077491L;
 	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
 	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
+	private SerialHtmlDataTable dataTableIntervencao = new SerialHtmlDataTable();
 	private boolean cadastrarAutor = false;
-	protected boolean botaRemoverTitulo = false;
+	private boolean botaRemoverTitulo = false;
 	protected List<Autor> autores = new ArrayList<Autor>();
+	protected List<Intervencao> intervencoes = new ArrayList<Intervencao>();
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
 	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
@@ -112,7 +115,12 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected Double altura;
 	protected String conteudo;
 	protected String meioDeAcesso;
-
+	protected String estadoConservPreserv;
+	protected String estadoPreser;
+	protected String estadoConser;
+	protected String estadoConservNotas;
+	protected Boolean intervencaoDoBem;
+	
 	/**
 	 * 
 	 */
@@ -207,7 +215,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		}
 
 	}
-
+	public void intervencoesAdd(AjaxBehaviorEvent event) {
+		this.intervencoes.add(new Intervencao());
+	}
+	
 	public void adicionarAutoria(AjaxBehaviorEvent event) {
 		if (this.autorias.size() < Autoria.TipoAutoria.values().length - 1) {
 			this.autorias.add(new Autoria());
@@ -307,7 +318,18 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		}
 		this.dataTableAutoria.processUpdates(context);
 	}
+	
+	public void excluirIntervencao(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
 
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer index = new Integer(list[2]);
+		
+			this.intervencoes.remove((int) index);
+	
+		this.dataTableIntervencao.processUpdates(context);
+	}
+	
 	public int classificarBemPatrimonial() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -909,6 +931,68 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	
+	public List<Intervencao> getIntervencoes() {
+		return intervencoes;
+	}
+
+	public void setIntervencoes(List<Intervencao> intervencoes) {
+		this.intervencoes = intervencoes;
+	}
+
+	public String getEstadoConservPreserv() {
+		return estadoConservPreserv;
+	}
+
+	public void setEstadoConservPreserv(String estadoConservPreserv) {
+		this.estadoConservPreserv = estadoConservPreserv;
+	}
+
+	public String getEstadoPreser() {
+		return estadoPreser;
+	}
+
+	public void setEstadoPreser(String estadoPreser) {
+		this.estadoPreser = estadoPreser;
+	}
+
+	public String getEstadoConser() {
+		return estadoConser;
+	}
+
+	public void setEstadoConser(String estadoConser) {
+		this.estadoConser = estadoConser;
+	}
+
+	public String getEstadoConservNotas() {
+		return estadoConservNotas;
+	}
+
+	public void setEstadoConservNotas(String estadoConservNotas) {
+		this.estadoConservNotas = estadoConservNotas;
+	}
+
+	public Boolean getIntervencaoDoBem() {
+		return intervencaoDoBem;
+	}
+
+	public void setIntervencaoDoBem(Boolean intervencaoDoBem) {
+		this.intervencaoDoBem = intervencaoDoBem;
+	}
+
+	
+
+
+	public SerialHtmlDataTable getDataTableIntervencao() {
+		return dataTableIntervencao;
+	}
+
+	public void setDataTableIntervencao(SerialHtmlDataTable dataTableIntervencao) {
+		this.dataTableIntervencao = dataTableIntervencao;
+	}
+
+
+
+
 	public class ApresentaAutoria implements Serializable {
 		/**
 		 * 
