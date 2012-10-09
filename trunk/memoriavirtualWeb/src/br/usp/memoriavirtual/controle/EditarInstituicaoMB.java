@@ -252,7 +252,10 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 				}
 			}
 		}
-		return "erro";
+		
+		MensagensDeErro.getErrorMessage("editarInstituicaoErroIdVazio", "resultado");
+		
+		return null;
 
 	}
 
