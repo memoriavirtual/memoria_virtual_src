@@ -30,6 +30,8 @@
 
 				<h:form method="post" prependId="false">
 					<fieldset>
+						<h:messages id="resultado" for="resultado" infoClass="sucesso"
+							errorClass="erro" globalOnly="true"></h:messages>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirAutorNome}</h:outputLabel>
 							<h:inputText value="#{excluirAutorMB.nome}" autocomplete="off">

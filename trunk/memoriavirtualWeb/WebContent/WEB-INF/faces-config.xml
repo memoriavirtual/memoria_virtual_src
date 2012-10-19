@@ -80,7 +80,7 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+
 
 	<navigation-rule>
 		<display-name>login</display-name>
@@ -133,8 +133,8 @@
 			<from-outcome>sucesso</from-outcome>
 			<to-view-id>/restrito/editarinstituicao.xhtml</to-view-id>
 		</navigation-case>
-		</navigation-rule>
-		<navigation-rule>
+	</navigation-rule>
+	<navigation-rule>
 		<display-name>editarInstituicao</display-name>
 		<from-view-id>/restrito/editarinstituicao.xhtml</from-view-id>
 		<navigation-case>
@@ -221,7 +221,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>cadastrarBemPatrimonial</display-name>
 		<from-view-id>/restrito/cadastrarbempatrimonial.xhtml</from-view-id>
@@ -231,8 +231,8 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
-	
+
+
 	<navigation-rule>
 		<display-name>cadastrarAutor</display-name>
 		<from-view-id>/restrito/cadastrarautor.xhtml</from-view-id>
@@ -242,7 +242,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>editarAutor</display-name>
 		<from-view-id>/restrito/editarautor.xhtml</from-view-id>
@@ -252,7 +252,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>cadastrarNovaSenha</display-name>
 		<from-view-id>/cadastrarnovasenha.xhtml</from-view-id>
@@ -275,7 +275,7 @@
 			<to-view-id>/restrito/editarcadastrousuario.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>excluirUsuario</display-name>
 		<from-view-id>/restrito/excluirusuario_etapa1.xhtml</from-view-id>
@@ -288,7 +288,7 @@
 			<to-view-id>/restrito/excluirusuario_etapa2.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>excluirUsuario</display-name>
 		<from-view-id>/restrito/excluirusuario_etapa2.xhtml</from-view-id>
@@ -305,13 +305,23 @@
 			<to-view-id>/restrito/excluirusuario_etapa3.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>excluirUsuario</display-name>
 		<from-view-id>/restrito/excluirusuario_etapa3.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>cancelar</from-outcome>
 			<to-view-id>/restrito/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<display-name>excluirAutor</display-name>
+		<from-view-id>/restrito/selecionarautor.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 

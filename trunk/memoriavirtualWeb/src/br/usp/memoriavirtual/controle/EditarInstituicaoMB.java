@@ -264,8 +264,8 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	}
 
 	public boolean validateNome() {
-		if ((this.memoriaVirtualEJB
-				.verificarDisponibilidadeNomeInstituicao(this.nome))) {
+		if (!this.memoriaVirtualEJB
+				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
 			MensagensDeErro.getErrorMessage(
 					"editarInstituicaoErroNomeExistente", "validacaoNome");
 			return false;

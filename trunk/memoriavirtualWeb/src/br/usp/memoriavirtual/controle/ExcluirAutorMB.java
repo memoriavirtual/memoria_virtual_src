@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
-import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirAutorRemote;
@@ -22,9 +21,7 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 @ManagedBean(name = "excluirAutorMB")
 public class ExcluirAutorMB implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -1769494097935536965L;
 	private String nome;
 	private List<Autor> autores = new ArrayList<Autor>();
@@ -40,6 +37,7 @@ public class ExcluirAutorMB implements Serializable {
 	
 
 	public void listarAutoresFocus(AjaxBehaviorEvent e) {
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
@@ -55,6 +53,9 @@ public class ExcluirAutorMB implements Serializable {
 	}
 
 	public void listarAutores() {
+		
+		MensagensDeErro.getWarningMessage("excluirAutorAviso", "resultado");
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
@@ -78,20 +79,13 @@ public class ExcluirAutorMB implements Serializable {
 
 		this.listarAutores();
 
-		if (!autor.getNome().equals(bundle.getString("listarTodos"))) {
-
-			if ((this.autor == null) && (this.autores.size() > 1)) {
-				this.autor = this.autores.get(1);
-			} else {
-				MensagensDeErro
-						.getErrorMessage("excluirAutorErro", "resultado");
-			}
-
-		} else {
+		if (autor.getNome().equals(bundle.getString("listarTodos"))){
+			
 			this.nome = "";
 			this.listarAutores();
 			this.autores.remove(0);
 			return null;
+			
 		}
 
 		this.autor = autor;
@@ -114,6 +108,15 @@ public class ExcluirAutorMB implements Serializable {
 		MensagensDeErro.getSucessMessage("excluirAutorSucesso", "resultado");
 		return null;
 
+	}
+	
+	public String cancelar(){
+		
+		this.autor = null;
+		this.autores.clear();
+		this.nome = null;
+		return "cancelar";
+		
 	}
 
 	public String getNome() {
