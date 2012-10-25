@@ -737,11 +737,11 @@
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
-						<fieldset  id="grupoIntervencao">
+						<fieldset id="grupoIntervencao">
 
 
 
-							<div>
+							<div class="outrosBens">
 								<h:outputLabel class="labels">
 										#{mensagens.cadastrarBemEstadoConservPreserv}
 									</h:outputLabel>
@@ -756,8 +756,8 @@
 										#{mensagens.cadastrarBemEstadoConservPreserv}
 									</h:outputLabel>
 							</div>
-							
-							
+
+
 							<div class="arquitetonico">
 								<h:selectOneRadio layout="pageDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.estadoPreser}">
@@ -775,13 +775,13 @@
 									<f:selectItem
 										itemLabel="#{mensagens.cadastrarBemEstadoPreser3}"
 										itemValue="#{mensagens.cadastrarBemEstadoPreser3}" />
-									
+
 								</h:selectOneRadio>
 								<div></div>
 							</div>
-							
-							
-							
+
+
+
 							<div class="arquitetonico">
 								<h:selectOneRadio layout="pageDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.estadoConser}">
@@ -799,12 +799,12 @@
 									<f:selectItem
 										itemLabel="#{mensagens.cadastrarBemEstadoCOnser3}"
 										itemValue="#{mensagens.cadastrarBemEstadoCOnser3}" />
-									
+
 								</h:selectOneRadio>
 								<div></div>
 							</div>
-							
-							
+
+
 							<div>
 								<h:outputLabel class="labels">
 										#{mensagens.cadastrarBemEstadoConservNotas}
@@ -814,7 +814,7 @@
 								</h:inputTextarea>
 								<div></div>
 							</div>
-							
+
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.intervencaoDoBem}">
@@ -823,12 +823,12 @@
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
 										itemValue="true" />
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
-										itemValue="false" /> 
+										itemValue="false" />
 								</h:selectOneRadio>
 								<div></div>
 							</div>
-							
-							
+
+
 							<div>
 
 								<div class="botoesTituiloTLB">
@@ -839,15 +839,14 @@
 											listener="#{cadastrarBemPatrimonialMB.intervencoesAdd}"></f:ajax>
 									</h:commandButton>
 								</div>
- 
- 
+
+
 
 
 							</div>
 
 
-							<h:dataTable id="intervencao" var="intervencao" class="titulos" 
-							
+							<h:dataTable id="intervencao" var="intervencao" class="titulos"
 								value="#{cadastrarBemPatrimonialMB.intervencoes}">
 								<div></div>
 								<h:message id="validacaoTitulo" for="validacaoTitulo"
@@ -863,20 +862,20 @@
 											listener="#{cadastrarBemPatrimonialMB.excluirIntervencao}">
 										</f:ajax>
 									</h:graphicImage>
-									
-									
+
+
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 10px !important;">#{mensagens.cadastrarBemIntervencaData}</h:outputLabel>
 									<h:inputText style="width: 10% !important ;"
 										value="#{intervencao.data}">
 									</h:inputText>
-									
+
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemIntervencaResoInterven}</h:outputLabel>
 									<h:inputText style="width: 20% !important ;"
 										value="#{intervencao.responsavel}">
 									</h:inputText>
-									
+
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemIntervencaDescricao}</h:outputLabel>
 									<h:inputText style="width: 20% !important ;"
@@ -887,20 +886,175 @@
 
 
 							</h:dataTable>
-							
-							
-							
-							
-							
+
+
+
+
+
 						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
-						<fieldset></fieldset>
+						<fieldset>
+
+							<div class="arquitetonico">
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{cadastrarBemPatrimonialMB.estadoPreser}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDisponibilidade}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade0}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade1}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade2}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade3}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade3}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade4}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade4}" />
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div class="arquitetonico">
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{cadastrarBemPatrimonialMB.estadoPreser}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesDeAcesso}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso0}"
+										itemValue="#{mensagens.cadastrarBemCondicoesDeAcesso0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso1}"
+										itemValue="#{mensagens.cadastrarBemCondicoesDeAcesso1}" />
+
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div class="outrosBens">
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDataRetorno}
+									</h:outputLabel>
+								<h:inputText styleClass="caixadetexto"
+									value="#{cadastrarBemPatrimonialMB.estadoConservPreserv}">
+								</h:inputText>
+								<div></div>
+							</div>
+
+							<div class="arquitetonico">
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{cadastrarBemPatrimonialMB.estadoPreser}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesReproducao}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso1}"
+										itemValue="#{mensagens.cadastrarBemCondicoesDeAcesso1}" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="#{mensagens.cadastrarBemNao}" />
+
+
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemNotasSobreUsoAproveitamento}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{cadastrarBemPatrimonialMB.estadoConservNotas}">
+								</h:inputTextarea>
+								<div></div>
+							</div>
+
+
+							<div class="arquitetonico">
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{cadastrarBemPatrimonialMB.estadoPreser}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemProtecao}</h:outputLabel>
+
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
+										itemValue="#{mensagens.cadastrarBemSim}" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="#{mensagens.cadastrarBemNao}" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemProtecao0}"
+										itemValue="#{mensagens.cadastrarBemProtecao0}" />
+
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+
+
+
+							<div class="arqueologico">
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicaoProtetora}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.largura}">
+								</h:inputText>
+								<div></div>
+							</div>
+
+
+							<div class="arqueologico">
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemLegislacaoNProcesso}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.largura}">
+								</h:inputText>
+								<div></div>
+							</div>
+
+
+
+						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemHistoricoProcedencia}">
-						<fieldset></fieldset>
+						<fieldset>
+
+							<div class="arquitetonico">
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{cadastrarBemPatrimonialMB.estadoPreser}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoTipo}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo0}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo1}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo2}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo3}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo3}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo4}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo4}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo5}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo5}" />
+
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+
+							
+							<div class="arqueologico">
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoValorVenal}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.largura}">
+								</h:inputText>
+								<div></div>
+							</div>
+
+
+						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemAssuntoDescritores}">
