@@ -108,11 +108,67 @@ organizarGrupoDescricao = (function(idfieldset) {
 
 	}
 });
+
+/**
+ * Função chamada quando um novo tipo de bem e escolhido
+ * Ela reorganiza os campos que devem ser vistos 
+ */
 mostrarDescricao = (function() {
 
 	var menu = document.getElementById("GeralInfo:tipodobem");
+	
+	
+	//variável estática que tem o tipo do bem 
 	tipoDobemfixo = menu.selectedIndex;
 	
+	//Acerta os campos vistos no grupo descrição
 	organizarGrupoDescricao("grupoDescricao");
+	//Acerta os campos vistos no grupo Intervenção
 	organizarGrupoDescricao("grupoIntervencao");
+});
+
+/**
+ * Função chamada quando um novo disponibilidade  é  escolhida
+ * Ela reorganiza os campos que devem ser vistos 
+ */
+mostrarDisponibilidade = (function(menu) {
+
+	//var menu = document.getElementById("disponibilidade:disponibilidade");
+	var tipodisponibilidade = new Number(menu.getAttribute("id").split(":")[2]);
+	
+
+	
+	
+
+	
+	if(tipodisponibilidade ==  0){//acervo
+		//mostrar condições de acesso
+		var elem = document.getElementById("disponibilidade:acesso");
+		elem.removeAttribute("style");
+	
+		//esconder data de retorno
+		var elem1 = document.getElementById("disponibilidade:data");
+		elem1.setAttribute("style", "display: none;");
+		
+		return;
+	}
+	if(tipodisponibilidade ==  5){
+	
+		//esconder data de retorno
+		var elem1 = document.getElementById("disponibilidade:data");
+		elem1.setAttribute("style", "display: none;");
+		
+		//esconder condições de acesso
+		var elem = document.getElementById("disponibilidade:acesso");
+		elem.setAttribute("style", "display: none;");
+		return;	
+	}
+
+	//mostrar data de retorno
+	var elem = document.getElementById("disponibilidade:data");
+	elem.removeAttribute("style");
+	
+	//esconder condições de acesso
+	var elem1 = document.getElementById("disponibilidade:acesso");
+	elem1.setAttribute("style", "display: none;");
 });
