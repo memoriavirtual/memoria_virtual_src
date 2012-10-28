@@ -68,8 +68,17 @@ mostrarTableCorreta = (function(index, idtabela) {
 	}
 });
 
+
+//variáveis estáticas utilizadas nas funções que acertam os campos que devem ser vistos
 var listaDeDivs;
 var tipoDobemfixo = null;
+
+
+
+/**
+ * organiza os campos que devem ser vistos no grupo descrição
+ * 
+ */
 organizarGrupoDescricao = (function(idfieldset) {
 	var listDivs = document.getElementById(idfieldset).getElementsByTagName(
 			"div");
