@@ -41,7 +41,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	 */
 	public CadastrarBemPatrimonialMB() {
 		super();
-		this.titulos.add(new Titulo());
+		this.geralTitulos.add(new Titulo());
 		this.apresentaAutorias.add(new ApresentaAutoria());
 		this.autorias.add(new Autoria());
 
@@ -57,7 +57,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	private EditarInstituicaoRemote editarInstituicaoEJB;
 
 	private static final long serialVersionUID = 7413170360811077491L;
-	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
+
 	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
 	private SerialHtmlDataTable dataTableIntervencao = new SerialHtmlDataTable();
 	private boolean cadastrarAutor = false;
@@ -67,17 +67,113 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
 	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
+
+	/*******************************************************************************************************
+	 * 
+	 * Bloco Informações Gerais
+	 * 
+	 *******************************************************************************************************/
+
+	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
+	protected boolean geralExterno;
+	protected String geralNomeInstituicao;
+	protected String geralNaturezaBem;
+	protected String geralTipoDoBemPatrimonial = "";
+	protected String geralNumeroRegistro;
+	protected String geralColecao;
+	protected String geralComplemento;
+	protected String geralLatitude;
+	protected String geralLongitude;
+	protected List<Titulo> geralTitulos = new ArrayList<Titulo>();
+
+	public boolean isGeralExterno() {
+		return geralExterno;
+	}
+
+	public void setGeralExterno(boolean externo) {
+		this.geralExterno = externo;
+	}
+
+	public String getGeralNomeInstituicao() {
+		return geralNomeInstituicao;
+	}
+
+	public void setGeralNomeInstituicao(String nomeInstituicao) {
+		this.geralNomeInstituicao = nomeInstituicao;
+	}
+
+	public void setGeralTipoDoBemPatrimonial(String tipoDoBemPatrimonial) {
+		this.geralTipoDoBemPatrimonial = tipoDoBemPatrimonial;
+	}
 	
-	protected boolean externo;
-	protected String nomeInstituicao;
-	protected String naturezaBem;
-	protected String tipoDoBemPatrimonial = "";
-	protected String numeroRegistro;
-	protected String colecao;
-	protected String complemento;
-	protected String latitude;
-	protected String longitude;
-	protected List<Titulo> titulos = new ArrayList<Titulo>();
+	public String getGeralTipoDoBemPatrimonial() {
+		return geralTipoDoBemPatrimonial;
+	}
+
+	public void setGeralNaturezaBem(String geralNaturezaBem) {
+		this.geralNaturezaBem = geralNaturezaBem;
+	}
+	
+	public String getGeralNaturezaBem() {
+		return geralNaturezaBem;
+	}
+	
+	public void setGeralNumeroRegistro(String numeroRegistro) {
+		this.geralNumeroRegistro = numeroRegistro;
+	}
+	
+	public String getGeralNumeroRegistro() {
+		return geralNumeroRegistro;
+	}
+
+
+	public String getGeralColecao() {
+		return geralColecao;
+	}
+
+	public void setGeralColecao(String geralColecao) {
+		this.geralColecao = geralColecao;
+	}
+	
+	public String getGeralComplemento() {
+		return geralComplemento;
+	}
+
+	public void setGeralComplemento(String complemento) {
+		this.geralComplemento = complemento;
+	}
+	
+	public String getGeralLongitude() {
+		return geralLongitude;
+	}
+
+	public void setGeralLongitude(String longitude) {
+		this.geralLongitude = longitude;
+	}
+	
+
+	public String getGeralLatitude() {
+		return geralLatitude;
+	}
+
+	public void setGeralLatitude(String latitude) {
+		this.geralLatitude = latitude;
+	}
+	
+	
+	public List<Titulo> getGeralTitulos() {
+		return geralTitulos;
+	}
+
+	
+	public void setGeralTitulos(List<Titulo> titulos) {
+		this.geralTitulos = titulos;
+	}
+	/*******************************************************************************************************
+	 * 
+	 * FIM Bloco Informações Gerais
+	 * 
+	 *******************************************************************************************************/
 	protected List<Autoria> autorias = new ArrayList<Autoria>();
 	protected String producaoLocal;
 	protected String producaoAno;
@@ -120,7 +216,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String estadoConser;
 	protected String estadoConservNotas;
 	protected Boolean intervencaoDoBem;
-	
+
 	/**
 	 * 
 	 */
@@ -129,16 +225,40 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.validacaoTitulo();
 		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
 			try {
-				this.bemPatrimonial.setInstituicao(this.editarInstituicaoEJB.getInstituicao(nomeInstituicao));
+				this.bemPatrimonial.setInstituicao(this.editarInstituicaoEJB
+						.getInstituicao(geralNomeInstituicao));
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-			this.bemPatrimonial.setTitulos(titulos);
+			
+			//anexando Geral Info
+						
+			this.bemPatrimonial.setTitulos(geralTitulos);
+			this.bemPatrimonial.setColecao(geralColecao);
+			this.bemPatrimonial.setExterno(geralExterno);
+			this.bemPatrimonial.setLatitude(geralLatitude);
+			this.bemPatrimonial.setNumeroDeRegistro(this.geralNumeroRegistro);
+			this.bemPatrimonial.setLongitude(geralLongitude);
+			this.bemPatrimonial.setComplemento(geralComplemento);
+			//fim Geral info
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			this.bemPatrimonial.setAutorias(null);
-			this.cadastrarBemPatrimonialEJB.cadastrarBemPatrimonial(this.bemPatrimonial);
+			this.cadastrarBemPatrimonialEJB
+					.cadastrarBemPatrimonial(this.bemPatrimonial);
+			
+			MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
+			"resultado");
 		} else {
-//			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
-//					"resultado");
+			// MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
+			// "resultado");
 		}
 		return null;
 
@@ -210,15 +330,16 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	public void adicionarTitulo(AjaxBehaviorEvent event) {
-		if (this.titulos.size() < this.getTiposTitulo().size() - 1) {
-			this.titulos.add(new Titulo());
+		if (this.geralTitulos.size() < this.getTiposTitulo().size() - 1) {
+			this.geralTitulos.add(new Titulo());
 		}
 
 	}
+
 	public void intervencoesAdd(AjaxBehaviorEvent event) {
 		this.intervencoes.add(new Intervencao());
 	}
-	
+
 	public void adicionarAutoria(AjaxBehaviorEvent event) {
 		if (this.autorias.size() < Autoria.TipoAutoria.values().length - 1) {
 			this.autorias.add(new Autoria());
@@ -269,8 +390,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 		String[] list = event.getComponent().getClientId().split(":");
 		Integer index = new Integer(list[2]);
-		if (this.titulos.size() > 1) {
-			this.titulos.remove((int) index);
+		if (this.geralTitulos.size() > 1) {
+			this.geralTitulos.remove((int) index);
 		}
 		this.dataTableTitulos.processUpdates(context);
 	}
@@ -318,37 +439,37 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		}
 		this.dataTableAutoria.processUpdates(context);
 	}
-	
+
 	public void excluirIntervencao(AjaxBehaviorEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		String[] list = event.getComponent().getClientId().split(":");
 		Integer index = new Integer(list[2]);
-		
-			this.intervencoes.remove((int) index);
-	
+
+		this.intervencoes.remove((int) index);
+
 		this.dataTableIntervencao.processUpdates(context);
 	}
-	
+
 	public int classificarBemPatrimonial() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 
-		if (this.tipoDoBemPatrimonial == null
-				|| this.tipoDoBemPatrimonial.equals("")) {
+		if (this.geralTipoDoBemPatrimonial == null
+				|| this.geralTipoDoBemPatrimonial.equals("")) {
 			return 0;
 		}
-		if (this.tipoDoBemPatrimonial.equals(bundle
+		if (this.geralTipoDoBemPatrimonial.equals(bundle
 				.getString("cadastrarBemTipoLista0"))) {
 			return 1;
 		}
-		if (this.tipoDoBemPatrimonial.equals(bundle
+		if (this.geralTipoDoBemPatrimonial.equals(bundle
 				.getString("cadastrarBemTipoLista4"))) {
 			return 2;
 		}
-		if (this.tipoDoBemPatrimonial.equals(bundle
+		if (this.geralTipoDoBemPatrimonial.equals(bundle
 				.getString("cadastrarBemTipoLista6"))) {
 			return 3;
 		}
@@ -372,7 +493,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 				e.printStackTrace();
 			}
 			for (Instituicao a : listaInstituicao) {
-				listaItens.add(new SelectItem(new String(a.getNome().getBytes())));
+				listaItens.add(new SelectItem(
+						new String(a.getNome().getBytes())));
 			}
 
 		} else {
@@ -383,13 +505,17 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 				e.printStackTrace();
 			}
 			for (Instituicao a : listaInstituicao) {
-				listaItens.add(new SelectItem(new String(a.getNome().getBytes())));
+				listaItens.add(new SelectItem(
+						new String(a.getNome().getBytes())));
 			}
 		}
-		if(!(listaItens.size() == 1)){
-			listaItens.add(0,new SelectItem(bundle.getString("cadastrarBemInstituicaoSelecione")));
+		if (!(listaItens.size() == 1)) {
+			listaItens.add(
+					0,
+					new SelectItem(bundle
+							.getString("cadastrarBemInstituicaoSelecione")));
 		}
-		if(listaItens.size() == 0){
+		if (listaItens.size() == 0) {
 			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
 					"resultado");
 		}
@@ -404,11 +530,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		List<SelectItem> tiposBem = new ArrayList<SelectItem>();
 		tiposBem.add(new SelectItem(bundle
 				.getString("cadastrarBemTipoListaSelecione")));
-		if (this.naturezaBem == null) {
+		if (this.geralNaturezaBem == null) {
 			tiposBem.clear();
 			return tiposBem;
 		}
-		if (this.naturezaBem.equalsIgnoreCase(bundle
+		if (this.geralNaturezaBem.equalsIgnoreCase(bundle
 				.getString("cadastrarBemMaterial"))) {
 			tiposBem.add(new SelectItem(bundle
 					.getString("cadastrarBemTipoLista0")));
@@ -447,10 +573,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		if (this.nomeInstituicao.equals(bundle.getString("cadastrarBemInstituicaoSelecione"))) {
+		if (this.geralNomeInstituicao.equals(bundle
+				.getString("cadastrarBemInstituicaoSelecione"))) {
 			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
 					"validacaoInstituicao");
-			
+
 		}
 	}
 
@@ -459,87 +586,14 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	public void validacaoTitulo() {
-		if (this.titulos.get(0).getValor().equals("")) {
+		if (this.geralTitulos.get(0).getValor().equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarBemTituloErro",
 					"resultado");
 
 		}
 	}
 
-	/**
-	 * @return the naturezaBem
-	 */
-	public String getNaturezaBem() {
-		return naturezaBem;
-	}
-
-	/**
-	 * @param naturezaBem
-	 *            the naturezaBem to set
-	 */
-	public void setNaturezaBem(String naturezaBem) {
-		this.naturezaBem = naturezaBem;
-	}
-
-	/**
-	 * @return the externo
-	 */
-	public boolean isExterno() {
-		return externo;
-	}
-
-	/**
-	 * @param externo
-	 *            the externo to set
-	 */
-	public void setExterno(boolean externo) {
-		this.externo = externo;
-	}
-
-	/**
-	 * @return the tipoDoBemPatrimonial
-	 */
-	public String getTipoDoBemPatrimonial() {
-		return tipoDoBemPatrimonial;
-	}
-
-	/**
-	 * @param tipoDoBemPatrimonial
-	 *            the tipoDoBemPatrimonial to set
-	 */
-	public void setTipoDoBemPatrimonial(String tipoDoBemPatrimonial) {
-		this.tipoDoBemPatrimonial = tipoDoBemPatrimonial;
-	}
-
-	/**
-	 * @return the numeroRegistro
-	 */
-	public String getNumeroRegistro() {
-		return numeroRegistro;
-	}
-
-	/**
-	 * @param numeroRegistro
-	 *            the numeroRegistro to set
-	 */
-	public void setNumeroRegistro(String numeroRegistro) {
-		this.numeroRegistro = numeroRegistro;
-	}
-
-	/**
-	 * @return the titulos
-	 */
-	public List<Titulo> getTitulos() {
-		return titulos;
-	}
-
-	/**
-	 * @param titulos
-	 *            the titulos to set
-	 */
-	public void setTitulos(List<Titulo> titulos) {
-		this.titulos = titulos;
-	}
+	
 
 	public boolean isBotaRemoverTitulo() {
 		return botaRemoverTitulo;
@@ -549,37 +603,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.botaRemoverTitulo = botaRemoverTitulo;
 	}
 
-	public String getColecao() {
-		return colecao;
-	}
+	
 
-	public void setColecao(String colecao) {
-		this.colecao = colecao;
-	}
 
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+	
 
 	public SerialHtmlDataTable getDataTableTitulos() {
 		return dataTableTitulos;
@@ -918,19 +945,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.meioDeAcesso = meioDeAcesso;
 	}
 
-	public String getNomeInstituicao() {
-		return nomeInstituicao;
-	}
-
-	public void setNomeInstituicao(String nomeInstituicao) {
-		this.nomeInstituicao = nomeInstituicao;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	
 	public List<Intervencao> getIntervencoes() {
 		return intervencoes;
 	}
@@ -979,9 +997,6 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.intervencaoDoBem = intervencaoDoBem;
 	}
 
-	
-
-
 	public SerialHtmlDataTable getDataTableIntervencao() {
 		return dataTableIntervencao;
 	}
@@ -989,9 +1004,6 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public void setDataTableIntervencao(SerialHtmlDataTable dataTableIntervencao) {
 		this.dataTableIntervencao = dataTableIntervencao;
 	}
-
-
-
 
 	public class ApresentaAutoria implements Serializable {
 		/**

@@ -69,7 +69,7 @@ public class BemPatrimonial  implements Serializable {
 	protected String conteudo= "";
 	protected String meioDeAcesso= "";
 	protected String idMidia= "";
-	
+	protected String Complemento= "";
 	
 	
 
@@ -316,6 +316,14 @@ public class BemPatrimonial  implements Serializable {
 	 */
 	public void setProducao(Producao producao) {
 		this.producao = producao;
+	}
+
+	public String getComplemento() {
+		return Complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		Complemento = complemento;
 	}
 
 	/**

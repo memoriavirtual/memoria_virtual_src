@@ -42,7 +42,7 @@
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicao}</h:outputLabel>
 							<h:selectOneMenu class="options"
-								value="#{cadastrarBemPatrimonialMB.nomeInstituicao}">
+								value="#{cadastrarBemPatrimonialMB.geralNomeInstituicao}">
 								<f:selectItems
 									value="#{cadastrarBemPatrimonialMB.recuperarInstituicoes()}" />
 								<f:ajax event="blur" execute="@this"
@@ -64,20 +64,20 @@
 							<div>
 
 								<h:selectOneRadio layout="lineDirection" class="checks"
-									value="#{cadastrarBemPatrimonialMB.externo}">
+									value="#{cadastrarBemPatrimonialMB.geralExterno}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemExterno}</h:outputLabel>
-
+ 
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
 										itemValue="true" />
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
 										itemValue="false" />
-								</h:selectOneRadio>
+								</h:selectOneRadio> 
 								<div></div>
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemNaturezaDoBem}</h:outputLabel>
 								<h:selectOneRadio layout="lineDirection" class="checks"
-									value="#{cadastrarBemPatrimonialMB.naturezaBem}">
+									value="#{cadastrarBemPatrimonialMB.geralNaturezaBem}">
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemImaterial}"
 										itemValue="#{mensagens.cadastrarBemImaterial}" />
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemMaterial}"
@@ -91,7 +91,7 @@
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial}</h:outputLabel>
 								<h:selectOneMenu id="tipodobem" styleClass="options"
 									onchange="mostrarDescricao()"
-									value="#{cadastrarBemPatrimonialMB.tipoDoBemPatrimonial}">
+									value="#{cadastrarBemPatrimonialMB.geralTipoDoBemPatrimonial}">
 									<f:selectItems value="#{cadastrarBemPatrimonialMB.tiposBem}" />
 									<f:ajax event="change" execute="@form"></f:ajax>
 								</h:selectOneMenu>
@@ -101,7 +101,7 @@
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.numeroRegistro}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.geralNumeroRegistro}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -126,7 +126,7 @@
 
 							<h:dataTable id="titulosBem" var="titulo" class="titulos"
 								binding="#{cadastrarBemPatrimonialMB.dataTableTitulos}"
-								value="#{cadastrarBemPatrimonialMB.titulos}">
+								value="#{cadastrarBemPatrimonialMB.geralTitulos}">
 								<div></div>
 								<h:message id="validacaoTitulo" for="validacaoTitulo"
 									infoClass="sucesso" errorClass="erro" warnClass="aviso">
@@ -162,14 +162,14 @@
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
 								<h:inputTextarea styleClass="caixadetexto"
-									value="#{cadastrarBemPatrimonialMB.complemento}">
+									value="#{cadastrarBemPatrimonialMB.geralComplemento}">
 								</h:inputTextarea>
 								<div></div>
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloColecao}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.colecao}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.geralColecao}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -180,7 +180,7 @@
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.latitude}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.geralLatitude}">
 
 								</h:inputText>
 								<div></div>
@@ -189,7 +189,7 @@
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.longitude}">
+								<h:inputText value="#{cadastrarBemPatrimonialMB.geralLongitude}">
 
 								</h:inputText>
 								<div></div>
