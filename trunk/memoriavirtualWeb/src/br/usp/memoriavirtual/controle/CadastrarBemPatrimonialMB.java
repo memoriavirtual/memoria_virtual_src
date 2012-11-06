@@ -58,11 +58,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	private static final long serialVersionUID = 7413170360811077491L;
 
-	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
+	
 	private SerialHtmlDataTable dataTableIntervencao = new SerialHtmlDataTable();
-	private boolean cadastrarAutor = false;
+	
 	private boolean botaRemoverTitulo = false;
-	protected List<Autor> autores = new ArrayList<Autor>();
+	
 	protected List<Intervencao> intervencoes = new ArrayList<Intervencao>();
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
@@ -86,95 +86,30 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String geralLongitude;
 	protected List<Titulo> geralTitulos = new ArrayList<Titulo>();
 
-	public boolean isGeralExterno() {
-		return geralExterno;
-	}
-
-	public void setGeralExterno(boolean externo) {
-		this.geralExterno = externo;
-	}
-
-	public String getGeralNomeInstituicao() {
-		return geralNomeInstituicao;
-	}
-
-	public void setGeralNomeInstituicao(String nomeInstituicao) {
-		this.geralNomeInstituicao = nomeInstituicao;
-	}
-
-	public void setGeralTipoDoBemPatrimonial(String tipoDoBemPatrimonial) {
-		this.geralTipoDoBemPatrimonial = tipoDoBemPatrimonial;
-	}
 	
-	public String getGeralTipoDoBemPatrimonial() {
-		return geralTipoDoBemPatrimonial;
-	}
-
-	public void setGeralNaturezaBem(String geralNaturezaBem) {
-		this.geralNaturezaBem = geralNaturezaBem;
-	}
-	
-	public String getGeralNaturezaBem() {
-		return geralNaturezaBem;
-	}
-	
-	public void setGeralNumeroRegistro(String numeroRegistro) {
-		this.geralNumeroRegistro = numeroRegistro;
-	}
-	
-	public String getGeralNumeroRegistro() {
-		return geralNumeroRegistro;
-	}
-
-
-	public String getGeralColecao() {
-		return geralColecao;
-	}
-
-	public void setGeralColecao(String geralColecao) {
-		this.geralColecao = geralColecao;
-	}
-	
-	public String getGeralComplemento() {
-		return geralComplemento;
-	}
-
-	public void setGeralComplemento(String complemento) {
-		this.geralComplemento = complemento;
-	}
-	
-	public String getGeralLongitude() {
-		return geralLongitude;
-	}
-
-	public void setGeralLongitude(String longitude) {
-		this.geralLongitude = longitude;
-	}
-	
-
-	public String getGeralLatitude() {
-		return geralLatitude;
-	}
-
-	public void setGeralLatitude(String latitude) {
-		this.geralLatitude = latitude;
-	}
-	
-	
-	public List<Titulo> getGeralTitulos() {
-		return geralTitulos;
-	}
-
-	
-	public void setGeralTitulos(List<Titulo> titulos) {
-		this.geralTitulos = titulos;
-	}
 	/*******************************************************************************************************
 	 * 
 	 * FIM Bloco Informações Gerais
 	 * 
 	 *******************************************************************************************************/
+	
+	/*******************************************************************************************************
+	 * 
+	 * Bloco Autoria
+	 * 
+	 *******************************************************************************************************/
+	protected List<Autor> autores = new ArrayList<Autor>();
+	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
+	private boolean cadastrarAutor = false;
 	protected List<Autoria> autorias = new ArrayList<Autoria>();
+	
+	/*******************************************************************************************************
+	 * 
+	 * FIM Bloco Autoria
+	 * 
+	 *******************************************************************************************************/
+	
+	
 	protected String producaoLocal;
 	protected String producaoAno;
 	protected String producaoEdicao;
@@ -242,15 +177,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			this.bemPatrimonial.setComplemento(geralComplemento);
 			//fim Geral info
 			
+			//anexando Geral Info
 			
+			this.bemPatrimonial.setAutorias(autorias);
 			
-			
-			
-			
-			
-			
-			
-			this.bemPatrimonial.setAutorias(null);
 			this.cadastrarBemPatrimonialEJB
 					.cadastrarBemPatrimonial(this.bemPatrimonial);
 			
@@ -606,7 +536,89 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	
 
 
+	public boolean isGeralExterno() {
+		return geralExterno;
+	}
+
+	public void setGeralExterno(boolean externo) {
+		this.geralExterno = externo;
+	}
+
+	public String getGeralNomeInstituicao() {
+		return geralNomeInstituicao;
+	}
+
+	public void setGeralNomeInstituicao(String nomeInstituicao) {
+		this.geralNomeInstituicao = nomeInstituicao;
+	}
+
+	public void setGeralTipoDoBemPatrimonial(String tipoDoBemPatrimonial) {
+		this.geralTipoDoBemPatrimonial = tipoDoBemPatrimonial;
+	}
 	
+	public String getGeralTipoDoBemPatrimonial() {
+		return geralTipoDoBemPatrimonial;
+	}
+
+	public void setGeralNaturezaBem(String geralNaturezaBem) {
+		this.geralNaturezaBem = geralNaturezaBem;
+	}
+	
+	public String getGeralNaturezaBem() {
+		return geralNaturezaBem;
+	}
+	
+	public void setGeralNumeroRegistro(String numeroRegistro) {
+		this.geralNumeroRegistro = numeroRegistro;
+	}
+	
+	public String getGeralNumeroRegistro() {
+		return geralNumeroRegistro;
+	}
+
+
+	public String getGeralColecao() {
+		return geralColecao;
+	}
+
+	public void setGeralColecao(String geralColecao) {
+		this.geralColecao = geralColecao;
+	}
+	
+	public String getGeralComplemento() {
+		return geralComplemento;
+	}
+
+	public void setGeralComplemento(String complemento) {
+		this.geralComplemento = complemento;
+	}
+	
+	public String getGeralLongitude() {
+		return geralLongitude;
+	}
+
+	public void setGeralLongitude(String longitude) {
+		this.geralLongitude = longitude;
+	}
+	
+
+	public String getGeralLatitude() {
+		return geralLatitude;
+	}
+
+	public void setGeralLatitude(String latitude) {
+		this.geralLatitude = latitude;
+	}
+	
+	
+	public List<Titulo> getGeralTitulos() {
+		return geralTitulos;
+	}
+
+	
+	public void setGeralTitulos(List<Titulo> titulos) {
+		this.geralTitulos = titulos;
+	}
 
 	public SerialHtmlDataTable getDataTableTitulos() {
 		return dataTableTitulos;
