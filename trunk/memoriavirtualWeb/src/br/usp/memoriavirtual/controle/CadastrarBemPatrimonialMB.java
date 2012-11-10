@@ -16,6 +16,7 @@ import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
+import br.usp.memoriavirtual.modelo.entidades.Autoria.TipoAutoria;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -177,9 +178,15 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			this.bemPatrimonial.setComplemento(geralComplemento);
 			//fim Geral info
 			
-			//anexando Geral Info
-			
+			//anexando autorias
+			for(int i = 0 ; i < this.autorias.size();i++){
+				this.autorias.get(i).setBemPatrimonial(this.bemPatrimonial);
+				this.autorias.get(i).setTipoAutoria(this.getEnumTipoAutoria(this.apresentaAutorias.get(i).tipoAutoria));
+			}
 			this.bemPatrimonial.setAutorias(autorias);
+			//fim autorias
+			
+			
 			
 			this.cadastrarBemPatrimonialEJB
 					.cadastrarBemPatrimonial(this.bemPatrimonial);
@@ -217,7 +224,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 		List<SelectItem> tipos = new ArrayList<SelectItem>();
 
-		for (int i = 0; i < 19; i++) {
+		for (int i = 0; i < 20; i++) {
 			tipos.add(new SelectItem(bundle
 					.getString("cadastrarAutorListaTipoAutoria" + i)));
 		}
@@ -522,7 +529,86 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 		}
 	}
+	
 
+	protected Autoria.TipoAutoria getEnumTipoAutoria(String a ){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		int i;
+		for (i = 1; i <= 19; i++) {
+			
+			if(bundle.getString("cadastrarAutorListaTipoAutoria" + i).equalsIgnoreCase(a)){
+				break;
+			}
+		}
+			switch (i) {
+			case 1:
+				return TipoAutoria.COAUTOR;
+			
+			case 2:
+				return TipoAutoria.ORGANIZADOR;
+				
+			case 3:
+				return TipoAutoria.TRADUTOR;
+					
+			case 4:
+				
+				return TipoAutoria.EDITOR;
+			case 5:
+				
+				return TipoAutoria.DIRETOR;
+			case 6:
+				
+				return TipoAutoria.PREFACIADOR;
+			case 7:
+				
+				return TipoAutoria.COORDENADOR;
+			case 8:
+				
+				return TipoAutoria.COMPILADOR;
+			case 9:
+				
+				return TipoAutoria.ILUSTRADOR;
+			case 10:
+				
+				return TipoAutoria.ENTREVISTADO;
+			case 11:
+				
+				return TipoAutoria.AUTOR_INSTITUCIONAL;
+			case 12:
+				
+				return TipoAutoria.ENTIDADE_PRODUTORA;
+			case 13:
+				
+				return TipoAutoria.AGENCIA;
+			case 14:
+				
+				return TipoAutoria.ESTUDIO;
+			case 15:
+				
+				return TipoAutoria.FOTOGRAFO;	
+			case 16:
+				
+				return TipoAutoria.FIGURINISTA;	
+			case 17:
+				
+				return TipoAutoria.FABRICANTE;	
+			case 18:
+				
+				return TipoAutoria.PALESTRANTE;
+			case 19:
+				
+				return TipoAutoria.AUTOR;
+			default:
+				
+				
+				return TipoAutoria.AUTOR;
+			}
+		
+	}
 	
 
 	public boolean isBotaRemoverTitulo() {
