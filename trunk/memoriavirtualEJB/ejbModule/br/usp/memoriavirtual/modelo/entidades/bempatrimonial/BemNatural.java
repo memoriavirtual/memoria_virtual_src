@@ -15,6 +15,19 @@ public class BemNatural extends BemPatrimonial implements Serializable {
 	public BemNatural() {
 	}
 	
+	/**
+	 * @param relevo
+	 * @param meioAntropico
+	 * @param caracteristicasAmbientais
+	 */
+	public BemNatural(String relevo, String meioAntropico,
+			String caracteristicasAmbientais) {
+		super();
+		this.relevo = relevo;
+		this.meioAntropico = meioAntropico;
+		this.caracteristicasAmbientais = caracteristicasAmbientais;
+	}
+
 	private String relevo;
 	private String meioAntropico;
 	private String caracteristicasAmbientais;

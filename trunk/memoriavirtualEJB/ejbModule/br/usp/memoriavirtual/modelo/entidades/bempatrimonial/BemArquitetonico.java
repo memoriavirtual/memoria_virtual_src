@@ -11,25 +11,67 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7652111334209358223L;
-
+	
+	/**
+	 * @param condicaoTopografia
+	 * @param sudo
+	 * @param numPavimentos
+	 * @param numAmbientes
+	 * @param alcova2
+	 * @param porao2
+	 * @param sotao2
+	 * @param outros
+	 * @param areaTotal2
+	 * @param alturaFachadaFrontal
+	 * @param alturaFachadaSuperior
+	 * @param largura2
+	 * @param profundidade2
+	 * @param alturaTotal2
+	 * @param peDireitoTerreo2
+	 * @param tipoPeDireito
+	 */
+	public BemArquitetonico(String condicaoTopografia, String sudo,
+			Integer numPavimentos, Integer numAmbientes, Boolean alcova2,
+			Boolean porao2, Boolean sotao2, String outros, Double areaTotal2,
+			Double alturaFachadaFrontal, Double alturaFachadaSuperior,
+			Double largura2, Double profundidade2, Double alturaTotal2,
+			Double peDireitoTerreo2, String tipoPeDireito) {
+		super();
+		this.condicaoTopografia = condicaoTopografia;
+		this.uso = sudo;
+		this.numeroDePavimentos = numPavimentos;
+		this.numeroDeAmbientes = numAmbientes;
+		this.alcova = alcova2;
+		this.porao = porao2;
+		this.sotao = sotao2;
+		this.outros = outros;
+		this.areaTotal = areaTotal2;
+		this.alturaFachFrontal = alturaFachadaFrontal;
+		this.alturaFachPosterior = alturaFachadaSuperior;
+		this.largura = largura2;
+		this.profundidade = profundidade2;
+		this.alturaTotal = alturaTotal2;
+		this.peDireitoTerreo = peDireitoTerreo2;
+		this.tipoPeDireito = tipoPeDireito;
+	}
 	public BemArquitetonico() {
 	}
 	
 	private String condicaoTopografia;
-	private String sudo;
-	private String numeroDePavimentos; 
-	private String numeroDeAmbientes;
-	private String alcova;
-	private String porao;
-	private String sotao;
+	private String uso;
+	private Integer numeroDePavimentos; 
+	private Integer numeroDeAmbientes;
+	private Boolean alcova;
+	private Boolean porao;
+	private Boolean sotao;
 	private String outros;
-	private String areaTotal;
-	private String alturaFachFrontal;
-	private String alturaFachPosterior;
-	private String largura;
-	private String profundidade;
-	private String alturaTotal;
-	private String peDireitoTerreo;
+	private Double areaTotal;
+	private Double alturaFachFrontal;
+	private Double alturaFachPosterior;
+	private Double largura;
+	private Double profundidade;
+	private Double alturaTotal;
+	private Double peDireitoTerreo;
 	private String tipoPeDireito;
 
 	/**
@@ -45,75 +87,75 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 		this.condicaoTopografia = condicaoTopografia;
 	}
 	/**
-	 * @return the sudo
+	 * @return the uso
 	 */
-	public String getSudo() {
-		return sudo;
+	public String getUso() {
+		return uso;
 	}
 	/**
-	 * @param sudo the sudo to set
+	 * @param uso the uso to set
 	 */
-	public void setSudo(String sudo) {
-		this.sudo = sudo;
+	public void setUso(String uso) {
+		this.uso = uso;
 	}
 	/**
 	 * @return the numeroDePavimentos
 	 */
-	public String getNumeroDePavimentos() {
+	public Integer getNumeroDePavimentos() {
 		return numeroDePavimentos;
 	}
 	/**
 	 * @param numeroDePavimentos the numeroDePavimentos to set
 	 */
-	public void setNumeroDePavimentos(String numeroDePavimentos) {
+	public void setNumeroDePavimentos(Integer numeroDePavimentos) {
 		this.numeroDePavimentos = numeroDePavimentos;
 	}
 	/**
 	 * @return the numeroDeAmbientes
 	 */
-	public String getNumeroDeAmbientes() {
+	public Integer getNumeroDeAmbientes() {
 		return numeroDeAmbientes;
 	}
 	/**
 	 * @param numeroDeAmbientes the numeroDeAmbientes to set
 	 */
-	public void setNumeroDeAmbientes(String numeroDeAmbientes) {
+	public void setNumeroDeAmbientes(Integer numeroDeAmbientes) {
 		this.numeroDeAmbientes = numeroDeAmbientes;
 	}
 	/**
 	 * @return the alcova
 	 */
-	public String getAlcova() {
+	public Boolean getAlcova() {
 		return alcova;
 	}
 	/**
 	 * @param alcova the alcova to set
 	 */
-	public void setAlcova(String alcova) {
+	public void setAlcova(Boolean alcova) {
 		this.alcova = alcova;
 	}
 	/**
 	 * @return the porao
 	 */
-	public String getPorao() {
+	public Boolean getPorao() {
 		return porao;
 	}
 	/**
 	 * @param porao the porao to set
 	 */
-	public void setPorao(String porao) {
+	public void setPorao(Boolean porao) {
 		this.porao = porao;
 	}
 	/**
 	 * @return the sotao
 	 */
-	public String getSotao() {
+	public Boolean getSotao() {
 		return sotao;
 	}
 	/**
 	 * @param sotao the sotao to set
 	 */
-	public void setSotao(String sotao) {
+	public void setSotao(Boolean sotao) {
 		this.sotao = sotao;
 	}
 	/**
@@ -131,85 +173,85 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 	/**
 	 * @return the areaTotal
 	 */
-	public String getAreaTotal() {
+	public Double getAreaTotal() {
 		return areaTotal;
 	}
 	/**
 	 * @param areaTotal the areaTotal to set
 	 */
-	public void setAreaTotal(String areaTotal) {
+	public void setAreaTotal(Double areaTotal) {
 		this.areaTotal = areaTotal;
 	}
 	/**
 	 * @return the alturaFachFrontal
 	 */
-	public String getAlturaFachFrontal() {
+	public Double getAlturaFachFrontal() {
 		return alturaFachFrontal;
 	}
 	/**
 	 * @param alturaFachFrontal the alturaFachFrontal to set
 	 */
-	public void setAlturaFachFrontal(String alturaFachFrontal) {
+	public void setAlturaFachFrontal(Double alturaFachFrontal) {
 		this.alturaFachFrontal = alturaFachFrontal;
 	}
 	/**
 	 * @return the alturaFachPosterior
 	 */
-	public String getAlturaFachPosterior() {
+	public Double getAlturaFachPosterior() {
 		return alturaFachPosterior;
 	}
 	/**
 	 * @param alturaFachPosterior the alturaFachPosterior to set
 	 */
-	public void setAlturaFachPosterior(String alturaFachPosterior) {
+	public void setAlturaFachPosterior(Double alturaFachPosterior) {
 		this.alturaFachPosterior = alturaFachPosterior;
 	}
 	/**
 	 * @return the largura
 	 */
-	public String getLargura() {
+	public Double getLargura() {
 		return largura;
 	}
 	/**
 	 * @param largura the largura to set
 	 */
-	public void setLargura(String largura) {
+	public void setLargura(Double largura) {
 		this.largura = largura;
 	}
 	/**
 	 * @return the profundidade
 	 */
-	public String getProfundidade() {
+	public Double getProfundidade() {
 		return profundidade;
 	}
 	/**
 	 * @param profundidade the profundidade to set
 	 */
-	public void setProfundidade(String profundidade) {
+	public void setProfundidade(Double profundidade) {
 		this.profundidade = profundidade;
 	}
 	/**
 	 * @return the alturaTotal
 	 */
-	public String getAlturaTotal() {
+	public Double getAlturaTotal() {
 		return alturaTotal;
 	}
 	/**
 	 * @param alturaTotal the alturaTotal to set
 	 */
-	public void setAlturaTotal(String alturaTotal) {
+	public void setAlturaTotal(Double alturaTotal) {
 		this.alturaTotal = alturaTotal;
 	}
 	/**
 	 * @return the peDireitoTerreo
 	 */
-	public String getPeDireitoTerreo() {
+	public Double getPeDireitoTerreo() {
 		return peDireitoTerreo;
 	}
 	/**
 	 * @param peDireitoTerreo the peDireitoTerreo to set
 	 */
-	public void setPeDireitoTerreo(String peDireitoTerreo) {
+	public void setPeDireitoTerreo(Double peDireitoTerreo) {
 		this.peDireitoTerreo = peDireitoTerreo;
 	}
 	/**
@@ -224,6 +266,6 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 	public void setTipoPeDireito(String tipoPeDireito) {
 		this.tipoPeDireito = tipoPeDireito;
 	}
-	
-	
+
+
 }

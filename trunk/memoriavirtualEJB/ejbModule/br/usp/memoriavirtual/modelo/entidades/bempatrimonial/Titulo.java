@@ -7,9 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
 @Entity(name="BEMPATRIMONIAL_TITULOS")
+@SequenceGenerator(name = "TITULO_ID", sequenceName = "TITULO_SEQ", allocationSize = 1)
 public class Titulo implements Serializable {
 
 	private static final long serialVersionUID = 1L;

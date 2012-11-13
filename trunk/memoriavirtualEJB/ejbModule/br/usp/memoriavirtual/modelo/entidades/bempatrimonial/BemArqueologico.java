@@ -10,7 +10,46 @@ public class BemArqueologico extends BemPatrimonial implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4718742198160645902L;
+	
+	
 
+	/**
+	 * @param condicaoTopografica
+	 * @param sitioDaPaisagem
+	 * @param aguaProximo
+	 * @param possuiVegetacao
+	 * @param exposicao
+	 * @param usoAtual
+	 * @param outros
+	 * @param notas
+	 * @param areaTotal2
+	 * @param comprimento2
+	 * @param altura2
+	 * @param largura2
+	 * @param profundidade2
+	 */
+	public BemArqueologico( String condicaoTopografica, String sitioDaPaisagem,
+			String aguaProximo, String possuiVegetacao, String exposicao,
+			String usoAtual, String outros, String notas, Double areaTotal2,
+			Double comprimento2, Double altura2, Double largura2,
+			Double profundidade2) {
+		super();
+		this.condicaoTopografica = condicaoTopografica;
+		this.sitioDaPaisagem = sitioDaPaisagem;
+		this.aguaProximo = aguaProximo;
+		this.possuiVegetacao = possuiVegetacao;
+		this.exposicao = exposicao;
+		this.usoAtual = usoAtual;
+		this.outros = outros;
+		this.notas = notas;
+		this.areaTotal = areaTotal2;
+		this.comprimento = comprimento2;
+		this.altura = altura2;
+		this.largura = largura2;
+		this.profundidade = profundidade2;
+		
+		
+	}
 	public BemArqueologico() {
 	}
 	
@@ -22,11 +61,11 @@ public class BemArqueologico extends BemPatrimonial implements Serializable {
 	private String usoAtual;
 	private String outros;
 	private String notas;
-	private String areaTotal;
-	private String comprimento;
-	private String altura;
-	private String largura;
-	private String profundidade;
+	private Double areaTotal;
+	private Double comprimento;
+	private Double altura;
+	private Double largura;
+	private Double profundidade;
 
 	/**
 	 * @return the condicaoTopografica
@@ -127,61 +166,61 @@ public class BemArqueologico extends BemPatrimonial implements Serializable {
 	/**
 	 * @return the areaTotal
 	 */
-	public String getAreaTotal() {
+	public Double getAreaTotal() {
 		return areaTotal;
 	}
 	/**
 	 * @param areaTotal the areaTotal to set
 	 */
-	public void setAreaTotal(String areaTotal) {
+	public void setAreaTotal(Double areaTotal) {
 		this.areaTotal = areaTotal;
 	}
 	/**
 	 * @return the comprimento
 	 */
-	public String getComprimento() {
+	public Double getComprimento() {
 		return comprimento;
 	}
 	/**
 	 * @param comprimento the comprimento to set
 	 */
-	public void setComprimento(String comprimento) {
+	public void setComprimento(Double comprimento) {
 		this.comprimento = comprimento;
 	}
 	/**
 	 * @return the altura
 	 */
-	public String getAltura() {
+	public Double getAltura() {
 		return altura;
 	}
 	/**
 	 * @param altura the altura to set
 	 */
-	public void setAltura(String altura) {
+	public void setAltura(Double altura) {
 		this.altura = altura;
 	}
 	/**
 	 * @return the largura
 	 */
-	public String getLargura() {
+	public Double getLargura() {
 		return largura;
 	}
 	/**
 	 * @param largura the largura to set
 	 */
-	public void setLargura(String largura) {
+	public void setLargura(Double largura) {
 		this.largura = largura;
 	}
 	/**
 	 * @return the profundidade
 	 */
-	public String getProfundidade() {
+	public Double getProfundidade() {
 		return profundidade;
 	}
 	/**
 	 * @param profundidade the profundidade to set
 	 */
-	public void setProfundidade(String profundidade) {
+	public void setProfundidade(Double profundidade) {
 		this.profundidade = profundidade;
 	}
 	
