@@ -15,8 +15,6 @@ import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
@@ -104,7 +102,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 					listaInstituicoes = this.editarInstituicaoEJB
 							.listarInstituicoes(this.nome);
 				} catch (ModeloException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -113,7 +110,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 							.listarInstituicoes(this.nome,
 									new Grupo("GERENTE"), requisitor);
 				} catch (ModeloException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

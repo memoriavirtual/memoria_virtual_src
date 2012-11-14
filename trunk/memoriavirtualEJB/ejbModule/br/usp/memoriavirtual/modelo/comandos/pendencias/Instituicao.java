@@ -1,7 +1,5 @@
 package br.usp.memoriavirtual.modelo.comandos.pendencias;
 
-import java.util.logging.Logger;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
