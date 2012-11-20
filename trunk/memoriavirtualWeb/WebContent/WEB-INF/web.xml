@@ -5,14 +5,6 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>memoriavirtualWeb</display-name>
 	<distributable />
-	<session-config>
-		<session-timeout>20</session-timeout>
-		<cookie-config>
-			<name>mcCookie</name>
-			<path>/memoriavirtual</path>
-		</cookie-config>
-		<tracking-mode>COOKIE</tracking-mode>
-	</session-config>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
