@@ -23,5 +23,7 @@ public class RealizarLogoffMB implements Serializable{
 	request.getSession().invalidate();
 	return "logout";
     }
-
+    public String getInstance(){
+    	return System.getProperty("com.sun.aas.instanceName");
+    }
 }

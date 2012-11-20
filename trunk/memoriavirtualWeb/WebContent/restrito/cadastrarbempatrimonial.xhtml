@@ -38,19 +38,19 @@
 
 
 					<fieldset>
-						<div class="espacador"></div>
+						<div class="espacador"></div> 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicao}</h:outputLabel>
 							<h:selectOneMenu class="options"
 								value="#{cadastrarBemPatrimonialMB.geralNomeInstituicao}">
 								<f:selectItems
 									value="#{cadastrarBemPatrimonialMB.recuperarInstituicoes()}" />
-								<f:ajax event="blur" execute="@this"
+								<f:ajax event="blur" execute="@this" 
 									render="validacaoInstituicao"
 									listener="#{cadastrarBemPatrimonialMB.validacaoInstituicao}" />
 							</h:selectOneMenu>
 							<div></div>
-							<h:message id="validacaoInstituicao" for="validacaoInstituicao"
+							<h:message id="validacaoInstituicao" for="validacaoInstituicao" 
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 

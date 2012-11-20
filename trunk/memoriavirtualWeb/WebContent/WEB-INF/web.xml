@@ -34,7 +34,7 @@
 		<servlet-name>Cadastro Servlet</servlet-name>
 		<url-pattern>/fazercadastro</url-pattern>
 	</servlet-mapping>
-	<filter>
+	 <filter>
 		<filter-name>FiltroLogin</filter-name>
 		<filter-class>br.usp.memoriavirtual.filtro.FiltroLogin</filter-class>
 	</filter>
