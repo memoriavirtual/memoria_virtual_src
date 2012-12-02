@@ -11,7 +11,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-@ManagedBean(name="realizarBuscaSimples")
+@ManagedBean(name="realizarBuscaSimplesMB")
 @RequestScoped
 public class RealizarBuscaSimplesMB {
 	
