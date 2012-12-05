@@ -703,3 +703,20 @@ textarea:focus {
 	top: -155px;
 	left: -40px;
 }
+
+#imgbusca{
+	margin: auto;
+	margin-top: 100px;
+	width: 500px;
+	height: 75px;
+}
+
+input.busca{
+	width: 500px;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+p.pbusca{
+	size: 40px;
+}
