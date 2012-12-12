@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 import javax.ejb.EJB;
 import javax.faces.component.html.HtmlDataTable;
@@ -24,7 +25,11 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.DisponibilidadeUsoProtecao;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.HistoricoProcedencia;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Intervencao;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Pesquisador;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Producao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -64,19 +69,15 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	private static final long serialVersionUID = 7413170360811077491L;
 
 	private SerialHtmlDataTable dataTableIntervencao = new SerialHtmlDataTable();
+	private SerialHtmlDataTable dataTablePesquisador = new SerialHtmlDataTable();
 
 	private boolean botaRemoverTitulo = false;
 
 	protected List<Intervencao> intervencoes = new ArrayList<Intervencao>();
+	protected List<Pesquisador> pesquisadores = new ArrayList<Pesquisador>();
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
 	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
-
-	/*******************************************************************************************************
-	 * 
-	 * Bloco Informações Gerais
-	 * 
-	 *******************************************************************************************************/
 
 	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
 	protected boolean geralExterno;
@@ -90,27 +91,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String geralLongitude;
 	protected List<Titulo> geralTitulos = new ArrayList<Titulo>();
 
-	/*******************************************************************************************************
-	 * 
-	 * FIM Bloco Informações Gerais
-	 * 
-	 *******************************************************************************************************/
-
-	/*******************************************************************************************************
-	 * 
-	 * Bloco Autoria
-	 * 
-	 *******************************************************************************************************/
 	protected List<Autor> autores = new ArrayList<Autor>();
 	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
 	private boolean cadastrarAutor = false;
 	protected List<Autoria> autorias = new ArrayList<Autoria>();
-
-	/*******************************************************************************************************
-	 * 
-	 * FIM Bloco Autoria
-	 * 
-	 *******************************************************************************************************/
 
 	protected String producaoLocal;
 	protected String producaoAno;
@@ -153,6 +137,24 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String estadoConser;
 	protected String estadoConservNotas;
 	protected Boolean intervencaoDoBem;
+	protected String disponibilidadeDoBem;
+	protected String condicoesDeAcesso;
+	protected String dataDeRetorno;
+	protected String condicoesDeReproducao;
+	protected String notasUsoAproveitamento;
+	protected String protecao;
+	protected String instituicaoProtetora;
+	protected String legislacaoNprocesso;
+
+	protected String tipoDeAquisicao;
+	protected String valorVenalEpocaTransacao;
+	protected String dataAquisicaoDocumento;
+	protected String documentoDeAquisicao;
+	protected String primeiroPropietario;
+	protected String historico;
+	protected String intrumentoDePesquisa;
+	protected String assunto;
+	protected String descritores;
 
 	/**
 	 * 
@@ -182,6 +184,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 						exposicao, usoAtual, descricaoOutros, descricaoNotas,
 						this.areaTotal, this.comprimento, this.altura,
 						this.largura, this.profundidade);
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoConservPreserv, this.estadoConservNotas));
 
 			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
 					.getString("cadastrarBemTipoLista4"))) {
@@ -192,13 +196,19 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 						alturaFachadaFrontal, this.alturaFachadaSuperior,
 						this.largura, profundidade, alturaTotal,
 						peDireitoTerreo, peDireitoTipo);
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoPreser, this.estadoConser,
+						this.estadoConservNotas));
 			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
 					.getString("cadastrarBemTipoLista6"))) {
 				// System.out.println("natural");
 				this.bemPatrimonial = new BemNatural(relevo,
 						caracteristicasAntropico, caracteristicasAmbientais);
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoConservPreserv, this.estadoConservNotas));
 			} else {
-				
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoConservPreserv, this.estadoConservNotas));
 			}
 
 			// anexando Geral Info
@@ -234,6 +244,51 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 					.setCaracteristicasFisTecExec(this.caracteristicasFisicas);
 
 			// fim anexando descrição
+
+			// anexando Intervencao e diagnostico
+			this.bemPatrimonial.setIntervencoes(intervencoes);
+			this.bemPatrimonial.setDiagnostico(new Diagnostico(
+					this.estadoPreser, this.estadoConser,
+					this.estadoConservNotas));
+			// fim anexando intervencao e diagnostico
+			// anexando Disponibilidade Uso e Protecão
+
+			this.bemPatrimonial
+					.setDisponibilidadeUsoProtecao(new DisponibilidadeUsoProtecao(
+							this.disponibilidadeDoBem, this.condicoesDeAcesso,
+							this.condicoesDeReproducao, this.dataDeRetorno,
+							this.notasUsoAproveitamento, this.protecao,
+							this.legislacaoNprocesso, this.instituicaoProtetora));
+			// Fim anexando Disponibilidade Uso e Protecão
+			// anexado historio e procerdencia
+
+			this.bemPatrimonial
+					.setHisttoricoProcedencia(new HistoricoProcedencia(
+							this.tipoDeAquisicao,
+							this.valorVenalEpocaTransacao,
+							this.documentoDeAquisicao,
+							this.primeiroPropietario, historico,
+							this.intrumentoDePesquisa));
+
+			// fim anexando historico e procedencia
+
+			// anexando assuntos
+			List<String> assun = new ArrayList<String>();
+			String[] a = this.assunto.split(" ");
+			for (int i = 0; i < a.length; i++) {
+				assun.add(a[i]);
+			}
+			this.bemPatrimonial.setAssuntos(new TreeSet<String>(assun));
+			// fim assuntos
+
+			// anexando descritores
+			List<String> descr = new ArrayList<String>();
+			String[] b = this.descritores.split(" ");
+			for (int i = 0; i < b.length; i++) {
+				descr.add(b[i]);
+			}
+			this.bemPatrimonial.setDescritores(new TreeSet<String>(assun));
+			// fim descritores
 
 			this.cadastrarBemPatrimonialEJB
 					.cadastrarBemPatrimonial(this.bemPatrimonial);
@@ -322,6 +377,11 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	public void intervencoesAdd(AjaxBehaviorEvent event) {
 		this.intervencoes.add(new Intervencao());
+	}
+
+	public void adicionarPesquisador(AjaxBehaviorEvent event) {
+		this.pesquisadores.add(new Pesquisador());
+
 	}
 
 	public void adicionarAutoria(AjaxBehaviorEvent event) {
@@ -433,6 +493,17 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.intervencoes.remove((int) index);
 
 		this.dataTableIntervencao.processUpdates(context);
+	}
+
+	public void excluirPesquisador(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer index = new Integer(list[2]);
+
+		this.pesquisadores.remove((int) index);
+
+		this.dataTablePesquisador.processUpdates(context);
 	}
 
 	public int classificarBemPatrimonial() {
@@ -1139,6 +1210,158 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	public void setDataTableIntervencao(SerialHtmlDataTable dataTableIntervencao) {
 		this.dataTableIntervencao = dataTableIntervencao;
+	}
+
+	public List<Pesquisador> getPesquisadores() {
+		return pesquisadores;
+	}
+
+	public void setPesquisadores(List<Pesquisador> pesquisadores) {
+		this.pesquisadores = pesquisadores;
+	}
+
+	public SerialHtmlDataTable getDataTablePesquisador() {
+		return dataTablePesquisador;
+	}
+
+	public void setDataTablePesquisador(SerialHtmlDataTable dataTablePesquisador) {
+		this.dataTablePesquisador = dataTablePesquisador;
+	}
+
+	public String getDisponibilidadeDoBem() {
+		return disponibilidadeDoBem;
+	}
+
+	public void setDisponibilidadeDoBem(String disponibilidadeDoBem) {
+		this.disponibilidadeDoBem = disponibilidadeDoBem;
+	}
+
+	public String getCondicoesDeAcesso() {
+		return condicoesDeAcesso;
+	}
+
+	public void setCondicoesDeAcesso(String condicoesDeAcesso) {
+		this.condicoesDeAcesso = condicoesDeAcesso;
+	}
+
+	public String getDataDeRetorno() {
+		return dataDeRetorno;
+	}
+
+	public void setDataDeRetorno(String dataDeRetorno) {
+		this.dataDeRetorno = dataDeRetorno;
+	}
+
+	public String getNotasUsoAproveitamento() {
+		return notasUsoAproveitamento;
+	}
+
+	public void setNotasUsoAproveitamento(String notasUsoAproveitamento) {
+		this.notasUsoAproveitamento = notasUsoAproveitamento;
+	}
+
+	public String getProtecao() {
+		return protecao;
+	}
+
+	public void setProtecao(String protecao) {
+		this.protecao = protecao;
+	}
+
+	public String getInstituicaoProtetora() {
+		return instituicaoProtetora;
+	}
+
+	public void setInstituicaoProtetora(String instituicaoProtetora) {
+		this.instituicaoProtetora = instituicaoProtetora;
+	}
+
+	public String getLegislacaoNprocesso() {
+		return legislacaoNprocesso;
+	}
+
+	public void setLegislacaoNprocesso(String legislacaoNprocesso) {
+		this.legislacaoNprocesso = legislacaoNprocesso;
+	}
+
+	public String getCondicoesDeReproducao() {
+		return condicoesDeReproducao;
+	}
+
+	public void setCondicoesDeReproducao(String condicoesDeReproducao) {
+		this.condicoesDeReproducao = condicoesDeReproducao;
+	}
+
+	public String getTipoDeAquisicao() {
+		return tipoDeAquisicao;
+	}
+
+	public void setTipoDeAquisicao(String tipoDeAquisicao) {
+		this.tipoDeAquisicao = tipoDeAquisicao;
+	}
+
+	public String getValorVenalEpocaTransacao() {
+		return valorVenalEpocaTransacao;
+	}
+
+	public void setValorVenalEpocaTransacao(String valorVenalEpocaTransacao) {
+		this.valorVenalEpocaTransacao = valorVenalEpocaTransacao;
+	}
+
+	public String getDataAquisicaoDocumento() {
+		return dataAquisicaoDocumento;
+	}
+
+	public void setDataAquisicaoDocumento(String dataAquisicaoDocumento) {
+		this.dataAquisicaoDocumento = dataAquisicaoDocumento;
+	}
+
+	public String getDocumentoDeAquisicao() {
+		return documentoDeAquisicao;
+	}
+
+	public void setDocumentoDeAquisicao(String documentoDeAquisicao) {
+		this.documentoDeAquisicao = documentoDeAquisicao;
+	}
+
+	public String getPrimeiroPropietario() {
+		return primeiroPropietario;
+	}
+
+	public void setPrimeiroPropietario(String primeiroPropietario) {
+		this.primeiroPropietario = primeiroPropietario;
+	}
+
+	public String getHistorico() {
+		return historico;
+	}
+
+	public void setHistorico(String historico) {
+		this.historico = historico;
+	}
+
+	public String getIntrumentoDePesquisa() {
+		return intrumentoDePesquisa;
+	}
+
+	public void setIntrumentoDePesquisa(String intrumentoDePesquisa) {
+		this.intrumentoDePesquisa = intrumentoDePesquisa;
+	}
+
+	public String getAssunto() {
+		return assunto;
+	}
+
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
+	}
+
+	public String getDescritores() {
+		return descritores;
+	}
+
+	public void setDescritores(String descritores) {
+		this.descritores = descritores;
 	}
 
 	public class ApresentaAutoria implements Serializable {

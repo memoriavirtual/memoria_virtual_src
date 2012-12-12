@@ -76,7 +76,11 @@ public class BemPatrimonial  implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_DESCRITORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected Set<String> descritores;
-
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "BEMPATRIMONIAL_ASSUNTOS", joinColumns = @JoinColumn(name = "ASSUNTOS_ID"))
+	protected Set<String> assuntos;
+	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_FONTESINFORMACAO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected Set<String> fontesInformacao;
@@ -464,6 +468,14 @@ public class BemPatrimonial  implements Serializable {
 
 	public void setBensrelacionados(List<BemPatrimonial> bensrelacionados) {
 		this.bensrelacionados = bensrelacionados;
+	}
+
+	public Set<String> getAssuntos() {
+		return assuntos;
+	}
+
+	public void setAssuntos(Set<String> assuntos) {
+		this.assuntos = assuntos;
 	}
 
 	

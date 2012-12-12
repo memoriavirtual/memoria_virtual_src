@@ -35,13 +35,13 @@ public class Pesquisador implements Serializable {
 		super();
 		this.nome = nome;
 		this.dataPesquisa = dataPesquisa;
-		this.notasPesquizador = notasPesquizador;
+		this.notasPesquisador = notasPesquizador;
 	}
 
 
 	private String nome;
 	private String dataPesquisa;
-	private String notasPesquizador;
+	private String notasPesquisador;
 
 	/**
 	 * @return the nome
@@ -70,13 +70,13 @@ public class Pesquisador implements Serializable {
 	/**
 	 * @return the notasPesquizador
 	 */
-	public String getNotasPesquizador() {
-		return notasPesquizador;
+	public String getNotasPesquisador() {
+		return notasPesquisador;
 	}
 	/**
 	 * @param notasPesquizador the notasPesquizador to set
 	 */
-	public void setNotasPesquizador(String notasPesquizador) {
-		this.notasPesquizador = notasPesquizador;
+	public void setNotasPesquisador(String notasPesquizador) {
+		this.notasPesquisador = notasPesquizador;
 	}
 }

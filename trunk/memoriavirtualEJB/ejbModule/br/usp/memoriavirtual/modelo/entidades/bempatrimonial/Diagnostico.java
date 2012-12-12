@@ -18,7 +18,13 @@ public class Diagnostico implements Serializable {
 		super();
 	}
 	
-	
+	public Diagnostico(String estPresercacao,
+			String notaEstConservacao) {
+		super();
+		this.estPresercacao = estPresercacao;
+		this.estConservacao = "";
+		this.notaEstConservacao = notaEstConservacao;
+	}
 	public Diagnostico(String estPresercacao, String estConservacao,
 			String notaEstConservacao) {
 		super();
