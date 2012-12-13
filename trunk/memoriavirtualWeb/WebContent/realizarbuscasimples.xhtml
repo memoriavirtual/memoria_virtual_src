@@ -5,48 +5,36 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Realizar Busca Simples</title>
-</head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Realizar Busca Simples</title>
+	<h:outputStylesheet name="mv.css" library="css" />
+</h:head>
 <h:body>
 
+	<h:graphicImage library="imagens" id="imgbusca"
+		name="logo_mv_catalogacao.png" />
 
-	<div class="formulario">
-
-		<div class="erroPrincipal">
-			<h:message id="resultado" for="resultado" infoClass="sucesso"
-				errorClass="erro"></h:message>
-		</div>
-
-		<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesTitle}</div>
-		<div class="conteudoDescricao">#{mensagens.realizarBuscaSimplesDescricao}</div>
+	<div class="erroPrincipal">
+		<h:message id="resultado" for="resultado" infoClass="sucesso"
+			errorClass="erro"></h:message>
+	</div>
+		<p class="pbusca">#{mensagens.realizarBuscaSimplesDescricao}</p>
 
 		<h:form method="post" prependId="false">
-			<fieldset>
-				<div>
-					<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesBusca}</h:outputLabel>
-					<h:inputText value="#{realizarBuscaSimplesMB.busca}" />
-
-				</div>
-
-			</fieldset>
-			<div class="botao">
-				<h:commandButton id="botaoCadastrar"
-					value="#{mensagens.realizarBuscaSimplesBotaoCadastrar}"
-					action="#{realizarBuscaSimplesMB.buscar}">
-
-				</h:commandButton>
-
-				<h:commandButton id="botaoResetar"
-					value="#{mensagens.realizarBuscaSimplesBotaoResetar}"
-					action="#{realizarBuscaSimplesMB.reset}">
-				</h:commandButton>
+		<fieldset>
+			<div>
+				<h:inputText class="busca" value="#{realizarBuscaSimplesMB.busca}" />
 
 			</div>
-		</h:form>
-	</div>
-	<!-- end .formulario-->
+
+		</fieldset>
+		<h:commandButton id="botaoCadastrar"
+			value="#{mensagens.realizarBuscaSimplesBotaoBuscar}"
+			action="#{realizarBuscaSimplesMB.buscar}">
+
+		</h:commandButton>
+	</h:form>
 
 </h:body>
 </html>

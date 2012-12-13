@@ -25,7 +25,7 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 		List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 
 		Query query = this.entityManager
-				.createQuery("SELECT t.bemPatrimonial FROM Titulo t WHERE  t.valor LIKE :nome");
+				.createQuery("SELECT t.bemPatrimonial FROM BEMPATRIMONIAL_TITULOS t WHERE  t.valor LIKE :nome");
 		query.setParameter("nome", "%" + nome + "%");
 
 		try {

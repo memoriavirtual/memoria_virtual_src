@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -7,6 +8,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
@@ -16,10 +18,11 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-@ManagedBean
-@RequestScoped
-public class ExcluirBemPatrimonialMB {
+@ManagedBean(name = "excluirBemPatrimonialMB")
+@SessionScoped
+public class ExcluirBemPatrimonialMB implements Serializable{
 
+	private static final long serialVersionUID = -5120759550692482010L;
 	private String nome = "";
 	private BemPatrimonial bemPatrimonial = null;
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
@@ -31,71 +34,76 @@ public class ExcluirBemPatrimonialMB {
 	}
 
 	public void listarBensPatrimoniais() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
+
 		try {
 			this.bens = excluirBemPatrimonialEJB
 					.listarBensPatrimoniais(this.nome);
-			
-			for(BemPatrimonial b : bens){
-				for(Titulo t : b.getTitulos()){
-					if(t.getValor().contains(this.nome)){
+
+			for (BemPatrimonial b : bens) {
+				for (Titulo t : b.getTitulos()) {
+					if (t.getValor().contains(this.nome)) {
 						b.getTitulos().set(0, t);
 					}
 				}
 			}
-			
+
 			BemPatrimonial showAll = new BemPatrimonial();
 			Titulo showAllTitulo = new Titulo();
 			showAllTitulo.setValor(bundle.getString("listarTodos"));
 			showAll.adicionarTitulo(showAllTitulo);
 			this.bens.add(0, showAll);
-			
+
 		} catch (ModeloException m) {
-			MensagensDeErro.getErrorMessage("excluirBemPatrimonialErroBemInexistente", "resultado");
+			MensagensDeErro.getErrorMessage(
+					"excluirBemPatrimonialErroBemInexistente", "resultado");
 			m.printStackTrace();
 		}
 	}
-	
-	public String selecionarBem(BemPatrimonial bem){
-		
+
+	public String selecionarBem(BemPatrimonial bem) {
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
-		if(bem.getTitulos().get(0).getValor().equals(bundle.getString("listarTodos"))){
+
+		if (bem.getTitulos().get(0).getValor()
+				.equals(bundle.getString("listarTodos"))) {
 			this.nome = "";
 			this.listarBensPatrimoniais();
 			return null;
 		}
-		
+
 		this.bemPatrimonial = bem;
-		
+		this.nome = bem.getTitulos().get(0).getValor();
+		this.bens.clear();
+
 		return "sucesso";
-		
+
 	}
 
-	
-	public String excluirBemPatrimonial(){
-		
-		try{
-			this.bemPatrimonial = this.excluirBemPatrimonialEJB.recuperarDados(this.bemPatrimonial);
+	public String excluirBemPatrimonial() {
+
+		try {
+			this.bemPatrimonial = this.excluirBemPatrimonialEJB
+					.recuperarDados(this.bemPatrimonial);
 			this.excluirBemPatrimonialEJB.excluirBem(this.bemPatrimonial);
-		}
-		catch(ModeloException m){
-			MensagensDeErro.getErrorMessage("excluirBemPatrimonialErroBemInexistente", "resultado");
+		} catch (ModeloException m) {
+			MensagensDeErro.getErrorMessage(
+					"excluirBemPatrimonialErroBemInexistente", "resultado");
 			m.printStackTrace();
 		}
-		
-		MensagensDeErro.getSucessMessage("excluirBemPatrimonialSucesso", "resultado");
-		
+
+		MensagensDeErro.getSucessMessage("excluirBemPatrimonialSucesso",
+				"resultado");
+
 		return "sucesso";
-		
+
 	}
 
 	public String getNome() {
