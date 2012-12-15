@@ -18,16 +18,16 @@ INSERT INTO USUARIO values( 'manutencao', false, true, 'manutencao@usp.br','Manu
 '(16)7777-7777', null);
 
 INSERT INTO INSTITUICAO values(1,'Elisa','1000m','111111','11111-111','São Carlos','elisa@usp.br',
-'Rua Norte, 1','São Paulo','111','1','icmc','1','Fazenda X','Brasil','Nenhuma','(111)1111-1111','Privada','fazendax.com',true);
+'Rua Norte, 1','São Paulo','111','1','icmc','Fazenda X','1','LABES','Brasil','Nenhuma','(111)1111-1111',' ','Privada','fazendax.com',true,null);
 
 INSERT INTO INSTITUICAO values(2,'Thiago','1000m','111111','11111-111','São Carlos','thiago@usp.br',
-'Rua Sul, 1','São Paulo','111','1','icmc','1','Fazenda Y','Brasil','Nenhuma','(111)1111-1111','Privada','fazenday.com',true);
+'Rua Sul, 1','São Paulo','111','1','icmc','Fazenda X','1','LCR','Brasil','Nenhuma','(111)1111-1111',' ','Privada','fazendax.com',true,null);
 
 INSERT INTO INSTITUICAO values(3,'Maldonado','1000m','111111','11111-111','São Carlos','maldonado@usp.br',
-'Rua Leste, 1','São Paulo','111','1','icmc','1','Fazenda Z','Brasil','Nenhuma','(111)1111-1111','Privada','fazendaz.com',true);
+'Rua Leste, 1','São Paulo','111','1','icmc','Fazenda X','1','LRM','Brasil','Nenhuma','(111)1111-1111',' ','Privada','fazendax.com',true,null);
 
-INSERT INTO AUTOR values(1, 'Escritor', 'Machado', '01/01/1900', 'Joaquim Maria', '01/01/2000', 'Machado de Assis','Autor');
-INSERT INTO AUTOR values(2, 'Desenhista', 'VanGogh', '01/01/1900', 'Vincent', '01/01/2000', 'Van Gogh','Autor');
+INSERT INTO AUTOR values(1, 'Escritor', 'Machado', '01/01/1900', 'Joaquim Maria', '01/01/2000', 'Machado de Assis');
+INSERT INTO AUTOR values(2, 'Desenhista', 'VanGogh', '01/01/1900', 'Vincent', '01/01/2000', 'Van Gogh');
 
 INSERT INTO GRUPO values('CATALOGADOR');
 INSERT INTO GRUPO values('REVISOR');

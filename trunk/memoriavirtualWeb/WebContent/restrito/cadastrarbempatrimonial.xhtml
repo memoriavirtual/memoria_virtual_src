@@ -38,19 +38,19 @@
 
 
 					<fieldset>
-						<div class="espacador"></div> 
+						<div class="espacador"></div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicao}</h:outputLabel>
 							<h:selectOneMenu class="options"
 								value="#{cadastrarBemPatrimonialMB.geralNomeInstituicao}">
 								<f:selectItems
 									value="#{cadastrarBemPatrimonialMB.recuperarInstituicoes()}" />
-								<f:ajax event="blur" execute="@this" 
+								<f:ajax event="blur" execute="@this"
 									render="validacaoInstituicao"
 									listener="#{cadastrarBemPatrimonialMB.validacaoInstituicao}" />
 							</h:selectOneMenu>
 							<div></div>
-							<h:message id="validacaoInstituicao" for="validacaoInstituicao" 
+							<h:message id="validacaoInstituicao" for="validacaoInstituicao"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 
@@ -66,12 +66,12 @@
 								<h:selectOneRadio layout="lineDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.geralExterno}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemExterno}</h:outputLabel>
- 
+
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
 										itemValue="true" />
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
 										itemValue="false" />
-								</h:selectOneRadio> 
+								</h:selectOneRadio>
 								<div></div>
 							</div>
 							<div>
@@ -101,7 +101,8 @@
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.geralNumeroRegistro}">
+								<h:inputText
+									value="#{cadastrarBemPatrimonialMB.geralNumeroRegistro}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -733,11 +734,7 @@
 
 					</mv:containerExpansivo>
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
-						<fieldset>
-						
-						
-						
-						</fieldset>
+						<fieldset></fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
@@ -901,8 +898,9 @@
 						label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
 						<fieldset>
 
-							<div >
-								<h:selectOneRadio layout="pageDirection" class="checks" id="disponibilidade" onchange="mostrarDisponibilidade(this)"
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									id="disponibilidade" onchange="mostrarDisponibilidade(this)"
 									value="#{cadastrarBemPatrimonialMB.disponibilidadeDoBem}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemDisponibilidade}</h:outputLabel>
 
@@ -954,7 +952,7 @@
 								<div></div>
 							</div>
 
-							<div >
+							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.dataDeRetorno}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesReproducao}</h:outputLabel>
@@ -1002,7 +1000,8 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicaoProtetora}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.instituicaoProtetora}">
+								<h:inputText
+									value="#{cadastrarBemPatrimonialMB.instituicaoProtetora}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -1010,7 +1009,8 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemLegislacaoNProcesso}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.legislacaoNprocesso}">
+								<h:inputText
+									value="#{cadastrarBemPatrimonialMB.legislacaoNprocesso}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -1052,28 +1052,31 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoValorVenal}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.valorVenalEpocaTransacao}">
+								<h:inputText
+									value="#{cadastrarBemPatrimonialMB.valorVenalEpocaTransacao}">
 								</h:inputText>
 								<div></div>
 							</div>
 
 
-							
+
 
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoData}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.dataAquisicaoDocumento}">
+								<h:inputText
+									value="#{cadastrarBemPatrimonialMB.dataAquisicaoDocumento}">
 								</h:inputText>
 								<div></div>
 							</div>
 
 
-							
+
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoDocumentoDados}</h:outputLabel>
-								<h:inputTextarea value="#{cadastrarBemPatrimonialMB.documentoDeAquisicao}"
+								<h:inputTextarea
+									value="#{cadastrarBemPatrimonialMB.documentoDeAquisicao}"
 									styleClass="caixadetexto">
 								</h:inputTextarea>
 								<div></div>
@@ -1081,10 +1084,11 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoPrimeiroProprietario}</h:outputLabel>
-								<h:inputText value="#{cadastrarBemPatrimonialMB.primeiroPropietario}">
+								<h:inputText
+									value="#{cadastrarBemPatrimonialMB.primeiroPropietario}">
 								</h:inputText>
 								<div></div>
-							</div>
+							</div> 
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoHistorico}</h:outputLabel>
@@ -1096,7 +1100,8 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoIntrumentosPesquisa}</h:outputLabel>
-								<h:inputTextarea value="#{cadastrarBemPatrimonialMB.intrumentoDePesquisa}"
+								<h:inputTextarea
+									value="#{cadastrarBemPatrimonialMB.intrumentoDePesquisa}"
 									styleClass="caixadetexto">
 								</h:inputTextarea>
 								<div></div>
@@ -1117,14 +1122,15 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemAssuntoDescritoresDescritores}</h:outputLabel>
-								<h:inputTextarea value="#{cadastrarBemPatrimonialMB.descritores}"
+								<h:inputTextarea
+									value="#{cadastrarBemPatrimonialMB.descritores}"
 									styleClass="caixadetexto">
 								</h:inputTextarea>
 								<div></div>
 							</div>
 
 						</fieldset>
-					</mv:containerExpansivo >
+					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemFontesInformacao}">
 						<fieldset>
@@ -1136,19 +1142,18 @@
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemFontesInformacao}</h:outputLabel>
 									<h:commandButton type="button" class="botoesTituiloTLB"
 										value="#{mensagens.cadastrarBemFontesInformacaoAdd}">
-										<f:ajax render="intervencao" execute="@form"
-											listener="#{cadastrarBemPatrimonialMB.intervencoesAdd}"></f:ajax>
+										<f:ajax render="fonteinformacao" execute="@form"
+											listener="#{cadastrarBemPatrimonialMB.fonteInformacaoAdd}"></f:ajax>  
 									</h:commandButton>
 								</div>
 
 							</div>
-							<h:dataTable id="intervencao" var="intervencao" class="titulos"
-							binding="#{cadastrarBemPatrimonialMB.dataTableIntervencao}"
-								value="#{cadastrarBemPatrimonialMB.intervencoes}">
+							<h:dataTable id="fonteinformacao" var="fonteinformacao"
+								class="titulos"
+								binding="#{cadastrarBemPatrimonialMB.dataTableFontesInformacao}"
+								value="#{cadastrarBemPatrimonialMB.fontesInformacao}">
 								<div></div>
-								<h:message id="validacaoTitulo" for="validacaoTitulo"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso">
-								</h:message>
+
 								<h:column id="coluna">
 
 
@@ -1157,7 +1162,7 @@
 									<div class="arqueologico">
 										<h:outputLabel class="labels"
 											style="width: 45%; float:left; font-size: 16px !important;">#{mensagens.cadastrarBemFontesInformacaolabel}</h:outputLabel>
-										<h:inputTextarea value="#{cadastrarBemPatrimonialMB.largura}"
+										<h:inputTextarea value="#{fonteinformacao}"
 											styleClass="caixadetexto">
 										</h:inputTextarea>
 										<h:graphicImage id="excluir" library="imagens"
@@ -1165,7 +1170,7 @@
 											style="width: 15px; height: 15px; margin:35px 120px 0px 0px;  border: none; float: right;">
 
 											<f:ajax render="@form" event="click" execute="@form"
-												listener="#{cadastrarBemPatrimonialMB.excluirIntervencao}">
+												listener="#{cadastrarBemPatrimonialMB.excluirFonteInformacao}">
 											</f:ajax>
 										</h:graphicImage>
 										<div></div>
@@ -1198,12 +1203,12 @@
 								binding="#{cadastrarBemPatrimonialMB.dataTablePesquisador}"
 								value="#{cadastrarBemPatrimonialMB.pesquisadores}">
 								<div></div>
-								
+
 								<h:column id="coluna">
 
 
 
-									
+
 
 
 									<h:outputLabel class="labels"
@@ -1220,7 +1225,8 @@
 									<div></div>
 									<h:outputLabel class="labels"
 										style="width: 30%; margin-left: 30px; float: left;">#{mensagens.cadastrarBemPesquisaNotas}</h:outputLabel>
-									<h:inputTextarea style="width: 45% !important ;" styleClass="caixadetexto"
+									<h:inputTextarea style="width: 45% !important ;"
+										styleClass="caixadetexto"
 										value="#{pesquisador.notasPesquisador}">
 									</h:inputTextarea>
 									<h:graphicImage id="excluir" library="imagens"
@@ -1231,7 +1237,7 @@
 											listener="#{cadastrarBemPatrimonialMB.excluirPesquisador}">
 										</f:ajax>
 									</h:graphicImage>
-									
+
 									<div></div>
 									<div></div>
 								</h:column>

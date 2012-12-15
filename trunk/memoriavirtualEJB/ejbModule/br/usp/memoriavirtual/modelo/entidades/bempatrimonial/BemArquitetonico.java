@@ -32,10 +32,10 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 	 */
 	public BemArquitetonico(String condicaoTopografia, String sudo,
 			Integer numPavimentos, Integer numAmbientes, Boolean alcova2,
-			Boolean porao2, Boolean sotao2, String outros, Double areaTotal2,
-			Double alturaFachadaFrontal, Double alturaFachadaSuperior,
-			Double largura2, Double profundidade2, Double alturaTotal2,
-			Double peDireitoTerreo2, String tipoPeDireito) {
+			Boolean porao2, Boolean sotao2, String outros, String areaTotal2,
+			String alturaFachadaFrontal, String alturaFachadaSuperior,
+			String largura2, String profundidade2, String alturaTotal2,
+			String peDireitoTerreo2, String tipoPeDireito) {
 		super();
 		this.condicaoTopografia = condicaoTopografia;
 		this.uso = sudo;
@@ -65,13 +65,13 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 	private Boolean porao;
 	private Boolean sotao;
 	private String outros;
-	private Double areaTotal;
-	private Double alturaFachFrontal;
-	private Double alturaFachPosterior;
-	private Double largura;
-	private Double profundidade;
-	private Double alturaTotal;
-	private Double peDireitoTerreo;
+	private String areaTotal;
+	private String alturaFachFrontal;
+	private String alturaFachPosterior;
+	private String largura;
+	private String profundidade;
+	private String alturaTotal;
+	private String peDireitoTerreo;
 	private String tipoPeDireito;
 
 	/**
@@ -173,85 +173,85 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 	/**
 	 * @return the areaTotal
 	 */
-	public Double getAreaTotal() {
+	public String getAreaTotal() {
 		return areaTotal;
 	}
 	/**
 	 * @param areaTotal the areaTotal to set
 	 */
-	public void setAreaTotal(Double areaTotal) {
+	public void setAreaTotal(String areaTotal) {
 		this.areaTotal = areaTotal;
 	}
 	/**
 	 * @return the alturaFachFrontal
 	 */
-	public Double getAlturaFachFrontal() {
+	public String getAlturaFachFrontal() {
 		return alturaFachFrontal;
 	}
 	/**
 	 * @param alturaFachFrontal the alturaFachFrontal to set
 	 */
-	public void setAlturaFachFrontal(Double alturaFachFrontal) {
+	public void setAlturaFachFrontal(String alturaFachFrontal) {
 		this.alturaFachFrontal = alturaFachFrontal;
 	}
 	/**
 	 * @return the alturaFachPosterior
 	 */
-	public Double getAlturaFachPosterior() {
+	public String getAlturaFachPosterior() {
 		return alturaFachPosterior;
 	}
 	/**
 	 * @param alturaFachPosterior the alturaFachPosterior to set
 	 */
-	public void setAlturaFachPosterior(Double alturaFachPosterior) {
+	public void setAlturaFachPosterior(String alturaFachPosterior) {
 		this.alturaFachPosterior = alturaFachPosterior;
 	}
 	/**
 	 * @return the largura
 	 */
-	public Double getLargura() {
+	public String getLargura() {
 		return largura;
 	}
 	/**
 	 * @param largura the largura to set
 	 */
-	public void setLargura(Double largura) {
+	public void setLargura(String largura) {
 		this.largura = largura;
 	}
 	/**
 	 * @return the profundidade
 	 */
-	public Double getProfundidade() {
+	public String getProfundidade() {
 		return profundidade;
 	}
 	/**
 	 * @param profundidade the profundidade to set
 	 */
-	public void setProfundidade(Double profundidade) {
+	public void setProfundidade(String profundidade) {
 		this.profundidade = profundidade;
 	}
 	/**
 	 * @return the alturaTotal
 	 */
-	public Double getAlturaTotal() {
+	public String getAlturaTotal() {
 		return alturaTotal;
 	}
 	/**
 	 * @param alturaTotal the alturaTotal to set
 	 */
-	public void setAlturaTotal(Double alturaTotal) {
+	public void setAlturaTotal(String alturaTotal) {
 		this.alturaTotal = alturaTotal;
 	}
 	/**
 	 * @return the peDireitoTerreo
 	 */
-	public Double getPeDireitoTerreo() {
+	public String getPeDireitoTerreo() {
 		return peDireitoTerreo;
 	}
 	/**
 	 * @param peDireitoTerreo the peDireitoTerreo to set
 	 */
-	public void setPeDireitoTerreo(Double peDireitoTerreo) {
+	public void setPeDireitoTerreo(String peDireitoTerreo) {
 		this.peDireitoTerreo = peDireitoTerreo;
 	}
 	/**

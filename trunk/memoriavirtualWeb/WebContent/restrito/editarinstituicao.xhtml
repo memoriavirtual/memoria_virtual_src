@@ -35,7 +35,7 @@
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
 							<h:inputText value="#{editarInstituicaoMB.nome}">
-								<f:ajax event="blur" execute="@this" render="validacaoNome"
+								<f:ajax event="change" execute="@this" render="validacaoNome"
 									listener="#{editarInstituicaoMB.validateNome}" />
 							</h:inputText>
 							<div></div>

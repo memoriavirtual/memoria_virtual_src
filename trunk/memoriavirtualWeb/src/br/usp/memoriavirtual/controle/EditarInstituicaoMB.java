@@ -29,11 +29,12 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	private EditarInstituicaoRemote editarInstituicaoEJB;
 	private List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 	private Instituicao instituicao;
+	private String nomeOriginal;
 	private long id;
 
 	public String editarInstituicao() {
 
-		if (this.validateNome() && this.validateLocalizacao()) {
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
 
 			Instituicao instituicao = new Instituicao(this.id, this.nome,
 					this.localizacao, this.endereco, this.cidade, this.estado,
@@ -82,8 +83,9 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		this.resetCadastrarinstituicao();
 		return "cancelar";
 	}
+
 	public void listarTodos(AjaxBehaviorEvent event) {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
@@ -94,6 +96,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		this.instituicoes.add(0, ins);
 
 	}
+
 	public void instituicoesSugeridas(AjaxBehaviorEvent event) {
 
 		this.listarInstituicoes();
@@ -154,6 +157,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 			return null;
 		}
 		this.id = instituicao.getId();
+		this.nomeOriginal = instituicao.getNome();
 		this.nome = instituicao.getNome();
 		this.cep = instituicao.getCep();
 		this.cidade = instituicao.getCidade();
@@ -191,7 +195,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 				try {
 					instituicao = editarInstituicaoEJB
 							.getInstituicao(this.nome);
-
+					this.nomeOriginal = this.nome;
 					this.cep = instituicao.getCep();
 					this.cidade = instituicao.getCidade();
 					this.endereco = instituicao.getEndereco();
@@ -223,7 +227,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 				try {
 					instituicao = editarInstituicaoEJB.getInstituicao(
 							this.nome, grupo, usuario);
-
+					this.nomeOriginal = this.nome;
 					this.cep = instituicao.getCep();
 					this.cidade = instituicao.getCidade();
 					this.endereco = instituicao.getEndereco();
@@ -252,9 +256,10 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 				}
 			}
 		}
-		
-		MensagensDeErro.getErrorMessage("editarInstituicaoErroIdVazio", "resultado");
-		
+
+		MensagensDeErro.getErrorMessage("editarInstituicaoErroIdVazio",
+				"resultado");
+
 		return null;
 
 	}
@@ -264,15 +269,17 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	}
 
 	public boolean validateNome() {
-		if (!this.memoriaVirtualEJB
-				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
-			MensagensDeErro.getErrorMessage(
-					"editarInstituicaoErroNomeExistente", "validacaoNome");
-			return false;
-		} else if (this.nome.length() < 4) {
-			MensagensDeErro.getErrorMessage("editarInstituicaoErroNomeCurto",
-					"validacaoNome");
-			return false;
+		if (!this.nome.equals(this.nomeOriginal)) {
+			if (!this.memoriaVirtualEJB
+					.verificarDisponibilidadeNomeInstituicao(this.nome)) {
+				MensagensDeErro.getErrorMessage(
+						"editarInstituicaoErroNomeExistente", "validacaoNome");
+				return false;
+			} else if (this.nome.length() < 4) {
+				MensagensDeErro.getErrorMessage(
+						"editarInstituicaoErroNomeCurto", "validacaoNome");
+				return false;
+			}
 		}
 		return true;
 	}

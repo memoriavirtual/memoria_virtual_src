@@ -56,10 +56,6 @@ public class ExcluirInstituicaoMB implements Serializable {
 	// objetos gerais
 
 	// para construir as mensagens
-	private FacesContext context = FacesContext.getCurrentInstance();
-	private String bundleName = "mensagens";
-	private ResourceBundle bundle = context.getApplication().getResourceBundle(
-			context, bundleName);
 
 	// da institui��o a ser exclu�da
 	private Instituicao instituicao = null;
@@ -93,6 +89,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 *            Ajax KeyUp
 	 */
 	public void listarInstituicoes(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		this.instituicoes.clear();
 		if (this.nome != "") {
 
@@ -117,14 +118,13 @@ public class ExcluirInstituicaoMB implements Serializable {
 			this.setInstituicoes(listaInstituicoes);
 			if (this.instituicoes.isEmpty()) {
 				Instituicao inst = new Instituicao();
-				inst.setNome(this.bundle
+				inst.setNome(bundle
 						.getString("excluirInstituicaoErrolistavazia"));
 				this.instituicoes.add(inst);
 			}
 		} else {
 			Instituicao inst = new Instituicao();
-			inst.setNome(this.bundle
-					.getString("listarTodos"));
+			inst.setNome(bundle.getString("listarTodos"));
 			this.instituicoes.add(inst);
 		}
 		return;
@@ -162,10 +162,15 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 */
 	public String selecionarInstituicoes(Instituicao instituicao) {
-		if (!instituicao.getNome().equals(
-				this.bundle.getString("listarTodos"))) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		if (!instituicao.getNome().equals(bundle.getString("listarTodos"))) {
 			if (!instituicao.getNome().equals(
-					this.bundle.getString("excluirInstituicaoErrolistavazia"))) {
+					bundle.getString("excluirInstituicaoErrolistavazia"))) {
 				this.setInstituicao(instituicao);
 				this.setNome(instituicao.getNome());
 				// System.out.println(instituicao.getNome() +
@@ -203,6 +208,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 */
 	public void listarGerentes(boolean b) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
 
 		if (this.gerentesInstituicao.isEmpty()) {
 			try {
@@ -213,7 +222,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 			}
 			if (this.gerentesInstituicao.isEmpty()) {
 				Usuario e = new Usuario();
-				e.setNomeCompleto(this.bundle
+				e.setNomeCompleto(bundle
 						.getString("excluirInstituicaoSemGerente"));
 				this.gerentesInstituicao.add(e);
 				this.gerente = null;
@@ -291,6 +300,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * @return lista de validadores.
 	 */
 	public List<SelectItem> recuperarPossiveisAprovadores() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
 
 		Map<String, String> validadoreslista = new HashMap<String, String>();
 		List<SelectItem> lista = new ArrayList<SelectItem>();
@@ -342,6 +356,12 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * @throws IOException
 	 */
 	public String enviarPedidoExclusao() throws IOException {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
 		if (this.instituicao != null) {
 
 			if (booleanValidador()) {
@@ -353,7 +373,7 @@ public class ExcluirInstituicaoMB implements Serializable {
 				GregorianCalendar gc = new GregorianCalendar();
 				gc.add(GregorianCalendar.HOUR, 24 * numeroDieas);
 				dataValidade = gc.getTime();
-				String gerente = (this.gerente == null) ? this.bundle
+				String gerente = (this.gerente == null) ? bundle
 						.getString("excluirInstituicaoSemGerente")
 						: this.gerente.getNomeCompleto();
 
@@ -552,13 +572,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * p�ginas do CDU Excluir Institui��o
 	 */
 	private void zerarManegedBean() {
-		// para construir as mensagens
-		this.context = FacesContext.getCurrentInstance();
-		;
-		this.bundleName = "mensagens";
-		this.bundle = context.getApplication().getResourceBundle(context,
-				bundleName);
-
+		
+		
 		// da institui��o a ser exclu�da
 		this.instituicao = null;
 		this.nome = null;
@@ -664,9 +679,14 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * Utilizado pelo vallidador do evento e pelo validador do bot�o
 	 */
 	public boolean booleanValidador() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
 
 		if (this.nomeValidador == null
-				|| this.nomeValidador.contains(this.bundle
+				|| this.nomeValidador.contains(bundle
 						.getString("excluirInstituicaoSemGerente"))) {
 			MensagensDeErro.getErrorMessage("excluirInstituicaoErroValidador",
 					"validacaoValidador");
@@ -804,6 +824,11 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * @return the validadeDias
 	 */
 	public List<SelectItem> getValidadeDias() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
 
 		List<SelectItem> diasValidade = new ArrayList<SelectItem>();
 
@@ -816,7 +841,8 @@ public class ExcluirInstituicaoMB implements Serializable {
 		return diasValidade;
 	}
 
-	private class MyStringComparable implements Comparator<String> ,Serializable{
+	private class MyStringComparable implements Comparator<String>,
+			Serializable {
 
 		/**
 		 * 

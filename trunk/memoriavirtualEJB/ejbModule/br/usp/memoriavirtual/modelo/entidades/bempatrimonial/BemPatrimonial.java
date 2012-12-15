@@ -31,7 +31,7 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "BEMPATRIMONIAL_ID", sequenceName = "BEMPATRIMONIAL_SEQ", allocationSize = 1)
-public class BemPatrimonial  implements Serializable {
+public class BemPatrimonial implements Serializable {
 
 	/**
 	 * 
@@ -44,50 +44,49 @@ public class BemPatrimonial  implements Serializable {
 	public BemPatrimonial() {
 		super();
 		this.descritores = new TreeSet<String>();
-		this.fontesInformacao = new TreeSet<String>();
+		this.fontesInformacao = new ArrayList<String>();
 		this.titulos = new ArrayList<Titulo>();
 		this.autorias = new ArrayList<Autoria>();
 		this.intervencoes = new ArrayList<Intervencao>();
 		this.pesquisadores = new ArrayList<Pesquisador>();
 		this.bensrelacionados = new ArrayList<BemPatrimonial>();
-		
+
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
 	protected long id;
 	@ManyToOne
 	protected Instituicao instituicao;
 	protected boolean externo;
-	protected String tipoDoBemPatrimonial= "";
-	protected String numeroDeRegistro= "";
-	protected String colecao= "";
-	protected String localizacaoFisica= "";
-	protected String latitude= "";
-	protected String longitude= "";
-	protected String caracteristicasFisTecExec= "";
-	protected String conteudo= "";
-	protected String meioDeAcesso= "";
-	protected String idMidia= "";
-	protected String Complemento= "";
-	
-	
+	protected String tipoDoBemPatrimonial = "";
+	protected String numeroDeRegistro = "";
+	protected String colecao = "";
+	protected String localizacaoFisica = "";
+	protected String latitude = "";
+	protected String longitude = "";
+	protected String caracteristicasFisTecExec = "";
+	protected String conteudo = "";
+	protected String meioDeAcesso = "";
+	protected String idMidia = "";
+	protected String Complemento = "";
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_DESCRITORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected Set<String> descritores;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_ASSUNTOS", joinColumns = @JoinColumn(name = "ASSUNTOS_ID"))
 	protected Set<String> assuntos;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_FONTESINFORMACAO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
-	protected Set<String> fontesInformacao;
+	protected List<String> fontesInformacao;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
-	//@ElementCollection(fetch = FetchType.EAGER)
-	//@CollectionTable(name = "BEMPATRIMONIAL_TITULOS", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
+	// @ElementCollection(fetch = FetchType.EAGER)
+	// @CollectionTable(name = "BEMPATRIMONIAL_TITULOS", joinColumns =
+	// @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Titulo> titulos;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
@@ -97,10 +96,12 @@ public class BemPatrimonial  implements Serializable {
 	protected Producao producao = new Producao("", "", "", "");
 
 	@Embedded
-	protected DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao("", "", "", "", "", "", "", "");
+	protected DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao(
+			"", "", "", "", "", "", "", "");
 
 	@Embedded
-	protected HistoricoProcedencia histtoricoProcedencia = new HistoricoProcedencia("", "", "", "", "", "");
+	protected HistoricoProcedencia histtoricoProcedencia = new HistoricoProcedencia(
+			"", "", "", "", "", "");
 
 	@Embedded
 	protected Diagnostico diagnostico = new Diagnostico("", "", "");
@@ -117,10 +118,9 @@ public class BemPatrimonial  implements Serializable {
 	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", inverseJoinColumns = @JoinColumn(name = "BENSRELACIONADOS_ID"), joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<BemPatrimonial> bensrelacionados;
 
-	@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	protected ContainerMultimidia containerMultimidia;
-	
-	
+
 	/**
 	 * @return the id
 	 */
@@ -129,12 +129,13 @@ public class BemPatrimonial  implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the externo
 	 */
@@ -288,7 +289,7 @@ public class BemPatrimonial  implements Serializable {
 	/**
 	 * @return the fontesInformacao
 	 */
-	public Set<String> getFontesInformacao() {
+	public List<String> getFontesInformacao() {
 		return fontesInformacao;
 	}
 
@@ -420,12 +421,13 @@ public class BemPatrimonial  implements Serializable {
 	}
 
 	/**
-	 * @param containerMultimidia the containerMultimidia to set
+	 * @param containerMultimidia
+	 *            the containerMultimidia to set
 	 */
 	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
 		this.containerMultimidia = containerMultimidia;
 	}
-	
+
 	public Instituicao getInstituicao() {
 		return instituicao;
 	}
@@ -442,7 +444,7 @@ public class BemPatrimonial  implements Serializable {
 		this.idMidia = idMidia;
 	}
 
-	public void adicionarTitulo(Titulo titulo){
+	public void adicionarTitulo(Titulo titulo) {
 		this.titulos.add(titulo);
 	}
 
@@ -450,7 +452,7 @@ public class BemPatrimonial  implements Serializable {
 		this.descritores = descritores;
 	}
 
-	public void setFontesInformacao(Set<String> fontesInformacao) {
+	public void setFontesInformacao(List<String> fontesInformacao) {
 		this.fontesInformacao = fontesInformacao;
 	}
 
@@ -478,5 +480,4 @@ public class BemPatrimonial  implements Serializable {
 		this.assuntos = assuntos;
 	}
 
-	
 }

@@ -30,9 +30,9 @@ public class BemArqueologico extends BemPatrimonial implements Serializable {
 	 */
 	public BemArqueologico( String condicaoTopografica, String sitioDaPaisagem,
 			String aguaProximo, String possuiVegetacao, String exposicao,
-			String usoAtual, String outros, String notas, Double areaTotal2,
-			Double comprimento2, Double altura2, Double largura2,
-			Double profundidade2) {
+			String usoAtual, String outros, String notas, String areaTotal2,
+			String comprimento2, String altura2, String largura2,
+			String profundidade2) {
 		super();
 		this.condicaoTopografica = condicaoTopografica;
 		this.sitioDaPaisagem = sitioDaPaisagem;
@@ -61,11 +61,11 @@ public class BemArqueologico extends BemPatrimonial implements Serializable {
 	private String usoAtual;
 	private String outros;
 	private String notas;
-	private Double areaTotal;
-	private Double comprimento;
-	private Double altura;
-	private Double largura;
-	private Double profundidade;
+	private String areaTotal;
+	private String comprimento;
+	private String altura;
+	private String largura;
+	private String profundidade;
 
 	/**
 	 * @return the condicaoTopografica
@@ -166,61 +166,61 @@ public class BemArqueologico extends BemPatrimonial implements Serializable {
 	/**
 	 * @return the areaTotal
 	 */
-	public Double getAreaTotal() {
+	public String getAreaTotal() {
 		return areaTotal;
 	}
 	/**
 	 * @param areaTotal the areaTotal to set
 	 */
-	public void setAreaTotal(Double areaTotal) {
+	public void setAreaTotal(String areaTotal) {
 		this.areaTotal = areaTotal;
 	}
 	/**
 	 * @return the comprimento
 	 */
-	public Double getComprimento() {
+	public String getComprimento() {
 		return comprimento;
 	}
 	/**
 	 * @param comprimento the comprimento to set
 	 */
-	public void setComprimento(Double comprimento) {
+	public void setComprimento(String comprimento) {
 		this.comprimento = comprimento;
 	}
 	/**
 	 * @return the altura
 	 */
-	public Double getAltura() {
+	public String getAltura() {
 		return altura;
 	}
 	/**
 	 * @param altura the altura to set
 	 */
-	public void setAltura(Double altura) {
+	public void setAltura(String altura) {
 		this.altura = altura;
 	}
 	/**
 	 * @return the largura
 	 */
-	public Double getLargura() {
+	public String getLargura() {
 		return largura;
 	}
 	/**
 	 * @param largura the largura to set
 	 */
-	public void setLargura(Double largura) {
+	public void setLargura(String largura) {
 		this.largura = largura;
 	}
 	/**
 	 * @return the profundidade
 	 */
-	public Double getProfundidade() {
+	public String getProfundidade() {
 		return profundidade;
 	}
 	/**
 	 * @param profundidade the profundidade to set
 	 */
-	public void setProfundidade(Double profundidade) {
+	public void setProfundidade(String profundidade) {
 		this.profundidade = profundidade;
 	}
 	

@@ -70,11 +70,13 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	private SerialHtmlDataTable dataTableIntervencao = new SerialHtmlDataTable();
 	private SerialHtmlDataTable dataTablePesquisador = new SerialHtmlDataTable();
+	private SerialHtmlDataTable dataTableFontesInformacao = new SerialHtmlDataTable();
 
 	private boolean botaRemoverTitulo = false;
 
 	protected List<Intervencao> intervencoes = new ArrayList<Intervencao>();
 	protected List<Pesquisador> pesquisadores = new ArrayList<Pesquisador>();
+	protected List<String> fontesInformacao = new ArrayList<String>();
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
 	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
@@ -119,17 +121,17 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String usoAtual;
 	protected String descricaoNotas;
 	protected String dimensoesEQuantificacoes;
-	protected Double areaTotal;
-	protected Double alturaFachadaFrontal;
-	protected Double alturaFachadaSuperior;
-	protected Double largura;
-	protected Double profundidade;
-	protected Double alturaDaCumeeira;
-	protected Double alturaTotal;
-	protected Double peDireitoTerreo;
+	protected String areaTotal;
+	protected String alturaFachadaFrontal;
+	protected String alturaFachadaSuperior;
+	protected String largura;
+	protected String profundidade;
+	protected String alturaDaCumeeira;
+	protected String alturaTotal;
+	protected String peDireitoTerreo;
 	protected String peDireitoTipo;
-	protected Double comprimento;
-	protected Double altura;
+	protected String comprimento;
+	protected String altura;
 	protected String conteudo;
 	protected String meioDeAcesso;
 	protected String estadoConservPreserv;
@@ -290,6 +292,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			this.bemPatrimonial.setDescritores(new TreeSet<String>(assun));
 			// fim descritores
 
+			// adcionando fontes de informação
+			this.bemPatrimonial.setFontesInformacao(this.fontesInformacao);
+			// fim adcionando fontes de informação
+
 			this.cadastrarBemPatrimonialEJB
 					.cadastrarBemPatrimonial(this.bemPatrimonial);
 
@@ -373,6 +379,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			this.geralTitulos.add(new Titulo());
 		}
 
+	}
+
+	public void fonteInformacaoAdd(AjaxBehaviorEvent event) {
+		this.fontesInformacao.add(new String());
 	}
 
 	public void intervencoesAdd(AjaxBehaviorEvent event) {
@@ -493,6 +503,17 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.intervencoes.remove((int) index);
 
 		this.dataTableIntervencao.processUpdates(context);
+	}
+
+	public void excluirFonteInformacao(AjaxBehaviorEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		String[] list = event.getComponent().getClientId().split(":");
+		Integer index = new Integer(list[2]);
+
+		this.fontesInformacao.remove((int) index);
+
+		this.dataTableFontesInformacao.processUpdates(context);
 	}
 
 	public void excluirPesquisador(AjaxBehaviorEvent event) {
@@ -1048,67 +1069,67 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.dimensoesEQuantificacoes = dimensoesEQuantificacoes;
 	}
 
-	public Double getAreaTotal() {
+	public String getAreaTotal() {
 		return areaTotal;
 	}
 
-	public void setAreaTotal(Double areaTotal) {
+	public void setAreaTotal(String areaTotal) {
 		this.areaTotal = areaTotal;
 	}
 
-	public Double getAlturaFachadaFrontal() {
+	public String getAlturaFachadaFrontal() {
 		return alturaFachadaFrontal;
 	}
 
-	public void setAlturaFachadaFrontal(Double alturaFachadaFrontal) {
+	public void setAlturaFachadaFrontal(String alturaFachadaFrontal) {
 		this.alturaFachadaFrontal = alturaFachadaFrontal;
 	}
 
-	public Double getAlturaFachadaSuperior() {
+	public String getAlturaFachadaSuperior() {
 		return alturaFachadaSuperior;
 	}
 
-	public void setAlturaFachadaSuperior(Double alturaFachadaSuperior) {
+	public void setAlturaFachadaSuperior(String alturaFachadaSuperior) {
 		this.alturaFachadaSuperior = alturaFachadaSuperior;
 	}
 
-	public Double getLargura() {
+	public String getLargura() {
 		return largura;
 	}
 
-	public void setLargura(Double largura) {
+	public void setLargura(String largura) {
 		this.largura = largura;
 	}
 
-	public Double getProfundidade() {
+	public String getProfundidade() {
 		return profundidade;
 	}
 
-	public void setProfundidade(Double profundidade) {
+	public void setProfundidade(String profundidade) {
 		this.profundidade = profundidade;
 	}
 
-	public Double getAlturaDaCumeeira() {
+	public String getAlturaDaCumeeira() {
 		return alturaDaCumeeira;
 	}
 
-	public void setAlturaDaCumeeira(Double alturaDaCumeeira) {
+	public void setAlturaDaCumeeira(String alturaDaCumeeira) {
 		this.alturaDaCumeeira = alturaDaCumeeira;
 	}
 
-	public Double getAlturaTotal() {
+	public String getAlturaTotal() {
 		return alturaTotal;
 	}
 
-	public void setAlturaTotal(Double alturaTotal) {
+	public void setAlturaTotal(String alturaTotal) {
 		this.alturaTotal = alturaTotal;
 	}
 
-	public Double getPeDireitoTerreo() {
+	public String getPeDireitoTerreo() {
 		return peDireitoTerreo;
 	}
 
-	public void setPeDireitoTerreo(Double peDireitoTerreo) {
+	public void setPeDireitoTerreo(String peDireitoTerreo) {
 		this.peDireitoTerreo = peDireitoTerreo;
 	}
 
@@ -1120,19 +1141,19 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		this.peDireitoTipo = peDireitoTipo;
 	}
 
-	public Double getComprimento() {
+	public String getComprimento() {
 		return comprimento;
 	}
 
-	public void setComprimento(Double comprimento) {
+	public void setComprimento(String comprimento) {
 		this.comprimento = comprimento;
 	}
 
-	public Double getAltura() {
+	public String getAltura() {
 		return altura;
 	}
 
-	public void setAltura(Double altura) {
+	public void setAltura(String altura) {
 		this.altura = altura;
 	}
 
@@ -1362,6 +1383,23 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	public void setDescritores(String descritores) {
 		this.descritores = descritores;
+	}
+
+	public SerialHtmlDataTable getDataTableFontesInformacao() {
+		return dataTableFontesInformacao;
+	}
+
+	public void setDataTableFontesInformacao(
+			SerialHtmlDataTable dataTableFontesInformacao) {
+		this.dataTableFontesInformacao = dataTableFontesInformacao;
+	}
+
+	public List<String> getFontesInformacao() {
+		return fontesInformacao;
+	}
+
+	public void setFontesInformacao(List<String> fontesInformacao) {
+		this.fontesInformacao = fontesInformacao;
 	}
 
 	public class ApresentaAutoria implements Serializable {
