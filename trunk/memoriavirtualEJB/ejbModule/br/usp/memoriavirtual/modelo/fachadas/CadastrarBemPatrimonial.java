@@ -10,9 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 
 /**
@@ -47,7 +49,12 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 	public void cadastrarBemPatrimonial(BemPatrimonial bem) {
 		
 		entityManager.persist(bem);
-		bem.getTitulos().get(0).setBempatrimonial(bem);
+		
+		for(Titulo a: bem.getTitulos())
+			a.setBempatrimonial(bem);
+		for(Autoria a: bem.getAutorias())
+			a.setBemPatrimonial(bem);
+		
 	}
 	
 }

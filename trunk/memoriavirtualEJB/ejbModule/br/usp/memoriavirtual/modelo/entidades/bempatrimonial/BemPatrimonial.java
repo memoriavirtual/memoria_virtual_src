@@ -19,6 +19,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -71,13 +72,12 @@ public class BemPatrimonial implements Serializable {
 	protected String idMidia = "";
 	protected String Complemento = "";
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "BEMPATRIMONIAL_DESCRITORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
+	@ManyToMany
 	protected Set<String> descritores;
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "BEMPATRIMONIAL_ASSUNTOS", joinColumns = @JoinColumn(name = "ASSUNTOS_ID"))
-	protected Set<String> assuntos;
+	
+	
+	@ManyToMany
+	protected Set<Assunto> assuntos;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_FONTESINFORMACAO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
@@ -472,11 +472,11 @@ public class BemPatrimonial implements Serializable {
 		this.bensrelacionados = bensrelacionados;
 	}
 
-	public Set<String> getAssuntos() {
+	public Set<Assunto> getAssuntos() {
 		return assuntos;
 	}
 
-	public void setAssuntos(Set<String> assuntos) {
+	public void setAssuntos(Set<Assunto> assuntos) {
 		this.assuntos = assuntos;
 	}
 
