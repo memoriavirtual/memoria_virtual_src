@@ -44,7 +44,7 @@ public class BemPatrimonial implements Serializable {
 	 */
 	public BemPatrimonial() {
 		super();
-		this.descritores = new TreeSet<String>();
+		this.descritores = new TreeSet<Descritor>();
 		this.fontesInformacao = new ArrayList<String>();
 		this.titulos = new ArrayList<Titulo>();
 		this.autorias = new ArrayList<Autoria>();
@@ -73,10 +73,20 @@ public class BemPatrimonial implements Serializable {
 	protected String Complemento = "";
 
 	@ManyToMany
-	protected Set<String> descritores;
+	@JoinTable(name="BEMPATRIMONIAL_DESCRITOR",
+    joinColumns=
+        @JoinColumn(name="BEMPATRIMONIAL_ID"),
+    inverseJoinColumns=
+        @JoinColumn(name="DESCRITOR_ID"))
+	protected Set<Descritor> descritores;
 	
 	
 	@ManyToMany
+	@JoinTable(name="BEMPATRIMONIAL_ASSUNTO",
+    joinColumns=
+        @JoinColumn(name="BEMPATRIMONIAL_ID"),
+    inverseJoinColumns=
+        @JoinColumn(name="ASSUNTO_ID"))
 	protected Set<Assunto> assuntos;
 
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -381,7 +391,7 @@ public class BemPatrimonial implements Serializable {
 	/**
 	 * @return the descritores
 	 */
-	public Set<String> getDescritores() {
+	public Set<Descritor> getDescritores() {
 		return descritores;
 	}
 
@@ -448,7 +458,7 @@ public class BemPatrimonial implements Serializable {
 		this.titulos.add(titulo);
 	}
 
-	public void setDescritores(Set<String> descritores) {
+	public void setDescritores(Set<Descritor> descritores) {
 		this.descritores = descritores;
 	}
 

@@ -27,7 +27,7 @@ public class Descritor {
 	@Id
 	private String descritor;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "assuntos")
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "descritores")
 	private Set<BemPatrimonial> bens;
 
 	public String getDescritor() {
