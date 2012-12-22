@@ -21,10 +21,12 @@ import br.usp.memoriavirtual.modelo.entidades.Autoria.TipoAutoria;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Assunto;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.DisponibilidadeUsoProtecao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.HistoricoProcedencia;
@@ -52,8 +54,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public CadastrarBemPatrimonialMB() {
 		super();
 		this.geralTitulos.add(new Titulo());
-		this.apresentaAutorias.add(new ApresentaAutoria());
-		this.autorias.add(new Autoria());
+//		this.apresentaAutorias.add(new ApresentaAutoria());
+//		this.autorias.add(new Autoria());
 
 	}
 
@@ -177,7 +179,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-
+			if(this.geralTipoDoBemPatrimonial == null){
+				this.geralTipoDoBemPatrimonial = bundle
+						.getString("cadastrarBemTipoLista0");
+			}
 			if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
 					.getString("cadastrarBemTipoLista0"))) {
 				// System.out.println("arqueologico");
@@ -275,21 +280,24 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			// fim anexando historico e procedencia
 
 			// anexando assuntos
-			List<String> assun = new ArrayList<String>();
+			List<Assunto> assun = new ArrayList<Assunto>();
+			
 			String[] a = this.assunto.split(" ");
 			for (int i = 0; i < a.length; i++) {
-				assun.add(a[i]);
+				assun.add(new Assunto());
+				assun.get(i).setAssunto(a[i]);
 			}
-			this.bemPatrimonial.setAssuntos(new TreeSet<String>(assun));
+			this.bemPatrimonial.setAssuntos(new TreeSet<Assunto>(assun));
 			// fim assuntos
 
 			// anexando descritores
-			List<String> descr = new ArrayList<String>();
+			List<Descritor> descr = new ArrayList<Descritor>();
 			String[] b = this.descritores.split(" ");
 			for (int i = 0; i < b.length; i++) {
-				descr.add(b[i]);
+				descr.add(new Descritor());
+				descr.get(i).setDescritor(b[i]);
 			}
-			this.bemPatrimonial.setDescritores(new TreeSet<String>(assun));
+			this.bemPatrimonial.setDescritores(new TreeSet<Descritor>(descr));
 			// fim descritores
 
 			// adcionando fontes de informação

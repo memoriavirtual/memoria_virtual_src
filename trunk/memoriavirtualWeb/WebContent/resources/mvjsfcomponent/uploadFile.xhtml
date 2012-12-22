@@ -12,7 +12,7 @@
 
 <cc:implementation>
 	<div id="uploadComponente">
-		<h:outputLabel class="labels" >#{mensagens.multimidiaLabel}</h:outputLabel>
+		<h:outputLabel class="labels">#{mensagens.multimidiaLabel}</h:outputLabel>
 		<h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"
 			media="all" rel="stylesheet" type="text/css" />
 		<h:outputScript name="uploadFile.js" library="mvjsfcomponent"></h:outputScript>
@@ -33,42 +33,97 @@
 			</div>
 
 		</div>
-		
-	<h:commandButton id="botaoEscondido" type="button" style="display: none;">
-			<f:ajax render="tabela" execute="@all" ></f:ajax>
-		
+
+		<h:commandButton id="botaoEscondido" type="button"
+			style="display: none;">
+			<f:ajax render="tabela" execute="@all"></f:ajax>
+
 		</h:commandButton>
 	</div>
 	<div id="tabela_imagens">
-	
+
 		<h:dataTable id="tabela" var="multimidia" value="#{cc.attrs.array}">
-			<h:column>
+			<h:column style="display: inline-table;">
 
 				<div>
 					<h:graphicImage
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
 
 					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
-					<h:inputTextarea id="caixadescricao" class="caixadetexto"
+					<h:inputTextarea class="caixadetexto"
 						value="#{multimidia.descricao}"></h:inputTextarea>
 					<h:commandLink
 						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
 						value="#{mensagens.multimidiaRemover}">
-						<h:graphicImage id="excluir" library="imagens" name="delete.png"
-							style="width: 15px;
-	height: 15px; margin: 0px; margin-left: 5px; margin-top: 9px; border: none;">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
 						</h:graphicImage>
 					</h:commandLink>
-					
+
 				</div>
 			</h:column>
-			
+			<h:column style="display: inline-table;">
+				<div>
+					<h:graphicImage
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
+
+					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						value="#{multimidia.descricao}"></h:inputTextarea>
+					<h:commandLink
+						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+			<h:column style="display: inline-table;">
+				<div>
+					<h:graphicImage
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
+
+					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						value="#{multimidia.descricao}"></h:inputTextarea>
+					<h:commandLink
+						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+			<h:column style="display: inline-table;">
+				<div>
+					<h:graphicImage
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
+
+					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						value="#{multimidia.descricao}"></h:inputTextarea>
+					<h:commandLink
+						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+
 		</h:dataTable>
-		
+
 	</div>
 
 	<script>
-		iniciarComponenteUpload("#{cc.attrs.nomebean}", "#{cc.clientId}:botaoEscondido" ,  "#{cc.clientId}:tag_imagem");
+		iniciarComponenteUpload("#{cc.attrs.nomebean}",
+				"#{cc.clientId}:botaoEscondido", "#{cc.clientId}:tag_imagem");
 	</script>
 </cc:implementation>
 

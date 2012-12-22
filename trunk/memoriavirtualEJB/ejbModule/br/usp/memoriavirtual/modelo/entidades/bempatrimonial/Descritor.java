@@ -3,9 +3,9 @@
  */
 package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 
+import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -16,7 +16,12 @@ import javax.persistence.ManyToMany;
  *
  */
 @Entity
-public class Descritor {
+public class Descritor implements Comparable<Descritor> , Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4048084487550749341L;
 
 	/**
 	 * 
@@ -27,7 +32,7 @@ public class Descritor {
 	@Id
 	private String descritor;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "descritores")
+	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "descritores")
 	private Set<BemPatrimonial> bens;
 
 	public String getDescritor() {
@@ -44,6 +49,12 @@ public class Descritor {
 
 	public void setBens(Set<BemPatrimonial> bens) {
 		this.bens = bens;
+	}
+
+	@Override
+	public int compareTo(Descritor o) {
+		
+		return this.descritor.compareTo(o.descritor);
 	}
 	
 	

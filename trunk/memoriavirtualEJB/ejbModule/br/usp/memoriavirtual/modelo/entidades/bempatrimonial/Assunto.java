@@ -3,9 +3,9 @@
  */
 package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 
+import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -16,7 +16,13 @@ import javax.persistence.ManyToMany;
  *
  */
 @Entity
-public class Assunto {
+public class Assunto implements Comparable<Assunto> , Serializable{
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4539453445771459458L;
 
 	/**
 	 * 
@@ -26,7 +32,7 @@ public class Assunto {
 	@Id
 	private String assunto;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "assuntos")
+	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "assuntos")
 	private Set<BemPatrimonial> bens;
 
 	public String getAssunto() {
@@ -43,6 +49,12 @@ public class Assunto {
 
 	public void setBens(Set<BemPatrimonial> bens) {
 		this.bens = bens;
+	}
+
+	@Override
+	public int compareTo(Assunto outroAssunto) {
+		
+		return this.assunto.compareTo(outroAssunto.assunto);
 	}
 
 }

@@ -8,7 +8,7 @@
 #uploadComponente label {
 	float: left;
 }
-
+ 
 #example-content {
 	background: #F7F7F7;
 	width: 240px;
@@ -66,43 +66,44 @@
 	width: 100%;
 }
 
+
 #tabela_imagens table div {
-	width: 50%;
-	display: block;
-	border: #777 1px solid;
-	margin: 2em;
-	padding: 2em;
-	float: none;
-	background-color: #ddd;
-	margin-left: 25%;
-	margin-right: 25%;
+width: 170px;
+display: block;
+border: #777 1px solid;
+margin: 2em;
+padding: 5px;
+float: none;
+background-color: #DDD;
+
 }
 
 #tabela_imagens table div label {
-	width: 100%;
-	text-align: center;
+font-size: 11px;
+float: left;
+text-align: left;
+margin-left: 0px;
 }
 
 #tabela_imagens table div textarea {
-	resize: none;
-	width: 75%;
-	float: none;
-	margin-left: 12.5%;
-	margin-right: 12.5%;
+resize: none;
+width: 165px;
+height: 30px;
+float: none;
+font-size: 10px;
 }
 
-#tabela_imagens table div img {
-	width: 80%;
-	margin-left: 10%;
-	margin-right: 10%;
-	border: outset #777;
+div img {
+display: block;
+width: 168px;
+border: outset #777;
+border-width: 1px;
 }
+
 
 #tabela_imagens table div a {
-	margin-top: 1em;
-	margin-bottom: 2px;
-	text-decoration: none;
-	color: #888;
+text-decoration: none;
+color: #888;
 }
 
 #tabela_imagens table div a:hover {
