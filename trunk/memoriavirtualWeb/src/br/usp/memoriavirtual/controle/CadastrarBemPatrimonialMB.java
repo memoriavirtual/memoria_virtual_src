@@ -1446,4 +1446,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	}
 
+	@Override
+	public String removeMidia(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

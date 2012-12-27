@@ -1,5 +1,7 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +17,12 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "MULTIMIDIA_ID", sequenceName = "MULTIMIDIA_SEQ", allocationSize = 1)
-public class Multimidia {
+public class Multimidia implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1246434877940087730L;
 	public Multimidia() {
 	}
 	

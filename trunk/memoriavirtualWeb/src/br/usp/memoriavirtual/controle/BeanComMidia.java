@@ -19,4 +19,6 @@ public interface BeanComMidia {
 	 *Remover Objetos Multimidia 
 	 */
 	public String removeMidia(Multimidia midia);
+	public String removeMidia(int index);
+	
 }

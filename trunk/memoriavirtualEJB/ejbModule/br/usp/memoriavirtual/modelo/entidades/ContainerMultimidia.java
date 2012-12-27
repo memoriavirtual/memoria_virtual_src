@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class ContainerMultimidia implements Serializable{
 	 */
 	private static final long serialVersionUID = 7661055811957115846L;
 
-	@OneToMany(mappedBy = "containerMultimidia", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "containerMultimidia", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	protected List<Multimidia> multimidia = new ArrayList<Multimidia>();
 
 	@Id

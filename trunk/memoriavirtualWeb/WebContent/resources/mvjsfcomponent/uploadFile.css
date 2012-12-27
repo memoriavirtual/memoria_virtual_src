@@ -69,6 +69,7 @@
 
 #tabela_imagens table div {
 width: 170px;
+
 display: block;
 border: #777 1px solid;
 margin: 2em;
@@ -93,7 +94,7 @@ float: none;
 font-size: 10px;
 }
 
-div img {
+#tabela_imagens div img {
 display: block;
 width: 168px;
 border: outset #777;

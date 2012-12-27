@@ -2,6 +2,35 @@
  * Cadastrar bem patrimonial javascript
  * 
  */
+function PlayerImagen(player) {
+	var classe = this;
+	this.player = player;
+
+	this.inicio = function() {
+		classe.player.setAttribute("class", "cadastroNovoAutor");
+		classe.player
+				.addEventListener("click", classe.playerSair, false);
+		classe.player.setAttribute("scrolling-y", "no");
+	};
+	this.playerSair = function() {
+	
+		classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
+	};
+
+}
+
+mostrarPlayerImagen = (function(nome, fim) {
+	var player = document.getElementById("cadastroNovoAutor");
+	Alert(nome );
+	Alert(fim );
+	var playerImagen = new PlayerImagen(player);
+
+	playerImagen.inicio();
+
+});
+
+
+
 function BackgroundNegro(backgrond) {
 	var classe = this;
 	this.backgrond = backgrond;

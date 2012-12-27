@@ -12,12 +12,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
-import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "editarInstituicaoMB")
 @SessionScoped
@@ -60,11 +62,17 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 					.getString("cadastrarInstituicaoEscolhaProtecaoExistente")
 					.equals(instituicao.getProtecaoExistente()))
 				instituicao.setProtecaoExistente("");
+			ContainerMultimidia cont = new ContainerMultimidia();
+			//adcionando os arquivos a instituicao
+			for(Multimidia i : midias){
+				cont.addMultimidia(i);
+			}
+			instituicao.setContainerMultimidia(cont);
 			try {
 				this.editarInstituicaoEJB.editarInstituicao(instituicao);
 			} catch (ModeloException e) {
 				MensagensDeErro.getErrorMessage(
-						"editarInstituicaoErroEditarFalha", "resutado");
+						"editarInstituicaoErroEditarFalha", "resultado");
 			} catch (RuntimeException e) {
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroEditarFalha", "resultado");
@@ -180,6 +188,9 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		this.URL = instituicao.getUrl();
 		this.legislacao = instituicao.getLegislacaoExistente();
 		this.instituicao = instituicao;
+		for (Multimidia a: instituicao.getContainerMultimidia().getMultimidia()){
+			this.adicionarMidia(a);
+		}
 		this.instituicoes.clear();
 		return "sucesso";
 	}

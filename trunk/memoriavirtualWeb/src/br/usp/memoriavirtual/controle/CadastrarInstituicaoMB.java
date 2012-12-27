@@ -40,7 +40,8 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	protected String slot = "arquivo0";
 	
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
-
+	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
+	
 	protected String nome = "";
 	protected String localizacao = "";
 	protected String endereco = "";
@@ -103,7 +104,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 							.getString("cadastrarInstituicaoEscolhaProtecaoExistente")))
 				instituicao.setProtecaoExistente("");
 			
-			//indesando os arquivos a instituicao
+			//adcionando os arquivos a instituicao
 			for(Multimidia i : midias){
 				this.containerMultimidia.addMultimidia(i);
 			}
@@ -140,6 +141,12 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 
 	public void adicionarMidia (Multimidia midia) {
 		this.midias.add( midia);
+		
+		if((this.midias.size() % 4 ) == 1  ){
+			Integer mult = this.midias.size() -1;
+			this.ApresentaMidias.add(mult);
+			
+		}
 	}
 		
 	public String resetCadastrarinstituicao() {	
@@ -164,6 +171,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		this.legislacao = "";
 		this.sinteseHistorica = "";
 		this.midias.clear();
+		this.ApresentaMidias.clear();
 		return "reset";
 
 	}
@@ -1010,5 +1018,28 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	 */
 	public void setSinteseHistorica(String sinteseHistorica) {
 		this.sinteseHistorica = sinteseHistorica;
+	}
+
+	@Override
+	public String removeMidia(int index) {
+		this.midias.remove(index);
+		if(this.midias.size() % 4  == 0){
+			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
+		} 
+		return null;
+	}
+
+	public ArrayList<Integer> getApresentaMidias() {
+		return ApresentaMidias;
+	}
+
+	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
+		ApresentaMidias = apresentaMidias;
+	}
+	public boolean  isRenderCell(int index) {
+		if(this.midias.size() > index ){
+			return true;
+		}
+		return false;
 	}
 }

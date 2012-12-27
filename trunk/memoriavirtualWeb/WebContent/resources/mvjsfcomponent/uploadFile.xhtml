@@ -6,6 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <cc:interface>
+	<cc:attribute name="bean"></cc:attribute>
 	<cc:attribute name="nomebean"></cc:attribute>
 	<cc:attribute name="array"></cc:attribute>
 </cc:interface>
@@ -42,18 +43,18 @@
 	</div>
 	<div id="tabela_imagens">
 
-		<h:dataTable id="tabela" var="multimidia" value="#{cc.attrs.array}">
+		<h:dataTable id="tabela" var="indexApresenta" value="#{cc.attrs.array}">
 			<h:column style="display: inline-table;">
 
 				<div>
-					<h:graphicImage
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
+					<h:graphicImage onclick="mostrarPlayerImagen(#{cc.attrs.nomebean}, #{cc.attrs.bean.midias.size()-1})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta)}"></h:graphicImage>
 
 					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
 					<h:inputTextarea class="caixadetexto"
-						value="#{multimidia.descricao}"></h:inputTextarea>
+						value="#{cc.attrs.bean.midias.get(indexApresenta).descricao}"></h:inputTextarea>
 					<h:commandLink
-						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 0)}"
 						value="#{mensagens.multimidiaRemover}">
 						<h:graphicImage library="imagens" name="delete.png"
 							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
@@ -64,14 +65,32 @@
 			</h:column>
 			<h:column style="display: inline-table;">
 				<div>
-					<h:graphicImage
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
+					<h:graphicImage onclick="mostrarPlayerImagen()" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 1)}"></h:graphicImage>
 
-					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
-					<h:inputTextarea class="caixadetexto"
-						value="#{multimidia.descricao}"></h:inputTextarea>
-					<h:commandLink
-						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
+					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+						value="#{cc.attrs.bean.midias.get(indexApresenta + 1).descricao}"></h:inputTextarea>
+					<h:commandLink rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+ 1)}"
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 1)}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+			<h:column style="display: inline-table;" >
+				<div>
+					<h:graphicImage onclick="mostrarPlayerImagen()" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta+2)}"></h:graphicImage>
+
+					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}" class="caixadetexto"
+				 		value="#{cc.attrs.bean.midias.get(indexApresenta + 2).descricao}"></h:inputTextarea>
+					<h:commandLink rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 2)}"
 						value="#{mensagens.multimidiaRemover}">
 						<h:graphicImage library="imagens" name="delete.png"
 							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
@@ -82,32 +101,14 @@
 			</h:column>
 			<h:column style="display: inline-table;">
 				<div>
-					<h:graphicImage
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
+					<h:graphicImage  onclick="mostrarPlayerImagen()" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 3)}"></h:graphicImage>
 
-					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
-					<h:inputTextarea class="caixadetexto"
-						value="#{multimidia.descricao}"></h:inputTextarea>
-					<h:commandLink
-						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
-						value="#{mensagens.multimidiaRemover}">
-						<h:graphicImage library="imagens" name="delete.png"
-							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
-						</h:graphicImage>
-					</h:commandLink>
-
-				</div>
-			</h:column>
-			<h:column style="display: inline-table;">
-				<div>
-					<h:graphicImage
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{cc.attrs.array.indexOf(multimidia)}"></h:graphicImage>
-
-					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
-					<h:inputTextarea class="caixadetexto"
-						value="#{multimidia.descricao}"></h:inputTextarea>
-					<h:commandLink
-						action="#{cc.attrs.array.remove(cc.attrs.array.indexOf(multimidia))}"
+					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"  rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						value="#{cc.attrs.bean.midias.get((indexApresenta + 3)).descricao}"></h:inputTextarea>
+					<h:commandLink rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 3)}"
 						value="#{mensagens.multimidiaRemover}">
 						<h:graphicImage library="imagens" name="delete.png"
 							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
