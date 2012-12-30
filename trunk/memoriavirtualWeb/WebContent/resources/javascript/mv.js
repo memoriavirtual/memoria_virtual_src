@@ -2,28 +2,70 @@
  * Cadastrar bem patrimonial javascript
  * 
  */
-function PlayerImagen(player) {
+function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 	var classe = this;
 	this.player = player;
-
+	this.nomeDoBean = nomeDoBean;
+	this.lastIndex = lastIndex;
+	this.thisIndex = thisIndex;
+	
+	
 	this.inicio = function() {
 		classe.player.setAttribute("class", "cadastroNovoAutor");
 		classe.player
 				.addEventListener("click", classe.playerSair, false);
 		classe.player.setAttribute("scrolling-y", "no");
+		var image = document.createElement("img");
+		image.setAttribute("src",
+		"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+		image.setAttribute("class", "imageNoPlayer");
+		image.addEventListener("click", classe.rolar, false);
+		classe.player.appendChild(image);		
+		
 	};
-	this.playerSair = function() {
-	
+	this.rolar = function(e) {
+		var a = classe.player.childNodes[0];
+		classe.player.removeChild(a);
+		
+		
+		if((window.outerWidth/2) > e.clientX ){
+			classe.thisIndex --;
+			if(classe.thisIndex < 0 ){
+				classe.thisIndex = classe.lastIndex;
+			}
+		}else{
+			classe.thisIndex ++;
+			if(classe.thisIndex > classe.lastIndex ){
+				classe.thisIndex = 0;
+			}
+		}
+		
+		e.stopPropagation();
+		var image = document.createElement("img");
+		image.setAttribute("src",
+		"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+		image.setAttribute("class", "imageNoPlayer");
+		image.addEventListener("click", classe.rolar, false);
+		classe.player.appendChild(image);		
+		
+	};
+	this.playerSair = function(e) {
+		var a = classe.player.childNodes[0];
+		classe.player.removeChild(a);
 		classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
+		e.stopPropagation();
 	};
 
 }
 
-mostrarPlayerImagen = (function(nome, fim) {
+mostrarPlayerImagen = (function(nome, fim , index) {
 	var player = document.getElementById("cadastroNovoAutor");
-	Alert(nome );
-	Alert(fim );
-	var playerImagen = new PlayerImagen(player);
+	var nomeDoBean = new String  (nome) ;
+	var lastIndex = new  Number ( fim );
+	var thisIndex = new  Number ( index );
+	//alert(nomeDoBean );
+	//alert(lastIndex );
+	var playerImagen = new PlayerImagen(player , nomeDoBean , lastIndex , thisIndex);
 
 	playerImagen.inicio();
 

@@ -47,7 +47,7 @@
 			<h:column style="display: inline-table;">
 
 				<div>
-					<h:graphicImage onclick="mostrarPlayerImagen(#{cc.attrs.nomebean}, #{cc.attrs.bean.midias.size()-1})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta)}"
+					<h:graphicImage onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta)}"></h:graphicImage>
 
 					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
@@ -65,7 +65,7 @@
 			</h:column>
 			<h:column style="display: inline-table;">
 				<div>
-					<h:graphicImage onclick="mostrarPlayerImagen()" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+					<h:graphicImage onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 1)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 1)}"></h:graphicImage>
 
 					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
@@ -83,7 +83,7 @@
 			</h:column>
 			<h:column style="display: inline-table;" >
 				<div>
-					<h:graphicImage onclick="mostrarPlayerImagen()" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+					<h:graphicImage onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 2)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta+2)}"></h:graphicImage>
 
 					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
@@ -101,7 +101,7 @@
 			</h:column>
 			<h:column style="display: inline-table;">
 				<div>
-					<h:graphicImage  onclick="mostrarPlayerImagen()" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+					<h:graphicImage  onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 3)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 3)}"></h:graphicImage>
 
 					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>

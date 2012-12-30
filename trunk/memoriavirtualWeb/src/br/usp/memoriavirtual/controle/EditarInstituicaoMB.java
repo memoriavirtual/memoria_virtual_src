@@ -188,6 +188,8 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 		this.URL = instituicao.getUrl();
 		this.legislacao = instituicao.getLegislacaoExistente();
 		this.instituicao = instituicao;
+		this.midias.clear();
+		this.ApresentaMidias.clear();
 		for (Multimidia a: instituicao.getContainerMultimidia().getMultimidia()){
 			this.adicionarMidia(a);
 		}

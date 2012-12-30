@@ -1023,6 +1023,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	@Override
 	public String removeMidia(int index) {
 		this.midias.remove(index);
+		
 		if(this.midias.size() % 4  == 0){
 			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
 		} 
