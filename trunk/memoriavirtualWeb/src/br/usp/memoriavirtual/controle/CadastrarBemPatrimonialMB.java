@@ -81,6 +81,10 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected List<String> fontesInformacao = new ArrayList<String>();
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
+	
+	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
+	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
+	
 	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
 
 	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
@@ -319,16 +323,33 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
+		return this.midias;
+	}
+
+	public void adicionarMidia (Multimidia midia) {
+		this.midias.add( midia);
+		
+		if((this.midias.size() % 4 ) == 1  ){
+			Integer mult = this.midias.size() -1;
+			this.ApresentaMidias.add(mult);
+			
+		}
+	}
+
+	public ArrayList<Multimidia> getMidias() {
+		return midias;
+	}
+
+	public void setMidias(ArrayList<Multimidia> midias) {
+		this.midias = midias;
+	}
+
+	public String removeMidia(String midia) {
 		return null;
 	}
-
-	@Override
-	public void adicionarMidia(Multimidia midia) {
-
-	}
-
 	@Override
 	public String removeMidia(Multimidia midia) {
+		this.midias.remove(midia);
 		return null;
 	}
 
@@ -1448,8 +1469,25 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	@Override
 	public String removeMidia(int index) {
-		// TODO Auto-generated method stub
+		this.midias.remove(index);
+		
+		if(this.midias.size() % 4  == 0){
+			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
+		} 
 		return null;
 	}
 
+	public ArrayList<Integer> getApresentaMidias() {
+		return ApresentaMidias;
+	}
+
+	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
+		ApresentaMidias = apresentaMidias;
+	}
+	public boolean  isRenderCell(int index) {
+		if(this.midias.size() > index ){
+			return true;
+		}
+		return false;
+	}
 }

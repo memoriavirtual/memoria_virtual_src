@@ -734,7 +734,15 @@
 
 					</mv:containerExpansivo>
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
-						<fieldset></fieldset>
+						<fieldset>
+						
+						<mv:containerExpansivo id="expansivo"
+							label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
+							<mv:uploadFile id="multimidia" nomebean="cadastrarBemPatrimonialMB" bean="#{cadastrarBemPatrimonialMB}"
+								array="#{cadastrarBemPatrimonialMB.apresentaMidias}"></mv:uploadFile>
+						</mv:containerExpansivo>
+						 
+						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
