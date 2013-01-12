@@ -29,36 +29,38 @@ function FileFrame(fileArea,  bean , botao , img) {
 
 	this.drop = function(e) {
 		self.dragHover(e);
-
-		self.file = e.dataTransfer.files[0];
-
-		if (self.file.type.match('image.*')) {
-			self.read(self.file);
-			self.sendFile(self.file , self.bean);
-			
-			
+		
+		for(var i = 0 ; i < e.dataTransfer.files.length ; i++){
+			self.file = e.dataTransfer.files[i];
+		
+			if (self.file.type.match('image.*')) {
+				self.read(self.file);
+				self.sendFile(self.file , self.bean);
+			}
 		}
+	
+		
 	};
 
 	this.read = function(file) {
 	    
 	   
-	      //var reader = new FileReader();
+	      // var reader = new FileReader();
 
-	      //reader.onload = function(f) {
-	        //self.fileArea.innerHTML = "";
-	        //self.fileArea.setAttribute("style", "padding: 0px !important;");
+	      // reader.onload = function(f) {
+	        // self.fileArea.innerHTML = "";
+	        // self.fileArea.setAttribute("style", "padding: 0px !important;");
 	        
-	        //var img = document.getElementById("*tag_imagem");
-	        //img.setAttribute("src", f.target.result);
+	        // var img = document.getElementById("*tag_imagem");
+	        // img.setAttribute("src", f.target.result);
 	        var spam =  document.getElementById("drop-message");
 	        spam.setAttribute("style", "display: none;");
 	        img.setAttribute("style", "display: inline-block;  margin-right: 30%; margin-left: 30%; margin-top: 9%; margin-bottom: 20%; ");
 	        self.fileArea.setAttribute("style", "background-color: #FFFFFF; ");
-	        //img.setAttribute("id", "tag_imagem");
+	        // img.setAttribute("id", "tag_imagem");
 
-	        //self.fileArea.appendChild(img);
-	    //  };
+	        // self.fileArea.appendChild(img);
+	    // };
 
 	     // reader.readAsDataURL(file);
 	    };
@@ -96,7 +98,7 @@ function FileFrame(fileArea,  bean , botao , img) {
 }
 iniciarComponenteUpload = (function(bean , botaoid , idImagem ) {
 	// Recupera a div que conterá a imagem
-	//alert(idImagem);
+	// alert(idImagem);
 	var area = document.getElementById("image-area");
 	var botao = document.getElementById(botaoid);
 	 var img = document.getElementById(idImagem);
