@@ -106,7 +106,9 @@
 								value="#{editarAutorMB.outroLinkAtividade}"
 								action="#{editarAutorMB.abrirAtividadeOutro}" />
 							<div></div>
-
+							<h:message id="validacaoAtividade" for="validacaoAtividade" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
 
 
@@ -153,10 +155,15 @@
 						</h:commandButton>
 
 						<h:commandButton id="botaoResetar"
-							value="#{mensagens.editarInstituicaoBotaoCancelar}"
+							value="#{mensagens.cadastrarAutorBotaoResetar}"
 							action="#{editarAutorMB.resetEditarAutor()}">
 						</h:commandButton>
-
+						
+						
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.cadastrarAutorBotaoCancelar}" 
+							action="#{editarAutorMB.cancelarEditarAutor}">
+						</h:commandButton>
 					</div>
 				</h:form>
 

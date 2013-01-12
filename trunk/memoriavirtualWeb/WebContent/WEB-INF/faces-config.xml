@@ -241,6 +241,11 @@
 			<to-view-id>/restrito/cadastrarautor.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
@@ -249,6 +254,11 @@
 		<navigation-case>
 			<from-outcome>reset</from-outcome>
 			<to-view-id>/restrito/editarautor.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/restrito/index.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

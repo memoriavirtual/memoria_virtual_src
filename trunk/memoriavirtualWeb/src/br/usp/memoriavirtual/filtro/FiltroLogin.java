@@ -45,8 +45,8 @@ public class FiltroLogin implements Filter, Serializable {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 
-		System.out.println("Passei aqui linha 47: inicio do filtro"
-				+ System.getProperty("com.sun.aas.instanceName"));
+		//System.out.println("Passei aqui linha 47: inicio do filtro"
+			//	+ System.getProperty("com.sun.aas.instanceName"));
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		String url = req.getRequestURL().toString();
@@ -56,7 +56,7 @@ public class FiltroLogin implements Filter, Serializable {
 		Object user = null;
 		user = req.getSession().getAttribute("usuario");
 		if (user == null) {
-			System.out.println("Passei aqui linha 57: if user null");
+			////System.out.println("Passei aqui linha 57: if user null");
 			session.setAttribute("url", url);
 
 			resp.sendRedirect(req.getContextPath() + "/login.jsf");
@@ -64,7 +64,7 @@ public class FiltroLogin implements Filter, Serializable {
 		} else {
 
 			String urlDireta = null;
-			System.out.println("Passei aqui linha 65: if not null");
+			//System.out.println("Passei aqui linha 65: if not null");
 			if (session.getAttribute("url") != null) {
 				urlDireta = session.getAttribute("url").toString();
 				session.removeAttribute("url");

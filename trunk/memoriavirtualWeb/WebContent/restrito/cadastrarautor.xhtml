@@ -74,7 +74,9 @@
 							<h:commandLink class="outraAutoria" value ="#{cadastrarAutorMB.outroLinkAtividade}"
 										action="#{cadastrarAutorMB.abrirAtividadeOutro}"/>
 							<div></div>
-							
+							<h:message id="validacaoAtividade" for="validacaoAtividade" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
 						
 						
@@ -122,6 +124,11 @@
 						<h:commandButton id="botaoResetar"
 							value="#{mensagens.cadastrarAutorBotaoResetar}" 
 							action="#{cadastrarAutorMB.resetCadastrarAutor}">
+						</h:commandButton>
+						
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.cadastrarAutorBotaoCancelar}" 
+							action="#{cadastrarAutorMB.cancelarCadastrarAutor}">
 						</h:commandButton>
 
 					</div>

@@ -16,6 +16,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarAutorRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
@@ -35,12 +36,12 @@ public class CadastrarAutorMB implements Serializable{
 
 	protected Autor autor = new Autor("", "", "", "", "", "");
 
-	private boolean outroAtividade = false;
-	private boolean normalAtividade = true;
-	private boolean outroNascimento = false;
-	private boolean normalNascimento = true;
-	private boolean outroObito = false;
-	private boolean normalObito = true;
+	protected boolean outroAtividade = false;
+	protected boolean normalAtividade = true;
+	protected boolean outroNascimento = false;
+	protected boolean normalNascimento = true;
+	protected boolean outroObito = false;
+	protected boolean normalObito = true;
 
 	/**
 	 * Construtor Padr�o
@@ -64,10 +65,15 @@ public class CadastrarAutorMB implements Serializable{
 		
 		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
 
-			this.cadastrarAutorEJB.cadastrarAutor(new Autor(this.autor
-					.getNome(), this.autor.getSobrenome(), this.autor
-					.getCodinome(), this.autor.getAtividade(), this.autor
-					.getNascimento(), this.autor.getObito()));
+			try {
+				this.cadastrarAutorEJB.cadastrarAutor(new Autor(this.autor
+						.getNome(), this.autor.getSobrenome(), this.autor
+						.getCodinome(), this.autor.getAtividade(), this.autor
+						.getNascimento(), this.autor.getObito()));
+			} catch (ModeloException e) {
+				MensagensDeErro.getErrorMessage("cadastrarAutorJaCadastrado", "resultado");
+				e.printStackTrace();
+			}
 			MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
 					"resultado");
 			this.autor.setNome("");
@@ -220,7 +226,12 @@ public class CadastrarAutorMB implements Serializable{
 		normalObito = true;
 		return "reset";
 	}
-
+	
+	public String cancelarCadastrarAutor() {
+		this.resetCadastrarAutor();
+		return "cancel";
+	}
+	
 	public void validateNome(AjaxBehaviorEvent event) {
 		this.validateNome();
 	}
@@ -250,7 +261,11 @@ public class CadastrarAutorMB implements Serializable{
 	public void validateAtividade(AjaxBehaviorEvent event) {
 		this.validateAtividade();
 	}
-
+	
+		
+		
+	
+	
 	public boolean validateAtividade() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -261,6 +276,12 @@ public class CadastrarAutorMB implements Serializable{
 			this.autor.setAtividade("");
 
 		}
+		
+		if (this.autor.getAtividade().equals("") && this.outroAtividade){
+			MensagensDeErro.getErrorMessage("cadastrarAutorAtividadeVazia",
+					"validacaoAtividade");
+		}
+		
 		return true;
 	}
 

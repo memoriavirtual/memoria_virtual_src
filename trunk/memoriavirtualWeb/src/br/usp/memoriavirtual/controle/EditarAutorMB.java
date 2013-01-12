@@ -4,8 +4,11 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -34,20 +37,21 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 	private boolean etapa1 = true;
 	private boolean etapa2 = false;
 	private boolean listarTodos = false;
+
 	/**
 	 * Construtor
 	 */
 	public EditarAutorMB() {
 		super();
 	}
-	
+
 	/**
 	 * M�todo � chamado enquanto as letras são inseridas no campo de busca.
 	 */
 	public void listarAutores(AjaxBehaviorEvent event) {
-		
-			this.listarAutores();
-		
+
+		this.listarAutores();
+
 	}
 
 	public String listarAutores() {
@@ -61,11 +65,11 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 			try {
 				this.autores = this.editarAutorEJB
 						.listarAutores(this.strDeBusca);
-				
+
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-		}else{
+		} else {
 			Autor autor = new Autor();
 			autor.setNome(bundle.getString("listarTodos"));
 			this.autores.add(0, autor);
@@ -82,22 +86,56 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		if (!autor.getNome().equals(
-				bundle.getString("listarTodos"))) {
+		if (!autor.getNome().equals(bundle.getString("listarTodos"))) {
 			this.autor = autor;
 			this.etapa1 = false;
 			this.etapa2 = true;
-		}
-		else{
+		} else {
 			this.listarTodos = true;
 			this.strDeBusca = "";
 			try {
 				this.autores = this.editarAutorEJB
 						.listarAutores(this.strDeBusca);
-				
+
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
+		}
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			format.setLenient(false);
+			format.parse(this.autor.getNascimento());
+		} catch (ParseException e) {
+			if (!this.autor.getNascimento().equals("")) {
+				this.outroNascimento = true;
+				this.normalNascimento = false;
+			}
+		}
+		try {
+			format.setLenient(false);
+			format.parse(this.autor.getObito());
+		} catch (ParseException e) {
+			if (!this.autor.getObito().equals("")) {
+				this.outroObito = true;
+				this.normalObito = false;
+			}
+		}
+		int i = 0;
+		while (true) {
+			try {
+				if (!bundle.getString("cadastrarAutorListaAtividade" + i).equals(this.autor.getAtividade()) && !this.autor.getAtividade().equals("")) {
+					this.outroAtividade = true;
+					this.normalAtividade = false;
+				}else{
+					this.outroAtividade = false;
+					this.normalAtividade = true;
+					break;
+				}
+				
+			} catch (MissingResourceException e) {
+				break;
+			}
+			i++;
 		}
 		return null;
 	}
@@ -109,8 +147,8 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 		this.validateNascimento();
 		this.validateObito();
 		this.validateAtividade();
-		
-		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
+
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
 
 			try {
 				this.editarAutorEJB.editarAutor(this.autor);
@@ -136,6 +174,11 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 		this.etapa2 = false;
 		this.listarTodos = false;
 		return null;
+	}
+
+	public String cancelarEditarAutor() {
+		this.resetEditarAutor();
+		return "cancel";
 	}
 
 	/**
