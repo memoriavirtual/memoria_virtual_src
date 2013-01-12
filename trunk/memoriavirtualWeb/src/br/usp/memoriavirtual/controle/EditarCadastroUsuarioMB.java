@@ -180,7 +180,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				.getExternalContext().getSessionMap().get("usuario");
 
 		this.listarUsuarios();
-
+		if(this.nome == ""){
+			MensagensDeErro.getErrorMessage("excluirAutorErro", "resultado");
+			return null;
+		}
 		for (Usuario u : this.usuarios) {
 			if (u.getNomeCompleto().equals(this.nome)) {
 				existeUsuario = true;
@@ -246,12 +249,33 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		}
 		return true;
 	}
+	public void validateAprovador(AjaxBehaviorEvent e) {
+		this.validateTelefone();
+	}
+
+	public boolean validateAprovador() {
+		
+		if(this.administrador == null){
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroTelefoneVazio",
+					"validacaoAprovador");
+			return false;
+		}
+		
+		return true;
+	}
 
 	public void validateTelefone(AjaxBehaviorEvent e) {
 		this.validateTelefone();
 	}
 
 	public boolean validateTelefone() {
+		if(this.telefone.equals("")){
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroTelefoneVazio",
+					"validacaoTelefone");
+			return false;
+		}
 		if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuarioErroTelefoneInvalido",
@@ -301,8 +325,11 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public String editarCadastroUsuario() {
-
-		if (this.validateNome() && this.validateTelefone()) {
+		this.validateNome();
+		this.validateTelefone();
+		this.validateAprovador();
+		
+		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
 
 			List<Acesso> pendentes = new ArrayList<Acesso>();
 			List<String> situacoes = new ArrayList<String>();
@@ -415,9 +442,13 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public List<SelectItem> getAdmnistradores() {
-
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
 		List<SelectItem> administradores = new ArrayList<SelectItem>();
-
+		administradores.add(new SelectItem(null, bundle.getString("editarCadastroUsuarioAdministradores") ));
 		for (Usuario u : this.administradores) {
 			administradores.add(new SelectItem(u.getId(), u.getNomeCompleto()));
 		}

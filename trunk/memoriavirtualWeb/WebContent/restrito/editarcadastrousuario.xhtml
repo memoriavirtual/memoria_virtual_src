@@ -135,12 +135,17 @@
 
 						<div>
 							<h:outputLabel class="labels"
-								value="#{mensagens.editarCadastroUsuarioAdministradores}"
+								value="#{mensagens.editarCadastroUsuarioAprovador}"
 								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
 							<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}"
 								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
 								<f:selectItems value="#{editarCadastroUsuarioMB.admnistradores}"></f:selectItems>
 							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoAprovador"
+								for="validacaoAprovador" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
 
 
