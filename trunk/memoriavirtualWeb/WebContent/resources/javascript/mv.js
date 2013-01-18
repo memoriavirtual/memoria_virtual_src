@@ -47,7 +47,7 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 		image.setAttribute("class", "imageNoPlayer");
 		image.addEventListener("click", classe.rolar, false);
 		classe.player.appendChild(image);		
-		
+		 
 	};
 	this.playerSair = function(e) {
 		var a = classe.player.childNodes[0];

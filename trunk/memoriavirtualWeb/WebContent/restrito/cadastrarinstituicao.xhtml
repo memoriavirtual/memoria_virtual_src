@@ -292,8 +292,10 @@
 
 						<mv:containerExpansivo id="expansivo"
 							label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-							<mv:uploadFile id="multimidia" nomebean="cadastrarInstituicaoMB" bean="#{cadastrarInstituicaoMB}"
-								array="#{cadastrarInstituicaoMB.apresentaMidias}"></mv:uploadFile>
+							<mv:uploadFile id="multimidia" nomebean="cadastrarInstituicaoMB"
+								bean="#{cadastrarInstituicaoMB}"
+								array="#{cadastrarInstituicaoMB.apresentaMidias}"
+								typeFile="image.*"></mv:uploadFile>
 						</mv:containerExpansivo>
 
 
@@ -301,7 +303,7 @@
 							<h:outputLabel class="labels" style="float:left;  heigth: 250px">#{mensagens.cadastrarInstituicaoSinteseHistorica}</h:outputLabel>
 							<h:inputTextarea class="caixadetexto"
 								value="#{cadastrarInstituicaoMB.sinteseHistorica}">
-								<f:ajax event="blur" execute="@this" 
+								<f:ajax event="blur" execute="@this"
 									render="validacaoSinteseHistorica"
 									listener="#{cadastrarInstituicaoMB.validateSinteseHistorica}" />
 							</h:inputTextarea>

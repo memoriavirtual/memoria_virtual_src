@@ -1,10 +1,10 @@
-function FileFrame(fileArea,  bean , botao , img) {
+function FileFrame(fileArea,  bean , botao , img, typeFile ) {
 	var self = this;
 
 	this.fileArea = fileArea;
 	this.botao = botao;
 	this.img = img ;
-	
+	this.typeFile = typeFile;
 	this.bean = bean;
 
 	this.init = function() {
@@ -32,8 +32,8 @@ function FileFrame(fileArea,  bean , botao , img) {
 		
 		for(var i = 0 ; i < e.dataTransfer.files.length ; i++){
 			self.file = e.dataTransfer.files[i];
-		
-			if (self.file.type.match('image.*')) {
+			alert(self.file.type);
+			if (self.file.type.match(self.typeFile)) {
 				self.read(self.file);
 				self.sendFile(self.file , self.bean);
 			}
@@ -80,7 +80,7 @@ function FileFrame(fileArea,  bean , botao , img) {
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
 			if(request.readyState==4 ){
-				if( request.status == 201) {
+				if( request.status == 200) {
 							
 					window.setTimeout(self.voltar, 1000);
 					
@@ -96,13 +96,13 @@ function FileFrame(fileArea,  bean , botao , img) {
 		self.botao.click();
 	};
 }
-iniciarComponenteUpload = (function(bean , botaoid , idImagem ) {
+iniciarComponenteUpload = (function(bean , botaoid , idImagem , typeFile ) {
 	// Recupera a div que conterá a imagem
 	// alert(idImagem);
 	var area = document.getElementById("image-area");
 	var botao = document.getElementById(botaoid);
 	 var img = document.getElementById(idImagem);
-	var fileFrameArea = new FileFrame(area ,bean , botao  , img);
+	var fileFrameArea = new FileFrame(area ,bean , botao  , img, typeFile);
 	
 	fileFrameArea.init();
 	

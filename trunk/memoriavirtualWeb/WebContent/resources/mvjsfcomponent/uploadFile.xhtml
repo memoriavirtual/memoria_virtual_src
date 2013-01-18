@@ -9,6 +9,7 @@
 	<cc:attribute name="bean"></cc:attribute>
 	<cc:attribute name="nomebean"></cc:attribute>
 	<cc:attribute name="array"></cc:attribute>
+	<cc:attribute name="typeFile"></cc:attribute>
 </cc:interface>
 
 <cc:implementation>
@@ -124,7 +125,7 @@
 
 	<script>
 		iniciarComponenteUpload("#{cc.attrs.nomebean}",
-				"#{cc.clientId}:botaoEscondido", "#{cc.clientId}:tag_imagem");
+				"#{cc.clientId}:botaoEscondido", "#{cc.clientId}:tag_imagem", "#{cc.attrs.typeFile}");
 	</script>
 </cc:implementation>
 
