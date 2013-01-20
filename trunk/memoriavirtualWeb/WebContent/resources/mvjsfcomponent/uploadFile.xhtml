@@ -25,7 +25,7 @@
 
 				<div id="image-area">
 					<h:graphicImage id="tag_imagem" library="imagens" name="espera.gif"
-						style="display: none;"></h:graphicImage>
+						style="display: none; "></h:graphicImage>
 
 					<span id="drop-message">#{mensagens.multimidiaArraste}</span>
 
@@ -49,7 +49,7 @@
 
 				<div>
 					<h:graphicImage onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta)}"
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta)}"></h:graphicImage>
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta)}&amp;thumb=true"></h:graphicImage>
 
 					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
 					<h:inputTextarea class="caixadetexto"
@@ -67,7 +67,7 @@
 			<h:column style="display: inline-table;">
 				<div>
 					<h:graphicImage onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 1)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 1)}"></h:graphicImage>
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 1)}&amp;thumb=true"></h:graphicImage>
 
 					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
 					<h:inputTextarea class="caixadetexto" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
@@ -85,7 +85,7 @@
 			<h:column style="display: inline-table;" >
 				<div>
 					<h:graphicImage onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 2)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta+2)}"></h:graphicImage>
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta+2)}&amp;thumb=true"></h:graphicImage>
 
 					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
 					<h:inputTextarea rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}" class="caixadetexto"
@@ -103,7 +103,7 @@
 			<h:column style="display: inline-table;">
 				<div>
 					<h:graphicImage  onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 3)})" rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
-						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 3)}"></h:graphicImage>
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 3)}&amp;thumb=true"></h:graphicImage>
 
 					<h:outputLabel rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}" class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
 					<h:inputTextarea class="caixadetexto"  rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"

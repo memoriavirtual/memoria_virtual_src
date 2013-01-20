@@ -6,13 +6,16 @@ function FileFrame(fileArea,  bean , botao , img, typeFile ) {
 	this.img = img ;
 	this.typeFile = typeFile;
 	this.bean = bean;
-
+	var div1 = document.getElementById("example-content");
+	this.div = div1;
 	this.init = function() {
 		
 		this.fileArea.addEventListener("dragleave", self.dragHover, false);
 		self.fileArea.addEventListener("dragover", self.dragHover, false);
 		self.fileArea.addEventListener("drop", self.drop, false);
-
+		window.document.addEventListener("dragover", self.melhoraPosicao, false);
+		window.document.addEventListener("dragleave", self.melhoraPosicao, false);
+		window.document.addEventListener("drop", self.melhoraPosicao, false);
 	};
 
 	this.dragHover = function(e) {
@@ -21,12 +24,18 @@ function FileFrame(fileArea,  bean , botao , img, typeFile ) {
 		// o conteudo do mesmo.
 		e.stopPropagation();
 		e.preventDefault();
-
+		
 		// Quando o arquivo está sobre área alteramos o seu estilo
 		self.fileArea.className = (e.type == "dragover" ? "hover" : "");
 		
 	};
-
+	
+	this.melhoraPosicao = function(e) {
+		e.preventDefault();
+		
+		
+	};
+	
 	this.drop = function(e) {
 		self.dragHover(e);
 		
@@ -55,7 +64,7 @@ function FileFrame(fileArea,  bean , botao , img, typeFile ) {
 	        // img.setAttribute("src", f.target.result);
 	        var spam =  document.getElementById("drop-message");
 	        spam.setAttribute("style", "display: none;");
-	        img.setAttribute("style", "display: inline-block;  margin-right: 30%; margin-left: 30%; margin-top: 9%; margin-bottom: 20%; ");
+	        img.setAttribute("style", "display: inline-block;  margin-right: 40%; margin-left: 40%; margin-top: 20%; margin-bottom: 20%; ");
 	        self.fileArea.setAttribute("style", "background-color: #FFFFFF; ");
 	        // img.setAttribute("id", "tag_imagem");
 
@@ -80,7 +89,7 @@ function FileFrame(fileArea,  bean , botao , img, typeFile ) {
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
 			if(request.readyState==4 ){
-				if( request.status == 200) {
+				if( request.status == 201) {
 							
 					window.setTimeout(self.voltar, 1000);
 					

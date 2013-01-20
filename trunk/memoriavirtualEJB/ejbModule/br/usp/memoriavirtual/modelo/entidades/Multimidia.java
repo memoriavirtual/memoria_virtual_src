@@ -32,12 +32,13 @@ public class Multimidia implements Serializable {
 	 * @param content
 	 * @param tamanho
 	 */
-	public Multimidia(String nome, byte[] content, String contentType , String descricao ) {
+	public Multimidia(String nome, byte[] content, String contentType , String descricao, Multimidia thumb ) {
 		super();
 		this.nome = nome;
 		this.content = content;
 		this.descricao = descricao;
 		this.contentType = contentType;
+		this.thumb = thumb;
 	}
 
 	@Id
@@ -52,6 +53,9 @@ public class Multimidia implements Serializable {
 	@Lob  
     @Column(columnDefinition = "BYTEA")
 	private byte[] content;
+	@Lob  
+    @Column(columnDefinition = "BYTEA")
+	private Multimidia thumb;
 	/**
 	 * @return the contentType
 	 */
@@ -150,6 +154,14 @@ public class Multimidia implements Serializable {
 	 */
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Multimidia getThumb() {
+		return thumb;
+	}
+
+	public void setThumb(Multimidia thumb) {
+		this.thumb = thumb;
 	}
 
 	

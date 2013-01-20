@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.el.ELResolver;
@@ -34,6 +35,8 @@ public class MultiMidiaServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Boolean type = new Boolean(request.getParameter("type"));
+		Boolean thumb = new Boolean(request.getParameter("thumb"));
 		
 		String nameBean = request.getParameter("bean");
 		
@@ -59,8 +62,11 @@ public class MultiMidiaServlet extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);//404
 				return;
 			}
-			
-			this.enviarStream(response , midias.get(indice) );
+
+			if(type)
+				this.enviarType(response , midias.get(indice) );
+			else 
+				this.enviarStream(response , midias.get(indice) , thumb );
 			
 		}else{//Testa se  imagem do Banco
 			
@@ -68,9 +74,18 @@ public class MultiMidiaServlet extends HttpServlet {
 		}
 		
 	}
-	
-	protected void enviarStream ( HttpServletResponse response,Multimidia midia ) throws IOException{
+	protected void enviarType ( HttpServletResponse response, Multimidia midia ) throws IOException{
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/plain");
+        out.println(midia.getContentType());
+        out.flush();
+        close(out);
+        //System.out.println("tamo ai \n");
+	}
+	protected void enviarStream ( HttpServletResponse response, Multimidia m, Boolean thumb ) throws IOException{
 		
+		Multimidia midia = (thumb)?m.getThumb() : m;
+				
 		//iniciando a resposta
 		response.reset();
 		response.setBufferSize(TAMANHO_PADRAO_BUFFER);

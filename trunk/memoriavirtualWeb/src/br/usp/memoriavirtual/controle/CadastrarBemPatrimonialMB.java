@@ -347,6 +347,17 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public String removeMidia(String midia) {
 		return null;
 	}
+
+	@Override
+	public String removeMidia(int index) {
+		this.midias.remove(index);
+		
+		if(this.midias.size() % 4  == 0){
+			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
+		} 
+		return null;
+	}
+	
 	@Override
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
@@ -1467,15 +1478,6 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	}
 
-	@Override
-	public String removeMidia(int index) {
-		this.midias.remove(index);
-		
-		if(this.midias.size() % 4  == 0){
-			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
-		} 
-		return null;
-	}
 
 	public ArrayList<Integer> getApresentaMidias() {
 		return ApresentaMidias;

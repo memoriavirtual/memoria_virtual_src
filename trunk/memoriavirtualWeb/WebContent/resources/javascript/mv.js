@@ -15,19 +15,53 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 		classe.player
 				.addEventListener("click", classe.playerSair, false);
 		classe.player.setAttribute("scrolling-y", "no");
-		var image = document.createElement("img");
-		image.setAttribute("src",
-		"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
-		image.setAttribute("class", "imageNoPlayer");
-		image.addEventListener("click", classe.rolar, false);
-		classe.player.appendChild(image);		
+		{
+		var xmlhttp=new XMLHttpRequest();
+		  
+		
+		xmlhttp.onreadystatechange = function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				if(xmlhttp.responseText.match("image.*")){
+					var image = document.createElement("img");
+					image.setAttribute("src",
+					"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+					image.setAttribute("class", "imageNoPlayer");
+					image.addEventListener("click", classe.rolar, false);
+					classe.player.appendChild(image);
+			  	}else if(xmlhttp.responseText.match("video.*")){
+			  		var video = document.createElement("video");
+			  		video.setAttribute("src",
+					"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+			  		video.setAttribute("class", "imageNoPlayer");
+			  		video.setAttribute("type", xmlhttp.responseText);
+			  		video.setAttribute("controls", true);
+			  		video.addEventListener("click", classe.rolar, false);
+					classe.player.appendChild(video);
+			  	}
+			};
+		xmlhttp.open("GET","/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex + "&type=true",true);
+		xmlhttp.send();
+		}
+		
+		
 		
 	};
 	this.rolar = function(e) {
-		var a = classe.player.childNodes[0];
-		classe.player.removeChild(a);
+		
+		e.stopPropagation();
 		
 		
+		if( (window.outerHeight/10) * 7  < e.clientY ){
+			;
+		}else{
+			try{
+				var a = classe.player.childNodes[0];
+				classe.player.removeChild(a);
+				
+			}
+			catch(err ){
+					classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
+			}
 		if((window.outerWidth/2) > e.clientX ){
 			classe.thisIndex --;
 			if(classe.thisIndex < 0 ){
@@ -40,19 +74,47 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 			}
 		}
 		
-		e.stopPropagation();
-		var image = document.createElement("img");
-		image.setAttribute("src",
-		"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
-		image.setAttribute("class", "imageNoPlayer");
-		image.addEventListener("click", classe.rolar, false);
-		classe.player.appendChild(image);		
-		 
+		
+		
+		{
+			var xmlhttp=new XMLHttpRequest();
+			  
+			
+			xmlhttp.onreadystatechange = function(){
+				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				  	if(xmlhttp.responseText.match("image.*")){
+						var image = document.createElement("img");
+						image.setAttribute("src",
+						"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+						image.setAttribute("class", "imageNoPlayer");
+						image.addEventListener("click", classe.rolar, false);
+						classe.player.appendChild(image);
+				  	}else if(xmlhttp.responseText.match("video.*")){
+				  		var video = document.createElement("video");
+				  		video.setAttribute("src",
+						"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+				  		video.setAttribute("class", "imageNoPlayer");
+				  		video.setAttribute("type", xmlhttp.responseText);
+				  		video.setAttribute("controls", true);
+				  		video.addEventListener("click", classe.rolar, false);
+						classe.player.appendChild(video);
+				  	}
+				};
+			xmlhttp.open("GET","/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex + "&type=true",true);
+			xmlhttp.send();
+			}
+		
+		}
 	};
 	this.playerSair = function(e) {
+		try{
 		var a = classe.player.childNodes[0];
 		classe.player.removeChild(a);
 		classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
+		}
+		catch(err ){
+			classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
+		}
 		e.stopPropagation();
 	};
 

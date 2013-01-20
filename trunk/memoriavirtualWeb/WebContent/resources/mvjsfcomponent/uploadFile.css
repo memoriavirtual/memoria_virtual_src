@@ -46,6 +46,11 @@
 	border: 1px solid #fff !important;
 }
 
+.melhoraPosicao {
+	position: absolute;
+}
+
+
 #drop-message {
 	text-align: center;
 	width: 100%;
