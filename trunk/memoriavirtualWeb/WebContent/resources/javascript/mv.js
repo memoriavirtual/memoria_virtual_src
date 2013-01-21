@@ -37,6 +37,26 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 			  		video.setAttribute("controls", true);
 			  		video.addEventListener("click", classe.rolar, false);
 					classe.player.appendChild(video);
+			  	}else if(xmlhttp.responseText.match("audio.*")){
+			  		var audio = document.createElement("video");
+			  		audio.setAttribute("src",
+					"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+			  		audio.setAttribute("class", "imageNoPlayer");
+			  		audio.setAttribute("type", xmlhttp.responseText);
+			  		audio.setAttribute("controls", true);
+			  		audio.addEventListener("click", classe.rolar, false);
+					classe.player.appendChild(audio);
+			  	}else if(xmlhttp.responseText.match("application/pdf")){
+			  		var embed = document.createElement("iframe");
+			  		embed.setAttribute("name", "plugin");
+			  		embed.setAttribute("type", xmlhttp.responseText);
+			  		embed.setAttribute("width", "80%");
+			  		embed.setAttribute("height", "100%");
+			  		embed.setAttribute("src",
+					"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+			  		//embed.setAttribute("class", "imageNoPlayer");
+			  		embed.addEventListener("click", classe.rolar, false);
+					classe.player.appendChild(embed);
 			  	}
 			};
 		xmlhttp.open("GET","/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex + "&type=true",true);
@@ -98,6 +118,26 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 				  		video.setAttribute("controls", true);
 				  		video.addEventListener("click", classe.rolar, false);
 						classe.player.appendChild(video);
+				  	}else if(xmlhttp.responseText.match("audio.*")){
+				  		var audio = document.createElement("video");
+				  		audio.setAttribute("src",
+						"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+				  		audio.setAttribute("class", "imageNoPlayer");
+				  		audio.setAttribute("type", xmlhttp.responseText);
+				  		audio.setAttribute("controls", true);
+				  		audio.addEventListener("click", classe.rolar, false);
+						classe.player.appendChild(audio);
+				  	}else if(xmlhttp.responseText.match("application/pdf")){
+				  		var embed = document.createElement("iframe");
+				  		embed.setAttribute("type", xmlhttp.responseText);
+				  		embed.setAttribute("name", "plugin");
+				  		embed.setAttribute("width", "80%");
+				  		embed.setAttribute("height", "100%");
+				  		embed.setAttribute("src",
+						"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
+				  		//embed.setAttribute("class", "imageNoPlayer");
+				  		embed.addEventListener("click", classe.rolar, false);
+						classe.player.appendChild(embed);
 				  	}
 				};
 			xmlhttp.open("GET","/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex + "&type=true",true);

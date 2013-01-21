@@ -38,7 +38,7 @@ function FileFrame(fileArea,  bean , botao , img, typeFile ) {
 	
 	this.drop = function(e) {
 		self.dragHover(e);
-		
+		e.preventDefault();
 		for(var i = 0 ; i < e.dataTransfer.files.length ; i++){
 			self.file = e.dataTransfer.files[i];
 			alert(self.file.type);

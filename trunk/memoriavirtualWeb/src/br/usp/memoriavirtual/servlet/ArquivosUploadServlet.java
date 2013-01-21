@@ -128,7 +128,63 @@ public class ArquivosUploadServlet extends HttpServlet {
 				
 				String pathToWeb = getServletContext().getRealPath(File.separator);
 				File f = new File(pathToWeb + "resources/imagens/File-Video-icon.png");
-				System.out.println(pathToWeb + "File-Video-icon.png");
+				
+				BufferedImage imagem = ImageIO.read(f);
+
+				int new_w = imagem.getWidth(), new_h = imagem.getHeight();
+				
+				// System.out.println(imagem.getHeight());
+				BufferedImage new_img = new BufferedImage(new_w, new_h,
+						BufferedImage.TYPE_INT_RGB);
+				Graphics2D g = new_img.createGraphics();
+
+				g.drawImage(imagem, 0, 0, new_w, new_h, null);
+
+				ByteArrayOutputStream aux = new ByteArrayOutputStream();
+				ImageIO.write(new_img, "JPG", aux);
+
+				byte[] c = aux.toByteArray();
+
+				System.out.println(b.length);
+				System.out.println(c.length);
+				multimidia = new Multimidia(nomeArquivo, b, tipoArquivo, null,
+						new Multimidia("Thumb"
+								+ nomeArquivo.substring(0,
+										nomeArquivo.length() - 4) + ".jpg", c,
+								"image/jpg", null, null));
+			}else if (tipoArquivo.startsWith("audio")) {
+				
+				String pathToWeb = getServletContext().getRealPath(File.separator);
+				File f = new File(pathToWeb + "resources/imagens/File Audio.png");
+				
+				BufferedImage imagem = ImageIO.read(f);
+
+				int new_w = imagem.getWidth(), new_h = imagem.getHeight();
+				
+				// System.out.println(imagem.getHeight());
+				BufferedImage new_img = new BufferedImage(new_w, new_h,
+						BufferedImage.TYPE_INT_RGB);
+				Graphics2D g = new_img.createGraphics();
+
+				g.drawImage(imagem, 0, 0, new_w, new_h, null);
+
+				ByteArrayOutputStream aux = new ByteArrayOutputStream();
+				ImageIO.write(new_img, "JPG", aux);
+
+				byte[] c = aux.toByteArray();
+
+				System.out.println(b.length);
+				System.out.println(c.length);
+				multimidia = new Multimidia(nomeArquivo, b, tipoArquivo, null,
+						new Multimidia("Thumb"
+								+ nomeArquivo.substring(0,
+										nomeArquivo.length() - 4) + ".jpg", c,
+								"image/jpg", null, null));
+			}else if (tipoArquivo.startsWith("application/pdf")) {
+				
+				String pathToWeb = getServletContext().getRealPath(File.separator);
+				File f = new File(pathToWeb + "resources/imagens/file-pdf-icon.png");
+				
 				BufferedImage imagem = ImageIO.read(f);
 
 				int new_w = imagem.getWidth(), new_h = imagem.getHeight();
