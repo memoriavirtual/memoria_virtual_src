@@ -63,7 +63,7 @@ function FileFrame(fileArea, bean, botao, img, typeFile) {
 		self.fileArea.setAttribute("style", "background-color: #FFFFFF; ");
 		
 		var a = document.getElementById("uploadComponente");
-		var div = document.createElement("div");
+		var div = document.createElement("progress");
 		div.setAttribute("id", "progress");
 
 		a.appendChild(div);
@@ -73,21 +73,19 @@ function FileFrame(fileArea, bean, botao, img, typeFile) {
 	this.newSendFile = function(file, bean) {
 
 		var xhr = new XMLHttpRequest();
-		var o = document.getElementById("progress");
-		var progress = o.appendChild(document.createElement("p"));
-		progress.appendChild(document.createTextNode("upload " + file.name));
+		
 
 		// progress bar
 		xhr.upload.addEventListener("progress", function(e) {
-			var pc = parseInt(100 - (e.loaded / e.total * 100));
-			
-			progress.style.backgroundPosition = pc + "% 0";
+			progress.setAttribute("value", parseInt(e.loaded));
+			progress.setAttribute("max", parseInt(e.total));
 		}, false);
 
 		xhr.onreadystatechange = function(e) {
 			if (xhr.readyState == 4) {
-				progress.className = (xhr.status == 201 ? "success" : "failure");
-				window.setTimeout(self.voltar, 1000);
+				var a = document.getElementById("uploadComponente");
+				a.removeChild(document.getElementById("progress"));
+				window.setTimeout(self.voltar, 0);
 			}
 		};
 
@@ -132,8 +130,7 @@ function FileFrame(fileArea, bean, botao, img, typeFile) {
 		spam.setAttribute("style", "display: inline-block;");
 		img.setAttribute("style", "display: none; ");
 		self.fileArea.setAttribute("style", "background-color: #F7F7F7;");
-		var a = document.getElementById("uploadComponente");
-		a.removeChild(document.getElementById("progress"));
+		
 		self.botao.click();
 	};
 }
