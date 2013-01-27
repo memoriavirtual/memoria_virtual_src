@@ -48,6 +48,14 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 					classe.player.appendChild(audio);
 			  	}else if(xmlhttp.responseText.match("application/pdf")){
 			  		var embed = document.createElement("iframe");
+			  		var esq = document.createElement("img");
+			  		esq.setAttribute("src", "/memoriavirtual/javax.faces.resource/seta_esquerda.png.jsf?ln=imagens");
+			  		esq.setAttribute("class", "setaRolarDir");
+			  		var dir = document.createElement("img");
+			  		dir.setAttribute("src", "/memoriavirtual/javax.faces.resource/seta_direita.png.jsf?ln=imagens");
+			  		dir.setAttribute("class", "setaRolarEsq");
+			  		dir.addEventListener("click", classe.rolar, false);
+			  		esq.addEventListener("click", classe.rolar, false);
 			  		embed.setAttribute("name", "plugin");
 			  		embed.setAttribute("type", xmlhttp.responseText);
 			  		embed.setAttribute("width", "80%");
@@ -56,7 +64,9 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 					"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
 			  		//embed.setAttribute("class", "imageNoPlayer");
 			  		embed.addEventListener("click", classe.rolar, false);
+			  		classe.player.appendChild(esq);
 					classe.player.appendChild(embed);
+					classe.player.appendChild(dir);
 			  	}
 			};
 		xmlhttp.open("GET","/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex + "&type=true",true);
@@ -71,18 +81,18 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 		e.stopPropagation();
 		
 		
-		if( (window.outerHeight/10) * 7  < e.clientY ){
+		if( (window.innerHeight /10) * 7  < e.clientY ){
 			;
 		}else{
 			try{
-				var a = classe.player.childNodes[0];
-				classe.player.removeChild(a);
+				classe.player.innerHTML = "";
+				
 				
 			}
 			catch(err ){
 					classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
 			}
-		if((window.outerWidth/2) > e.clientX ){
+		if((window.innerWidth/2) > e.clientX ){
 			classe.thisIndex --;
 			if(classe.thisIndex < 0 ){
 				classe.thisIndex = classe.lastIndex;
@@ -129,15 +139,25 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 						classe.player.appendChild(audio);
 				  	}else if(xmlhttp.responseText.match("application/pdf")){
 				  		var embed = document.createElement("iframe");
-				  		embed.setAttribute("type", xmlhttp.responseText);
+				  		var esq = document.createElement("img");
+				  		esq.setAttribute("src", "/memoriavirtual/javax.faces.resource/seta_esquerda.png.jsf?ln=imagens");
+				  		esq.setAttribute("class", "setaRolarDir");
+				  		var dir = document.createElement("img");
+				  		dir.setAttribute("src", "/memoriavirtual/javax.faces.resource/seta_direita.png.jsf?ln=imagens");
+				  		dir.setAttribute("class", "setaRolarEsq");
+				  		dir.addEventListener("click", classe.rolar, false);
+				  		esq.addEventListener("click", classe.rolar, false);
 				  		embed.setAttribute("name", "plugin");
+				  		embed.setAttribute("type", xmlhttp.responseText);
 				  		embed.setAttribute("width", "80%");
 				  		embed.setAttribute("height", "100%");
 				  		embed.setAttribute("src",
 						"/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex);
 				  		//embed.setAttribute("class", "imageNoPlayer");
 				  		embed.addEventListener("click", classe.rolar, false);
+				  		classe.player.appendChild(esq);
 						classe.player.appendChild(embed);
+						classe.player.appendChild(dir);
 				  	}
 				};
 			xmlhttp.open("GET","/memoriavirtual/multimidia?bean=" + classe.nomeDoBean + "&indice=" + classe.thisIndex + "&type=true",true);
@@ -148,8 +168,8 @@ function PlayerImagen(player  , nomeDoBean , lastIndex , thisIndex) {
 	};
 	this.playerSair = function(e) {
 		try{
-		var a = classe.player.childNodes[0];
-		classe.player.removeChild(a);
+			classe.player.innerHTML = "";
+			
 		classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
 		}
 		catch(err ){

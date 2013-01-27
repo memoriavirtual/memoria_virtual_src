@@ -16,5 +16,5 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
  */
 public interface CadastrarBemPatrimonialRemote {
 	List<Instituicao> listarInstituicao(Usuario usuario)throws ModeloException;
-	void cadastrarBemPatrimonial(BemPatrimonial bem);
+	void cadastrarBemPatrimonial(BemPatrimonial bem)throws ModeloException;
 }

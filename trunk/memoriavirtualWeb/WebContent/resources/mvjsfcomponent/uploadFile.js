@@ -1,20 +1,22 @@
-function FileFrame(fileArea,  bean , botao , img, typeFile ) {
+function FileFrame(fileArea, bean, botao, img, typeFile) {
 	var self = this;
 
 	this.fileArea = fileArea;
 	this.botao = botao;
-	this.img = img ;
+	this.img = img;
 	this.typeFile = typeFile;
 	this.bean = bean;
 	var div1 = document.getElementById("example-content");
 	this.div = div1;
 	this.init = function() {
-		
+
 		this.fileArea.addEventListener("dragleave", self.dragHover, false);
 		self.fileArea.addEventListener("dragover", self.dragHover, false);
 		self.fileArea.addEventListener("drop", self.drop, false);
-		window.document.addEventListener("dragover", self.melhoraPosicao, false);
-		window.document.addEventListener("dragleave", self.melhoraPosicao, false);
+		window.document
+				.addEventListener("dragover", self.melhoraPosicao, false);
+		window.document.addEventListener("dragleave", self.melhoraPosicao,
+				false);
 		window.document.addEventListener("drop", self.melhoraPosicao, false);
 	};
 
@@ -24,95 +26,125 @@ function FileFrame(fileArea,  bean , botao , img, typeFile ) {
 		// o conteudo do mesmo.
 		e.stopPropagation();
 		e.preventDefault();
-		
+
 		// Quando o arquivo está sobre área alteramos o seu estilo
 		self.fileArea.className = (e.type == "dragover" ? "hover" : "");
-		
+
 	};
-	
+
 	this.melhoraPosicao = function(e) {
 		e.preventDefault();
-		
-		
+
 	};
-	
+
 	this.drop = function(e) {
 		self.dragHover(e);
 		e.preventDefault();
-		for(var i = 0 ; i < e.dataTransfer.files.length ; i++){
+		for ( var i = 0; i < e.dataTransfer.files.length; i++) {
 			self.file = e.dataTransfer.files[i];
-			alert(self.file.type);
+			// alert(self.file.type);
 			if (self.file.type.match(self.typeFile)) {
 				self.read(self.file);
-				self.sendFile(self.file , self.bean);
+				self.newSendFile(self.file, self.bean);
 			}
+			
 		}
-	
-		
+
 	};
 
 	this.read = function(file) {
-	    
-	   
-	      // var reader = new FileReader();
 
-	      // reader.onload = function(f) {
-	        // self.fileArea.innerHTML = "";
-	        // self.fileArea.setAttribute("style", "padding: 0px !important;");
-	        
-	        // var img = document.getElementById("*tag_imagem");
-	        // img.setAttribute("src", f.target.result);
-	        var spam =  document.getElementById("drop-message");
-	        spam.setAttribute("style", "display: none;");
-	        img.setAttribute("style", "display: inline-block;  margin-right: 40%; margin-left: 40%; margin-top: 20%; margin-bottom: 20%; ");
-	        self.fileArea.setAttribute("style", "background-color: #FFFFFF; ");
-	        // img.setAttribute("id", "tag_imagem");
+		var spam = document.getElementById("drop-message");
+		spam.setAttribute("style", "display: none;");
+		img
+				.setAttribute(
+						"style",
+						"display: inline-block;  margin-right: 40%; margin-left: 40%; margin-top: 20%; margin-bottom: 20%; ");
+		self.fileArea.setAttribute("style", "background-color: #FFFFFF; ");
+		
+		var a = document.getElementById("uploadComponente");
+		var div = document.createElement("div");
+		div.setAttribute("id", "progress");
 
-	        // self.fileArea.appendChild(img);
-	    // };
+		a.appendChild(div);
 
-	     // reader.readAsDataURL(file);
-	    };
-	
-	
-	this.sendFile = function(file , bean) {
+	};
+
+	this.newSendFile = function(file, bean) {
+
+		var xhr = new XMLHttpRequest();
+		var o = document.getElementById("progress");
+		var progress = o.appendChild(document.createElement("p"));
+		progress.appendChild(document.createTextNode("upload " + file.name));
+
+		// progress bar
+		xhr.upload.addEventListener("progress", function(e) {
+			var pc = parseInt(100 - (e.loaded / e.total * 100));
+			
+			progress.style.backgroundPosition = pc + "% 0";
+		}, false);
+
+		xhr.onreadystatechange = function(e) {
+			if (xhr.readyState == 4) {
+				progress.className = (xhr.status == 201 ? "success" : "failure");
+				window.setTimeout(self.voltar, 1000);
+			}
+		};
+
+		xhr
+				.open("POST", "/memoriavirtual/uploadarquivo/" + "bean" + bean,
+						true);
+		var f = new FormData();
+		f.enctype = "multipart/form-data";
+		f.append("file", file);
+		xhr.send(f);
+	};
+
+	this.sendFile = function(file, bean) {
 
 		var f = new FormData();
-		
-		f.enctype="multipart/form-data";
+
+		f.enctype = "multipart/form-data";
 
 		f.append("file", file);
 
 		var request = new XMLHttpRequest();
-		request.open("POST", "/memoriavirtual/uploadarquivo/"+"bean"+ bean, true);
+
+		request.open("POST", "/memoriavirtual/uploadarquivo/" + "bean" + bean,
+				true);
 		request.send(f);
 		request.onreadystatechange = function() {
 			// Término do envio do formulário
-			if(request.readyState==4 ){
-				if( request.status == 201) {
-							
+			switch (request.readyState) {
+			case 4:
+				if (request.status == 201) {
 					window.setTimeout(self.voltar, 1000);
-					
 				}
-		    }
+				break;
+
+			default:
+				break;
+			}
 		};
 	};
-	this.voltar = function(){
-        var spam =  document.getElementById("drop-message");
-        spam.setAttribute("style", "display: inline-block;");
-        img.setAttribute("style", "display: none; ");
+	this.voltar = function() {
+		var spam = document.getElementById("drop-message");
+		spam.setAttribute("style", "display: inline-block;");
+		img.setAttribute("style", "display: none; ");
 		self.fileArea.setAttribute("style", "background-color: #F7F7F7;");
+		var a = document.getElementById("uploadComponente");
+		a.removeChild(document.getElementById("progress"));
 		self.botao.click();
 	};
 }
-iniciarComponenteUpload = (function(bean , botaoid , idImagem , typeFile ) {
+iniciarComponenteUpload = (function(bean, botaoid, idImagem, typeFile) {
 	// Recupera a div que conterá a imagem
 	// alert(idImagem);
 	var area = document.getElementById("image-area");
 	var botao = document.getElementById(botaoid);
-	 var img = document.getElementById(idImagem);
-	var fileFrameArea = new FileFrame(area ,bean , botao  , img, typeFile);
-	
+	var img = document.getElementById(idImagem);
+	var fileFrameArea = new FileFrame(area, bean, botao, img, typeFile);
+
 	fileFrameArea.init();
-	
+
 });

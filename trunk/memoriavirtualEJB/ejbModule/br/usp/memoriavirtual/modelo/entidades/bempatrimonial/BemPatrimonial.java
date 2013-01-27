@@ -72,7 +72,7 @@ public class BemPatrimonial implements Serializable {
 	protected String idMidia = "";
 	protected String Complemento = "";
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY )
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY )
 	@JoinTable(name="BEMPATRIMONIAL_DESCRITOR",
     joinColumns=
         @JoinColumn(name="BEMPATRIMONIAL_ID"),
@@ -81,7 +81,7 @@ public class BemPatrimonial implements Serializable {
 	protected Set<Descritor> descritores;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinTable(name="BEMPATRIMONIAL_ASSUNTO",
     joinColumns=
         @JoinColumn(name="BEMPATRIMONIAL_ID"),

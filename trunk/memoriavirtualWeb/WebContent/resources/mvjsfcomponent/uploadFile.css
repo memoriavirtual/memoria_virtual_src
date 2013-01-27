@@ -116,3 +116,30 @@ color: #888;
 	text-decoration: none;
 	color: #222;
 }
+
+#progress{
+	margin: 20px 0px 0px 0px;
+	padding: 0;
+	text-align: left;
+}
+
+#progress p
+{
+	overflow: hidden;
+	display: block;
+	width: 250px;
+	height: 10px;
+	padding: 2px 5px;
+	margin: 2px 1px 1px 1px;
+	border: 1px inset #446;
+		
+}
+
+#progress p.success
+{
+	background: #ccc none 0 0 no-repeat;
+}
+#progress p.failed
+{
+	background: #c00 none 0 0 no-repeat;
+}

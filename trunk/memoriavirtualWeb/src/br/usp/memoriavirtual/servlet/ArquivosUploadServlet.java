@@ -62,7 +62,9 @@ public class ArquivosUploadServlet extends HttpServlet {
 		String nomeBean = request.getRequestURL().toString();
 		nomeBean = nomeBean.substring(nomeBean.indexOf("bean") + 4,
 				nomeBean.length());
-
+		
+		
+	
 		for (Part part : request.getParts()) {
 
 			BufferedInputStream in = new BufferedInputStream(request.getPart(
@@ -99,87 +101,17 @@ public class ArquivosUploadServlet extends HttpServlet {
 
 			in.close();
 			if (tipoArquivo.startsWith("image")) {
-				BufferedImage imagem = ImageIO
-						.read(new ByteArrayInputStream(b));
-
-				int new_w = 168, new_h = 168;
-				new_h = (int) (((double) new_w / imagem.getWidth()) * imagem
-						.getHeight());
-				// System.out.println(imagem.getHeight());
-				BufferedImage new_img = new BufferedImage(new_w, new_h,
-						BufferedImage.TYPE_INT_RGB);
-				Graphics2D g = new_img.createGraphics();
-
-				g.drawImage(imagem, 0, 0, new_w, new_h, null);
-
-				ByteArrayOutputStream aux = new ByteArrayOutputStream();
-				ImageIO.write(new_img, "JPG", aux);
-
-				byte[] c = aux.toByteArray();
-
-				System.out.println(b.length);
-				System.out.println(c.length);
-				multimidia = new Multimidia(nomeArquivo, b, tipoArquivo, null,
-						new Multimidia("Thumb"
-								+ nomeArquivo.substring(0,
-										nomeArquivo.length() - 4) + ".jpg", c,
-								"image/jpg", null, null));
+				
+				multimidia = this.processingImage(b, nomeArquivo, tipoArquivo);
+			
 			} else if (tipoArquivo.startsWith("video")) {
-				
-				String pathToWeb = getServletContext().getRealPath(File.separator);
-				File f = new File(pathToWeb + "resources/imagens/File-Video-icon.png");
-				
-				BufferedImage imagem = ImageIO.read(f);
-
-				int new_w = imagem.getWidth(), new_h = imagem.getHeight();
-				
-				// System.out.println(imagem.getHeight());
-				BufferedImage new_img = new BufferedImage(new_w, new_h,
-						BufferedImage.TYPE_INT_RGB);
-				Graphics2D g = new_img.createGraphics();
-
-				g.drawImage(imagem, 0, 0, new_w, new_h, null);
-
-				ByteArrayOutputStream aux = new ByteArrayOutputStream();
-				ImageIO.write(new_img, "JPG", aux);
-
-				byte[] c = aux.toByteArray();
-
-				System.out.println(b.length);
-				System.out.println(c.length);
-				multimidia = new Multimidia(nomeArquivo, b, tipoArquivo, null,
-						new Multimidia("Thumb"
-								+ nomeArquivo.substring(0,
-										nomeArquivo.length() - 4) + ".jpg", c,
-								"image/jpg", null, null));
+			
+				multimidia = this.processingVideo(b, nomeArquivo, tipoArquivo);
+			
 			}else if (tipoArquivo.startsWith("audio")) {
 				
-				String pathToWeb = getServletContext().getRealPath(File.separator);
-				File f = new File(pathToWeb + "resources/imagens/File Audio.png");
-				
-				BufferedImage imagem = ImageIO.read(f);
-
-				int new_w = imagem.getWidth(), new_h = imagem.getHeight();
-				
-				// System.out.println(imagem.getHeight());
-				BufferedImage new_img = new BufferedImage(new_w, new_h,
-						BufferedImage.TYPE_INT_RGB);
-				Graphics2D g = new_img.createGraphics();
-
-				g.drawImage(imagem, 0, 0, new_w, new_h, null);
-
-				ByteArrayOutputStream aux = new ByteArrayOutputStream();
-				ImageIO.write(new_img, "JPG", aux);
-
-				byte[] c = aux.toByteArray();
-
-				System.out.println(b.length);
-				System.out.println(c.length);
-				multimidia = new Multimidia(nomeArquivo, b, tipoArquivo, null,
-						new Multimidia("Thumb"
-								+ nomeArquivo.substring(0,
-										nomeArquivo.length() - 4) + ".jpg", c,
-								"image/jpg", null, null));
+				multimidia = this.processingAudio(b, nomeArquivo, tipoArquivo); 
+			
 			}else if (tipoArquivo.startsWith("application/pdf")) {
 				
 				String pathToWeb = getServletContext().getRealPath(File.separator);
@@ -201,8 +133,8 @@ public class ArquivosUploadServlet extends HttpServlet {
 
 				byte[] c = aux.toByteArray();
 
-				System.out.println(b.length);
-				System.out.println(c.length);
+				//System.out.println(b.length);
+				//System.out.println(c.length);
 				multimidia = new Multimidia(nomeArquivo, b, tipoArquivo, null,
 						new Multimidia("Thumb"
 								+ nomeArquivo.substring(0,
@@ -226,5 +158,104 @@ public class ArquivosUploadServlet extends HttpServlet {
 		}
 
 	}
+	protected Multimidia processingImage(byte[] stream, String nomeArquivo, String tipoArquivo ) throws IOException{
+		
+		
+		BufferedImage imagem = ImageIO
+				.read(new ByteArrayInputStream(stream));
 
+		int new_w = 168, new_h = 168;
+		new_h = (int) (((double) new_w / imagem.getWidth()) * imagem
+				.getHeight());
+		// System.out.println(imagem.getHeight());
+		BufferedImage new_img = new BufferedImage(new_w, new_h,
+				BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = new_img.createGraphics();
+
+		g.drawImage(imagem, 0, 0, new_w, new_h, null);
+
+		ByteArrayOutputStream aux = new ByteArrayOutputStream();
+		ImageIO.write(new_img, "JPG", aux);
+
+		
+		
+		return new Multimidia(nomeArquivo, stream, tipoArquivo, null,
+				new Multimidia("Thumb"
+						+ nomeArquivo.substring(0,
+								nomeArquivo.length() - 4) + ".jpg", aux.toByteArray(),
+						"image/jpg", null, null));
+	}
+	
+	protected Multimidia processingVideo(byte[] stream, String nomeArquivo, String tipoArquivo ) throws IOException{
+	
+		String pathToWeb = getServletContext().getRealPath(File.separator);
+		File f = new File(pathToWeb + "resources/imagens/File-Video-icon.png");
+		
+		BufferedImage imagem = ImageIO.read(f);
+
+		int new_w = imagem.getWidth(), new_h = imagem.getHeight();
+		
+		BufferedImage new_img = new BufferedImage(new_w, new_h,
+				BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = new_img.createGraphics();
+
+		g.drawImage(imagem, 0, 0, new_w, new_h, null);
+
+		ByteArrayOutputStream aux = new ByteArrayOutputStream();
+		ImageIO.write(new_img, "JPG", aux);
+		
+		return  new Multimidia(nomeArquivo, stream, tipoArquivo, null,
+				new Multimidia("Thumb"
+						+ nomeArquivo.substring(0,
+								nomeArquivo.length() - 4) + ".jpg", aux.toByteArray(),
+						"image/jpg", null, null));
+	}
+	protected Multimidia processingAudio(byte[] stream, String nomeArquivo, String tipoArquivo ) throws IOException{
+		String pathToWeb = getServletContext().getRealPath(File.separator);
+		File f = new File(pathToWeb + "resources/imagens/File Audio.png");
+		
+		BufferedImage imagem = ImageIO.read(f);
+
+		int new_w = imagem.getWidth(), new_h = imagem.getHeight();
+		
+		
+		BufferedImage new_img = new BufferedImage(new_w, new_h,
+				BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = new_img.createGraphics();
+
+		g.drawImage(imagem, 0, 0, new_w, new_h, null);
+
+		ByteArrayOutputStream aux = new ByteArrayOutputStream();
+		ImageIO.write(new_img, "JPG", aux);
+
+		
+		return new Multimidia(nomeArquivo, stream, tipoArquivo, null,
+				new Multimidia("Thumb"
+						+ nomeArquivo.substring(0,
+								nomeArquivo.length() - 4) + ".jpg", aux.toByteArray(),
+						"image/jpg", null, null));
+	}
+	protected Multimidia processingPDF(byte[] stream, String nomeArquivo, String tipoArquivo ) throws IOException{
+		String pathToWeb = getServletContext().getRealPath(File.separator);
+		File f = new File(pathToWeb + "resources/imagens/file-pdf-icon.png");
+		
+		BufferedImage imagem = ImageIO.read(f);
+
+		int new_w = imagem.getWidth(), new_h = imagem.getHeight();
+		
+		BufferedImage new_img = new BufferedImage(new_w, new_h,
+				BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = new_img.createGraphics();
+
+		g.drawImage(imagem, 0, 0, new_w, new_h, null);
+
+		ByteArrayOutputStream aux = new ByteArrayOutputStream();
+		ImageIO.write(new_img, "JPG", aux);
+		
+		return new Multimidia(nomeArquivo, stream, tipoArquivo, null,
+				new Multimidia("Thumb"
+						+ nomeArquivo.substring(0,
+								nomeArquivo.length() - 4) + ".jpg", aux.toByteArray(),
+						"image/jpg", null, null));
+	}
 }

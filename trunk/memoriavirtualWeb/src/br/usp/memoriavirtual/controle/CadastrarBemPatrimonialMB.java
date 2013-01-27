@@ -18,6 +18,7 @@ import javax.faces.model.SelectItem;
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.Autoria.TipoAutoria;
+import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -307,9 +308,19 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			// adcionando fontes de informação
 			this.bemPatrimonial.setFontesInformacao(this.fontesInformacao);
 			// fim adcionando fontes de informação
-
-			this.cadastrarBemPatrimonialEJB
-					.cadastrarBemPatrimonial(this.bemPatrimonial);
+			this.bemPatrimonial.setPesquisadores(this.pesquisadores);
+			ContainerMultimidia c = new ContainerMultimidia();
+			for(Multimidia i : midias){
+				c.addMultimidia(i);
+			}
+			this.bemPatrimonial.setContainerMultimidia(c);
+			try {
+				this.cadastrarBemPatrimonialEJB
+						.cadastrarBemPatrimonial(this.bemPatrimonial);
+			} catch (ModeloException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
 					"resultado");

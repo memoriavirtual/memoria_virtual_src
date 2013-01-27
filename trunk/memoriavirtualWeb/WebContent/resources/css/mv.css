@@ -653,7 +653,7 @@ textarea:focus {
 .buscarAutoria {
 	position: absolute;
 	width: 237px;
-	margin-left: 146px;
+	margin-left: 130px;
 	background: #F5F1E1;
 	border-radius: 0px 0px 7px 7px;
 }
@@ -673,7 +673,7 @@ textarea:focus {
 	z-index: 1000;
 	float: left;
 	position: fixed;
-	overflow: scroll; 
+	overflow: hidden;
 }
 #cadastroNovoAutor div {
 	position: relative;
@@ -690,7 +690,19 @@ textarea:focus {
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.9);
 }
+.setaRolarDir{
+	width: 100px;
+	height: 100%;
+	float: left;
+	opacity: 0.1;
+}
 
+.setaRolarEsq{
+	width: 100px;
+	height: 100%;
+	float: right;
+	opacity: 0.1;
+}
 .cadastroNovoAutorDesativado {
 	display: none;
 }
@@ -705,8 +717,8 @@ textarea:focus {
 }
 
 .imageNoPlayer{
-height: 80%;
-margin-top: 5%;
+	height: 80%;
+	margin-top: 5%;
 }
 
 #imgbusca{
