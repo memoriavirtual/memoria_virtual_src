@@ -257,7 +257,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		
 		if(this.administrador == null){
 			MensagensDeErro.getErrorMessage(
-					"cadastrarInstituicaoErroTelefoneVazio",
+					"editarCadastroUsuarioAprovadorVazio",
 					"validacaoAprovador");
 			return false;
 		}
@@ -327,7 +327,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	public String editarCadastroUsuario() {
 		this.validateNome();
 		this.validateTelefone();
-		this.validateAprovador();
+		if(this.exibirAcessos)
+			this.validateAprovador();
 		
 		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
 

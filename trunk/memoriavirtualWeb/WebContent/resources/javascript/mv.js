@@ -374,3 +374,21 @@ mostrarDisponibilidade = (function(menu) {
 	var elem1 = document.getElementById("disponibilidade:acesso");
 	elem1.setAttribute("style", "display: none;");
 });
+
+
+inicioUnity = (function(){
+/**
+ * Integração com o Unity Beta
+ */
+function unityReady() {
+	  // Integrate with Unity!
+	}
+	var Unity = external.getUnityObject(1.0); 
+
+	Unity.init({name: "Memoria Virtual",
+	            iconUrl: "http://localhost:8080/memoriavirtual/icon.png",
+	            onInit: unityReady});
+});
+
+
+
