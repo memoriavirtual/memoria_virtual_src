@@ -84,6 +84,8 @@ function FileFrame(fileArea, bean, botao, img, typeFile) {
 		xhr.onreadystatechange = function(e) {
 			if (xhr.readyState == 4) {
 				var a = document.getElementById("uploadComponente");
+				progress.setAttribute("value", 0);
+				progress.setAttribute("max", 100);
 				a.removeChild(document.getElementById("progress"));
 				window.setTimeout(self.voltar, 0);
 			}

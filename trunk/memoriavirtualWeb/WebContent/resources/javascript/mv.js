@@ -386,7 +386,7 @@ function unityReady() {
 	var Unity = external.getUnityObject(1.0); 
 
 	Unity.init({name: "Memoria Virtual",
-	            iconUrl: "http://localhost:8080/memoriavirtual/icon.png",
+	            iconUrl: "http?://localhost:8080?/memoriavirtual/icon.png",
 	            onInit: unityReady});
 });
 

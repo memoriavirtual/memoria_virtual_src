@@ -33,7 +33,7 @@ public class Assunto implements Comparable<Assunto>, Serializable {
 	@Id
 	private String assunto;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "assuntos", cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "assuntos", cascade = CascadeType.MERGE)
 	private Set<BemPatrimonial> bens;
 
 	public String getAssunto() {

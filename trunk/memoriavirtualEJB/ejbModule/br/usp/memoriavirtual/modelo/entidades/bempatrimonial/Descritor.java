@@ -33,7 +33,7 @@ public class Descritor implements Comparable<Descritor> , Serializable{
 	@Id
 	private String descritor;
 	
-	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "descritores", cascade = CascadeType.ALL)
+	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "descritores", cascade = CascadeType.MERGE  )
 	private Set<BemPatrimonial> bens;
 
 	public String getDescritor() {
