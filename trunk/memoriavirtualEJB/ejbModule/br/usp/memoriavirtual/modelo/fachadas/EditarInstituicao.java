@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -81,7 +80,6 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		return instituicao;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void editarInstituicao(Instituicao instituicao)
 			throws ModeloException {
