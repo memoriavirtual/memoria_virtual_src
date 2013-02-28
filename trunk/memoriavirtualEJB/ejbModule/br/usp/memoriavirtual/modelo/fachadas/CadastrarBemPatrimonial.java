@@ -5,14 +5,10 @@ package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.List;
 
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.RollbackException;
-
-import org.eclipse.persistence.exceptions.TransactionException;
 
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
