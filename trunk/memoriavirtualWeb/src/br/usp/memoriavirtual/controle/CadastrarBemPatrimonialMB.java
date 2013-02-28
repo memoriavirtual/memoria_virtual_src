@@ -61,21 +61,21 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	}
 
 	@EJB
-	private EditarAutorRemote editarAutorEJB;
+	protected EditarAutorRemote editarAutorEJB;
 	@EJB
-	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
+	protected CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
 	@EJB
-	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
+	protected ExcluirInstituicaoRemote excluirInstituicaoEJB;
 	@EJB
-	private EditarInstituicaoRemote editarInstituicaoEJB;
+	protected EditarInstituicaoRemote editarInstituicaoEJB;
 
 	private static final long serialVersionUID = 7413170360811077491L;
 
-	private SerialHtmlDataTable dataTableIntervencao = new SerialHtmlDataTable();
-	private SerialHtmlDataTable dataTablePesquisador = new SerialHtmlDataTable();
-	private SerialHtmlDataTable dataTableFontesInformacao = new SerialHtmlDataTable();
+	protected SerialHtmlDataTable dataTableIntervencao = new SerialHtmlDataTable();
+	protected SerialHtmlDataTable dataTablePesquisador = new SerialHtmlDataTable();
+	protected SerialHtmlDataTable dataTableFontesInformacao = new SerialHtmlDataTable();
 
-	private boolean botaRemoverTitulo = false;
+	protected boolean botaRemoverTitulo = false;
 
 	protected List<Intervencao> intervencoes = new ArrayList<Intervencao>();
 	protected List<Pesquisador> pesquisadores = new ArrayList<Pesquisador>();
@@ -86,9 +86,9 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
 	
-	private BemPatrimonial bemPatrimonial = new BemPatrimonial();
+	protected BemPatrimonial bemPatrimonial = new BemPatrimonial();
 
-	private SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
+	protected SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
 	protected boolean geralExterno;
 	protected String geralNomeInstituicao;
 	protected String geralNaturezaBem;
@@ -101,8 +101,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected List<Titulo> geralTitulos = new ArrayList<Titulo>();
 
 	protected List<Autor> autores = new ArrayList<Autor>();
-	private SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
-	private boolean cadastrarAutor = false;
+	protected SerialHtmlDataTable dataTableAutoria = new SerialHtmlDataTable();
+	protected boolean cadastrarAutor = false;
 	protected List<Autoria> autorias = new ArrayList<Autoria>();
 
 	protected String producaoLocal;
@@ -1457,9 +1457,9 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
-		private String nomeAutor = "";
-		private String tipoAutoria = "";
+		protected static final long serialVersionUID = 1L;
+		protected String nomeAutor = "";
+		protected String tipoAutoria = "";
 
 		public String getNomeAutor() {
 			return nomeAutor;
@@ -1485,7 +1485,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
+		protected static final long serialVersionUID = 1L;
 
 	}
 

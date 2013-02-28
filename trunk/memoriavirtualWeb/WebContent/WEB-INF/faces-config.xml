@@ -80,7 +80,11 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-
+	<managed-bean>
+		<managed-bean-name>editarBemPatrimonialMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.EditarBemPatrimonialMB</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login</display-name>
@@ -231,7 +235,16 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-
+	
+	<navigation-rule>
+		<display-name>editarBemPatrimonial</display-name>
+		<from-view-id>/restrito/editarbempatrimonial.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>reset</from-outcome>
+			<to-view-id>/restrito/editarbempatrimonial.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<display-name>cadastrarAutor</display-name>
