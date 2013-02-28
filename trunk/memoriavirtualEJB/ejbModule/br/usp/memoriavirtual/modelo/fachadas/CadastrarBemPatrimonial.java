@@ -49,39 +49,38 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 	@Override
 	public void cadastrarBemPatrimonial(BemPatrimonial bem)
 			throws ModeloException {
+		for (Assunto a : bem.getAssuntos()) {
+			Query query;
+			query = this.entityManager
+					.createQuery("SELECT a FROM Assunto a WHERE  a.assunto = :assunto ");
+			query.setParameter("assunto", a.getAssunto());
+			try {
+				a = (Assunto) query.getSingleResult();
+
+			} catch (Exception e1) {
+				throw new ModeloException(e1);
+			}
+		}
+		// entityManager.persist(bem);
+		for (Descritor a : bem.getDescritores()) {
+			Query query;
+			query = this.entityManager
+					.createQuery("SELECT a FROM Descritor a WHERE  a.descritor = :descritor ");
+			query.setParameter("descritor", a.getDescritor());
+			try {
+				a = (Descritor) query.getSingleResult();
+
+			} catch (Exception e1) {
+				throw new ModeloException(e1);
+			}
+		}
 		try {
 			entityManager.persist(bem);
 		} catch (Exception e) {
-			for (Assunto a : bem.getAssuntos()) {
-				Query query;
-				query = this.entityManager
-						.createQuery("SELECT a FROM Assunto a WHERE  a.assunto = :assunto ");
-				query.setParameter("assunto", a.getAssunto());
-				try {
-					a = (Assunto) query.getSingleResult();
-					
-				} catch (Exception e1) {
-					throw new ModeloException(e1);
-				}
-			}
-			//entityManager.persist(bem);
-			for (Descritor a : bem.getDescritores()) {
-				Query query;
-				query = this.entityManager
-						.createQuery("SELECT a FROM Descritor a WHERE  a.descritor = :descritor ");
-				query.setParameter("descritor", a.getDescritor());
-				try {
-					a = (Descritor) query.getSingleResult();
-					
-				} catch (Exception e1) {
-					throw new ModeloException(e1);
-				}
-			}
+			throw new ModeloException(e);
 		}
-		
-		
 		for (Titulo a : bem.getTitulos())
-			a.setBempatrimonial(bem);
+			a.setBempatrimonial(bem); 
 		for (Autoria a : bem.getAutorias())
 			a.setBemPatrimonial(bem);
 
