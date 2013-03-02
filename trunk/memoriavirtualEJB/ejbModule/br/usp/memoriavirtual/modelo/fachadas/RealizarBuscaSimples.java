@@ -31,6 +31,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		Query query;
 		stringsDeBusca = obterStrings(busca);
 
+		/*Ordem de busca: titulos, descritores e autores*/
 		for (String s : stringsDeBusca) {
 			try {
 				query = entityManager
@@ -43,7 +44,13 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 					if (!bens.contains(b))
 						bens.add(b);
 				}
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
 
+		for (String s : stringsDeBusca) {
+			try {
 				query = entityManager.createQuery("SELECT b FROM "
 						+ "BemPatrimonial b WHERE "
 						+ "b.descritores LIKE :padrao");
@@ -53,7 +60,13 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 					if (!bens.contains(b))
 						bens.add(b);
 				}
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
 
+		for (String s : stringsDeBusca) {
+			try {
 				query = entityManager
 						.createQuery("SELECT au.bemPatrimonial FROM Autoria au WHERE "
 								+ "au.autor.nome LIKE :padrao OR "
@@ -65,10 +78,10 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 					if (!bens.contains(b))
 						bens.add(b);
 				}
-
 			} catch (Exception e) {
 				throw new ModeloException(e);
 			}
+
 		}
 
 		return bens;

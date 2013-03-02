@@ -5,36 +5,47 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Realizar Busca Simples</title>
-	<h:outputStylesheet name="mv.css" library="css" />
-</h:head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>realizarBuscaSimples</title>
+<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
+</head>
+
 <h:body>
 
-	<h:graphicImage library="imagens" id="imgbusca"
-		name="logo_mv_catalogacao.png" />
+	<h:outputScript library="javascript" name="jquery.js" />
+	<h:outputScript library="javascript" name="abas.js" />
+	<h:outputScript library="javascript" name="jquery.corner.js" />
+	<h:outputScript library="javascript" name="mv.js" />
+	<h:outputScript library="css" name="mv.css" />
+	<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
+		class="imgbusca" />
 
 	<div class="erroPrincipal">
 		<h:message id="resultado" for="resultado" infoClass="sucesso"
 			errorClass="erro"></h:message>
 	</div>
-		<p class="pbusca">#{mensagens.realizarBuscaSimplesDescricao}</p>
+	<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesTitle}</div>
 
-		<h:form method="post" prependId="false">
-		<fieldset>
-			<div>
-				<h:inputText class="busca" value="#{realizarBuscaSimplesMB.busca}" />
 
-			</div>
+	<h:form method="post" prependId="false">
+		<div class="buscadiv">
+			<fieldset>
+				<h:inputText value="#{realizarBuscaSimplesMB.busca}"
+					class="inputbusca" autocomplete="off">
+				</h:inputText>
 
-		</fieldset>
-		<h:commandButton id="botaoCadastrar"
-			value="#{mensagens.realizarBuscaSimplesBotaoBuscar}"
-			action="#{realizarBuscaSimplesMB.buscar}">
 
-		</h:commandButton>
+			</fieldset>
+
+			<h:commandButton id="botaoBusca"
+				value="#{mensagens.realizarBuscaSimplesBuscar}"
+				action="#{realizarBuscaSimplesMB.buscar()}">
+
+			</h:commandButton>
+		</div>
 	</h:form>
-
+	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
+		de Engenharia de Software - ICMC-USP</p>
 </h:body>
 </html>

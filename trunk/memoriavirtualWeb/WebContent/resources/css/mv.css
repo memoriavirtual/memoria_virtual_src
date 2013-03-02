@@ -262,7 +262,7 @@ h4 {
 	margin-bottom:10px;
 }*/
 .labels {
-	float:left;
+	float: left;
 	width: 45%;
 	display: inline-block;
 	margin: 0 10px;
@@ -587,7 +587,6 @@ textarea:focus {
 	height: auto !important;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	
 }
 
 .titulos td:HOVER {
@@ -675,6 +674,7 @@ textarea:focus {
 	position: fixed;
 	overflow: hidden;
 }
+
 #cadastroNovoAutor div {
 	position: relative;
 	width: 925px;
@@ -683,6 +683,7 @@ textarea:focus {
 	margin-top: 10%;
 	margin-left: 15%;
 }
+
 .cadastroNovoAutor {
 	position: fixed;
 	z-index: 1000;
@@ -690,19 +691,21 @@ textarea:focus {
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.9);
 }
-.setaRolarDir{
+
+.setaRolarDir {
 	width: 100px;
 	height: 100%;
 	float: left;
 	opacity: 0.1;
 }
 
-.setaRolarEsq{
+.setaRolarEsq {
 	width: 100px;
 	height: 100%;
 	float: right;
 	opacity: 0.1;
 }
+
 .cadastroNovoAutorDesativado {
 	display: none;
 }
@@ -711,29 +714,42 @@ textarea:focus {
 	width: 1000px;
 	height: 850px;
 	overflow: hidden;
- 	position: absolute;
+	position: absolute;
 	top: -155px;
 	left: -40px;
 }
 
-.imageNoPlayer{
+.imageNoPlayer {
 	height: 80%;
 	margin-top: 5%;
 }
 
-#imgbusca{
-	margin: auto;
+.imgbusca {
 	margin-top: 100px;
-	width: 500px;
-	height: 75px;
 }
 
-input.busca{
-	width: 500px;
-	margin-bottom: 20px;
-	margin-top: 20px;
+.labelbusca {
+	width: 45%;
+	margin: 0 10px;
+	font-size: 16px;
 }
 
-p.pbusca{
-	size: 40px;
+#botaoBusca {
+	margin-top: 5px;
+}
+
+.buscadiv {
+	margin: auto;
+	text-align: center;
+	width: 300px;
+}
+
+.inputbusca {
+	margin: auto;
+	width: 100%;
+}
+
+p .rodape{
+	position: absolute;
+	bottom: 0;
 }
