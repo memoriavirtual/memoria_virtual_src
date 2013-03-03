@@ -744,12 +744,11 @@ textarea:focus {
 	width: 300px;
 }
 
+.continente{
+	height: 100%;
+}
+
 .inputbusca {
 	margin: auto;
 	width: 100%;
-}
-
-p .rodape{
-	position: absolute;
-	bottom: 0;
 }

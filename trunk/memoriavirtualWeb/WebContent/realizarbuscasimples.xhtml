@@ -18,34 +18,44 @@
 	<h:outputScript library="javascript" name="jquery.corner.js" />
 	<h:outputScript library="javascript" name="mv.js" />
 	<h:outputScript library="css" name="mv.css" />
-	<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
-		class="imgbusca" />
+	<div class="continente">
+		<div id="usuario">
 
-	<div class="erroPrincipal">
-		<h:message id="resultado" for="resultado" infoClass="sucesso"
-			errorClass="erro"></h:message>
-	</div>
-	<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesTitle}</div>
+			<h:form>
+				&lt;<h:outputText value="#{usuario.id}" />&gt;,
+				<h:commandLink rendered="#{realizarBuscaSimplesMB.rendSair}"
+					action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
+				<h:commandLink rendered="#{realizarBuscaSimplesMB.rendLogin}"
+					action="#{realizarBuscaSimplesMB.redirecionarLogin}">Login</h:commandLink>
+			</h:form>
 
-
-	<h:form method="post" prependId="false">
-		<div class="buscadiv">
-			<fieldset>
-				<h:inputText value="#{realizarBuscaSimplesMB.busca}"
-					class="inputbusca" autocomplete="off">
-				</h:inputText>
-
-
-			</fieldset>
-
-			<h:commandButton id="botaoBusca"
-				value="#{mensagens.realizarBuscaSimplesBuscar}"
-				action="#{realizarBuscaSimplesMB.buscar()}">
-
-			</h:commandButton>
 		</div>
-	</h:form>
+		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
+			class="imgbusca" />
+
+		<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesTitle}</div>
+
+
+		<h:form method="post" prependId="false">
+			<div class="buscadiv">
+				<fieldset>
+					<h:inputText value="#{realizarBuscaSimplesMB.busca}"
+						class="inputbusca" autocomplete="off">
+					</h:inputText>
+
+
+				</fieldset>
+
+				<h:commandButton id="botaoBusca"
+					value="#{mensagens.realizarBuscaSimplesBuscar}"
+					action="#{realizarBuscaSimplesMB.buscar()}">
+
+				</h:commandButton>
+			</div>
+		</h:form>
+	</div>
 	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
 		de Engenharia de Software - ICMC-USP</p>
+
 </h:body>
 </html>
