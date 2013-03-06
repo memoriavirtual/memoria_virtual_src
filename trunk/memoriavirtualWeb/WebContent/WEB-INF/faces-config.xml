@@ -235,7 +235,7 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<display-name>editarBemPatrimonial</display-name>
 		<from-view-id>/restrito/editarbempatrimonial.xhtml</from-view-id>
@@ -345,6 +345,15 @@
 			<from-outcome>cancelar</from-outcome>
 			<to-view-id>/restrito/index.xhtml</to-view-id>
 			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<display-name>realizarBuscaSimples</display-name>
+		<from-view-id>realizarbuscasimples.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>resultados</from-outcome>
+			<to-view-id>resultadosbusca.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

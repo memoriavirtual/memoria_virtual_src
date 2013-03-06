@@ -55,8 +55,8 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public CadastrarBemPatrimonialMB() {
 		super();
 		this.geralTitulos.add(new Titulo());
-//		this.apresentaAutorias.add(new ApresentaAutoria());
-//		this.autorias.add(new Autoria());
+		// this.apresentaAutorias.add(new ApresentaAutoria());
+		// this.autorias.add(new Autoria());
 
 	}
 
@@ -82,10 +82,9 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected List<String> fontesInformacao = new ArrayList<String>();
 	protected List<CadastrarBemPatrimonialMB.ApresentaAutoria> apresentaAutorias = new ArrayList<CadastrarBemPatrimonialMB.ApresentaAutoria>();
 
-	
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
-	
+
 	protected BemPatrimonial bemPatrimonial = new BemPatrimonial();
 
 	protected SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
@@ -184,7 +183,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-			if(this.geralTipoDoBemPatrimonial == null){
+			if (this.geralTipoDoBemPatrimonial == null) {
 				this.geralTipoDoBemPatrimonial = bundle
 						.getString("cadastrarBemTipoLista0");
 			}
@@ -242,20 +241,22 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 								this.getEnumTipoAutoria(this.apresentaAutorias
 										.get(i).tipoAutoria));
 			}
+
 			this.bemPatrimonial.setAutorias(autorias);
+
 			// fim autorias
-			// anexando produção
+			// anexando produï¿½ï¿½o
 
 			this.bemPatrimonial.setProducao(new Producao(this.producaoLocal,
 					this.producaoAno, this.producaoEdicao,
 					this.producaoOutrasRes));
-			// fim anexando produção
+			// fim anexando produï¿½ï¿½o
 			// System.out.println("normal");
-			// anexando descrição
+			// anexando descriï¿½ï¿½o
 			this.bemPatrimonial
 					.setCaracteristicasFisTecExec(this.caracteristicasFisicas);
 
-			// fim anexando descrição
+			// fim anexando descriï¿½ï¿½o
 
 			// anexando Intervencao e diagnostico
 			this.bemPatrimonial.setIntervencoes(intervencoes);
@@ -263,7 +264,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 					this.estadoPreser, this.estadoConser,
 					this.estadoConservNotas));
 			// fim anexando intervencao e diagnostico
-			// anexando Disponibilidade Uso e Protecão
+			// anexando Disponibilidade Uso e Protecï¿½o
 
 			this.bemPatrimonial
 					.setDisponibilidadeUsoProtecao(new DisponibilidadeUsoProtecao(
@@ -271,7 +272,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 							this.condicoesDeReproducao, this.dataDeRetorno,
 							this.notasUsoAproveitamento, this.protecao,
 							this.legislacaoNprocesso, this.instituicaoProtetora));
-			// Fim anexando Disponibilidade Uso e Protecão
+			// Fim anexando Disponibilidade Uso e Protecï¿½o
 			// anexado historio e procerdencia
 
 			this.bemPatrimonial
@@ -286,7 +287,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 			// anexando assuntos
 			List<Assunto> assun = new ArrayList<Assunto>();
-			
+
 			String[] a = this.assunto.split(" ");
 			for (int i = 0; i < a.length; i++) {
 				assun.add(new Assunto());
@@ -305,12 +306,12 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 			this.bemPatrimonial.setDescritores(new TreeSet<Descritor>(descr));
 			// fim descritores
 
-			// adcionando fontes de informação
+			// adcionando fontes de informaï¿½ï¿½o
 			this.bemPatrimonial.setFontesInformacao(this.fontesInformacao);
-			// fim adcionando fontes de informação
+			// fim adcionando fontes de informaï¿½ï¿½o
 			this.bemPatrimonial.setPesquisadores(this.pesquisadores);
 			ContainerMultimidia c = new ContainerMultimidia();
-			for(Multimidia i : midias){
+			for (Multimidia i : midias) {
 				c.addMultimidia(i);
 			}
 			this.bemPatrimonial.setContainerMultimidia(c);
@@ -337,13 +338,13 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 		return this.midias;
 	}
 
-	public void adicionarMidia (Multimidia midia) {
-		this.midias.add( midia);
-		
-		if((this.midias.size() % 4 ) == 1  ){
-			Integer mult = this.midias.size() -1;
+	public void adicionarMidia(Multimidia midia) {
+		this.midias.add(midia);
+
+		if ((this.midias.size() % 4) == 1) {
+			Integer mult = this.midias.size() - 1;
 			this.ApresentaMidias.add(mult);
-			
+
 		}
 	}
 
@@ -362,13 +363,13 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	@Override
 	public String removeMidia(int index) {
 		this.midias.remove(index);
-		
-		if(this.midias.size() % 4  == 0){
-			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
-		} 
+
+		if (this.midias.size() % 4 == 0) {
+			this.ApresentaMidias.remove(this.ApresentaMidias.size() - 1);
+		}
 		return null;
 	}
-	
+
 	@Override
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
@@ -1489,7 +1490,6 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 
 	}
 
-
 	public ArrayList<Integer> getApresentaMidias() {
 		return ApresentaMidias;
 	}
@@ -1497,8 +1497,9 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
 		ApresentaMidias = apresentaMidias;
 	}
-	public boolean  isRenderCell(int index) {
-		if(this.midias.size() > index ){
+
+	public boolean isRenderCell(int index) {
+		if (this.midias.size() > index) {
 			return true;
 		}
 		return false;

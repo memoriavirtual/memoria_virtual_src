@@ -745,10 +745,20 @@ textarea:focus {
 }
 
 .continente{
-	height: 100%;
+	height: 85%;
 }
 
 .inputbusca {
 	margin: auto;
 	width: 100%;
+}
+.caixabusca{
+	margin-left: 0px;
+	margin-top: 20px;
+	width: 500px;
+}
+
+.linkresultado{
+	font-size: 20px;
+	margin-left: 10px;
 }

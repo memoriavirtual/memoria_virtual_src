@@ -31,14 +31,14 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		Query query;
 		stringsDeBusca = obterStrings(busca);
 
-		/*Ordem de busca: titulos, descritores e autores*/
+		// Ordem de busca: titulos, descritores e autores
 		for (String s : stringsDeBusca) {
 			try {
 				query = entityManager
 						.createQuery("SELECT t.bemPatrimonial FROM "
 								+ "BEMPATRIMONIAL_TITULOS t WHERE  "
 								+ "t.valor LIKE :padrao");
-				query.setParameter("padrao", "%" + s + "%");
+				query.setParameter("padrao", "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {
 					if (!bens.contains(b))
@@ -49,40 +49,27 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			}
 		}
 
-		for (String s : stringsDeBusca) {
-			try {
-				query = entityManager.createQuery("SELECT b FROM "
-						+ "BemPatrimonial b WHERE "
-						+ "b.descritores LIKE :padrao");
-				query.setParameter("padrao", "%" + s + "%");
-				parcial = (List<BemPatrimonial>) query.getResultList();
-				for (BemPatrimonial b : parcial) {
-					if (!bens.contains(b))
-						bens.add(b);
-				}
-			} catch (Exception e) {
-				throw new ModeloException(e);
-			}
-		}
+		/*
+		 * for (String s : stringsDeBusca) { try { query = entityManager
+		 * .createQuery("SELECT b FROM BEMPATRIMONIAL_DESCRITOR b"); //
+		 * query.setParameter("padrao", "%" + s + "%"); parcial =
+		 * (List<BemPatrimonial>) query.getResultList(); for (BemPatrimonial b :
+		 * parcial) { if (!bens.contains(b)) bens.add(b); } } catch (Exception
+		 * e) { throw new ModeloException(e); } }
+		 */
 
-		for (String s : stringsDeBusca) {
-			try {
-				query = entityManager
-						.createQuery("SELECT au.bemPatrimonial FROM Autoria au WHERE "
-								+ "au.autor.nome LIKE :padrao OR "
-								+ "au.autor.sobrenome LIKE :padrao OR "
-								+ "au.autor.codinome LIKE :padrao");
-				query.setParameter("padrao", "%" + s + "%");
-				parcial = (List<BemPatrimonial>) query.getResultList();
-				for (BemPatrimonial b : parcial) {
-					if (!bens.contains(b))
-						bens.add(b);
-				}
-			} catch (Exception e) {
-				throw new ModeloException(e);
-			}
-
-		}
+		/*
+		 * for (String s : stringsDeBusca) { try { query = entityManager
+		 * .createQuery("SELECT au.bemPatrimonial FROM Autoria au WHERE " +
+		 * "au.autor.nome LIKE :padrao OR " +
+		 * "au.autor.sobrenome LIKE :padrao OR " +
+		 * "au.autor.codinome LIKE :padrao"); query.setParameter("padrao", "%" +
+		 * s + "%"); parcial = (List<BemPatrimonial>) query.getResultList(); for
+		 * (BemPatrimonial b : parcial) { if (!bens.contains(b)) bens.add(b); }
+		 * } catch (Exception e) { throw new ModeloException(e); }
+		 * 
+		 * }
+		 */
 
 		return bens;
 	}

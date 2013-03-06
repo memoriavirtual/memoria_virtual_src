@@ -7,7 +7,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>#{mensagens.realizarBuscaSimplesTitle}</title>
+<title>#{mensagens.realizarBuscaSimplesResultado}
+	#{realizarBuscaSimplesMB.busca}</title>
 <link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
 </head>
 
@@ -32,29 +33,43 @@
 			</h:form>
 
 		</div>
-		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
-			class="imgbusca" />
+		<div class="caixabusca">
+			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
 
-		<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesTitle}</div>
-
-
-		<h:form method="post" prependId="false">
-			<div class="buscadiv">
-				<fieldset>
-					<h:inputText value="#{realizarBuscaSimplesMB.busca}"
-						class="inputbusca" autocomplete="off">
-					</h:inputText>
+			<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesResultado}
+				#{realizarBuscaSimplesMB.busca}</div>
 
 
-				</fieldset>
+			<h:form method="post" prependId="false">
+				<div class="buscadiv">
+					<fieldset>
+						<h:inputText value="#{realizarBuscaSimplesMB.busca}"
+							class="inputbusca" autocomplete="off">
+						</h:inputText>
 
-				<h:commandButton id="botaoBusca"
-					value="#{mensagens.realizarBuscaSimplesBuscar}"
-					action="#{realizarBuscaSimplesMB.buscar()}">
 
-				</h:commandButton>
-			</div>
+					</fieldset>
+
+					<h:commandButton id="botaoBusca"
+						value="#{mensagens.realizarBuscaSimplesBuscar}"
+						action="#{realizarBuscaSimplesMB.buscar()}">
+
+					</h:commandButton>
+				</div>
+			</h:form>
+		</div>
+		<h:form>
+			<fieldset>
+				<h:dataTable id="resultados" var="bem"
+					value="#{realizarBuscaSimplesMB.bens}">
+					<h:column>
+						<h:commandLink class="linkresultado"
+							action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.titulos.get(0).valor}</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</fieldset>
 		</h:form>
+
 	</div>
 	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
 		de Engenharia de Software - ICMC-USP</p>

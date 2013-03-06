@@ -7,7 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>#{mensagens.realizarBuscaSimplesTitle}</title>
+<title>#{realizarBuscaSimplesMB.bem.titulos.get(0)}</title>
 <link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
 </head>
 
@@ -35,26 +35,12 @@
 		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
 			class="imgbusca" />
 
-		<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesTitle}</div>
+		<div class="conteudoTitulo">
+			#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</div>
+		<h:outputText>#{realizarBuscaSimplesMB.bem.colecao}</h:outputText>
 
 
-		<h:form method="post" prependId="false">
-			<div class="buscadiv">
-				<fieldset>
-					<h:inputText value="#{realizarBuscaSimplesMB.busca}"
-						class="inputbusca" autocomplete="off">
-					</h:inputText>
 
-
-				</fieldset>
-
-				<h:commandButton id="botaoBusca"
-					value="#{mensagens.realizarBuscaSimplesBuscar}"
-					action="#{realizarBuscaSimplesMB.buscar()}">
-
-				</h:commandButton>
-			</div>
-		</h:form>
 	</div>
 	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
 		de Engenharia de Software - ICMC-USP</p>

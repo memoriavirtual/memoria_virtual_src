@@ -3,24 +3,35 @@ package br.usp.memoriavirtual.controle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "realizarBuscaSimplesMB")
-@RequestScoped
-public class RealizarBuscaSimplesMB {
+@SessionScoped
+public class RealizarBuscaSimplesMB implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4130356176853401265L;
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 	private String busca;
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
+	private BemPatrimonial bem;
+	private Descritor descritor;
 
 	public RealizarBuscaSimplesMB() {
 
@@ -33,8 +44,19 @@ public class RealizarBuscaSimplesMB {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaErro", "resultado");
 			return null;
+
 		}
-		return "sucesso";
+
+		return "resultados";
+	}
+
+	public String resultado(BemPatrimonial b) {
+		this.bem = b;
+		Iterator<Descritor> it = bem.getDescritores().iterator();
+		this.descritor = it.next();
+		System.out.println(this.descritor.getDescritor());
+		return "bempatrimonial";
+
 	}
 
 	public String getBusca() {
@@ -75,8 +97,20 @@ public class RealizarBuscaSimplesMB {
 		}
 	}
 
-	public String redirecionarLogin() {
-		return "login";
+	public BemPatrimonial getBem() {
+		return bem;
+	}
+
+	public void setBem(BemPatrimonial bem) {
+		this.bem = bem;
+	}
+
+	public Descritor getDescritor() {
+		return this.descritor;
+	}
+
+	public void setDescritor(Descritor descritor) {
+		this.descritor = descritor;
 	}
 
 }
