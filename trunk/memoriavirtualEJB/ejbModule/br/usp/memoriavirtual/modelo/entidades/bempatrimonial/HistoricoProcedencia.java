@@ -21,7 +21,9 @@ public class HistoricoProcedencia implements Serializable {
 	private String primeiroProprietario;
 	private String historico;
 	private String instrumentoPesquisa;
+	private String dataAquisicao;
 
+	
 	public HistoricoProcedencia(String tipoAquisicao,
 			String valorVenalTransacao, String dadosDocTransacao,
 			String primeiroProprietario, String historico,
@@ -106,5 +108,10 @@ public class HistoricoProcedencia implements Serializable {
 	public void setInstrumentoPesquisa(String instrumentoPesquisa) {
 		this.instrumentoPesquisa = instrumentoPesquisa;
 	}
-
+	public String getDataAquisicao() {
+		return dataAquisicao;
+	}
+	public void setDataAquisicao(String dataAquisicao) {
+		this.dataAquisicao = dataAquisicao;
+	}
 }

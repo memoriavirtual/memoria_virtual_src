@@ -30,8 +30,10 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6035894025134227970L;
+	
+	
 	@EJB
-	private EditarAutorRemote editarAutorEJB;
+	private transient EditarAutorRemote editarAutorEJB;
 	private String strDeBusca;
 	private List<Autor> autores = new ArrayList<Autor>();
 	private boolean etapa1 = true;

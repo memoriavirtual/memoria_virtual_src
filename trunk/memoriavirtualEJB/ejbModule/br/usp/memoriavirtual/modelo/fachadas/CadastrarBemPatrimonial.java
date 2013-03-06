@@ -58,7 +58,7 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 				a = (Assunto) query.getSingleResult();
 
 			} catch (Exception e1) {
-				throw new ModeloException(e1);
+				entityManager.persist(a);
 			}
 		}
 		// entityManager.persist(bem);
@@ -71,7 +71,7 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 				a = (Descritor) query.getSingleResult();
 
 			} catch (Exception e1) {
-				throw new ModeloException(e1);
+				entityManager.persist(a);
 			}
 		}
 		try {
