@@ -31,7 +31,7 @@ public class RealizarBuscaSimplesMB implements Serializable{
 	private String busca;
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	private BemPatrimonial bem;
-	private Descritor descritor;
+
 
 	public RealizarBuscaSimplesMB() {
 
@@ -52,9 +52,6 @@ public class RealizarBuscaSimplesMB implements Serializable{
 
 	public String resultado(BemPatrimonial b) {
 		this.bem = b;
-		Iterator<Descritor> it = bem.getDescritores().iterator();
-		this.descritor = it.next();
-		System.out.println(this.descritor.getDescritor());
 		return "bempatrimonial";
 
 	}
@@ -103,14 +100,6 @@ public class RealizarBuscaSimplesMB implements Serializable{
 
 	public void setBem(BemPatrimonial bem) {
 		this.bem = bem;
-	}
-
-	public Descritor getDescritor() {
-		return this.descritor;
-	}
-
-	public void setDescritor(Descritor descritor) {
-		this.descritor = descritor;
 	}
 
 }

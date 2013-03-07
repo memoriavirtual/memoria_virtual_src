@@ -33,15 +33,15 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 		// Ordem de busca: titulos, descritores e autores
 		for (String s : stringsDeBusca) {
+			s = s.trim();
+			System.out.println(s);
 			try {
 				query = entityManager
-						.createQuery("SELECT t.bemPatrimonial FROM "
-								+ "BEMPATRIMONIAL_TITULOS t WHERE  "
-								+ "t.valor LIKE :padrao");
-				query.setParameter("padrao", "%");
+						.createQuery("SELECT t.bemPatrimonial FROM BEMPATRIMONIAL_TITULOS t WHERE t.valor LIKE :padrao");
+				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {
-					if (!bens.contains(b))
+					if(!bens.contains(b))
 						bens.add(b);
 				}
 			} catch (Exception e) {
@@ -70,6 +70,10 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		 * 
 		 * }
 		 */
+		
+		for(BemPatrimonial b : bens){
+			System.out.println(b.getTitulos().get(0).getValor());
+		}
 
 		return bens;
 	}
