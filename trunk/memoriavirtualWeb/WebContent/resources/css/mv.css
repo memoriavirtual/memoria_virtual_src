@@ -762,3 +762,11 @@ textarea:focus {
 	font-size: 20px;
 	margin-left: 10px;
 }
+
+.resultados{
+	margin-left: 7%;
+}
+
+table .titulo{
+	margin-left: 30%;
+}

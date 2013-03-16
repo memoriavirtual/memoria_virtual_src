@@ -60,17 +60,14 @@
 		</div>
 		<h:form>
 			<fieldset>
-				<h:dataTable id="resultados" var="bem"
+				<h:dataTable id="resultados" var="bem" class="resultados"
 					value="#{realizarBuscaSimplesMB.bens}">
 					<h:column>
-						<h:outputText>#{mensagens.realizarBuscaSimplesTituloPrincipal}</h:outputText>
 						<h:commandLink class="linkresultado"
 							action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.titulos.get(0).valor}</h:commandLink>
-						<h:outputText>#{mensagens.relizarBuscaSimplesTodosTitulos}</h:outputText>
-						<h:dataTable id="titulos" var="titulo" value="#{bem.titulos}">
+						<h:dataTable id="titulos" class="titulo" var="titulo" value="#{bem.titulos}">
 							<h:column>#{titulo.valor}</h:column>
 						</h:dataTable>
-
 					</h:column>
 				</h:dataTable>
 			</fieldset>
