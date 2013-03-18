@@ -96,6 +96,8 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		return null;
 	}
 
+	
+	
 	public String selecionarBemPatrimonial(BemPatrimonial bemPatrimonial) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -107,9 +109,10 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			intervencoes = bemPatrimonial.getIntervencoes();
 			pesquisadores = bemPatrimonial.getPesquisadores();
 			fontesInformacao = bemPatrimonial.getFontesInformacao();
-
-			midias = (ArrayList<Multimidia>) bemPatrimonial
-					.getContainerMultimidia().getMultimidia();
+			
+			midias.clear();
+			midias.addAll(bemPatrimonial
+					.getContainerMultimidia().getMultimidia()) ;
 
 			geralExterno = bemPatrimonial.isExterno();
 			geralNomeInstituicao = bemPatrimonial.getInstituicao().getNome();
@@ -271,7 +274,11 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			for (@SuppressWarnings("unused") Autoria b : this.autorias) {
 				if (aux < Autoria.TipoAutoria.values().length - 1) {
 					aux += 1;
-					this.apresentaAutorias.add(new ApresentaAutoria());
+					ApresentaAutoria c = new ApresentaAutoria();
+					c.setNomeAutor(b.getNomeAutor());
+					c.setTipoAutoria("bla");
+					this.apresentaAutorias.add(c);
+					
 				}
 			}
 			

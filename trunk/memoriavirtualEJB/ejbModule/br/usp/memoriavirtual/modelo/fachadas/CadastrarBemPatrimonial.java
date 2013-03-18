@@ -5,6 +5,7 @@ package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
 
 /**
  * @author bigmac
@@ -28,6 +30,9 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
+	
+	@EJB
+	private EditarBemPatrimonialRemote editarBemPatrimonialEJB;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -84,6 +89,13 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 		for (Autoria a : bem.getAutorias())
 			a.setBemPatrimonial(bem);
 
+	}
+
+	@Override
+	public void salvarBemPatrimonial(BemPatrimonial bem) throws ModeloException {
+		
+		editarBemPatrimonialEJB.salvarBemPatrimonial(bem);
+		
 	}
 
 }

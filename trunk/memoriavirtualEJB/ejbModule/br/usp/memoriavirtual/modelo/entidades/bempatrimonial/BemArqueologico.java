@@ -47,7 +47,7 @@ public class BemArqueologico extends BemPatrimonial implements Serializable {
 		this.altura = altura2;
 		this.largura = largura2;
 		this.profundidade = profundidade2;
-		
+		this.tipoDoBemPatrimonial = new String(BemPatrimonial.TipoDoBemPatrimonial.ARQUEOLOGICO.name());
 		
 	}
 	public BemArqueologico() {

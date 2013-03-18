@@ -42,6 +42,11 @@ public class BemPatrimonial implements Serializable {
 	/**
 	 * 
 	 */
+	public enum TipoDoBemPatrimonial{
+		NORMAL,ARQUEOLOGICO,ARQUITETONICO,NATURAL;
+	}
+	
+	
 	public BemPatrimonial() {
 		super();
 		this.descritores = new TreeSet<Descritor>();

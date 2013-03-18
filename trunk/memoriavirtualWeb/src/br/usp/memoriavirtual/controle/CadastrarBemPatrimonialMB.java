@@ -165,6 +165,179 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 	protected String assunto;
 	protected String descritores;
 
+	
+	
+	
+	public String salvarBemPatrimonial() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		this.validacaoInstituicao();
+		this.validacaoTitulo();
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
+			try {
+				this.bemPatrimonial.setInstituicao(this.editarInstituicaoEJB
+						.getInstituicao(geralNomeInstituicao));
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+			if(this.geralTipoDoBemPatrimonial == null){
+				this.geralTipoDoBemPatrimonial = "";
+			}
+			if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
+					.getString("cadastrarBemTipoLista0"))) {
+				// System.out.println("arqueologico");
+				this.bemPatrimonial = new BemArqueologico(condicaoTopografica,
+						sitioDaPaisagem, aguaProxima, possuiVegetacao,
+						exposicao, usoAtual, descricaoOutros, descricaoNotas,
+						this.areaTotal, this.comprimento, this.altura,
+						this.largura, this.profundidade);
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoConservPreserv, this.estadoConservNotas));
+
+			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
+					.getString("cadastrarBemTipoLista4"))) {
+				// System.out.println("edificado");
+				this.bemPatrimonial = new BemArquitetonico(condicaoTopografica,
+						this.uso, this.numPavimentos, numAmbientes, alcova,
+						porao, sotao, descricaoOutros, areaTotal,
+						alturaFachadaFrontal, this.alturaFachadaSuperior,
+						this.largura, profundidade, alturaTotal,
+						peDireitoTerreo, peDireitoTipo);
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoPreser, this.estadoConser,
+						this.estadoConservNotas));
+			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
+					.getString("cadastrarBemTipoLista6"))) {
+				// System.out.println("natural");
+				this.bemPatrimonial = new BemNatural(relevo,
+						caracteristicasAntropico, caracteristicasAmbientais);
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoConservPreserv, this.estadoConservNotas));
+			} else {
+				this.bemPatrimonial.setTipoDoBemPatrimonial(new String(BemPatrimonial.TipoDoBemPatrimonial.NORMAL.name())); 
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoConservPreserv, this.estadoConservNotas));
+			}
+
+			// anexando Geral Info
+
+			this.bemPatrimonial.setTitulos(geralTitulos);
+			this.bemPatrimonial.setColecao(geralColecao);
+			this.bemPatrimonial.setExterno(geralExterno);
+			this.bemPatrimonial.setLatitude(geralLatitude);
+			this.bemPatrimonial.setNumeroDeRegistro(this.geralNumeroRegistro);
+			this.bemPatrimonial.setLongitude(geralLongitude);
+			this.bemPatrimonial.setComplemento(geralComplemento);
+			// fim Geral info
+
+			// anexando autorias
+			for (int i = 0; i < this.autorias.size(); i++) {
+				this.autorias.get(i).setBemPatrimonial(this.bemPatrimonial);
+				this.autorias.get(i)
+						.setTipoAutoria(
+								this.getEnumTipoAutoria(this.apresentaAutorias
+										.get(i).tipoAutoria));
+			}
+			this.bemPatrimonial.setAutorias(autorias);
+			// fim autorias
+			// anexando produção
+
+			this.bemPatrimonial.setProducao(new Producao(this.producaoLocal,
+					this.producaoAno, this.producaoEdicao,
+					this.producaoOutrasRes));
+			// fim anexando produção
+			// System.out.println("normal");
+			// anexando descrição
+			this.bemPatrimonial
+					.setCaracteristicasFisTecExec(this.caracteristicasFisicas);
+
+			// fim anexando descrição
+
+			// anexando Intervencao e diagnostico
+			this.bemPatrimonial.setIntervencoes(intervencoes);
+			this.bemPatrimonial.setDiagnostico(new Diagnostico(
+					this.estadoPreser, this.estadoConser,
+					this.estadoConservNotas));
+			// fim anexando intervencao e diagnostico
+			// anexando Disponibilidade Uso e Protecão
+
+			this.bemPatrimonial
+					.setDisponibilidadeUsoProtecao(new DisponibilidadeUsoProtecao(
+							this.disponibilidadeDoBem, this.condicoesDeAcesso,
+							this.condicoesDeReproducao, this.dataDeRetorno,
+							this.notasUsoAproveitamento, this.protecao,
+							this.legislacaoNprocesso, this.instituicaoProtetora));
+			// Fim anexando Disponibilidade Uso e Protecão
+			// anexado historio e procerdencia
+
+			this.bemPatrimonial
+					.setHisttoricoProcedencia(new HistoricoProcedencia(
+							this.tipoDeAquisicao,
+							this.valorVenalEpocaTransacao,
+							this.documentoDeAquisicao,
+							this.primeiroPropietario, historico,
+							this.intrumentoDePesquisa));
+
+			// fim anexando historico e procedencia
+
+			// anexando assuntos
+			List<Assunto> assun = new ArrayList<Assunto>();
+			
+			String[] a = this.assunto.split(" ");
+			for (int i = 0; i < a.length; i++) {
+				assun.add(new Assunto());
+				assun.get(i).setAssunto(a[i]);
+			}
+			this.bemPatrimonial.setAssuntos(new TreeSet<Assunto>(assun));
+			// fim assuntos
+
+			// anexando descritores
+			List<Descritor> descr = new ArrayList<Descritor>();
+			String[] b = this.descritores.split(" ");
+			for (int i = 0; i < b.length; i++) {
+				descr.add(new Descritor());
+				descr.get(i).setDescritor(b[i]);
+			}
+			this.bemPatrimonial.setDescritores(new TreeSet<Descritor>(descr));
+			// fim descritores
+
+			// adcionando fontes de informação
+			this.bemPatrimonial.setFontesInformacao(this.fontesInformacao);
+			// fim adcionando fontes de informação
+			this.bemPatrimonial.setPesquisadores(this.pesquisadores);
+			ContainerMultimidia c = new ContainerMultimidia();
+			for(Multimidia i : midias){
+				c.addMultimidia(i);
+			}
+			
+			
+			this.bemPatrimonial.setContainerMultimidia(c);
+			try {
+				this.cadastrarBemPatrimonialEJB
+						.salvarBemPatrimonial(this.bemPatrimonial);
+			} catch (ModeloException e) {
+				// TODO Auto-generated catch block
+				MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
+					 "resultado");
+				e.printStackTrace();
+				return null;
+			}
+
+			MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
+					"resultado");
+		} else {
+			// MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
+			// "resultado");
+		}
+		return null;
+
+	}
+	
+	
 	/**
 	 * 
 	 */
@@ -218,6 +391,7 @@ public class CadastrarBemPatrimonialMB implements BeanComMidia, Serializable {
 				this.bemPatrimonial.setDiagnostico(new Diagnostico(
 						this.estadoConservPreserv, this.estadoConservNotas));
 			} else {
+				this.bemPatrimonial.setTipoDoBemPatrimonial(new String(BemPatrimonial.TipoDoBemPatrimonial.NORMAL.name())); 
 				this.bemPatrimonial.setDiagnostico(new Diagnostico(
 						this.estadoConservPreserv, this.estadoConservNotas));
 			}

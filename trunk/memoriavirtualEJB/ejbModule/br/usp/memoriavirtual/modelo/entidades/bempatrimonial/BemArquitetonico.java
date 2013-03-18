@@ -53,6 +53,7 @@ public class BemArquitetonico extends BemPatrimonial implements Serializable {
 		this.alturaTotal = alturaTotal2;
 		this.peDireitoTerreo = peDireitoTerreo2;
 		this.tipoPeDireito = tipoPeDireito;
+		this.tipoDoBemPatrimonial = new String(BemPatrimonial.TipoDoBemPatrimonial.ARQUITETONICO.name());
 	}
 	public BemArquitetonico() {
 	}

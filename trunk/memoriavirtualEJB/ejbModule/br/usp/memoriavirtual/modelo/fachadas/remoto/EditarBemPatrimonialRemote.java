@@ -20,5 +20,5 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 public interface EditarBemPatrimonialRemote {
 	
 	public List<BemPatrimonial> listarBensPatrimoniais (String strDeBusca) throws ModeloException ;
-
+	public void salvarBemPatrimonial (BemPatrimonial bem) throws ModeloException ;
 }
