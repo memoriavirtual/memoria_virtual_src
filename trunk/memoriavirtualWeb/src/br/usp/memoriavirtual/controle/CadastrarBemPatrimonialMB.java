@@ -129,18 +129,18 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 			}
 			this.bemPatrimonial.setAutorias(autorias);
 			// fim autorias
-			// anexando produção
+			// anexando produï¿½ï¿½o
 
 			this.bemPatrimonial.setProducao(new Producao(this.producaoLocal,
 					this.producaoAno, this.producaoEdicao,
 					this.producaoOutrasRes));
-			// fim anexando produção
+			// fim anexando produï¿½ï¿½o
 			// System.out.println("normal");
-			// anexando descrição
+			// anexando descriï¿½ï¿½o
 			this.bemPatrimonial
 					.setCaracteristicasFisTecExec(this.caracteristicasFisicas);
 
-			// fim anexando descrição
+			// fim anexando descriï¿½ï¿½o
 
 			// anexando Intervencao e diagnostico
 			this.bemPatrimonial.setIntervencoes(intervencoes);
@@ -148,7 +148,7 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 					this.estadoPreser, this.estadoConser,
 					this.estadoConservNotas));
 			// fim anexando intervencao e diagnostico
-			// anexando Disponibilidade Uso e Protecão
+			// anexando Disponibilidade Uso e Protecï¿½o
 
 			this.bemPatrimonial
 					.setDisponibilidadeUsoProtecao(new DisponibilidadeUsoProtecao(
@@ -156,11 +156,11 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 							this.condicoesDeReproducao, this.dataDeRetorno,
 							this.notasUsoAproveitamento, this.protecao,
 							this.legislacaoNprocesso, this.instituicaoProtetora));
-			// Fim anexando Disponibilidade Uso e Protecão
+			// Fim anexando Disponibilidade Uso e Protecï¿½o
 			// anexado historio e procerdencia
 
 			this.bemPatrimonial
-					.setHisttoricoProcedencia(new HistoricoProcedencia(
+					.setHistoricoProcedencia(new HistoricoProcedencia(
 							this.tipoDeAquisicao,
 							this.valorVenalEpocaTransacao,
 							this.documentoDeAquisicao,
@@ -190,9 +190,9 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 			this.bemPatrimonial.setDescritores(new TreeSet<Descritor>(descr));
 			// fim descritores
 
-			// adcionando fontes de informação
+			// adcionando fontes de informaï¿½ï¿½o
 			this.bemPatrimonial.setFontesInformacao(this.fontesInformacao);
-			// fim adcionando fontes de informação
+			// fim adcionando fontes de informaï¿½ï¿½o
 			this.bemPatrimonial.setPesquisadores(this.pesquisadores);
 			ContainerMultimidia c = new ContainerMultimidia();
 			for(Multimidia i : midias){
