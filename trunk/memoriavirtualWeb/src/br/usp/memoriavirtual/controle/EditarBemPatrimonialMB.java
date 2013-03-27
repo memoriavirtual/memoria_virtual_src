@@ -9,14 +9,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB.ApresentaAutoria;
-import br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB.SerialHtmlDataTable;
-import br.usp.memoriavirtual.modelo.entidades.Autor;
+
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Assunto;
@@ -26,10 +23,6 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Intervencao;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Pesquisador;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Producao;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
 
@@ -54,6 +47,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	private boolean etapa1 = true;
 	private boolean etapa2 = false;
 	private boolean listarTodos = false;
+	
 
 	/**
 	 * 
@@ -163,7 +157,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 						.getProfundidade();
 
 				estadoConservPreserv = bemPatrimonial.getDiagnostico()
-						.getEstPreservacao();
+						.getEstPresercacao();
 				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
 						.getNotaEstConservacao();
 			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
@@ -197,7 +191,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 						.getTipoPeDireito();
 
 				this.estadoPreser = bemPatrimonial.getDiagnostico()
-						.getEstPreservacao();
+						.getEstPresercacao();
 				this.estadoConser = bemPatrimonial.getDiagnostico()
 						.getEstConservacao();
 				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
@@ -260,7 +254,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				descritores += (a.getDescritor() + " ");
 			}
 
-			// apresentaï¿½ï¿½es
+			// apresentações
 			int aux = 0;
 			for (@SuppressWarnings("unused") Multimidia a : this.midias) {
 				aux += 1;
@@ -271,18 +265,18 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				}
 			}
 			aux = 0;
-			for (@SuppressWarnings("unused") Autoria b : this.autorias) {
+			for (Autoria b : this.autorias) {
 				if (aux < Autoria.TipoAutoria.values().length - 1) {
 					aux += 1;
 					ApresentaAutoria c = new ApresentaAutoria();
 					c.setNomeAutor(b.getNomeAutor());
-					c.setTipoAutoria("bla");
+					c.setTipoAutoria(this.getTipoAutoria(b.getTipoAutoria()));
 					this.apresentaAutorias.add(c);
 					
 				}
 			}
 			
-			
+			id = bemPatrimonial.getId();
 			this.etapa1 = false;
 			this.etapa2 = true;
 		}
