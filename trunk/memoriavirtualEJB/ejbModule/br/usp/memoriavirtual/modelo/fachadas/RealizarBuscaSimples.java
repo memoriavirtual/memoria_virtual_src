@@ -12,6 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 
@@ -147,6 +150,58 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		}
 
 		return combinacoes;
+	}
+	
+	@Override
+	public BemArqueologico buscarBemArqueologico(BemPatrimonial bem) throws ModeloException{
+		
+		BemArqueologico bemArq;
+		Query query;
+		
+		try{
+			query = entityManager.createQuery("SELECT arq FROM BemArqueologico arq WHERE arq.id = :b.id");
+			query.setParameter("b", bem);
+			bemArq = (BemArqueologico) query.getSingleResult();
+		}
+		catch(Exception e){
+			throw new ModeloException(e);
+		}
+		
+		return bemArq;
+	}
+	
+	@Override
+	public BemArquitetonico buscarBemArquitetonico(BemPatrimonial bem) throws ModeloException{
+		BemArquitetonico bemArq;
+		Query query;
+		
+		try{
+			query = entityManager.createQuery("SELECT ba FROM BemArquitetonico ba WHERE ba.id = :b.id");
+			query.setParameter("b", bem);
+			bemArq = (BemArquitetonico)query.getSingleResult();
+		}
+		catch(Exception e){
+			throw new ModeloException(e);
+		}
+		
+		return bemArq;
+	}
+	
+	@Override
+	public BemNatural buscarBemNatural(BemPatrimonial bem) throws ModeloException{
+		BemNatural bemN;
+		Query query;
+		
+		try{
+			query = entityManager.createQuery("SELECT bn FROM BemNatural bn WHERE bn.id = :b.id");
+			query.setParameter("b", bem);
+			bemN = (BemNatural)query.getSingleResult();
+		}
+		catch(Exception e){
+			throw new ModeloException(e);
+		}
+		
+		return bemN;
 	}
 
 	/**

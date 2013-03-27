@@ -18,34 +18,34 @@ public class Diagnostico implements Serializable {
 		super();
 	}
 	
-	public Diagnostico(String estPresercacao,
+	public Diagnostico(String estPreservacao,
 			String notaEstConservacao) {
 		super();
-		this.estPresercacao = estPresercacao;
+		this.estPreservacao = estPreservacao;
 		this.estConservacao = "";
 		this.notaEstConservacao = notaEstConservacao;
 	}
-	public Diagnostico(String estPresercacao, String estConservacao,
+	public Diagnostico(String estPreservacao, String estConservacao,
 			String notaEstConservacao) {
 		super();
-		this.estPresercacao = estPresercacao;
+		this.estPreservacao = estPreservacao;
 		this.estConservacao = estConservacao;
 		this.notaEstConservacao = notaEstConservacao;
 	}
-	private String estPresercacao;
+	private String estPreservacao;
 	private String estConservacao;
 	private String notaEstConservacao;
 	/**
-	 * @return the estPresercacao
+	 * @return the estPreservacao
 	 */
-	public String getEstPresercacao() {
-		return estPresercacao;
+	public String getEstPreservacao() {
+		return estPreservacao;
 	}
 	/**
-	 * @param estPresercacao the estPresercacao to set
+	 * @param estPreservacao the estPreservacao to set
 	 */
-	public void setEstPresercacao(String estPresercacao) {
-		this.estPresercacao = estPresercacao;
+	public void setEstPreservacao(String estPreservacao) {
+		this.estPreservacao = estPreservacao;
 	}
 	/**
 	 * @return the estConservacao

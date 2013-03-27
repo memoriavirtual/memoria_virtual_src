@@ -2,25 +2,25 @@ package br.usp.memoriavirtual.controle;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "realizarBuscaSimplesMB")
 @SessionScoped
-public class RealizarBuscaSimplesMB implements Serializable{
+public class RealizarBuscaSimplesMB implements Serializable {
 
 	/**
 	 * 
@@ -31,7 +31,13 @@ public class RealizarBuscaSimplesMB implements Serializable{
 	private String busca;
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	private BemPatrimonial bem;
-
+	private BemArqueologico bemArqueologico = null;
+	private BemArquitetonico bemArquitetonico = null;
+	private BemNatural bemNatural = null;
+	private boolean simples;
+	private boolean arquitetonico;
+	private boolean arqueologico;
+	private boolean natural;
 
 	public RealizarBuscaSimplesMB() {
 
@@ -44,14 +50,41 @@ public class RealizarBuscaSimplesMB implements Serializable{
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaErro", "resultado");
 			return null;
-
 		}
-
+		
 		return "resultados";
 	}
 
 	public String resultado(BemPatrimonial b) {
 		this.bem = b;
+
+		if (this.bem.getTipoDoBemPatrimonial().equals("BemArqueologico")) {
+			try {
+				this.bemArqueologico = this.realizarBuscaEJB
+						.buscarBemArqueologico(this.bem);
+			} catch (ModeloException m) {
+				m.printStackTrace();
+			}
+		}
+
+		if (this.bem.getTipoDoBemPatrimonial().equals("BemArquitetonico")) {
+			try {
+				this.bemArquitetonico = this.realizarBuscaEJB
+						.buscarBemArquitetonico(this.bem);
+			} catch (ModeloException m) {
+				m.printStackTrace();
+			}
+		}
+
+		if (this.bem.getTipoDoBemPatrimonial().equals("BemNatural")) {
+			try {
+				this.bemNatural = this.realizarBuscaEJB
+						.buscarBemNatural(this.bem);
+			} catch (ModeloException m) {
+				m.printStackTrace();
+			}
+		}
+
 		return "bempatrimonial";
 
 	}
@@ -100,6 +133,62 @@ public class RealizarBuscaSimplesMB implements Serializable{
 
 	public void setBem(BemPatrimonial bem) {
 		this.bem = bem;
+	}
+
+	public BemArqueologico getBemArqueologico() {
+		return bemArqueologico;
+	}
+
+	public void setBemArqueologico(BemArqueologico bemArqueologico) {
+		this.bemArqueologico = bemArqueologico;
+	}
+
+	public BemArquitetonico getBemArquitetonico() {
+		return bemArquitetonico;
+	}
+
+	public void setBemArquitetonico(BemArquitetonico bemArquitetonico) {
+		this.bemArquitetonico = bemArquitetonico;
+	}
+
+	public BemNatural getBemNatural() {
+		return bemNatural;
+	}
+
+	public void setBemNatural(BemNatural bemNatural) {
+		this.bemNatural = bemNatural;
+	}
+
+	public boolean isSimples() {
+		return simples;
+	}
+
+	public void setSimples(boolean simples) {
+		this.simples = simples;
+	}
+
+	public boolean isArquitetonico() {
+		return arquitetonico;
+	}
+
+	public void setArquitetonico(boolean arquitetonico) {
+		this.arquitetonico = arquitetonico;
+	}
+
+	public boolean isArqueologico() {
+		return arqueologico;
+	}
+
+	public void setArqueologico(boolean arqueologico) {
+		this.arqueologico = arqueologico;
+	}
+
+	public boolean isNatural() {
+		return natural;
+	}
+
+	public void setNatural(boolean natural) {
+		this.natural = natural;
 	}
 
 }

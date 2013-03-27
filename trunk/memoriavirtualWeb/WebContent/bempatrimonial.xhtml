@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</title>
@@ -37,119 +38,42 @@
 
 		<div class="conteudoTitulo">
 			#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</div>
-		<h:outputText>#{realizarBuscaSimplesMB.bem.colecao}</h:outputText>
 
-		<fieldset>
-			<div class="espacador"></div>
-			<div>
-				<h:outputLabel>Instituicao #{realizarBuscaSimplesMB.bem.instituicao.nome}</h:outputLabel>
-			</div>
-		</fieldset>
+		<h:outputLabel>Todos os titulos</h:outputLabel>
+		<h:dataTable id="titulosbem"
+			value="#{realizarBuscaSimplesMB.bem.titulos}" var="titulo">
+			<h:column>
+				<h:outputLabel>#{titulo.valor}</h:outputLabel>
+			</h:column>
+		</h:dataTable>
 
-		<mv:containerExpansivo id="GeralInfo"
-			label="#{mensagens.cadastrarBemGeralInfo}">
-			<fieldset>
+		<h:outputLabel>Coleção: #{realizarBuscaSimplesMB.bem.colecao}</h:outputLabel>
 
-				<div>
-					<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial} #{realizarBuscaSimples.bem.tipo}</h:outputLabel>
-				</div>
+		<h:outputLabel>Instituicao: #{realizarBuscaSimplesMB.bem.instituicao.nome}</h:outputLabel>
 
+		<h:outputLabel>Autorias</h:outputLabel>
 
-				<div>
-					<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro} #{realizarBuscaSimples.bem.numeroDeRegistro} </h:outputLabel>
-				</div>
+		<h:dataTable id="autoriasbem"
+			value="#{realizarBuscaSimplesMB.bem.autorias}" var="autoria">
+			<h:column>
+				<h:outputLabel>Nome do Autor: #{autoria.nomeAutor}</h:outputLabel>
+			</h:column>
+			<h:column>
+				<h:outputLabel>Tipo: #{autoria.tipoAutoria}</h:outputLabel>
+			</h:column>
+		</h:dataTable>
+		
+		<h:outputLabel>CaracteristicasFisTecExec: #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel>
+		
+		<h:outputLabel>Complemento: #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel>
+		
+		<h:outputLabel>Conteudo: #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel>
+		
+		<h:outputLabel>Estado Conservação: #{realizarBuscaSimplesMB.bem.diagnostico.estConservacao}</h:outputLabel>
+		
+		<h:outputLabel>Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.estPreservacao}</h:outputLabel>
 
-				<div>
-					<div class="botoesTituiloTLB">
-						<h:outputLabel class="labels">#{mensagens.cadastrarBemTitulos}</h:outputLabel>
-						<h:commandButton type="button" class="botoesTituiloTLB"
-							value="#{mensagens.cadastrarBemTituloAdicionar}">
-							<f:ajax render="titulosBem" execute="@form"
-								listener="#{cadastrarBemPatrimonialMB.adicionarTitulo}"></f:ajax>
-						</h:commandButton>
-					</div>
-
-
-
-
-				</div>
-
-
-				<h:dataTable id="titulosBem" var="titulo" class="titulos"
-					binding="#{cadastrarBemPatrimonialMB.dataTableTitulos}"
-					value="#{cadastrarBemPatrimonialMB.geralTitulos}">
-					<div></div>
-					<h:message id="validacaoTitulo" for="validacaoTitulo"
-						infoClass="sucesso" errorClass="erro" warnClass="aviso">
-					</h:message>
-					<h:column id="coluna">
-
-						<h:graphicImage id="excluir" library="imagens" name="delete.png"
-							style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
-
-							<f:ajax render="@form" event="click" execute="@form"
-								listener="#{cadastrarBemPatrimonialMB.excluirTitulo}">
-							</f:ajax>
-						</h:graphicImage>
-						<h:outputLabel class="labels"
-							style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
-						<h:inputText style="width: 40% !important;"
-							value="#{titulo.valor}">
-						</h:inputText>
-
-						<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
-						<h:selectOneMenu id="tipodotitulo" class="options"
-							value="#{titulo.tipo}">
-							<f:selectItems
-								value="#{cadastrarBemPatrimonialMB.getTiposTitulo()}" />
-						</h:selectOneMenu>
-
-					</h:column>
-
-
-				</h:dataTable>
-
-				<div>
-					<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
-					<h:inputTextarea styleClass="caixadetexto"
-						value="#{cadastrarBemPatrimonialMB.geralComplemento}">
-					</h:inputTextarea>
-					<div></div>
-				</div>
-
-				<div>
-					<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloColecao}</h:outputLabel>
-					<h:inputText value="#{cadastrarBemPatrimonialMB.geralColecao}">
-					</h:inputText>
-					<div></div>
-				</div>
-
-
-				<div>
-					<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCoordenadasGeograficas}</h:outputLabel>
-				</div>
-				<div>
-					<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-					<h:inputText value="#{cadastrarBemPatrimonialMB.geralLatitude}">
-
-					</h:inputText>
-					<div></div>
-
-				</div>
-
-				<div>
-					<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-					<h:inputText value="#{cadastrarBemPatrimonialMB.geralLongitude}">
-
-					</h:inputText>
-					<div></div>
-
-				</div>
-
-
-
-			</fieldset>
-		</mv:containerExpansivo>
+		<h:outputLabel>Nota Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.notaEstPreservacao}</h:outputLabel>
 
 
 

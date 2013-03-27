@@ -100,7 +100,7 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 				
 				
 				((BemArquitetonico)bemOld).getDiagnostico().setEstConservacao(((BemArquitetonico)bem).getDiagnostico().getEstConservacao());
-				((BemArquitetonico)bemOld).getDiagnostico().setEstPresercacao(((BemArquitetonico)bem).getDiagnostico().getEstPresercacao());
+				((BemArquitetonico)bemOld).getDiagnostico().setEstPreservacao(((BemArquitetonico)bem).getDiagnostico().getEstPreservacao());
 				((BemArquitetonico)bemOld).getDiagnostico().setNotaEstConservacao(((BemArquitetonico)bem).getDiagnostico().getNotaEstConservacao());
 						
 			} else if (bem.getTipoDoBemPatrimonial().equals(new String(BemPatrimonial.TipoDoBemPatrimonial.NATURAL.name()))) {
@@ -111,11 +111,11 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 				((BemNatural)bemOld).setCaracteristicasAmbientais(((BemNatural)bem).getCaracteristicasAmbientais());
 				
 						
-				((BemNatural)bemOld).getDiagnostico().setEstPresercacao(((BemNatural)bem).getDiagnostico().getEstPresercacao());
+				((BemNatural)bemOld).getDiagnostico().setEstPreservacao(((BemNatural)bem).getDiagnostico().getEstPreservacao());
 				((BemNatural)bemOld).getDiagnostico().setNotaEstConservacao(((BemNatural)bem).getDiagnostico().getNotaEstConservacao());
 			} else {
 				
-				bemOld.getDiagnostico().setEstPresercacao(bem.getDiagnostico().getEstPresercacao());
+				bemOld.getDiagnostico().setEstPreservacao(bem.getDiagnostico().getEstPreservacao());
 				bemOld.getDiagnostico().setNotaEstConservacao(bem.getDiagnostico().getNotaEstConservacao());
 			}
 
@@ -136,28 +136,28 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 			bemOld.getAutorias().clear();
 			bemOld.getAutorias().addAll(bem.getAutorias());
 			// fim autorias
-			// anexando produção
+			// anexando produï¿½ï¿½o
 
 			bemOld.setProducao(bem.getProducao());
 			
-			// fim anexando produção
+			// fim anexando produï¿½ï¿½o
 			// System.out.println("normal");
-			// anexando descrição
+			// anexando descriï¿½ï¿½o
 			bemOld
 					.setCaracteristicasFisTecExec(bem.getCaracteristicasFisTecExec());
 
-			// fim anexando descrição
+			// fim anexando descriï¿½ï¿½o
 
 			// anexando Intervencao e diagnostico
 			bemOld.getIntervencoes().clear();
 			bemOld.setIntervencoes(bem.getIntervencoes());
 			bemOld.setDiagnostico(bem.getDiagnostico());
 			// fim anexando intervencao e diagnostico
-			// anexando Disponibilidade Uso e Protecão
+			// anexando Disponibilidade Uso e Protecï¿½o
 
 			bemOld
 					.setDisponibilidadeUsoProtecao(bem.getDisponibilidadeUsoProtecao());
-			// Fim anexando Disponibilidade Uso e Protecão
+			// Fim anexando Disponibilidade Uso e Protecï¿½o
 			// anexado historio e procerdencia
 
 			bemOld
@@ -175,9 +175,9 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 			bemOld.setDescritores(bem.getDescritores());
 			// fim descritores
 
-			// adcionando fontes de informação
+			// adcionando fontes de informaï¿½ï¿½o
 			bemOld.setFontesInformacao(bem.getFontesInformacao());
-			// fim adcionando fontes de informação
+			// fim adcionando fontes de informaï¿½ï¿½o
 			bemOld.getPesquisadores().clear();
 			bemOld.setPesquisadores(bem.getPesquisadores());
 			
