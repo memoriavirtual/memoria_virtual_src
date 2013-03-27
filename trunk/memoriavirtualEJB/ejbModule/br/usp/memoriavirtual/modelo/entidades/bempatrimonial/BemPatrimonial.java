@@ -115,7 +115,7 @@ public class BemPatrimonial implements Serializable {
 			"", "", "", "", "", "", "", "");
 
 	@Embedded
-	protected HistoricoProcedencia histtoricoProcedencia = new HistoricoProcedencia(
+	protected HistoricoProcedencia historicoProcedencia = new HistoricoProcedencia(
 			"", "", "", "", "", "");
 
 	@Embedded
@@ -363,19 +363,19 @@ public class BemPatrimonial implements Serializable {
 	}
 
 	/**
-	 * @return the histtoricoProcedencia
+	 * @return the historicoProcedencia
 	 */
-	public HistoricoProcedencia getHisttoricoProcedencia() {
-		return histtoricoProcedencia;
+	public HistoricoProcedencia getHistoricoProcedencia() {
+		return historicoProcedencia;
 	}
 
 	/**
-	 * @param histtoricoProcedencia
-	 *            the histtoricoProcedencia to set
+	 * @param historicoProcedencia
+	 *            the historicoProcedencia to set
 	 */
-	public void setHisttoricoProcedencia(
-			HistoricoProcedencia histtoricoProcedencia) {
-		this.histtoricoProcedencia = histtoricoProcedencia;
+	public void setHistoricoProcedencia(
+			HistoricoProcedencia historicoProcedencia) {
+		this.historicoProcedencia = historicoProcedencia;
 	}
 
 	/**
