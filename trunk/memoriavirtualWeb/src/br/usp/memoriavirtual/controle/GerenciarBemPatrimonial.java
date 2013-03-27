@@ -266,7 +266,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 			// anexado historio e procerdencia
 
 			this.bemPatrimonial
-					.setHisttoricoProcedencia(new HistoricoProcedencia(
+					.setHistoricoProcedencia(new HistoricoProcedencia(
 							this.tipoDeAquisicao,
 							this.valorVenalEpocaTransacao,
 							this.documentoDeAquisicao,
