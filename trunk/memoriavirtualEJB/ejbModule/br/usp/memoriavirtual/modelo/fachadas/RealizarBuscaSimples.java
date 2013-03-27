@@ -39,8 +39,9 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			s = s.trim();
 			System.out.println(s);
 			try {
-				query = entityManager
-						.createQuery("SELECT t.bemPatrimonial FROM BEMPATRIMONIAL_TITULOS t WHERE t.valor LIKE :padrao");
+				//query = entityManager
+					//	.createQuery("SELECT t.bemPatrimonial FROM BEMPATRIMONIAL_TITULOS t WHERE t.valor LIKE :padrao");
+				query = entityManager.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t WHERE t MEMBER OF b.titulos AND t.valor LIKE :padrao");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {
@@ -73,10 +74,6 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		 * 
 		 * }
 		 */
-		
-		for(BemPatrimonial b : bens){
-			System.out.println(b.getTitulos().get(0).getValor());
-		}
 
 		return bens;
 	}
