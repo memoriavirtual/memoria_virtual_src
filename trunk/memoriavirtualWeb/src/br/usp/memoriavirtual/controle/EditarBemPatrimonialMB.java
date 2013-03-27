@@ -157,7 +157,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 						.getProfundidade();
 
 				estadoConservPreserv = bemPatrimonial.getDiagnostico()
-						.getEstPresercacao();
+						.getEstPreservacao();
 				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
 						.getNotaEstConservacao();
 			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
@@ -191,7 +191,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 						.getTipoPeDireito();
 
 				this.estadoPreser = bemPatrimonial.getDiagnostico()
-						.getEstPresercacao();
+						.getEstPreservacao();
 				this.estadoConser = bemPatrimonial.getDiagnostico()
 						.getEstConservacao();
 				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
@@ -232,19 +232,19 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			legislacaoNprocesso = bemPatrimonial
 					.getDisponibilidadeUsoProtecao().getLegislacao();
 
-			tipoDeAquisicao = bemPatrimonial.getHisttoricoProcedencia()
+			tipoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
 					.getTipoAquisicao();
 			valorVenalEpocaTransacao = bemPatrimonial
-					.getHisttoricoProcedencia().getValorVenalTransacao();
-			dataAquisicaoDocumento = bemPatrimonial.getHisttoricoProcedencia()
+					.getHistoricoProcedencia().getValorVenalTransacao();
+			dataAquisicaoDocumento = bemPatrimonial.getHistoricoProcedencia()
 					.getDataAquisicao();
-			documentoDeAquisicao = bemPatrimonial.getHisttoricoProcedencia()
+			documentoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
 					.getDadosDocTransacao();
-			primeiroPropietario = bemPatrimonial.getHisttoricoProcedencia()
+			primeiroPropietario = bemPatrimonial.getHistoricoProcedencia()
 					.getPrimeiroProprietario();
-			historico = bemPatrimonial.getHisttoricoProcedencia()
+			historico = bemPatrimonial.getHistoricoProcedencia()
 					.getHistorico();
-			intrumentoDePesquisa = bemPatrimonial.getHisttoricoProcedencia()
+			intrumentoDePesquisa = bemPatrimonial.getHistoricoProcedencia()
 					.getInstrumentoPesquisa();
 
 			for (Assunto a : bemPatrimonial.getAssuntos()) {
@@ -254,7 +254,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				descritores += (a.getDescritor() + " ");
 			}
 
-			// apresentações
+			// apresentaï¿½ï¿½es
 			int aux = 0;
 			for (@SuppressWarnings("unused") Multimidia a : this.midias) {
 				aux += 1;
