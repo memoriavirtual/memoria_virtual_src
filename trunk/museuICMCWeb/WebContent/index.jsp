@@ -4,10 +4,10 @@
 
 <html>
   <head>
-    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    	<meta http-equiv="Content-Type" content="1;url=ultima_versao.html">
     	<title>GlassFish JSP Page</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h1>Iniciando</h1>
   </body>
-</html> 
+</html>   
