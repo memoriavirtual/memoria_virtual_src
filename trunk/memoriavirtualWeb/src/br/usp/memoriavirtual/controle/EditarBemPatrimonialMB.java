@@ -254,7 +254,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				descritores += (a.getDescritor() + " ");
 			}
 
-			// apresentaï¿½ï¿½es
+			// apresentações
 			int aux = 0;
 			for (@SuppressWarnings("unused") Multimidia a : this.midias) {
 				aux += 1;
