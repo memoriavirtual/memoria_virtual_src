@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
@@ -12,10 +13,9 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 @Entity
 public class Autoria implements Serializable{
 	
-	public enum TipoAutoria {AGENCIA, 
+	public enum TipoAutoria {COAUTOR,ORGANIZADOR,AGENCIA, 
 	AUTOR,
 	AUTOR_INSTITUCIONAL,
-	COAUTOR,
 	COMPILADOR, 
 	COORDENADOR, 
 	DIRETOR, 
@@ -29,7 +29,6 @@ public class Autoria implements Serializable{
 	ILUSTRADOR, 
 	PALESTRANTE, 
 	PREFACIADOR, 
-	ORGANIZADOR,
 	TRADUTOR; 
 	}
 	
@@ -61,6 +60,7 @@ public class Autoria implements Serializable{
 	private Autor autor;
 	@Id
 	@ManyToOne
+	@JoinColumn(name = "BEMPATRIMONIAL")
 	private BemPatrimonial bemPatrimonial;
 	
 	public String getNomeAutor(){
