@@ -169,12 +169,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 		this.validacaoInstituicao();
 		this.validacaoTitulo();
 		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-			try {
-				this.bemPatrimonial.setInstituicao(this.editarInstituicaoEJB
-						.getInstituicao(geralNomeInstituicao));
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
+			
 			if(this.geralTipoDoBemPatrimonial == null){
 				this.geralTipoDoBemPatrimonial = "";
 			}
@@ -213,7 +208,14 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 				this.bemPatrimonial.setDiagnostico(new Diagnostico(
 						this.estadoConservPreserv, this.estadoConservNotas));
 			}
-
+			
+			try {
+				this.bemPatrimonial.setInstituicao(this.editarInstituicaoEJB
+						.getInstituicao(geralNomeInstituicao));
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+			
 			// anexando Geral Info
 
 			this.bemPatrimonial.setTitulos(geralTitulos);
