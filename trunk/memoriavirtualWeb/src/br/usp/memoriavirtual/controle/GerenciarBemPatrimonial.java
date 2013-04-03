@@ -158,7 +158,9 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 
 	
 	
-	
+	public void autoSaveBemPatrimonial(AjaxBehaviorEvent e){
+		this.salvarBemPatrimonial();
+	}
 	public String salvarBemPatrimonial() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -346,7 +348,181 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 			
 		}
 	}
+	
+	public String zerarMB() {
+		bemPatrimonial = new BemPatrimonial();
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (!bemPatrimonial.getTipoDoBemPatrimonial().equals(
+				bundle.getString("listarTodos"))) {
 
+			intervencoes = bemPatrimonial.getIntervencoes();
+			pesquisadores = bemPatrimonial.getPesquisadores();
+			fontesInformacao = bemPatrimonial.getFontesInformacao();
+			
+			midias.clear();
+			midias.addAll(bemPatrimonial
+					.getContainerMultimidia().getMultimidia()) ;
+
+			geralExterno = bemPatrimonial.isExterno();
+			geralNomeInstituicao = bemPatrimonial.getInstituicao().getNome();
+			// geralNaturezaBem = bemPatrimonial.get;
+			geralTipoDoBemPatrimonial = bemPatrimonial
+					.getTipoDoBemPatrimonial();
+			geralNumeroRegistro = bemPatrimonial.getNumeroDeRegistro();
+			geralColecao = bemPatrimonial.getColecao();
+			geralComplemento = bemPatrimonial.getComplemento();
+			geralLatitude = bemPatrimonial.getLatitude();
+			geralLongitude = bemPatrimonial.getLongitude();
+			geralTitulos = bemPatrimonial.getTitulos();
+
+			autorias = bemPatrimonial.getAutorias();
+
+			producaoLocal = bemPatrimonial.getProducao().getLocal();
+			producaoAno = bemPatrimonial.getProducao().getAno();
+			producaoEdicao = bemPatrimonial.getProducao().getEdicao();
+			producaoOutrasRes = bemPatrimonial.getProducao()
+					.getOutrasResponsabilidades();
+
+			caracteristicasFisicas = bemPatrimonial
+					.getCaracteristicasFisTecExec();
+
+			// Arqueologico
+			if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
+					.getString("cadastrarBemTipoLista0"))) {
+				condicaoTopografica = ((BemArqueologico) bemPatrimonial)
+						.getCondicaoTopografica();
+				sitioDaPaisagem = ((BemArqueologico) bemPatrimonial)
+						.getSitioDaPaisagem();
+				aguaProxima = ((BemArqueologico) bemPatrimonial)
+						.getAguaProximo();
+				possuiVegetacao = ((BemArqueologico) bemPatrimonial)
+						.getPossuiVegetacao();
+				exposicao = ((BemArqueologico) bemPatrimonial).getExposicao();
+				usoAtual = ((BemArqueologico) bemPatrimonial).getUsoAtual();
+				descricaoOutros = ((BemArqueologico) bemPatrimonial)
+						.getOutros();
+				descricaoNotas = ((BemArqueologico) bemPatrimonial).getNotas();
+				this.areaTotal = ((BemArqueologico) bemPatrimonial)
+						.getAreaTotal();
+				this.comprimento = ((BemArqueologico) bemPatrimonial)
+						.getComprimento();
+				this.altura = ((BemArqueologico) bemPatrimonial).getAltura();
+				this.largura = ((BemArqueologico) bemPatrimonial).getLargura();
+				this.profundidade = ((BemArqueologico) bemPatrimonial)
+						.getProfundidade();
+
+				estadoConservPreserv = bemPatrimonial.getDiagnostico()
+						.getEstPreservacao();
+				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
+						.getNotaEstConservacao();
+			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
+					.getString("cadastrarBemTipoLista4"))) {
+				// Arquitetonico
+				condicaoTopografica = ((BemArquitetonico) bemPatrimonial)
+						.getCondicaoTopografia();
+				this.uso = ((BemArquitetonico) bemPatrimonial).getUso();
+				this.numPavimentos = ((BemArquitetonico) bemPatrimonial)
+						.getNumeroDePavimentos();
+				numAmbientes = ((BemArquitetonico) bemPatrimonial)
+						.getNumeroDeAmbientes();
+				alcova = ((BemArquitetonico) bemPatrimonial).getAlcova();
+				porao = ((BemArquitetonico) bemPatrimonial).getPorao();
+				sotao = ((BemArquitetonico) bemPatrimonial).getSotao();
+				descricaoOutros = ((BemArquitetonico) bemPatrimonial)
+						.getOutros();
+				areaTotal = ((BemArquitetonico) bemPatrimonial).getAreaTotal();
+				alturaFachadaFrontal = ((BemArquitetonico) bemPatrimonial)
+						.getAlturaFachFrontal();
+				this.alturaFachadaSuperior = ((BemArquitetonico) bemPatrimonial)
+						.getAlturaFachPosterior();
+				this.largura = ((BemArquitetonico) bemPatrimonial).getLargura();
+				profundidade = ((BemArquitetonico) bemPatrimonial)
+						.getProfundidade();
+				alturaTotal = ((BemArquitetonico) bemPatrimonial)
+						.getAlturaTotal();
+				peDireitoTerreo = ((BemArquitetonico) bemPatrimonial)
+						.getPeDireitoTerreo();
+				peDireitoTipo = ((BemArquitetonico) bemPatrimonial)
+						.getTipoPeDireito();
+
+				this.estadoPreser = bemPatrimonial.getDiagnostico()
+						.getEstPreservacao();
+				this.estadoConser = bemPatrimonial.getDiagnostico()
+						.getEstConservacao();
+				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
+						.getNotaEstConservacao();
+			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
+					.getString("cadastrarBemTipoLista6"))) {
+				// System.out.println("natural");
+				relevo = ((BemNatural) bemPatrimonial).getRelevo();
+				caracteristicasAntropico = ((BemNatural) bemPatrimonial)
+						.getMeioAntropico();
+				caracteristicasAmbientais = ((BemNatural) bemPatrimonial)
+						.getCaracteristicasAmbientais();
+
+				this.estadoConservPreserv = ((BemNatural) bemPatrimonial)
+						.getDiagnostico().getEstConservacao();
+				this.estadoConservNotas = ((BemNatural) bemPatrimonial)
+						.getDiagnostico().getNotaEstConservacao();
+			} else {
+				this.bemPatrimonial.setDiagnostico(new Diagnostico(
+						this.estadoConservPreserv, this.estadoConservNotas));
+			}
+
+			disponibilidadeDoBem = bemPatrimonial
+					.getDisponibilidadeUsoProtecao().getDisponibilidade();
+			condicoesDeAcesso = bemPatrimonial.getDisponibilidadeUsoProtecao()
+					.getCondicoesAcesso();
+			dataDeRetorno = bemPatrimonial.getDisponibilidadeUsoProtecao()
+					.getDataRetorno();
+			condicoesDeReproducao = bemPatrimonial
+					.getDisponibilidadeUsoProtecao().getCondicoesReproducao();
+			notasUsoAproveitamento = bemPatrimonial
+					.getDisponibilidadeUsoProtecao()
+					.getNotasUsoAproveitamento();
+			protecao = bemPatrimonial.getDisponibilidadeUsoProtecao()
+					.getProtecao();
+			instituicaoProtetora = bemPatrimonial
+					.getDisponibilidadeUsoProtecao().getProtetoraInstituicao();
+			legislacaoNprocesso = bemPatrimonial
+					.getDisponibilidadeUsoProtecao().getLegislacao();
+
+			tipoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
+					.getTipoAquisicao();
+			valorVenalEpocaTransacao = bemPatrimonial
+					.getHistoricoProcedencia().getValorVenalTransacao();
+			dataAquisicaoDocumento = bemPatrimonial.getHistoricoProcedencia()
+					.getDataAquisicao();
+			documentoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
+					.getDadosDocTransacao();
+			primeiroPropietario = bemPatrimonial.getHistoricoProcedencia()
+					.getPrimeiroProprietario();
+			historico = bemPatrimonial.getHistoricoProcedencia()
+					.getHistorico();
+			intrumentoDePesquisa = bemPatrimonial.getHistoricoProcedencia()
+					.getInstrumentoPesquisa();
+
+			for (Assunto a : bemPatrimonial.getAssuntos()) {
+				assunto += (a.getAssunto() + " ");
+			}
+			for (Descritor a : bemPatrimonial.getDescritores()) {
+				descritores += (a.getDescritor() + " ");
+			}
+
+			// apresentações
+			this.ApresentaMidias.clear();
+			this.apresentaAutorias.clear();
+			this.geralTitulos.add(new Titulo());
+			id = bemPatrimonial.getId();
+			
+		}
+		return null;
+	}
+	
+	
 	public ArrayList<Multimidia> getMidias() {
 		return midias;
 	}

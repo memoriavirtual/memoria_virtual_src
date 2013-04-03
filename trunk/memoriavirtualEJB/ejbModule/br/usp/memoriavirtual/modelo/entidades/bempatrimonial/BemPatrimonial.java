@@ -50,6 +50,7 @@ public class BemPatrimonial implements Serializable {
 	public BemPatrimonial() {
 		super();
 		this.descritores = new TreeSet<Descritor>();
+		this.assuntos = new TreeSet<Assunto>(); 
 		this.fontesInformacao = new ArrayList<String>();
 		this.titulos = new ArrayList<Titulo>();
 		this.autorias = new ArrayList<Autoria>();
@@ -63,8 +64,8 @@ public class BemPatrimonial implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
 	protected long id;
 	@ManyToOne
-	protected Instituicao instituicao;
-	protected boolean externo;
+	protected Instituicao instituicao = new Instituicao();
+	protected boolean externo = false;
 	protected String tipoDoBemPatrimonial = "";
 	protected String numeroDeRegistro = "";
 	protected String colecao = "";
@@ -134,7 +135,7 @@ public class BemPatrimonial implements Serializable {
 	protected List<BemPatrimonial> bensrelacionados;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	protected ContainerMultimidia containerMultimidia;
+	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
 
 	/**
 	 * @return the id

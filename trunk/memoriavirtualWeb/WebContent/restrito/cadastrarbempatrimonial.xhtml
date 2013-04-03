@@ -32,6 +32,16 @@
 				<h:form method="post" prependId="false">
 
 
+					<h:selectManyCheckbox id="autoSave">
+						<f:selectItem itemLabel="AutoSave" itemValue="yesAuto"/>
+						<f:ajax event="blur"
+							listener="#{cadastrarBemPatrimonialMB.autoSaveBemPatrimonial()}" />
+						
+					</h:selectManyCheckbox>
+					<script>
+						entradaAutoSave();					
+						</script>
+
 					<fieldset>
 						<div class="espacador"></div>
 						<div>
@@ -254,8 +264,8 @@
 										</h:column>
 									</h:dataTable>
 									<h:outputLabel class="labels" style="margin-left: 20px;">#{mensagens.cadastrarAutorTipoAutoria}</h:outputLabel>
-									
-									
+
+
 									<h:selectOneMenu class="options" value="#{autoria.tipoAutoria}">
 										<f:selectItems
 											value="#{cadastrarBemPatrimonialMB.getTiposAutoria()}" />
@@ -717,7 +727,7 @@
 								<div></div>
 							</div>
 
-							<div >
+							<div>
 								<h:outputLabel class="labels">
 										#{mensagens.cadastrarBemDescricaoNotas}
 									</h:outputLabel>
@@ -740,10 +750,10 @@
 									bean="#{cadastrarBemPatrimonialMB}"
 									array="#{cadastrarBemPatrimonialMB.apresentaMidias}"></mv:uploadFile>
 							</mv:containerExpansivo>
-							
-							
-							
-							
+
+
+
+
 						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
@@ -878,7 +888,7 @@
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 10px !important;">#{mensagens.cadastrarBemIntervencaData}</h:outputLabel>
 									<h:inputText style="width: 10% !important ;"
-										value="#{intervencao.data}" >
+										value="#{intervencao.data}">
 									</h:inputText>
 
 									<h:outputLabel class="labels"
@@ -1279,7 +1289,7 @@
 
 						<h:commandButton id="botaoResetar"
 							value="#{mensagens.cadastrarInstituicaoBotaoResetar}"
-							action="#{cadastrarInstituicaoMB.resetCadastrarinstituicao}">
+							action="#{cadastrarBemPatrimonialMB.zerarMB()}">
 						</h:commandButton>
 
 					</div>

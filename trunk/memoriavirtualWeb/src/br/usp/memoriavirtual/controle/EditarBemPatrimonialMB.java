@@ -282,7 +282,21 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		}
 		return null;
 	}
-
+	public String salvarBemPatrimonial(){
+		super.salvarBemPatrimonial();
+		this.zerarMB();
+		return null;
+		
+	}
+	public String zerarMB(){
+		super.zerarMB();
+		this.etapa2 = false;
+		this.etapa1 = true;
+		strDeBusca = "";
+		return null;
+		
+	}
+	
 	public String getStrDeBusca() {
 		return strDeBusca;
 	}

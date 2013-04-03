@@ -211,6 +211,8 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 
 			MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
 					"resultado");
+			
+			this.zerarMB();
 		} else {
 			// MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
 			// "resultado");

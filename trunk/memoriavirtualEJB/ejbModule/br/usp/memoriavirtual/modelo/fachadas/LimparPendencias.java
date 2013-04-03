@@ -114,7 +114,6 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	            controle.adicionar(cmd);
 	            
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -17,6 +17,11 @@ import javax.persistence.SequenceGenerator;
 @SequenceGenerator(name = "CONTAINERMULTIMIDIA_ID", sequenceName = "CONTAINERMULTIMIDIA_SEQ", allocationSize = 1)
 public class ContainerMultimidia implements Serializable{
 
+	public ContainerMultimidia() {
+		super();
+		multimidia = new ArrayList<Multimidia>();
+	}
+
 	/**
 	 * 
 	 */

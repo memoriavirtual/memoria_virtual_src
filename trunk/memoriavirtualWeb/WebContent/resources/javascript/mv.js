@@ -311,6 +311,22 @@ organizarGrupoDescricao = (function(idfieldset) {
 	}
 });
 
+
+
+entradaAutoSave = (function(){
+	setInterval ( "testAutoSave()", 10000 );
+});
+
+testAutoSave = (function(){
+	var autosave = document.getElementById("autoSave:0");
+	
+	if(autosave.checked){
+		autosave.blur();
+	}else{
+		
+	}
+});
+
 /**
  * Função chamada quando um novo tipo de bem e escolhido
  * Ela reorganiza os campos que devem ser vistos 

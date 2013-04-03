@@ -547,6 +547,14 @@ textarea:focus {
 	margin: 7px;
 	/*padding-top: 16px;*/
 }
+#autoSave{
+float: right;
+margin: 15px;
+font-size: 15px;
+text-align: justify;
+text-indent: 20px;	
+}
+
 
 .checks input {
 	height: 15px !important;
