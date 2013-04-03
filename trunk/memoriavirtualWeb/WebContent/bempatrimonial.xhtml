@@ -126,65 +126,152 @@
 		<h:outputLabel>Valor venal: #{realizarBuscaSimplesMB.bem.historicoProcedencia.valorVenalTransacao}</h:outputLabel>
 		<br />
 
-<!-- 		<h:dataTable id="intervencoes" -->
-<!-- 			value="#{realizarBuscaSimplesMB.bem.intervencoes}" var="intervencao"> -->
-<!-- 			<h:column>Data: #{intervencao.data} -->
-<!-- 			</h:column> -->
-<!-- 			<h:column>Descricao: #{intervencao.descricao} -->
-<!-- 			</h:column> -->
-<!-- 			<h:column>responsavel: #{intervencao.responsavel} -->
-<!-- 			</h:column> -->
-<!-- 		</h:dataTable> -->
+		<!-- 		<h:dataTable id="intervencoes" -->
+		<!-- 			value="#{realizarBuscaSimplesMB.bem.intervencoes}" var="intervencao"> -->
+		<!-- 			<h:column>Data: #{intervencao.data} -->
+		<!-- 			</h:column> -->
+		<!-- 			<h:column>Descricao: #{intervencao.descricao} -->
+		<!-- 			</h:column> -->
+		<!-- 			<h:column>responsavel: #{intervencao.responsavel} -->
+		<!-- 			</h:column> -->
+		<!-- 		</h:dataTable> -->
 
 		<h:outputLabel>Latitude: #{realizarBuscaSimplesMB.bem.latitude}</h:outputLabel>
 		<br />
-		
+
 		<h:outputLabel>Longitude: #{realizarBuscaSimplesMB.bem.longitude}</h:outputLabel>
 		<br />
-		
+
 		<h:outputLabel>Localizacao: #{realizarBuscaSimplesMB.bem.localizacaoFisica}</h:outputLabel>
 		<br />
-		
+
 		<h:outputLabel>Meio de Acesso: #{realizarBuscaSimplesMB.bem.meioDeAcesso}</h:outputLabel>
 		<br />
-		
+
 		<h:outputLabel>Numero de registro: #{realizarBuscaSimplesMB.bem.numeroDeRegistro}</h:outputLabel>
 		<br />
-		
-<!-- 		<h:dataTable id="pesquisadores" -->
-<!-- 			value="#{realizarBuscaSimplesMB.bem.pesquisadores}" var="pesquisador"> -->
-<!-- 			<h:column>Data: #{pesquisador.dataPesquisa} -->
-<!-- 			</h:column> -->
-<!-- 			<h:column>Nome: #{pesquisador.nome} -->
-<!-- 			</h:column> -->
-<!-- 			<h:column>Notas: #{pesquisador.notasPesquisador} -->
-<!-- 			</h:column> -->
-<!-- 		</h:dataTable> -->
+
+		<!-- 		<h:dataTable id="pesquisadores" -->
+		<!-- 			value="#{realizarBuscaSimplesMB.bem.pesquisadores}" var="pesquisador"> -->
+		<!-- 			<h:column>Data: #{pesquisador.dataPesquisa} -->
+		<!-- 			</h:column> -->
+		<!-- 			<h:column>Nome: #{pesquisador.nome} -->
+		<!-- 			</h:column> -->
+		<!-- 			<h:column>Notas: #{pesquisador.notasPesquisador} -->
+		<!-- 			</h:column> -->
+		<!-- 		</h:dataTable> -->
 
 		<h:outputLabel>Ano: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
 		<br />
-		
+
 		<h:outputLabel>Edicao: #{realizarBuscaSimplesMB.bem.producao.edicao}</h:outputLabel>
 		<br />
-		
+
 		<h:outputLabel>Local: #{realizarBuscaSimplesMB.bem.producao.local}</h:outputLabel>
 		<br />
 
 		<h:outputLabel>Outras Responsabilidades: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
 		<br />
-		
+
 		<h:outputLabel>Tipo do bem: #{realizarBuscaSimplesMB.bem.tipoDoBemPatrimonial}</h:outputLabel>
 		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Agua Proxima: #{realizarBuscaSimplesMB.bemArqueologico.aguaProximo}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Altura: #{realizarBuscaSimplesMB.bemArqueologico.altura}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Area Total: #{realizarBuscaSimplesMB.bemArqueologico.areaTotal}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Comprimento: #{realizarBuscaSimplesMB.bemArqueologico.comprimento}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Condicao Topografica: #{realizarBuscaSimplesMB.bemArqueologico.condicaoTopografica}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Exposicao: #{realizarBuscaSimplesMB.bemArqueologico.exposicao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Largura: #{realizarBuscaSimplesMB.bemArqueologico.largura}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Notas: #{realizarBuscaSimplesMB.bemArqueologico.notas}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Outros: #{realizarBuscaSimplesMB.bemArqueologico.outros}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Vegetacao: #{realizarBuscaSimplesMB.bemArqueologico.possuiVegetacao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Profundidade: #{realizarBuscaSimplesMB.bemArqueologico.profundidade}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Sitio da paisagem: #{realizarBuscaSimplesMB.bemArqueologico.sitioDaPaisagem}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Uso Atual: #{realizarBuscaSimplesMB.bemArqueologico.usoAtual}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Alcova: #{realizarBuscaSimplesMB.bemArquitetonico.alcova}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura da fachada frontal: #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachFrontal}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura da fachada posterior: #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachPosterior}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura total: #{realizarBuscaSimplesMB.bemArquitetonico.alturaTotal}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Area Total: #{realizarBuscaSimplesMB.bemArquitetonico.areaTotal}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Condicao Topografica: #{realizarBuscaSimplesMB.bemArquitetonico.condicaoTopografia}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Largura: #{realizarBuscaSimplesMB.bemArquitetonico.largura}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Numero de ambientes: #{realizarBuscaSimplesMB.bemArquitetonico.numeroDeAmbientes}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Numero de pavimentos: #{realizarBuscaSimplesMB.bemArquitetonico.numeroDePavimentos}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Outros: #{realizarBuscaSimplesMB.bemArquitetonico.outros}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Pe direito terreo: #{realizarBuscaSimplesMB.bemArquitetonico.peDireitoTerreo}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Porao: #{realizarBuscaSimplesMB.bemArquitetonico.porao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Profundidade: #{realizarBuscaSimplesMB.bemArquitetonico.profundidade}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Sotao: #{realizarBuscaSimplesMB.bemArquitetonico.sotao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Tipo do pe direito: #{realizarBuscaSimplesMB.bemArquitetonico.tipoPeDireito}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Uso: #{realizarBuscaSimplesMB.bemArquitetonico.uso}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.natural}">Caracteristicas Ambientais: #{realizarBuscaSimplesMB.bemNatural.caracteristicasAmbientais}</h:outputLabel>
+		<br />
+
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.natural}">Meio Antropico: #{realizarBuscaSimplesMB.bemNatural.meioAntropico}</h:outputLabel>
+		<br />
 		
-
+		<h:outputLabel rendered="#{realizarBuscaSimplesMB.natural}">Relevo: #{realizarBuscaSimplesMB.bemNatural.relevo}</h:outputLabel>
+		<br />
 	</div>
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-
 
 </h:body>
 </html>

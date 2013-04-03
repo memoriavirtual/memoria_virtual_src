@@ -156,11 +156,12 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		Query query;
 		
 		try{
-			query = entityManager.createQuery("SELECT arq FROM BemArqueologico arq WHERE arq.id = :b.id");
-			query.setParameter("b", bem);
+			query = entityManager.createQuery("SELECT arq FROM BemArqueologico arq, BemPatrimonial b WHERE b.id = arq.id AND b.id = :parametro");
+			query.setParameter("parametro", bem.getId());
 			bemArq = (BemArqueologico) query.getSingleResult();
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			throw new ModeloException(e);
 		}
 		
@@ -173,8 +174,8 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		Query query;
 		
 		try{
-			query = entityManager.createQuery("SELECT ba FROM BemArquitetonico ba WHERE ba.id = :b.id");
-			query.setParameter("b", bem);
+			query = entityManager.createQuery("SELECT ba FROM BemArquitetonico ba, BemPatrimonial b WHERE ba.id = b.id AND b.id = :parametro");
+			query.setParameter("parametro", bem.getId());
 			bemArq = (BemArquitetonico)query.getSingleResult();
 		}
 		catch(Exception e){
@@ -190,8 +191,8 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		Query query;
 		
 		try{
-			query = entityManager.createQuery("SELECT bn FROM BemNatural bn WHERE bn.id = :b.id");
-			query.setParameter("b", bem);
+			query = entityManager.createQuery("SELECT bn FROM BemNatural bn, BemPatrimonial b WHERE bn.id = b.id AND b.id = :parametro");
+			query.setParameter("parametro", bem.getId());
 			bemN = (BemNatural)query.getSingleResult();
 		}
 		catch(Exception e){

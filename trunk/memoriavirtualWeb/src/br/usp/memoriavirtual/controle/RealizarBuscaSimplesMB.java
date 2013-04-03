@@ -34,7 +34,6 @@ public class RealizarBuscaSimplesMB implements Serializable {
 	private BemArqueologico bemArqueologico = null;
 	private BemArquitetonico bemArquitetonico = null;
 	private BemNatural bemNatural = null;
-	private boolean simples;
 	private boolean arquitetonico;
 	private boolean arqueologico;
 	private boolean natural;
@@ -51,12 +50,13 @@ public class RealizarBuscaSimplesMB implements Serializable {
 			MensagensDeErro.getErrorMessage("realizarBuscaErro", "resultado");
 			return null;
 		}
-		
+
 		return "resultados";
 	}
 
 	public String resultado(BemPatrimonial b) {
 		this.bem = b;
+		this.determinaTipo();
 
 		if (this.bem.getTipoDoBemPatrimonial().equals("BemArqueologico")) {
 			try {
@@ -86,6 +86,50 @@ public class RealizarBuscaSimplesMB implements Serializable {
 		}
 
 		return "bempatrimonial";
+
+	}
+
+	public void determinaTipo() {
+
+		if (this.bem.getTipoDoBemPatrimonial().equalsIgnoreCase("arqueologico")) {
+
+			this.arqueologico = true;
+			this.arquitetonico = false;
+			this.natural = false;
+			try {
+				this.bemArqueologico = realizarBuscaEJB
+						.buscarBemArqueologico(bem);
+			} catch (ModeloException e) {
+				MensagensDeErro.getErrorMessage("erro", "resultado");
+			}
+
+		} else if (this.bem.getTipoDoBemPatrimonial().equalsIgnoreCase(
+				"arquitetonico")) {
+
+			this.arqueologico = false;
+			this.arquitetonico = true;
+			this.natural = false;
+			try {
+				this.bemArquitetonico = realizarBuscaEJB
+						.buscarBemArquitetonico(bem);
+			} catch (ModeloException e) {
+				MensagensDeErro.getErrorMessage("erro", "resultado");
+			}
+
+		} else if (this.bem.getTipoDoBemPatrimonial().equalsIgnoreCase(
+				"natural")) {
+
+			this.arqueologico = false;
+			this.arquitetonico = false;
+			this.natural = true;
+			try {
+				this.bemNatural = realizarBuscaEJB
+						.buscarBemNatural(bem);
+			} catch (ModeloException e) {
+				MensagensDeErro.getErrorMessage("erro", "resultado");
+			}
+
+		}
 
 	}
 
@@ -157,14 +201,6 @@ public class RealizarBuscaSimplesMB implements Serializable {
 
 	public void setBemNatural(BemNatural bemNatural) {
 		this.bemNatural = bemNatural;
-	}
-
-	public boolean isSimples() {
-		return simples;
-	}
-
-	public void setSimples(boolean simples) {
-		this.simples = simples;
 	}
 
 	public boolean isArquitetonico() {
