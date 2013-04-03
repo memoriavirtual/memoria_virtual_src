@@ -51,7 +51,7 @@ public class RealizarBuscaSimplesMB implements Serializable {
 			MensagensDeErro.getErrorMessage("realizarBuscaErro", "resultado");
 			return null;
 		}
-
+		
 		return "resultados";
 	}
 

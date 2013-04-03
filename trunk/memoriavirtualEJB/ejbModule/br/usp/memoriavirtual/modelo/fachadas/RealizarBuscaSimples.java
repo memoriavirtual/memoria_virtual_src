@@ -79,11 +79,11 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 	}
 
 	/**
-	 * M√©todo para gerar uma lista de strings a serem buscadas no banco a partir
-	 * de uma busca do usu√°rio
+	 * MÈtodo para gerar uma lista de strings a serem buscadas no banco a partir
+	 * de uma busca do usu·rio
 	 * 
 	 * @param busca
-	 *            String de busca inserida pelo usu√°rio
+	 *            String de busca inserida pelo usu·rio
 	 * @return Lista de strings a serem buscadas no banco
 	 */
 	@SuppressWarnings("rawtypes")
@@ -202,7 +202,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 	}
 
 	/**
-	 * Classe utilizada para estabelecer os crit√©rios de compara√ß√£o entre duas
+	 * Classe utilizada para estabelecer os critÈrios de comparaÁ„o entre duas
 	 * strings ponderadas.
 	 * 
 	 */
@@ -211,7 +211,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		private int peso;
 
 		/**
-		 * Construtor padr√£o
+		 * Construtor padr„o
 		 */
 		public StringPonderada() {
 			super();

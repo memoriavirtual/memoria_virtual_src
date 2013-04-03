@@ -62,44 +62,129 @@
 				<h:outputLabel>Tipo: #{autoria.tipoAutoria}</h:outputLabel>
 			</h:column>
 		</h:dataTable>
-		
-		<h:outputLabel>CaracteristicasFisTecExec: #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel> <br />
-		
-		<h:outputLabel>Complemento: #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel><br />
-		
-		<h:outputLabel>Conteudo: #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel><br />
-		
-		<h:outputLabel>Estado Conservação: #{realizarBuscaSimplesMB.bem.diagnostico.estConservacao}</h:outputLabel><br />
-		
-		<h:outputLabel>Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.estPreservacao}</h:outputLabel><br />
 
-		<h:outputLabel>Nota Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.notaEstConservacao}</h:outputLabel><br />
-		
-		<h:outputLabel>Condições de acesso: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesAcesso}</h:outputLabel><br />
-		
-		<h:outputLabel>Condições de reproducao: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesReproducao}</h:outputLabel><br />
-		
-		<h:outputLabel>Data de retorno: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.dataRetorno}</h:outputLabel><br />
-		
-		<h:outputLabel>Disponibilidade: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.disponibilidade}</h:outputLabel><br />
-		
-		<h:outputLabel>Legislação: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.legislacao}</h:outputLabel><br />
-		
-		<h:outputLabel>Notas Uso Aproveitamento: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.notasUsoAproveitamento}</h:outputLabel><br />
+		<h:outputLabel>CaracteristicasFisTecExec: #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel>
+		<br />
 
-		<h:outputLabel>Proteção: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protecao}</h:outputLabel><br />
-		
-		<h:outputLabel>Instituicao protetora: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protetoraInstituicao}</h:outputLabel><br />
-		
-		<h:dataTable>
-		<h:column><h:outputLabel></h:outputLabel></h:column>
-		</h:dataTable>
+		<h:outputLabel>Complemento: #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel>
+		<br />
 
+		<h:outputLabel>Conteudo: #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Estado Conservação: #{realizarBuscaSimplesMB.bem.diagnostico.estConservacao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.estPreservacao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Nota Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.notaEstConservacao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Condições de acesso: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesAcesso}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Condições de reproducao: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesReproducao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Data de retorno: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.dataRetorno}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Disponibilidade: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.disponibilidade}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Legislação: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.legislacao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Notas Uso Aproveitamento: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.notasUsoAproveitamento}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Proteção: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protecao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Instituicao protetora: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protetoraInstituicao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Fontes de informação: #{realizarBuscaSimplesMB.bem.fontesInformacao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Dados transacao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.dadosDocTransacao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Historico: #{realizarBuscaSimplesMB.bem.historicoProcedencia.historico}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Instrumento: #{realizarBuscaSimplesMB.bem.historicoProcedencia.instrumentoPesquisa}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Dados transacao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.primeiroProprietario}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Tipo Aquisicao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.tipoAquisicao}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Valor venal: #{realizarBuscaSimplesMB.bem.historicoProcedencia.valorVenalTransacao}</h:outputLabel>
+		<br />
+
+<!-- 		<h:dataTable id="intervencoes" -->
+<!-- 			value="#{realizarBuscaSimplesMB.bem.intervencoes}" var="intervencao"> -->
+<!-- 			<h:column>Data: #{intervencao.data} -->
+<!-- 			</h:column> -->
+<!-- 			<h:column>Descricao: #{intervencao.descricao} -->
+<!-- 			</h:column> -->
+<!-- 			<h:column>responsavel: #{intervencao.responsavel} -->
+<!-- 			</h:column> -->
+<!-- 		</h:dataTable> -->
+
+		<h:outputLabel>Latitude: #{realizarBuscaSimplesMB.bem.latitude}</h:outputLabel>
+		<br />
+		
+		<h:outputLabel>Longitude: #{realizarBuscaSimplesMB.bem.longitude}</h:outputLabel>
+		<br />
+		
+		<h:outputLabel>Localizacao: #{realizarBuscaSimplesMB.bem.localizacaoFisica}</h:outputLabel>
+		<br />
+		
+		<h:outputLabel>Meio de Acesso: #{realizarBuscaSimplesMB.bem.meioDeAcesso}</h:outputLabel>
+		<br />
+		
+		<h:outputLabel>Numero de registro: #{realizarBuscaSimplesMB.bem.numeroDeRegistro}</h:outputLabel>
+		<br />
+		
+<!-- 		<h:dataTable id="pesquisadores" -->
+<!-- 			value="#{realizarBuscaSimplesMB.bem.pesquisadores}" var="pesquisador"> -->
+<!-- 			<h:column>Data: #{pesquisador.dataPesquisa} -->
+<!-- 			</h:column> -->
+<!-- 			<h:column>Nome: #{pesquisador.nome} -->
+<!-- 			</h:column> -->
+<!-- 			<h:column>Notas: #{pesquisador.notasPesquisador} -->
+<!-- 			</h:column> -->
+<!-- 		</h:dataTable> -->
+
+		<h:outputLabel>Ano: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
+		<br />
+		
+		<h:outputLabel>Edicao: #{realizarBuscaSimplesMB.bem.producao.edicao}</h:outputLabel>
+		<br />
+		
+		<h:outputLabel>Local: #{realizarBuscaSimplesMB.bem.producao.local}</h:outputLabel>
+		<br />
+
+		<h:outputLabel>Outras Responsabilidades: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
+		<br />
+		
+		<h:outputLabel>Tipo do bem: #{realizarBuscaSimplesMB.bem.tipoDoBemPatrimonial}</h:outputLabel>
+		<br />
+		
 
 	</div>
-	<br/>	<br/>	<br/>
-	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
-		de Engenharia de Software - ICMC-USP</p>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+
 
 </h:body>
 </html>
