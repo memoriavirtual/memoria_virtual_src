@@ -25,6 +25,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 
 /**
  * @author mac
@@ -47,6 +48,8 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	private boolean etapa1 = true;
 	private boolean etapa2 = false;
 	private boolean listarTodos = false;
+	@EJB
+	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 	
 
 	/**
@@ -75,8 +78,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		this.bemPatrimoniais.clear();
 		if (!this.strDeBusca.equals("") || this.listarTodos) {
 			try {
-				this.bemPatrimoniais = this.editarBemPatrimonialEJB
-						.listarBensPatrimoniais(this.strDeBusca);
+				this.bemPatrimoniais = realizarBuscaEJB.buscar(this.strDeBusca);
 
 			} catch (ModeloException e) {
 				e.printStackTrace();
