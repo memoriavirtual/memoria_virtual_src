@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;

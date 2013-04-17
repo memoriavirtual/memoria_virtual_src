@@ -158,9 +158,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 
 	
 	
-	public void autoSaveBemPatrimonial(AjaxBehaviorEvent e){
-		this.salvarBemPatrimonial();
-	}
+	
 	public String salvarBemPatrimonial() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -331,7 +329,11 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 
 	}
 	
-	
+	public String autoSaveBemPatrimonial(){
+		this.salvarBemPatrimonial();
+		System.out.println("Auto save in: ");
+		return null;
+	}
 	
 
 	@Override

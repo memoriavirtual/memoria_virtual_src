@@ -21,7 +21,7 @@
 		<ui:define name="conteudo">
 
 			<div class="formulario">
-
+				
 				<div class="erroPrincipal">
 					<h:messages id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro"></h:messages>
@@ -30,17 +30,21 @@
 				<div class="conteudoTitulo">#{mensagens.cadastrarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarBemDescricao}</div>
 				<h:form method="post" prependId="false">
-
-
+				
+				
+				
+					<h:commandButton id="botaoEscondidoAutoSave" type="submit"
+					action="#{cadastrarBemPatrimonialMB.autoSaveBemPatrimonial()}"
+						style="display: none;">
+					</h:commandButton>
+					
 					<h:selectManyCheckbox id="autoSave">
-						<f:selectItem itemLabel="AutoSave" itemValue="yesAuto"/>
-						<f:ajax event="blur"
-							listener="#{cadastrarBemPatrimonialMB.autoSaveBemPatrimonial()}" />
-						
+						<f:selectItem itemLabel="AutoSave" itemValue="yesAuto" />
+
 					</h:selectManyCheckbox>
 					<script>
-						entradaAutoSave();					
-						</script>
+						entradaAutoSave();
+					</script>
 
 					<fieldset>
 						<div class="espacador"></div>

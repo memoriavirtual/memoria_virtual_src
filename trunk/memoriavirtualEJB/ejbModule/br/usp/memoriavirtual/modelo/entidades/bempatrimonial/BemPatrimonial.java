@@ -87,7 +87,7 @@ public class BemPatrimonial implements Serializable {
 	protected Set<Descritor> descritores;
 	
 	
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name="BEMPATRIMONIAL_ASSUNTO",
     joinColumns=
         @JoinColumn(name="BEMPATRIMONIAL_ID"),
@@ -122,15 +122,15 @@ public class BemPatrimonial implements Serializable {
 	@Embedded
 	protected Diagnostico diagnostico = new Diagnostico("", "", "");
 
-	@ElementCollection
+	@ElementCollection( fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_INTERVENCOES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Intervencao> intervencoes;
 
-	@ElementCollection
+	@ElementCollection( fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_PESQUISADORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Pesquisador> pesquisadores;
 
-	@OneToMany
+	@OneToMany( fetch = FetchType.EAGER)
 	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", inverseJoinColumns = @JoinColumn(name = "BENSRELACIONADOS_ID"), joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<BemPatrimonial> bensrelacionados;
 

@@ -314,14 +314,14 @@ organizarGrupoDescricao = (function(idfieldset) {
 
 
 entradaAutoSave = (function(){
-	setInterval ( "testAutoSave()", 10000 );
+	setInterval ( "testAutoSave()", 30000 );
 });
 
 testAutoSave = (function(){
 	var autosave = document.getElementById("autoSave:0");
-	
+	var butonAutosave = document.getElementById("botaoEscondidoAutoSave");
 	if(autosave.checked){
-		autosave.blur();
+		butonAutosave.click();
 	}else{
 		
 	}
