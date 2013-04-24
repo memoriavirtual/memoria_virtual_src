@@ -5,6 +5,7 @@
 	<projects>
 		<project>memoriavirtualWeb</project>
 		<project>memoriavirtualEJB</project>
+		<project>CriandoWebService</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

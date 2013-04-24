@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</title>
+<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
+</head>
+
+<h:body>
+
+	<h:outputScript library="javascript" name="jquery.js" />
+	<h:outputScript library="javascript" name="abas.js" />
+	<h:outputScript library="javascript" name="jquery.corner.js" />
+	<h:outputScript library="javascript" name="mv.js" />
+	<h:outputScript library="css" name="mv.css" />
+	<div class="continente">
+		<div id="usuario">
+
+			<h:form>
+				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendSair}"
+					value="restrito/index.jsf">Início</h:outputLink>
+				&lt;<h:outputText value="#{usuario.id}" />&gt;,
+				<h:commandLink rendered="#{realizarBuscaSimplesMB.rendSair}"
+					action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
+				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendLogin}"
+					value="login.jsf">Login</h:outputLink>
+			</h:form>
+
+		</div>
+		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
+			class="imgbusca" />
+
+		<div class="conteudoTitulo">
+			#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</div>
+
+		<h:outputLabel>Todos os titulos</h:outputLabel>
+		<h:dataTable id="titulosbem"
+			value="#{realizarBuscaSimplesMB.bem.titulos}" var="titulo">
+			<h:column>
+				<h:outputLabel>#{titulo.valor}</h:outputLabel>
+			</h:column>
+		</h:dataTable>
+
+		<h:outputLabel>Coleção: #{realizarBuscaSimplesMB.bem.colecao}</h:outputLabel>
+
+		<h:outputLabel>Instituicao: #{realizarBuscaSimplesMB.bem.instituicao.nome}</h:outputLabel>
+
+		<h:outputLabel>Autorias</h:outputLabel>
+
+		<h:dataTable id="autoriasbem"
+			value="#{realizarBuscaSimplesMB.bem.autorias}" var="autoria">
+			<h:column>
+				<h:outputLabel>Nome do Autor: #{autoria.nomeAutor}</h:outputLabel>
+			</h:column>
+			<h:column>
+				<h:outputLabel>Tipo: #{autoria.tipoAutoria}</h:outputLabel>
+			</h:column>
+		</h:dataTable>
+		
+		<h:outputLabel>CaracteristicasFisTecExec: #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel> <br />
+		
+		<h:outputLabel>Complemento: #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel><br />
+		
+		<h:outputLabel>Conteudo: #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel><br />
+		
+		<h:outputLabel>Estado Conservação: #{realizarBuscaSimplesMB.bem.diagnostico.estConservacao}</h:outputLabel><br />
+		
+		<h:outputLabel>Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.estPreservacao}</h:outputLabel><br />
+
+		<h:outputLabel>Nota Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.notaEstConservacao}</h:outputLabel><br />
+		
+		<h:outputLabel>Condições de acesso: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesAcesso}</h:outputLabel><br />
+		
+		<h:outputLabel>Condições de reproducao: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesReproducao}</h:outputLabel><br />
+		
+		<h:outputLabel>Data de retorno: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.dataRetorno}</h:outputLabel><br />
+		
+		<h:outputLabel>Disponibilidade: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.disponibilidade}</h:outputLabel><br />
+		
+		<h:outputLabel>Legislação: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.legislacao}</h:outputLabel><br />
+		
+		<h:outputLabel>Notas Uso Aproveitamento: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.notasUsoAproveitamento}</h:outputLabel><br />
+
+		<h:outputLabel>Proteção: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protecao}</h:outputLabel><br />
+		
+		<h:outputLabel>Instituicao protetora: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protetoraInstituicao}</h:outputLabel><br />
+		
+		<h:dataTable>
+		<h:column><h:outputLabel></h:outputLabel></h:column>
+		</h:dataTable>
+
+
+	</div>
+	<br/>	<br/>	<br/>
+	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
+		de Engenharia de Software - ICMC-USP</p>
+
+</h:body>
+</html>
