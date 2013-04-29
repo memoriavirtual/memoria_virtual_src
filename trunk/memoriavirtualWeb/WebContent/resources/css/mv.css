@@ -547,14 +547,14 @@ textarea:focus {
 	margin: 7px;
 	/*padding-top: 16px;*/
 }
-#autoSave{
-float: right;
-margin: 15px;
-font-size: 15px;
-text-align: justify;
-text-indent: 20px;	
-}
 
+#autoSave {
+	float: right;
+	margin: 15px;
+	font-size: 15px;
+	text-align: justify;
+	text-indent: 20px;
+}
 
 .checks input {
 	height: 15px !important;
@@ -752,7 +752,7 @@ text-indent: 20px;
 	width: 300px;
 }
 
-.continente{
+.continente {
 	height: 85%;
 }
 
@@ -760,21 +760,28 @@ text-indent: 20px;
 	margin: auto;
 	width: 100%;
 }
-.caixabusca{
+
+.caixabusca {
 	margin-left: 0px;
 	margin-top: 20px;
 	width: 500px;
 }
 
-.linkresultado{
+.linkresultado {
 	font-size: 20px;
 	margin-left: 10px;
 }
 
-.resultados{
+.resultados {
 	margin-left: 7%;
 }
 
-table .titulo{
+table .titulo {
 	margin-left: 30%;
+}
+
+div #container {
+	text-align: left;
+	width: 60%;
+	margin: auto;
 }
