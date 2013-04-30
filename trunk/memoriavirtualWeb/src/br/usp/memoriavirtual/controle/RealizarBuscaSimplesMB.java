@@ -14,6 +14,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
@@ -46,9 +47,9 @@ public class RealizarBuscaSimplesMB implements Serializable {
 	private List<Multimidia> videos;
 	private List<Multimidia> imagens;
 	private List<Multimidia> audio;
+	private List<ContainerMultimidia> teste;
 
 	public RealizarBuscaSimplesMB() {
-
 	}
 
 	public String buscar() {
@@ -150,8 +151,8 @@ public class RealizarBuscaSimplesMB implements Serializable {
 
 		response.reset();
 		response.setContentType(midia.getContentType());
-		response.setHeader("Content-disposition",
-				"attachment; filename=" + midia.getNome());
+		response.setHeader("Content-disposition", "attachment; filename="
+				+ midia.getNome());
 
 		BufferedInputStream input = null;
 		BufferedOutputStream output = null;
@@ -290,6 +291,14 @@ public class RealizarBuscaSimplesMB implements Serializable {
 
 	public void setAudio(List<Multimidia> audio) {
 		this.audio = audio;
+	}
+
+	public List<ContainerMultimidia> getTeste() {
+		return teste;
+	}
+
+	public void setTeste(List<ContainerMultimidia> teste) {
+		this.teste = teste;
 	}
 
 }
