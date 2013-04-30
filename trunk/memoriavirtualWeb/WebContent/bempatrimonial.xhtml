@@ -19,6 +19,7 @@
 	<h:outputScript library="javascript" name="jquery.corner.js" />
 	<h:outputScript library="javascript" name="mv.js" />
 	<h:outputScript library="css" name="mv.css" />
+
 	<div class="continente">
 		<div id="usuario">
 
@@ -45,266 +46,300 @@
 			<mv:containerExpansivo id="GeralInfo"
 				label="#{mensagens.cadastrarBemGeralInfo}">
 
-				<h:outputLabel>#{mensagens.realizarBuscaSimplesTodosTitulos}</h:outputLabel>
-				<h:dataTable id="titulosbem"
-					value="#{realizarBuscaSimplesMB.bem.titulos}" var="titulo">
-					<h:column>
-						<h:outputLabel>#{titulo.valor}</h:outputLabel>
-					</h:column>
-				</h:dataTable>
+				<div class="caixa">
 
-				<h:outputLabel>Instituicao: #{realizarBuscaSimplesMB.bem.instituicao.nome}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">#{mensagens.realizarBuscaSimplesTodosTitulos}</h:outputLabel>
+					<h:dataTable id="titulosbem"
+						value="#{realizarBuscaSimplesMB.bem.titulos}" var="titulo">
+						<h:column>
+							<h:outputLabel class="resultadosBusca">#{titulo.valor}</h:outputLabel>
+						</h:column>
+					</h:dataTable>
 
-				<h:outputLabel>Disponivel acesso externo: #{realizarBuscaSimplesMB.bem.externo}</h:outputLabel>
+					<h:outputLabel class="resultadosBusca">Instituicao: #{realizarBuscaSimplesMB.bem.instituicao.nome}</h:outputLabel>
 
-				<h:outputLabel>Tipo do bem: #{realizarBuscaSimplesMB.bem.tipoDoBemPatrimonial}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Disponivel acesso externo: #{realizarBuscaSimplesMB.bem.externo}</h:outputLabel>
 
-				<h:outputLabel>Numero de registro: #{realizarBuscaSimplesMB.bem.numeroDeRegistro}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Tipo do bem: #{realizarBuscaSimplesMB.bem.tipoDoBemPatrimonial}</h:outputLabel>
 
-				<h:outputLabel>Complemento: #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Numero de registro: #{realizarBuscaSimplesMB.bem.numeroDeRegistro}</h:outputLabel>
 
-				<h:outputLabel>Coleção: #{realizarBuscaSimplesMB.bem.colecao}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Complemento: #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel>
 
-				<h:outputLabel>Latitude: #{realizarBuscaSimplesMB.bem.latitude}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Coleção: #{realizarBuscaSimplesMB.bem.colecao}</h:outputLabel>
 
-				<h:outputLabel>Longitude: #{realizarBuscaSimplesMB.bem.longitude}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Latitude: #{realizarBuscaSimplesMB.bem.latitude}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Longitude: #{realizarBuscaSimplesMB.bem.longitude}</h:outputLabel>
+
+				</div>
 
 			</mv:containerExpansivo>
 
 			<mv:containerExpansivo id="containerBemAutoria"
 				label="#{mensagens.cadastrarBemAutoria}">
 
-				<h:outputLabel>Autorias</h:outputLabel>
+				<div class="caixa">
 
-				<h:dataTable id="autoriasbem"
-					value="#{realizarBuscaSimplesMB.bem.autorias}" var="autoria">
-					<h:column>
-						<h:outputLabel>Nome do Autor: #{autoria.nomeAutor}</h:outputLabel>
-					</h:column>
-					<h:column>
-						<h:outputLabel>Tipo: #{autoria.tipoAutoria}</h:outputLabel>
-					</h:column>
-				</h:dataTable>
+					<h:outputLabel class="resultadosBusca">Autorias</h:outputLabel>
 
+					<h:dataTable id="autoriasbem"
+						value="#{realizarBuscaSimplesMB.bem.autorias}" var="autoria">
+						<h:column>
+							<h:outputLabel class="resultadosBusca">Nome do Autor: #{autoria.nomeAutor}</h:outputLabel>
+						</h:column>
+						<h:column>
+							<h:outputLabel class="resultadosBusca">Tipo: #{autoria.tipoAutoria}</h:outputLabel>
+						</h:column>
+					</h:dataTable>
+				</div>
 			</mv:containerExpansivo>
 
 			<mv:containerExpansivo label="#{mensagens.cadastrarBemProducao}">
 
-				<h:outputLabel>Ano: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
-				<br />
+				<div class="caixa">
 
-				<h:outputLabel>Edicao: #{realizarBuscaSimplesMB.bem.producao.edicao}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Ano: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
 
-				<h:outputLabel>Local: #{realizarBuscaSimplesMB.bem.producao.local}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Edicao: #{realizarBuscaSimplesMB.bem.producao.edicao}</h:outputLabel>
 
-				<h:outputLabel>Outras Responsabilidades: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
-				<br />
+					<h:outputLabel class="resultadosBusca">Local: #{realizarBuscaSimplesMB.bem.producao.local}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Outras Responsabilidades: #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
+
+				</div>
 
 			</mv:containerExpansivo>
-			
-			<mv:containerExpansivo>
-			
-			<h:outputLabel>CaracteristicasFisTecExec: #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel>
-			<br />
-			
+
+			<mv:containerExpansivo id="containerDescricao"
+				label="#{mensagens.cadastrarBemDescricaoGrupo}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">CaracteristicasFisTecExec: #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Conteudo: #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Meio de Acesso: #{realizarBuscaSimplesMB.bem.meioDeAcesso}</h:outputLabel>
+
+				</div>
+
 			</mv:containerExpansivo>
-			
-			
 
+			<mv:containerExpansivo
+				label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
 
+				<div class="caixa">
 
-			<h:outputLabel>Conteudo: #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca">Estado Conservação: #{realizarBuscaSimplesMB.bem.diagnostico.estConservacao}</h:outputLabel>
 
-			<h:outputLabel>Estado Conservação: #{realizarBuscaSimplesMB.bem.diagnostico.estConservacao}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca">Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.estPreservacao}</h:outputLabel>
 
-			<h:outputLabel>Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.estPreservacao}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca">Nota Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.notaEstConservacao}</h:outputLabel>
 
-			<h:outputLabel>Nota Estado Preservação: #{realizarBuscaSimplesMB.bem.diagnostico.notaEstConservacao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Condições de acesso: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesAcesso}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Condições de reproducao: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesReproducao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Data de retorno: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.dataRetorno}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Disponibilidade: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.disponibilidade}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Legislação: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.legislacao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Notas Uso Aproveitamento: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.notasUsoAproveitamento}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Proteção: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protecao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Instituicao protetora: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protetoraInstituicao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Fontes de informação: #{realizarBuscaSimplesMB.bem.fontesInformacao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Dados transacao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.dadosDocTransacao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Historico: #{realizarBuscaSimplesMB.bem.historicoProcedencia.historico}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Instrumento: #{realizarBuscaSimplesMB.bem.historicoProcedencia.instrumentoPesquisa}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Dados transacao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.primeiroProprietario}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Tipo Aquisicao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.tipoAquisicao}</h:outputLabel>
-			<br />
-
-			<h:outputLabel>Valor venal: #{realizarBuscaSimplesMB.bem.historicoProcedencia.valorVenalTransacao}</h:outputLabel>
-			<br />
-
-			<h:dataTable id="intervencoes"
-				value="#{realizarBuscaSimplesMB.bem.intervencoes}" var="intervencao">
-				<h:column>Data: #{intervencao.data}
+					<h:dataTable id="intervencoes"
+						value="#{realizarBuscaSimplesMB.bem.intervencoes}"
+						var="intervencao">
+						<h:column>Data: #{intervencao.data}
 						</h:column>
-				<h:column>Descricao: #{intervencao.descricao}
+						<h:column>Descricao: #{intervencao.descricao}
 						</h:column>
-				<h:column>responsavel: #{intervencao.responsavel}
+						<h:column>responsavel: #{intervencao.responsavel}
 						</h:column>
-			</h:dataTable>
+					</h:dataTable>
 
+				</div>
+			</mv:containerExpansivo>
 
+			<mv:containerExpansivo id="disponibilidade"
+				label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
 
-			<h:outputLabel>Localizacao: #{realizarBuscaSimplesMB.bem.localizacaoFisica}</h:outputLabel>
-			<br />
+				<div class="caixa">
 
-			<h:outputLabel>Meio de Acesso: #{realizarBuscaSimplesMB.bem.meioDeAcesso}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca">Condições de acesso: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesAcesso}</h:outputLabel>
 
+					<h:outputLabel class="resultadosBusca">Condições de reproducao: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesReproducao}</h:outputLabel>
 
+					<h:outputLabel class="resultadosBusca">Data de retorno: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.dataRetorno}</h:outputLabel>
 
-			<h:dataTable id="pesquisadores"
-				value="#{realizarBuscaSimplesMB.bem.pesquisadores}"
-				var="pesquisador">
-				<h:column>Data: #{pesquisador.dataPesquisa}
+					<h:outputLabel class="resultadosBusca">Disponibilidade: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.disponibilidade}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Legislação: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.legislacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Notas Uso Aproveitamento: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.notasUsoAproveitamento}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Proteção: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protecao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Instituicao protetora: #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protetoraInstituicao}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.cadastrarBemHistoricoProcedencia}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">Dados transacao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.dadosDocTransacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Historico: #{realizarBuscaSimplesMB.bem.historicoProcedencia.historico}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Instrumento: #{realizarBuscaSimplesMB.bem.historicoProcedencia.instrumentoPesquisa}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Dados transacao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.primeiroProprietario}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Tipo Aquisicao: #{realizarBuscaSimplesMB.bem.historicoProcedencia.tipoAquisicao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Valor venal: #{realizarBuscaSimplesMB.bem.historicoProcedencia.valorVenalTransacao}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.cadastrarBemFontesInformacao}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">Fontes de informação: #{realizarBuscaSimplesMB.bem.fontesInformacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">Localizacao: #{realizarBuscaSimplesMB.bem.localizacaoFisica}</h:outputLabel>
+
+					<h:dataTable id="pesquisadores"
+						value="#{realizarBuscaSimplesMB.bem.pesquisadores}"
+						var="pesquisador">
+						<h:column>Data: #{pesquisador.dataPesquisa}
 						</h:column>
-				<h:column>Nome: #{pesquisador.nome}
+						<h:column>Nome: #{pesquisador.nome}
 						</h:column>
-				<h:column>Notas: #{pesquisador.notasPesquisador}
+						<h:column>Notas: #{pesquisador.notasPesquisador}
 						</h:column>
-			</h:dataTable>
+					</h:dataTable>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Agua Proxima: #{realizarBuscaSimplesMB.bemArqueologico.aguaProximo}</h:outputLabel>
-			<br />
+				</div>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Altura: #{realizarBuscaSimplesMB.bemArqueologico.altura}</h:outputLabel>
-			<br />
+			</mv:containerExpansivo>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Area Total: #{realizarBuscaSimplesMB.bemArqueologico.areaTotal}</h:outputLabel>
-			<br />
+			<mv:containerExpansivo
+				label="#{mensagens.realizarBuscaSimplesDadosArqueologicos}">
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Comprimento: #{realizarBuscaSimplesMB.bemArqueologico.comprimento}</h:outputLabel>
-			<br />
+				<div class="caixa">
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Condicao Topografica: #{realizarBuscaSimplesMB.bemArqueologico.condicaoTopografica}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Agua Proxima: #{realizarBuscaSimplesMB.bemArqueologico.aguaProximo}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Exposicao: #{realizarBuscaSimplesMB.bemArqueologico.exposicao}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Altura: #{realizarBuscaSimplesMB.bemArqueologico.altura}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Largura: #{realizarBuscaSimplesMB.bemArqueologico.largura}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Area Total: #{realizarBuscaSimplesMB.bemArqueologico.areaTotal}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Notas: #{realizarBuscaSimplesMB.bemArqueologico.notas}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Comprimento: #{realizarBuscaSimplesMB.bemArqueologico.comprimento}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Outros: #{realizarBuscaSimplesMB.bemArqueologico.outros}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Exposicao: #{realizarBuscaSimplesMB.bemArqueologico.exposicao}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Vegetacao: #{realizarBuscaSimplesMB.bemArqueologico.possuiVegetacao}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Largura: #{realizarBuscaSimplesMB.bemArqueologico.largura}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Profundidade: #{realizarBuscaSimplesMB.bemArqueologico.profundidade}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Notas: #{realizarBuscaSimplesMB.bemArqueologico.notas}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Sitio da paisagem: #{realizarBuscaSimplesMB.bemArqueologico.sitioDaPaisagem}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Outros: #{realizarBuscaSimplesMB.bemArqueologico.outros}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arqueologico}">Uso Atual: #{realizarBuscaSimplesMB.bemArqueologico.usoAtual}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Vegetacao: #{realizarBuscaSimplesMB.bemArqueologico.possuiVegetacao}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Alcova: #{realizarBuscaSimplesMB.bemArquitetonico.alcova}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Profundidade: #{realizarBuscaSimplesMB.bemArqueologico.profundidade}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura da fachada frontal: #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachFrontal}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Sitio da paisagem: #{realizarBuscaSimplesMB.bemArqueologico.sitioDaPaisagem}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura da fachada posterior: #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachPosterior}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">Uso Atual: #{realizarBuscaSimplesMB.bemArqueologico.usoAtual}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura total: #{realizarBuscaSimplesMB.bemArquitetonico.alturaTotal}</h:outputLabel>
-			<br />
+				</div>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Area Total: #{realizarBuscaSimplesMB.bemArquitetonico.areaTotal}</h:outputLabel>
-			<br />
+			</mv:containerExpansivo>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Condicao Topografica: #{realizarBuscaSimplesMB.bemArquitetonico.condicaoTopografia}</h:outputLabel>
-			<br />
+			<mv:containerExpansivo
+				label="#{mensagens.realizarBuscaSimplesDadosArquitetonicos}">
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Largura: #{realizarBuscaSimplesMB.bemArquitetonico.largura}</h:outputLabel>
-			<br />
+				<div class="caixa">
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Numero de ambientes: #{realizarBuscaSimplesMB.bemArquitetonico.numeroDeAmbientes}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Alcova: #{realizarBuscaSimplesMB.bemArquitetonico.alcova}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Numero de pavimentos: #{realizarBuscaSimplesMB.bemArquitetonico.numeroDePavimentos}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura da fachada frontal: #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachFrontal}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Outros: #{realizarBuscaSimplesMB.bemArquitetonico.outros}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura da fachada posterior: #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachPosterior}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Pe direito terreo: #{realizarBuscaSimplesMB.bemArquitetonico.peDireitoTerreo}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Altura total: #{realizarBuscaSimplesMB.bemArquitetonico.alturaTotal}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Porao: #{realizarBuscaSimplesMB.bemArquitetonico.porao}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Area Total: #{realizarBuscaSimplesMB.bemArquitetonico.areaTotal}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Profundidade: #{realizarBuscaSimplesMB.bemArquitetonico.profundidade}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Condicao Topografica: #{realizarBuscaSimplesMB.bemArquitetonico.condicaoTopografia}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Sotao: #{realizarBuscaSimplesMB.bemArquitetonico.sotao}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Largura: #{realizarBuscaSimplesMB.bemArquitetonico.largura}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Tipo do pe direito: #{realizarBuscaSimplesMB.bemArquitetonico.tipoPeDireito}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Numero de ambientes: #{realizarBuscaSimplesMB.bemArquitetonico.numeroDeAmbientes}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.arquitetonico}">Uso: #{realizarBuscaSimplesMB.bemArquitetonico.uso}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Numero de pavimentos: #{realizarBuscaSimplesMB.bemArquitetonico.numeroDePavimentos}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.natural}">Caracteristicas Ambientais: #{realizarBuscaSimplesMB.bemNatural.caracteristicasAmbientais}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Outros: #{realizarBuscaSimplesMB.bemArquitetonico.outros}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.natural}">Meio Antropico: #{realizarBuscaSimplesMB.bemNatural.meioAntropico}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Pe direito terreo: #{realizarBuscaSimplesMB.bemArquitetonico.peDireitoTerreo}</h:outputLabel>
 
-			<h:outputLabel rendered="#{realizarBuscaSimplesMB.natural}">Relevo: #{realizarBuscaSimplesMB.bemNatural.relevo}</h:outputLabel>
-			<br />
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Porao: #{realizarBuscaSimplesMB.bemArquitetonico.porao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Profundidade: #{realizarBuscaSimplesMB.bemArquitetonico.profundidade}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Sotao: #{realizarBuscaSimplesMB.bemArquitetonico.sotao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Tipo do pe direito: #{realizarBuscaSimplesMB.bemArquitetonico.tipoPeDireito}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">Uso: #{realizarBuscaSimplesMB.bemArquitetonico.uso}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.realizarBuscaSimplesDadosNaturais}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.natural}">Caracteristicas Ambientais: #{realizarBuscaSimplesMB.bemNatural.caracteristicasAmbientais}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.natural}">Meio Antropico: #{realizarBuscaSimplesMB.bemNatural.meioAntropico}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.natural}">Relevo: #{realizarBuscaSimplesMB.bemNatural.relevo}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
 		</div>
 	</div>
 

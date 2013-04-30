@@ -19,6 +19,7 @@
 	<h:outputScript library="javascript" name="jquery.corner.js" />
 	<h:outputScript library="javascript" name="mv.js" />
 	<h:outputScript library="css" name="mv.css" />
+
 	<div class="continente">
 		<div id="usuario">
 
@@ -60,16 +61,21 @@
 		</div>
 		<h:form>
 			<fieldset>
-				<h:dataTable id="resultados" var="bem" class="resultados"
-					value="#{realizarBuscaSimplesMB.bens}">
-					<h:column>
-						<h:commandLink class="linkresultado"
-							action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.titulos.get(0).valor}</h:commandLink>
-						<h:dataTable id="titulos" class="titulo" var="titulo" value="#{bem.titulos}">
-							<h:column>#{titulo.valor}</h:column>
-						</h:dataTable>
-					</h:column>
-				</h:dataTable>
+				<div id="resultados">
+					<h:dataTable id="resultados" var="bem" class="resultados"
+						value="#{realizarBuscaSimplesMB.bens}">
+						<h:column>
+							<h:commandLink class="linkresultado"
+								action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.titulos.get(0).valor}</h:commandLink>
+							<h:dataTable id="titulos" class="titulo" var="titulo"
+								value="#{bem.titulos}">
+								<h:column>
+									<h:outputLabel class="resultadosBusca">#{titulo.valor}</h:outputLabel>
+								</h:column>
+							</h:dataTable>
+						</h:column>
+					</h:dataTable>
+				</div>
 			</fieldset>
 		</h:form>
 

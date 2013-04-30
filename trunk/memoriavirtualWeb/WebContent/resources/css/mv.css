@@ -742,6 +742,10 @@ textarea:focus {
 	font-size: 16px;
 }
 
+label.resultadosBusca {
+	display: block;
+}
+
 #botaoBusca {
 	margin-top: 5px;
 }
@@ -782,6 +786,26 @@ table .titulo {
 
 div #container {
 	text-align: left;
+	font-size: 12pt;
 	width: 60%;
 	margin: auto;
+}
+
+img[class*=botao] {
+	float: left;
+	width: 16px;
+}
+
+div#resultados {
+	text-align: left;
+	font-size: 12pt;
+	width: 60%;
+}
+
+div#resultados table{
+	margin-left: 30px;
+}
+
+div.caixa {
+	margin-left: 15px;
 }

@@ -10,10 +10,4 @@
   <module>
     <ejb>memoriavirtualEJB.jar</ejb>
   </module>
-  <module>
-    <web>
-      <web-uri>CriandoWebService.war</web-uri>
-      <context-root>CriandoWebService</context-root>
-    </web>
-  </module>
 </application>

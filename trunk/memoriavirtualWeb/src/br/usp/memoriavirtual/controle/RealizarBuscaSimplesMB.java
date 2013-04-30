@@ -123,8 +123,7 @@ public class RealizarBuscaSimplesMB implements Serializable {
 			this.arquitetonico = false;
 			this.natural = true;
 			try {
-				this.bemNatural = realizarBuscaEJB
-						.buscarBemNatural(bem);
+				this.bemNatural = realizarBuscaEJB.buscarBemNatural(bem);
 			} catch (ModeloException e) {
 				MensagensDeErro.getErrorMessage("erro", "resultado");
 			}
