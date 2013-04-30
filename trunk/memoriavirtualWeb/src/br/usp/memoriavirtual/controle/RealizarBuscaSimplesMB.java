@@ -1,14 +1,20 @@
 package br.usp.memoriavirtual.controle;
 
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+
+import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
@@ -37,6 +43,9 @@ public class RealizarBuscaSimplesMB implements Serializable {
 	private boolean arquitetonico;
 	private boolean arqueologico;
 	private boolean natural;
+	private List<Multimidia> videos;
+	private List<Multimidia> imagens;
+	private List<Multimidia> audio;
 
 	public RealizarBuscaSimplesMB() {
 
@@ -128,6 +137,39 @@ public class RealizarBuscaSimplesMB implements Serializable {
 				MensagensDeErro.getErrorMessage("erro", "resultado");
 			}
 
+		}
+
+	}
+
+	public void download(Multimidia midia) {
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		HttpServletResponse response = (HttpServletResponse) externalContext
+				.getResponse();
+
+		response.reset();
+		response.setContentType(midia.getContentType());
+		response.setHeader("Content-disposition",
+				"attachment; filename=" + midia.getNome());
+
+		BufferedInputStream input = null;
+		BufferedOutputStream output = null;
+
+		try {
+
+			input = new BufferedInputStream(new ByteArrayInputStream(
+					midia.getContent()));
+			output = new BufferedOutputStream(response.getOutputStream());
+
+			for (int length; (length = input.read(midia.getContent())) > 0;)
+				output.write(midia.getContent(), 0, length);
+
+			input.close();
+			output.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO tratar exceção
 		}
 
 	}
@@ -224,6 +266,30 @@ public class RealizarBuscaSimplesMB implements Serializable {
 
 	public void setNatural(boolean natural) {
 		this.natural = natural;
+	}
+
+	public List<Multimidia> getVideos() {
+		return videos;
+	}
+
+	public void setVideos(List<Multimidia> videos) {
+		this.videos = videos;
+	}
+
+	public List<Multimidia> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(List<Multimidia> imagens) {
+		this.imagens = imagens;
+	}
+
+	public List<Multimidia> getAudio() {
+		return audio;
+	}
+
+	public void setAudio(List<Multimidia> audio) {
+		this.audio = audio;
 	}
 
 }

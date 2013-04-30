@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
@@ -39,13 +40,14 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			s = s.trim();
 			System.out.println(s);
 			try {
-				//query = entityManager
-					//	.createQuery("SELECT t.bemPatrimonial FROM BEMPATRIMONIAL_TITULOS t WHERE t.valor LIKE :padrao");
-				query = entityManager.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t WHERE t MEMBER OF b.titulos AND t.valor LIKE :padrao");
+				// query = entityManager
+				// .createQuery("SELECT t.bemPatrimonial FROM BEMPATRIMONIAL_TITULOS t WHERE t.valor LIKE :padrao");
+				query = entityManager
+						.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t WHERE t MEMBER OF b.titulos AND t.valor LIKE :padrao");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {
-					if(!bens.contains(b))
+					if (!bens.contains(b))
 						bens.add(b);
 				}
 			} catch (Exception e) {
@@ -148,58 +150,82 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 		return combinacoes;
 	}
-	
+
 	@Override
-	public BemArqueologico buscarBemArqueologico(BemPatrimonial bem) throws ModeloException{
-		
+	public BemArqueologico buscarBemArqueologico(BemPatrimonial bem)
+			throws ModeloException {
+
 		BemArqueologico bemArq;
 		Query query;
-		
-		try{
-			query = entityManager.createQuery("SELECT arq FROM BemArqueologico arq, BemPatrimonial b WHERE b.id = arq.id AND b.id = :parametro");
+
+		try {
+			query = entityManager
+					.createQuery("SELECT arq FROM BemArqueologico arq, BemPatrimonial b WHERE b.id = arq.id AND b.id = :parametro");
 			query.setParameter("parametro", bem.getId());
 			bemArq = (BemArqueologico) query.getSingleResult();
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ModeloException(e);
 		}
-		
+
 		return bemArq;
 	}
-	
+
 	@Override
-	public BemArquitetonico buscarBemArquitetonico(BemPatrimonial bem) throws ModeloException{
+	public BemArquitetonico buscarBemArquitetonico(BemPatrimonial bem)
+			throws ModeloException {
 		BemArquitetonico bemArq;
 		Query query;
-		
-		try{
-			query = entityManager.createQuery("SELECT ba FROM BemArquitetonico ba, BemPatrimonial b WHERE ba.id = b.id AND b.id = :parametro");
+
+		try {
+			query = entityManager
+					.createQuery("SELECT ba FROM BemArquitetonico ba, BemPatrimonial b WHERE ba.id = b.id AND b.id = :parametro");
 			query.setParameter("parametro", bem.getId());
-			bemArq = (BemArquitetonico)query.getSingleResult();
-		}
-		catch(Exception e){
+			bemArq = (BemArquitetonico) query.getSingleResult();
+		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
-		
+
 		return bemArq;
 	}
-	
+
 	@Override
-	public BemNatural buscarBemNatural(BemPatrimonial bem) throws ModeloException{
+	public BemNatural buscarBemNatural(BemPatrimonial bem)
+			throws ModeloException {
 		BemNatural bemN;
 		Query query;
-		
-		try{
-			query = entityManager.createQuery("SELECT bn FROM BemNatural bn, BemPatrimonial b WHERE bn.id = b.id AND b.id = :parametro");
+
+		try {
+			query = entityManager
+					.createQuery("SELECT bn FROM BemNatural bn, BemPatrimonial b WHERE bn.id = b.id AND b.id = :parametro");
 			query.setParameter("parametro", bem.getId());
-			bemN = (BemNatural)query.getSingleResult();
-		}
-		catch(Exception e){
+			bemN = (BemNatural) query.getSingleResult();
+		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
-		
+
 		return bemN;
+	}
+
+	@Override
+	public List<Multimidia> buscarVideos(BemPatrimonial bem)
+			throws ModeloException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Multimidia> buscarImagens(BemPatrimonial bem)
+			throws ModeloException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Multimidia> buscarAudio(BemPatrimonial bem)
+			throws ModeloException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

@@ -340,6 +340,23 @@
 				</div>
 
 			</mv:containerExpansivo>
+
+			<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+
+				<div class="caixa">
+					<h:form>
+						<h:dataTable
+							value="#{realizarBuscaSimplesMB.bem.containerMultimidia.multimidia}"
+							var="midia">
+							<h:column>
+								<h:commandLink action="#{realizarBuscaSimplesMB.download(midia)}">teste</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+
+			</mv:containerExpansivo>
+
 		</div>
 	</div>
 
