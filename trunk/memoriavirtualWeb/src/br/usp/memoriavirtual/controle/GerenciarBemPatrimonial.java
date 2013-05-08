@@ -15,7 +15,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
-
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
@@ -45,9 +44,10 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 /**
  * @author mac
- *
+ * 
  */
-public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMidia {
+public abstract class GerenciarBemPatrimonial implements Serializable,
+		BeanComMidia {
 
 	@EJB
 	protected EditarAutorRemote editarAutorEJB;
@@ -71,15 +71,14 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 	protected List<String> fontesInformacao = new ArrayList<String>();
 	protected List<GerenciarBemPatrimonial.ApresentaAutoria> apresentaAutorias = new ArrayList<GerenciarBemPatrimonial.ApresentaAutoria>();
 
-	
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
-	
+
 	protected BemPatrimonial bemPatrimonial = new BemPatrimonial();
 
 	protected SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
 	protected boolean geralExterno;
-	
+
 	protected long id = 0;
 	protected String geralNomeInstituicao;
 	protected String geralNaturezaBem;
@@ -156,9 +155,6 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 	protected String assunto;
 	protected String descritores;
 
-	
-	
-	
 	public String salvarBemPatrimonial() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -169,8 +165,8 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 		this.validacaoInstituicao();
 		this.validacaoTitulo();
 		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-			
-			if(this.geralTipoDoBemPatrimonial == null){
+
+			if (this.geralTipoDoBemPatrimonial == null) {
 				this.geralTipoDoBemPatrimonial = "";
 			}
 			if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
@@ -204,18 +200,19 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 				this.bemPatrimonial.setDiagnostico(new Diagnostico(
 						this.estadoConservPreserv, this.estadoConservNotas));
 			} else {
-				this.bemPatrimonial.setTipoDoBemPatrimonial(new String(BemPatrimonial.TipoDoBemPatrimonial.NORMAL.name())); 
+				this.bemPatrimonial.setTipoDoBemPatrimonial(new String(
+						BemPatrimonial.TipoDoBemPatrimonial.NORMAL.name()));
 				this.bemPatrimonial.setDiagnostico(new Diagnostico(
 						this.estadoConservPreserv, this.estadoConservNotas));
 			}
-			
+
 			try {
 				this.bemPatrimonial.setInstituicao(this.editarInstituicaoEJB
 						.getInstituicao(geralNomeInstituicao));
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
-			
+
 			// anexando Geral Info
 
 			this.bemPatrimonial.setTitulos(geralTitulos);
@@ -279,7 +276,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 
 			// anexando assuntos
 			List<Assunto> assun = new ArrayList<Assunto>();
-			
+
 			String[] a = this.assunto.split(" ");
 			for (int i = 0; i < a.length; i++) {
 				assun.add(new Assunto());
@@ -303,10 +300,10 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 			// fim adcionando fontes de informação
 			this.bemPatrimonial.setPesquisadores(this.pesquisadores);
 			ContainerMultimidia c = new ContainerMultimidia();
-			for(Multimidia i : midias){
+			for (Multimidia i : midias) {
 				c.addMultimidia(i);
 			}
-			
+
 			this.bemPatrimonial.setId(id);
 			this.bemPatrimonial.setContainerMultimidia(c);
 			try {
@@ -314,13 +311,13 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 						.salvarBemPatrimonial(this.bemPatrimonial);
 			} catch (ModeloException e) {
 				MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
-					 "resultado");
+						"resultado");
 				e.printStackTrace();
 				return null;
 			}
 
-//			MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
-//					"resultado");
+			// MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
+			// "resultado");
 		} else {
 			// MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
 			// "resultado");
@@ -328,29 +325,28 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 		return null;
 
 	}
-	
-	public String autoSaveBemPatrimonial(){
+
+	public String autoSaveBemPatrimonial() {
 		this.salvarBemPatrimonial();
 		System.out.println("Auto save in: ");
 		return null;
 	}
-	
 
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
 		return this.midias;
 	}
 
-	public void adicionarMidia (Multimidia midia) {
-		this.midias.add( midia);
-		
-		if((this.midias.size() % 4 ) == 1  ){
-			Integer mult = this.midias.size() -1;
+	public void adicionarMidia(Multimidia midia) {
+		this.midias.add(midia);
+
+		if ((this.midias.size() % 4) == 1) {
+			Integer mult = this.midias.size() - 1;
 			this.ApresentaMidias.add(mult);
-			
+
 		}
 	}
-	
+
 	public String zerarMB() {
 		bemPatrimonial = new BemPatrimonial();
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -363,10 +359,10 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 			intervencoes = bemPatrimonial.getIntervencoes();
 			pesquisadores = bemPatrimonial.getPesquisadores();
 			fontesInformacao = bemPatrimonial.getFontesInformacao();
-			
+
 			midias.clear();
-			midias.addAll(bemPatrimonial
-					.getContainerMultimidia().getMultimidia()) ;
+			midias.addAll(bemPatrimonial.getContainerMultimidia()
+					.getMultimidia());
 
 			geralExterno = bemPatrimonial.isExterno();
 			geralNomeInstituicao = bemPatrimonial.getInstituicao().getNome();
@@ -494,16 +490,15 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 
 			tipoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
 					.getTipoAquisicao();
-			valorVenalEpocaTransacao = bemPatrimonial
-					.getHistoricoProcedencia().getValorVenalTransacao();
+			valorVenalEpocaTransacao = bemPatrimonial.getHistoricoProcedencia()
+					.getValorVenalTransacao();
 			dataAquisicaoDocumento = bemPatrimonial.getHistoricoProcedencia()
 					.getDataAquisicao();
 			documentoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
 					.getDadosDocTransacao();
 			primeiroPropietario = bemPatrimonial.getHistoricoProcedencia()
 					.getPrimeiroProprietario();
-			historico = bemPatrimonial.getHistoricoProcedencia()
-					.getHistorico();
+			historico = bemPatrimonial.getHistoricoProcedencia().getHistorico();
 			intrumentoDePesquisa = bemPatrimonial.getHistoricoProcedencia()
 					.getInstrumentoPesquisa();
 
@@ -519,12 +514,11 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 			this.apresentaAutorias.clear();
 			this.geralTitulos.add(new Titulo());
 			id = bemPatrimonial.getId();
-			
+
 		}
 		return null;
 	}
-	
-	
+
 	public ArrayList<Multimidia> getMidias() {
 		return midias;
 	}
@@ -540,20 +534,20 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 	@Override
 	public String removeMidia(int index) {
 		this.midias.remove(index);
-		
-		if(this.midias.size() % 4  == 0){
-			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
-		} 
+
+		if (this.midias.size() % 4 == 0) {
+			this.ApresentaMidias.remove(this.ApresentaMidias.size() - 1);
+		}
 		return null;
 	}
-	
+
 	@Override
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
 		return null;
 	}
-	
-	protected String getTipoAutoria(Autoria.TipoAutoria a ) {
+
+	protected String getTipoAutoria(Autoria.TipoAutoria a) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
@@ -561,12 +555,12 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 
 		String valor = new String();
 
-			valor = bundle.getString("cadastrarAutorListaTipoAutoria" + (a.ordinal() + 1));
-
+		valor = bundle.getString("cadastrarAutorListaTipoAutoria"
+				+ (a.ordinal() + 1));
 
 		return valor;
 	}
-	
+
 	public List<SelectItem> getTiposAutoria() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
@@ -905,7 +899,14 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 	}
 
 	public void validacaoTitulo() {
-		if (this.geralTitulos.get(0).getValor().equals("")) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		
+		if (this.geralTitulos.get(0).getValor().equals("")
+				|| !bundle.getString("cadastrarBemTipoTitulo0")
+						.equals(this.geralTitulos.get(0).getTipo())) {
 			MensagensDeErro.getErrorMessage("cadastrarBemTituloErro",
 					"resultado");
 
@@ -1681,7 +1682,6 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 
 	}
 
-
 	public ArrayList<Integer> getApresentaMidias() {
 		return ApresentaMidias;
 	}
@@ -1689,8 +1689,9 @@ public abstract class GerenciarBemPatrimonial implements Serializable, BeanComMi
 	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
 		ApresentaMidias = apresentaMidias;
 	}
-	public boolean  isRenderCell(int index) {
-		if(this.midias.size() > index ){
+
+	public boolean isRenderCell(int index) {
+		if (this.midias.size() > index) {
 			return true;
 		}
 		return false;

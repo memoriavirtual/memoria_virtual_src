@@ -56,7 +56,7 @@
 								value="#{editarBemPatrimonialMB.bemPatrimoniais}">
 								<h:column>
 									<h:commandLink
-										action="#{editarBemPatrimonialMB.selecionarBemPatrimonial(bem)}">#{bem.class.getName()} </h:commandLink>
+										action="#{editarBemPatrimonialMB.selecionarBemPatrimonial(bem)}">#{bem.getTitulos().get(0).valor} </h:commandLink>
 								</h:column>
 							</h:dataTable>
 							<div></div>
