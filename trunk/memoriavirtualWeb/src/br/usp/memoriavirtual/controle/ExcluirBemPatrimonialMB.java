@@ -15,6 +15,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "excluirBemPatrimonialMB")
@@ -27,41 +28,41 @@ public class ExcluirBemPatrimonialMB implements Serializable{
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	@EJB
 	private ExcluirBemPatrimonialRemote excluirBemPatrimonialEJB;
+	
+	@EJB
+	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 
-	public void listarBensPatrimoniais(AjaxBehaviorEvent e) {
-		this.listarBensPatrimoniais();
+	public void listarBemPatrimonial(AjaxBehaviorEvent event) {
+
+		this.listarBemPatrimonial();
+
 	}
 
-	public void listarBensPatrimoniais() {
+	public String selecionarBem() {
+		return null;
+	}
 
+	public String listarBemPatrimonial() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 
-		try {
-			this.bens = excluirBemPatrimonialEJB
-					.listarBensPatrimoniais(this.nome);
+		this.bens.clear();
+		if (!this.nome.equals("") ) {
+			try {
+				this.bens = realizarBuscaEJB.buscar(this.nome);
 
-			for (BemPatrimonial b : bens) {
-				for (Titulo t : b.getTitulos()) {
-					if (t.getValor().contains(this.nome)) {
-						b.getTitulos().set(0, t);
-					}
-				}
+			} catch (ModeloException e) {
+				e.printStackTrace();
 			}
-
-			BemPatrimonial showAll = new BemPatrimonial();
-			Titulo showAllTitulo = new Titulo();
-			showAllTitulo.setValor(bundle.getString("listarTodos"));
-			showAll.adicionarTitulo(showAllTitulo);
-			this.bens.add(0, showAll);
-
-		} catch (ModeloException m) {
-			MensagensDeErro.getErrorMessage(
-					"excluirBemPatrimonialErroBemInexistente", "resultado");
-			m.printStackTrace();
+		} else {
+			BemPatrimonial bem = new BemPatrimonial();
+			bem.setTipoDoBemPatrimonial(bundle.getString("listarTodos"));
+			this.bens.add(0, bem);
 		}
+
+		return null;
 	}
 
 	public String selecionarBem(BemPatrimonial bem) {
@@ -74,7 +75,7 @@ public class ExcluirBemPatrimonialMB implements Serializable{
 		if (bem.getTitulos().get(0).getValor()
 				.equals(bundle.getString("listarTodos"))) {
 			this.nome = "";
-			this.listarBensPatrimoniais();
+			this.listarBemPatrimonial();
 			return null;
 		}
 
