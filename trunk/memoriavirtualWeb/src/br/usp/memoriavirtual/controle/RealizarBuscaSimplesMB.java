@@ -53,14 +53,6 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		try {
 			this.bens = realizarBuscaEJB.buscar(this.busca);
 			bens.trimToSize();
-			this.apresentaMidias.clear();
-
-			for (int i = 0; i <= this.bens.size(); ++i) {
-
-				this.apresentaMidias.add(i, i);
-				this.apresentaMidias.trimToSize();
-
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +77,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		return "/restrito/selecionarbemexclusao.jsf";
 
 	}
-	
+
 	public String editar() {
 
 		// Inicializando Managed Bean
@@ -126,6 +118,15 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	public String resultado(BemPatrimonial b) {
 		this.bem = b;
 		this.determinaTipo();
+		this.busca = null;
+		
+		for (int i = 0; i < this.bem.getContainerMultimidia()
+				.getMultimidia().size(); ++i) {
+
+			this.apresentaMidias.add(i, i);
+			this.apresentaMidias.trimToSize();
+
+		}
 
 		if (this.bem.getTipoDoBemPatrimonial().equals("BemArqueologico")) {
 			try {
@@ -202,6 +203,8 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	}
 
 	public void download(Integer index) {
+		
+		System.out.println("oloco");
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
