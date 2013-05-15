@@ -802,10 +802,31 @@ div#resultados {
 	width: 60%;
 }
 
-div#resultados table{
+div#resultados table {
 	margin-left: 30px;
 }
 
 div.caixa {
 	margin-left: 15px;
+}
+
+div[id*=midiasExpansivo] label {
+	position: absolute; 
+	margin-bottom : 100%;
+}
+
+table[id*=resultadosMidias] {
+	margin-left: 35%;
+	margin-top: 10%;
+	width: 100%;
+}
+
+table[id*=resultadosMidias] div{
+	margin-left: 45%;
+}
+
+a[class*=acaoLink]{
+	font-size: 12pt;
+	margin-left: 10px;
+	margin-right: 10px;
 }

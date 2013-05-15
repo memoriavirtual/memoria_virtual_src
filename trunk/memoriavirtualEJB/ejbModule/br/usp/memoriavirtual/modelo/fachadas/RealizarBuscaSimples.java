@@ -12,7 +12,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
@@ -27,21 +30,19 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BemPatrimonial> buscar(String busca) throws ModeloException {
+	public ArrayList<BemPatrimonial> buscar(String busca)
+			throws ModeloException {
 
-		List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
+		ArrayList<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 		List<BemPatrimonial> parcial = new ArrayList<BemPatrimonial>();
 		List<String> stringsDeBusca = new ArrayList<String>();
 		Query query;
-		stringsDeBusca = obterStrings(busca);
+		stringsDeBusca = (List<String>) obterStrings(busca);
 
 		// Ordem de busca: titulos, descritores e autores
 		for (String s : stringsDeBusca) {
 			s = s.trim();
-			System.out.println(s);
 			try {
-				// query = entityManager
-				// .createQuery("SELECT t.bemPatrimonial FROM BEMPATRIMONIAL_TITULOS t WHERE t.valor LIKE :padrao");
 				query = entityManager
 						.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t WHERE t MEMBER OF b.titulos AND t.valor LIKE :padrao");
 				query.setParameter("padrao", "%" + s + "%");
@@ -50,6 +51,8 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 					if (!bens.contains(b))
 						bens.add(b);
 				}
+				parcial.clear();
+
 			} catch (Exception e) {
 				throw new ModeloException(e);
 			}
@@ -77,6 +80,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		 * }
 		 */
 
+		bens.trimToSize();
 		return bens;
 	}
 
@@ -297,6 +301,28 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			this.peso = peso;
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean possuiAcesso(Usuario usuario, Instituicao instituicao)
+			throws ModeloException {
+
+		Query query;
+		List<Acesso> acessos = new ArrayList<Acesso>();
+
+		try {
+			query = entityManager
+					.createQuery("SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.instituicao = :instituicao");
+			acessos = (List<Acesso>) query.getResultList();
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
+		if (!acessos.isEmpty())
+			return true;
+
+		return false;
 	}
 
 }

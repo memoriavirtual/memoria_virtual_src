@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
-import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
@@ -27,7 +27,7 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "realizarBuscaSimplesMB")
 @SessionScoped
-public class RealizarBuscaSimplesMB implements Serializable {
+public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class RealizarBuscaSimplesMB implements Serializable {
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 	private String busca;
-	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
+	private ArrayList<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	private BemPatrimonial bem;
 	private BemArqueologico bemArqueologico = null;
 	private BemArquitetonico bemArquitetonico = null;
@@ -44,10 +44,7 @@ public class RealizarBuscaSimplesMB implements Serializable {
 	private boolean arquitetonico;
 	private boolean arqueologico;
 	private boolean natural;
-	private List<Multimidia> videos;
-	private List<Multimidia> imagens;
-	private List<Multimidia> audio;
-	private List<ContainerMultimidia> teste;
+	private ArrayList<Integer> apresentaMidias = new ArrayList<Integer>();
 
 	public RealizarBuscaSimplesMB() {
 	}
@@ -55,6 +52,16 @@ public class RealizarBuscaSimplesMB implements Serializable {
 	public String buscar() {
 		try {
 			this.bens = realizarBuscaEJB.buscar(this.busca);
+			bens.trimToSize();
+			this.apresentaMidias.clear();
+
+			for (int i = 0; i <= this.bens.size(); ++i) {
+
+				this.apresentaMidias.add(i, i);
+				this.apresentaMidias.trimToSize();
+
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaErro", "resultado");
@@ -62,6 +69,58 @@ public class RealizarBuscaSimplesMB implements Serializable {
 		}
 
 		return "resultados";
+	}
+
+	public String excluir() {
+
+		// Inicializando Managed Bean
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+
+		ExcluirBemPatrimonialMB managedBean = (ExcluirBemPatrimonialMB) resolver
+				.getValue(facesContext.getELContext(), null,
+						"excluirBemPatrimonialMB");
+
+		managedBean.selecionarBem(this.bem);
+		return "/restrito/selecionarbemexclusao.jsf";
+
+	}
+	
+	public String editar() {
+
+		// Inicializando Managed Bean
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+
+		EditarBemPatrimonialMB managedBean = (EditarBemPatrimonialMB) resolver
+				.getValue(facesContext.getELContext(), null,
+						"editarBemPatrimonialMB");
+
+		managedBean.selecionarBemPatrimonial(this.bem);
+		return "/restrito/editarbempatrimonial.jsf";
+
+	}
+
+	public boolean permissao() {
+
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+
+		if (usuario == null)
+			return false;
+
+		try {
+			if (usuario.isAdministrador())
+				return true;
+			else if (this.realizarBuscaEJB.possuiAcesso(usuario,
+					this.bem.getInstituicao()))
+				return true;
+			else
+				return false;
+		} catch (ModeloException m) {
+			m.printStackTrace();
+		}
+		return false;
 	}
 
 	public String resultado(BemPatrimonial b) {
@@ -142,12 +201,15 @@ public class RealizarBuscaSimplesMB implements Serializable {
 
 	}
 
-	public void download(Multimidia midia) {
+	public void download(Integer index) {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		HttpServletResponse response = (HttpServletResponse) externalContext
 				.getResponse();
+
+		Multimidia midia = this.bem.getContainerMultimidia().getMultimidia()
+				.get(index);
 
 		response.reset();
 		response.setContentType(midia.getContentType());
@@ -170,7 +232,6 @@ public class RealizarBuscaSimplesMB implements Serializable {
 			output.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO tratar exceção
 		}
 
 	}
@@ -183,11 +244,11 @@ public class RealizarBuscaSimplesMB implements Serializable {
 		this.busca = busca;
 	}
 
-	public List<BemPatrimonial> getBens() {
+	public ArrayList<BemPatrimonial> getBens() {
 		return bens;
 	}
 
-	public void setBens(List<BemPatrimonial> bens) {
+	public void setBens(ArrayList<BemPatrimonial> bens) {
 		this.bens = bens;
 	}
 
@@ -269,36 +330,44 @@ public class RealizarBuscaSimplesMB implements Serializable {
 		this.natural = natural;
 	}
 
-	public List<Multimidia> getVideos() {
-		return videos;
+	@Override
+	public List<Multimidia> recuperaColecaoMidia() {
+		return this.bem.getContainerMultimidia().getMultimidia();
 	}
 
-	public void setVideos(List<Multimidia> videos) {
-		this.videos = videos;
+	@Override
+	public void adicionarMidia(Multimidia midia) {
+
 	}
 
-	public List<Multimidia> getImagens() {
-		return imagens;
+	@Override
+	public String removeMidia(Multimidia midia) {
+		return null;
 	}
 
-	public void setImagens(List<Multimidia> imagens) {
-		this.imagens = imagens;
+	@Override
+	public String removeMidia(int index) {
+		return null;
 	}
 
-	public List<Multimidia> getAudio() {
-		return audio;
+	@Override
+	public ArrayList<Integer> getApresentaMidias() {
+		return this.apresentaMidias;
 	}
 
-	public void setAudio(List<Multimidia> audio) {
-		this.audio = audio;
+	@Override
+	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
+		this.apresentaMidias = apresentaMidias;
 	}
 
-	public List<ContainerMultimidia> getTeste() {
-		return teste;
+	@Override
+	public boolean isRenderCell(int index) {
+		return false;
 	}
 
-	public void setTeste(List<ContainerMultimidia> teste) {
-		this.teste = teste;
+	public String url(Integer index) {
+		return "/multimidia?bean=realizarBuscaSimplesMB&indice="
+				+ index.toString() + "&thumb=true&type=false";
 	}
 
 }
