@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://servico.lista.usp.icmc.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://servico.lista.usp.icmc.br" xmlns:intf="http://servico.lista.usp.icmc.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://servico.lista.usp.icmc.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="Lista">
+    <complexType>
+     <sequence>
+      <element name="recebe" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="ListaResponse">
+    <complexType>
+     <sequence>
+      <element name="ListaReturn" type="impl:ArrayOf_xsd_anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_anyType">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="ListaRequest">
+
+      <wsdl:part element="impl:Lista" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="ListaResponse">
+
+      <wsdl:part element="impl:ListaResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ListaWebService">
+
+      <wsdl:operation name="Lista">
+
+         <wsdl:input message="impl:ListaRequest" name="ListaRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:ListaResponse" name="ListaResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ListaWebServiceSoapBinding" type="impl:ListaWebService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="Lista">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="ListaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="ListaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ListaWebServiceService">
+
+      <wsdl:port binding="impl:ListaWebServiceSoapBinding" name="ListaWebService">
+
+         <wsdlsoap:address location="http://localhost:8080/ListaWebService2/services/ListaWebService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
