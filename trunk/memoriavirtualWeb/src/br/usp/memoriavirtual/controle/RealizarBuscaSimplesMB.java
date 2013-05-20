@@ -158,6 +158,10 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		return "bempatrimonial";
 
 	}
+	
+	public String voltar(){
+		return "resultadosbusca.jsf";
+	}
 
 	public void determinaTipo() {
 
