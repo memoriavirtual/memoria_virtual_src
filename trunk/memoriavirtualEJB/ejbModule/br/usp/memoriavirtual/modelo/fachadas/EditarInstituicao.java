@@ -41,8 +41,8 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		Instituicao instituicao;
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Instituicao a WHERE a.nome = :nome");
-		query.setParameter("nome", pnome);
+				.createQuery("SELECT a FROM Instituicao a WHERE LOWER(a.nome) = :nome");
+		query.setParameter("nome", pnome.toLowerCase());
 		try {
 			instituicao = (Instituicao) query.getSingleResult();
 		} catch (Exception e) {
