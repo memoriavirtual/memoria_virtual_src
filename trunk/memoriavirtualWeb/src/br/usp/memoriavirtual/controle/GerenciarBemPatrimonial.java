@@ -88,6 +88,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 	protected String geralComplemento;
 	protected String geralLatitude;
 	protected String geralLongitude;
+	protected String geralTituloPrincipal;
 	protected List<Titulo> geralTitulos = new ArrayList<Titulo>();
 
 	protected List<Autor> autores = new ArrayList<Autor>();
@@ -214,7 +215,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 			}
 
 			// anexando Geral Info
-
+			this.bemPatrimonial.setTituloPrincipal(geralTituloPrincipal);
 			this.bemPatrimonial.setTitulos(geralTitulos);
 			this.bemPatrimonial.setColecao(geralColecao);
 			this.bemPatrimonial.setExterno(geralExterno);
@@ -375,7 +376,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 			geralLatitude = bemPatrimonial.getLatitude();
 			geralLongitude = bemPatrimonial.getLongitude();
 			geralTitulos = bemPatrimonial.getTitulos();
-
+			geralTituloPrincipal = bemPatrimonial.getTituloPrincipal();
 			autorias = bemPatrimonial.getAutorias();
 
 			producaoLocal = bemPatrimonial.getProducao().getLocal();
@@ -587,8 +588,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 
 		tiposTitulo.add(new SelectItem(bundle
 				.getString("cadastrarBemTipoTituloSelecione")));
-		tiposTitulo.add(new SelectItem(bundle
-				.getString("cadastrarBemTipoTitulo0")));
+		
 		tiposTitulo.add(new SelectItem(bundle
 				.getString("cadastrarBemTipoTitulo1")));
 		tiposTitulo.add(new SelectItem(bundle
@@ -904,9 +904,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 		
-		if (this.geralTitulos.get(0).getValor().equals("")
-				|| !bundle.getString("cadastrarBemTipoTitulo0")
-						.equals(this.geralTitulos.get(0).getTipo())) {
+		if (this.geralTituloPrincipal.equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarBemTituloErro",
 					"resultado");
 
@@ -1695,5 +1693,13 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 			return true;
 		}
 		return false;
+	}
+
+	public String getGeralTituloPrincipal() {
+		return geralTituloPrincipal;
+	}
+
+	public void setGeralTituloPrincipal(String geralTituloPrincipal) {
+		this.geralTituloPrincipal = geralTituloPrincipal;
 	}
 }

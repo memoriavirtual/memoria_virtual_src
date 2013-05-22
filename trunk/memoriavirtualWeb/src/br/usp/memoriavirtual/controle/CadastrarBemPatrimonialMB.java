@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
@@ -110,7 +109,7 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 				e.printStackTrace();
 			}
 			// anexando Geral Info
-
+			this.bemPatrimonial.setTituloPrincipal(geralTituloPrincipal);
 			this.bemPatrimonial.setTitulos(geralTitulos);
 			this.bemPatrimonial.setColecao(geralColecao);
 			this.bemPatrimonial.setExterno(geralExterno);

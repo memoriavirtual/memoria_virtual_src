@@ -72,6 +72,7 @@ public class BemPatrimonial implements Serializable {
 	protected String localizacaoFisica = "";
 	protected String latitude = "";
 	protected String longitude = "";
+	protected String tituloPrincipal = "";
 	protected String caracteristicasFisTecExec = "";
 	protected String conteudo = "";
 	protected String meioDeAcesso = "";
@@ -494,6 +495,14 @@ public class BemPatrimonial implements Serializable {
 
 	public void setAssuntos(Set<Assunto> assuntos) {
 		this.assuntos = assuntos;
+	}
+
+	public String getTituloPrincipal() {
+		return tituloPrincipal;
+	}
+
+	public void setTituloPrincipal(String tituloPrincipal) {
+		this.tituloPrincipal = tituloPrincipal;
 	}
 
 }

@@ -85,7 +85,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			}
 		} else {
 			BemPatrimonial bem = new BemPatrimonial();
-			bem.setTipoDoBemPatrimonial(bundle.getString("listarTodos"));
+			bem.setTituloPrincipal(bundle.getString("listarTodos"));
 			this.bemPatrimoniais.add(0, bem);
 		}
 
@@ -121,7 +121,8 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			geralLatitude = bemPatrimonial.getLatitude();
 			geralLongitude = bemPatrimonial.getLongitude();
 			geralTitulos = bemPatrimonial.getTitulos();
-
+			
+			geralTituloPrincipal = bemPatrimonial.getTituloPrincipal();
 			autorias = bemPatrimonial.getAutorias();
 
 			producaoLocal = bemPatrimonial.getProducao().getLocal();
