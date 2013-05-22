@@ -46,7 +46,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoLocalizacao}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.localizacao}">
+							<h:inputText id="localizacao"
+								value="#{editarInstituicaoMB.localizacao}">
 								<f:ajax event="blur" execute="@this"
 									render="validacaoLocalizacao"
 									listener="#{editarInstituicaoMB.validateLocalizacao}" />
@@ -103,7 +104,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.cep}">
+							<h:inputText id="cep" value="#{editarInstituicaoMB.cep}">
 								<f:ajax event="blur" execute="@this" render="validacaoCep"
 									listener="#{editarInstituicaoMB.validateCep}" />
 							</h:inputText>
@@ -115,7 +116,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoTelefone}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.telefone}">
+							<h:inputText id="telefone" value="#{editarInstituicaoMB.telefone}">
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{editarInstituicaoMB.validateTelefone}" />
 							</h:inputText>
@@ -184,11 +185,11 @@
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.latitude}">
+							<h:inputText id="latitude" value="#{editarInstituicaoMB.latitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLatitude"
 									listener="#{editarInstituicaoMB.validateLatitude}" />
 							</h:inputText>
-							<div></div>
+							<div>#{mensagens.editarInstituicaoFormatoDMS}</div>
 							<h:message id="validacaoLatitude" for="validacaoLatitude"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -196,11 +197,11 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.longitude}">
+							<h:inputText id="longitude" value="#{editarInstituicaoMB.longitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLongitude"
 									listener="#{editarInstituicaoMB.validateLongitude}" />
 							</h:inputText>
-							<div></div>
+							<div>#{mensagens.editarInstituicaoFormatoDMS}</div>
 							<h:message id="validacaoLongitude" for="validacaoLongitude"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -264,7 +265,8 @@
 						</div>
 						<mv:containerExpansivo id="expansivo"
 							label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-							<mv:uploadFile id="multimidia" nomebean="editarInstituicaoMB" bean="#{editarInstituicaoMB}"
+							<mv:uploadFile id="multimidia" nomebean="editarInstituicaoMB"
+								bean="#{editarInstituicaoMB}"
 								array="#{editarInstituicaoMB.apresentaMidias}"></mv:uploadFile>
 						</mv:containerExpansivo>
 
