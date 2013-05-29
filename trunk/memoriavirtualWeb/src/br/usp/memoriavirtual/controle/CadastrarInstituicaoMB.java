@@ -614,8 +614,9 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	public boolean validateNome() {
 
 		if (this.nome.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"cadastrarInstituicaoErroNomeVazio", "validacaoNome");
+			
+			String args[] = {"nome"};
+			MensagensDeErro.getErrorMessage("campo_vazio", args, "validacaoNome");
 			return false;
 		} else if (!memoriaVirtualEJB
 				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
