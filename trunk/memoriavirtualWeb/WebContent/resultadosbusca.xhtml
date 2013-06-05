@@ -66,7 +66,7 @@
 						value="#{realizarBuscaSimplesMB.bens}">
 						<h:column>
 							<h:commandLink class="linkresultado"
-								action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.titulos.get(0).valor}</h:commandLink>
+								action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.tituloPrincipal}</h:commandLink>
 							<h:dataTable id="titulos" class="titulo" var="titulo"
 								value="#{bem.titulos}">
 								<h:column>

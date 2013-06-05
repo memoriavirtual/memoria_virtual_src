@@ -39,12 +39,33 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		Query query;
 		stringsDeBusca = (List<String>) obterStrings(busca);
 
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b FROM BemPatrimonial b WHERE b.tituloPrincipal LIKE :padrao");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<BemPatrimonial>) query.getResultList();
+
+				for (BemPatrimonial b : parcial) {
+					if (!bens.contains(b)) {
+						bens.add(b);
+					}
+				}
+				parcial.clear();
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+
 		// Ordem de busca: titulos, descritores e autores
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
 				query = entityManager
-						.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t WHERE t MEMBER OF b.titulos AND t.valor LIKE :padrao");
+						.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t "
+								+ "WHERE t MEMBER OF b.titulos "
+								+ "AND t.valor LIKE :padrao");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {

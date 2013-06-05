@@ -36,7 +36,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 	private String busca;
-	private ArrayList<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
+	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	private BemPatrimonial bem;
 	private BemArqueologico bemArqueologico = null;
 	private BemArquitetonico bemArquitetonico = null;
@@ -52,15 +52,13 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	public String buscar() {
 		try {
 			this.bens = realizarBuscaEJB.buscar(this.busca);
-			bens.trimToSize();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaErro", "resultado");
 			return null;
 		}
 
-		return "resultados";
+		return "resultadosbusca";
 	}
 
 	public String excluir() {
@@ -119,9 +117,9 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		this.bem = b;
 		this.determinaTipo();
 		this.busca = null;
-		
-		for (int i = 0; i < this.bem.getContainerMultimidia()
-				.getMultimidia().size(); ++i) {
+
+		for (int i = 0; i < this.bem.getContainerMultimidia().getMultimidia()
+				.size(); ++i) {
 
 			this.apresentaMidias.add(i, i);
 			this.apresentaMidias.trimToSize();
@@ -158,8 +156,8 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		return "bempatrimonial";
 
 	}
-	
-	public String voltar(){
+
+	public String voltar() {
 		return "resultadosbusca.jsf";
 	}
 
@@ -207,7 +205,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	}
 
 	public void download(Integer index) {
-		
+
 		System.out.println("oloco");
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -251,11 +249,11 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		this.busca = busca;
 	}
 
-	public ArrayList<BemPatrimonial> getBens() {
+	public List<BemPatrimonial> getBens() {
 		return bens;
 	}
 
-	public void setBens(ArrayList<BemPatrimonial> bens) {
+	public void setBens(List<BemPatrimonial> bens) {
 		this.bens = bens;
 	}
 
