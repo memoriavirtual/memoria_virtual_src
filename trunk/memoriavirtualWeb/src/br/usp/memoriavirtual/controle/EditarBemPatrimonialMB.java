@@ -99,7 +99,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		if (!bemPatrimonial.getTipoDoBemPatrimonial().equals(
+		if (!bemPatrimonial.getTituloPrincipal().equals(
 				bundle.getString("listarTodos"))) {
 
 			intervencoes = bemPatrimonial.getIntervencoes();
