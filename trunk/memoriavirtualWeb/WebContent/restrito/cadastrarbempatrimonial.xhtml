@@ -1289,18 +1289,32 @@
 						
 						<div>
 							<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
-							<h:inputText value="#{editarBemPatrimonialMB.strDeBusca}"
+							<h:inputText value="#{cadastrarBemPatrimonialMB.strDeBusca}"
 								autocomplete="off">
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
+									listener="#{cadastrarBemPatrimonialMB.listarBemPatrimonial}" />
 								<f:ajax event="focus" execute="@this" render="sugestoesId"
-									listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
+									listener="#{cadastrarBemPatrimonialMB.listarBemPatrimonial}" />
 							</h:inputText>
 
 
 						</div>
 						<div id="sugestoes">
 							<h:dataTable id="sugestoesId" var="bem"
+								value="#{cadastrarBemPatrimonialMB.bemPatrimoniais}">
+								<h:column>
+									<h:commandLink
+										action="#{cadastrarBemPatrimonialMB.selecionarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+								</h:column>
+							</h:dataTable>
+							<div></div>
+						</div>
+						
+					
+						
+						
+						<div id="relacionadosBem">
+							<h:dataTable id="relacionadosBemList" var="bem"
 								value="#{editarBemPatrimonialMB.bemPatrimoniais}">
 								<h:column>
 									<h:commandLink
@@ -1309,7 +1323,6 @@
 							</h:dataTable>
 							<div></div>
 						</div>
-						
 						
 						
 						</fieldset>
