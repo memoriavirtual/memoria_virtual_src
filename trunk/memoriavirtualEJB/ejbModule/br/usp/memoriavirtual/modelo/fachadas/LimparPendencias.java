@@ -18,6 +18,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
+
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.comandos.Comando;
 import br.usp.memoriavirtual.modelo.comandos.ControleComandos;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
@@ -45,7 +48,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		TimerConfig timerConfig = new TimerConfig();
 		timerConfig.setInfo("Timer para tarefa de limpeza do banco.");
 		timerConfig.setPersistent(true);
-
+		
 		timerService.createSingleActionTimer(intervalDuration, timerConfig);
 	}
 
@@ -83,6 +86,20 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 			
 			/*Extraimos o nome da Entidade que gerou a dependencia*/
 			String name = aprov.getTabelaEstrangeira();
+			
+			if(name == "ExcluirUsuario"){
+				Usuario user = entityManager.find(Usuario.class, aprov.getChaveEstrangeira());
+				user.setAtivo(true); 
+				entityManager.merge(user);
+				entityManager.flush();
+
+			}else if(name == "ExcluirInstituicao"){
+				Instituicao inst = entityManager.find(Instituicao.class,aprov.getChaveEstrangeira());
+				inst.setValidade(true); 
+				entityManager.merge(inst);
+				entityManager.flush();
+			}
+			entityManager.remove(aprov);
 			
 			StringTokenizer strToken = new StringTokenizer(name, ".");
 			while(strToken.hasMoreTokens()){
