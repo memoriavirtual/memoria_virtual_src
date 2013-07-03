@@ -5,6 +5,7 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -40,6 +41,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemot
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 /**
@@ -48,7 +50,8 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  */
 public abstract class GerenciarBemPatrimonial implements Serializable,
 		BeanComMidia {
-
+	@EJB
+	protected RealizarBuscaSimplesRemote realizarBuscaEJB;
 	@EJB
 	protected EditarAutorRemote editarAutorEJB;
 	@EJB
@@ -79,6 +82,10 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 	protected SerialHtmlDataTable dataTableTitulos = new SerialHtmlDataTable();
 	protected boolean geralExterno;
 
+	protected boolean listarTodos = false;
+	protected String strDeBusca;
+	protected List<BemPatrimonial> bemPatrimoniais = new ArrayList<BemPatrimonial>();
+	protected List<BemPatrimonial> bensRelacionados= new ArrayList<BemPatrimonial>();
 	protected long id = 0;
 	protected String geralNomeInstituicao;
 	protected String geralNaturezaBem;
@@ -307,6 +314,9 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 
 			this.bemPatrimonial.setId(id);
 			this.bemPatrimonial.setContainerMultimidia(c);
+			this.bemPatrimonial.setBensrelacionados(new ArrayList<BemPatrimonial>(  new HashSet<BemPatrimonial>(bensRelacionados)   ));
+			
+			
 			try {
 				this.cadastrarBemPatrimonialEJB
 						.salvarBemPatrimonial(this.bemPatrimonial);
@@ -326,14 +336,64 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 		return null;
 
 	}
+	public String removerAnexarBemPatrimonial(BemPatrimonial bemPatrimonial){
+		bensRelacionados.remove(bemPatrimonial);		
+		return null;
+	}
+	
+	public String anexarBemPatrimonial(BemPatrimonial bemPatrimonial) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+		if (!bemPatrimonial.getTituloPrincipal().equals(
+				bundle.getString("listarTodos"))) {
+			bemPatrimoniais.clear();
+			bensRelacionados.add(bemPatrimonial);
+			
+			
+		}else{
+			bemPatrimoniais.clear();
+			try {
+				this.bemPatrimoniais = realizarBuscaEJB.buscar("");
 
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
+	public void listarBemPatrimonial() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		this.bemPatrimoniais.clear();
+		if (!this.strDeBusca.equals("") || this.listarTodos) {
+			try {
+				this.bemPatrimoniais = realizarBuscaEJB.buscar(this.strDeBusca);
+
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
+		} else {
+			BemPatrimonial bem = new BemPatrimonial();
+			bem.setTituloPrincipal(bundle.getString("listarTodos"));
+			this.bemPatrimoniais.add(0, bem);
+		}
+
+	}
+	
 	public String autoSaveBemPatrimonial() {
 		this.salvarBemPatrimonial();
 		System.out.println("Auto save in: ");
 		return null;
 	}
 
-	@Override
+	
 	public List<Multimidia> recuperaColecaoMidia() {
 		return this.midias;
 	}
@@ -515,6 +575,8 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 			this.apresentaAutorias.clear();
 			this.geralTitulos.add(new Titulo());
 			id = bemPatrimonial.getId();
+			bensRelacionados.clear();
+			bemPatrimoniais.clear();
 
 		}
 		return null;
@@ -1701,5 +1763,65 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 
 	public void setGeralTituloPrincipal(String geralTituloPrincipal) {
 		this.geralTituloPrincipal = geralTituloPrincipal;
+	}
+
+
+	public BemPatrimonial getBemPatrimonial() {
+		return bemPatrimonial;
+	}
+
+
+	public void setBemPatrimonial(BemPatrimonial bemPatrimonial) {
+		this.bemPatrimonial = bemPatrimonial;
+	}
+
+
+	public boolean isListarTodos() {
+		return listarTodos;
+	}
+
+
+	public void setListarTodos(boolean listarTodos) {
+		this.listarTodos = listarTodos;
+	}
+
+
+	public String getStrDeBusca() {
+		return strDeBusca;
+	}
+
+
+	public void setStrDeBusca(String strDeBusca) {
+		this.strDeBusca = strDeBusca;
+	}
+
+
+	public List<BemPatrimonial> getBemPatrimoniais() {
+		return bemPatrimoniais;
+	}
+
+
+	public void setBemPatrimoniais(List<BemPatrimonial> bemPatrimoniais) {
+		this.bemPatrimoniais = bemPatrimoniais;
+	}
+
+
+	public long getId() {
+		return id;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+	public List<BemPatrimonial> getBensRelacionados() {
+		return bensRelacionados;
+	}
+
+
+	public void setBensRelacionados(List<BemPatrimonial> bensRelacionados) {
+		this.bensRelacionados = bensRelacionados;
 	}
 }

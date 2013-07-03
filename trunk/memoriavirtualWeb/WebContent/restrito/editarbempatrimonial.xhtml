@@ -1301,7 +1301,45 @@
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemRelacionarBemPatrimonial}">
-						<fieldset></fieldset>
+						<fieldset>
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
+							<h:inputText value="#{editarBemPatrimonialMB.strDeBusca}"
+								autocomplete="off">
+								<f:ajax event="keyup" execute="@this" render="sugestoesId"
+									listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
+								<f:ajax event="focus" execute="@this" render="sugestoesId"
+									listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
+							</h:inputText>
+
+
+						</div>
+						<div id="sugestoes">
+							<h:dataTable id="sugestoesId" var="bem"
+								value="#{editarBemPatrimonialMB.bemPatrimoniais}">
+								<h:column>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.selecionarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+								</h:column>
+							</h:dataTable>
+							<div></div>
+						</div>
+						
+					
+						
+						
+						<div id="relacionadosBem">
+							<h:dataTable id="relacionadosBemList" var="bem"
+								value="#{editarBemPatrimonialMB.bemPatrimoniais}">
+								<h:column>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.anexarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+								</h:column>
+							</h:dataTable>
+							<div></div>
+						</div>
+						</fieldset>
 					</mv:containerExpansivo>
 
 

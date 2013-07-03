@@ -1299,12 +1299,14 @@
 
 
 						</div>
+						
+						
 						<div id="sugestoes">
 							<h:dataTable id="sugestoesId" var="bem"
 								value="#{cadastrarBemPatrimonialMB.bemPatrimoniais}">
 								<h:column>
 									<h:commandLink
-										action="#{cadastrarBemPatrimonialMB.selecionarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+										action="#{cadastrarBemPatrimonialMB.anexarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
 								</h:column>
 							</h:dataTable>
 							<div></div>
@@ -1314,11 +1316,12 @@
 						
 						
 						<div id="relacionadosBem">
-							<h:dataTable id="relacionadosBemList" var="bem"
-								value="#{editarBemPatrimonialMB.bemPatrimoniais}">
+							<h:dataTable id="relacionadosBemList" var="bemP"
+								value="#{cadastrarBemPatrimonialMB.bensRelacionados}">
+								
 								<h:column>
 									<h:commandLink
-										action="#{editarBemPatrimonialMB.selecionarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+										action="#{cadastrarBemPatrimonialMB.removerAnexarBemPatrimonial(bemP)}">#{bemP.getTituloPrincipal()} </h:commandLink>
 								</h:column>
 							</h:dataTable>
 							<div></div>

@@ -86,7 +86,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 				.getValue(facesContext.getELContext(), null,
 						"editarBemPatrimonialMB");
 
-		managedBean.selecionarBemPatrimonial(this.bem);
+		managedBean.anexarBemPatrimonial(this.bem);
 		return "/restrito/editarbempatrimonial.jsf";
 
 	}

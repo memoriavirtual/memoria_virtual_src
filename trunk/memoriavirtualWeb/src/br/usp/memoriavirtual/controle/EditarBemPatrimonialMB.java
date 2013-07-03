@@ -4,15 +4,12 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-
 
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
@@ -23,16 +20,14 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 
 /**
  * @author mac
  * 
  */
 @SessionScoped
-public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
+public class EditarBemPatrimonialMB extends GerenciarBemPatrimonial implements
 		BeanComMidia, Serializable {
 
 	/**
@@ -43,13 +38,13 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	@EJB
 	private EditarBemPatrimonialRemote editarBemPatrimonialEJB;
 
-	private String strDeBusca;
-	private List<BemPatrimonial> bemPatrimoniais = new ArrayList<BemPatrimonial>();
+	//private String strDeBusca;
+	//private List<BemPatrimonial> bemPatrimoniais = new ArrayList<BemPatrimonial>();
 	private boolean etapa1 = true;
 	private boolean etapa2 = false;
-	private boolean listarTodos = false;
-	@EJB
-	private RealizarBuscaSimplesRemote realizarBuscaEJB;
+	//private boolean listarTodos = false;
+	//@EJB
+	//private RealizarBuscaSimplesRemote realizarBuscaEJB;
 	
 
 	/**
@@ -69,28 +64,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		return null;
 	}
 
-	public String listarBemPatrimonial() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		this.bemPatrimoniais.clear();
-		if (!this.strDeBusca.equals("") || this.listarTodos) {
-			try {
-				this.bemPatrimoniais = realizarBuscaEJB.buscar(this.strDeBusca);
-
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
-		} else {
-			BemPatrimonial bem = new BemPatrimonial();
-			bem.setTituloPrincipal(bundle.getString("listarTodos"));
-			this.bemPatrimoniais.add(0, bem);
-		}
-
-		return null;
-	}
+	
 
 	
 	
@@ -279,10 +253,15 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				}
 			}
 			
+			bensRelacionados = bemPatrimonial.getBensrelacionados();
+						
 			id = bemPatrimonial.getId();
 			this.etapa1 = false;
 			this.etapa2 = true;
 		}
+		
+		strDeBusca = "";
+		bemPatrimoniais.clear();
 		return null;
 	}
 	public String salvarBemPatrimonial(){
@@ -300,21 +279,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		
 	}
 	
-	public String getStrDeBusca() {
-		return strDeBusca;
-	}
 
-	public void setStrDeBusca(String strDeBusca) {
-		this.strDeBusca = strDeBusca;
-	}
-
-	public List<BemPatrimonial> getBemPatrimoniais() {
-		return bemPatrimoniais;
-	}
-
-	public void setBemPatrimoniais(List<BemPatrimonial> autores) {
-		this.bemPatrimoniais = autores;
-	}
 
 	public boolean isEtapa1() {
 		return etapa1;
@@ -332,12 +297,6 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		this.etapa2 = etapa2;
 	}
 
-	public boolean isListarTodos() {
-		return listarTodos;
-	}
-
-	public void setListarTodos(boolean listarTodos) {
-		this.listarTodos = listarTodos;
-	}
+	
 
 }

@@ -4,12 +4,13 @@
 package br.usp.memoriavirtual.controle;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
@@ -25,7 +26,6 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.HistoricoProcedenci
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Producao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 /**
@@ -36,11 +36,11 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 	
 	
-	private String strDeBusca;
-	private List<BemPatrimonial> bemPatrimoniais = new ArrayList<BemPatrimonial>();
-	private boolean listarTodos = false;
-	@EJB
-	private RealizarBuscaSimplesRemote realizarBuscaEJB;
+	//private String strDeBusca;
+	//private List<BemPatrimonial> bemPatrimoniais = new ArrayList<BemPatrimonial>();
+	//private boolean listarTodos = false;
+	//@EJB
+	//private RealizarBuscaSimplesRemote realizarBuscaEJB;
 	/**
 	 * 
 	 */
@@ -208,6 +208,9 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 				c.addMultimidia(i);
 			}
 			this.bemPatrimonial.setContainerMultimidia(c);
+			this.bemPatrimonial.setBensrelacionados(new ArrayList<BemPatrimonial>(  new HashSet<BemPatrimonial>(bensRelacionados)   ));
+			
+			
 			try {
 				this.cadastrarBemPatrimonialEJB
 						.cadastrarBemPatrimonial(this.bemPatrimonial);
@@ -230,59 +233,16 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 
 	}
 
-	public String listarBemPatrimonial() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
+	public void listarBemPatrimonial(AjaxBehaviorEvent event) {
 
-		this.bemPatrimoniais.clear();
-		if (!this.strDeBusca.equals("") || this.listarTodos) {
-			try {
-				this.bemPatrimoniais = realizarBuscaEJB.buscar(this.strDeBusca);
+		this.listarBemPatrimonial();
 
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
-		} else {
-			BemPatrimonial bem = new BemPatrimonial();
-			bem.setTituloPrincipal(bundle.getString("listarTodos"));
-			this.bemPatrimoniais.add(0, bem);
-		}
-
-		return null;
 	}
 
 	
 	
-	public String selecionarBemPatrimonial(BemPatrimonial bemPatrimonial) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (!bemPatrimonial.getTituloPrincipal().equals(
-				bundle.getString("listarTodos"))) {
-		}
-		return null;
-	}
+	
 
 
-	public String getStrDeBusca() {
-		return strDeBusca;
-	}
-
-
-	public void setStrDeBusca(String strDeBusca) {
-		this.strDeBusca = strDeBusca;
-	}
-
-
-	public List<BemPatrimonial> getBemPatrimoniais() {
-		return bemPatrimoniais;
-	}
-
-
-	public void setBemPatrimoniais(List<BemPatrimonial> bemPatrimoniais) {
-		this.bemPatrimoniais = bemPatrimoniais;
-	}
+	
 }
