@@ -34,10 +34,11 @@
 
 				<div class="conteudoTitulo">#{mensagens.editarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.editarBemPassoPrimeiro}</div>
-				
-				
-				
-				<h:form rendered="#{editarBemPatrimonialMB.etapa1}" method="post" prependId="false">
+
+
+
+				<h:form rendered="#{editarBemPatrimonialMB.etapa1}" method="post"
+					prependId="false">
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
@@ -62,9 +63,10 @@
 							<div></div>
 						</div>
 					</fieldset>
-					
+
 				</h:form>
-				<h:form rendered="#{editarBemPatrimonialMB.etapa2}" method="post" prependId="false">
+				<h:form rendered="#{editarBemPatrimonialMB.etapa2}" method="post"
+					prependId="false">
 
 
 					<fieldset>
@@ -136,8 +138,8 @@
 								</h:inputText>
 								<div></div>
 							</div>
-							
-							
+
+
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloPrincipal}</h:outputLabel>
 								<h:inputText
@@ -339,8 +341,7 @@
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoOutrasRes}</h:outputLabel>
-								<h:inputText
-									value="#{editarBemPatrimonialMB.producaoOutrasRes}">
+								<h:inputText value="#{editarBemPatrimonialMB.producaoOutrasRes}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -487,8 +488,7 @@
 
 							<div class="arquitetonico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoOutros}</h:outputLabel>
-								<h:inputText
-									value="#{editarBemPatrimonialMB.descricaoOutros}">
+								<h:inputText value="#{editarBemPatrimonialMB.descricaoOutros}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -558,8 +558,7 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoSitoDaPaisagem}</h:outputLabel>
-								<h:inputText
-									value="#{editarBemPatrimonialMB.sitioDaPaisagem}">
+								<h:inputText value="#{editarBemPatrimonialMB.sitioDaPaisagem}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -573,8 +572,7 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPossuiVegetacao}</h:outputLabel>
-								<h:inputText
-									value="#{editarBemPatrimonialMB.possuiVegetacao}">
+								<h:inputText value="#{editarBemPatrimonialMB.possuiVegetacao}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -610,8 +608,7 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoOutros}</h:outputLabel>
-								<h:inputText
-									value="#{editarBemPatrimonialMB.descricaoOutros}">
+								<h:inputText value="#{editarBemPatrimonialMB.descricaoOutros}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -667,8 +664,7 @@
 
 							<div class="arquitetonico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAlturaDaCumeeira}</h:outputLabel>
-								<h:inputText
-									value="#{editarBemPatrimonialMB.alturaDaCumeeira}">
+								<h:inputText value="#{editarBemPatrimonialMB.alturaDaCumeeira}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -682,8 +678,7 @@
 
 							<div class="arquitetonico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPeDireitoTerreo}</h:outputLabel>
-								<h:inputText
-									value="#{editarBemPatrimonialMB.peDireitoTerreo}">
+								<h:inputText value="#{editarBemPatrimonialMB.peDireitoTerreo}">
 								</h:inputText>
 								<div></div>
 							</div>
@@ -758,7 +753,7 @@
 								<div></div>
 							</div>
 
-							<div >
+							<div>
 								<h:outputLabel class="labels">
 										#{mensagens.cadastrarBemDescricaoNotas}
 									</h:outputLabel>
@@ -776,15 +771,14 @@
 
 							<mv:containerExpansivo id="expansivo"
 								label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-								<mv:uploadFile id="multimidia"
-									nomebean="editarBemPatrimonialMB"
+								<mv:uploadFile id="multimidia" nomebean="editarBemPatrimonialMB"
 									bean="#{editarBemPatrimonialMB}"
 									array="#{editarBemPatrimonialMB.apresentaMidias}"></mv:uploadFile>
 							</mv:containerExpansivo>
-							
-							
-							
-							
+
+
+
+
 						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
@@ -919,7 +913,7 @@
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 10px !important;">#{mensagens.cadastrarBemIntervencaData}</h:outputLabel>
 									<h:inputText style="width: 10% !important ;"
-										value="#{intervencao.data}" >
+										value="#{intervencao.data}">
 									</h:inputText>
 
 									<h:outputLabel class="labels"
@@ -1173,8 +1167,7 @@
 
 							<div class="arqueologico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemAssuntoDescritoresDescritores}</h:outputLabel>
-								<h:inputTextarea
-									value="#{editarBemPatrimonialMB.descritores}"
+								<h:inputTextarea value="#{editarBemPatrimonialMB.descritores}"
 									styleClass="caixadetexto">
 								</h:inputTextarea>
 								<div></div>
@@ -1302,43 +1295,49 @@
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemRelacionarBemPatrimonial}">
 						<fieldset>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
-							<h:inputText value="#{editarBemPatrimonialMB.strDeBusca}"
-								autocomplete="off">
-								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
-								<f:ajax event="focus" execute="@this" render="sugestoesId"
-									listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
-							</h:inputText>
 
+							<div>
+								<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
+								<h:inputText value="#{editarBemPatrimonialMB.strDeBusca}"
+									autocomplete="off">
+									<f:ajax event="keyup" execute="@this" render="sugestoesId"
+										listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
+									<f:ajax event="focus" execute="@this" render="sugestoesId"
+										listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
+								</h:inputText>
 
-						</div>
-						<div id="sugestoes">
-							<h:dataTable id="sugestoesId" var="bem"
-								value="#{editarBemPatrimonialMB.bemPatrimoniais}">
-								<h:column>
-									<h:commandLink
-										action="#{editarBemPatrimonialMB.selecionarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
-								</h:column>
-							</h:dataTable>
-							<div></div>
-						</div>
-						
-					
-						
-						
-						<div id="relacionadosBem">
-							<h:dataTable id="relacionadosBemList" var="bem"
-								value="#{editarBemPatrimonialMB.bemPatrimoniais}">
-								<h:column>
-									<h:commandLink
-										action="#{editarBemPatrimonialMB.anexarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
-								</h:column>
-							</h:dataTable>
-							<div></div>
-						</div>
+								<div id="sugestoes">
+									<h:dataTable id="sugestoesId" styleClass="relacionadosBemList"
+										var="bem" value="#{cadastrarBemPatrimonialMB.bemPatrimoniais}">
+										<h:column>
+											<h:commandLink
+												action="#{cadastrarBemPatrimonialMB.anexarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+										</h:column>
+									</h:dataTable>
+									<div></div>
+								</div>
+
+								<div class="espacador"></div>
+
+								<div>
+
+									<h:outputLabel class="labels">#{mensagens.bensrelacionados}</h:outputLabel>
+
+								</div>
+								<div class="espacador"></div>
+
+								<div id="relacionadosBem">
+									<h:dataTable styleClass="relacionadosBemList" var="bemP"
+										style="position: relative !important; z-index: 50; margin-left: 350px;"
+										value="#{cadastrarBemPatrimonialMB.bensRelacionados}">
+
+										<h:column>
+											<h:commandLink
+												action="#{cadastrarBemPatrimonialMB.removerAnexarBemPatrimonial(bemP)}">#{bemP.getTituloPrincipal()} </h:commandLink>
+										</h:column>
+									</h:dataTable>
+									<div></div>
+								</div>
 						</fieldset>
 					</mv:containerExpansivo>
 

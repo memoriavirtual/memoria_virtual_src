@@ -21,7 +21,7 @@
 		<ui:define name="conteudo">
 
 			<div class="formulario">
-				
+
 				<div class="erroPrincipal">
 					<h:messages id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro"></h:messages>
@@ -30,14 +30,14 @@
 				<div class="conteudoTitulo">#{mensagens.cadastrarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarBemDescricao}</div>
 				<h:form method="post" prependId="false">
-				
-				
-				
+
+
+
 					<h:commandButton id="botaoEscondidoAutoSave" type="submit"
-					action="#{cadastrarBemPatrimonialMB.autoSaveBemPatrimonial()}"
+						action="#{cadastrarBemPatrimonialMB.autoSaveBemPatrimonial()}"
 						style="display: none;">
 					</h:commandButton>
-					
+
 					<h:selectManyCheckbox id="autoSave">
 						<f:selectItem itemLabel="AutoSave" itemValue="yesAuto" />
 
@@ -115,7 +115,7 @@
 								</h:inputText>
 								<div></div>
 							</div>
-							
+
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloPrincipal}</h:outputLabel>
 								<h:inputText
@@ -123,7 +123,7 @@
 								</h:inputText>
 								<div></div>
 							</div>
-							
+
 
 							<div>
 
@@ -141,8 +141,8 @@
 
 							</div>
 
-							
-									
+
+
 							<h:dataTable id="titulosBem" var="titulo" class="titulos"
 								binding="#{cadastrarBemPatrimonialMB.dataTableTitulos}"
 								value="#{cadastrarBemPatrimonialMB.geralTitulos}">
@@ -1284,51 +1284,57 @@
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemRelacionarBemPatrimonial}">
 						<fieldset>
-						
-						
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
-							<h:inputText value="#{cadastrarBemPatrimonialMB.strDeBusca}"
-								autocomplete="off">
-								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{cadastrarBemPatrimonialMB.listarBemPatrimonial}" />
-								<f:ajax event="focus" execute="@this" render="sugestoesId"
-									listener="#{cadastrarBemPatrimonialMB.listarBemPatrimonial}" />
-							</h:inputText>
 
 
-						</div>
-						
-						
-						<div id="sugestoes">
-							<h:dataTable id="sugestoesId" var="bem"
-								value="#{cadastrarBemPatrimonialMB.bemPatrimoniais}">
-								<h:column>
-									<h:commandLink
-										action="#{cadastrarBemPatrimonialMB.anexarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
-								</h:column>
-							</h:dataTable>
-							<div></div>
-						</div>
-						
-					
-						<div>
-							<h:outputLabel class="labels">#{mensagens.bensrelacionados}</h:outputLabel>
-						</div>
-						<div id="relacionadosBem">
-							<h:dataTable id="relacionadosBemList" var="bemP"
-								value="#{cadastrarBemPatrimonialMB.bensRelacionados}">
-								
-								<h:column>
-									<h:commandLink
-										action="#{cadastrarBemPatrimonialMB.removerAnexarBemPatrimonial(bemP)}">#{bemP.getTituloPrincipal()} </h:commandLink>
-								</h:column>
-							</h:dataTable>
-							<div></div>
-						</div>
-						
-						
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
+								<h:inputText value="#{cadastrarBemPatrimonialMB.strDeBusca}"
+									autocomplete="off">
+									<f:ajax event="keyup" execute="@this" render="sugestoesId"
+										listener="#{cadastrarBemPatrimonialMB.listarBemPatrimonial}" />
+									<f:ajax event="focus" execute="@this" render="sugestoesId"
+										listener="#{cadastrarBemPatrimonialMB.listarBemPatrimonial}" />
+								</h:inputText>
+
+
+							</div>
+
+
+							<div id="sugestoes">
+								<h:dataTable id="sugestoesId" styleClass="relacionadosBemList"
+									var="bem" value="#{cadastrarBemPatrimonialMB.bemPatrimoniais}">
+									<h:column>
+										<h:commandLink
+											action="#{cadastrarBemPatrimonialMB.anexarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+									</h:column>
+								</h:dataTable>
+								<div></div>
+							</div>
+
+							<div class="espacador"></div>
+
+							<div>
+
+								<h:outputLabel class="labels">#{mensagens.bensrelacionados}</h:outputLabel>
+
+							</div>
+							<div class="espacador"></div>
+
+							<div id="relacionadosBem">
+								<h:dataTable styleClass="relacionadosBemList" var="bemP"
+									style="position: relative !important; z-index: 50; margin-left: 350px;"
+									value="#{cadastrarBemPatrimonialMB.bensRelacionados}">
+
+									<h:column>
+										<h:commandLink
+											action="#{cadastrarBemPatrimonialMB.removerAnexarBemPatrimonial(bemP)}">#{bemP.getTituloPrincipal()} </h:commandLink>
+									</h:column>
+								</h:dataTable>
+								<div></div>
+							</div>
+
+
 						</fieldset>
 					</mv:containerExpansivo>
 
