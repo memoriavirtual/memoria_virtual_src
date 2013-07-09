@@ -19,7 +19,7 @@ jQuery(function($) {
 	$.mask.definitions['^']='[WL]';
 	$("[id*='latitude']").mask("~ 99° 99' 99,99''");
 	$("[id*='longitude']").mask("^ 999° 99' 99,99''");
-	$("[id*='telefone']").mask("(999) 9999-9999");
-	$("[id*='cep']").mask("(999) 99999-999");
+	$("[id*='telefone']").mask("(999)9999-9999");
+	$("[id*='cep']").mask("(999)99999-999");
 
 });

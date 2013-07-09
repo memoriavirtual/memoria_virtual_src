@@ -298,6 +298,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	}
 
 	public List<SelectItem> getEstadoSigla() {
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
