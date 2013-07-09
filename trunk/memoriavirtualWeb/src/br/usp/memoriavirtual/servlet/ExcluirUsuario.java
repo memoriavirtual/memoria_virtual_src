@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.ExcluirUsuarioMB;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
@@ -62,11 +63,6 @@ public class ExcluirUsuario extends HttpServlet {
 					.isAprovacaoExpirada(aprovacaoId);
 		} catch (ModeloException m) {
 			m.printStackTrace();
-		}
-
-		if (expiracao) {
-			response.sendRedirect("restrito/dataexpirada.jsf");
-
 		}
 
 		if (expiracao) {

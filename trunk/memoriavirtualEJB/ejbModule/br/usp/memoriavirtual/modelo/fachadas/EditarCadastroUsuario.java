@@ -64,12 +64,10 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		return acessos;
 	}
 
-	
-
 	/**
-	 * Método usado para listar os possíveis aprovadores
-	 * de uma edição de acessos de usuário. Esses aprovadores
-	 * são os administradores do sistema..
+	 * Método usado para listar os possíveis aprovadores de uma edição de
+	 * acessos de usuário. Esses aprovadores são os administradores do
+	 * sistema..
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
@@ -88,7 +86,6 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		}
 		return administradores;
 	}
-
 
 	@Override
 	public void editarCadastro(Usuario usuario, String nomeCompleto,
@@ -311,34 +308,35 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			throw new ModeloException(e);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Instituicao> listarInstituicoes(String instituicao) throws ModeloException{
+	public List<Instituicao> listarInstituicoes(String instituicao)
+			throws ModeloException {
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 
-		try{
-			Query query = entityManager.createQuery("SELECT i FROM Instituicao i WHERE i.nome LIKE :padrao ORDER BY i.nome");
+		try {
+			Query query = entityManager
+					.createQuery("SELECT i FROM Instituicao i WHERE i.nome LIKE :padrao ORDER BY i.nome");
 			query.setParameter("padrao", "%" + instituicao + "%");
-			instituicoes = (List<Instituicao>)query.getResultList();
+			instituicoes = (List<Instituicao>) query.getResultList();
 			return instituicoes;
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
 	}
-	
-	@Override
-	public boolean isAprovador(Usuario usuario, String aprovacaoId){
-		try{
 
-			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class, Long.valueOf(aprovacaoId));
-			if(aprovacao.getAprovador().getId() == usuario.getId())
+	@Override
+	public boolean isAprovador(Usuario usuario, String aprovacaoId) {
+		try {
+
+			Aprovacao aprovacao = this.entityManager.find(Aprovacao.class,
+					Long.valueOf(aprovacaoId));
+			if (aprovacao.getAprovador().getId().equals(usuario.getId()))
 				return true;
 			else
 				return false;
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
