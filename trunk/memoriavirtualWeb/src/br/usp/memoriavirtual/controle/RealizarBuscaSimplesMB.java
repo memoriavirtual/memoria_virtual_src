@@ -54,7 +54,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 			this.bens = realizarBuscaEJB.buscar(this.busca);
 		} catch (Exception e) {
 			e.printStackTrace();
-			MensagensDeErro.getErrorMessage("realizarBuscaErro", "resultado");
+			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro", "resultado");
 			return null;
 		}
 
