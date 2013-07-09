@@ -1044,4 +1044,11 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		}
 		return false;
 	}
+	
+	public String cancelar(){
+		
+		this.resetCadastrarinstituicao();
+		return "/restrito/index.jsf";
+		
+	}
 }
