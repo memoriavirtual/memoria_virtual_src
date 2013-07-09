@@ -35,10 +35,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private Acesso acesso; // acesso do
-	private String nome; // nome a ser buscado para oferecer sugestoes
+	private String nome = ""; // nome a ser buscado para oferecer sugestoes
 	private String nomeCompleto; // nome a ser exibido na visão de edição
 	private String telefone;
-	private List<Usuario> usuarios  =  new ArrayList<Usuario>();
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	private List<Usuario> administradores;
 	private List<Instituicao> instituicoes;
 	private Usuario usuario;
@@ -50,32 +50,28 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private List<Acesso> acessosAntigos;
 	private Aprovacao aprovacao;
 	private boolean exibirAcessos = false; // exibir a tabela de acessos
-	private boolean mostrarLink = true; // renderizar link para exibir a tabela de acessos
+	private boolean mostrarLink = true; // renderizar link para exibir a tabela
+										// de acessos
 	private boolean renderInstituicoes = false;
 
 	public EditarCadastroUsuarioMB() {
 		super();
 	}
-	
+
 	public void listarUsuariosFocus(AjaxBehaviorEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
+
 		this.usuarios.clear();
 		Usuario ins = new Usuario();
 		ins.setNomeCompleto(bundle.getString("listarTodos"));
 		this.usuarios.add(0, ins);
 	}
-	
-	public void listarUsuarios(AjaxBehaviorEvent event) {
-		this.listarUsuarios();
-	}
 
 	public void listarUsuarios() {
 		
-
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
@@ -126,14 +122,14 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
+
 		// pega o usuário requerente
 		Usuario requerente = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
-		// se for a opção para listar todos os usuários, refaz a busca no banco
-		if (usuario.getNomeCompleto().equals(
-				bundle.getString("listarTodos"))) {
+		// se for a opção para listar todos os usuários, refaz a busca no
+		// banco
+		if (usuario.getNomeCompleto().equals(bundle.getString("listarTodos"))) {
 			this.nome = "";
 			this.listarUsuarios();
 			this.usuarios.remove(0);
@@ -180,7 +176,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				.getExternalContext().getSessionMap().get("usuario");
 
 		this.listarUsuarios();
-		if(this.nome == ""){
+		if (this.nome == "") {
 			MensagensDeErro.getErrorMessage("excluirAutorErro", "resultado");
 			return null;
 		}
@@ -249,19 +245,20 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		}
 		return true;
 	}
+
 	public void validateAprovador(AjaxBehaviorEvent e) {
 		this.validateTelefone();
 	}
 
 	public boolean validateAprovador() {
-		
-		if(this.administrador == null){
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuarioAprovadorVazio",
-					"validacaoAprovador");
+
+		if (this.administrador == null) {
+			MensagensDeErro
+					.getErrorMessage("editarCadastroUsuarioAprovadorVazio",
+							"validacaoAprovador");
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -270,7 +267,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public boolean validateTelefone() {
-		if(this.telefone.equals("")){
+		if (this.telefone.equals("")) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarInstituicaoErroTelefoneVazio",
 					"validacaoTelefone");
@@ -327,10 +324,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	public String editarCadastroUsuario() {
 		this.validateNome();
 		this.validateTelefone();
-		if(this.exibirAcessos)
+		if (this.exibirAcessos)
 			this.validateAprovador();
-		
-		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
+
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
 
 			List<Acesso> pendentes = new ArrayList<Acesso>();
 			List<String> situacoes = new ArrayList<String>();
@@ -447,9 +444,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
-		
+
 		List<SelectItem> administradores = new ArrayList<SelectItem>();
-		administradores.add(new SelectItem(null, bundle.getString("editarCadastroUsuarioAdministradores") ));
+		administradores.add(new SelectItem(null, bundle
+				.getString("editarCadastroUsuarioAdministradores")));
 		for (Usuario u : this.administradores) {
 			administradores.add(new SelectItem(u.getId(), u.getNomeCompleto()));
 		}

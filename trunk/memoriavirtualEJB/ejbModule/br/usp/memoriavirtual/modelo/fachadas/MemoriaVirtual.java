@@ -248,6 +248,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			opcaoListarTodos.setNomeCompleto("Listar Todos");
 			opcaoListarTodos.setId("listartodos");
 			usuarios.add(0, opcaoListarTodos);
+			
 
 		} catch (Exception e) {
 			// em caso de erro, joga uma exceção
