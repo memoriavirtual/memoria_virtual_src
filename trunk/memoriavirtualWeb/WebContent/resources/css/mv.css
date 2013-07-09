@@ -278,6 +278,20 @@ h4 {
 	height: 20px;
 }
 
+textarea {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	padding: 1px;
+	width: 250px;
+	height: 300px;
+}
+
+fieldset input {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	padding: 1px;
+}
+
 .formulario fieldset option {
 	background: #F7F7F7;
 	border-left: #444 solid 1px;
@@ -521,8 +535,8 @@ textarea:focus {
 	margin: auto;
 }
 
-#dataTableEmails {
-	/*margin: auto;*/
+#dataTableEmails { /*margin: auto;*/
+	
 }
 
 #paragrafo {
@@ -811,8 +825,8 @@ div.caixa {
 }
 
 div[id*=midiasExpansivo] label {
-	position: absolute; 
-	margin-bottom : 100%;
+	position: absolute;
+	margin-bottom: 100%;
 }
 
 table[id*=resultadosMidias] {
@@ -821,17 +835,15 @@ table[id*=resultadosMidias] {
 	width: 100%;
 }
 
-table[id*=resultadosMidias] div{
+table[id*=resultadosMidias] div {
 	margin-left: 45%;
 }
 
-a[class*=acaoLink]{
+a[class*=acaoLink] {
 	font-size: 12pt;
 	margin-left: 10px;
 	margin-right: 10px;
 }
-
-
 
 .relacionadosBemList {
 	background-color: #F7F7F7;

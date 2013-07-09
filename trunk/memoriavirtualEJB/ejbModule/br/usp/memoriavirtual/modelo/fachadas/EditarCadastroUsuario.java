@@ -112,17 +112,13 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@Override
 	public void editarAcessos(String aprovadorId, List<Acesso> acessos,
-			List<String> situacoes, Date data, Date expiracao)
+			List<String> situacoes, Date data, Date expiracao, String justificativa)
 			throws ModeloException {
 
 		try {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
 
 			for (Acesso a : acessos) {
-
-				System.out.println(a.getInstituicao().getNome()
-						+ a.getGrupo().getId()
-						+ a.getUsuario().getNomeCompleto());
 
 				// Buscar no banco os objetos corretos para instanciar o aceso
 				Query q = entityManager
@@ -138,7 +134,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String usuario = u.getId();
 				long instituicao = i.getId();
 				String acesso = grupo + ";" + usuario + ";" + instituicao + ";"
-						+ situacoes.get(0);
+						+ situacoes.get(0) + ";" + justificativa;
 
 				situacoes.remove(0);
 

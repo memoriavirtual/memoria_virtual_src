@@ -65,7 +65,7 @@ public interface EditarCadastroUsuarioRemote {
 	 * @throws ModeloException
 	 */
 	public void editarAcessos(String aprovador, List<Acesso> acessos,
-			List<String> situacoes, Date data, Date expiracao)
+			List<String> situacoes, Date data, Date expiracao, String justificativa)
 			throws ModeloException;
 
 	/**

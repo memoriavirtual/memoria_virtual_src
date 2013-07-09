@@ -98,6 +98,14 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				+ this.acesso.getGrupo().getId() + " ?";
 
 	}
+	
+	public String getInformacaoJusticicativa(){
+		
+		String chave[] = this.aprovacao.getChaveEstrangeira().split(";");
+		
+		return "Justificativa: "+ chave[4];
+		
+	}
 
 	public String cancelar() {
 		this.limpar();
@@ -389,7 +397,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				try {
 					this.editarCadastroUsuarioEJB.editarAcessos(
 							this.administrador, pendentes, situacoes, data,
-							expiracao);
+							expiracao, this.justificativa);
 					this.limpar();
 					MensagensDeErro.getSucessMessage(
 							"editarCadastroUsuarioSucesso", "resultado");

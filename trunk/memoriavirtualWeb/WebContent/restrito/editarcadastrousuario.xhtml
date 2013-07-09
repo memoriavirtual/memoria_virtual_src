@@ -109,12 +109,12 @@
 							<h:outputLabel class="labels"
 								value="#{mensagens.editarCadastroUsuarioJustificativa}"
 								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
-							<h:inputText value="#{editarCadastroUsuarioMB.justificativa}"
+							<h:inputTextarea value="#{editarCadastroUsuarioMB.justificativa}"
 								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
 								<f:ajax event="blur" execute="@this"
 									render="validacaoJustificativa"
 									listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
-							</h:inputText>
+							</h:inputTextarea>
 							<div></div>
 							<h:message id="validacaoJustificativa"
 								for="validacaoJustificativa" infoClass="sucesso"
