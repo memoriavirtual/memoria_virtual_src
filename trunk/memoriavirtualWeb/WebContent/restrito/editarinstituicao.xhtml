@@ -103,6 +103,14 @@
 						</div>
 
 						<div>
+							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCaixaPostal}</h:outputLabel>
+							<h:inputText id="caixapostal"
+								value="#{editarInstituicaoMB.caixaPostal}">
+							</h:inputText>
+							<div></div>
+						</div>
+
+						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
 							<h:inputText id="cep" value="#{editarInstituicaoMB.cep}">
 								<f:ajax event="blur" execute="@this" render="validacaoCep"
@@ -116,7 +124,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoTelefone}</h:outputLabel>
-							<h:inputText id="telefone" value="#{editarInstituicaoMB.telefone}">
+							<h:inputText id="telefone"
+								value="#{editarInstituicaoMB.telefone}">
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{editarInstituicaoMB.validateTelefone}" />
 							</h:inputText>
@@ -185,7 +194,8 @@
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-							<h:inputText id="latitude" value="#{editarInstituicaoMB.latitude}">
+							<h:inputText id="latitude"
+								value="#{editarInstituicaoMB.latitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLatitude"
 									listener="#{editarInstituicaoMB.validateLatitude}" />
 							</h:inputText>
@@ -197,7 +207,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-							<h:inputText id="longitude" value="#{editarInstituicaoMB.longitude}">
+							<h:inputText id="longitude"
+								value="#{editarInstituicaoMB.longitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLongitude"
 									listener="#{editarInstituicaoMB.validateLongitude}" />
 							</h:inputText>
