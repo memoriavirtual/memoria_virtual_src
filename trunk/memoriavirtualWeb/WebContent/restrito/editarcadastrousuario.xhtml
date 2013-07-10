@@ -42,7 +42,8 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioTelefone}</h:outputLabel>
-							<h:inputText value="#{editarCadastroUsuarioMB.telefone}">
+							<h:inputText id="telefone"
+								value="#{editarCadastroUsuarioMB.telefone}">
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{editarCadastroUsuarioMB.validateTelefone}" />
 							</h:inputText>
@@ -72,6 +73,9 @@
 									<h:outputLabel class="labeltabela"
 										value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
 									<h:inputText value="#{acesso.instituicao.nome}">
+										<f:ajax event="focus" execute="@this" render="instituicoes"
+											rendered="#{editarCadastroUsuarioMB.renderInstituicoes}"
+											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
 										<f:ajax event="keyup" execute="@this" render="instituicoes"
 											rendered="#{editarCadastroUsuarioMB.renderInstituicoes}"
 											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
@@ -142,9 +146,8 @@
 								<f:selectItems value="#{editarCadastroUsuarioMB.admnistradores}"></f:selectItems>
 							</h:selectOneMenu>
 							<div></div>
-							<h:message id="validacaoAprovador"
-								for="validacaoAprovador" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
+							<h:message id="validacaoAprovador" for="validacaoAprovador"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
 

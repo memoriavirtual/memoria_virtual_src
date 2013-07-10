@@ -3,9 +3,11 @@ package br.usp.memoriavirtual.modelo.fachadas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -97,11 +99,6 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 		usuarioAlterado.setNomeCompleto(nomeCompleto);
 		usuarioAlterado.setTelefone(telefone);
 
-		// problemas com constraints - administrador nao pode ser null
-		if (!usuarioAlterado.isAdministrador()) {
-			usuarioAlterado.setAdministrador(false);
-		}
-
 		try {
 			entityManager.flush();
 		} catch (Exception t) {
@@ -112,8 +109,8 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 	@Override
 	public void editarAcessos(String aprovadorId, List<Acesso> acessos,
-			List<String> situacoes, Date data, Date expiracao, String justificativa)
-			throws ModeloException {
+			List<String> situacoes, Date data, Date expiracao,
+			String justificativa) throws ModeloException {
 
 		try {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
@@ -155,8 +152,19 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String link = memoriaVirtualEJB.getURLServidor()
 						+ "/editarcadastrousuario?Id=" + idEmbaralhado;
 
+				FacesContext context = FacesContext.getCurrentInstance();
+				String bundleName = "mensagens";
+				ResourceBundle bundle = context.getApplication()
+						.getResourceBundle(context, bundleName);
+				
+				String message = bundle.getString("editarCadastroUsuarioMensagem");
+				
+				message = message + link;
+				message = message + bundle.getString("editarCadastroUsuarioMensagemJustificativa");
+				message = message + justificativa;
+
 				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
-						link);
+						message);
 
 			}
 		} catch (Exception e) {
@@ -316,6 +324,13 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 					.createQuery("SELECT i FROM Instituicao i WHERE i.nome LIKE :padrao ORDER BY i.nome");
 			query.setParameter("padrao", "%" + instituicao + "%");
 			instituicoes = (List<Instituicao>) query.getResultList();
+
+			if (instituicoes.size() == 0) {
+				Instituicao listarTodos = new Instituicao();
+				listarTodos.setNome("Listar Todos");
+				instituicoes.add(0, listarTodos);
+			}
+
 			return instituicoes;
 		} catch (Exception e) {
 			throw new ModeloException(e);

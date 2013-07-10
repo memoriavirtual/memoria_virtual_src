@@ -225,6 +225,11 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public String selecionarInstituicao(Acesso acesso, Instituicao i) {
 
+		if(i.getNome().equals("Listar Todos")){
+			this.listarInstituicoes("");
+			return null;
+		}		
+		
 		if (acesso != null && i != null) {
 			if (this.acessos.contains(acesso) && this.instituicoes.contains(i))
 				this.acessos.get(this.acessos.indexOf(acesso))
