@@ -1,0 +1,878 @@
+/*************************************************************/
+/*                   RESET INICIAL                           */
+/*************************************************************/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,code,del,dfn,em,img,q,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td
+	{
+	border: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	line-height: 1.5;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+caption,th,td {
+	text-align: left;
+	font-weight: 400;
+}
+
+table,td,th {
+	vertical-align: middle;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+	content: "";
+}
+
+blockquote,q {
+	quotes: "" "";
+}
+
+a img {
+	border: none;
+}
+
+ul,li,ol {
+	margin-left: 0;
+}
+
+/*************************************************************/
+/*                 FIM RESET INICIAL                         */
+/*************************************************************/
+/*Configuracoes para o rodape ficar embaixo sempre*/
+html,body {
+	height: 100%;
+}
+
+* html #tudo {
+	height: 100%; /* hack para IE6 que trata height como min-height */
+}
+
+/*Final das configs*/
+body {
+	margin: 0;
+	padding: 0;
+	color: #666;
+	font: 75%/1.4 Verdana, Arial;
+	text-align: center;
+}
+
+#recipiente {
+	min-height: 90%;
+	width: 976px;
+	margin: 0px auto 0;
+	padding: 0;
+	text-align: left;
+	position: relative;
+}
+
+#topo { /*padding:  15px 10px 0;*/
+	background: url(../resources/imagens/header.png) no-repeat;
+	text-align: left;
+	width: 976px;
+	height: 10px;
+}
+
+#cabecalho {
+	background: url(../resources/imagens/content_background.png) repeat-y;
+	padding: 30px 8px 0;
+	position: relative;
+	text-align: left;
+	width: 960px;
+}
+
+#cabecalho img {
+	margin: 0 0 0 20px;
+	clear: right;
+}
+
+#CaixaCorpo {
+	width: 940px;
+	padding: 0 0px 10px;
+	margin: 0;
+}
+
+#rodape {
+	background: url(../resources/imagens/footer.png) no-repeat;
+	width: 976px;
+	height: 30px;
+	text-align: center;
+	clear: both;
+	position: relative;
+	bottom: 0;
+	font-size: 10px;
+	margin: 0 auto;
+	padding-top: 10px;
+}
+
+#rodape p {
+	margin: 0;
+	font-weight: bold;
+	color: #000;
+}
+
+#usuario {
+	font-size: 14px;
+	width: 200px;
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	text-align: right;
+}
+
+#usuario a {
+	text-decoration: none;
+	color: #000;
+}
+
+#usuario a:hover {
+	text-decoration: underline;
+	color: #000;
+}
+
+h4 {
+	font-size: 16px;
+}
+
+.clear {
+	clear: both;
+}
+
+/*************************************************************/
+/*                         MENU                              */
+/*************************************************************/
+#menuRecipiente {
+	float: right;
+	margin-bottom: -1px;
+}
+
+#menuNavegacao {
+	margin: 0 0 2px;
+	text-align: left;
+	min-height: 25px;
+	padding-top: 10px;
+	padding-left: 0px;
+}
+
+#menuNavegacao li {
+	display: inline;
+	list-style: none;
+}
+
+#menuNavegacao li a {
+	margin-right: 5px;
+	font-size: 15px;
+	text-decoration: none;
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 10px;
+	outline: 0;
+	position: relative;
+	top: -2px;
+}
+
+#menuNavegacao li a:hover,#menuNavegacao li a.ativo {
+	background: #000;
+	color: #FFF;
+}
+
+#menuNavegacao li .linkSecundario li a {
+	color: #FFF;
+}
+
+#menuNavegacao li .linkSecundario li a:hover {
+	background: #484848;
+}
+
+#linkSecundarioRecipiente {
+	background: #000;
+	min-height: 5px;
+	border-bottom: #999 1px solid;
+	width: 960px;
+	clear: both;
+}
+
+.linkSecundario {
+	display: none;
+	width: 960px;
+	text-align: left;
+	position: absolute;
+	z-index: 200;
+	left: 8px;
+	margin-top: 16px;
+}
+
+/*************************************************************/
+/*                       FIM MENU                             /
+/*************************************************************/
+/*************************************************************/
+/*                CONTEUDO / FORMULARIO                       /
+/*************************************************************/
+#conteudo {
+	background: url(../resources/imagens/content_background.png) repeat-y;
+	color: #000;
+	width: 936px;
+	font-size: 13px;
+	margin: 0 auto;
+	padding: 0 20px 10px;
+}
+
+.formulario {
+	background: #FFF;
+	border: #000 2px solid;
+	border-top: none;
+	padding-top: 5px;
+}
+
+.conteudoTitulo {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	margin-left: 10px;
+}
+
+.conteudoDescricao {
+	margin: 0 10px 10px 20px;
+	font-size: 13px;
+	text-align: justify;
+	text-indent: 20px;
+}
+
+.formulario fieldset div {
+	clear: both;
+	display: block;
+}
+
+/*.formulario fieldset div{
+	background:#93C;
+	display:compact;
+	clear:right;
+	margin-bottom:10px;
+}*/
+.labels {
+	float: left;
+	width: 45%;
+	display: inline-block;
+	margin: 0 10px;
+	text-align: right;
+	font-size: 16px;
+}
+
+.formulario fieldset input {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	padding: 1px;
+	width: 250px;
+	height: 20px;
+}
+
+textarea {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	padding: 1px;
+	width: 250px;
+	height: 300px;
+}
+
+fieldset input {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	padding: 1px;
+}
+
+.formulario fieldset option {
+	background: #F7F7F7;
+	border-left: #444 solid 1px;
+	border-top: #444 solid 1px;
+	border-right: #444 solid 1px;
+	padding: 1px;
+	width: 250px;
+	height: 20px;
+}
+
+.options {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	padding: 1px;
+	width: 250px;
+	height: 25px !important;
+}
+
+.formulario fieldset div div {
+	color: #414141;
+	width: 45%;
+	float: left;
+	text-align: right;
+	font-size: 11px;
+	margin: -6px 10px 10px;
+}
+
+.formulario fieldset div span {
+	text-align: -webkit-center;
+	min-width: 252px;
+	max-width: 252px;
+	min-height: 0px;
+	float: left;
+	clear: none;
+	margin: 2px 0 7px;
+	font-size: 12px;
+	text-indent: 5px;
+	padding: 0px;
+}
+
+.sucesso {
+	background: #CBF3C7;
+	border: #2EA021 solid 1px;
+	color: #3F7227;
+}
+
+.erro {
+	background: #F4D2D2;
+	border: #EAA8A8 solid 1px;
+	color: #BE4741;
+}
+
+.fatal {
+	background: #900;
+	border: #FFC6C6 solid 1.5px;
+	color: #FFC6C6;
+}
+
+.aviso {
+	background: #FBF4AA;
+	border: #CBBC07 solid 1px;
+	color: #7B7802;
+}
+
+.erroPrincipal {
+	text-align: center;
+	max-width: 50%;
+	margin: 0 auto;
+}
+
+.erroPrincipal span {
+	text-align: center;
+	padding: 7px 10px;
+	display: block;
+	margin: 0 auto;
+	font-size: 12px;
+	text-indent: 5px;
+}
+
+.botao {
+	text-align: right;
+	padding: 10px;
+}
+
+#sugestoesId {
+	background-color: #F7F7F7;
+	paddinh: 0px;
+	position: absolute;
+	border-color: black;
+	border-width: 2px;
+	border-style: solid;
+	margin-left: 440px;
+	margin-top: 0px;
+	width: 250px;
+	z-index: 100;
+	border-color: black;
+}
+
+#sugestoesId td:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
+	cursor: hand;
+}
+
+#sugestoesId a {
+	text-align: center;
+	color: black;
+	text-decoration: none;
+	display: block;
+}
+
+#sugestoesId a:hover {
+	color: white;
+}
+
+table[id*=instituicoes] {
+	background-color: white;
+	position: absolute;
+	border-color: black;
+	border-width: 2px;
+	border-style: solid;
+	margin-left: 476px;
+	margin-top: -8px;
+	width: 250px;
+	z-index: 100;
+}
+
+table[id*=instituicoes] td:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
+	cursor: hand;
+}
+
+table[id*=instituicoes] a {
+	color: black;
+	text-decoration: none;
+	display: block;
+}
+
+table[id*=instituicoes] a:hover {
+	color: white;
+}
+
+.outraAutoria {
+	color: black;
+	padding: 7px;
+}
+
+.outraAutoria:hover {
+	color: silver;
+}
+/*************************************************************/
+/*                FIM CONTEUDO / FORMULARIO                   /
+/*************************************************************/
+
+/*************************************************************/
+/*              INICIO AVISO EXCLUIR INSTITUI��O             /
+/*************************************************************/
+.avisoexcluir {
+	max-width: 70%;
+	text-align: center;
+	padding: 15px 15px;
+	display: block;
+	margin: 0 auto;
+	font-size: 14px;
+	text-indent: 5px;
+}
+
+.mensagenavisoexcluir {
+	background: #FBF4AA;
+	border: #CBBC07 solid 1px;
+	color: #7B7802;
+}
+
+.mensagenavisoexcluirred {
+	background: #F4D2D2;
+	border: #EAA8A8 solid 1px;
+	color: #BE4741;
+}
+
+.mensagenavisoexcluir div {
+	padding: 10px;
+}
+
+.botaoavisoexcluir {
+	padding-bottom: 10px;
+	padding-top: 5px
+}
+
+#tabelagerente {
+	padding-top: 10px;
+	width: 250px;
+	min-width: 252px;
+	max-width: 252px;
+	min-height: 0px;
+	float: left;
+}
+
+#tabeladiv {
+	color: #000;
+	min-width: 468px;
+	max-width: 252px;
+	min-height: 0px;
+	float: right;
+	font-size: 13px;
+}
+
+.dadoinstituicao {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	padding: 1px;
+	text-align: left;
+}
+
+.boxtext {
+	padding: 10px;
+}
+
+.caixadetexto {
+	background: #F7F7F7;
+	border: #444 solid 1px;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 250px;
+	height: 80px;
+	resize: none;
+}
+
+textarea:focus {
+	background: #f5f5f5;
+}
+
+.labeltabela {
+	font-size: 16px;
+	margin-right: 5px;
+	margin-left: 10px;
+}
+
+#acessos {
+	margin: auto;
+}
+
+#dataTableEmails { /*margin: auto;*/
+	
+}
+
+#paragrafo {
+	font-size: 16px;
+	margin-left: 20px;
+}
+
+#acessos td {
+	padding: 3px;
+}
+
+.delete {
+	margin-left: 10px;
+	margin-bottom: -8px;
+}
+
+/*************************************************************/
+/*              Bem Patrimonial						          /
+/*************************************************************/
+.checks {
+	display: inline-block;
+	margin: 7px;
+	/*padding-top: 16px;*/
+}
+
+#autoSave {
+	float: right;
+	margin: 15px;
+	font-size: 15px;
+	text-align: justify;
+	text-indent: 20px;
+}
+
+.checks input {
+	height: 15px !important;
+	width: 15px !important;
+}
+
+.checks label {
+	margin-left: 0px !important;
+	margin-right: 30px !important;
+}
+
+.titulos {
+	float: left;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.titulos textarea {
+	width: 35%;
+	resize: none;
+}
+
+.titulos input {
+	height: 16px !important;
+	width: 200px !important;
+}
+
+.titulos input[type=checkbox] {
+	display: inline-block;
+	width: 15px !important;
+	height: 15px !important;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+}
+
+.titulos td {
+	height: auto !important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.titulos td:HOVER {
+	background: #f5f1e1;
+}
+
+.titulos div {
+	height: 10px !important;
+	width: 100% !important;
+}
+
+.titulos option {
+	height: 17px !important;
+	width: 200px !important;
+}
+
+.botoesTituiloTLB {
+	margin: 0 !important;
+	padding-top: 30px !important;
+	padding-bottom: 10px !important;
+	height: 20px !important;
+	/* 	float: right !important; */
+	margin-right: 20%;
+	display: inline-table !important;
+	width: 100% !important;
+}
+
+.botoesTituiloTLB label {
+	float: left;
+	width: 15%;
+}
+
+.botoesTituiloTLB  input[type=button] {
+	float: left;
+	padding: 0 !important;
+	font-size: 11px;
+	margin: 0;
+	margin-left: 20px !important;;
+	display: inline-table !important;
+	height: auto !important;
+	width: auto !important;
+	background-color: buttonface;
+	color: buttontext;
+	border: 2px outset buttonface;
+	border-radius: 4px;
+}
+
+.botoesTituiloTLB  input[type=button]:active {
+	border-style: inset;
+}
+
+.titulos select {
+	height: 20px !important;
+	width: 200px !important;
+}
+
+.titulos label {
+	font-size: 13px !important;
+	width: auto;
+	float: inherit;
+}
+
+.buscarAutoria {
+	position: absolute;
+	width: 237px;
+	margin-left: 130px;
+	background: #F5F1E1;
+	border-radius: 0px 0px 7px 7px;
+}
+
+.buscarAutoria td {
+	border-bottom: #999 1px solid;
+	border-radius: 7px;
+	padding: 0px;
+}
+
+.buscarAutoria td:HOVER {
+	background: #E5E1D1;
+	border-radius: 7px;
+}
+
+#cadastroNovoAutor {
+	z-index: 1000;
+	float: left;
+	position: fixed;
+	overflow: hidden;
+}
+
+#cadastroNovoAutor div {
+	position: relative;
+	width: 925px;
+	height: 450px;
+	overflow: hidden;
+	margin-top: 10%;
+	margin-left: 15%;
+}
+
+.cadastroNovoAutor {
+	position: fixed;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+.setaRolarDir {
+	width: 100px;
+	height: 100%;
+	float: left;
+	opacity: 0.1;
+}
+
+.setaRolarEsq {
+	width: 100px;
+	height: 100%;
+	float: right;
+	opacity: 0.1;
+}
+
+.cadastroNovoAutorDesativado {
+	display: none;
+}
+
+.frameCadastrarAutor {
+	width: 1000px;
+	height: 850px;
+	overflow: hidden;
+	position: absolute;
+	top: -155px;
+	left: -40px;
+}
+
+.imageNoPlayer {
+	height: 80%;
+	margin-top: 5%;
+}
+
+.imgbusca {
+	margin-top: 100px;
+}
+
+.labelbusca {
+	width: 45%;
+	margin: 0 10px;
+	font-size: 16px;
+}
+
+label.resultadosBusca {
+	display: block;
+}
+
+#botaoBusca {
+	margin-top: 5px;
+}
+
+.buscadiv {
+	margin: auto;
+	text-align: center;
+	width: 300px;
+}
+
+.continente {
+	height: 85%;
+}
+
+.inputbusca {
+	margin: auto;
+	width: 100%;
+}
+
+.caixabusca {
+	margin-left: 0px;
+	margin-top: 20px;
+	width: 500px;
+}
+
+.linkresultado {
+	font-size: 20px;
+	margin-left: 10px;
+}
+
+.resultados {
+	margin-left: 7%;
+}
+
+table .titulo {
+	margin-left: 30%;
+}
+
+div #container {
+	text-align: left;
+	font-size: 12pt;
+	width: 60%;
+	margin: auto;
+}
+
+img[class*=botao] {
+	float: left;
+	width: 16px;
+}
+
+div#resultados {
+	text-align: left;
+	font-size: 12pt;
+	width: 60%;
+}
+
+div#resultados table {
+	margin-left: 30px;
+}
+
+div.caixa {
+	margin-left: 15px;
+}
+
+div[id*=midiasExpansivo] label {
+	position: absolute;
+	margin-bottom: 100%;
+}
+
+table[id*=resultadosMidias] {
+	margin-left: 35%;
+	margin-top: 10%;
+	width: 100%;
+}
+
+table[id*=resultadosMidias] div {
+	margin-left: 45%;
+}
+
+a[class*=acaoLink] {
+	font-size: 12pt;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.relacionadosBemList {
+	background-color: #F7F7F7;
+	paddinh: 0px;
+	position: absolute;
+	border-color: black;
+	border-width: 2px;
+	border-style: solid;
+	margin-left: 450px;
+	margin-top: 0px;
+	width: 250px;
+	z-index: 100;
+	border-color: black;
+}
+
+.relacionadosBemList td:hover {
+	background-color: black;
+	color: white;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.relacionadosBemList a {
+	text-align: center;
+	color: black;
+	text-decoration: none;
+	display: block;
+}
+
+.relacionadosBemList a:hover {
+	color: white;
+}
