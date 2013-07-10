@@ -208,10 +208,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 	 * 
 	 */
 	public void listarGerentes(boolean b) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
+//		FacesContext context = FacesContext.getCurrentInstance();
+//		String bundleName = "mensagens";
+//		ResourceBundle bundle = context.getApplication().getResourceBundle(
+//				context, bundleName);
 
 		if (this.gerentesInstituicao.isEmpty()) {
 			try {
@@ -221,10 +221,10 @@ public class ExcluirInstituicaoMB implements Serializable {
 				e.printStackTrace();
 			}
 			if (this.gerentesInstituicao.isEmpty()) {
-				Usuario e = new Usuario();
-				e.setNomeCompleto(bundle
-						.getString("excluirInstituicaoSemGerente"));
-				this.gerentesInstituicao.add(e);
+//				Usuario e = new Usuario();
+//				e.setNomeCompleto(bundle
+//						.getString("excluirInstituicaoSemGerente"));
+//				this.gerentesInstituicao.add(e);
 				this.gerente = null;
 			} else {
 				this.gerente = this.gerentesInstituicao.get(0);
