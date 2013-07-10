@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>#{mensagens.realizarBuscaSimplesDescricao}#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</title>
+<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
+<script type="text/javascript" src="./resources/javascript/jquery.js"></script>
+<script type="text/javascript" src="./resources/javascript/abas.js"></script>
+<script type="text/javascript"
+	src="./resources/javascript/jquery.corner.js"></script>
+<script type="text/javascript" src="./resources/javascript/mv.js"></script>
+</head>
+
+<h:body>
+	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado"></div>
+
+	<div class="continente">
+		<div id="usuario">
+
+			<h:form>
+				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendSair}"
+					value="restrito/index.jsf">#{mensagens.realizarBuscaSimplesInicio}</h:outputLink>
+				&lt;<h:outputText value="#{usuario.id}" />&gt;,
+				<h:commandLink rendered="#{realizarBuscaSimplesMB.rendSair}"
+					action="#{realizarLogoffMB.realizarLogoff}">#{mensagens.realizarBuscaSimplesSair}</h:commandLink>
+				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendLogin}"
+					value="login.jsf">#{mensagens.Entrar}</h:outputLink>
+			</h:form>
+
+		</div>
+		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
+			class="imgbusca" />
+
+		<div class="conteudoTitulo">
+			#{mensagens.realizarBuscaSimplesDescricao}
+			#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</div>
+
+		<h:form>
+			<h:commandLink class="acaoLink"
+				rendered="#{realizarBuscaSimplesMB.permissao()}"
+				action="#{realizarBuscaSimplesMB.excluir()}">#{mensagens.realizarBuscaSimplesExcluir}</h:commandLink>
+			<h:commandLink class="acaoLink"
+				rendered="#{realizarBuscaSimplesMB.permissao()}"
+				action="#{realizarBuscaSimplesMB.editar()}">#{mensagens.realizarBuscaSimplesEditar}</h:commandLink>
+			<h:commandLink class="acaoLink"
+				action="#{realizarBuscaSimplesMB.voltar()}">#{mensagens.realizarBuscaSimplesVoltar}</h:commandLink>
+		</h:form>
+
+		<div id="container">
+
+			<mv:containerExpansivo id="GeralInfo"
+				label="#{mensagens.cadastrarBemGeralInfo}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.realizarBuscaSimplesTodosTitulos}</h:outputLabel>
+					<h:dataTable id="titulosbem"
+						value="#{realizarBuscaSimplesMB.bem.titulos}" var="titulo">
+						<h:column>
+							<h:outputLabel class="resultadosBusca">#{titulo.valor}</h:outputLabel>
+						</h:column>
+					</h:dataTable>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemInstituicao} #{realizarBuscaSimplesMB.bem.instituicao.nome}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemExterno} #{realizarBuscaSimplesMB.bem.externo}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemTipoBemPatrimonial} #{realizarBuscaSimplesMB.bem.tipoDoBemPatrimonial}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemNumRegistro} #{realizarBuscaSimplesMB.bem.numeroDeRegistro}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemTituloComplemento} #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemTituloColecao} #{realizarBuscaSimplesMB.bem.colecao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarInstituicaoLatitude} #{realizarBuscaSimplesMB.bem.latitude}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarInstituicaoLongitude} #{realizarBuscaSimplesMB.bem.longitude}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo id="containerBemAutoria"
+				label="#{mensagens.cadastrarBemAutoria}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemAutorias}</h:outputLabel>
+
+					<h:dataTable id="autoriasbem"
+						value="#{realizarBuscaSimplesMB.bem.autorias}" var="autoria">
+						<h:column>
+							<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarAutorNome} #{autoria.nomeAutor}</h:outputLabel>
+						</h:column>
+						<h:column>
+							<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarAutorTipoAutoria} #{autoria.tipoAutoria}</h:outputLabel>
+						</h:column>
+					</h:dataTable>
+				</div>
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo label="#{mensagens.cadastrarBemProducao}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemProducaoAno} #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemProducaoEdicao} #{realizarBuscaSimplesMB.bem.producao.edicao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemProducaoLocal} #{realizarBuscaSimplesMB.bem.producao.local}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemProducaoOutrasRes} #{realizarBuscaSimplesMB.bem.producao.ano}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo id="containerDescricao"
+				label="#{mensagens.cadastrarBemDescricaoGrupo}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoCaracteristicasFisicas} #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoConteudo} #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoMeioDeAcesso} #{realizarBuscaSimplesMB.bem.meioDeAcesso}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemEstadoCOnser} #{realizarBuscaSimplesMB.bem.diagnostico.estConservacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemEstadoPreser} #{realizarBuscaSimplesMB.bem.diagnostico.estPreservacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemEstadoConservNotas} #{realizarBuscaSimplesMB.bem.diagnostico.notaEstConservacao}</h:outputLabel>
+
+					<h:dataTable id="intervencoes"
+						value="#{realizarBuscaSimplesMB.bem.intervencoes}"
+						var="intervencao">
+						<h:column>#{mensagens.cadastrarBemIntervencaData} #{intervencao.data}
+						</h:column>
+						<h:column>#{mensagens.cadastrarBemIntervencaDescricao} #{intervencao.descricao}
+						</h:column>
+						<h:column>#{mensagens.cadastrarBemIntervencaResoInterven} #{intervencao.responsavel}
+						</h:column>
+					</h:dataTable>
+
+				</div>
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo id="disponibilidade"
+				label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemCondicoesDeAcesso} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesAcesso}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemCondicoesReproducao} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesReproducao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDataRetorno} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.dataRetorno}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDisponibilidade} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.disponibilidade}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemLegislacaoNProcesso} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.legislacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemNotasSobreUsoAproveitamento} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.notasUsoAproveitamento}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemProtecao} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protecao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemInstituicaoProtetora} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.protetoraInstituicao}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.cadastrarBemHistoricoProcedencia}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemHistoricoAquisicaoDocumentoDados} #{realizarBuscaSimplesMB.bem.historicoProcedencia.dadosDocTransacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemHistoricoHistorico} #{realizarBuscaSimplesMB.bem.historicoProcedencia.historico}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{cadastrarBemHistoricoIntrumentosPesquisa} #{realizarBuscaSimplesMB.bem.historicoProcedencia.instrumentoPesquisa}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemHistoricoPrimeiroProprietario} #{realizarBuscaSimplesMB.bem.historicoProcedencia.primeiroProprietario}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemHistoricoAquisicaoTipo} #{realizarBuscaSimplesMB.bem.historicoProcedencia.tipoAquisicao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemHistoricoValorVenal} #{realizarBuscaSimplesMB.bem.historicoProcedencia.valorVenalTransacao}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.cadastrarBemFontesInformacao}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemFontesInformacao} #{realizarBuscaSimplesMB.bem.fontesInformacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca">#{mensagens.realizarBuscaSimplesLocalizacao} #{realizarBuscaSimplesMB.bem.localizacaoFisica}</h:outputLabel>
+
+					<h:dataTable id="pesquisadores"
+						value="#{realizarBuscaSimplesMB.bem.pesquisadores}"
+						var="pesquisador">
+						<h:column>#{mensagens.cadastrarBemPesquisaData} #{pesquisador.dataPesquisa}
+						</h:column>
+						<h:column>#{mensagens.cadastrarBemPesquisaNome} #{pesquisador.nome}
+						</h:column>
+						<h:column>#{mensagens.cadastrarBemPesquisaNotas} #{pesquisador.notasPesquisador}
+						</h:column>
+					</h:dataTable>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.realizarBuscaSimplesDadosArqueologicos}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoAguaProxima} #{realizarBuscaSimplesMB.bemArqueologico.aguaProximo}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoAltura} #{realizarBuscaSimplesMB.bemArqueologico.altura}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoAreaTotal} #{realizarBuscaSimplesMB.bemArqueologico.areaTotal}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoComprimento} #{realizarBuscaSimplesMB.bemArqueologico.comprimento}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoExposicao} #{realizarBuscaSimplesMB.bemArqueologico.exposicao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoLargura} #{realizarBuscaSimplesMB.bemArqueologico.largura}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoNotas} #{realizarBuscaSimplesMB.bemArqueologico.notas}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoOutros} #{realizarBuscaSimplesMB.bemArqueologico.outros}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoPossuiVegetacao} #{realizarBuscaSimplesMB.bemArqueologico.possuiVegetacao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoProfundidade} #{realizarBuscaSimplesMB.bemArqueologico.profundidade}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoSitoDaPaisagem} #{realizarBuscaSimplesMB.bemArqueologico.sitioDaPaisagem}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoUsoAtual} #{realizarBuscaSimplesMB.bemArqueologico.usoAtual}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.realizarBuscaSimplesDadosArquitetonicos}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAlcova} #{realizarBuscaSimplesMB.bemArquitetonico.alcova}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAlturaFachadaFrontal} #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachFrontal}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.realizarBuscaSimplesAlturaFachPost} #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachPosterior}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAlturaTotal} #{realizarBuscaSimplesMB.bemArquitetonico.alturaTotal}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAreaTotal} #{realizarBuscaSimplesMB.bemArquitetonico.areaTotal}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoCondicaoTopografica} #{realizarBuscaSimplesMB.bemArquitetonico.condicaoTopografia}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoLargura} #{realizarBuscaSimplesMB.bemArquitetonico.largura}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoNdeAmbientes} #{realizarBuscaSimplesMB.bemArquitetonico.numeroDeAmbientes}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoNdePavimentos} #{realizarBuscaSimplesMB.bemArquitetonico.numeroDePavimentos}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoOutros} #{realizarBuscaSimplesMB.bemArquitetonico.outros}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoPeDireitoTerreo} #{realizarBuscaSimplesMB.bemArquitetonico.peDireitoTerreo}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoPorao} #{realizarBuscaSimplesMB.bemArquitetonico.porao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoProfundidade} #{realizarBuscaSimplesMB.bemArquitetonico.profundidade}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoSotao} #{realizarBuscaSimplesMB.bemArquitetonico.sotao}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoPeDireitoTipo} #{realizarBuscaSimplesMB.bemArquitetonico.tipoPeDireito}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoUso} #{realizarBuscaSimplesMB.bemArquitetonico.uso}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo
+				label="#{mensagens.realizarBuscaSimplesDadosNaturais}">
+
+				<div class="caixa">
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.natural}">#{mensagens.cadastrarBemDescricaoCaracteristicasAmbientais} #{realizarBuscaSimplesMB.bemNatural.caracteristicasAmbientais}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.natural}">#{mensagens.cadastrarBemDescricaoCaracteristicasDoMeioAntropico} #{realizarBuscaSimplesMB.bemNatural.meioAntropico}</h:outputLabel>
+
+					<h:outputLabel class="resultadosBusca"
+						rendered="#{realizarBuscaSimplesMB.natural}">#{mensagens.cadastrarBemDescricaoRelevo} #{realizarBuscaSimplesMB.bemNatural.relevo}</h:outputLabel>
+
+				</div>
+
+			</mv:containerExpansivo>
+
+			<mv:containerExpansivo id="midiasExpansivo"
+				label="#{mensagens.cadastrarBemAudioVisual}">
+
+				<h:dataTable value="#{realizarBuscaSimplesMB.apresentaMidias}"
+					var="index" id="resultadosMidias">
+					<h:column>
+						<h:graphicImage
+							onclick="mostrarPlayerImagen('realizarBuscaSimplesMB', #{realizarBuscaSimplesMB.bem.containerMultimidia.multimidia.size()-1}, #{(index)})"
+							url="#{realizarBuscaSimplesMB.url(index)}">
+						</h:graphicImage>
+						<div>
+							<h:outputLabel id="descricaoLabel">#{realizarBuscaSimplesMB.bem.containerMultimidia.multimidia.get(index).descricao}</h:outputLabel>
+						</div>
+						<h:form>
+							<h:commandLink action="#{realizarBuscaSimplesMB.download(index)}">#{mensagens.realizarBuscaSimplesDownload}</h:commandLink>
+						</h:form>
+					</h:column>
+				</h:dataTable>
+			</mv:containerExpansivo>
+
+		</div>
+	</div>
+
+</h:body>
+</html>
