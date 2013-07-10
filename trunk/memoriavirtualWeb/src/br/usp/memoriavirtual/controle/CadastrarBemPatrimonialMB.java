@@ -33,20 +33,18 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  * 
  */
 
-public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
-	
-	
-	//private String strDeBusca;
-	//private List<BemPatrimonial> bemPatrimoniais = new ArrayList<BemPatrimonial>();
-	//private boolean listarTodos = false;
-	//@EJB
-	//private RealizarBuscaSimplesRemote realizarBuscaEJB;
+public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial {
+
+	// private String strDeBusca;
+	// private List<BemPatrimonial> bemPatrimoniais = new
+	// ArrayList<BemPatrimonial>();
+	// private boolean listarTodos = false;
+	// @EJB
+	// private RealizarBuscaSimplesRemote realizarBuscaEJB;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4487901192049535944L;
-	
-
 
 	/**
 	 * 
@@ -54,11 +52,10 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 	public CadastrarBemPatrimonialMB() {
 		super();
 		this.geralTitulos.add(new Titulo());
-//		this.apresentaAutorias.add(new ApresentaAutoria());
-//		this.autorias.add(new Autoria());
+		// this.apresentaAutorias.add(new ApresentaAutoria());
+		// this.autorias.add(new Autoria());
 	}
 
-	
 	/**
 	 * 
 	 */
@@ -72,8 +69,8 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 		this.validacaoInstituicao();
 		this.validacaoTitulo();
 		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-			
-			if(this.geralTipoDoBemPatrimonial == null){
+
+			if (this.geralTipoDoBemPatrimonial == null) {
 				this.geralTipoDoBemPatrimonial = "";
 			}
 			if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
@@ -107,7 +104,8 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 				this.bemPatrimonial.setDiagnostico(new Diagnostico(
 						this.estadoConservPreserv, this.estadoConservNotas));
 			} else {
-				this.bemPatrimonial.setTipoDoBemPatrimonial(new String(BemPatrimonial.TipoDoBemPatrimonial.NORMAL.name())); 
+				this.bemPatrimonial.setTipoDoBemPatrimonial(new String(
+						BemPatrimonial.TipoDoBemPatrimonial.NORMAL.name()));
 				this.bemPatrimonial.setDiagnostico(new Diagnostico(
 						this.estadoConservPreserv, this.estadoConservNotas));
 			}
@@ -180,7 +178,7 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 
 			// anexando assuntos
 			List<Assunto> assun = new ArrayList<Assunto>();
-			
+
 			String[] a = this.assunto.split(" ");
 			for (int i = 0; i < a.length; i++) {
 				assun.add(new Assunto());
@@ -204,26 +202,27 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 			// fim adcionando fontes de informa��o
 			this.bemPatrimonial.setPesquisadores(this.pesquisadores);
 			ContainerMultimidia c = new ContainerMultimidia();
-			for(Multimidia i : midias){
+			for (Multimidia i : midias) {
 				c.addMultimidia(i);
 			}
 			this.bemPatrimonial.setContainerMultimidia(c);
-			this.bemPatrimonial.setBensrelacionados(new ArrayList<BemPatrimonial>(  new HashSet<BemPatrimonial>(bensRelacionados)   ));
-			
-			
+			this.bemPatrimonial
+					.setBensrelacionados(new ArrayList<BemPatrimonial>(
+							new HashSet<BemPatrimonial>(bensRelacionados)));
+
 			try {
 				this.cadastrarBemPatrimonialEJB
 						.cadastrarBemPatrimonial(this.bemPatrimonial);
 			} catch (ModeloException e) {
 				MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
-					 "resultado");
+						"resultado");
 				e.printStackTrace();
 				return null;
 			}
 
 			MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
 					"resultado");
-			
+
 			this.zerarMB();
 		} else {
 			// MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
@@ -239,10 +238,9 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial{
 
 	}
 
-	
-	
-	
+	public String cancelar() {
+		this.zerarMB();
+		return "/restrito/index.jsf";
+	}
 
-
-	
 }

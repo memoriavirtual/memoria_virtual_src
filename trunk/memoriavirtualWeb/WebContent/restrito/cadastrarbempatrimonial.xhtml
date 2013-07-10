@@ -1189,9 +1189,6 @@
 
 								<h:column id="coluna">
 
-
-
-
 									<div class="arqueologico">
 										<h:outputLabel class="labels"
 											style="width: 45%; float:left; font-size: 16px !important;">#{mensagens.cadastrarBemFontesInformacaolabel}</h:outputLabel>
@@ -1211,14 +1208,12 @@
 
 								</h:column>
 
-
 							</h:dataTable>
 						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemResponsavelPesquisa}">
 						<fieldset>
-
 
 							<div>
 
@@ -1238,11 +1233,6 @@
 								<div></div>
 
 								<h:column id="coluna">
-
-
-
-
-
 
 									<h:outputLabel class="labels"
 										style="width: 20%; margin-left: 10px !important;">#{mensagens.cadastrarBemPesquisaNome}</h:outputLabel>
@@ -1275,17 +1265,13 @@
 									<div></div>
 								</h:column>
 
-
 							</h:dataTable>
-
 
 						</fieldset>
 					</mv:containerExpansivo>
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemRelacionarBemPatrimonial}">
 						<fieldset>
-
-
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
@@ -1299,7 +1285,6 @@
 
 
 							</div>
-
 
 							<div id="sugestoes">
 								<h:dataTable id="sugestoesId" styleClass="relacionadosBemList"
@@ -1334,19 +1319,11 @@
 								<div></div>
 							</div>
 
-
 						</fieldset>
 					</mv:containerExpansivo>
 
-
-
-
-
-
-
-
-
 					<div class="botao">
+
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
 							action="#{cadastrarBemPatrimonialMB.cadastrarBemPatrimonial()}">
@@ -1355,6 +1332,11 @@
 						<h:commandButton id="botaoResetar"
 							value="#{mensagens.cadastrarInstituicaoBotaoResetar}"
 							action="#{cadastrarBemPatrimonialMB.zerarMB()}">
+						</h:commandButton>
+
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.cadastrarInstituicaoBotaoCancelar}"
+							action="#{cadastrarBemPatrimonialMB.cancelar()}">
 						</h:commandButton>
 
 					</div>
