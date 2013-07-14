@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+<composite:interface>
+
+</composite:interface>
+
+<composite:implementation>
+
+
+	<f:event listener="#{renderizarMenuMB.verificarAcessos}"
+		type="preRenderView">
+	</f:event>
+
+
+	<div id="menuRecipiente">
+		<ul id="menuNavegacao">
+
+
+			<li><h:outputLink class="linkPrincipal"
+					rendered="#{renderizarMenuMB.gerente}">#{mensagens.instituicao}</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="#{renderizarMenuMB.administrador}"
+							value="cadastrarinstituicao.jsf">#{mensagens.menuCadastrarInstituicao}</h:outputLink></li>
+
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="excluirInstituicao.jsf">#{mensagens.menuExcluirInstituicao}</h:outputLink></li>
+
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="selecionarinstituicao.jsf">#{mensagens.menuEditarInstituicao}</h:outputLink></li>
+				</ul></li>
+
+			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.bempatrimonial}</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="true"
+							value="cadastrarbempatrimonial.jsf">#{mensagens.menuCadastrarBemPatrimonial}</h:outputLink></li>
+					
+					<li><h:outputLink rendered="true"
+							value="editarbempatrimonial.jsf">#{mensagens.menuEditarBemPatrimonial}</h:outputLink></li>
+
+					<li><h:outputLink rendered="true"
+							value="selecionarbemexclusao.jsf">#{mensagens.menuExcluirBemPatrimonial}</h:outputLink></li>
+					<li><h:outputLink rendered="true"
+							value="../realizarbuscasimples.jsf">#{mensagens.menuRealizarBuscaSimples}</h:outputLink></li>
+				</ul></li>
+
+
+			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.autoria}</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="cadastrarautor.jsf">#{mensagens.menuCadastrarAutor}</h:outputLink></li>
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="editarautor.jsf">#{mensagens.menuEditarAutor}</h:outputLink></li>
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="excluirautor.jsf">#{mensagens.menuExcluirAutor}</h:outputLink></li>
+				</ul></li>
+
+			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.descritor}</h:outputLink>
+				<ul class="linkSecundario">
+				</ul></li>
+
+			<li><h:outputLink class="linkPrincipal"
+					rendered="#{renderizarMenuMB.gerente}">#{mensagens.administracao}</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="enviarconvite.jsf">#{mensagens.menuEnviarConvite}</h:outputLink></li>
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="selecionarusuario.jsf">#{mensagens.menuEditarCadastroUsuario}</h:outputLink></li>
+					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+							value="excluirusuario_etapa1.jsf">#{mensagens.menuExcluirUsuario}</h:outputLink>
+					</li>
+				</ul></li>
+
+			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.usuario}</h:outputLink>
+				<ul class="linkSecundario">
+					<li><h:outputLink rendered="true"
+							value="editarcadastroproprio.jsf">#{mensagens.menuAlterarCadastroProprio}</h:outputLink>
+					</li>
+				</ul></li>
+		</ul>
+
+	</div>
+
+</composite:implementation>
+
+</html>

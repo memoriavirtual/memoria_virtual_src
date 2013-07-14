@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>Memoria Virtual Cataloguing</display-name>
+	<context-param>
+		<param-name>mainCSSPath</param-name>
+		<param-value>/memoriavirtual/css/main.css</param-value>
+	</context-param>
+	<context-param>
+		<param-name>CSSPath</param-name>
+		<param-value>/memoriavirtual/css</param-value>
+	</context-param>
+	<context-param>
+		<param-name>appPath</param-name>
+		<param-value>/memoriavirtual</param-value>
+	</context-param>
+	<context-param>
+		<param-name>favoriteIcon</param-name>
+		<param-value>/memoriavirtual/images/favicon.ico</param-value>
+	</context-param>
+	<context-param>
+		<param-name>applicationName</param-name>
+		<param-value>Memória Virtual</param-value>
+	</context-param>
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>ContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>SessionListener</listener-class>
+	</listener>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

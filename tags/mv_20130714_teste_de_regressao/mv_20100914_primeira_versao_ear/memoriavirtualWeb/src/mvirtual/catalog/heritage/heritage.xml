@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+   <constant name="struts.devMode" value="true" />
+
+    <package name="HeritagePack" namespace="/heritage" extends="struts-default">
+
+    <!-- Renderiza lista de bens patrimoniais para escolha. -->
+        <action name="RenderListOfHeritages" class="mvirtual.catalog.heritage.RenderListOfHeritages">
+            <result>/catalog/heritage/ListOfHeritages.jsp</result>
+        </action>
+
+
+    <!-- Renderiza edição de bem patrimonial. -->
+        <action name="RenderHeritageTab" class="mvirtual.catalog.heritage.RenderHeritageTab">
+
+            <result name="new">
+                <param name="location">/catalog/heritage/Heritage.jsp</param>
+            </result>
+
+            <result name="edit">
+                <param name="location">/catalog/heritage/Heritage.jsp</param>
+            </result>
+
+            <result name="remove" type="redirectAction">RenderListOfHeritages</result>
+            <result name="error" type="redirectAction">RenderListOfHeritages</result>
+        </action>
+
+    <!-- Salva dados do bem patrimonial editado. -->
+        <action name="SaveHeritageTab" class="mvirtual.catalog.heritage.SaveHeritageTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+        <action name="SaveHeritage" class="mvirtual.catalog.heritage.SaveHeritage">
+            <result type="redirectAction">RenderListOfHeritages</result>
+        </action>
+
+    <!-- Authority Tab -->
+        <action name="RenderAuthorityTab" class="mvirtual.catalog.heritage.RenderAuthorityTab">
+            <result>/catalog/heritage/Authority.jsp</result>
+        </action>
+
+        <action name="SaveAuthorityTab" class="mvirtual.catalog.heritage.SaveAuthorityTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+
+    <!-- Production Tab -->
+        <action name="RenderProductionTab" class="mvirtual.catalog.heritage.RenderProductionTab">
+            <result>/catalog/heritage/Production.jsp</result>
+        </action>
+
+        <action name="SaveProductionTab" class="mvirtual.catalog.heritage.SaveProductionTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Description Tab -->
+        <action name="RenderDescriptionTab" class="mvirtual.catalog.heritage.RenderDescriptionTab">
+            <result>/catalog/heritage/Description.jsp</result>
+        </action>
+
+        <action name="SaveDescriptionTab" class="mvirtual.catalog.heritage.SaveDescriptionTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Intervention Tab -->
+        <action name="RenderInterventionTab" class="mvirtual.catalog.heritage.RenderInterventionTab">
+            <result>/catalog/heritage/Intervention.jsp</result>
+        </action>
+
+        <action name="SaveInterventionTab" class="mvirtual.catalog.heritage.SaveInterventionTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Use Condition Tab -->
+        <action name="RenderUseConditionTab" class="mvirtual.catalog.heritage.RenderUseConditionTab">
+            <result>/catalog/heritage/UseCondition.jsp</result>
+        </action>
+
+        <action name="SaveUseConditionTab" class="mvirtual.catalog.heritage.SaveUseConditionTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- History And Origin Tab -->
+        <action name="RenderHistoryAndOriginTab" class="mvirtual.catalog.heritage.RenderHistoryAndOriginTab">
+            <result>/catalog/heritage/HistoryAndOrigin.jsp</result>
+        </action>
+
+        <action name="SaveHistoryAndOriginTab" class="mvirtual.catalog.heritage.SaveHistoryAndOriginTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Acquisition Document Tab -->
+        <action name="RenderAcquisitionDocumentTab" class="mvirtual.catalog.heritage.RenderAcquisitionDocumentTab">
+            <result>/catalog/heritage/AcquisitionDocument.jsp</result>
+        </action>
+
+        <action name="SaveAcquisitionDocumentTab" class="mvirtual.catalog.heritage.SaveAcquisitionDocumentTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Subject And Descriptors Tab -->
+        <action name="RenderSubjectAndDescriptorsTab" class="mvirtual.catalog.heritage.RenderSubjectAndDescriptorsTab">
+            <result>/catalog/heritage/SubjectAndDescriptors.jsp</result>
+        </action>
+
+        <action name="SaveSubjectAndDescriptorsTab" class="mvirtual.catalog.heritage.SaveSubjectAndDescriptorsTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Multimedia Tab -->
+        <action name="RenderMultimediaTab" class="mvirtual.catalog.heritage.RenderMultimediaTab">
+            <result>/catalog/heritage/Multimedia.jsp</result>
+        </action>
+
+        <action name="SaveMultimediaTab" class="mvirtual.catalog.heritage.SaveMultimediaTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Information Source Tab -->
+        <action name="RenderInformationSourceTab" class="mvirtual.catalog.heritage.RenderInformationSourceTab">
+            <result>/catalog/heritage/InformationSource.jsp</result>
+        </action>
+
+        <action name="SaveInformationSourceTab" class="mvirtual.catalog.heritage.SaveInformationSourceTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    <!-- Research Responsible Tab -->
+        <action name="RenderResearchResponsibleTab" class="mvirtual.catalog.heritage.RenderResearchResponsibleTab">
+            <result>/catalog/heritage/ResearchResponsible.jsp</result>
+        </action>
+
+        <action name="SaveResearchResponsibleTab" class="mvirtual.catalog.heritage.SaveResearchResponsibleTab">
+            <result type="redirectAction" name="HeritageTab">RenderHeritageTab</result>
+            <result type="redirectAction" name="AuthorityTab">RenderAuthorityTab</result>
+            <result type="redirectAction" name="ProductionTab">RenderProductionTab</result>
+            <result type="redirectAction" name="DescriptionTab">RenderDescriptionTab</result>
+            <result type="redirectAction" name="InterventionTab">RenderInterventionTab</result>
+            <result type="redirectAction" name="UseConditionTab">RenderUseConditionTab</result>
+            <result type="redirectAction" name="HistoryAndOriginTab">RenderHistoryAndOriginTab</result>
+            <result type="redirectAction" name="AcquisitionDocumentTab">RenderAcquisitionDocumentTab</result>
+            <result type="redirectAction" name="SubjectAndDescriptorsTab">RenderSubjectAndDescriptorsTab</result>
+            <result type="redirectAction" name="MultimediaTab">RenderMultimediaTab</result>
+            <result type="redirectAction" name="InformationSourceTab">RenderInformationSourceTab</result>
+            <result type="redirectAction" name="ResearchResponsibleTab">RenderResearchResponsibleTab</result>
+            <result type="redirectAction" name="SaveHeritage">SaveHeritage</result>
+        </action>
+
+    </package>
+
+</struts>

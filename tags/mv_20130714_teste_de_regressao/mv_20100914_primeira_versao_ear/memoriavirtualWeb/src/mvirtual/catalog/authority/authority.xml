@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : authority.xml
+    Created on : 16. Oktober 2009, 20:04
+    Author     : Fabricio
+    Description:
+        Purpose of the document follows.
+-->
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+   <constant name="struts.devMode" value="true" />
+
+    <package name="AuthorityPack" namespace="/authority" extends="struts-default">
+
+    <!-- Authority Page -->
+        <action name="RenderAuthorityMainPage" class="mvirtual.catalog.authority.RenderAuthorityMainPage">
+            <result>/catalog/authority/AuthorityMainPage.jsp</result>
+        </action>
+
+        <action name="RenderAuthorityPage" class="mvirtual.catalog.authority.RenderAuthorityPage">
+            <result name="new">/catalog/authority/AuthorityPage.jsp</result>
+            <result name="edit">/catalog/authority/AuthorityPage.jsp</result>
+            <result type="redirectAction" name="remove">RenderAuthorityMainPage</result>
+        </action>
+
+        <action name="SaveAuthorityPage" class="mvirtual.catalog.authority.SaveAuthorityPage">
+            <result type="redirectAction">RenderAuthorityMainPage</result>
+        </action>
+
+    </package>
+
+</struts>

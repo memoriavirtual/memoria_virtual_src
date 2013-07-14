@@ -1,0 +1,46 @@
+#sidebarsp {
+	position:static; 
+	float:left; 
+	width:236px; 
+	background:white; 
+	font-size:10px; 
+	z-index:90; 
+} 
+
+#sidebarsp ul {
+	margin:0; 
+	padding:5px 0 0; 
+	font-size:12px;
+}
+
+#sidebarsp li {
+	overflow:inherit; 
+	list-style-type:none; 
+	margin:0; 
+	padding:0; 
+} 
+
+#sidebarsp a {
+	text-decoration:none; 
+	margin:0; 
+	padding:7px 10px 1px; 
+	display:block; 
+	height:20px; 
+	color:#000000;
+}
+
+#sidebarsp a.first {
+	margin:0; 
+	padding:7px 10px 1px; 
+} 
+
+#sidebarsp a:hover {
+	color:#FFDEAD; 
+	background:#800000;
+}
+
+#sidebarsp ul #itemSelected {
+	font-weight:bolder;
+	font-style:itaulic;
+	background:#F00;
+}
