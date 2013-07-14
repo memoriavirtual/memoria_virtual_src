@@ -20,6 +20,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
 
 /**
@@ -258,11 +259,20 @@ public class EditarBemPatrimonialMB extends GerenciarBemPatrimonial implements
 			id = bemPatrimonial.getId();
 			this.etapa1 = false;
 			this.etapa2 = true;
+		}else{
+			bemPatrimoniais.clear();
+			try {
+				this.bemPatrimoniais = realizarBuscaEJB.buscar("");
+
+			} catch (ModeloException e) {
+				e.printStackTrace();
+			}
 		}
-		
 		strDeBusca = "";
-		bemPatrimoniais.clear();
 		return null;
+		
+		
+		
 	}
 	public String salvarBemPatrimonial(){
 		super.salvarBemPatrimonial();
