@@ -3,9 +3,8 @@
 	<name>memoriavirtual</name>
 	<comment></comment>
 	<projects>
-		<project>memoriavirtualWeb</project>
 		<project>memoriavirtualEJB</project>
-		<project>CriandoWebService</project>
+		<project>memoriavirtualWeb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
