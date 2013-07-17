@@ -74,13 +74,15 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> listarAprovadores(Usuario usuario)
+	public List<Usuario> listarAprovadores(Usuario requerente, Usuario usuario)
 			throws ModeloException {
 		List<Usuario> administradores = new ArrayList<Usuario>();
 
 		Query query = entityManager
-				.createQuery("SELECT a FROM Usuario a WHERE a <> :requerente AND a.administrador = true AND a.ativo = true");
-		query.setParameter("requerente", usuario);
+				.createQuery("SELECT a FROM Usuario a WHERE a <> :requerente "
+						+ "AND a <> :u AND a.administrador = true AND a.ativo = true");
+		query.setParameter("requerente", requerente);
+		query.setParameter("u", usuario);
 		try {
 			administradores = (List<Usuario>) query.getResultList();
 		} catch (Exception e) {
@@ -117,14 +119,17 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
 			usuario = entityManager.find(Usuario.class, usuario.getId());
 
-			if (administrador == true) {
+			if (administrador == true && !usuario.isAdministrador()) {
 
 				Aprovacao aprovacao = new Aprovacao();
 				aprovacao.setAprovador(aprovador);
-				aprovacao.setChaveEstrangeira(new Boolean(administrador).toString());
+				aprovacao.setChaveEstrangeira(new Boolean(administrador)
+						.toString());
 				aprovacao.setData(data);
 				aprovacao.setExpiracao(expiracao);
 				aprovacao.setTabelaEstrangeira("Usuario");
+
+				entityManager.persist(aprovacao);
 
 				String idEmbaralhado = memoriaVirtualEJB.embaralhar(aprovacao
 						.getId().toString());
@@ -147,8 +152,6 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
 						message);
-
-				entityManager.persist(aprovacao);
 
 				return;
 			} else {

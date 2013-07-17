@@ -23,7 +23,7 @@ public interface EditarCadastroUsuarioRemote {
 	 *         requisicao, caso o mesmo seja administrador)
 	 * @throws ModeloException
 	 */
-	public List<Usuario> listarAprovadores(Usuario usuario)
+	public List<Usuario> listarAprovadores(Usuario requerente, Usuario usuario)
 			throws ModeloException;
 
 	/**

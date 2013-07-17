@@ -79,8 +79,12 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		if (usuario.isAdministrador()) {
 
 			try {
-				this.usuarios = this.memoriaVirtualEJB
-						.listarUsuarios(this.nome);
+
+				this.usuarios = this.memoriaVirtualEJB.listarUsuarios(
+						this.nome, usuario);
+				if (this.usuarios.contains(usuario))
+					this.usuarios.remove(usuario);
+
 			} catch (ModeloException m) {
 				MensagensDeErro.getErrorMessage(
 						"editarCadastroUsuarioErroListarUsuarios", "resultado");
@@ -161,7 +165,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			this.acessosAntigos = this.editarCadastroUsuarioEJB
 					.listarAcessos(usuario);
 			this.administradores = this.editarCadastroUsuarioEJB
-					.listarAprovadores(requerente);
+					.listarAprovadores(requerente, this.usuario);
 		} catch (ModeloException m) {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuarioErroSelecaoUsuario", "resultado");
@@ -205,7 +209,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				this.acessosAntigos = this.editarCadastroUsuarioEJB
 						.listarAcessos(selecionado);
 				this.administradores = this.editarCadastroUsuarioEJB
-						.listarAprovadores(requerente);
+						.listarAprovadores(requerente, this.usuario);
 			} catch (ModeloException m) {
 				MensagensDeErro.getErrorMessage(
 						"editarCadastroUsuarioErroSelecao", "resultado");
@@ -362,11 +366,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			}
 
 			if (exibirAcessos && validateInstituicao()) {
-				// adiciona a lista pendentes os acessos que foram modificados,
-				// ou seja os acessos que estao em apenas uma das listas
-				if (marcadoAdministrador == true) {
 
-				}
 				for (Acesso a : this.acessos) {
 					for (Acesso o : this.acessosAntigos) {
 
@@ -417,6 +417,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 					this.limpar();
 					MensagensDeErro.getErrorMessage(
 							"editarCadastroUsuarioErroEdicao", "resultado");
+					System.out.println("lol");
 					e.printStackTrace();
 				}
 
@@ -461,14 +462,9 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public List<SelectItem> getAdmnistradores() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
 
 		List<SelectItem> administradores = new ArrayList<SelectItem>();
-		administradores.add(new SelectItem(null, bundle
-				.getString("editarCadastroUsuarioAdministradores")));
+
 		for (Usuario u : this.administradores) {
 			administradores.add(new SelectItem(u.getId(), u.getNomeCompleto()));
 		}
@@ -527,12 +523,16 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		Usuario aprovador = this.aprovacao.getAprovador();
 
 		if (aprovador.getId().equals(requerente.getId())) {
-			
-			if(aprovacao.getTabelaEstrangeira().equals("Usuario")){
-				this.usuario.setAdministrador(true);
-			}
 
 			String acao[] = this.aprovacao.getChaveEstrangeira().split(";");
+
+			if (acao.length == 1) {
+
+				Boolean administrador = new Boolean(acao[0]);
+
+				this.usuario.setAdministrador(administrador.booleanValue());
+
+			}
 
 			if (acao[3].equals("adicionar")) {
 				try {
@@ -861,6 +861,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			return true;
 		else
 			return false;
+	}
+
+	public boolean isNotMarcadoAdministrador() {
+		return !marcadoAdministrador;
 	}
 
 }

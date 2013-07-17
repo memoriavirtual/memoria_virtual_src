@@ -13,12 +13,22 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 public interface MemoriaVirtualRemote {
 
 	public String getURLServidor() throws ModeloException;
+
 	public String getIntervaloTimer() throws ModeloException;
-	public  String embaralhar (String mensagemOriginal);
+
+	public String embaralhar(String mensagemOriginal);
+
 	public List<Acesso> listarAcessos(Usuario usuario);
-	public List<Usuario> listarUsuarios(String pnome) throws ModeloException;
+
+	public List<Usuario> listarUsuarios(String pnome, Usuario usuario)
+			throws ModeloException;
+
 	public boolean verificarDisponibilidadeIdUsuario(String id);
+
 	public boolean verificarDisponibilidadeEmail(String email);
+
 	public boolean verificarDisponibilidadeNomeInstituicao(String Nome);
-	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException;
-	}
+
+	public void enviarEmail(String destinatario, String assunto, String mensagem)
+			throws MessagingException;
+}

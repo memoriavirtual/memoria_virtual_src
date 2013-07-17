@@ -69,6 +69,48 @@
 								value="#{editarCadastroUsuarioMB.marcadoAdministrador}"></h:selectBooleanCheckbox>
 						</div>
 
+						<div>
+							<h:outputLabel class="labels"
+								value="#{mensagens.editarCadastroUsuarioJustificativa}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
+							<h:inputTextarea value="#{editarCadastroUsuarioMB.justificativa}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoJustificativa"
+									listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
+							</h:inputTextarea>
+							<div></div>
+							<h:message id="validacaoJustificativa"
+								for="validacaoJustificativa" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels"
+								value="#{mensagens.editarCadastroUsuarioValidade}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+							</h:outputLabel>
+							<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+								<f:selectItems value="#{editarCadastroUsuarioMB.validades}"></f:selectItems>
+							</h:selectOneMenu>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels"
+								value="#{mensagens.editarCadastroUsuarioAprovador}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
+							<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+								<f:selectItems value="#{editarCadastroUsuarioMB.admnistradores}"></f:selectItems>
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoAprovador" for="validacaoAprovador"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
 					</fieldset>
 
 					<div class="botao">

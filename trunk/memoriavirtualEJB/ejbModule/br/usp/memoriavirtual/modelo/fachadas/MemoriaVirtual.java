@@ -206,11 +206,9 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return msgNova;
 	}
 
-
-
 	/**
-	 * Método para sugestão de usuários retorna todos os usuários do banco cujo
-	 * nome contém o padrão
+	 * Método para sugestão de usuários retorna todos os usuários do banco
+	 * cujo nome contém o padrão
 	 * 
 	 * @param pnome
 	 *            String a ser comparada com os nomes
@@ -219,7 +217,8 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String pnome) throws ModeloException {
+	public List<Usuario> listarUsuarios(String pnome, Usuario usuario)
+			throws ModeloException {
 
 		// Lista de usuarios a ser retornada
 		List<Usuario> usuarios = new ArrayList<Usuario>();
@@ -229,14 +228,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		// Só busca se o nome não for nulo
 		if (!pnome.equals(null)) {
 
-			// query busca todos os usuarios ativos, não administradores
+			// query busca todos os usuarios ativos,
 			// cujo nome contém a string fornecida em ordem alfabética
-			query = this.entityManager
-					.createQuery("SELECT u FROM Usuario u WHERE u.ativo = TRUE "
-							+ "AND u.administrador = FALSE "
-							+ "AND u.nomeCompleto LIKE :padrao "
-							+ "ORDER BY u.nomeCompleto");
+			query = this.entityManager.createQuery("SELECT u FROM Usuario u "
+					+ "WHERE u.ativo = TRUE "
+					+ "AND u.nomeCompleto LIKE :padrao AND u.id <> :id "
+					+ "ORDER BY u.nomeCompleto");
 			query.setParameter("padrao", "%" + pnome + "%");
+			query.setParameter("id", usuario.getId());
 		}
 		try {
 
@@ -248,7 +247,6 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			opcaoListarTodos.setNomeCompleto("Listar Todos");
 			opcaoListarTodos.setId("listartodos");
 			usuarios.add(0, opcaoListarTodos);
-			
 
 		} catch (Exception e) {
 			// em caso de erro, joga uma exceção
@@ -275,5 +273,5 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 		return listaAcessos;
 	}
-	
+
 }
