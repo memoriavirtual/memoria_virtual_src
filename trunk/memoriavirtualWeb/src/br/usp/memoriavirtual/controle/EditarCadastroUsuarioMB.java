@@ -53,6 +53,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	private boolean mostrarLink = true; // renderizar link para exibir a tabela
 										// de acessos
 	private boolean renderInstituicoes = false;
+	private boolean marcadoAdministrador;
 
 	public EditarCadastroUsuarioMB() {
 		super();
@@ -71,7 +72,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public void listarUsuarios() {
-		
+
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
@@ -98,13 +99,13 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				+ this.acesso.getGrupo().getId() + " ?";
 
 	}
-	
-	public String getInformacaoJusticicativa(){
-		
+
+	public String getInformacaoJusticicativa() {
+
 		String chave[] = this.aprovacao.getChaveEstrangeira().split(";");
-		
-		return "Justificativa: "+ chave[4];
-		
+
+		return "Justificativa: " + chave[4];
+
 	}
 
 	public String cancelar() {
@@ -172,6 +173,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.usuarios.clear();
 		this.nome = null;
 		this.nomeCompleto = usuario.getNomeCompleto();
+		this.marcadoAdministrador = this.usuario.isAdministrador();
 
 		return "sucesso";
 	}
@@ -214,6 +216,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			this.usuarios.clear();
 			this.nome = null;
 			this.nomeCompleto = usuario.getNomeCompleto();
+			this.marcadoAdministrador = this.usuario.isAdministrador();
 			return "sucesso";
 		}
 
@@ -225,11 +228,11 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public String selecionarInstituicao(Acesso acesso, Instituicao i) {
 
-		if(i.getNome().equals("Listar Todos")){
+		if (i.getNome().equals("Listar Todos")) {
 			this.listarInstituicoes("");
 			return null;
-		}		
-		
+		}
+
 		if (acesso != null && i != null) {
 			if (this.acessos.contains(acesso) && this.instituicoes.contains(i))
 				this.acessos.get(this.acessos.indexOf(acesso))
@@ -361,6 +364,9 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			if (exibirAcessos && validateInstituicao()) {
 				// adiciona a lista pendentes os acessos que foram modificados,
 				// ou seja os acessos que estao em apenas uma das listas
+				if (marcadoAdministrador == true) {
+
+				}
 				for (Acesso a : this.acessos) {
 					for (Acesso o : this.acessosAntigos) {
 
@@ -400,13 +406,15 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				Date expiracao = calendar.getTime();
 
 				try {
-					this.editarCadastroUsuarioEJB.editarAcessos(
+					this.editarCadastroUsuarioEJB.editarAcessos(this.usuario,
 							this.administrador, pendentes, situacoes, data,
-							expiracao, this.justificativa);
+							expiracao, this.justificativa,
+							this.marcadoAdministrador);
 					this.limpar();
 					MensagensDeErro.getSucessMessage(
 							"editarCadastroUsuarioSucesso", "resultado");
 				} catch (Exception e) {
+					this.limpar();
 					MensagensDeErro.getErrorMessage(
 							"editarCadastroUsuarioErroEdicao", "resultado");
 					e.printStackTrace();
@@ -519,6 +527,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		Usuario aprovador = this.aprovacao.getAprovador();
 
 		if (aprovador.getId().equals(requerente.getId())) {
+			
+			if(aprovacao.getTabelaEstrangeira().equals("Usuario")){
+				this.usuario.setAdministrador(true);
+			}
 
 			String acao[] = this.aprovacao.getChaveEstrangeira().split(";");
 
@@ -830,6 +842,25 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public void setRenderInstituicoes(boolean renderInstituicoes) {
 		this.renderInstituicoes = renderInstituicoes;
+	}
+
+	public boolean isMarcadoAdministrador() {
+		return marcadoAdministrador;
+	}
+
+	public void setMarcadoAdministrador(boolean marcadoAdministrador) {
+		this.marcadoAdministrador = marcadoAdministrador;
+	}
+
+	public boolean isExibirAdministrador() {
+
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+
+		if (usuario.isAdministrador() && exibirAcessos)
+			return true;
+		else
+			return false;
 	}
 
 }

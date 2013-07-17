@@ -108,44 +108,24 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	}
 
 	@Override
-	public void editarAcessos(String aprovadorId, List<Acesso> acessos,
-			List<String> situacoes, Date data, Date expiracao,
-			String justificativa) throws ModeloException {
+	public void editarAcessos(Usuario usuario, String aprovadorId,
+			List<Acesso> acessos, List<String> situacoes, Date data,
+			Date expiracao, String justificativa, boolean administrador)
+			throws ModeloException {
 
 		try {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
+			usuario = entityManager.find(Usuario.class, usuario.getId());
 
-			for (Acesso a : acessos) {
+			if (administrador == true) {
 
-				// Buscar no banco os objetos corretos para instanciar o aceso
-				Query q = entityManager
-						.createQuery("SELECT i FROM Instituicao i WHERE i.nome = :nome");
-				q.setParameter("nome", a.getInstituicao().getNome());
-				Instituicao i = (Instituicao) q.getSingleResult();
-				Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
-				Usuario u = entityManager.find(Usuario.class, a.getUsuario()
-						.getId());
-
-				// Preparar o objeto acesso para ser salvo na tabela aprovacao
-				String grupo = g.getId();
-				String usuario = u.getId();
-				long instituicao = i.getId();
-				String acesso = grupo + ";" + usuario + ";" + instituicao + ";"
-						+ situacoes.get(0) + ";" + justificativa;
-
-				situacoes.remove(0);
-
-				// Persistir a aprovacao
 				Aprovacao aprovacao = new Aprovacao();
 				aprovacao.setAprovador(aprovador);
-				aprovacao.setChaveEstrangeira(acesso);
+				aprovacao.setChaveEstrangeira(new Boolean(administrador).toString());
 				aprovacao.setData(data);
 				aprovacao.setExpiracao(expiracao);
-				aprovacao.setTabelaEstrangeira("Acesso");
+				aprovacao.setTabelaEstrangeira("Usuario");
 
-				entityManager.persist(aprovacao);
-
-				// Preparar o link
 				String idEmbaralhado = memoriaVirtualEJB.embaralhar(aprovacao
 						.getId().toString());
 
@@ -156,16 +136,80 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String bundleName = "mensagens";
 				ResourceBundle bundle = context.getApplication()
 						.getResourceBundle(context, bundleName);
-				
-				String message = bundle.getString("editarCadastroUsuarioMensagem");
-				
+
+				String message = bundle
+						.getString("editarCadastroUsuarioMensagem");
+
 				message = message + link;
-				message = message + bundle.getString("editarCadastroUsuarioMensagemJustificativa");
+				message = message
+						+ bundle.getString("editarCadastroUsuarioMensagemJustificativa");
 				message = message + justificativa;
 
 				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
 						message);
 
+				entityManager.persist(aprovacao);
+
+				return;
+			} else {
+
+				for (Acesso a : acessos) {
+
+					// Buscar no banco os objetos corretos para instanciar o
+					// aceso
+					Query q = entityManager
+							.createQuery("SELECT i FROM Instituicao i WHERE i.nome = :nome");
+					q.setParameter("nome", a.getInstituicao().getNome());
+					Instituicao i = (Instituicao) q.getSingleResult();
+					Grupo g = entityManager.find(Grupo.class, a.getGrupo()
+							.getId());
+					Usuario u = entityManager.find(Usuario.class, a
+							.getUsuario().getId());
+
+					// Preparar o objeto acesso para ser salvo na tabela
+					// aprovacao
+					String grupo = g.getId();
+					String usuarioId = u.getId();
+					long instituicao = i.getId();
+					String acesso = grupo + ";" + usuarioId + ";" + instituicao
+							+ ";" + situacoes.get(0) + ";" + justificativa;
+
+					situacoes.remove(0);
+
+					// Persistir a aprovacao
+					Aprovacao aprovacao = new Aprovacao();
+					aprovacao.setAprovador(aprovador);
+					aprovacao.setChaveEstrangeira(acesso);
+					aprovacao.setData(data);
+					aprovacao.setExpiracao(expiracao);
+					aprovacao.setTabelaEstrangeira("Acesso");
+
+					entityManager.persist(aprovacao);
+
+					// Preparar o link
+					String idEmbaralhado = memoriaVirtualEJB
+							.embaralhar(aprovacao.getId().toString());
+
+					String link = memoriaVirtualEJB.getURLServidor()
+							+ "/editarcadastrousuario?Id=" + idEmbaralhado;
+
+					FacesContext context = FacesContext.getCurrentInstance();
+					String bundleName = "mensagens";
+					ResourceBundle bundle = context.getApplication()
+							.getResourceBundle(context, bundleName);
+
+					String message = bundle
+							.getString("editarCadastroUsuarioMensagem");
+
+					message = message + link;
+					message = message
+							+ bundle.getString("editarCadastroUsuarioMensagemJustificativa");
+					message = message + justificativa;
+
+					this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(),
+							"mv", message);
+
+				}
 			}
 		} catch (Exception e) {
 			throw new ModeloException(e);

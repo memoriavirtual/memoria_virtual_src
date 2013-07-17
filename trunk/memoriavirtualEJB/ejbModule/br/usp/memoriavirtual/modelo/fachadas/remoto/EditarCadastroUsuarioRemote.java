@@ -64,8 +64,9 @@ public interface EditarCadastroUsuarioRemote {
 	 *            Data de expiracao das alteracoes
 	 * @throws ModeloException
 	 */
-	public void editarAcessos(String aprovador, List<Acesso> acessos,
-			List<String> situacoes, Date data, Date expiracao, String justificativa)
+	public void editarAcessos(Usuario usuario, String aprovador,
+			List<Acesso> acessos, List<String> situacoes, Date data,
+			Date expiracao, String justificativa, boolean administrador)
 			throws ModeloException;
 
 	/**
@@ -87,7 +88,7 @@ public interface EditarCadastroUsuarioRemote {
 	 * @throws ModeloException
 	 */
 	public Acesso getAcesso(String aprovacao) throws ModeloException;
-	
+
 	public boolean isAprovador(Usuario usuario, String aprovacaoId);
 
 	public Aprovacao getAprovacao(String aprovacao) throws ModeloException;
@@ -99,5 +100,7 @@ public interface EditarCadastroUsuarioRemote {
 	public void persistir(long id) throws ModeloException;
 
 	public List<Grupo> listarGrupos() throws ModeloException;
-	public List<Instituicao> listarInstituicoes(String instituicao) throws ModeloException;
+
+	public List<Instituicao> listarInstituicoes(String instituicao)
+			throws ModeloException;
 }
