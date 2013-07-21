@@ -119,9 +119,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
 			usuario = entityManager.find(Usuario.class, usuario.getId());
 
-			System.out.println(situacoes.size());
-
-			if (situacoes.isEmpty()) {
+			if (administrador != usuario.isAdministrador()) {
 
 				Aprovacao aprovacao = new Aprovacao();
 				aprovacao.setAprovador(aprovador);
@@ -158,66 +156,63 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
 						message);
 
-				return;
-			} else {
+			}
 
-				for (Acesso a : acessos) {
+			for (Acesso a : acessos) {
 
-					// Buscar no banco os objetos corretos para instanciar o
-					// aceso
-					Query q = entityManager
-							.createQuery("SELECT i FROM Instituicao i WHERE i.nome = :nome");
-					q.setParameter("nome", a.getInstituicao().getNome());
-					Instituicao i = (Instituicao) q.getSingleResult();
-					Grupo g = entityManager.find(Grupo.class, a.getGrupo()
-							.getId());
-					Usuario u = entityManager.find(Usuario.class, a
-							.getUsuario().getId());
+				// Buscar no banco os objetos corretos para instanciar o
+				// aceso
+				Query q = entityManager
+						.createQuery("SELECT i FROM Instituicao i WHERE i.nome = :nome");
+				q.setParameter("nome", a.getInstituicao().getNome());
+				Instituicao i = (Instituicao) q.getSingleResult();
+				Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
+				Usuario u = entityManager.find(Usuario.class, a.getUsuario()
+						.getId());
 
-					// Preparar o objeto acesso para ser salvo na tabela
-					// aprovacao
-					String grupo = g.getId();
-					String usuarioId = u.getId();
-					long instituicao = i.getId();
-					String acesso = grupo + ";" + usuarioId + ";" + instituicao
-							+ ";" + situacoes.get(0) + ";" + justificativa;
+				// Preparar o objeto acesso para ser salvo na tabela
+				// aprovacao
+				String grupo = g.getId();
+				String usuarioId = u.getId();
+				long instituicao = i.getId();
+				String acesso = grupo + ";" + usuarioId + ";" + instituicao
+						+ ";" + situacoes.get(0) + ";" + justificativa;
 
-					situacoes.remove(0);
+				situacoes.remove(0);
 
-					// Persistir a aprovacao
-					Aprovacao aprovacao = new Aprovacao();
-					aprovacao.setAprovador(aprovador);
-					aprovacao.setChaveEstrangeira(acesso);
-					aprovacao.setData(data);
-					aprovacao.setExpiracao(expiracao);
-					aprovacao.setTabelaEstrangeira("Acesso");
+				// Persistir a aprovacao
+				Aprovacao aprovacao = new Aprovacao();
+				aprovacao.setAprovador(aprovador);
+				aprovacao.setChaveEstrangeira(acesso);
+				aprovacao.setData(data);
+				aprovacao.setExpiracao(expiracao);
+				aprovacao.setTabelaEstrangeira("Acesso");
 
-					entityManager.persist(aprovacao);
+				entityManager.persist(aprovacao);
 
-					// Preparar o link
-					String idEmbaralhado = memoriaVirtualEJB
-							.embaralhar(aprovacao.getId().toString());
+				// Preparar o link
+				String idEmbaralhado = memoriaVirtualEJB.embaralhar(aprovacao
+						.getId().toString());
 
-					String link = memoriaVirtualEJB.getURLServidor()
-							+ "/editarcadastrousuario?Id=" + idEmbaralhado;
+				String link = memoriaVirtualEJB.getURLServidor()
+						+ "/editarcadastrousuario?Id=" + idEmbaralhado;
 
-					FacesContext context = FacesContext.getCurrentInstance();
-					String bundleName = "mensagens";
-					ResourceBundle bundle = context.getApplication()
-							.getResourceBundle(context, bundleName);
+				FacesContext context = FacesContext.getCurrentInstance();
+				String bundleName = "mensagens";
+				ResourceBundle bundle = context.getApplication()
+						.getResourceBundle(context, bundleName);
 
-					String message = bundle
-							.getString("editarCadastroUsuarioMensagem");
+				String message = bundle
+						.getString("editarCadastroUsuarioMensagem");
 
-					message = message + link;
-					message = message
-							+ bundle.getString("editarCadastroUsuarioMensagemJustificativa");
-					message = message + justificativa;
+				message = message + link;
+				message = message
+						+ bundle.getString("editarCadastroUsuarioMensagemJustificativa");
+				message = message + justificativa;
 
-					this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(),
-							"mv", message);
+				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
+						message);
 
-				}
 			}
 		} catch (Exception e) {
 			throw new ModeloException(e);

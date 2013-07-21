@@ -97,7 +97,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 		String chave[] = this.aprovacao.getChaveEstrangeira().split(";");
 
-		if (chave.length == 4) {
+		if (chave.length == 5) {
 
 			return "Voce deseja " + chave[3] + " o seguinte acesso: Usuario: "
 					+ this.acesso.getUsuario().getNomeCompleto()
@@ -130,7 +130,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 		String chave[] = this.aprovacao.getChaveEstrangeira().split(";");
 
-		if (chave.length == 4)
+		if (chave.length == 5)
 			return "Justificativa: " + chave[4];
 		else
 			return "Justificativa: " + chave[1];
@@ -442,7 +442,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 					this.limpar();
 					MensagensDeErro.getErrorMessage(
 							"editarCadastroUsuarioErroEdicao", "resultado");
-					System.out.println("lol");
 					e.printStackTrace();
 				}
 
@@ -570,7 +569,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 									"editarCadastroUsuarioErroConfirmacao",
 									"resultado");
 					m.printStackTrace();
-					System.out.println("alalala");
 					return null;
 				}
 
