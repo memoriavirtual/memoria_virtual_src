@@ -119,12 +119,17 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			Usuario aprovador = entityManager.find(Usuario.class, aprovadorId);
 			usuario = entityManager.find(Usuario.class, usuario.getId());
 
-			if (administrador == true && !usuario.isAdministrador()) {
+			System.out.println(situacoes.size());
+
+			if (situacoes.isEmpty()) {
 
 				Aprovacao aprovacao = new Aprovacao();
 				aprovacao.setAprovador(aprovador);
-				aprovacao.setChaveEstrangeira(new Boolean(administrador)
-						.toString());
+
+				String chave = new Boolean(administrador).toString() + ";"
+						+ justificativa + ";" + usuario.getId();
+
+				aprovacao.setChaveEstrangeira(chave);
 				aprovacao.setData(data);
 				aprovacao.setExpiracao(expiracao);
 				aprovacao.setTabelaEstrangeira("Usuario");
@@ -327,7 +332,11 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 					.find(Instituicao.class, instituicaoId);
 
 			Query removeAcesso = this.entityManager
-					.createQuery("DELETE FROM Acesso a WHERE a.grupo = :grupo AND a.instituicao = :instituicao AND a.usuario = :usuario AND a.validade = true");
+					.createQuery("DELETE FROM Acesso a "
+							+ "WHERE a.grupo = :grupo "
+							+ "AND a.instituicao = :instituicao "
+							+ "AND a.usuario = :usuario "
+							+ "AND a.validade = true");
 			removeAcesso.setParameter("instituicao", i);
 			removeAcesso.setParameter("usuario", u);
 			removeAcesso.setParameter("grupo", g);
@@ -398,5 +407,27 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public Usuario getUsuario(String id) throws ModeloException {
+		Usuario usuario;
+		try {
+			usuario = entityManager.find(Usuario.class, id);
+			return usuario;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
+	}
+
+	@Override
+	public void merge(Usuario usuario) throws ModeloException {
+		try {
+			entityManager.merge(usuario);
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+
 	}
 }

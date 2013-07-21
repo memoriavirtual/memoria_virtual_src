@@ -103,4 +103,8 @@ public interface EditarCadastroUsuarioRemote {
 
 	public List<Instituicao> listarInstituicoes(String instituicao)
 			throws ModeloException;
+
+	public Usuario getUsuario(String id) throws ModeloException;
+
+	public void merge(Usuario usuario) throws ModeloException;
 }

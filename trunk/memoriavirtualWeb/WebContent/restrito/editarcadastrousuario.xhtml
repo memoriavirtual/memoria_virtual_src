@@ -66,8 +66,60 @@
 								class="labels">#{mensagens.editarCadastroUsuarioMarcadoAdministrador}</h:outputLabel>
 							<h:selectBooleanCheckbox
 								rendered="#{editarCadastroUsuarioMB.exibirAdministrador}"
-								value="#{editarCadastroUsuarioMB.marcadoAdministrador}"></h:selectBooleanCheckbox>
+								value="#{editarCadastroUsuarioMB.marcadoAdministrador}">
+								<f:ajax execute="@this" render="@form" event="change"></f:ajax>
+							</h:selectBooleanCheckbox>
 						</div>
+
+						<div id="sugestoes">
+							<h:dataTable id="acessos" var="acesso"
+								value="#{editarCadastroUsuarioMB.acessos}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessosTabela}">
+								<h:column>
+									<h:outputLabel class="labeltabela"
+										value="#{mensagens.editarCadastroUsuarioNivel}"></h:outputLabel>
+									<h:selectOneMenu value="#{acesso.grupo.id}">
+										<f:selectItems value="#{editarCadastroUsuarioMB.nivel}"></f:selectItems>
+									</h:selectOneMenu>
+									<h:outputLabel class="labeltabela"
+										value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
+									<h:inputText value="#{acesso.instituicao.nome}">
+										<f:ajax event="focus" execute="@this" render="instituicoes"
+											rendered="#{editarCadastroUsuarioMB.renderInstituicoes}"
+											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
+										<f:ajax event="keyup" execute="@this" render="instituicoes"
+											rendered="#{editarCadastroUsuarioMB.renderInstituicoes}"
+											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
+									</h:inputText>
+									<h:commandLink
+										action="#{editarCadastroUsuarioMB.excluirAcesso(acesso)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png" class="delete">
+										</h:graphicImage>
+									</h:commandLink>
+
+									<h:dataTable id="instituicoes" var="instituicao"
+										value="#{editarCadastroUsuarioMB.instituicoes}">
+										<h:column>
+											<h:commandLink
+												action="#{editarCadastroUsuarioMB.selecionarInstituicao(acesso, instituicao)}">#{instituicao.nome}</h:commandLink>
+										</h:column>
+									</h:dataTable>
+
+								</h:column>
+								<div></div>
+								<h:message id="validacaoInstituicao" for="validacaoInstituicao"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso" />
+							</h:dataTable>
+						</div>
+
+						<div>
+							<h:commandLink class="labels"
+								action="#{editarCadastroUsuarioMB.adicionarAcesso}"
+								value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"
+								rendered="#{editarCadastroUsuarioMB.exibirAcessosTabela}"></h:commandLink>
+						</div>
+
 
 						<div>
 							<h:outputLabel class="labels"

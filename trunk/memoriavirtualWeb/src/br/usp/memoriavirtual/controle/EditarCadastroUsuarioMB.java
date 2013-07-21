@@ -97,18 +97,43 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 		String chave[] = this.aprovacao.getChaveEstrangeira().split(";");
 
-		return "Voce deseja " + chave[3] + " o seguinte acesso: Usuario: "
-				+ this.acesso.getUsuario().getNomeCompleto() + " Instituicao: "
-				+ this.acesso.getInstituicao().getNome() + " Nivel: "
-				+ this.acesso.getGrupo().getId() + " ?";
+		if (chave.length == 4) {
+
+			return "Voce deseja " + chave[3] + " o seguinte acesso: Usuario: "
+					+ this.acesso.getUsuario().getNomeCompleto()
+					+ " Instituicao: " + this.acesso.getInstituicao().getNome()
+					+ " Nivel: " + this.acesso.getGrupo().getId() + " ?";
+		} else {
+			String acao;
+
+			try {
+				this.usuario = this.editarCadastroUsuarioEJB
+						.getUsuario(chave[2]);
+			} catch (ModeloException m) {
+				MensagensDeErro.getErrorMessage("erro", "resultado");
+				m.printStackTrace();
+				return null;
+			}
+
+			if (chave[0].equals(new Boolean(true).toString()))
+				acao = "adicionar";
+			else
+				acao = "remover";
+
+			return "Voce deseja " + acao + " privilegios de administrador?\n"
+					+ "Usuario: " + this.usuario.getNomeCompleto() + "\n";
+		}
 
 	}
 
-	public String getInformacaoJusticicativa() {
+	public String getInformacaoJustificativa() {
 
 		String chave[] = this.aprovacao.getChaveEstrangeira().split(";");
 
-		return "Justificativa: " + chave[4];
+		if (chave.length == 4)
+			return "Justificativa: " + chave[4];
+		else
+			return "Justificativa: " + chave[1];
 
 	}
 
@@ -526,11 +551,28 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 			String acao[] = this.aprovacao.getChaveEstrangeira().split(";");
 
-			if (acao.length == 1) {
+			if (acao.length == 3) {
 
 				Boolean administrador = new Boolean(acao[0]);
 
 				this.usuario.setAdministrador(administrador.booleanValue());
+
+				try {
+					this.editarCadastroUsuarioEJB.removerAprovacao(aprovacao
+							.getId().toString());
+					this.editarCadastroUsuarioEJB.merge(this.usuario);
+					MensagensDeErro.getSucessMessage(
+							"editarCadastroUsuarioSucesso", "resultado");
+					return null;
+				} catch (ModeloException m) {
+					MensagensDeErro
+							.getErrorMessage(
+									"editarCadastroUsuarioErroConfirmacao",
+									"resultado");
+					m.printStackTrace();
+					System.out.println("alalala");
+					return null;
+				}
 
 			}
 
@@ -787,6 +829,10 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public void setAprovacao(Aprovacao aprovacao) {
 		this.aprovacao = aprovacao;
+	}
+
+	public boolean isExibirAcessosTabela() {
+		return (exibirAcessos && !marcadoAdministrador);
 	}
 
 	public boolean isExibirAcessos() {
