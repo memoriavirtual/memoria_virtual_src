@@ -2,6 +2,7 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -121,12 +122,19 @@ public class CadastrarUsuarioMB implements Serializable {
 	}
 
 	public void validateId() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		if (this.id.equals("")) {
 			String[] argumentos = { "id" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoId");
 		} else if (this.id.length() < 4) {
-			String[] argumentos = { "id", "id_minimo" };
+			String[] argumentos = { bundle.getString("id"),
+					bundle.getString("id_minimo") };
 			MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
 					"validacaoId");
 		} else if (!memoriaVirtualEJB
@@ -180,12 +188,19 @@ public class CadastrarUsuarioMB implements Serializable {
 	}
 
 	public void validateSenha() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		if (this.senha.equals("")) {
 			String[] argumentos = { "senha" };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoSenha");
 		} else if (this.senha.length() < 6) {
-			String[] argumentos = { "senha", "senha_minima" };
+			String[] argumentos = { bundle.getString("senha"),
+					bundle.getString("senha_minima") };
 			MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
 					"validacaoSenha");
 		}
