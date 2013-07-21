@@ -85,11 +85,11 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarUsuarioTelefone}</h:outputLabel>
-							<h:inputText value="#{cadastrarUsuarioMB.telefone}">
+							<h:inputText id="telefone" value="#{cadastrarUsuarioMB.telefone}">
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{cadastrarUsuarioMB.validateTelefone}" />
 							</h:inputText>
-							<div>(dd)xxxx-xxxx</div>
+							<div>(ddd)xxxxx-xxxx</div>
 							<h:message id="validacaoTelefone" for="validacaoTelefone"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>

@@ -98,13 +98,16 @@ public class EnviarConvite implements EnviarConviteRemote {
 			try {
 				/* Classe que formata o Date para exibir na mensagem do convite. */
 				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
-				String assunto = "Convite para o Memória Virtual";
+				String assunto = "Convite para o Mem�ria Virtual";
 
-				/* Agora formamos a mensagem de corpo do email que será enviado. */
+				/*
+				 * Agora formamos a mensagem de corpo do email que será
+				 * enviado.
+				 */
 				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como "
 						+ nivelAcesso.toLowerCase();
 				if (!nivelAcesso.equalsIgnoreCase("Administrador"))
-					textoEmail = textoEmail + "na instituição: " + instituicao;
+					textoEmail = textoEmail + "na institui��o: " + instituicao;
 				textoEmail = textoEmail
 						+ ".\n Para concluir seu cadastro acesse o link a seguir :"
 						+ memoriaVirtual.getURLServidor()
@@ -222,8 +225,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * 
 	 * @param usuario
 	 * 
-	 * @return List<Instituicao> Institui��es que o usuario faz parte e pertence
-	 *         ao grupo passado como parametro
+	 * @return List<Instituicao> Institui��es que o usuario faz parte e
+	 *         pertence ao grupo passado como parametro
 	 */
 
 	@SuppressWarnings("unchecked")
