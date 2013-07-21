@@ -137,11 +137,12 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoTelefone}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.telefone}">
+							<h:inputText id="telefone"
+								value="#{cadastrarInstituicaoMB.telefone}">
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{cadastrarInstituicaoMB.validateTelefone}" />
 							</h:inputText>
-							<div>(dd)xxxx-xxxx</div>
+							<div>(ddd)xxxxx-xxxx</div>
 							<h:message id="validacaoTelefone" for="validacaoTelefone"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -322,7 +323,7 @@
 							action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
 
 						</h:commandButton>
-						
+
 						<h:commandButton id="botaoCancelar"
 							value="#{mensagens.cadastrarInstituicaoBotaoCancelar}"
 							action="#{cadastrarInstituicaoMB.cancelar}">
