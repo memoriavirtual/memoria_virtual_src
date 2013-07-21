@@ -367,8 +367,11 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public String editarCadastroUsuario() {
+
 		this.validateNome();
 		this.validateTelefone();
+		this.validateJustificativa();
+
 		if (this.exibirAcessos)
 			this.validateAprovador();
 
