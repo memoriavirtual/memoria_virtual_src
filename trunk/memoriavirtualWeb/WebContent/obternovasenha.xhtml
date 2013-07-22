@@ -13,22 +13,24 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Obter nova senha</title>
 	<h:outputStylesheet name="login.css" library="css" />
-</h:head><h:body>
+</h:head>
+<h:body>
 	<f:view locale="#{facesContext.externalContext.requestLocale}">
 		<div id="container">
 
 			<div id="conteudo">
-				<h:messages globalOnly="false" />
+				<h:messages id="resultado" for="resultado" infoClass="sucesso"
+					errorClass="erro" globalOnly="false" />
 				<h:outputText value="#{mensagens.email}" />
 				<h:form>
 					<div>
 						<h:inputText value="#{obterNovaSenhaMB.email}" required="true" />
 					</div>
 					<br></br>
-						<div>
-							<h:commandButton action="#{obterNovaSenhaMB.obterNovaSenha}"
-								value="Enviar email" />
-						</div>
+					<div>
+						<h:commandButton action="#{obterNovaSenhaMB.obterNovaSenha}"
+							value="Enviar email" />
+					</div>
 				</h:form>
 			</div>
 			<!--end #conteudo-->

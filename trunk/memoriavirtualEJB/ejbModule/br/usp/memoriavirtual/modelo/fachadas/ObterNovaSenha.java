@@ -41,8 +41,8 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 			this.entityManager.flush();
 
 			try {
-				String assunto = "RecuperaÃ§Ã£o de senha do Memoria Virtual";
-				String mensagem = "VocÃª foi solicitou uma nova senha do Memoria Virtual.  "
+				String assunto = "Recuperação de senha do Memoria Virtual";
+				String mensagem = "Você foi solicitou uma nova senha do Memoria Virtual.  "
 						+ "Para cadastrar uma nova senha, entre no link a seguir: "
 						+ this.memoriaVirtual.getURLServidor() + "/cadastrarnovasenha.jsf?email=" + email
 						+ "&validacao=" + usuario.getSenha();
@@ -51,11 +51,8 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 				e.printStackTrace();
 				throw new ModeloException("Erro ao enviar o email!");
 			}
-
-			throw new ModeloException("Email enviado com sucesso!");
-
 		} else
-			throw new ModeloException("Email nÃ£o encontrado!");
+			throw new ModeloException("Email não encontrado!");
 	}
 
 	public void cadastrarNovaSenha(String email, String token, String novaSenha) throws ModeloException {
@@ -66,7 +63,7 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 			usuario.setSenha(novaSenha);
 			this.entityManager.flush();
 		} else
-			throw new ModeloException("Erro ao processar sua solicitaÃ§Ã£o.");
+			throw new ModeloException("Erro ao processar sua solicitação.");
 	}
 
 	/**
@@ -83,7 +80,7 @@ public class ObterNovaSenha implements ObterNovaSenhaRemote {
 		try {
 			usuario = (Usuario) query.getSingleResult();
 		} catch (NoResultException e) {
-			throw new ModeloException("Email nÃ£o cadastrado!");
+			throw new ModeloException("Email não cadastrado!");
 		}
 		return usuario;
 	}

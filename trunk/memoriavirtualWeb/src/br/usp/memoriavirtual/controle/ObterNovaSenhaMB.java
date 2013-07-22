@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ObterNovaSenhaRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-public class ObterNovaSenhaMB implements Serializable{
+public class ObterNovaSenhaMB implements Serializable {
 
 	/**
 	 * 
@@ -19,40 +20,45 @@ public class ObterNovaSenhaMB implements Serializable{
 
 	@EJB
 	private ObterNovaSenhaRemote obterNovaSenhaEJB;
-	
+
 	private String email;
 	private String token;
 	private String novaSenha;
 
-	public ObterNovaSenhaMB(){
-		FacesContext ctx = FacesContext.getCurrentInstance(); 
-        HttpServletRequest req = (HttpServletRequest) ctx.getExternalContext().getRequest();  
-        
-        String token = req.getParameter("validacao");  
-        String email = req.getParameter("email");
-        
-        if(token != null) {  
-             this.token = token;
-        }
-        if(email != null){
-        	this.email = email;
-        }
+	public ObterNovaSenhaMB() {
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest req = (HttpServletRequest) ctx.getExternalContext()
+				.getRequest();
+
+		String token = req.getParameter("validacao");
+		String email = req.getParameter("email");
+
+		if (token != null) {
+			this.token = token;
+		}
+		if (email != null) {
+			this.email = email;
+		}
 
 	}
-	public String obterNovaSenha(){
-		
+
+	public String obterNovaSenha() {
+
 		try {
 			this.obterNovaSenhaEJB.obterNovaSenha(this.email);
 		} catch (ModeloException e) {
+			MensagensDeErro.getErrorMessage("obterNovaSenhaErro", "resultado");
 			e.printStackTrace();
 			return "falha";
 		}
+		MensagensDeErro.getSucessMessage("obterNovaSenhaSucesso", "resultado");
 		return "sucesso";
 	}
 
-	public String cadastrarNovaSenha(){
+	public String cadastrarNovaSenha() {
 		try {
-			this.obterNovaSenhaEJB.cadastrarNovaSenha(this.email, this.token, this.novaSenha);
+			this.obterNovaSenhaEJB.cadastrarNovaSenha(this.email, this.token,
+					this.novaSenha);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -61,7 +67,7 @@ public class ObterNovaSenhaMB implements Serializable{
 		}
 		return "sucesso";
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -77,7 +83,7 @@ public class ObterNovaSenhaMB implements Serializable{
 	public String getToken() {
 		return token;
 	}
-	
+
 	public String getNovaSenha() {
 		return novaSenha;
 	}
@@ -85,5 +91,5 @@ public class ObterNovaSenhaMB implements Serializable{
 	public void setNovaSenha(String novaSenha) {
 		this.novaSenha = novaSenha;
 	}
-	
+
 }
