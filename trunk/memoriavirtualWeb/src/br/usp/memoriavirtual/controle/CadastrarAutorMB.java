@@ -24,7 +24,7 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
  * @author bigmac
  * 
  */
-public class CadastrarAutorMB implements Serializable{
+public class CadastrarAutorMB implements Serializable {
 
 	/**
 	 * 
@@ -62,8 +62,8 @@ public class CadastrarAutorMB implements Serializable{
 		this.validateNascimento();
 		this.validateObito();
 		this.validateAtividade();
-		
-		if(!FacesContext.getCurrentInstance().getMessages().hasNext()){
+
+		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
 
 			try {
 				this.cadastrarAutorEJB.cadastrarAutor(new Autor(this.autor
@@ -71,7 +71,8 @@ public class CadastrarAutorMB implements Serializable{
 						.getCodinome(), this.autor.getAtividade(), this.autor
 						.getNascimento(), this.autor.getObito()));
 			} catch (ModeloException e) {
-				MensagensDeErro.getErrorMessage("cadastrarAutorJaCadastrado", "resultado");
+				MensagensDeErro.getErrorMessage("cadastrarAutorJaCadastrado",
+						"resultado");
 				e.printStackTrace();
 			}
 			MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
@@ -226,12 +227,12 @@ public class CadastrarAutorMB implements Serializable{
 		normalObito = true;
 		return "reset";
 	}
-	
+
 	public String cancelarCadastrarAutor() {
 		this.resetCadastrarAutor();
 		return "cancel";
 	}
-	
+
 	public void validateNome(AjaxBehaviorEvent event) {
 		this.validateNome();
 	}
@@ -261,27 +262,25 @@ public class CadastrarAutorMB implements Serializable{
 	public void validateAtividade(AjaxBehaviorEvent event) {
 		this.validateAtividade();
 	}
-	
-		
-		
-	
-	
+
 	public boolean validateAtividade() {
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
+
 		if (this.autor.getAtividade().equals(
-				bundle.getString("cadastrarAutorListaAtividade" + 0))) {
+				bundle.getString("cadastrarAutorListaAtividade0"))) {
 			this.autor.setAtividade("");
 
 		}
-		
-		if (this.autor.getAtividade().equals("") && this.outroAtividade){
+
+		if (this.autor.getAtividade().equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarAutorAtividadeVazia",
 					"validacaoAtividade");
 		}
-		
+
 		return true;
 	}
 
