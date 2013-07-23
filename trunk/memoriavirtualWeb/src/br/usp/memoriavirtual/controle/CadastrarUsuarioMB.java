@@ -129,7 +129,7 @@ public class CadastrarUsuarioMB implements Serializable {
 				context, bundleName);
 
 		if (this.id.equals("")) {
-			String[] argumentos = { "id" };
+			String[] argumentos = { bundle.getString("id") };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoId");
 		} else if (this.id.length() < 4) {
@@ -159,12 +159,17 @@ public class CadastrarUsuarioMB implements Serializable {
 
 	public void validateEmail() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		if (this.email.equals("")) {
-			String[] argumentos = { "email" };
+			String[] argumentos = { bundle.getString("email") };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoEmail");
 		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.email)) {
-			String[] argumentos = { "email" };
+			String[] argumentos = { bundle.getString("email") };
 			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
 					"validacaoEmail");
 		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.email)
@@ -195,7 +200,7 @@ public class CadastrarUsuarioMB implements Serializable {
 				context, bundleName);
 
 		if (this.senha.equals("")) {
-			String[] argumentos = { "senha" };
+			String[] argumentos = { bundle.getString("senha") };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoSenha");
 		} else if (this.senha.length() < 6) {
@@ -219,8 +224,14 @@ public class CadastrarUsuarioMB implements Serializable {
 	}
 
 	public void validateNomeCompleto() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		if (this.nomeCompleto.equals("")) {
-			String[] argumentos = { "nome_completo" };
+			String[] argumentos = { bundle.getString("nome_completo") };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoNomeCompleto");
 		}
@@ -239,12 +250,18 @@ public class CadastrarUsuarioMB implements Serializable {
 	}
 
 	public void validateTelefone() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		if (this.telefone.equals("")) {
-			String[] argumentos = { "telefone" };
+			String[] argumentos = { bundle.getString("telefone") };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoTelefone");
 		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
-			String[] argumentos = { "telefone" };
+			String[] argumentos = { bundle.getString("telefone") };
 			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
 					"validacaoTelefone");
 		}
@@ -263,12 +280,19 @@ public class CadastrarUsuarioMB implements Serializable {
 	}
 
 	public void validateConfirmacaoSenha() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
 		if (confirmacaoSenha.equals("")) {
-			String[] argumentos = { "confirmacao_senha" };
+			String[] argumentos = { bundle.getString("confirmacao_senha") };
 			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
 					"validacaoConfirmacaoSenha");
 		} else if (!this.confirmacaoSenha.equals(this.senha)) {
-			String[] argumentos = { "confirmacao_senha", "senha" };
+			String[] argumentos = { bundle.getString("confirmacao_senha"),
+					bundle.getString("senha") };
 			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
 					"validacaoConfirmacaoSenha");
 		}
