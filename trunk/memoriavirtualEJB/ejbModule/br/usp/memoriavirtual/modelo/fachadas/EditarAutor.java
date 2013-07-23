@@ -5,7 +5,6 @@ package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.List;
 
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,27 +15,29 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 
 /**
  * @author bigmac
- *
+ * 
  */
 
-@Stateless (mappedName = "EditarAutor")
+@Stateless(mappedName = "EditarAutor")
 public class EditarAutor implements EditarAutorRemote {
-	
+
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Autor> listarAutores (String strDeBusca) throws ModeloException {
-		List<Autor> lista ;
+	public List<Autor> listarAutores(String strDeBusca) throws ModeloException {
+		List<Autor> lista;
 
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Autor a WHERE a.nome like :busca or a.sobrenome like :busca or a.codinome like :busca ORDER BY a.nome");
-		query.setParameter("busca", "%"+strDeBusca+"%");
+				.createQuery("SELECT a FROM Autor a WHERE LOWER(a.nome) like LOWER(:busca) or "
+						+ "LOWER(a.sobrenome) like LOWER(:busca) or "
+						+ "LOWER(a.codinome) like LOWER(:busca) ORDER BY a.nome");
+		query.setParameter("busca", "%" + strDeBusca + "%");
 		try {
-			lista = ( List<Autor> ) query.getResultList();
-			return  lista ;
+			lista = (List<Autor>) query.getResultList();
+			return lista;
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
@@ -45,10 +46,10 @@ public class EditarAutor implements EditarAutorRemote {
 	@Override
 	public void editarAutor(Autor autor) throws ModeloException {
 		Autor autorAntigo;
-	
-		autorAntigo = this.entityManager.find(Autor.class,  autor.getId());
-		
-		if(autorAntigo != null){
+
+		autorAntigo = this.entityManager.find(Autor.class, autor.getId());
+
+		if (autorAntigo != null) {
 			autorAntigo.setAtividade(autor.getAtividade());
 			autorAntigo.setCodinome(autor.getCodinome());
 			autorAntigo.setNascimento(autor.getNascimento());
@@ -56,7 +57,7 @@ public class EditarAutor implements EditarAutorRemote {
 			autorAntigo.setObito(autor.getObito());
 			autorAntigo.setSobrenome(autor.getSobrenome());
 		}
-		
+
 		try {
 			entityManager.flush();
 		} catch (Exception t) {
