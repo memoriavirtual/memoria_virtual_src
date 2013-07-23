@@ -68,11 +68,9 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 	 *             Em caso de erro
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Usuario> recuperarGerentesdaInstituicao(Instituicao instituicao,
-			boolean b) throws ModeloException {
-		
-		
-		
+	public List<Usuario> recuperarGerentesdaInstituicao(
+			Instituicao instituicao, boolean b) throws ModeloException {
+
 		Grupo grupo = new Grupo("GERENTE");
 		List<Usuario> usuarios;
 		Query query;
@@ -108,12 +106,11 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	}
 
-	public Aprovacao recuperarAprovacao(long chave)
-			throws ModeloException {
+	public Aprovacao recuperarAprovacao(long chave) throws ModeloException {
 		Aprovacao aprovacao;
-		
+
 		aprovacao = this.entityManager.find(Aprovacao.class, chave);
-		
+
 		return aprovacao;
 	}
 
@@ -163,11 +160,12 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 
-	public ItemAuditoria recuperarItemAuditoria(long chave) throws ModeloException {
+	public ItemAuditoria recuperarItemAuditoria(long chave)
+			throws ModeloException {
 		ItemAuditoria itemAuditoria;
-		
+
 		itemAuditoria = this.entityManager.find(ItemAuditoria.class, chave);
-				
+
 		return itemAuditoria;
 	}
 
@@ -203,8 +201,8 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		}
 	}
 
-	public Aprovacao registrarAprovacao(Usuario validador, Instituicao instituicao,
-			Date dataValidade) {
+	public Aprovacao registrarAprovacao(Usuario validador,
+			Instituicao instituicao, Date dataValidade) {
 		Date data = new Date();
 		instituicao = this.entityManager.find(Instituicao.class,
 				instituicao.getId());
@@ -222,7 +220,9 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		List<Instituicao> lista;
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a.instituicao FROM Acesso a WHERE  a.instituicao.validade = TRUE AND a.grupo = :grupo AND a.usuario = :usuario");
+				.createQuery("SELECT a.instituicao FROM Acesso a WHERE  "
+						+ "a.instituicao.validade = TRUE AND a.grupo = :grupo "
+						+ "AND a.usuario = :usuario");
 		query.setParameter("grupo", grupo);
 		query.setParameter("usuario", usuario);
 		try {

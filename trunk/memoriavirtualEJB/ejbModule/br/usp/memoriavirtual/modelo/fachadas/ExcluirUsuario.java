@@ -33,7 +33,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			Query query = this.entityManager
 					.createQuery("SELECT u FROM Usuario u WHERE "
 							+ "u.ativo = TRUE AND "
-							+ "u.nomeCompleto LIKE :nome AND "
+							+ "LOWER(u.nomeCompleto) LIKE LOWER(:nome) AND "
 							+ "u <> :requerente" + " ORDER BY u.nomeCompleto ");
 			query.setParameter("requerente", requerente);
 			query.setParameter("nome", "%" + parteNome + "%");
@@ -84,11 +84,14 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		Query query;
 		if (isAdministrador) {
 			query = this.entityManager
-					.createQuery("SELECT a FROM Usuario a WHERE a.id <> :eliminador AND a.administrador = TRUE ORDER BY a.id ");
+					.createQuery("SELECT a FROM Usuario a WHERE a.id <> :eliminador "
+							+ "AND a.administrador = TRUE ORDER BY a.id ");
 			query.setParameter("eliminador", eliminador);
 		} else {
 			query = this.entityManager
-					.createQuery("SELECT a FROM Usuario a WHERE a.administrador = FALSE AND a.nomeCompleto LIKE :parteNome ORDER BY a.id ");
+					.createQuery("SELECT a FROM Usuario a WHERE a.administrador = FALSE AND "
+							+ "LOWER(a.nomeCompleto) LIKE LOWER(:parteNome) "
+							+ "ORDER BY a.id ");
 			query.setParameter("eliminador", eliminador);
 		}
 		try {
@@ -112,7 +115,7 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
-		
+
 		return aprovacao.getId();
 	}
 
@@ -245,24 +248,23 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 		}
 	}
 
-	
-	
-	public Usuario recuperarUsuario(String id){
-		
-		Query query1 = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
+	public Usuario recuperarUsuario(String id) {
+
+		Query query1 = this.entityManager
+				.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
 		query1.setParameter("usuario", id);
-		
+
 		Usuario usuario = null;
-		
-		try{
-		usuario = (Usuario) query1.getSingleResult();
-		}catch(Exception e){
+
+		try {
+			usuario = (Usuario) query1.getSingleResult();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return usuario;
 	}
-	
+
 	public void excluirAprovacao(Aprovacao aprovacao) {
 		Query query;
 		query = this.entityManager

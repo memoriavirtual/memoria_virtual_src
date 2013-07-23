@@ -372,7 +372,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 		try {
 			Query query = entityManager
-					.createQuery("SELECT i FROM Instituicao i WHERE i.nome LIKE :padrao ORDER BY i.nome");
+					.createQuery("SELECT i FROM Instituicao i WHERE LOWER(i.nome) LIKE LOWER(:padrao) ORDER BY i.nome");
 			query.setParameter("padrao", "%" + instituicao + "%");
 			instituicoes = (List<Instituicao>) query.getResultList();
 

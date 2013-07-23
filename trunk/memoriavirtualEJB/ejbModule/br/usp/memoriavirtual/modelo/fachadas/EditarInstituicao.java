@@ -98,21 +98,24 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		}
 
 		if (instituicao != null) {
-			
-			Multimidia b =null;
-			
-			for(Multimidia a: instituicao.getContainerMultimidia().getMultimidia()){
-				
+
+			Multimidia b = null;
+
+			for (Multimidia a : instituicao.getContainerMultimidia()
+					.getMultimidia()) {
+
 				b = this.entityManager.find(Multimidia.class, a.getId());
-				if(b != null){
+				if (b != null) {
 					b.setDescricao(a.getDescricao());
-				}else{
+				} else {
 					a.setId(0);
-					a.setContainerMultimidia(managedInstituicao.getContainerMultimidia());
-					managedInstituicao.getContainerMultimidia().addMultimidia(a);
+					a.setContainerMultimidia(managedInstituicao
+							.getContainerMultimidia());
+					managedInstituicao.getContainerMultimidia()
+							.addMultimidia(a);
 				}
-				
-			}	
+
+			}
 			managedInstituicao.setNome(instituicao.getNome());
 			managedInstituicao.setLocalidade(instituicao.getLocalidade());
 			managedInstituicao.setEndereco(instituicao.getEndereco());
@@ -134,8 +137,7 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 					.getTipoPropriedade());
 			managedInstituicao.setProtecaoExistente(instituicao
 					.getProtecaoExistente());
-			
-		
+
 		}
 
 		try {
@@ -164,8 +166,10 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 		List<Instituicao> ins = new ArrayList<Instituicao>();
 		Query query;
 
-		query = entityManager
-				.createQuery("SELECT a.instituicao FROM Acesso a WHERE a.grupo =:grupo AND a.usuario =:usuario AND a.instituicao.nome LIKE :nome ");
+		query = entityManager.createQuery("SELECT a.instituicao "
+				+ "FROM Acesso a " + "WHERE a.grupo = :grupo "
+				+ "AND a.usuario = :usuario "
+				+ "AND LOWER(a.instituicao.nome) LIKE LOWER(:nome) ");
 		query.setParameter("nome", "%" + pnome + "%");
 
 		query.setParameter("grupo", grupo);
@@ -192,8 +196,9 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 			throws ModeloException {
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 		Query query;
-		query = entityManager
-				.createQuery("SELECT a FROM Instituicao a  WHERE a.validade = TRUE AND a.nome LIKE :padrao ORDER BY a.nome");
+		query = entityManager.createQuery("SELECT a FROM Instituicao a  "
+				+ "WHERE a.validade = TRUE AND LOWER(a.nome) "
+				+ "LIKE LOWER(:padrao) ORDER BY a.nome");
 
 		query.setParameter("padrao", "%" + pnome + "%");
 		try {

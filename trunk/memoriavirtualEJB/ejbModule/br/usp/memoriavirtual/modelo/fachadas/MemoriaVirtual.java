@@ -230,10 +230,11 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 			// query busca todos os usuarios ativos,
 			// cujo nome contém a string fornecida em ordem alfabética
-			query = this.entityManager.createQuery("SELECT u FROM Usuario u "
-					+ "WHERE u.ativo = TRUE "
-					+ "AND u.nomeCompleto LIKE :padrao AND u.id <> :id "
-					+ "ORDER BY u.nomeCompleto");
+			query = this.entityManager
+					.createQuery("SELECT u FROM Usuario u "
+							+ "WHERE u.ativo = TRUE "
+							+ "AND LOWER(u.nomeCompleto) LIKE LOWER(:padrao) AND u.id <> :id "
+							+ "ORDER BY u.nomeCompleto");
 			query.setParameter("padrao", "%" + pnome + "%");
 			query.setParameter("id", usuario.getId());
 		}
