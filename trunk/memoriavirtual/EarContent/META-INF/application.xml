@@ -10,4 +10,10 @@
   <module>
     <ejb>memoriavirtualEJB.jar</ejb>
   </module>
+  <module>
+    <web>
+      <web-uri>memoriavirtualWebService.war</web-uri>
+      <context-root>memoriavirtualWebService</context-root>
+    </web>
+  </module>
 </application>

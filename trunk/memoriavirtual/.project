@@ -5,6 +5,7 @@
 	<projects>
 		<project>memoriavirtualEJB</project>
 		<project>memoriavirtualWeb</project>
+		<project>memoriavirtualWebService</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
