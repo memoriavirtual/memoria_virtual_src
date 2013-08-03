@@ -370,7 +370,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 		this.validateNome();
 		this.validateTelefone();
-		this.validateJustificativa();
 
 		if (this.exibirAcessos)
 			this.validateAprovador();
@@ -393,7 +392,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				m.printStackTrace();
 			}
 
-			if (exibirAcessos && validateInstituicao()) {
+			if (exibirAcessos && validateInstituicao()
+					&& validateJustificativa()) {
 
 				for (Acesso a : this.acessos) {
 					for (Acesso o : this.acessosAntigos) {
@@ -450,6 +450,7 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 			}
 		}
+		this.limpar();
 		return null;
 	}
 
