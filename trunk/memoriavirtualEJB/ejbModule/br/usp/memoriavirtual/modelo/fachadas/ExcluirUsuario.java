@@ -236,6 +236,11 @@ public class ExcluirUsuario implements ExcluirUsuarioRemote {
 			removerAcessos.setParameter("usuario", usuario);
 			removerAcessos.executeUpdate();
 
+			Query query = entityManager
+					.createQuery("DELETE FROM ItemAuditoria i WHERE i.autorAcao = :usuario");
+			query.setParameter("usuario", usuario);
+			query.executeUpdate();
+
 			this.entityManager.remove(usuario);
 
 			Query removerUsuario = this.entityManager

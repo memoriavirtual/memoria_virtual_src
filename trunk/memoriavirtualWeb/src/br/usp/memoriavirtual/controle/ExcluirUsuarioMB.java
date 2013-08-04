@@ -35,11 +35,9 @@ public class ExcluirUsuarioMB implements Serializable {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private AuditoriaFabricaRemote auditoriaFabricaEJB;
-	
+
 	private String nome;
 	private int prazoValidade;
-	private String instuicaoPertencente;
-	private String nivelPermissao;
 	private String justificativa;
 	private String excluir;
 	private Usuario usuario;
@@ -65,14 +63,6 @@ public class ExcluirUsuarioMB implements Serializable {
 
 	public void setPrazoValidade(int prazoValidade) {
 		this.prazoValidade = prazoValidade;
-	}
-
-	public void setInstituicaoPertencente(String instituicaoPertencente) {
-		this.instuicaoPertencente = instituicaoPertencente;
-	}
-
-	public void setNivelPermissao(String nivelPermissao) {
-		this.nivelPermissao = nivelPermissao;
 	}
 
 	public void setJustificativa(String justificativa) {
@@ -117,14 +107,6 @@ public class ExcluirUsuarioMB implements Serializable {
 		return this.prazoValidade;
 	}
 
-	public String getInstituicaoPertencente() {
-		return this.instuicaoPertencente;
-	}
-
-	public String getNivelPermissao() {
-		return this.nivelPermissao;
-	}
-
 	public String getJustificativa() {
 		return this.justificativa;
 	}
@@ -159,6 +141,22 @@ public class ExcluirUsuarioMB implements Serializable {
 
 	}
 
+	public void listarUsuariosFocus(AjaxBehaviorEvent e) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		if (this.usuarios.isEmpty()) {
+			Usuario todos = new Usuario();
+			todos.setId(bundle.getString("listarTodos"));
+			todos.setNomeCompleto(bundle.getString("listarTodos"));
+			this.usuarios.add(0, todos);
+		}
+
+	}
+
 	public void listarUsuarios() {
 
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -182,11 +180,12 @@ public class ExcluirUsuarioMB implements Serializable {
 			m.printStackTrace();
 		}
 
-		Usuario todos = new Usuario();
-		todos.setId(bundle.getString("listarTodos"));
-		todos.setNomeCompleto(bundle.getString("listarTodos"));
-		this.usuarios.add(0, todos);
-
+		if (this.usuarios.isEmpty()) {
+			Usuario todos = new Usuario();
+			todos.setId(bundle.getString("listarTodos"));
+			todos.setNomeCompleto(bundle.getString("listarTodos"));
+			this.usuarios.add(0, todos);
+		}
 	}
 
 	public String selecionarUsuario(Usuario usuario) {
@@ -242,7 +241,7 @@ public class ExcluirUsuarioMB implements Serializable {
 
 		}
 
-		if (requerente.isAdministrador()) {
+		if (!requerente.isAdministrador()) {
 			try {
 				this.acessos = excluirUsuarioEJB.listarAcessos(this.usuario);
 			} catch (ModeloException m) {
@@ -294,13 +293,14 @@ public class ExcluirUsuarioMB implements Serializable {
 			this.auditoriaFabricaEJB.auditarExcluirUsuario(this.requerente,
 					this.usuario.getId(), this.justificativa);
 			// registra um objeto Aprovacao
-			Long apr = this.excluirUsuarioEJB.registrarAprovacao(this.validador,
-					this.usuario.getId(), dataValidade);
-			// marca a institui��o a ser exclu�da para que a mesma n�o seja mais
+			Long apr = this.excluirUsuarioEJB.registrarAprovacao(
+					this.validador, this.usuario.getId(), dataValidade);
+			// marca a institui��o a ser exclu�da para que a mesma n�o
+			// seja mais
 			// utilizada
 			this.excluirUsuarioEJB.marcarUsuarioExcluido(this.usuario, false,
 					false);
-			
+
 			String ap = this.memoriaVirtualEJB.embaralhar(String.valueOf(apr));
 			String us = this.memoriaVirtualEJB.embaralhar(this.usuario.getId());
 
@@ -314,14 +314,6 @@ public class ExcluirUsuarioMB implements Serializable {
 									+ bundle.getString("excluirUsuarioNome")
 									+ ": "
 									+ this.getNome()
-									+ "\n"
-									+ bundle.getString("excluirUsuarioInstituicao")
-									+ ": "
-									+ this.getInstituicaoPertencente()
-									+ "\n"
-									+ bundle.getString("excluirUsuarioNivelPermissao")
-									+ ": "
-									+ this.getNivelPermissao()
 									+ "\n"
 									+ bundle.getString("excluirUsuarioJustificativa")
 									+ ": "
@@ -366,10 +358,8 @@ public class ExcluirUsuarioMB implements Serializable {
 	public String cancelar() {
 		this.usuario = null;
 		this.nome = "";
-		this.nivelPermissao = "";
 		this.justificativa = "";
 		this.semelhante = "";
-		this.instuicaoPertencente = "";
 		return "cancelar";
 	}
 

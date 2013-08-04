@@ -30,10 +30,11 @@
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirUsuarioNome}</h:outputLabel>
-							<h:inputText value="#{excluirUsuarioMB.nome}"
-								autoComplete="off">
-								<f:ajax event="focus" execute="@this" render="sugestoesId"
+							<h:inputText value="#{excluirUsuarioMB.nome}" autoComplete="off">
+								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{excluirUsuarioMB.listarUsuarios}" />
+								<f:ajax event="focus" execute="@this" render="sugestoesId"
+									listener="#{excluirUsuarioMB.listarUsuariosFocus}" />
 							</h:inputText>
 							<h:dataTable id="sugestoesId" var="usuario"
 								value="#{excluirUsuarioMB.usuarios}">

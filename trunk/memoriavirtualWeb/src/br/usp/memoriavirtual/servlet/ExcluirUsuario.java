@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.ExcluirUsuarioMB;
-import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
@@ -39,19 +38,17 @@ public class ExcluirUsuario extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String aprovacaoId = request.getParameter("aprovacao");
 		aprovacaoId = this.memoriaVirtualEJB.embaralhar(aprovacaoId);
 
-		String usuarioNome =  request.getParameter("usuario");
+		String usuarioNome = request.getParameter("usuario");
 		usuarioNome = this.memoriaVirtualEJB.embaralhar(usuarioNome);
-		
-		
-		
+
 		Usuario usuario = (Usuario) request.getSession()
 				.getAttribute("usuario");
-		
-		if(!this.editarCadastroUsuarioEJB.isAprovador(usuario, aprovacaoId)){
+
+		if (!this.editarCadastroUsuarioEJB.isAprovador(usuario, aprovacaoId)) {
 			response.sendRedirect("restrito/excluirusuario_etapa1.jsf");
 			return;
 		}
@@ -81,6 +78,7 @@ public class ExcluirUsuario extends HttpServlet {
 		}
 
 		else {
+
 			// Inicializando Managed Bean
 			FacesContext facesContext = FacesUtil.getFacesContext(request,
 					response);
@@ -93,7 +91,7 @@ public class ExcluirUsuario extends HttpServlet {
 			managedBean.setNome(usuarioNome);
 			managedBean.setUsuario(null);
 			managedBean.listarAcessos();
-			
+
 			response.sendRedirect("restrito/confirmarexclusao.jsf");
 		}
 
