@@ -214,7 +214,10 @@ public class ExcluirUsuarioMB implements Serializable {
 		try {
 			usuario = excluirUsuarioEJB.recuperarDadosUsuario(nome);
 		} catch (ModeloException e) {
+			MensagensDeErro.getErrorMessage(
+					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
 			e.printStackTrace();
+			return null;
 		}
 
 		return this.selecionarUsuario(usuario);
@@ -304,6 +307,25 @@ public class ExcluirUsuarioMB implements Serializable {
 			String ap = this.memoriaVirtualEJB.embaralhar(String.valueOf(apr));
 			String us = this.memoriaVirtualEJB.embaralhar(this.usuario.getId());
 
+			String acessos = "";
+
+			List<Acesso> acessosList = this.excluirUsuarioEJB
+					.listarAcessos(this.usuario);
+
+			if (this.usuario.isAdministrador()) {
+				acessos = bundle.getString("excluirUsuarioEmailAdministrador");
+			} else {
+				for (Acesso a : acessosList) {
+					acessos = acessos
+							+ bundle.getString("excluirUsuarioEmailGrupo")
+							+ ":"
+							+ a.getGrupo().getId()
+							+ "\n"
+							+ bundle.getString("excluirUsuarioEmailInstituicao")
+							+ ":" + a.getInstituicao().getNome() + "\n";
+				}
+			}
+
 			this.memoriaVirtualEJB
 					.enviarEmail(
 							this.validador.getEmail(),
@@ -315,6 +337,9 @@ public class ExcluirUsuarioMB implements Serializable {
 									+ ": "
 									+ this.getNome()
 									+ "\n"
+									+ bundle.getString("excluirUsuarioEmailAcessos")
+									+ ":"
+									+ acessos
 									+ bundle.getString("excluirUsuarioJustificativa")
 									+ ": "
 									+ this.getJustificativa()
