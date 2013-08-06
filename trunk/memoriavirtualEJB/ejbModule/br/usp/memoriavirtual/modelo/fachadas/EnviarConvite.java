@@ -104,7 +104,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 				 * Agora formamos a mensagem de corpo do email que serÃ¡
 				 * enviado.
 				 */
-				String textoEmail = "VocÃª foi convidado(a) para participar do memoria virtual como "
+				String textoEmail = "Você foi convidado(a) para participar do memoria virtual como "
 						+ nivelAcesso.toLowerCase();
 				if (!nivelAcesso.equalsIgnoreCase("Administrador"))
 					textoEmail = textoEmail + "na instituição: " + instituicao;
@@ -114,7 +114,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 						+ "/fazercadastro?Validacao="
 						+ memoriaVirtual.embaralhar(user.getId()) + "&email="
 						+ memoriaVirtual.embaralhar(user.getEmail());
-				textoEmail = textoEmail + ".\n Seu convite Ã© valido ate "
+				textoEmail = textoEmail + ".\n Seu convite é valido ate "
 						+ formatoData.format(user.getValidade());
 				if (!mensagem.equals(""))
 					textoEmail = textoEmail

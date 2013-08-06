@@ -85,10 +85,8 @@
 										value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
 									<h:inputText value="#{acesso.instituicao.nome}">
 										<f:ajax event="focus" execute="@this" render="instituicoes"
-											rendered="#{editarCadastroUsuarioMB.renderInstituicoes}"
 											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
 										<f:ajax event="keyup" execute="@this" render="instituicoes"
-											rendered="#{editarCadastroUsuarioMB.renderInstituicoes}"
 											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
 									</h:inputText>
 									<h:commandLink

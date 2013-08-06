@@ -256,8 +256,13 @@ public class EditarCadastroUsuarioMB implements Serializable {
 	}
 
 	public String selecionarInstituicao(Acesso acesso, Instituicao i) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
 
-		if (i.getNome().equals("Listar Todos")) {
+		if (i.getNome().equals(bundle.getString("listarTodos"))) {
 			this.listarInstituicoes("");
 			return null;
 		}
@@ -459,15 +464,26 @@ public class EditarCadastroUsuarioMB implements Serializable {
 
 	public List<Instituicao> listarInstituicoes(String instituicao) {
 
-		try {
-			this.instituicoes = editarCadastroUsuarioEJB
-					.listarInstituicoes(instituicao);
-			if (this.instituicoes.size() > 0)
-				this.renderInstituicoes = true;
-			else
-				this.renderInstituicoes = false;
-		} catch (ModeloException m) {
-			m.printStackTrace();
+		if (this.instituicoes.isEmpty()) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			String bundleName = "mensagens";
+			ResourceBundle bundle = context.getApplication().getResourceBundle(
+					context, bundleName);
+
+			Instituicao i = new Instituicao();
+			i.setNome(bundle.getString("listarTodos"));
+			this.instituicoes.add(i);
+		} else {
+			try {
+				this.instituicoes = editarCadastroUsuarioEJB
+						.listarInstituicoes(instituicao);
+				if (this.instituicoes.size() > 0)
+					this.renderInstituicoes = true;
+				else
+					this.renderInstituicoes = false;
+			} catch (ModeloException m) {
+				m.printStackTrace();
+			}
 		}
 
 		return this.instituicoes;
