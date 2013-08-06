@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
@@ -56,7 +58,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 *         houve algum erro ao incluir o email no banco de dados
 	 */
 	public void enviarConvite(List<String> emails, String mensagem,
-			String validade, String instituicao, String nivelAcesso)
+			String validade, boolean administrador, List<Acesso> acessos)
 			throws ModeloException {
 
 		/* Crio um Date que guarda a data de vencimento do convite. */
@@ -94,36 +96,61 @@ public class EnviarConvite implements EnviarConviteRemote {
 			user.setValidade(vencimento);
 			user.setEmail(mail);
 			user.setAtivo(false);
+			user.setAdministrador(administrador);
 
 			try {
 				/* Classe que formata o Date para exibir na mensagem do convite. */
-				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
 				String assunto = "Convite para o MemÛria Virtual";
 
 				/*
 				 * Agora formamos a mensagem de corpo do email que ser√°
 				 * enviado.
 				 */
-				String textoEmail = "VocÍ foi convidado(a) para participar do memoria virtual como "
-						+ nivelAcesso.toLowerCase();
-				if (!nivelAcesso.equalsIgnoreCase("Administrador"))
-					textoEmail = textoEmail + "na instituiÁ„o: " + instituicao;
-				textoEmail = textoEmail
-						+ ".\n Para concluir seu cadastro acesse o link a seguir :"
+
+				FacesContext context = FacesContext.getCurrentInstance();
+				String bundleName = "mensagens";
+				ResourceBundle bundle = context.getApplication()
+						.getResourceBundle(context, bundleName);
+				
+				DateFormat formatoData = new SimpleDateFormat("dd/MM/yy");
+
+				String textoEmail = bundle
+						.getString("enviarConviteEmailMensagem");
+
+				String acessosString = "";
+
+				if (administrador) {
+					acessosString = bundle
+							.getString("enviarConviteAdministrador");
+				} else {
+					for (Acesso a : acessos) {
+						acessosString = acessosString
+								+ bundle.getString("enviarConviteNivel") + ": "
+								+ a.getGrupo().getId() + ", "
+								+ bundle.getString("enviarConviteInstituicao")
+								+ ": " + a.getInstituicao().getNome() + "\n";
+						a.setUsuario(user);
+					}
+				}
+
+				textoEmail = textoEmail + "\n" + acessosString
+						+ bundle.getString("enviarConviteLink")
 						+ memoriaVirtual.getURLServidor()
 						+ "/fazercadastro?Validacao="
 						+ memoriaVirtual.embaralhar(user.getId()) + "&email="
 						+ memoriaVirtual.embaralhar(user.getEmail());
-				textoEmail = textoEmail + ".\n Seu convite È valido ate "
+				textoEmail = textoEmail
+						+ bundle.getString("enviarConviteValidade")
 						+ formatoData.format(user.getValidade());
+
 				if (!mensagem.equals(""))
-					textoEmail = textoEmail
-							+ ".\n Voce recebeu a seguinte mensagem junto ao convite: "
+					textoEmail = textoEmail + "\n"
+							+ bundle.getString("enviarConviteMensagem") + ": "
 							+ mensagem;
 
 				/* Envia o email com a mensagem e cadastra no banco de dados. */
 				enviarEmail(mail, assunto, textoEmail);
-				cadastrarUsuarioBD(user, instituicao, nivelAcesso);
+				cadastrarUsuarioBD(user, acessos);
 			} catch (ModeloException e) {
 				throw e;
 			}
@@ -148,14 +175,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 	 * @throws ModeloException
 	 */
 
-	private void cadastrarUsuarioBD(Usuario usuario, String instituicaoNome,
-			String nivelAcesso) throws ModeloException {
-
-		/* Verifica se √© um novo administrador. */
-		if (nivelAcesso.equalsIgnoreCase("ADMINISTRADOR"))
-			usuario.setAdministrador(true);
-		else
-			usuario.setAdministrador(false);
+	private void cadastrarUsuarioBD(Usuario usuario, List<Acesso> acessos)
+			throws ModeloException {
 
 		/* Persiste o novo usuario no banco de dados. */
 		try {
@@ -164,57 +185,22 @@ public class EnviarConvite implements EnviarConviteRemote {
 			throw new ModeloException(
 					"Erro ao persistir o novo usu√°rio no banco de dados.", e);
 		}
-
-		/*
-		 * Se n√£o for um administrador devemos inserir um novo acesso no banco
-		 * de dados.
-		 */
-		if (!nivelAcesso.equalsIgnoreCase("ADMINISTRADOR")) {
-			Acesso acesso = new Acesso();
-			Grupo grupo = null;
-
-			/* Recupera-se a institui√ß√£o ao qual o acesso pertence. */
-			Query query1 = this.entityManager
-					.createQuery("select i from Instituicao i where i.nome = :nome");
-			query1.setParameter("nome", instituicaoNome);
-
-			@SuppressWarnings("unchecked")
-			List<Instituicao> instList = (List<Instituicao>) query1
-					.getResultList();
-
-			Instituicao instituicao = null;
-
-			if (!instList.isEmpty())
-				instituicao = instList.get(0);
-			else {
-				this.entityManager.remove(usuario);
-				throw new ModeloException(
-						"Instituicao selecionada nao existe no banco de dados.",
-						null);
+		if (!usuario.isAdministrador()) {
+			for (Acesso a : acessos) {
+				try {
+					Query q = entityManager
+							.createQuery("SELECT i FROM Instituicao i WHERE i.nome = :nome");
+					q.setParameter("nome", a.getInstituicao().getNome());
+					Instituicao i = (Instituicao) q.getSingleResult();
+					a.setInstituicao(i);
+					Grupo g = entityManager.find(Grupo.class, a.getGrupo()
+							.getId());
+					a.setGrupo(g);
+					entityManager.persist(a);
+				} catch (Exception e) {
+					throw new ModeloException(e);
+				}
 			}
-
-			/* Recupera o grupo baseado no nivel de acesso inserido. */
-			grupo = (Grupo) entityManager.find(Grupo.class,
-					nivelAcesso.toUpperCase());
-			if (grupo == null) {
-
-				this.entityManager.remove(usuario);
-				throw new ModeloException("Grupo nao encontrado", null);
-			}
-			acesso.setValidade(false);
-			acesso.setInstituicao(instituicao);
-			acesso.setUsuario(usuario);
-			acesso.setGrupo(grupo);
-
-			/* Persiste o novo acesso no banco. */
-			try {
-				this.entityManager.persist(acesso);
-			} catch (Exception e) {
-				this.entityManager.remove(usuario);
-				throw new ModeloException(
-						"Falha ao inserir o novo acesso no banco de dados.", e);
-			}
-
 		}
 
 	}

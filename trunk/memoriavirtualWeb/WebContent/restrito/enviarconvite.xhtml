@@ -45,8 +45,8 @@
 									</h:commandLink>
 
 									<div></div>
-									<h:message for="layout" forceId="true" infoClass="sucesso"
-										errorClass="erro" warnClass="aviso">
+									<h:message for="layout" id="layout" forceId="true"
+										infoClass="sucesso" errorClass="erro" warnClass="aviso">
 									</h:message>
 								</h:column>
 							</h:dataTable>
@@ -55,16 +55,12 @@
 								action="#{enviarConviteMB.addEmail}"
 								value="#{mensagens.enviarconvite_adicionaremail}" />
 
-
-
-
 							<div></div>
-							<h:message for="validacaoEmails" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
+							<h:message for="validacaoEmails" id="validacaoEmails"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 
 						</div>
-
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.enviarconvite_validade}</h:outputLabel>
@@ -79,34 +75,38 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
+
 						<div>
-							<h:outputLabel class="labels">#{mensagens.enviarconvite_niveldeacesso}</h:outputLabel>
-							<h:selectOneMenu value="#{enviarConviteMB.nivelAcesso}">
-								<f:selectItems value="#{enviarConviteMB.niveisPermitidos}" />
-								<f:ajax event="change" execute="@all" render="@all"
-									listener="#{enviarConviteMB.validateNivelAcesso}" />
-							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoNivelAcesso" for="validacaoNivelAcesso"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
+							<h:outputLabel class="labels">#{mensagens.enviarConviteAdministrador}</h:outputLabel>
+							<h:selectBooleanCheckbox
+								rendered="#{enviarConviteMB.mostrarAdministrador()}"
+								value="#{enviarConviteMB.administrador}">
+								<f:ajax execute="@this" render="@form" event="change"
+									listener="#{enviarConviteMB.alterarAdministrador}" />
+							</h:selectBooleanCheckbox>
 						</div>
+
 						<div>
-							<h:outputLabel
-								rendered="#{enviarConviteMB.renderizarInstituicao}"
-								class="labels">#{mensagens.enviarconvite_instituicao}</h:outputLabel>
-							<h:selectOneMenu
-								rendered="#{enviarConviteMB.renderizarInstituicao}"
-								value="#{enviarConviteMB.instituicao}">
-								<f:selectItems value="#{enviarConviteMB.instituicoesPermitidas}" />
-								<f:ajax event="change" execute="@this" render="@this"
-									listener="#{enviarConviteMB.validateInstituicao}" />
-							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoInstituicao" for="validacaoInstituicao"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
+							<h:dataTable value="#{enviarConviteMB.acessos}" var="acesso">
+								<h:column>
+									<h:outputLabel class="labels">#{mensagens.enviarconvite_niveldeacesso}</h:outputLabel>
+									<h:selectOneMenu value="#{acesso.grupo.id}">
+										<f:selectItems value="#{enviarConviteMB.niveisPermitidos}"></f:selectItems>
+									</h:selectOneMenu>
+									<h:outputLabel class="labels">#{mensagens.enviarconvite_instituicao}</h:outputLabel>
+									<h:selectOneMenu value="#{acesso.instituicao.nome}">
+										<f:selectItems
+											value="#{enviarConviteMB.instituicoesPermitidas}"></f:selectItems>
+									</h:selectOneMenu>
+									<h:commandLink class="labels"
+										action="#{enviarConviteMB.removerAcesso(acesso)}">#{mensagens.enviarConviteRemoverAcesso}</h:commandLink>
+								</h:column>
+
+							</h:dataTable>
+							<h:commandLink class="labels"
+								action="#{enviarConviteMB.adicionarAcesso()}">#{mensagens.enviarConviteAdicionarAcesso}</h:commandLink>
 						</div>
+
 						<div>
 							<h:outputLabel class="labels">#{mensagens.enviarConviteMensagem}</h:outputLabel>
 							<h:inputTextarea id="mensagemPersonalizada" cols="30" rows="10"
