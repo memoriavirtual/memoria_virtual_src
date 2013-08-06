@@ -385,11 +385,14 @@ public class EditarCadastroUsuarioMB implements Serializable {
 				if (exibirAcessos == false) {
 					MensagensDeErro.getSucessMessage(
 							"editarCadastroUsuarioSucesso", "resultado");
+					return null;
 				}
 			} catch (ModeloException m) {
 				MensagensDeErro.getErrorMessage(
 						"editarCadastroUsuarioErroEdicao", "resultado");
 				m.printStackTrace();
+				if (exibirAcessos == false)
+					return null;
 			}
 
 			if (exibirAcessos && validateInstituicao()

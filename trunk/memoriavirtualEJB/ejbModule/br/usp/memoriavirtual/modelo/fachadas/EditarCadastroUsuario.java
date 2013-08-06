@@ -95,14 +95,15 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	public void editarCadastro(Usuario usuario, String nomeCompleto,
 			String telefone) throws ModeloException {
 
-		Usuario usuarioAlterado = entityManager.find(usuario.getClass(),
-				usuario.getId());
-
-		usuarioAlterado.setNomeCompleto(nomeCompleto);
-		usuarioAlterado.setTelefone(telefone);
-
 		try {
-			entityManager.flush();
+			Usuario usuarioAlterado = entityManager.find(usuario.getClass(),
+					usuario.getId());
+
+			usuarioAlterado.setNomeCompleto(nomeCompleto);
+			usuarioAlterado.setTelefone(telefone);
+
+			entityManager.merge(usuarioAlterado);
+
 		} catch (Exception t) {
 			throw new ModeloException(t);
 		}
@@ -148,12 +149,13 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String message = bundle
 						.getString("editarCadastroUsuarioMensagem");
 
-				message = message + link;
+				message = message + link + "\n";
 				message = message
 						+ bundle.getString("editarCadastroUsuarioMensagemJustificativa");
 				message = message + justificativa;
 
-				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
+				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), bundle
+						.getString("editarCadastroUsuarioMensagemAssunto"),
 						message);
 
 			}
@@ -205,12 +207,14 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 				String message = bundle
 						.getString("editarCadastroUsuarioMensagem");
 
-				message = message + link;
+				message = message + link + "\n";
 				message = message
-						+ bundle.getString("editarCadastroUsuarioMensagemJustificativa");
+						+ bundle.getString("editarCadastroUsuarioMensagemJustificativa")
+						+ ":" + "\n";
 				message = message + justificativa;
 
-				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), "mv",
+				this.memoriaVirtualEJB.enviarEmail(aprovador.getEmail(), bundle
+						.getString("editarCadastroUsuarioMensagemAssunto"),
 						message);
 
 			}
