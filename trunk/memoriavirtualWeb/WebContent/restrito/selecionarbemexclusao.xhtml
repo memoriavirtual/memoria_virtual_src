@@ -32,7 +32,10 @@
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.excluirBemPatrimonialNome}</h:outputLabel>
-							<h:inputText value="#{excluirBemPatrimonialMB.nome}" autocomplete="off">
+							<h:inputText value="#{excluirBemPatrimonialMB.nome}"
+								autocomplete="off">
+								<f:ajax event="focus" execute="@this" render="sugestoesId"
+									listener="#{excluirBemPatrimonialMB.listarBemPatrimonialFocus()}" />
 								<f:ajax event="keyup" execute="@this" render="sugestoesId"
 									listener="#{excluirBemPatrimonialMB.listarBemPatrimonial}" />
 							</h:inputText>
@@ -43,7 +46,7 @@
 								value="#{excluirBemPatrimonialMB.bens}">
 								<h:column>
 									<h:commandLink
-										action="#{excluirBemPatrimonialMB.selecionarBem(bem)}">#{bem.getTitulos().get(0).valor}</h:commandLink>
+										action="#{excluirBemPatrimonialMB.selecionarBem(bem)}">#{bem.tituloPrincipal}</h:commandLink>
 								</h:column>
 							</h:dataTable>
 						</div>

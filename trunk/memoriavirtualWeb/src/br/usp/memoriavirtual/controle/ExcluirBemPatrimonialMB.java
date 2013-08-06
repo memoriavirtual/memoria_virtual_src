@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
@@ -20,7 +19,7 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "excluirBemPatrimonialMB")
 @SessionScoped
-public class ExcluirBemPatrimonialMB implements Serializable{
+public class ExcluirBemPatrimonialMB implements Serializable {
 
 	private static final long serialVersionUID = -5120759550692482010L;
 	private String nome = "";
@@ -28,7 +27,7 @@ public class ExcluirBemPatrimonialMB implements Serializable{
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	@EJB
 	private ExcluirBemPatrimonialRemote excluirBemPatrimonialEJB;
-	
+
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 
@@ -38,28 +37,40 @@ public class ExcluirBemPatrimonialMB implements Serializable{
 
 	}
 
+	public String cancelar() {
+		this.nome = "";
+		this.bemPatrimonial = null;
+		this.bens.clear();
+
+		return "/restrito/index.jsf";
+	}
+
 	public String selecionarBem() {
 		return null;
 	}
 
-	public String listarBemPatrimonial() {
+	public void listarBemPatrimonialFocus() {
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 
 		this.bens.clear();
-		if (!this.nome.equals("") ) {
-			try {
-				this.bens = realizarBuscaEJB.buscar(this.nome);
+		BemPatrimonial b = new BemPatrimonial();
+		b.setTituloPrincipal(bundle.getString("listarTodos"));
+		this.bens.add(b);
+	}
 
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
-		} else {
-			BemPatrimonial bem = new BemPatrimonial();
-			bem.setTipoDoBemPatrimonial(bundle.getString("listarTodos"));
-			this.bens.add(0, bem);
+	public String listarBemPatrimonial() {
+
+		this.bens.clear();
+
+		try {
+			this.bens = realizarBuscaEJB.buscar(this.nome);
+
+		} catch (ModeloException e) {
+			e.printStackTrace();
 		}
 
 		return null;
@@ -72,15 +83,14 @@ public class ExcluirBemPatrimonialMB implements Serializable{
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 
-		if (bem.getTitulos().get(0).getValor()
-				.equals(bundle.getString("listarTodos"))) {
+		if (bem.getTituloPrincipal().equals(bundle.getString("listarTodos"))) {
 			this.nome = "";
 			this.listarBemPatrimonial();
 			return null;
 		}
 
 		this.bemPatrimonial = bem;
-		this.nome = bem.getTitulos().get(0).getValor();
+		this.nome = bem.getTituloPrincipal();
 		this.bens.clear();
 
 		return "sucesso";
