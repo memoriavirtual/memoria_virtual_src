@@ -5,182 +5,188 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Editar Cadastro Usuario</title>
-</head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Editar Cadastro Usuario</title>
+</h:head>
 <h:body>
-	<ui:composition
-		template="/restrito/fragmentos/templates/template.xhtml">
+	<f:view>
+		<ui:composition
+			template="/restrito/fragmentos/templates/template.xhtml">
 
-		<ui:define name="titulo">#{mensagens.editarCadastroUsuarioTitle}</ui:define>
+			<ui:define name="titulo">#{mensagens.editarCadastroUsuarioTitle}</ui:define>
 
-		<ui:define name="conteudo">
-			<div class="formulario">
+			<ui:define name="conteudo">
+				<div class="formulario">
 
-				<div class="erroPrincipal">
-					<h:messages id="resultado" for="resultado" infoClass="sucesso"
-						errorClass="erro" globalOnly="true"></h:messages>
-				</div>
-
-				<div class="conteudoTitulo">#{mensagens.editarCadastroUsuarioTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.editarCadastroUsuarioDescricao}</div>
-
-				<h:form method="post" prependId="false">
-					<fieldset>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioNome}</h:outputLabel>
-							<h:inputText value="#{editarCadastroUsuarioMB.nomeCompleto}">
-								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{editarCadastroUsuarioMB.validateNome}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioTelefone}</h:outputLabel>
-							<h:inputText id="telefone"
-								value="#{editarCadastroUsuarioMB.telefone}">
-								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
-									listener="#{editarCadastroUsuarioMB.validateTelefone}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoTelefone" for="validacaoTelefone"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:commandLink class="labels"
-								rendered="#{editarCadastroUsuarioMB.mostrarLink}"
-								value="#{mensagens.editarCadastroUsuarioLinkEditar}"
-								action="#{editarCadastroUsuarioMB.mostrar}"></h:commandLink>
-						</div>
-
-						<div>
-							<h:outputLabel
-								rendered="#{editarCadastroUsuarioMB.exibirAdministrador}"
-								class="labels">#{mensagens.editarCadastroUsuarioMarcadoAdministrador}</h:outputLabel>
-							<h:selectBooleanCheckbox
-								rendered="#{editarCadastroUsuarioMB.exibirAdministrador}"
-								value="#{editarCadastroUsuarioMB.marcadoAdministrador}">
-								<f:ajax execute="@this" render="@form" event="change"></f:ajax>
-							</h:selectBooleanCheckbox>
-						</div>
-
-						<div id="sugestoes">
-							<h:dataTable id="acessos" var="acesso"
-								value="#{editarCadastroUsuarioMB.acessos}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessosTabela}">
-								<h:column>
-									<h:outputLabel class="labeltabela"
-										value="#{mensagens.editarCadastroUsuarioNivel}"></h:outputLabel>
-									<h:selectOneMenu value="#{acesso.grupo.id}">
-										<f:selectItems value="#{editarCadastroUsuarioMB.nivel}"></f:selectItems>
-									</h:selectOneMenu>
-									<h:outputLabel class="labeltabela"
-										value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
-									<h:inputText value="#{acesso.instituicao.nome}">
-										<f:ajax event="focus" execute="@this" render="instituicoes"
-											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
-										<f:ajax event="keyup" execute="@this" render="instituicoes"
-											listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
-									</h:inputText>
-									<h:commandLink
-										action="#{editarCadastroUsuarioMB.excluirAcesso(acesso)}">
-										<h:graphicImage id="excluir" library="imagens"
-											name="delete.png" class="delete">
-										</h:graphicImage>
-									</h:commandLink>
-
-									<h:dataTable id="instituicoes" var="instituicao"
-										value="#{editarCadastroUsuarioMB.instituicoes}">
-										<h:column>
-											<h:commandLink
-												action="#{editarCadastroUsuarioMB.selecionarInstituicao(acesso, instituicao)}">#{instituicao.nome}</h:commandLink>
-										</h:column>
-									</h:dataTable>
-
-								</h:column>
-								<div></div>
-								<h:message id="validacaoInstituicao" for="validacaoInstituicao"
-									infoClass="sucesso" errorClass="erro" warnClass="aviso" />
-							</h:dataTable>
-						</div>
-
-						<div>
-							<h:commandLink class="labels"
-								action="#{editarCadastroUsuarioMB.adicionarAcesso}"
-								value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessosTabela}"></h:commandLink>
-						</div>
-
-
-						<div>
-							<h:outputLabel class="labels"
-								value="#{mensagens.editarCadastroUsuarioJustificativa}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
-							<h:inputTextarea value="#{editarCadastroUsuarioMB.justificativa}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoJustificativa"
-									listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
-							</h:inputTextarea>
-							<div></div>
-							<h:message id="validacaoJustificativa"
-								for="validacaoJustificativa" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels"
-								value="#{mensagens.editarCadastroUsuarioValidade}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
-							</h:outputLabel>
-							<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
-								<f:selectItems value="#{editarCadastroUsuarioMB.validades}"></f:selectItems>
-							</h:selectOneMenu>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels"
-								value="#{mensagens.editarCadastroUsuarioAprovador}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
-							<h:selectOneMenu value="#{editarCadastroUsuarioMB.administrador}"
-								rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
-								<f:selectItems value="#{editarCadastroUsuarioMB.admnistradores}"></f:selectItems>
-							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoAprovador" for="validacaoAprovador"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-					</fieldset>
-
-					<div class="botao">
-						<h:commandButton id="botaoEditar"
-							value="#{mensagens.editarCadastroUsuarioBotaoSalvar}"
-							action="#{editarCadastroUsuarioMB.editarCadastroUsuario}">
-						</h:commandButton>
-						<h:commandButton id="botaoCancelar"
-							value="#{mensagens.editarCadastroUsuarioBotaoCancelar}"
-							action="#{editarCadastroUsuarioMB.cancelar}">
-						</h:commandButton>
-						<h:commandButton id="botaoResetar"
-							value="#{mensagens.editarCadastroUsuarioBotaoReset}" type="reset">
-						</h:commandButton>
+					<div class="erroPrincipal">
+						<h:messages id="resultado" for="resultado" infoClass="sucesso"
+							errorClass="erro" globalOnly="true"></h:messages>
 					</div>
-				</h:form>
-			</div>
-			<!-- end .formulario-->
 
-		</ui:define>
-	</ui:composition>
+					<div class="conteudoTitulo">#{mensagens.editarCadastroUsuarioTitle}</div>
+					<div class="conteudoDescricao">#{mensagens.editarCadastroUsuarioDescricao}</div>
+
+					<h:form method="post" prependId="false">
+						<fieldset>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioNome}</h:outputLabel>
+								<h:inputText value="#{editarCadastroUsuarioMB.nomeCompleto}">
+									<f:ajax event="blur" execute="@this" render="validacaoNome"
+										listener="#{editarCadastroUsuarioMB.validateNome}" />
+								</h:inputText>
+								<div></div>
+								<h:message id="validacaoNome" for="validacaoNome"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								</h:message>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.editarCadastroUsuarioTelefone}</h:outputLabel>
+								<h:inputText id="telefone"
+									value="#{editarCadastroUsuarioMB.telefone}">
+									<f:ajax event="blur" execute="@this" render="validacaoTelefone"
+										listener="#{editarCadastroUsuarioMB.validateTelefone}" />
+								</h:inputText>
+								<div></div>
+								<h:message id="validacaoTelefone" for="validacaoTelefone"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								</h:message>
+							</div>
+
+							<div>
+								<h:commandLink class="labels"
+									rendered="#{editarCadastroUsuarioMB.mostrarLink}"
+									value="#{mensagens.editarCadastroUsuarioLinkEditar}"
+									action="#{editarCadastroUsuarioMB.mostrar}"></h:commandLink>
+							</div>
+
+							<div>
+								<h:outputLabel
+									rendered="#{editarCadastroUsuarioMB.exibirAdministrador}"
+									class="labels">#{mensagens.editarCadastroUsuarioMarcadoAdministrador}</h:outputLabel>
+								<h:selectBooleanCheckbox
+									rendered="#{editarCadastroUsuarioMB.exibirAdministrador}"
+									value="#{editarCadastroUsuarioMB.marcadoAdministrador}">
+									<f:ajax execute="@this" render="@form" event="change"></f:ajax>
+								</h:selectBooleanCheckbox>
+							</div>
+
+							<div id="sugestoes">
+								<h:dataTable id="acessos" var="acesso"
+									value="#{editarCadastroUsuarioMB.acessos}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessosTabela}">
+									<h:column>
+										<h:outputLabel class="labeltabela"
+											value="#{mensagens.editarCadastroUsuarioNivel}"></h:outputLabel>
+										<h:selectOneMenu value="#{acesso.grupo.id}">
+											<f:selectItems value="#{editarCadastroUsuarioMB.nivel}"></f:selectItems>
+										</h:selectOneMenu>
+										<h:outputLabel class="labeltabela"
+											value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
+										<h:inputText value="#{acesso.instituicao.nome}">
+											<f:ajax event="focus" execute="@this" render="instituicoes"
+												listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
+											<f:ajax event="keyup" execute="@this" render="instituicoes"
+												listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
+										</h:inputText>
+										<h:commandLink
+											action="#{editarCadastroUsuarioMB.excluirAcesso(acesso)}">
+											<h:graphicImage id="excluir" library="imagens"
+												name="delete.png" class="delete">
+											</h:graphicImage>
+										</h:commandLink>
+
+										<h:dataTable id="instituicoes" var="instituicao"
+											value="#{editarCadastroUsuarioMB.instituicoes}">
+											<h:column>
+												<h:commandLink
+													action="#{editarCadastroUsuarioMB.selecionarInstituicao(acesso, instituicao)}">#{instituicao.nome}</h:commandLink>
+											</h:column>
+										</h:dataTable>
+
+									</h:column>
+									<div></div>
+									<h:message id="validacaoInstituicao" for="validacaoInstituicao"
+										infoClass="sucesso" errorClass="erro" warnClass="aviso" />
+								</h:dataTable>
+							</div>
+
+							<div>
+								<h:commandLink class="labels"
+									action="#{editarCadastroUsuarioMB.adicionarAcesso}"
+									value="#{mensagens.editarCadastroUsuarioAdicionarAcesso}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessosTabela}"></h:commandLink>
+							</div>
+
+
+							<div>
+								<h:outputLabel class="labels"
+									value="#{mensagens.editarCadastroUsuarioJustificativa}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
+								<h:inputTextarea
+									value="#{editarCadastroUsuarioMB.justificativa}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+									<f:ajax event="blur" execute="@this"
+										render="validacaoJustificativa"
+										listener="#{editarCadastroUsuarioMB.validateJustificativa}" />
+								</h:inputTextarea>
+								<div></div>
+								<h:message id="validacaoJustificativa"
+									for="validacaoJustificativa" infoClass="sucesso"
+									errorClass="erro" warnClass="aviso">
+								</h:message>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels"
+									value="#{mensagens.editarCadastroUsuarioValidade}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+								</h:outputLabel>
+								<h:selectOneMenu value="#{editarCadastroUsuarioMB.validade}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+									<f:selectItems value="#{editarCadastroUsuarioMB.validades}"></f:selectItems>
+								</h:selectOneMenu>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels"
+									value="#{mensagens.editarCadastroUsuarioAprovador}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessos}"></h:outputLabel>
+								<h:selectOneMenu
+									value="#{editarCadastroUsuarioMB.administrador}"
+									rendered="#{editarCadastroUsuarioMB.exibirAcessos}">
+									<f:selectItems
+										value="#{editarCadastroUsuarioMB.admnistradores}"></f:selectItems>
+								</h:selectOneMenu>
+								<div></div>
+								<h:message id="validacaoAprovador" for="validacaoAprovador"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								</h:message>
+							</div>
+
+						</fieldset>
+
+						<div class="botao">
+							<h:commandButton id="botaoEditar"
+								value="#{mensagens.editarCadastroUsuarioBotaoSalvar}"
+								action="#{editarCadastroUsuarioMB.editarCadastroUsuario}">
+							</h:commandButton>
+							<h:commandButton id="botaoCancelar"
+								value="#{mensagens.editarCadastroUsuarioBotaoCancelar}"
+								action="#{editarCadastroUsuarioMB.cancelar}">
+							</h:commandButton>
+							<h:commandButton id="botaoResetar"
+								value="#{mensagens.editarCadastroUsuarioBotaoReset}"
+								type="reset">
+							</h:commandButton>
+						</div>
+					</h:form>
+				</div>
+				<!-- end .formulario-->
+
+			</ui:define>
+		</ui:composition>
+	</f:view>
 </h:body>
 </html>

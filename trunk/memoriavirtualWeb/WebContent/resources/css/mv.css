@@ -410,12 +410,11 @@ fieldset input {
 
 table[id*=instituicoes] {
 	background-color: white;
-	position: absolute;
 	border-color: black;
 	border-width: 2px;
 	border-style: solid;
-	margin-left: 476px;
-	margin-top: -8px;
+	margin-left: 62%;
+	margin-top: -6px;
 	width: 250px;
 	z-index: 100;
 }
@@ -425,6 +424,10 @@ table[id*=instituicoes] td:hover {
 	color: white;
 	cursor: pointer;
 	cursor: hand;
+}
+
+table[id*=instituicoes] td{
+	text-align: center;
 }
 
 table[id*=instituicoes] a {
