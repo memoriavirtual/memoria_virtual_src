@@ -293,7 +293,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 			/* Envia o email. */
 			Transport.send(message);
 		} catch (MessagingException e) {
-			throw new ModeloException();
+			e.printStackTrace();
+			throw new ModeloException("Enviar Email");
 		}
 	}
 }

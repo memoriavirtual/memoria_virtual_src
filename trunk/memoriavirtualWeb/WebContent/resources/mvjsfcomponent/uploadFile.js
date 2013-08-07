@@ -18,6 +18,9 @@ function FileFrame(fileArea, bean, botao, img, typeFile) {
 		window.document.addEventListener("dragleave", self.melhoraPosicao,
 				false);
 		window.document.addEventListener("drop", self.melhoraPosicao, false);
+		
+		
+		
 	};
 
 	this.dragHover = function(e) {
@@ -136,14 +139,45 @@ function FileFrame(fileArea, bean, botao, img, typeFile) {
 		self.botao.click();
 	};
 }
+var fileFrameArea = null;
 iniciarComponenteUpload = (function(bean, botaoid, idImagem, typeFile) {
 	// Recupera a div que conterá a imagem
 	// alert(idImagem);
+	
+	
+	
+	
 	var area = document.getElementById("image-area");
 	var botao = document.getElementById(botaoid);
 	var img = document.getElementById(idImagem);
-	var fileFrameArea = new FileFrame(area, bean, botao, img, typeFile);
+	fileFrameArea = new FileFrame(area, bean, botao, img, typeFile);
 
 	fileFrameArea.init();
+	newUp();
 
 });
+
+newUp = (function(){
+	if(fileFrameArea != null){
+		
+	   var uploader = document.getElementById('image-area');
+
+	   upclick(
+	     {
+	      element: uploader,
+	      action: '/memoriavirtual/uploadarquivo/' + 'bean' + fileFrameArea.bean, 
+	      onstart:
+	        function(filename){
+	    	  ;
+	        },
+	      oncomplete:
+	        function(response_data) 
+	        {
+	    	  var body = document.getElementsByTagName("body").item(0);
+	    	  fileFrameArea.botao.click();
+	    	  body.removeChild(body.firstChild);
+	    	  newUp();
+	        }
+	     });
+	}
+}); 
