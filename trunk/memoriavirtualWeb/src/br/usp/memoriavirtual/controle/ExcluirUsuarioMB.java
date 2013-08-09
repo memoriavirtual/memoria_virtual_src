@@ -339,6 +339,7 @@ public class ExcluirUsuarioMB implements Serializable {
 									+ "\n"
 									+ bundle.getString("excluirUsuarioEmailAcessos")
 									+ ":"
+									+ "\n"
 									+ acessos
 									+ bundle.getString("excluirUsuarioJustificativa")
 									+ ": "
