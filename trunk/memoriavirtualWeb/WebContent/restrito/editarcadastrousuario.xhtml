@@ -84,27 +84,16 @@
 										</h:selectOneMenu>
 										<h:outputLabel class="labeltabela"
 											value="#{mensagens.editarCadastroUsuarioInstituicao}"></h:outputLabel>
-										<h:inputText value="#{acesso.instituicao.nome}">
-											<f:ajax event="focus" execute="@this" render="instituicoes"
-												listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
-											<f:ajax event="keyup" execute="@this" render="instituicoes"
-												listener="#{editarCadastroUsuarioMB.listarInstituicoes(acesso.instituicao.nome)}" />
-										</h:inputText>
+										<h:selectOneMenu value="#{acesso.instituicao.id}">
+											<f:selectItems
+												value="#{editarCadastroUsuarioMB.listarInstituicoes()}"></f:selectItems>
+										</h:selectOneMenu>
 										<h:commandLink
 											action="#{editarCadastroUsuarioMB.excluirAcesso(acesso)}">
 											<h:graphicImage id="excluir" library="imagens"
 												name="delete.png" class="delete">
 											</h:graphicImage>
 										</h:commandLink>
-
-										<h:dataTable id="instituicoes" var="instituicao"
-											value="#{editarCadastroUsuarioMB.instituicoes}">
-											<h:column>
-												<h:commandLink
-													action="#{editarCadastroUsuarioMB.selecionarInstituicao(acesso, instituicao)}">#{instituicao.nome}</h:commandLink>
-											</h:column>
-										</h:dataTable>
-
 									</h:column>
 									<div></div>
 									<h:message id="validacaoInstituicao" for="validacaoInstituicao"

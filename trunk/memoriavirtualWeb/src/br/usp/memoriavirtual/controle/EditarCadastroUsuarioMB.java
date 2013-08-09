@@ -255,30 +255,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		return null;
 	}
 
-	public String selecionarInstituicao(Acesso acesso, Instituicao i) {
-		
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (i.getNome().equals(bundle.getString("listarTodos"))) {
-			this.listarInstituicoes("");
-			return null;
-		}
-
-		if (acesso != null && i != null) {
-			if (this.acessos.contains(acesso) && this.instituicoes.contains(i))
-				this.acessos.get(this.acessos.indexOf(acesso))
-						.setInstituicao(i);
-			this.instituicoes.clear();
-			return null;
-		} else {
-			return null;
-		}
-
-	}
-
 	public void validateNome(AjaxBehaviorEvent e) {
 		this.validateNome();
 	}
@@ -462,31 +438,24 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		return null;
 	}
 
-	public List<Instituicao> listarInstituicoes(String instituicao) {
+	public List<SelectItem> listarInstituicoes() {
 
-		if (this.instituicoes.isEmpty()) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			String bundleName = "mensagens";
-			ResourceBundle bundle = context.getApplication().getResourceBundle(
-					context, bundleName);
-
-			Instituicao i = new Instituicao();
-			i.setNome(bundle.getString("listarTodos"));
-			this.instituicoes.add(i);
-		} else {
-			try {
-				this.instituicoes = editarCadastroUsuarioEJB
-						.listarInstituicoes(instituicao);
-				if (this.instituicoes.size() > 0)
-					this.renderInstituicoes = true;
-				else
-					this.renderInstituicoes = false;
-			} catch (ModeloException m) {
-				m.printStackTrace();
-			}
+		try {
+			this.instituicoes = editarCadastroUsuarioEJB.listarInstituicoes("");
+			if (this.instituicoes.size() > 0)
+				this.renderInstituicoes = true;
+			else
+				this.renderInstituicoes = false;
+		} catch (ModeloException m) {
+			m.printStackTrace();
 		}
 
-		return this.instituicoes;
+		List<SelectItem> instituicoes = new ArrayList<SelectItem>();
+
+		for (Instituicao i : this.instituicoes)
+			instituicoes.add(new SelectItem(i.getId(), i.getNome()));
+
+		return instituicoes;
 	}
 
 	public List<SelectItem> getNivel() {
