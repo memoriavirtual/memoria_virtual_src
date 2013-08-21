@@ -341,6 +341,7 @@ public class ExcluirUsuarioMB implements Serializable {
 									+ ":"
 									+ "\n"
 									+ acessos
+									+ "\n"
 									+ bundle.getString("excluirUsuarioJustificativa")
 									+ ": "
 									+ this.getJustificativa()
@@ -356,7 +357,6 @@ public class ExcluirUsuarioMB implements Serializable {
 									+ bundle.getString("excluirUsuarioEmailMensagemURL")
 									+ "\n"
 									+ "\n"
-									+ "http://"
 									+ memoriaVirtualEJB.getURLServidor()
 									+ "/excluirusuario?"
 									+ "aprovacao="
