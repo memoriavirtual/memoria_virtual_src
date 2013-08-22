@@ -111,13 +111,10 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 		try {
 			query.getSingleResult();
-			System.out.println("resultado");
 			return false;
 		} catch (NoResultException e) {
-			System.out.println("noresult");
 			return true;
 		} catch (Exception e) {
-			System.out.println("outro");
 			return false;
 		}
 	}

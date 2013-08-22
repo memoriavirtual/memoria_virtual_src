@@ -23,7 +23,6 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
-import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "editarCadastroUsuarioMB")
 @SessionScoped
@@ -264,10 +263,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 			MensagensDeErro.getErrorMessage(
 					"editarCadastroUsuarioErroNomeVazio", "validacaoNome");
 			return false;
-		} else if (this.nomeCompleto.length() < 4) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuarioErroNomeCurto", "validacaoNome");
-			return false;
 		}
 		return true;
 	}
@@ -296,12 +291,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		if (this.telefone.equals("")) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarInstituicaoErroTelefoneVazio",
-					"validacaoTelefone");
-			return false;
-		}
-		if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroUsuarioErroTelefoneInvalido",
 					"validacaoTelefone");
 			return false;
 		}
@@ -376,18 +365,17 @@ public class EditarCadastroUsuarioMB implements Serializable {
 					return null;
 			}
 
-			if (exibirAcessos && validateInstituicao()
-					&& validateJustificativa()) {
+			if (exibirAcessos && validateJustificativa()) {
 
 				for (Acesso a : this.acessos) {
 					for (Acesso o : this.acessosAntigos) {
 
-						String nome1 = a.getInstituicao().getNome();
-						String nome2 = o.getInstituicao().getNome();
+						long nome1 = a.getInstituicao().getId();
+						long nome2 = o.getInstituicao().getId();
 						String id1 = a.getGrupo().getId();
 						String id2 = o.getGrupo().getId();
 
-						if (((nome1.equals(nome2)) && (id1.equals(id2)))) {
+						if ((nome1 == nome2) && (id1.equals(id2))) {
 							pendentes.add(a);
 							pendentes.add(o);
 						}
@@ -499,36 +487,6 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		}
 
 		return validades;
-	}
-
-	public void validateInstituicao(AjaxBehaviorEvent e) {
-		this.validateInstituicao();
-	}
-
-	public boolean validateInstituicao() {
-		if (exibirAcessos) {
-			Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-					.getExternalContext().getSessionMap().get("usuario");
-			boolean existe = false;
-
-			if (usuario.isAdministrador()) {
-				for (Acesso a : this.acessos) {
-					existe = this.memoriaVirtualEJB
-							.verificarDisponibilidadeNomeInstituicao(a
-									.getInstituicao().getNome());
-					if (existe) {
-						MensagensDeErro.getErrorMessage(
-								"editarCadastroUsuarioErroInstituicaoInvalida",
-								"resultado");
-						return false;
-					}
-				}
-			}
-
-			return true;
-		} else {
-			return true;
-		}
 	}
 
 	public String confirmar() {

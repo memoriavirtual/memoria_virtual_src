@@ -164,9 +164,10 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 				// Buscar no banco os objetos corretos para instanciar o
 				// aceso
+				
 				Query q = entityManager
-						.createQuery("SELECT i FROM Instituicao i WHERE i.nome = :nome");
-				q.setParameter("nome", a.getInstituicao().getNome());
+						.createQuery("SELECT i FROM Instituicao i WHERE i.id = :id");
+				q.setParameter("id", a.getInstituicao().getId());
 				Instituicao i = (Instituicao) q.getSingleResult();
 				Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
 				Usuario u = entityManager.find(Usuario.class, a.getUsuario()
@@ -376,15 +377,9 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 		try {
 			Query query = entityManager
-					.createQuery("SELECT i FROM Instituicao i WHERE LOWER(i.nome) LIKE LOWER(:padrao) ORDER BY i.nome");
+					.createQuery("SELECT i FROM Instituicao i WHERE LOWER(i.nome) LIKE LOWER(:padrao) AND i.validade = true ORDER BY i.nome");
 			query.setParameter("padrao", "%" + instituicao + "%");
 			instituicoes = (List<Instituicao>) query.getResultList();
-
-			if (instituicoes.size() == 0) {
-				Instituicao listarTodos = new Instituicao();
-				listarTodos.setNome("Listar Todos");
-				instituicoes.add(0, listarTodos);
-			}
 
 			return instituicoes;
 		} catch (Exception e) {
