@@ -803,6 +803,8 @@ public class EditarCadastroUsuarioMB implements Serializable {
 		this.mostrarLink = true;
 		this.justificativa = null;
 		this.exibirAcessos = false;
+		
+		System.out.println("ola");
 
 	}
 

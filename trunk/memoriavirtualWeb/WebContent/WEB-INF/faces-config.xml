@@ -22,7 +22,7 @@
 	<managed-bean>
 		<managed-bean-name>cadastrarInstituicaoMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarInstituicaoMB</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>editarInstituicaoMB</managed-bean-name>
@@ -32,7 +32,7 @@
 	<managed-bean>
 		<managed-bean-name>cadastrarAutorMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarAutorMB</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>editarAutorMB</managed-bean-name>
@@ -47,7 +47,7 @@
 	<managed-bean>
 		<managed-bean-name>enviarConviteMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.EnviarConviteMB</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 	<managed-bean>
@@ -78,7 +78,7 @@
 	<managed-bean>
 		<managed-bean-name>cadastrarBemPatrimonialMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>editarBemPatrimonialMB</managed-bean-name>
