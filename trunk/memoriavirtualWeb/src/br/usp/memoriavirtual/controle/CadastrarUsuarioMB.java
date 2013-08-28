@@ -56,7 +56,6 @@ public class CadastrarUsuarioMB implements Serializable {
 		this.validateId();
 		this.validateEmail();
 		this.validateNomeCompleto();
-		this.validateTelefone();
 		this.validateSenha();
 		this.validateConfirmacaoSenha();
 
@@ -243,28 +242,6 @@ public class CadastrarUsuarioMB implements Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
-	}
-
-	public void validateTelefone(AjaxBehaviorEvent event) {
-		this.validateTelefone();
-	}
-
-	public void validateTelefone() {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (this.telefone.equals("")) {
-			String[] argumentos = { bundle.getString("telefone") };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoTelefone");
-		} else if (!ValidacoesDeCampos.validarFormatoTelefone(this.telefone)) {
-			String[] argumentos = { bundle.getString("telefone") };
-			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
-					"validacaoTelefone");
-		}
 	}
 
 	public String getConfirmacaoSenha() {
