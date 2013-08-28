@@ -719,6 +719,7 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 	}
 
 	public void listarSugestoesAutores(AjaxBehaviorEvent event) {
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		String[] list = event.getComponent().getClientId().split(":");
 		Integer index = new Integer(list[2]);
