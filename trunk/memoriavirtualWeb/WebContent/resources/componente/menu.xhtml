@@ -26,13 +26,21 @@
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="#{renderizarMenuMB.administrador}"
 							value="cadastrarinstituicao.jsf">#{mensagens.menuCadastrarInstituicao}
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
 						</h:outputLink></li>
 
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="excluirInstituicao.jsf">#{mensagens.menuExcluirInstituicao}</h:outputLink></li>
+							value="excluirInstituicao.jsf">#{mensagens.menuExcluirInstituicao}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="selecionarinstituicao.jsf">#{mensagens.menuEditarInstituicao}</h:outputLink></li>
+							value="selecionarinstituicao.jsf">#{mensagens.menuEditarInstituicao}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 				</ul></li>
 
 			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.bempatrimonial}</h:outputLink>
@@ -41,23 +49,41 @@
 							value="cadastrarbempatrimonial.jsf">#{mensagens.menuCadastrarBemPatrimonial}</h:outputLink></li>
 
 					<li><h:outputLink rendered="true"
-							value="editarbempatrimonial.jsf">#{mensagens.menuEditarBemPatrimonial}</h:outputLink></li>
+							value="editarbempatrimonial.jsf">#{mensagens.menuEditarBemPatrimonial}
+														<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 
 					<li><h:outputLink rendered="true"
-							value="selecionarbemexclusao.jsf">#{mensagens.menuExcluirBemPatrimonial}</h:outputLink></li>
+							value="selecionarbemexclusao.jsf">#{mensagens.menuExcluirBemPatrimonial}
+														<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 					<li><h:outputLink rendered="true"
-							value="../realizarbuscasimples.jsf">#{mensagens.menuRealizarBuscaSimples}</h:outputLink></li>
+							value="../realizarbuscasimples.jsf">#{mensagens.menuRealizarBuscaSimples}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 				</ul></li>
 
 
 			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.autoria}</h:outputLink>
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="cadastrarautor.jsf">#{mensagens.menuCadastrarAutor}</h:outputLink></li>
+							value="cadastrarautor.jsf">#{mensagens.menuCadastrarAutor}
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="editarautor.jsf">#{mensagens.menuEditarAutor}</h:outputLink></li>
+							value="editarautor.jsf">#{mensagens.menuEditarAutor}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="excluirautor.jsf">#{mensagens.menuExcluirAutor}</h:outputLink></li>
+							value="excluirautor.jsf">#{mensagens.menuExcluirAutor}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 				</ul></li>
 
 			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.descritor}</h:outputLink>
@@ -68,19 +94,29 @@
 					rendered="#{renderizarMenuMB.gerente}">#{mensagens.administracao}</h:outputLink>
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="enviarconvite.jsf">#{mensagens.menuEnviarConvite}</h:outputLink></li>
+							value="enviarconvite.jsf">#{mensagens.menuEnviarConvite}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="selecionarusuario.jsf">#{mensagens.menuEditarCadastroUsuario}</h:outputLink></li>
+							value="selecionarusuario.jsf">#{mensagens.menuEditarCadastroUsuario}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
-							value="excluirusuario_etapa1.jsf">#{mensagens.menuExcluirUsuario}</h:outputLink>
-					</li>
+							value="excluirusuario_etapa1.jsf">#{mensagens.menuExcluirUsuario}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 				</ul></li>
 
 			<li><h:outputLink class="linkPrincipal" rendered="true">#{mensagens.usuario}</h:outputLink>
 				<ul class="linkSecundario">
 					<li><h:outputLink rendered="true"
-							value="editarcadastroproprio.jsf">#{mensagens.menuAlterarCadastroProprio}</h:outputLink>
-					</li>
+							value="editarcadastroproprio.jsf">#{mensagens.menuAlterarCadastroProprio}							
+							<f:ajax event="click" render="@none" execute="@this"
+								listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
+						</h:outputLink></li>
 				</ul></li>
 		</ul>
 

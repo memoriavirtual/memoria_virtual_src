@@ -13,6 +13,8 @@
 </head>
 <h:body>
 
+	<f:ajax event="load" execute="@this" render="@none"
+		listener="#{cadastrarBemPatrimonialMB.zerarMB()}"></f:ajax>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 

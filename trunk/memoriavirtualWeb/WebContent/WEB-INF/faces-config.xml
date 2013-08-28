@@ -78,7 +78,7 @@
 	<managed-bean>
 		<managed-bean-name>cadastrarBemPatrimonialMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarBemPatrimonialMB</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>editarBemPatrimonialMB</managed-bean-name>
