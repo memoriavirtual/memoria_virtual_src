@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>excluirInstituicao</title>
+</head>
+
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+		<ui:define name="titulo">#{mensagens.excluirInstituicaoTitle}</ui:define>
+		<ui:define name="conteudo">
+			<div class="formulario">
+				<div class="conteudoTitulo">#{mensagens.excluirInstituicaoTitle}</div>
+				<div class="conteudoDescricao">#{mensagens.excluirInstituicaoPassoSegundo}</div>
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
+				<h:form method="post" prependId="false">
+					<fieldset>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoNome}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.instituicao.getNome()}</h:outputLabel>
+						</div>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoGerentes}</h:outputLabel>
+						<div id="tabeladiv">
+							<h:dataTable id="tabelagerente" var="gerente"
+								value="#{excluirInstituicaoMB.gerentesInstituicao}">
+								<h:column>
+								#{gerente.nomeCompleto}
+									
+								</h:column>
+							</h:dataTable>
+						</div>
+						</div>
+						
+												
+						
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoJustificativa}</h:outputLabel>
+							<h:inputTextarea class="caixadetexto"
+								value="#{excluirInstituicaoMB.justificativa}">
+								<f:ajax event="blur" execute="@this"
+									render="validacaoJustificativa"
+									listener="#{excluirInstituicaoMB.validateJustificativa}" />
+								<f:ajax event="keyup" execute="@this"
+									render="validacaoJustificativa"
+									listener="#{excluirInstituicaoMB.contagemJustificativa}" />
+
+
+							</h:inputTextarea>
+							<div></div>
+
+							<h:message id="validacaoJustificativa"
+								for="validacaoJustificativa" infoClass="sucesso"
+								errorClass="erro" warnClass="aviso">
+
+							</h:message>
+
+						</div>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.excluirInstituicaoValidade}</h:outputLabel>
+							<h:outputLabel class="dadoInstituicao">#{excluirInstituicaoMB.getValidadecomdias()}</h:outputLabel>
+						</div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoExcluir"
+							value="#{mensagens.excluirInstituicaoBotaoExcluir}"
+							action="#{excluirInstituicaoMB.confirmarexcluirInstituicao}">
+
+						</h:commandButton>
+
+						<h:commandButton id="botaoVoltar"
+							value="#{mensagens.excluirInstituicaoBotaoVoltar}"
+							action="#{excluirInstituicaoMB.voltar}">
+
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.excluirInstituicaoBotaoCancelar}"
+							action="#{excluirInstituicaoMB.cancelar}">
+						</h:commandButton>
+
+					</div>
+				</h:form>
+			</div>
+			<!-- end .formulario-->
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
