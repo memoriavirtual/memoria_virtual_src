@@ -288,7 +288,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroNomeExistente", "validacaoNome");
 				return false;
-			} else if (this.nome.length() < 4) {
+			} else if (this.nome.length() == 0) {
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroNomeCurto", "validacaoNome");
 				return false;
