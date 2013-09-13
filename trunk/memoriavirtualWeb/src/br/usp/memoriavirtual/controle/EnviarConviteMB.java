@@ -80,6 +80,7 @@ public class EnviarConviteMB implements Serializable {
 				 * Envia o convite a todos emails atravez do método
 				 * implementado no EJB.
 				 */
+				System.out.println(this.acessos.size());
 				this.enviarConviteEJB.enviarConvite(stringsEmails, mensagem,
 						validade, administrador, acessos);
 
@@ -97,6 +98,10 @@ public class EnviarConviteMB implements Serializable {
 			}
 		}
 
+		this.acessos.clear();
+		this.listaEmails.clear();
+		this.mensagem = "";
+		
 		return "sucesso";
 	}
 

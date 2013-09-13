@@ -81,7 +81,7 @@
 							<h:selectBooleanCheckbox
 								rendered="#{enviarConviteMB.mostrarAdministrador()}"
 								value="#{enviarConviteMB.administrador}">
-								<f:ajax execute="@this" render="@form" event="change"
+								<f:ajax execute="@all" render="@form" event="change"
 									listener="#{enviarConviteMB.alterarAdministrador}" />
 							</h:selectBooleanCheckbox>
 						</div>

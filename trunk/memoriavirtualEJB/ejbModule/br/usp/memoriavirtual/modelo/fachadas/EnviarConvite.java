@@ -185,6 +185,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 			throw new ModeloException(
 					"Erro ao persistir o novo usuário no banco de dados.", e);
 		}
+		
 		if (!usuario.isAdministrador()) {
 			for (Acesso a : acessos) {
 				try {
@@ -197,6 +198,7 @@ public class EnviarConvite implements EnviarConviteRemote {
 							.getId());
 					a.setGrupo(g);
 					entityManager.persist(a);
+					entityManager.flush();
 				} catch (Exception e) {
 					throw new ModeloException(e);
 				}
