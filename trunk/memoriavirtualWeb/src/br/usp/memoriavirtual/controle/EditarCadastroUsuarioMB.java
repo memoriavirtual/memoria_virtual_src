@@ -410,11 +410,9 @@ public class EditarCadastroUsuarioMB implements Serializable {
 							this.administrador, pendentes, situacoes, data,
 							expiracao, this.justificativa,
 							this.marcadoAdministrador);
-					this.limpar();
 					MensagensDeErro.getSucessMessage(
 							"editarCadastroUsuarioSucesso", "resultado");
 				} catch (Exception e) {
-					this.limpar();
 					MensagensDeErro.getErrorMessage(
 							"editarCadastroUsuarioErroEdicao", "resultado");
 					e.printStackTrace();

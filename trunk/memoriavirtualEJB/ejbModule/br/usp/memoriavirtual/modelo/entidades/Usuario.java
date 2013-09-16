@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
 @Entity
@@ -26,9 +25,6 @@ public class Usuario implements Serializable, Cloneable {
 	private String id;
 	@NotNull
 	@Column(unique = true)
-	@Pattern(regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
-			+ "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
-			+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email invalido")
 	private String email;
 	private String nomeCompleto;
 	private String telefone;

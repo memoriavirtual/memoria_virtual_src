@@ -164,7 +164,7 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 
 				// Buscar no banco os objetos corretos para instanciar o
 				// aceso
-				
+
 				Query q = entityManager
 						.createQuery("SELECT i FROM Instituicao i WHERE i.id = :id");
 				q.setParameter("id", a.getInstituicao().getId());
@@ -418,7 +418,9 @@ public class EditarCadastroUsuario implements EditarCadastroUsuarioRemote {
 	@Override
 	public void merge(Usuario usuario) throws ModeloException {
 		try {
-			entityManager.merge(usuario);
+			Usuario u = entityManager.find(Usuario.class, usuario.getId());
+			u.setAdministrador(usuario.isAdministrador());
+			entityManager.flush();
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
