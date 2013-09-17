@@ -8,7 +8,7 @@
 	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>#{mensagens.realizarBuscaSimplesDescricao}#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</title>
+<title>#{mensagens.realizarBuscaSimplesDescricao}#{realizarBuscaSimplesMB.bem.tituloPrincipal}</title>
 <link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
 <script type="text/javascript" src="./resources/javascript/jquery.js"></script>
 <script type="text/javascript" src="./resources/javascript/abas.js"></script>
@@ -39,7 +39,7 @@
 
 		<div class="conteudoTitulo">
 			#{mensagens.realizarBuscaSimplesDescricao}
-			#{realizarBuscaSimplesMB.bem.titulos.get(0).valor}</div>
+			#{realizarBuscaSimplesMB.bem.tituloPrincipal}</div>
 
 		<h:form>
 			<h:commandLink class="acaoLink"
@@ -63,7 +63,7 @@
 					<h:dataTable id="titulosbem"
 						value="#{realizarBuscaSimplesMB.bem.titulos}" var="titulo">
 						<h:column>
-							<h:outputLabel class="resultadosBusca">#{titulo.valor}</h:outputLabel>
+							<h:outputLabel class="resultadosBusca">#{titulo.valor} : #{titulo.tipo}</h:outputLabel>
 						</h:column>
 					</h:dataTable>
 

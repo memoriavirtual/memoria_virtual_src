@@ -43,7 +43,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			s = s.trim();
 			try {
 				query = entityManager
-						.createQuery("SELECT b FROM BemPatrimonial b WHERE b.tituloPrincipal LIKE :padrao");
+						.createQuery("SELECT b FROM BemPatrimonial b WHERE LOWER(b.tituloPrincipal) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 
@@ -65,7 +65,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				query = entityManager
 						.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t "
 								+ "WHERE t MEMBER OF b.titulos "
-								+ "AND t.valor LIKE :padrao");
+								+ "AND LOWER(t.valor) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {
@@ -78,28 +78,6 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-
-		/*
-		 * for (String s : stringsDeBusca) { try { query = entityManager
-		 * .createQuery("SELECT b FROM BEMPATRIMONIAL_DESCRITOR b"); //
-		 * query.setParameter("padrao", "%" + s + "%"); parcial =
-		 * (List<BemPatrimonial>) query.getResultList(); for (BemPatrimonial b :
-		 * parcial) { if (!bens.contains(b)) bens.add(b); } } catch (Exception
-		 * e) { throw new ModeloException(e); } }
-		 */
-
-		/*
-		 * for (String s : stringsDeBusca) { try { query = entityManager
-		 * .createQuery("SELECT au.bemPatrimonial FROM Autoria au WHERE " +
-		 * "au.autor.nome LIKE :padrao OR " +
-		 * "au.autor.sobrenome LIKE :padrao OR " +
-		 * "au.autor.codinome LIKE :padrao"); query.setParameter("padrao", "%" +
-		 * s + "%"); parcial = (List<BemPatrimonial>) query.getResultList(); for
-		 * (BemPatrimonial b : parcial) { if (!bens.contains(b)) bens.add(b); }
-		 * } catch (Exception e) { throw new ModeloException(e); }
-		 * 
-		 * }
-		 */
 
 		bens.trimToSize();
 		return bens;

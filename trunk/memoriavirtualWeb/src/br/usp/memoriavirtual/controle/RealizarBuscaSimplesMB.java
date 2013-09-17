@@ -50,14 +50,16 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	}
 
 	public String buscar() {
+		
 		try {
 			this.bens = realizarBuscaEJB.buscar(this.busca);
 		} catch (Exception e) {
 			e.printStackTrace();
-			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro", "resultado");
+			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
+					"resultado");
 			return null;
 		}
-
+		
 		return "resultadosbusca";
 	}
 
@@ -114,9 +116,9 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	}
 
 	public String resultado(BemPatrimonial b) {
+		
 		this.bem = b;
 		this.determinaTipo();
-		this.busca = null;
 
 		for (int i = 0; i < this.bem.getContainerMultimidia().getMultimidia()
 				.size(); ++i) {
@@ -152,13 +154,15 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 				m.printStackTrace();
 			}
 		}
-
+		
 		return "bempatrimonial";
 
 	}
 
 	public String voltar() {
-		return "resultadosbusca.jsf";
+
+		this.apresentaMidias.clear();
+		return this.buscar();
 	}
 
 	public void determinaTipo() {
@@ -205,8 +209,6 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	}
 
 	public void download(Integer index) {
-
-		System.out.println("oloco");
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
