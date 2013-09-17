@@ -590,7 +590,8 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 	}
 
 	public String removeMidia(String midia) {
-		return null;
+		Integer i = new Integer(midia);
+		return this.removeMidia(i);
 	}
 
 	@Override
