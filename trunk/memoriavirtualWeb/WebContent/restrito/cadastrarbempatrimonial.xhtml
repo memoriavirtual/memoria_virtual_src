@@ -269,7 +269,7 @@
 
 										<h:column>
 											<h:outputLabel class="rowBuscarAutoria" style="width: 100%"
-												value="#{autor.nome}">
+												value="#{autor.nome}#{autor.sobrenome}">
 												<f:ajax render="@form" execute="@form" event="click"
 													onevent="mostrarTableCorreta(this, 'containerBemAutoria:autoriaBem') "
 													listener="#{cadastrarBemPatrimonialMB.selecionarAutoria}"></f:ajax>
