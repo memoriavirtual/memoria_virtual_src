@@ -5,13 +5,13 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import br.usp.memoriavirtual.servicos.rest.RealizarBuscaService;
+import br.usp.memoriavirtual.servicos.rest.RealizarBuscaRESTService;
 
 public class MemoriaVirtualConfiguradorREST extends Application {
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
 
-		classes.add(RealizarBuscaService.class);
+		classes.add(RealizarBuscaRESTService.class);
 
 		return classes;
 	}

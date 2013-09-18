@@ -17,7 +17,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 @Stateless
 @Path("/buscar")
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-public class RealizarBuscaService {
+public class RealizarBuscaRESTService {
 
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
@@ -25,12 +25,13 @@ public class RealizarBuscaService {
 	@GET
 	@Path("/{stringDeBusca}")
 	public ArrayList<BemPatrimonial> buscar(@PathParam("stringDeBusca") String stringDeBusca) {
+		ArrayList<BemPatrimonial> bensPatrimoniais = null;
 		try {
-			return realizarBuscaEJB.buscar(stringDeBusca);
+			bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return bensPatrimoniais;
 
 	}
 }
