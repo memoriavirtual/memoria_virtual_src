@@ -103,8 +103,6 @@ public class CadastrarAutorMB implements Serializable {
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
 				context, bundleName);
 		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade0")));
-		atividades.add(new SelectItem(bundle
 				.getString("cadastrarAutorListaAtividade1")));
 		atividades.add(new SelectItem(bundle
 				.getString("cadastrarAutorListaAtividade2")));
@@ -264,17 +262,6 @@ public class CadastrarAutorMB implements Serializable {
 	}
 
 	public boolean validateAtividade() {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (this.autor.getAtividade().equals(
-				bundle.getString("cadastrarAutorListaAtividade0"))) {
-			this.autor.setAtividade("");
-
-		}
 
 		if (this.autor.getAtividade().equals("")) {
 			MensagensDeErro.getErrorMessage("cadastrarAutorAtividadeVazia",
