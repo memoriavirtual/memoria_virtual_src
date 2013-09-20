@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author mac
@@ -33,7 +34,8 @@ public class Assunto implements Comparable<Assunto>, Serializable {
 	@Id
 	private String assunto;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "assuntos", cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "assuntos", cascade = CascadeType.MERGE)
+	@XmlTransient
 	private Set<BemPatrimonial> bens;
 
 	public String getAssunto() {
@@ -44,6 +46,7 @@ public class Assunto implements Comparable<Assunto>, Serializable {
 		this.assunto = assunto;
 	}
 
+	@XmlTransient
 	public Set<BemPatrimonial> getBens() {
 		return bens;
 	}

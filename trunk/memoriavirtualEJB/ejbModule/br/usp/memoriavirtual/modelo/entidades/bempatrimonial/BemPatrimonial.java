@@ -30,10 +30,11 @@ import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 
-@XmlRootElement
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "BEMPATRIMONIAL_ID", sequenceName = "BEMPATRIMONIAL_SEQ", allocationSize = 1)
+@XmlRootElement
 public class BemPatrimonial implements Serializable {
 
 	/**
@@ -44,15 +45,14 @@ public class BemPatrimonial implements Serializable {
 	/**
 	 * 
 	 */
-	public enum TipoDoBemPatrimonial{
-		NORMAL,ARQUEOLOGICO,ARQUITETONICO,NATURAL;
+	public enum TipoDoBemPatrimonial {
+		NORMAL, ARQUEOLOGICO, ARQUITETONICO, NATURAL;
 	}
-	
-	
+
 	public BemPatrimonial() {
 		super();
 		this.descritores = new TreeSet<Descritor>();
-		this.assuntos = new TreeSet<Assunto>(); 
+		this.assuntos = new TreeSet<Assunto>();
 		this.fontesInformacao = new ArrayList<String>();
 		this.titulos = new ArrayList<Titulo>();
 		this.autorias = new ArrayList<Autoria>();
@@ -65,7 +65,7 @@ public class BemPatrimonial implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
 	protected long id;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	protected Instituicao instituicao = new Instituicao();
 	protected boolean externo = false;
 	protected String tipoDoBemPatrimonial = "";
@@ -81,21 +81,12 @@ public class BemPatrimonial implements Serializable {
 	protected String idMidia = "";
 	protected String Complemento = "";
 
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER )
-	@JoinTable(name="BEMPATRIMONIAL_DESCRITOR",
-    joinColumns=
-        @JoinColumn(name="BEMPATRIMONIAL_ID"),
-    inverseJoinColumns=
-        @JoinColumn(name="DESCRITOR_ID"))
-	protected Set<Descritor> descritores;
-	
-	
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinTable(name="BEMPATRIMONIAL_ASSUNTO",
-    joinColumns=
-        @JoinColumn(name="BEMPATRIMONIAL_ID"),
-    inverseJoinColumns=
-        @JoinColumn(name="ASSUNTO_ID"))
+	@JoinTable(name = "BEMPATRIMONIAL_DESCRITOR", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"), inverseJoinColumns = @JoinColumn(name = "DESCRITOR_ID"))
+	protected Set<Descritor> descritores;
+
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinTable(name = "BEMPATRIMONIAL_ASSUNTO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"), inverseJoinColumns = @JoinColumn(name = "ASSUNTO_ID"))
 	protected Set<Assunto> assuntos;
 
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -103,9 +94,6 @@ public class BemPatrimonial implements Serializable {
 	protected List<String> fontesInformacao;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
-	// @ElementCollection(fetch = FetchType.EAGER)
-	// @CollectionTable(name = "BEMPATRIMONIAL_TITULOS", joinColumns =
-	// @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Titulo> titulos;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
@@ -115,25 +103,24 @@ public class BemPatrimonial implements Serializable {
 	protected Producao producao = new Producao("", "", "", "");
 
 	@Embedded
-	protected DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao(
-			"", "", "", "", "", "", "", "");
+	protected DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao("", "", "", "",
+			"", "", "", "");
 
 	@Embedded
-	protected HistoricoProcedencia historicoProcedencia = new HistoricoProcedencia(
-			"", "", "", "", "", "");
+	protected HistoricoProcedencia historicoProcedencia = new HistoricoProcedencia("", "", "", "", "", "");
 
 	@Embedded
 	protected Diagnostico diagnostico = new Diagnostico("", "", "");
 
-	@ElementCollection( fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_INTERVENCOES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Intervencao> intervencoes;
 
-	@ElementCollection( fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_PESQUISADORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<Pesquisador> pesquisadores;
 
-	@OneToMany( fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", inverseJoinColumns = @JoinColumn(name = "BENSRELACIONADOS_ID"), joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	protected List<BemPatrimonial> bensrelacionados;
 
@@ -361,8 +348,7 @@ public class BemPatrimonial implements Serializable {
 	 * @param disponibilidadeUsoProtecao
 	 *            the disponibilidadeUsoProtecao to set
 	 */
-	public void setDisponibilidadeUsoProtecao(
-			DisponibilidadeUsoProtecao disponibilidadeUsoProtecao) {
+	public void setDisponibilidadeUsoProtecao(DisponibilidadeUsoProtecao disponibilidadeUsoProtecao) {
 		this.disponibilidadeUsoProtecao = disponibilidadeUsoProtecao;
 	}
 
@@ -377,8 +363,7 @@ public class BemPatrimonial implements Serializable {
 	 * @param historicoProcedencia
 	 *            the historicoProcedencia to set
 	 */
-	public void setHistoricoProcedencia(
-			HistoricoProcedencia historicoProcedencia) {
+	public void setHistoricoProcedencia(HistoricoProcedencia historicoProcedencia) {
 		this.historicoProcedencia = historicoProcedencia;
 	}
 

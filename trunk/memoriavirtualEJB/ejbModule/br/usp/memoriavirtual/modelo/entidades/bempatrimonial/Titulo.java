@@ -3,14 +3,16 @@ package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
-@Entity(name="BEMPATRIMONIAL_TITULOS")
+@Entity(name = "BEMPATRIMONIAL_TITULOS")
 @SequenceGenerator(name = "TITULO_ID", sequenceName = "TITULO_SEQ", allocationSize = 1)
 public class Titulo implements Serializable {
 
@@ -19,7 +21,9 @@ public class Titulo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TITULO_ID")
 	private long id;
-	@ManyToOne
+	
+	@XmlTransient
+	@ManyToOne(fetch = FetchType.EAGER)
 	private BemPatrimonial bemPatrimonial;
 	private String tipo;
 	private String valor;
@@ -85,6 +89,7 @@ public class Titulo implements Serializable {
 		this.select = select;
 	}
 
+	@XmlTransient
 	public BemPatrimonial getBempatrimonial() {
 		return bemPatrimonial;
 	}

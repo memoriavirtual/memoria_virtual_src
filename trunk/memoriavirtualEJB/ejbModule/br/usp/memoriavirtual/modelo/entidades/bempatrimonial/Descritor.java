@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author mac
@@ -33,7 +34,8 @@ public class Descritor implements Comparable<Descritor> , Serializable{
 	@Id
 	private String descritor;
 	
-	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "descritores", cascade = CascadeType.MERGE  )
+	@XmlTransient
+	@ManyToMany( fetch = FetchType.EAGER, mappedBy = "descritores", cascade = CascadeType.MERGE  )
 	private Set<BemPatrimonial> bens;
 
 	public String getDescritor() {
@@ -44,6 +46,7 @@ public class Descritor implements Comparable<Descritor> , Serializable{
 		this.descritor = descritor;
 	}
 
+	@XmlTransient
 	public Set<BemPatrimonial> getBens() {
 		return bens;
 	}
