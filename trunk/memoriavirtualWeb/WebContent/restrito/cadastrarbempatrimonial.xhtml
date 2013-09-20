@@ -348,12 +348,6 @@
 								<div></div>
 							</div>
 
-
-
-
-
-
-
 							<div class="outrosBens">
 								<h:outputLabel class="labels">
 										#{mensagens.cadastrarBemDescricaoDimensoesEQuantificacoes}
@@ -387,28 +381,45 @@
 							</div>
 
 							<div class="arquitetonico">
-								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{cadastrarBemPatrimonialMB.uso}">
+								<h:selectOneRadio id="selectUso" layout="pageDirection"
+									class="checks" value="#{cadastrarBemPatrimonialMB.uso}">
+
+									<f:ajax event="click" execute="@all"
+										render="inputUso"
+										listener="#{cadastrarBemPatrimonialMB.usoEspecificar}" />
+
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoUso}</h:outputLabel>
 
-									<f:selectItem
+									<f:selectItem 
+										noSelectionOption="#{not cadastrarBemPatrimonialMB.especificarUso}"
 										itemLabel="#{mensagens.cadastrarBemDescricaoUso0}"
 										itemValue="#{mensagens.cadastrarBemDescricaoUso0}" />
-									<f:selectItem
+									<f:selectItem 
+										noSelectionOption="#{not cadastrarBemPatrimonialMB.especificarUso}"
 										itemLabel="#{mensagens.cadastrarBemDescricaoUso1}"
 										itemValue="#{mensagens.cadastrarBemDescricaoUso1}" />
-									<f:selectItem
+									<f:selectItem 
+										noSelectionOption="#{not cadastrarBemPatrimonialMB.especificarUso}"
 										itemLabel="#{mensagens.cadastrarBemDescricaoUso2}"
 										itemValue="#{mensagens.cadastrarBemDescricaoUso2}" />
-									<f:selectItem
+									<f:selectItem 
+										noSelectionOption="#{not cadastrarBemPatrimonialMB.especificarUso}"
 										itemLabel="#{mensagens.cadastrarBemDescricaoUso3}"
 										itemValue="#{mensagens.cadastrarBemDescricaoUso3}" />
-									<f:selectItem
+									<f:selectItem 
+										noSelectionOption="#{not cadastrarBemPatrimonialMB.especificarUso}"
 										itemLabel="#{mensagens.cadastrarBemDescricaoUso4}"
 										itemValue="#{mensagens.cadastrarBemDescricaoUso4}" />
+
 								</h:selectOneRadio>
-								<div></div>
 							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoUsoInput}</h:outputLabel>
+								<h:inputText id="inputUso"
+									disabled="#{cadastrarBemPatrimonialMB.especificarUso}"
+									value="#{cadastrarBemPatrimonialMB.usoInput}"></h:inputText>
+							</div>
+
 
 							<div class="arquitetonico">
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPavimentos}</h:outputLabel>

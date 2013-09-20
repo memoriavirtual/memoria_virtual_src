@@ -28,11 +28,6 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-/**
- * @author bigmac
- * 
- */
-
 public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial {
 
 	// private String strDeBusca;
@@ -45,6 +40,8 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial {
 	 * 
 	 */
 	private static final long serialVersionUID = 4487901192049535944L;
+	private boolean especificarUso = true;
+	private String usoInput = "";
 
 	/**
 	 * 
@@ -87,6 +84,10 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial {
 			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
 					.getString("cadastrarBemTipoLista4"))) {
 				// System.out.println("edificado");
+
+				if (this.uso.equals(bundle
+						.getString("cadastrarBemDescricaoUso4")))
+					this.uso = this.usoInput;
 				this.bemPatrimonial = new BemArquitetonico(condicaoTopografica,
 						this.uso, this.numPavimentos, numAmbientes, alcova,
 						porao, sotao, descricaoOutros, areaTotal,
@@ -241,6 +242,36 @@ public class CadastrarBemPatrimonialMB extends GerenciarBemPatrimonial {
 	public String cancelar() {
 		this.zerarMB();
 		return "/restrito/index.jsf";
+	}
+
+	public void usoEspecificar(AjaxBehaviorEvent e) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		if (this.uso.equals(bundle.getString("cadastrarBemDescricaoUso4"))) {
+			this.especificarUso = false;
+		} else {
+			this.especificarUso = true;
+		}
+	}
+
+	public boolean isEspecificarUso() {
+		return especificarUso;
+	}
+
+	public void setEspecificarUso(boolean especificarUso) {
+		this.especificarUso = especificarUso;
+	}
+
+	public String getUsoInput() {
+		return usoInput;
+	}
+
+	public void setUsoInput(String usoInput) {
+		this.usoInput = usoInput;
 	}
 
 }
