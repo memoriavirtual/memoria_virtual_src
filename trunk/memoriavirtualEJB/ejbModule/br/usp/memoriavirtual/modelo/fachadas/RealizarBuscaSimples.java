@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,7 +59,6 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			}
 		}
 
-		// Ordem de busca: titulos, descritores e autores
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {

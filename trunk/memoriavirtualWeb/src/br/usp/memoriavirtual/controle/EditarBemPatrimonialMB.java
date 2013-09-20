@@ -70,6 +70,7 @@ public class EditarBemPatrimonialMB extends GerenciarBemPatrimonial implements
 	
 	
 	public String selecionarBemPatrimonial(BemPatrimonial bemPatrimonial) {
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		String bundleName = "mensagens";
 		ResourceBundle bundle = context.getApplication().getResourceBundle(
@@ -224,10 +225,11 @@ public class EditarBemPatrimonialMB extends GerenciarBemPatrimonial implements
 					.getHistorico();
 			intrumentoDePesquisa = bemPatrimonial.getHistoricoProcedencia()
 					.getInstrumentoPesquisa();
-
+			
 			for (Assunto a : bemPatrimonial.getAssuntos()) {
 				assunto += (a.getAssunto() + " ");
 			}
+			
 			for (Descritor a : bemPatrimonial.getDescritores()) {
 				descritores += (a.getDescritor() + " ");
 			}
@@ -270,8 +272,6 @@ public class EditarBemPatrimonialMB extends GerenciarBemPatrimonial implements
 		}
 		strDeBusca = "";
 		return null;
-		
-		
 		
 	}
 	public String salvarBemPatrimonial(){

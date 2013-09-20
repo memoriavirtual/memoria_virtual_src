@@ -160,8 +160,8 @@ public abstract class GerenciarBemPatrimonial implements Serializable,
 	protected String primeiroPropietario;
 	protected String historico;
 	protected String intrumentoDePesquisa;
-	protected String assunto;
-	protected String descritores;
+	protected String assunto = "";
+	protected String descritores = "";
 
 	public String salvarBemPatrimonial() {
 
