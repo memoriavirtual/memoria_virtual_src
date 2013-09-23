@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
@@ -46,6 +47,7 @@ public class Multimidia implements Serializable {
 	private long id;
 	@ManyToOne(cascade=CascadeType.ALL , fetch=FetchType.EAGER)
 	@JoinColumn(name="CONTAINERMULTIMIDIA_ID")
+	@XmlTransient
 	private ContainerMultimidia containerMultimidia;
 	private String nome; 
 	private String contentType;
@@ -74,6 +76,7 @@ public class Multimidia implements Serializable {
 	/**
 	 * @return the entidadeComMidia
 	 */
+	@XmlTransient
 	public ContainerMultimidia getEntidadeComMidia() {
 		return containerMultimidia;
 	}
@@ -138,6 +141,7 @@ public class Multimidia implements Serializable {
 	/**
 	 * @return the containerMultimidia
 	 */
+	@XmlTransient
 	public ContainerMultimidia getContainerMultimidia() {
 		return containerMultimidia;
 	}
