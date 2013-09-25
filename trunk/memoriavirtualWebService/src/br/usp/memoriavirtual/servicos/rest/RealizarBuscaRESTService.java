@@ -23,6 +23,17 @@ public class RealizarBuscaRESTService {
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 
 	@GET
+	public ArrayList<BemPatrimonial> buscar() {
+		ArrayList<BemPatrimonial> bensPatrimoniais = null;
+		try {
+			bensPatrimoniais = this.realizarBuscaEJB.buscar("");
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		}
+		return bensPatrimoniais;
+	}
+
+	@GET
 	@Path("/{stringDeBusca}")
 	public ArrayList<BemPatrimonial> buscar(@PathParam("stringDeBusca") String stringDeBusca) {
 		ArrayList<BemPatrimonial> bensPatrimoniais = null;
