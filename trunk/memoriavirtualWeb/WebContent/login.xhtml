@@ -16,7 +16,6 @@
 <h:body>
 	<f:view locale="#{facesContext.externalContext.requestLocale}">
 		<div id="container">
-
 			<div id="conteudo">
 				<h:messages id="resultado" globalOnly="false" />
 				<h:outputText value="#{mensagens.usuario}" />
@@ -29,12 +28,13 @@
 						<h:inputSecret value="#{realizarLoginMB.senha}" />
 					</div>
 					<br></br>
-						<div>
-							<h:commandButton action="#{realizarLoginMB.autenticarUsuario}"
-								value="#{mensagens.Entrar}" />
-						</div>
-						<br></br>
-						<a id="esqueceusenha" href="obternovasenha.jsf"><h:outputText  value="#{mensagens.esqueciMinhaSenha}" /></a>
+					<div>
+						<h:commandButton action="#{realizarLoginMB.autenticarUsuario}"
+							value="#{mensagens.Entrar}" />
+					</div>
+					<br></br>
+					<a id="esqueceusenha" href="obternovasenha.jsf"><h:outputText
+							value="#{mensagens.esqueciMinhaSenha}" /></a>
 				</h:form>
 			</div>
 			<!--end #conteudo-->
