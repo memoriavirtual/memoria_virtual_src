@@ -1,13 +1,11 @@
 package br.usp.memoriavirtual.controle;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,11 +28,6 @@ public class RealizarLoginMB implements Serializable {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private String usuario = "";
 	private String senha = "";
-
-	public RealizarLoginMB() {
-		super();
-		this.redirecionarUsuarioLogado();
-	}
 
 	/**
 	 * Verifica as informacões de usuário e senha na base de dados.
@@ -69,8 +62,7 @@ public class RealizarLoginMB implements Serializable {
 			/*
 			 * Coloca a lista de acessos do usuario no sessao.
 			 */
-			List<Acesso> listaAcessos = memoriaVirtualEJB
-					.listarAcessos(usuarioAutenticado);
+			List<Acesso> listaAcessos = memoriaVirtualEJB.listarAcessos(usuarioAutenticado);
 			request.getSession().setAttribute("acessos", listaAcessos);
 
 		} else {
@@ -84,26 +76,6 @@ public class RealizarLoginMB implements Serializable {
 		this.setSenha(null);
 
 		return autenticado ? "sucesso" : "falha";
-	}
-
-	public String redirecionarUsuarioLogado() {
-
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		Usuario u = (Usuario) request.getSession().getAttribute("usuario");
-
-		if (u != null) {
-			ExternalContext context = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			try {
-				context.redirect("restrito/index.jsf");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return null;
-
 	}
 
 	/**
