@@ -23,7 +23,6 @@ import br.usp.memoriavirtual.controle.BeanComMidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.utils.FacesUtil;
 
-@WebServlet(urlPatterns = "/uploadarquivo/*")
 @MultipartConfig
 public class ArquivosUploadServlet extends HttpServlet {
 
@@ -142,7 +141,7 @@ public class ArquivosUploadServlet extends HttpServlet {
 
 			// multimidia.setThumb(multimidia);
 			// Antecipando a instancia do ManegedBean antes mesmo que a
-			// página
+			// pï¿½gina
 			// esteja carregada
 			FacesContext facesContext = FacesUtil.getFacesContext(request,
 					response);
