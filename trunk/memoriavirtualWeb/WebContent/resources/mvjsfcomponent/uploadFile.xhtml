@@ -74,7 +74,7 @@
 			<h:column style="display: inline-table;">
 				<div>
 					<h:graphicImage
-						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 1)})"
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta} + 1)"
 						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 1)}&amp;thumb=true"></h:graphicImage>
 					<h:outputLabel
@@ -103,7 +103,7 @@
 			<h:column style="display: inline-table;">
 				<div>
 					<h:graphicImage
-						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 2)})"
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta} + 2)"
 						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta+2)}&amp;thumb=true"></h:graphicImage>
 					<h:outputLabel
@@ -134,7 +134,7 @@
 			<h:column style="display: inline-table;">
 				<div>
 					<h:graphicImage
-						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta + 3)})"
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta} + 3)"
 						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 3)}&amp;thumb=true"></h:graphicImage>
 					<h:outputLabel
