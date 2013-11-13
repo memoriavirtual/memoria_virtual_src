@@ -52,7 +52,7 @@
 
 				<div>
 					<h:graphicImage
-						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{(indexApresenta)})"
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta})"
 						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta)}"
 						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta)}&amp;thumb=true"></h:graphicImage>
 					<h:outputLabel class="labels">#{mensagens.multimidiaNome}</h:outputLabel>
