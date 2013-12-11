@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/componente">
+<body>
+	<ui:composition>
+		<h:outputScript library="javascript" name="jquery.js" />
+		<h:outputScript library="javascript" name="abas.js" />
+		<h:outputScript library="javascript" name="jquery.corner.js" />
+		<h:outputScript library="javascript" name="mv.js" />
+		<h:outputScript library="javascript" name="maskedinput.js" />
+		<h:outputScript library="javascript" name="mask.js" />
+		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
+
+		<mv:menu />
+		<!-- fim #menuRecipiente -->
+
+		<div id="linkSecundarioRecipiente"></div>
+		<div id="usuario">
+
+			<h:form>
+				&lt;<h:outputText value="#{usuario.id}" />&gt;,
+				<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
+			</h:form>
+			<script>
+				inicioUnity();
+			</script>
+		</div>
+	</ui:composition>
+</body>
+</html>
