@@ -17,6 +17,8 @@
 //_hiddenCategory_\:http\://mojarra.dev.java.net/mojarra_ext=false
 _hiddenCategory_\:DataPalette=false
 _hiddenCategory_\:HTML=false
+_hiddenCategory_\:ManagedBeans=false
+_hiddenCategory_\:PageVariables=false
 _hiddenCategory_\:jsp11=false
 _hiddenCategory_\:urn\:com\:sun\:jersey\:api\:view=false
 eclipse.preferences.version=1
