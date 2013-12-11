@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<cc:interface>
+	<cc:attribute name="bean"></cc:attribute>
+	<cc:attribute name="nomebean"></cc:attribute>
+	<cc:attribute name="array"></cc:attribute>
+	<cc:attribute name="typeFile"></cc:attribute>
+</cc:interface>
+
+<cc:implementation>
+
+	<div id="uploadComponente">
+		<h:outputLabel class="labels">#{mensagens.multimidiaLabel}</h:outputLabel>
+		<h:outputStylesheet name="uploadFile.css" library="mvjsfcomponent"
+			media="all" rel="stylesheet" type="text/css" />
+		<h:outputScript name="uploadFile.js" library="mvjsfcomponent"></h:outputScript>
+		<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
+		<h:outputScript name="upclick.js" library="javascript"></h:outputScript>
+
+		<div id="example-content">
+
+			<div id="frame">
+
+				<div id="image-area">
+					<h:graphicImage id="tag_imagem" library="imagens" name="espera.gif"
+						style="display: none; "></h:graphicImage>
+					<span id="drop-message">#{mensagens.multimidiaArraste}</span>
+				</div>
+
+
+			</div>
+
+
+		</div>
+
+		<h:commandButton id="botaoEscondido" type="button"
+			style="display: none;">
+			<f:ajax render="tabela" execute="@all"></f:ajax>
+
+		</h:commandButton>
+	</div>
+	<div id="tabela_imagens">
+
+		<h:dataTable id="tabela" var="indexApresenta"
+			value="#{cc.attrs.array}">
+			<h:column style="display: inline-table;">
+
+				<div>
+					<h:graphicImage
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta})"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta)}&amp;thumb=true"></h:graphicImage>
+					<h:outputLabel class="labels">#{mensagens.multimidiaNome}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						value="#{cc.attrs.bean.midias.get(indexApresenta).nome}"></h:inputTextarea>
+					<h:outputLabel class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						value="#{cc.attrs.bean.midias.get(indexApresenta).descricao}"></h:inputTextarea>
+					<h:commandLink
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 0)}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+			<h:column style="display: inline-table;">
+				<div>
+					<h:graphicImage
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta} + 1)"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 1)}&amp;thumb=true"></h:graphicImage>
+					<h:outputLabel
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+						class="labels">#{mensagens.multimidiaNome}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+						value="#{cc.attrs.bean.midias.get(indexApresenta + 1).nome}"></h:inputTextarea>
+					<h:outputLabel
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+						class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+1)}"
+						value="#{cc.attrs.bean.midias.get(indexApresenta + 1).descricao}"></h:inputTextarea>
+					<h:commandLink
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+ 1)}"
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 1)}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+			<h:column style="display: inline-table;">
+				<div>
+					<h:graphicImage
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta} + 2)"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta+2)}&amp;thumb=true"></h:graphicImage>
+					<h:outputLabel
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						class="labels">#{mensagens.multimidiaNome}</h:outputLabel>
+					<h:inputTextarea
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						class="caixadetexto"
+						value="#{cc.attrs.bean.midias.get(indexApresenta + 2).nome}"></h:inputTextarea>
+					<h:outputLabel
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						class="caixadetexto"
+						value="#{cc.attrs.bean.midias.get(indexApresenta + 2).descricao}"></h:inputTextarea>
+					<h:commandLink
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+2)}"
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 2)}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+			<h:column style="display: inline-table;">
+				<div>
+					<h:graphicImage
+						onclick="mostrarPlayerImagen('#{cc.attrs.nomebean}', #{cc.attrs.bean.midias.size()-1}, #{indexApresenta} + 3)"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						url="/multimidia?bean=#{cc.attrs.nomebean}&amp;indice=#{(indexApresenta + 3)}&amp;thumb=true"></h:graphicImage>
+					<h:outputLabel
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						class="labels">#{mensagens.multimidiaNome}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						value="#{cc.attrs.bean.midias.get((indexApresenta + 3)).nome}"></h:inputTextarea>
+					<h:outputLabel
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						class="labels">#{mensagens.multimidiaDescricao}</h:outputLabel>
+					<h:inputTextarea class="caixadetexto"
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						value="#{cc.attrs.bean.midias.get((indexApresenta + 3)).descricao}"></h:inputTextarea>
+					<h:commandLink
+						rendered="#{cc.attrs.bean.isRenderCell(indexApresenta+3)}"
+						action="#{cc.attrs.bean.removeMidia(indexApresenta + 3)}"
+						value="#{mensagens.multimidiaRemover}">
+						<h:graphicImage library="imagens" name="delete.png"
+							style="width: 10px; height: 10px; margin: 0px; margin-left: 5px; margin-top: 5px; border: none; display: inline-block;">
+						</h:graphicImage>
+					</h:commandLink>
+
+				</div>
+			</h:column>
+
+		</h:dataTable>
+
+	</div>
+
+	<script>
+		iniciarComponenteUpload("#{cc.attrs.nomebean}",
+				"#{cc.clientId}:botaoEscondido", "#{cc.clientId}:tag_imagem", "#{cc.attrs.typeFile}");
+	</script>
+</cc:implementation>
+
+</html>
