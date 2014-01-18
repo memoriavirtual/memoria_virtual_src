@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+</head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+		<ui:define name="titulo">#{mensagens.editarBemTitulo}</ui:define>
+		<ui:define name="conteudo">
+			<div class="formulario">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
+				<div class="conteudoTitulo">#{mensagens.editarBemTitulo}</div>
+				<div class="conteudoDescricao">#{mensagens.editarBemDescricao}</div>
+				<h:form method="post" prependId="false">
+					<div>
+						<h:outputLabel class="labels">#{mensagens.excluirBemPatrimonialNome}</h:outputLabel>
+						<h:inputText value="#{editarBemPatrimonialMB.nome}"
+							autocomplete="off">
+							<f:ajax event="keyup" execute="@this" render="sugestoesId"
+								listener="#{editarBemPatrimonialMB.listarBens()}" />
+						</h:inputText>
+					</div>
+					<div id="sugestoes">
+						<h:dataTable id="sugestoesId" var="bem"
+							value="#{editarBemPatrimonialMB.bens}">
+							<h:column>
+								<h:commandLink
+									action="#{editarBemPatrimonialMB.selecionarBem(bem)}">#{bem.tituloPrincipal}</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</div>
+					<div class="botao">
+						<h:commandButton id="botaoEditar"
+							value="#{mensagens.editarBemPatrimonialBotaoEditar}"
+							action="#{editarBemPatrimonialMB.selecionarBem()}">
+						</h:commandButton>
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.excluirBemPatrimonialBotaoCancelar}"
+							action="#{editarPatrimonialMB.cancelar}">
+						</h:commandButton>
+					</div>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

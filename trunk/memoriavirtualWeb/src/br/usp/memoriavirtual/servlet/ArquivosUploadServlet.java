@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +25,6 @@ import br.usp.memoriavirtual.utils.FacesUtil;
 @MultipartConfig
 public class ArquivosUploadServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -413155777348292080L;
 
 	private static final int TAMANHO_PADRAO_BUFFER = 8192;

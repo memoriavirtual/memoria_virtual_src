@@ -13,11 +13,9 @@
 </h:head>
 
 <h:body>
-<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado"   ></div>
+	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado"></div>
 	<f:view locale="#{facesContext.externalContext.requestLocale}">
 		<div id="recipiente">
-			
-			<!-- <div id="topo"></div> -->
 
 			<div id="cabecalho">
 				<ui:insert name="cabecalho">
@@ -26,18 +24,18 @@
 			</div>
 
 			<div id="conteudo">
-					<ui:insert name="conteudo">
-					</ui:insert>
+				<ui:insert name="conteudo">
+				</ui:insert>
 			</div>
 			<!-- Fim div#conteudo -->
 
 			<div id="rodape">
 				<ui:insert name="rodape">
 					<ui:include src="/restrito/fragmentos/rodapes/rodape.xhtml"></ui:include>
-					
+
 				</ui:insert>
 			</div>
-			
+
 		</div>
 		<!-- Fim div#tudo -->
 	</f:view>

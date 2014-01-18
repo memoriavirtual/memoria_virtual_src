@@ -24,9 +24,6 @@ public class EditarCadastroUsuario extends HttpServlet {
 	@EJB
 	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
 
-	/**
-	 * Serial Version UID
-	 */
 	private static final long serialVersionUID = 2734229838622329992L;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)

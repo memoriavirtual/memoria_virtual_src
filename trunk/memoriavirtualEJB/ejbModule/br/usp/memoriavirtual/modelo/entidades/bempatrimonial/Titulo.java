@@ -16,6 +16,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name = "TITULO_ID", sequenceName = "TITULO_SEQ", allocationSize = 1)
 public class Titulo implements Serializable {
 
+	public enum TipoTitulo{Equivalente, Atribuido, Subtitulo, Anterior, Posterior, Suplemento, Correlato};
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id

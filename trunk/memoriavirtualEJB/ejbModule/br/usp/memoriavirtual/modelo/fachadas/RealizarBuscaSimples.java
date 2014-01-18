@@ -17,9 +17,6 @@ import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 
@@ -84,11 +81,11 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 	}
 
 	/**
-	 * Método para gerar uma lista de strings a serem buscadas no banco a partir
-	 * de uma busca do usuário
+	 * Mï¿½todo para gerar uma lista de strings a serem buscadas no banco a partir
+	 * de uma busca do usuï¿½rio
 	 * 
 	 * @param busca
-	 *            String de busca inserida pelo usuário
+	 *            String de busca inserida pelo usuï¿½rio
 	 * @return Lista de strings a serem buscadas no banco
 	 */
 	@SuppressWarnings("rawtypes")
@@ -155,62 +152,6 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 	}
 
 	@Override
-	public BemArqueologico buscarBemArqueologico(BemPatrimonial bem)
-			throws ModeloException {
-
-		BemArqueologico bemArq;
-		Query query;
-
-		try {
-			query = entityManager
-					.createQuery("SELECT arq FROM BemArqueologico arq, BemPatrimonial b WHERE b.id = arq.id AND b.id = :parametro");
-			query.setParameter("parametro", bem.getId());
-			bemArq = (BemArqueologico) query.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ModeloException(e);
-		}
-
-		return bemArq;
-	}
-
-	@Override
-	public BemArquitetonico buscarBemArquitetonico(BemPatrimonial bem)
-			throws ModeloException {
-		BemArquitetonico bemArq;
-		Query query;
-
-		try {
-			query = entityManager
-					.createQuery("SELECT ba FROM BemArquitetonico ba, BemPatrimonial b WHERE ba.id = b.id AND b.id = :parametro");
-			query.setParameter("parametro", bem.getId());
-			bemArq = (BemArquitetonico) query.getSingleResult();
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
-
-		return bemArq;
-	}
-
-	@Override
-	public BemNatural buscarBemNatural(BemPatrimonial bem)
-			throws ModeloException {
-		BemNatural bemN;
-		Query query;
-
-		try {
-			query = entityManager
-					.createQuery("SELECT bn FROM BemNatural bn, BemPatrimonial b WHERE bn.id = b.id AND b.id = :parametro");
-			query.setParameter("parametro", bem.getId());
-			bemN = (BemNatural) query.getSingleResult();
-		} catch (Exception e) {
-			throw new ModeloException(e);
-		}
-
-		return bemN;
-	}
-
-	@Override
 	public List<Multimidia> buscarVideos(BemPatrimonial bem)
 			throws ModeloException {
 		// TODO Auto-generated method stub
@@ -232,7 +173,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 	}
 
 	/**
-	 * Classe utilizada para estabelecer os critérios de comparação entre duas
+	 * Classe utilizada para estabelecer os critï¿½rios de comparaï¿½ï¿½o entre duas
 	 * strings ponderadas.
 	 * 
 	 */
@@ -241,7 +182,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		private int peso;
 
 		/**
-		 * Construtor padrão
+		 * Construtor padrï¿½o
 		 */
 		public StringPonderada() {
 			super();

@@ -378,7 +378,7 @@ fieldset input {
 
 #sugestoesId {
 	background-color: #F7F7F7;
-	paddinh: 0px;
+	padding: 0px;
 	position: absolute;
 	border-color: black;
 	border-width: 2px;
@@ -850,7 +850,7 @@ a[class*=acaoLink] {
 
 .relacionadosBemList {
 	background-color: #F7F7F7;
-	paddinh: 0px;
+	padding: 0px;
 	position: absolute;
 	border-color: black;
 	border-width: 2px;

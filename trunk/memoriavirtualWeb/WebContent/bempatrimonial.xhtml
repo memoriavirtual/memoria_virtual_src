@@ -7,14 +7,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>#{mensagens.realizarBuscaSimplesDescricao}#{realizarBuscaSimplesMB.bem.tituloPrincipal}</title>
-<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
-<script type="text/javascript" src="./resources/javascript/jquery.js"></script>
-<script type="text/javascript" src="./resources/javascript/abas.js"></script>
-<script type="text/javascript"
-	src="./resources/javascript/jquery.corner.js"></script>
-<script type="text/javascript" src="./resources/javascript/mv.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{mensagens.realizarBuscaSimplesDescricao}#{realizarBuscaSimplesMB.bem.tituloPrincipal}</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
+	<script type="text/javascript" src="./resources/javascript/jquery.js"></script>
+	<script type="text/javascript" src="./resources/javascript/abas.js"></script>
+	<script type="text/javascript"
+		src="./resources/javascript/jquery.corner.js"></script>
+	<script type="text/javascript" src="./resources/javascript/mv.js"></script>
 </h:head>
 
 <h:body>
@@ -71,9 +71,9 @@
 
 					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemExterno} #{realizarBuscaSimplesMB.bem.externo}</h:outputLabel>
 
-					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemTipoBemPatrimonial} #{realizarBuscaSimplesMB.bem.tipoDoBemPatrimonial}</h:outputLabel>
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemTipoBemPatrimonial} #{realizarBuscaSimplesMB.bem.tipoBemPatrimonial}</h:outputLabel>
 
-					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemNumRegistro} #{realizarBuscaSimplesMB.bem.numeroDeRegistro}</h:outputLabel>
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemNumRegistro} #{realizarBuscaSimplesMB.bem.numeroRegistro}</h:outputLabel>
 
 					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemTituloComplemento} #{realizarBuscaSimplesMB.bem.complemento}</h:outputLabel>
 
@@ -127,11 +127,11 @@
 
 				<div class="caixa">
 
-					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoCaracteristicasFisicas} #{realizarBuscaSimplesMB.bem.caracteristicasFisTecExec}</h:outputLabel>
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoCaracteristicasFisicas} #{realizarBuscaSimplesMB.bem.caracteristicasFisicasTecnicasExecutivas}</h:outputLabel>
 
 					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoConteudo} #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel>
 
-					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoMeioDeAcesso} #{realizarBuscaSimplesMB.bem.meioDeAcesso}</h:outputLabel>
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoMeioDeAcesso} #{realizarBuscaSimplesMB.bem.meioAcesso}</h:outputLabel>
 
 				</div>
 
@@ -166,10 +166,6 @@
 				label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
 
 				<div class="caixa">
-
-					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemCondicoesDeAcesso} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesAcesso}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemCondicoesReproducao} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.condicoesReproducao}</h:outputLabel>
 
 					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDataRetorno} #{realizarBuscaSimplesMB.bem.disponibilidadeUsoProtecao.dataRetorno}</h:outputLabel>
 
@@ -232,134 +228,13 @@
 
 			</mv:containerExpansivo>
 
-			<mv:containerExpansivo
-				label="#{mensagens.realizarBuscaSimplesDadosArqueologicos}">
-
-				<div class="caixa">
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoAguaProxima} #{realizarBuscaSimplesMB.bemArqueologico.aguaProximo}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoAltura} #{realizarBuscaSimplesMB.bemArqueologico.altura}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoAreaTotal} #{realizarBuscaSimplesMB.bemArqueologico.areaTotal}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoComprimento} #{realizarBuscaSimplesMB.bemArqueologico.comprimento}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoExposicao} #{realizarBuscaSimplesMB.bemArqueologico.exposicao}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoLargura} #{realizarBuscaSimplesMB.bemArqueologico.largura}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoNotas} #{realizarBuscaSimplesMB.bemArqueologico.notas}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoOutros} #{realizarBuscaSimplesMB.bemArqueologico.outros}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoPossuiVegetacao} #{realizarBuscaSimplesMB.bemArqueologico.possuiVegetacao}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoProfundidade} #{realizarBuscaSimplesMB.bemArqueologico.profundidade}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoSitoDaPaisagem} #{realizarBuscaSimplesMB.bemArqueologico.sitioDaPaisagem}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arqueologico}">#{mensagens.cadastrarBemDescricaoUsoAtual} #{realizarBuscaSimplesMB.bemArqueologico.usoAtual}</h:outputLabel>
-
-				</div>
-
-			</mv:containerExpansivo>
-
-			<mv:containerExpansivo
-				label="#{mensagens.realizarBuscaSimplesDadosArquitetonicos}">
-
-				<div class="caixa">
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAlcova} #{realizarBuscaSimplesMB.bemArquitetonico.alcova}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAlturaFachadaFrontal} #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachFrontal}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.realizarBuscaSimplesAlturaFachPost} #{realizarBuscaSimplesMB.bemArquitetonico.alturaFachPosterior}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAlturaTotal} #{realizarBuscaSimplesMB.bemArquitetonico.alturaTotal}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoAreaTotal} #{realizarBuscaSimplesMB.bemArquitetonico.areaTotal}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoCondicaoTopografica} #{realizarBuscaSimplesMB.bemArquitetonico.condicaoTopografia}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoLargura} #{realizarBuscaSimplesMB.bemArquitetonico.largura}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoNdeAmbientes} #{realizarBuscaSimplesMB.bemArquitetonico.numeroDeAmbientes}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoNdePavimentos} #{realizarBuscaSimplesMB.bemArquitetonico.numeroDePavimentos}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoOutros} #{realizarBuscaSimplesMB.bemArquitetonico.outros}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoPeDireitoTerreo} #{realizarBuscaSimplesMB.bemArquitetonico.peDireitoTerreo}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoPorao} #{realizarBuscaSimplesMB.bemArquitetonico.porao}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoProfundidade} #{realizarBuscaSimplesMB.bemArquitetonico.profundidade}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoSotao} #{realizarBuscaSimplesMB.bemArquitetonico.sotao}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoPeDireitoTipo} #{realizarBuscaSimplesMB.bemArquitetonico.tipoPeDireito}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.arquitetonico}">#{mensagens.cadastrarBemDescricaoUso} #{realizarBuscaSimplesMB.bemArquitetonico.uso}</h:outputLabel>
-
-				</div>
-
-			</mv:containerExpansivo>
-
-			<mv:containerExpansivo
-				label="#{mensagens.realizarBuscaSimplesDadosNaturais}">
-
-				<div class="caixa">
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.natural}">#{mensagens.cadastrarBemDescricaoCaracteristicasAmbientais} #{realizarBuscaSimplesMB.bemNatural.caracteristicasAmbientais}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.natural}">#{mensagens.cadastrarBemDescricaoCaracteristicasDoMeioAntropico} #{realizarBuscaSimplesMB.bemNatural.meioAntropico}</h:outputLabel>
-
-					<h:outputLabel class="resultadosBusca"
-						rendered="#{realizarBuscaSimplesMB.natural}">#{mensagens.cadastrarBemDescricaoRelevo} #{realizarBuscaSimplesMB.bemNatural.relevo}</h:outputLabel>
-
-				</div>
-
-			</mv:containerExpansivo>
-
-			<mv:containerExpansivo id="midiasExpansivo"
-				label="#{mensagens.cadastrarBemAudioVisual}">
+			<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
 
 				<h:dataTable value="#{realizarBuscaSimplesMB.apresentaMidias}"
 					var="index" id="resultadosMidias">
 					<h:column>
 						<h:graphicImage
-							onclick="mostrarPlayerImagen('realizarBuscaSimplesMB', #{realizarBuscaSimplesMB.bem.containerMultimidia.multimidia.size()-1}, #{(index)})"
+							onclick="mostrarPlayerImagen('realizarBuscaSimplesMB', #{realizarBuscaSimplesMB.bem.containerMultimidia.multimidia.size()-1}, #{index})"
 							url="#{realizarBuscaSimplesMB.url(index)}">
 						</h:graphicImage>
 						<div>

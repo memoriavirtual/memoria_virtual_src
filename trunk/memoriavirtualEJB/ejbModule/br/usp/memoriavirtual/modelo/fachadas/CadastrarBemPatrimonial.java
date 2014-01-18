@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -21,16 +22,12 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
 
-/**
- * @author bigmac
- * 
- */
 @Stateless(mappedName = "CadastrarBemPatrimonial")
 public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
-	
+
 	@EJB
 	private EditarBemPatrimonialRemote editarBemPatrimonialEJB;
 
@@ -85,7 +82,7 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 			throw new ModeloException(e);
 		}
 		for (Titulo a : bem.getTitulos())
-			a.setBempatrimonial(bem); 
+			a.setBempatrimonial(bem);
 		for (Autoria a : bem.getAutorias())
 			a.setBemPatrimonial(bem);
 
@@ -93,9 +90,29 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 
 	@Override
 	public void salvarBemPatrimonial(BemPatrimonial bem) throws ModeloException {
-		
-		editarBemPatrimonialEJB.salvarBemPatrimonial(bem);
-		
+
+		editarBemPatrimonialEJB.editarBemPatrimonial(bem);
+
+	}
+
+	@Override
+	public Instituicao recuperarInstituicao(String id) throws ModeloException {
+		try {
+			Instituicao i = entityManager.find(Instituicao.class, new Long(id));
+			return i;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
+
+	@Override
+	public Autor recuperarAutor(String id) throws ModeloException {
+		try {
+			Autor a = entityManager.find(Autor.class, new Long(id));
+			return a;
+		} catch (Exception e) {
+			throw new ModeloException();
+		}
 	}
 
 }

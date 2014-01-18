@@ -1,312 +1,181 @@
-/**
- * 
- */
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
+import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
-import br.usp.memoriavirtual.modelo.entidades.Multimidia;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Assunto;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArqueologico;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemArquitetonico;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemNatural;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.StringContainer;
 
-/**
- * @author mac
- * 
- */
 @SessionScoped
-public class EditarBemPatrimonialMB extends GerenciarBemPatrimonial implements
-		BeanComMidia, Serializable {
+public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
+		Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2482974978856128676L;
+	private String nome = "";
 
 	@EJB
 	private EditarBemPatrimonialRemote editarBemPatrimonialEJB;
 
-	//private String strDeBusca;
-	//private List<BemPatrimonial> bemPatrimoniais = new ArrayList<BemPatrimonial>();
-	private boolean etapa1 = true;
-	private boolean etapa2 = false;
-	//private boolean listarTodos = false;
-	//@EJB
-	//private RealizarBuscaSimplesRemote realizarBuscaEJB;
-	
+	@EJB
+	private RealizarBuscaSimplesRemote realizarBuscaSimplesEJB;
 
-	/**
-	 * 
-	 */
+	@EJB
+	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
+
+	@EJB
+	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
+
 	public EditarBemPatrimonialMB() {
 
 	}
 
-	public void listarBemPatrimonial(AjaxBehaviorEvent event) {
+	public String editarBemPatrimonial() {
+		if (this.bemPatrimonial.getTituloPrincipal() != "") {
 
-		this.listarBemPatrimonial();
+			this.bemPatrimonial.setHistoricoProcedencia(historicoProcedencia);
+			this.bemPatrimonial.setTitulos(titulos);
+			this.bemPatrimonial.setAutorias(autorias);
+			this.bemPatrimonial.setProducao(producao);
+			this.bemPatrimonial
+					.setDisponibilidadeUsoProtecao(disponibilidadeUsoProtecao);
+			this.bemPatrimonial.setDiagnostico(diagnostico);
+			this.bemPatrimonial.setIntervencoes(intervencoes);
+			this.bemPatrimonial.setPesquisadores(pesquisadores);
+			this.setContainerMultimidia(containerMultimidia);
+			this.setBensRelacionados(bensRelacionados);
 
-	}
-
-	public String selecionarBemPatrimonial() {
-		return null;
-	}
-
-	
-
-	
-	
-	public String selecionarBemPatrimonial(BemPatrimonial bemPatrimonial) {
-		
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (!bemPatrimonial.getTituloPrincipal().equals(
-				bundle.getString("listarTodos"))) {
-
-			intervencoes = bemPatrimonial.getIntervencoes();
-			pesquisadores = bemPatrimonial.getPesquisadores();
-			fontesInformacao = bemPatrimonial.getFontesInformacao();
-			
-			midias.clear();
-			midias.addAll(bemPatrimonial
-					.getContainerMultimidia().getMultimidia()) ;
-
-			geralExterno = bemPatrimonial.isExterno();
-			geralNomeInstituicao = bemPatrimonial.getInstituicao().getNome();
-			// geralNaturezaBem = bemPatrimonial.get;
-			geralTipoDoBemPatrimonial = bemPatrimonial
-					.getTipoDoBemPatrimonial();
-			geralNumeroRegistro = bemPatrimonial.getNumeroDeRegistro();
-			geralColecao = bemPatrimonial.getColecao();
-			geralComplemento = bemPatrimonial.getComplemento();
-			geralLatitude = bemPatrimonial.getLatitude();
-			geralLongitude = bemPatrimonial.getLongitude();
-			geralTitulos = bemPatrimonial.getTitulos();
-			
-			geralTituloPrincipal = bemPatrimonial.getTituloPrincipal();
-			autorias = bemPatrimonial.getAutorias();
-
-			producaoLocal = bemPatrimonial.getProducao().getLocal();
-			producaoAno = bemPatrimonial.getProducao().getAno();
-			producaoEdicao = bemPatrimonial.getProducao().getEdicao();
-			producaoOutrasRes = bemPatrimonial.getProducao()
-					.getOutrasResponsabilidades();
-
-			caracteristicasFisicas = bemPatrimonial
-					.getCaracteristicasFisTecExec();
-
-			// Arqueologico
-			if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
-					.getString("cadastrarBemTipoLista0"))) {
-				condicaoTopografica = ((BemArqueologico) bemPatrimonial)
-						.getCondicaoTopografica();
-				sitioDaPaisagem = ((BemArqueologico) bemPatrimonial)
-						.getSitioDaPaisagem();
-				aguaProxima = ((BemArqueologico) bemPatrimonial)
-						.getAguaProximo();
-				possuiVegetacao = ((BemArqueologico) bemPatrimonial)
-						.getPossuiVegetacao();
-				exposicao = ((BemArqueologico) bemPatrimonial).getExposicao();
-				usoAtual = ((BemArqueologico) bemPatrimonial).getUsoAtual();
-				descricaoOutros = ((BemArqueologico) bemPatrimonial)
-						.getOutros();
-				descricaoNotas = ((BemArqueologico) bemPatrimonial).getNotas();
-				this.areaTotal = ((BemArqueologico) bemPatrimonial)
-						.getAreaTotal();
-				this.comprimento = ((BemArqueologico) bemPatrimonial)
-						.getComprimento();
-				this.altura = ((BemArqueologico) bemPatrimonial).getAltura();
-				this.largura = ((BemArqueologico) bemPatrimonial).getLargura();
-				this.profundidade = ((BemArqueologico) bemPatrimonial)
-						.getProfundidade();
-
-				estadoConservPreserv = bemPatrimonial.getDiagnostico()
-						.getEstPreservacao();
-				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
-						.getNotaEstConservacao();
-			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
-					.getString("cadastrarBemTipoLista4"))) {
-				// Arquitetonico
-				condicaoTopografica = ((BemArquitetonico) bemPatrimonial)
-						.getCondicaoTopografia();
-				this.uso = ((BemArquitetonico) bemPatrimonial).getUso();
-				this.numPavimentos = ((BemArquitetonico) bemPatrimonial)
-						.getNumeroDePavimentos();
-				numAmbientes = ((BemArquitetonico) bemPatrimonial)
-						.getNumeroDeAmbientes();
-				alcova = ((BemArquitetonico) bemPatrimonial).getAlcova();
-				porao = ((BemArquitetonico) bemPatrimonial).getPorao();
-				sotao = ((BemArquitetonico) bemPatrimonial).getSotao();
-				descricaoOutros = ((BemArquitetonico) bemPatrimonial)
-						.getOutros();
-				areaTotal = ((BemArquitetonico) bemPatrimonial).getAreaTotal();
-				alturaFachadaFrontal = ((BemArquitetonico) bemPatrimonial)
-						.getAlturaFachFrontal();
-				this.alturaFachadaSuperior = ((BemArquitetonico) bemPatrimonial)
-						.getAlturaFachPosterior();
-				this.largura = ((BemArquitetonico) bemPatrimonial).getLargura();
-				profundidade = ((BemArquitetonico) bemPatrimonial)
-						.getProfundidade();
-				alturaTotal = ((BemArquitetonico) bemPatrimonial)
-						.getAlturaTotal();
-				peDireitoTerreo = ((BemArquitetonico) bemPatrimonial)
-						.getPeDireitoTerreo();
-				peDireitoTipo = ((BemArquitetonico) bemPatrimonial)
-						.getTipoPeDireito();
-
-				this.estadoPreser = bemPatrimonial.getDiagnostico()
-						.getEstPreservacao();
-				this.estadoConser = bemPatrimonial.getDiagnostico()
-						.getEstConservacao();
-				this.estadoConservNotas = bemPatrimonial.getDiagnostico()
-						.getNotaEstConservacao();
-			} else if (this.geralTipoDoBemPatrimonial.equalsIgnoreCase(bundle
-					.getString("cadastrarBemTipoLista6"))) {
-				// System.out.println("natural");
-				relevo = ((BemNatural) bemPatrimonial).getRelevo();
-				caracteristicasAntropico = ((BemNatural) bemPatrimonial)
-						.getMeioAntropico();
-				caracteristicasAmbientais = ((BemNatural) bemPatrimonial)
-						.getCaracteristicasAmbientais();
-
-				this.estadoConservPreserv = ((BemNatural) bemPatrimonial)
-						.getDiagnostico().getEstConservacao();
-				this.estadoConservNotas = ((BemNatural) bemPatrimonial)
-						.getDiagnostico().getNotaEstConservacao();
-			} else {
-				this.bemPatrimonial.setDiagnostico(new Diagnostico(
-						this.estadoConservPreserv, this.estadoConservNotas));
-			}
-
-			disponibilidadeDoBem = bemPatrimonial
-					.getDisponibilidadeUsoProtecao().getDisponibilidade();
-			condicoesDeAcesso = bemPatrimonial.getDisponibilidadeUsoProtecao()
-					.getCondicoesAcesso();
-			dataDeRetorno = bemPatrimonial.getDisponibilidadeUsoProtecao()
-					.getDataRetorno();
-			condicoesDeReproducao = bemPatrimonial
-					.getDisponibilidadeUsoProtecao().getCondicoesReproducao();
-			notasUsoAproveitamento = bemPatrimonial
-					.getDisponibilidadeUsoProtecao()
-					.getNotasUsoAproveitamento();
-			protecao = bemPatrimonial.getDisponibilidadeUsoProtecao()
-					.getProtecao();
-			instituicaoProtetora = bemPatrimonial
-					.getDisponibilidadeUsoProtecao().getProtetoraInstituicao();
-			legislacaoNprocesso = bemPatrimonial
-					.getDisponibilidadeUsoProtecao().getLegislacao();
-
-			tipoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
-					.getTipoAquisicao();
-			valorVenalEpocaTransacao = bemPatrimonial
-					.getHistoricoProcedencia().getValorVenalTransacao();
-			dataAquisicaoDocumento = bemPatrimonial.getHistoricoProcedencia()
-					.getDataAquisicao();
-			documentoDeAquisicao = bemPatrimonial.getHistoricoProcedencia()
-					.getDadosDocTransacao();
-			primeiroPropietario = bemPatrimonial.getHistoricoProcedencia()
-					.getPrimeiroProprietario();
-			historico = bemPatrimonial.getHistoricoProcedencia()
-					.getHistorico();
-			intrumentoDePesquisa = bemPatrimonial.getHistoricoProcedencia()
-					.getInstrumentoPesquisa();
-			
-			for (Assunto a : bemPatrimonial.getAssuntos()) {
-				assunto += (a.getAssunto() + " ");
-			}
-			
-			for (Descritor a : bemPatrimonial.getDescritores()) {
-				descritores += (a.getDescritor() + " ");
-			}
-
-			// apresentações
-			int aux = 0;
-			for (@SuppressWarnings("unused") Multimidia a : this.midias) {
-				aux += 1;
-				if ((aux % 4) == 1) {
-					Integer mult = aux - 1;
-					this.ApresentaMidias.add(mult);
-
-				}
-			}
-			aux = 0;
-			for (Autoria b : this.autorias) {
-				if (aux < Autoria.TipoAutoria.values().length - 1) {
-					aux += 1;
-					ApresentaAutoria c = new ApresentaAutoria();
-					c.setNomeAutor(b.getNomeAutor());
-					c.setTipoAutoria(this.getTipoAutoria(b.getTipoAutoria()));
-					this.apresentaAutorias.add(c);
-					
-				}
-			}
-			
-			bensRelacionados = bemPatrimonial.getBensrelacionados();
-						
-			id = bemPatrimonial.getId();
-			this.etapa1 = false;
-			this.etapa2 = true;
-		}else{
-			bemPatrimoniais.clear();
 			try {
-				this.bemPatrimoniais = realizarBuscaEJB.buscar("");
+
+				for (Autoria a : this.autorias) {
+					Autor autor = this.cadastrarBemPatrimonialEJB
+							.recuperarAutor(a.getAutor().getNome());
+					a.setAutor(autor);
+				}
+
+				Instituicao i = this.cadastrarBemPatrimonialEJB
+						.recuperarInstituicao(this.instituicao);
+
+				this.bemPatrimonial.setInstituicao(i);
+				Set<Assunto> assuntosSet = new TreeSet<Assunto>();
+				String assuntosArray[] = assuntos.split(" ");
+				Assunto a = new Assunto();
+				for (String s : assuntosArray) {
+					a.setAssunto(s);
+					assuntosSet.add(a);
+				}
+
+				Set<Descritor> descritoresSet = new TreeSet<Descritor>();
+				String descritoresArray[] = this.descritores.split(" ");
+				Descritor d = new Descritor();
+				for (String s : descritoresArray) {
+					d.setDescritor(s);
+					descritoresSet.add(d);
+				}
+
+				this.bemPatrimonial.setAssuntos(assuntosSet);
+				this.bemPatrimonial.setDescritores(descritoresSet);
+
+				List<String> fontesInformacaoLista = new ArrayList<String>();
+				for (StringContainer s : this.fontesInformacao) {
+					fontesInformacaoLista.add(s.getValor());
+				}
+
+				this.containerMultimidia.setMultimidia(this.midias);
+				this.bemPatrimonial
+						.setContainerMultimidia(this.containerMultimidia);
+
+				this.editarBemPatrimonialEJB
+						.editarBemPatrimonial(bemPatrimonial);
+				
+				this.zerar();
+
+				MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
+						"resultado");
 
 			} catch (ModeloException e) {
+				MensagensDeErro
+						.getErrorMessage("cadastrarBemErro", "resultado");
 				e.printStackTrace();
+				return null;
 			}
+		} else {
+			MensagensDeErro.getErrorMessage("cadastrarBemErro", "resultado");
+			return null;
 		}
-		strDeBusca = "";
+
 		return null;
-		
-	}
-	public String salvarBemPatrimonial(){
-		super.salvarBemPatrimonial();
-		this.zerarMB();
-		return null;
-		
-	}
-	public String zerarMB(){
-		super.zerarMB();
-		this.etapa2 = false;
-		this.etapa1 = true;
-		strDeBusca = "";
-		return null;
-		
-	}
-	
-
-
-	public boolean isEtapa1() {
-		return etapa1;
 	}
 
-	public void setEtapa1(boolean etapa1) {
-		this.etapa1 = etapa1;
+	public void listarBens() {
+		try {
+			this.bens = realizarBuscaSimplesEJB.buscar(this.nome);
+		} catch (ModeloException e1) {
+			e1.printStackTrace();
+			MensagensDeErro.getErrorMessage("erro", "resultado");
+		}
 	}
 
-	public boolean isEtapa2() {
-		return etapa2;
+	public String selecionarBem(BemPatrimonial bem) {
+		this.bemPatrimonial = bem;
+		return "editarbempatrimonial.jsf";
 	}
 
-	public void setEtapa2(boolean etapa2) {
-		this.etapa2 = etapa2;
+	public String selecionarBem() {
+		try {
+			this.listarBens();
+			if (this.bens.size() == 1) {
+				return this.selecionarBem(this.bens.get(0));
+			} else {
+				MensagensDeErro.getErrorMessage("erro", "resultado");
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			MensagensDeErro.getErrorMessage("erro", "resultado");
+			return null;
+		}
 	}
 
-	
+	// getters e setters
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public BemPatrimonial getBemPatrimonial() {
+		return bemPatrimonial;
+	}
+
+	public void setBemPatrimonial(BemPatrimonial bem) {
+		this.bemPatrimonial = bem;
+	}
+
+	public List<BemPatrimonial> getBens() {
+		return bens;
+	}
+
+	public void setBens(List<BemPatrimonial> bens) {
+		this.bens = bens;
+	}
 }
