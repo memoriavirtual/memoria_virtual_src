@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+</head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+
+		<ui:define name="titulo">#{mensagens.enviarconvite_title}</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="formulario">
+				<div class="erroPrincipal">
+					<h:messages id="resultado" infoClass="sucesso" errorClass="erro"
+						warnClass="aviso" globalOnly="true"></h:messages>
+				</div>
+
+				<div class="conteudoTitulo">#{mensagens.enviarconvite_title}</div>
+				<div class="conteudoDescricao">#{mensagens.enviarconvite_descricao}</div>
+
+				<h:form method="post" prependId="false">
+					<fieldset>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarconvite_email}</h:outputLabel>
+
+							<h:dataTable id="dataTableEmails" var="email"
+								value="#{enviarConviteMB.listaEmails}">
+								<h:column>
+									<h:inputText id="campoEmail" value="#{email.email}">
+										<f:ajax event="blur" execute="@all" render="@all"
+											listener="#{enviarConviteMB.validateEmail}" />
+									</h:inputText>
+									<h:commandLink action="#{enviarConviteMB.deleteEmail(email)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png" class="delete">
+										</h:graphicImage>
+									</h:commandLink>
+
+									<div></div>
+									<h:message for="layout" id="layout" forceId="true"
+										infoClass="sucesso" errorClass="erro" warnClass="aviso">
+									</h:message>
+								</h:column>
+							</h:dataTable>
+
+							<h:commandLink class="labels"
+								action="#{enviarConviteMB.addEmail}"
+								value="#{mensagens.enviarconvite_adicionaremail}" />
+
+							<div></div>
+							<h:message for="validacaoEmails" id="validacaoEmails"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarconvite_validade}</h:outputLabel>
+							<h:selectOneMenu value="#{enviarConviteMB.validade}">
+								<f:selectItems value="#{enviarConviteMB.validadeDias}" />
+								<f:ajax event="change" execute="@this"
+									render="validacaoValidade"
+									listener="#{enviarConviteMB.validateValidade}" />
+							</h:selectOneMenu>
+							<div></div>
+							<h:message id="validacaoValidade" for="validacaoValidade"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarConviteAdministrador}</h:outputLabel>
+							<h:selectBooleanCheckbox
+								rendered="#{enviarConviteMB.mostrarAdministrador()}"
+								value="#{enviarConviteMB.administrador}">
+								<f:ajax execute="@all" render="@form" event="change"
+									listener="#{enviarConviteMB.alterarAdministrador}" />
+							</h:selectBooleanCheckbox>
+						</div>
+
+						<div>
+							<h:dataTable value="#{enviarConviteMB.acessos}" var="acesso">
+								<h:column>
+									<h:outputLabel class="labels">#{mensagens.enviarconvite_niveldeacesso}</h:outputLabel>
+									<h:selectOneMenu value="#{acesso.grupo.id}">
+										<f:selectItems value="#{enviarConviteMB.niveisPermitidos}"></f:selectItems>
+									</h:selectOneMenu>
+									<h:outputLabel class="labels">#{mensagens.enviarconvite_instituicao}</h:outputLabel>
+									<h:selectOneMenu value="#{acesso.instituicao.nome}">
+										<f:selectItems
+											value="#{enviarConviteMB.instituicoesPermitidas}"></f:selectItems>
+									</h:selectOneMenu>
+									<h:commandLink class="labels"
+										action="#{enviarConviteMB.removerAcesso(acesso)}">#{mensagens.enviarConviteRemoverAcesso}</h:commandLink>
+								</h:column>
+
+							</h:dataTable>
+							<h:commandLink class="labels"
+								action="#{enviarConviteMB.adicionarAcesso()}">#{mensagens.enviarConviteAdicionarAcesso}</h:commandLink>
+						</div>
+
+						<div>
+							<h:outputLabel class="labels">#{mensagens.enviarConviteMensagem}</h:outputLabel>
+							<h:inputTextarea id="mensagemPersonalizada" cols="30" rows="10"
+								value="#{enviarConviteMB.mensagem}" />
+							<div></div>
+							<h:message id="validacaoMensagem" for="validacaoMensagem"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+
+						</div>
+					</fieldset>
+					<div class="botao">
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.enviarConviteEnviar}"
+							action="#{enviarConviteMB.enviarConvite}">
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.enviarConviteResetar}" type="reset">
+						</h:commandButton>
+
+					</div>
+				</h:form>
+			</div>
+			<!-- end .formulario-->
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
