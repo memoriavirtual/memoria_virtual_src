@@ -21,14 +21,11 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 /**
- * Mananged Bean responsável pelo controle do cadaStro de uma nova
- * instituição
+ * Mananged Bean responsável pelo controle do cadaStro de uma nova instituição
  */
 
-public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
+public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 
-	
-	
 	/**
 	 * 
 	 */
@@ -38,10 +35,10 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	@EJB
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
 	protected String slot = "arquivo0";
-	
+
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
-	
+
 	protected String nome = "";
 	protected String localizacao = "";
 	protected String endereco = "";
@@ -64,25 +61,22 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	protected String sinteseHistorica = "";
 	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
 
-	/**
-	 * Construtor padrão
-	 */
 	public CadastrarInstituicaoMB() {
 
 	}
 
 	public String cadastrarInstituicao() {
-		if (this.validateNome() &&  this.validateCep() && this.validateTelefone()) {
+		if (this.validateNome() && this.validateCep()
+				&& this.validateTelefone()) {
 			Instituicao instituicao = new Instituicao(this.nome,
-					this.localizacao, this.endereco, this.cidade, this.estado,this.pais,
-					this.cep, this.telefone, this.caixaPostal, this.email,
-					this.URL, this.identificacaoProprietario,
+					this.localizacao, this.endereco, this.cidade, this.estado,
+					this.pais, this.cep, this.telefone, this.caixaPostal,
+					this.email, this.URL, this.identificacaoProprietario,
 					this.administradorPropriedade, this.latitude,
 					this.longitude, this.altitude, this.tipoPropriedade,
-					this.protecaoExistente, this.legislacao , this.sinteseHistorica);
-			// como n�o � necessario a aprova��o de nenhum outro
-			// administrador
-			// A validade do registro j� � setada como verdadeira.
+					this.protecaoExistente, this.legislacao,
+					this.sinteseHistorica);
+
 			instituicao.setValidade(true);
 
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -103,15 +97,15 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 					.equals(bundle
 							.getString("cadastrarInstituicaoEscolhaProtecaoExistente")))
 				instituicao.setProtecaoExistente("");
-			
-			//adcionando os arquivos a instituicao
-			for(Multimidia i : midias){
+
+			for (Multimidia i : midias) {
 				this.containerMultimidia.addMultimidia(i);
 			}
+
 			instituicao.setContainerMultimidia(containerMultimidia);
-			// Cadastra a instituicao no banco de dados
+
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
-			// Testa se a institui��o foi gravada
+
 			if (!memoriaVirtualEJB
 					.verificarDisponibilidadeNomeInstituicao(this.nome)) {
 				this.resetCadastrarinstituicao();
@@ -124,7 +118,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		this.resetCadastrarinstituicao();
 		return null;
 	}
-	
+
 	/**
 	 * @return the midias
 	 */
@@ -133,23 +127,24 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	}
 
 	/**
-	 * @param midias the midias to set
+	 * @param midias
+	 *            the midias to set
 	 */
 	public void setMidias(ArrayList<Multimidia> midias) {
 		this.midias = midias;
 	}
 
-	public void adicionarMidia (Multimidia midia) {
-		this.midias.add( midia);
-		
-		if((this.midias.size() % 4 ) == 1  ){
-			Integer mult = this.midias.size() -1;
+	public void adicionarMidia(Multimidia midia) {
+		this.midias.add(midia);
+
+		if ((this.midias.size() % 4) == 1) {
+			Integer mult = this.midias.size() - 1;
 			this.ApresentaMidias.add(mult);
-			
+
 		}
 	}
-		
-	public String resetCadastrarinstituicao() {	
+
+	public String resetCadastrarinstituicao() {
 		this.nome = "";
 		this.localizacao = "";
 		this.endereco = "";
@@ -246,16 +241,8 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	 */
 	public List<SelectItem> getEstadoSigla() {
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
 		List<SelectItem> estados = new ArrayList<SelectItem>();
 
-		estados.add(new SelectItem(bundle
-				.getString("cadastrarInstituicaoEscolhaEstado"), bundle
-				.getString("cadastrarInstituicaoEscolhaEstado")));
 		estados.add(new SelectItem("AL", "AL"));
 		estados.add(new SelectItem("AM", "AM"));
 		estados.add(new SelectItem("AP", "AP"));
@@ -365,10 +352,6 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 
 		tiposPropriedade
 				.add(new SelectItem(
-						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade"),
-						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedade")));
-		tiposPropriedade
-				.add(new SelectItem(
 						"Publica",
 						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedadePublica")));
 		tiposPropriedade
@@ -397,10 +380,6 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 
 		List<SelectItem> protecaoExistentes = new ArrayList<SelectItem>();
 
-		protecaoExistentes
-				.add(new SelectItem(
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente"),
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistente")));
 		protecaoExistentes
 				.add(new SelectItem(
 						"Publica",
@@ -614,9 +593,10 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	public boolean validateNome() {
 
 		if (this.nome.equals("")) {
-			
-			String args[] = {"nome"};
-			MensagensDeErro.getErrorMessage("campo_vazio", args, "validacaoNome");
+
+			String args[] = { "nome" };
+			MensagensDeErro.getErrorMessage("campo_vazio", args,
+					"validacaoNome");
 			return false;
 		} else if (!memoriaVirtualEJB
 				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
@@ -951,7 +931,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		}
 		return true;
 	}
-	
+
 	public String getSlot() {
 		return slot;
 	}
@@ -959,6 +939,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	public void setSlot(String slot) {
 		this.slot = slot;
 	}
+
 	/**
 	 * Validacao do Legislacao
 	 */
@@ -975,7 +956,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do Legislacao
 	 */
@@ -992,15 +973,16 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		}
 		return true;
 	}
-	
-	
+
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
 		return this.midias;
 	}
+
 	public String removeMidia(String midia) {
 		return null;
 	}
+
 	@Override
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
@@ -1015,7 +997,8 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	}
 
 	/**
-	 * @param sinteseHistorica the sinteseHistorica to set
+	 * @param sinteseHistorica
+	 *            the sinteseHistorica to set
 	 */
 	public void setSinteseHistorica(String sinteseHistorica) {
 		this.sinteseHistorica = sinteseHistorica;
@@ -1024,10 +1007,10 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	@Override
 	public String removeMidia(int index) {
 		this.midias.remove(index);
-		
-		if(this.midias.size() % 4  == 0){
-			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
-		} 
+
+		if (this.midias.size() % 4 == 0) {
+			this.ApresentaMidias.remove(this.ApresentaMidias.size() - 1);
+		}
 		return null;
 	}
 
@@ -1038,17 +1021,18 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
 		ApresentaMidias = apresentaMidias;
 	}
-	public boolean  isRenderCell(int index) {
-		if(this.midias.size() > index ){
+
+	public boolean isRenderCell(int index) {
+		if (this.midias.size() > index) {
 			return true;
 		}
 		return false;
 	}
-	
-	public String cancelar(){
-		
+
+	public String cancelar() {
+
 		this.resetCadastrarinstituicao();
 		return "/restrito/index.jsf";
-		
+
 	}
 }

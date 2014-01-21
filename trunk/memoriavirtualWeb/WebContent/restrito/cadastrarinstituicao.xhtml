@@ -9,338 +9,295 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
-<title>Cadastrar Instituicao</title>
 </head>
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-
 		<ui:define name="titulo">#{mensagens.cadastrarInstituicaoTitle}</ui:define>
 
-
-
 		<ui:define name="conteudo">
-			<div class="formulario">
+			<div class="col-md-12">
 
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro"></h:message>
 				</div>
 
-				<div class="conteudoTitulo">#{mensagens.cadastrarInstituicaoTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.cadastrarInstituicaoDescricao}</div>
-				<h:form method="post" prependId="false">
-					<fieldset>
+				<h1>#{mensagens.cadastrarInstituicaoTitle}</h1>
+				<h2>#{mensagens.cadastrarInstituicaoDescricao}</h2>
+				<h:form class="form-horizontal" role="form" method="post"
+					prependId="false">
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoNome}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.nome}">
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="nome">#{mensagens.cadastrarInstituicaoNome}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText value="#{cadastrarInstituicaoMB.nome}"
+								class="form-control" id="nome">
 								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{cadastrarInstituicaoMB.validateNome}" />
+									listener="#{cadastrarInstituicaoMB.validateNome}"
+									onevent="erroNome" />
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+						<div class="col-md-1">
+							<div class="hidden">
+								<h:message id="validacaoNome" for="validacaoNome"
+									infoClass="has-success" errorClass="has-error"
+									warnClass="has-warning">
+								</h:message>
+							</div>
+							<i class="fa fa-times font-size-20 hidden" id="icone-erro-nome">
+							</i>
+						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCidade}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.cidade}">
-								<f:ajax event="blur" execute="@this" render="validacaoCidade"
-									listener="#{cadastrarInstituicaoMB.validateCidade}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="cidade">#{mensagens.cadastrarInstituicaoCidade}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="cidade"
+								value="#{cadastrarInstituicaoMB.cidade}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoCidade" for="validacaoCidade"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLocalizacao}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.localizacao}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoLocalizacao"
-									listener="#{cadastrarInstituicaoMB.validateLocalizacao}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="localizacao">#{mensagens.cadastrarInstituicaoLocalizacao}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="localizacao"
+								value="#{cadastrarInstituicaoMB.localizacao}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoLocalizacao" for="validacaoLocalizacao"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoEstado}</h:outputLabel>
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="estado">#{mensagens.cadastrarInstituicaoEstado}</h:outputLabel>
+						<div class="col-md-8">
 							<h:selectOneMenu value="#{cadastrarInstituicaoMB.estado}"
-								class="options">
+								class="form-control" id="estado">
 								<f:selectItems value="#{cadastrarInstituicaoMB.estadoSigla}" />
-								<f:ajax event="blur" execute="@this" render="validacaoEstado"
-									listener="#{cadastrarInstituicaoMB.validateEstado}" />
 							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoEstado" for="validacaoEstado"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoPais}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.pais}">
-								<f:ajax event="blur" execute="@this" render="validacaoPais"
-									listener="#{cadastrarInstituicaoMB.validatePais}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="pais">#{mensagens.cadastrarInstituicaoPais}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="pais"
+								value="#{cadastrarInstituicaoMB.pais}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoPais" for="validacaoPais"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoEndereco}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.endereco}">
-								<f:ajax event="blur" execute="@this" render="validacaoEndereco"
-									listener="#{cadastrarInstituicaoMB.validateEndereco}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="endereco">#{mensagens.cadastrarInstituicaoEndereco}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="endereco"
+								value="#{cadastrarInstituicaoMB.endereco}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoEndereco" for="validacaoEndereco"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCEP}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.cep}">
-								<f:ajax event="blur" execute="@this" render="validacaoCep"
-									listener="#{cadastrarInstituicaoMB.validateCep}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label" for="cep">#{mensagens.cadastrarInstituicaoCEP}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="cep"
+								value="#{cadastrarInstituicaoMB.cep}">
 							</h:inputText>
-							<div>xxxxx-xxx</div>
-							<h:message id="validacaoCep" for="validacaoCep"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCaixaPostal}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.caixaPostal}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoCaixaPostal"
-									listener="#{cadastrarInstituicaoMB.validateCaixaPostal}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="caixaPostal">#{mensagens.cadastrarInstituicaoCaixaPostal}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="caixaPostal"
+								value="#{cadastrarInstituicaoMB.caixaPostal}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoCaixaPostal" for="validacaoCaixaPostal"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoTelefone}</h:outputLabel>
-							<h:inputText id="telefone"
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="telefone">#{mensagens.cadastrarInstituicaoTelefone}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="telefone"
 								value="#{cadastrarInstituicaoMB.telefone}">
-								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
-									listener="#{cadastrarInstituicaoMB.validateTelefone}" />
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoTelefone" for="validacaoTelefone"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoEmail}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.email}">
-								<f:ajax event="blur" execute="@this" render="validacaoEmail"
-									listener="#{cadastrarInstituicaoMB.validateEmail}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="email">#{mensagens.cadastrarInstituicaoEmail}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="email"
+								value="#{cadastrarInstituicaoMB.email}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoEmail" for="validacaoEmail"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoURL}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.URL}">
-								<f:ajax event="blur" execute="@this" render="validacaoURL"
-									listener="#{cadastrarInstituicaoMB.validateURL}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label" for="url">#{mensagens.cadastrarInstituicaoURL}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="url"
+								value="#{cadastrarInstituicaoMB.URL}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoURL" for="validacaoURL"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoIdentificacaoProprietario}</h:outputLabel>
-							<h:inputText
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="identificacaoProprietario">#{mensagens.cadastrarInstituicaoIdentificacaoProprietario}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="identificacaoProprietario"
 								value="#{cadastrarInstituicaoMB.identificacaoProprietario}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoIdentificacaoProprietario"
-									listener="#{cadastrarInstituicaoMB.validateIdentificacaoProprietario}" />
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoIdentificacaoProprietario"
-								for="validacaoIdentificacaoProprietario" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoAdministradorPropriedade}</h:outputLabel>
-							<h:inputText
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="administradorPropriedade">#{mensagens.cadastrarInstituicaoAdministradorPropriedade}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="administradorPropriedade"
 								value="#{cadastrarInstituicaoMB.administradorPropriedade}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoAdministradorPropriedade"
-									listener="#{cadastrarInstituicaoMB.validateAdministradorPropriedade}" />
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoAdministradorPropriedade"
-								for="validacaoAdministradorPropriedade" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCoordenadasGeograficas}</h:outputLabel>
-						</div>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.latitude}">
-								<f:ajax event="blur" execute="@this" render="validacaoLatitude"
-									listener="#{cadastrarInstituicaoMB.validateLatitude}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label">#{mensagens.cadastrarInstituicaoCoordenadasGeograficas}</h:outputLabel>
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="latitude">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="latitude"
+								value="#{cadastrarInstituicaoMB.latitude}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoLatitude" for="validacaoLatitude"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.longitude}">
-								<f:ajax event="blur" execute="@this" render="validacaoLongitude"
-									listener="#{cadastrarInstituicaoMB.validateLongitude}" />
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="longitude">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="longitude"
+								value="#{cadastrarInstituicaoMB.longitude}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoLongitude" for="validacaoLongitude"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoAltitude}</h:outputLabel>
-							<h:inputText value="#{cadastrarInstituicaoMB.altitude}">
-								<f:ajax event="blur" execute="@this" render="validacaoAltitude"
-									listener="#{cadastrarInstituicaoMB.validateAltitude}" />
+					<div class="form-group">
+						<h:outputLabel for="altitude"
+							class="col-md-3 text-right control-label">#{mensagens.cadastrarInstituicaoAltitude}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText class="form-control" id="altitude"
+								value="#{cadastrarInstituicaoMB.altitude}">
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoAltitude" for="validacaoAltitude"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoTipoPropriedade}</h:outputLabel>
-							<h:selectOneMenu class="options"
+					<div class="form-group">
+						<h:outputLabel for="tipoPropriedade"
+							class="col-md-3 text-right control-label">#{mensagens.cadastrarInstituicaoTipoPropriedade}</h:outputLabel>
+						<div class="col-md-8">
+							<h:selectOneMenu class="form-control" id="tipoPropriedade"
 								value="#{cadastrarInstituicaoMB.tipoPropriedade}">
 								<f:selectItems
 									value="#{cadastrarInstituicaoMB.tipoPropriedadeLista}" />
-								<f:ajax event="blur" execute="@this"
-									render="validacaoTipoPropriedade"
-									listener="#{cadastrarInstituicaoMB.validateTipoPropriedade}" />
 							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoTipoPropriedade"
-								for="validacaoTipoPropriedade" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoProtecaoExistente}</h:outputLabel>
-							<h:selectOneMenu class="options"
+					<div class="form-group">
+						<h:outputLabel for="protecaoExistente"
+							class="col-md-3 text-right control-label">#{mensagens.cadastrarInstituicaoProtecaoExistente}</h:outputLabel>
+						<div class="col-md-8">
+							<h:selectOneMenu class="form-control" id="protecaoExistente"
 								value="#{cadastrarInstituicaoMB.protecaoExistente}">
 								<f:selectItems
 									value="#{cadastrarInstituicaoMB.protecaoExistenteLista}" />
-								<f:ajax event="blur" execute="@this"
-									render="validacaoProtecaoExistente"
-									listener="#{cadastrarInstituicaoMB.validateProtecaoExistente}" />
 							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoProtecaoExistente"
-								for="validacaoProtecaoExistente" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels" style="float:left">#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
-							<h:inputTextarea class="caixadetexto"
+					<div class="form-group">
+						<h:outputLabel for="legislacao"
+							class="col-md-3 text-right control-label">#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputTextarea class="form-control" id="legislacao"
 								value="#{cadastrarInstituicaoMB.legislacao}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoLegislacao"
-									listener="#{cadastrarInstituicaoMB.validateLegislacao}" />
 							</h:inputTextarea>
-							<div></div>
-							<h:message id="validacaoLegislacao" for="validacaoLegislacao"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
+
+					<mv:containerExpansivo id="expansivo"
+						label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
+						<mv:uploadFile id="multimidia" nomebean="cadastrarInstituicaoMB"
+							bean="#{cadastrarInstituicaoMB}"
+							array="#{cadastrarInstituicaoMB.apresentaMidias}"
+							typeFile="image.*"></mv:uploadFile>
+					</mv:containerExpansivo>
 
 
-
-						<mv:containerExpansivo id="expansivo"
-							label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-							<mv:uploadFile id="multimidia" nomebean="cadastrarInstituicaoMB"
-								bean="#{cadastrarInstituicaoMB}"
-								array="#{cadastrarInstituicaoMB.apresentaMidias}"
-								typeFile="image.*"></mv:uploadFile>
-						</mv:containerExpansivo>
-
-
-						<div>
-							<h:outputLabel class="labels" style="float:left;  heigth: 250px">#{mensagens.cadastrarInstituicaoSinteseHistorica}</h:outputLabel>
-							<h:inputTextarea class="caixadetexto"
+					<div class="form-group">
+						<h:outputLabel for="sinteseHistorica"
+							class="col-md-3 text-right control-label">#{mensagens.cadastrarInstituicaoSinteseHistorica}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputTextarea class="form-control" id="sinteseHistorica"
 								value="#{cadastrarInstituicaoMB.sinteseHistorica}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoSinteseHistorica"
-									listener="#{cadastrarInstituicaoMB.validateSinteseHistorica}" />
 							</h:inputTextarea>
-							<div></div>
-							<h:message id="validacaoSinteseHistorica"
-								for="validacaoSinteseHistorica" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
+					</div>
 
-					</fieldset>
-
-					<div class="botao">
-						<h:commandButton id="botaoCadastrar"
+					<div class="text-right col-md-11 no-padding no-margin">
+						<h:commandButton class="btn btn-success margin-5"
 							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
 							action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
-
 						</h:commandButton>
-
-						<h:commandButton id="botaoCancelar"
-							value="#{mensagens.cadastrarInstituicaoBotaoCancelar}"
-							action="#{cadastrarInstituicaoMB.cancelar}">
-
-						</h:commandButton>
-
-						<h:commandButton id="botaoResetar"
+						<h:commandButton class="btn btn-primary margin-5"
 							value="#{mensagens.cadastrarInstituicaoBotaoResetar}"
 							action="#{cadastrarInstituicaoMB.resetCadastrarinstituicao}">
 						</h:commandButton>
-
+						<h:commandButton
+							class="btn btn-danger margin-left-5 no-right-margin"
+							value="#{mensagens.cadastrarInstituicaoBotaoCancelar}"
+							action="#{cadastrarInstituicaoMB.cancelar}">
+						</h:commandButton>
 					</div>
 				</h:form>
-
 			</div>
-			<!-- end .formulario-->
+			<script type="text/javascript">
+				$(document).ready(
+						function() {
+							todosItens = $('.linkPrincipal');
+							todosItens.removeClass('itemAtual');
+							todosItens.addClass('outrosItens');
 
+							segundoItemAnchor = $(
+									"#menuNavegacao li:nth-of-type(2)").find(
+									'.linkPrincipal');
+							segundoItemAnchor.addClass('itemAtual');
+
+							filhos = $('#menuNavegacao li:nth-of-type(2)')
+									.find('.linkSecundario').clone();
+							subMenu = $('#subMenu');
+							subMenu.html(filhos);
+
+						});
+
+				function erroNome() {
+					mostrarErro('#validacaoNome', '#icone-erro-nome');
+				}
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

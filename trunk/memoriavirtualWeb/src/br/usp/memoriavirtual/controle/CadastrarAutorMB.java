@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
@@ -11,6 +8,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
@@ -20,15 +19,10 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarAutorRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-/**
- * @author bigmac
- * 
- */
+@ManagedBean(name = "cadastrarAutorMB")
+@RequestScoped
 public class CadastrarAutorMB implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5784819830194641882L;
 
 	@EJB
@@ -43,18 +37,12 @@ public class CadastrarAutorMB implements Serializable {
 	protected boolean outroObito = false;
 	protected boolean normalObito = true;
 
-	/**
-	 * Construtor Padr�o
-	 */
 	public CadastrarAutorMB() {
 		super();
 	}
 
-	/**
-	 * 
-	 * @return String a ser interpretada pelo faces-config
-	 */
 	public String cadastrarAutor() {
+		
 		String retorno = null;
 
 		this.validateNome();

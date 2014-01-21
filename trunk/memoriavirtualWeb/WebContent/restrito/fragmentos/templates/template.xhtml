@@ -5,40 +5,45 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="lang" content="pt" />
+	<meta name="charset" content="utf-8" />
+	<h:outputStylesheet name="reset.css" library="css" />
+	<h:outputStylesheet name="bootstrap.css" library="bootstrap/css" />
+	<!-- 	<h:outputStylesheet name="font-awesome.min.css" library="fontawesome/css" /> -->
+	<link
+		href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+		rel="stylesheet" />
+	<h:outputStylesheet name="estilo.less" library="css" />
+	<h:outputScript name="less.min.js" library="javascript" />
 	<title><ui:insert name="titulo">Mem</ui:insert></title>
-	<h:outputStylesheet name="mv.css" library="css" />
-	<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
-	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
-	<h:outputScript name="pdfobject.js" library="javascript"></h:outputScript>
 </h:head>
 
 <h:body>
-	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado"></div>
-	<f:view locale="#{facesContext.externalContext.requestLocale}">
-		<div id="recipiente">
+	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
+	<h:outputScript name="pdfobject.js" library="javascript"></h:outputScript>
+	<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
+	<h:outputScript name="bootstrap.js" library="bootstrap/js"></h:outputScript>
 
+	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado"></div>
+
+	<f:view locale="#{facesContext.externalContext.requestLocale}">
+		<div>
 			<div id="cabecalho">
 				<ui:insert name="cabecalho">
 					<ui:include src="/restrito/fragmentos/cabecalhos/cabecalho.xhtml"></ui:include>
 				</ui:insert>
 			</div>
-
 			<div id="conteudo">
 				<ui:insert name="conteudo">
 				</ui:insert>
 			</div>
-			<!-- Fim div#conteudo -->
-
 			<div id="rodape">
 				<ui:insert name="rodape">
 					<ui:include src="/restrito/fragmentos/rodapes/rodape.xhtml"></ui:include>
-
 				</ui:insert>
 			</div>
-
 		</div>
-		<!-- Fim div#tudo -->
 	</f:view>
 </h:body>
-
 </html>

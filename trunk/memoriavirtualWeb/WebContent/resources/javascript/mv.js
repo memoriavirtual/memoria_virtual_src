@@ -1,3 +1,65 @@
+function mostrarErro(messagesId, alvoId) {
+
+	messages = $(messagesId);
+
+	erro = messages.hasClass('has-error');
+	warning = messages.hasClass('has-warning');
+	success = messages.hasClass('has-success');
+
+	texto = messages.text();
+
+	if (texto !== '') {
+		alvo = $(alvoId);
+		alvo.attr('title', texto);
+		alvo.attr('data-original-title', texto);
+		alvo.attr('data-toggle', 'tooltip');
+		alvo.tooltip();
+		alvo.removeClass('hidden');
+		if (erro) {
+			alvo.addClass('color-error');
+			alvo.removeClass('color-warning');
+			alvo.removeClass('color-success');
+			formGroup = alvo.closest('.form-group');
+			formGroup.addClass('has-error');
+			formGroup.removeClass('has-warning');
+			formGroup.removeClass('has-success');
+		} else if (warning) {
+			alvo.addClass('color-warning');
+			alvo.removeClass('color-error');
+			alvo.removeClass('color-success');
+			formGroup = alvo.closest('.form-group');
+			formGroup.addClass('has-warning');
+			formGroup.removeClass('has-error');
+			formGroup.removeClass('has-success');
+		} else if (success) {
+			alvo.addClass('color-success');
+			alvo.removeClass('color-error');
+			alvo.removeClass('color-warning');
+			formGroup = alvo.closest('.form-group');
+			formGroup.addClass('has-success');
+			formGroup.removeClass('has-error');
+			formGroup.removeClass('has-warning');
+		}
+	} else {
+		removerErro(alvoId);
+	}
+
+	messages = $(messagesId);
+}
+
+function removerErro(alvoId) {
+	alvo = $(alvoId);
+	alvo.attr('title', texto);
+	alvo.attr('data-original-title', texto);
+	alvo.attr('data-toggle', 'tooltip');
+	alvo.tooltip();
+	alvo.addClass('hidden');
+	formGroup = alvo.closest('.form-group');
+	formGroup.removeClass('has-error');
+	formGroup.removeClass('has-warning');
+	formGroup.removeClass('has-success');
+}
+
 /**
  * Cadastrar bem patrimonial javascript
  * 
@@ -222,7 +284,7 @@ mostrarPlayerImagen = (function(nome, fim, index) {
 });
 
 function BackgroundNegro(backgrond) {
-	
+
 	var classe = this;
 	this.backgrond = backgrond;
 
@@ -262,7 +324,7 @@ iniciaTabelas = (function(idtabela) {
 	var tabela = document.getElementById(idtabela);
 	var tabelas = tabela.getElementsByTagName("table");
 
-	for ( var i = 0; i < tabelas.length; i++) {
+	for (var i = 0; i < tabelas.length; i++) {
 		if (i != pass) {
 			tabelas[i].setAttribute("style", "display: none;");
 
@@ -279,7 +341,7 @@ mostrarTableCorreta = (function(index, idtabela) {
 	var tabela = document.getElementById(idtabela);
 	var tabelas = tabela.getElementsByTagName("table");
 
-	for ( var i = 0; i < tabelas.length; i++) {
+	for (var i = 0; i < tabelas.length; i++) {
 		if (i != j) {
 			tabelas[i].setAttribute("style", "display: none;");
 
@@ -288,13 +350,13 @@ mostrarTableCorreta = (function(index, idtabela) {
 	}
 });
 
-// variáveis estáticas utilizadas nas funções que acertam os campos que devem
+// variï¿½veis estï¿½ticas utilizadas nas funï¿½ï¿½es que acertam os campos que devem
 // ser vistos
 var listaDeDivs;
 var tipoDobemfixo = null;
 
 /**
- * organiza os campos que devem ser vistos no grupo descrição
+ * organiza os campos que devem ser vistos no grupo descriï¿½ï¿½o
  * 
  */
 organizarGrupoDescricao = (function(idfieldset) {
@@ -303,7 +365,7 @@ organizarGrupoDescricao = (function(idfieldset) {
 	listaDeDivs = listDivs;
 	if (tipoDobemfixo == null) {
 
-		for ( var i = 0; i < listDivs.length; i++) {
+		for (var i = 0; i < listDivs.length; i++) {
 			listDivs[i].setAttribute("style", "display: none;");
 		}
 	} else {
@@ -321,7 +383,7 @@ organizarGrupoDescricao = (function(idfieldset) {
 			break;
 		}
 
-		for ( var i = 0; i < listDivs.length; i++) {
+		for (var i = 0; i < listDivs.length; i++) {
 
 			if (listDivs[i].getAttribute("class") != null) {
 				if (listDivs[i].getAttribute("class") != strTipo) {
@@ -351,24 +413,24 @@ testAutoSave = (function() {
 });
 
 /**
- * Função chamada quando um novo tipo de bem e escolhido Ela reorganiza os
+ * Funï¿½ï¿½o chamada quando um novo tipo de bem e escolhido Ela reorganiza os
  * campos que devem ser vistos
  */
 mostrarDescricao = (function() {
 
 	var menu = document.getElementById("GeralInfo:tipodobem");
 
-	// variável estática que tem o tipo do bem
+	// variï¿½vel estï¿½tica que tem o tipo do bem
 	tipoDobemfixo = menu.selectedIndex;
 
-	// Acerta os campos vistos no grupo descrição
+	// Acerta os campos vistos no grupo descriï¿½ï¿½o
 	organizarGrupoDescricao("grupoDescricao");
-	// Acerta os campos vistos no grupo Intervenção
+	// Acerta os campos vistos no grupo Intervenï¿½ï¿½o
 	organizarGrupoDescricao("grupoIntervencao");
 });
 
 /**
- * Função chamada quando um novo disponibilidade é escolhida Ela reorganiza os
+ * Funï¿½ï¿½o chamada quando um novo disponibilidade ï¿½ escolhida Ela reorganiza os
  * campos que devem ser vistos
  */
 mostrarDisponibilidade = (function(menu) {
@@ -377,7 +439,7 @@ mostrarDisponibilidade = (function(menu) {
 	var tipodisponibilidade = new Number(menu.getAttribute("id").split(":")[2]);
 
 	if (tipodisponibilidade == 0) {// acervo
-		// mostrar condições de acesso
+		// mostrar condiï¿½ï¿½es de acesso
 		var elem = document.getElementById("disponibilidade:acesso");
 		elem.removeAttribute("style");
 
@@ -393,7 +455,7 @@ mostrarDisponibilidade = (function(menu) {
 		var elem1 = document.getElementById("disponibilidade:data");
 		elem1.setAttribute("style", "display: none;");
 
-		// esconder condições de acesso
+		// esconder condiï¿½ï¿½es de acesso
 		var elem = document.getElementById("disponibilidade:acesso");
 		elem.setAttribute("style", "display: none;");
 		return;
@@ -403,14 +465,14 @@ mostrarDisponibilidade = (function(menu) {
 	var elem = document.getElementById("disponibilidade:data");
 	elem.removeAttribute("style");
 
-	// esconder condições de acesso
+	// esconder condiï¿½ï¿½es de acesso
 	var elem1 = document.getElementById("disponibilidade:acesso");
 	elem1.setAttribute("style", "display: none;");
 });
 
 inicioUnity = (function() {
 	/**
-	 * Integração com o Unity Beta
+	 * Integraï¿½ï¿½o com o Unity Beta
 	 */
 	function unityReady() {
 		// Integrate with Unity!

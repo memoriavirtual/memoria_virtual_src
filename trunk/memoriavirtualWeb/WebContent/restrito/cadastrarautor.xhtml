@@ -7,135 +7,164 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Cadastrar Autor</title>
 </head>
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-
 		<ui:define name="titulo">#{mensagens.cadastrarAutorTitle}</ui:define>
-
-
 
 		<ui:define name="conteudo">
 			<div class="formulario">
-			
+
 				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado" infoClass="sucesso" errorClass="erro"></h:message>
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
 				</div>
 
-				<div class="conteudoTitulo">#{mensagens.cadastrarAutorTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.cadastrarAutorDescricao}</div>
+				<h1>#{mensagens.cadastrarAutorTitle}</h1>
+				<h2 class="conteudoDescricao">#{mensagens.cadastrarAutorDescricao}</h2>
 
-				<h:form method="post"  prependId="false">
-					<fieldset>
-						
-											
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.nome}">
+				<h:form class="form-horizontal" role="form" method="post"
+					prependId="false">
+
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="nome">#{mensagens.cadastrarAutorNome}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText value="#{cadastrarAutorMB.nome}"
+								class="form-control" id="nome">
 								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{cadastrarAutorMB.validateNome}" />
+									listener="#{cadastrarAutorMB.validateNome}" onevent="erroNome" />
 							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorSobrenome}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.sobrenome}">
-								<f:ajax event="blur" execute="@this" render="validacaoSobrenome"
-									listener="#{cadastrarAutorMB.validateSobrenome}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoSobrenome" for="validacaoSobrenome" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
+						<div class="col-md-1">
+							<div class="hidden">
+								<h:message id="validacaoNome" for="validacaoNome"
+									infoClass="has-success" errorClass="has-error"
+									warnClass="has-warning">
+								</h:message>
+							</div>
+							<i class="fa fa-times font-size-20 hidden" id="icone-erro-nome">
+							</i>
 						</div>
+					</div>
 
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorCodinome}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.codinome}">
-								
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="sobrenome">#{mensagens.cadastrarAutorSobrenome}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText value="#{cadastrarAutorMB.sobrenome}"
+								class="form-control" id="sobrenome">
+								<f:ajax event="blur" execute="@this" render="validacaoSobrenome"
+									listener="#{cadastrarAutorMB.validateSobrenome}"
+									onevent="erroSobreNome" />
 							</h:inputText>
-							<div></div>
-							
 						</div>
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorAtividade}</h:outputLabel>
-							<h:selectOneMenu rendered="#{cadastrarAutorMB.normalAtividade}" value="#{cadastrarAutorMB.atividade}">
-									<f:selectItems value="#{cadastrarAutorMB.listaAtividade}" />
+						<div class="col-md-1">
+							<div class="hidden">
+								<h:message id="validacaoSobrenome" for="validacaoSobrenome"
+									infoClass="has-success" errorClass="has-error"
+									warnClass="has-warning">
+								</h:message>
+							</div>
+							<i class="fa fa-times font-size-20 hidden"
+								id="icone-erro-sobre-nome"> </i>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="codinome">#{mensagens.cadastrarAutorCodinome}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText value="#{cadastrarAutorMB.codinome}"
+								class="form-control" id="codinome">
+							</h:inputText>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel for="atividade"
+							class="col-md-3 text-right control-label">#{mensagens.cadastrarAutorAtividade}</h:outputLabel>
+						<div class="col-md-8">
+							<h:selectOneMenu class="form-control" id="atividade"
+								rendered="#{cadastrarAutorMB.normalAtividade}"
+								value="#{cadastrarAutorMB.atividade}">
+								<f:selectItems value="#{cadastrarAutorMB.listaAtividade}" />
 							</h:selectOneMenu>
-							<h:inputText rendered="#{cadastrarAutorMB.outroAtividade}" value="#{cadastrarAutorMB.atividade}"/>
-							<h:commandLink class="outraAutoria" value ="#{cadastrarAutorMB.outroLinkAtividade}"
-										action="#{cadastrarAutorMB.abrirAtividadeOutro}"/>
-							<div></div>
-							<h:message id="validacaoAtividade" for="validacaoAtividade" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
-						
-						
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNascimento}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.nascimento}">
-								<f:ajax event="blur" execute="@this" render="validacaoNascimento"
-									listener="#{cadastrarAutorMB.validateNascimento}" />
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="nascimento">#{mensagens.cadastrarAutorNascimento}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText value="#{cadastrarAutorMB.nascimento}"
+								class="form-control" id="nascimento">
 							</h:inputText>
-							<h:commandLink class="outraAutoria"
-								value="#{cadastrarAutorMB.outroLinkNascimento}"
-								action="#{cadastrarAutorMB.abrirNascimentoOutro}" />
-							<div><h:outputLabel rendered="#{cadastrarAutorMB.normalNascimento}">dd/mm/aaaa</h:outputLabel></div>
-							<h:message id="validacaoNascimento" for="validacaoNascimento"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
-						
-						
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorObito}</h:outputLabel>
-							<h:inputText value="#{cadastrarAutorMB.obito}">
-								<f:ajax event="blur" execute="@this" render="validacaoObito"
-									listener="#{cadastrarAutorMB.validateObito}" />
+						<div class="col-md-1"></div>
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel class="col-md-3 text-right control-label"
+							for="obito">#{mensagens.cadastrarAutorObito}</h:outputLabel>
+						<div class="col-md-8">
+							<h:inputText value="#{cadastrarAutorMB.obito}"
+								class="form-control" id="obito">
 							</h:inputText>
-							<h:commandLink class="outraAutoria" 
-								value="#{cadastrarAutorMB.outroLinkObito}"
-								action="#{cadastrarAutorMB.abrirObitoOutro}" />
-							<div><h:outputLabel rendered="#{cadastrarAutorMB.normalObito}">dd/mm/aaaa</h:outputLabel></div>
-							<h:message id="validacaoObito" for="validacaoObito"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
 						</div>
-						
-						
-					</fieldset>
-					<div class="botao">
-						<h:commandButton id="botaoCadastrar"
+						<div class="col-md-1"></div>
+					</div>
+
+					<div class="col-md-11 text-right no-padding no-margin">
+						<h:commandButton class="btn btn-success margin-5"
 							value="#{mensagens.cadastrarAutorBotaoCadastrar}"
 							action="#{cadastrarAutorMB.cadastrarAutor}">
-							
-				  		</h:commandButton>
 
-						<h:commandButton id="botaoResetar"
-							value="#{mensagens.cadastrarAutorBotaoResetar}" 
+						</h:commandButton>
+
+						<h:commandButton class="btn btn-primary margin-5"
+							value="#{mensagens.cadastrarAutorBotaoResetar}"
 							action="#{cadastrarAutorMB.resetCadastrarAutor}">
 						</h:commandButton>
-						
-						<h:commandButton id="botaoCancelar"
-							value="#{mensagens.cadastrarAutorBotaoCancelar}" 
+
+						<h:commandButton
+							class="btn btn-danger margin-left-5 no-right-margin"
+							value="#{mensagens.cadastrarAutorBotaoCancelar}"
 							action="#{cadastrarAutorMB.cancelarCadastrarAutor}">
 						</h:commandButton>
-
 					</div>
 				</h:form>
 			</div>
-			<!-- end .formulario-->
+			<script type="text/javascript">
+				$(document).ready(
+						function() {
+							todosItens = $('.linkPrincipal');
+							todosItens.removeClass('itemAtual');
+							todosItens.addClass('outrosItens');
 
+							segundoItemAnchor = $(
+									"#menuNavegacao li:nth-of-type(4)").find(
+									'.linkPrincipal');
+							segundoItemAnchor.addClass('itemAtual');
+
+							filhos = $('#menuNavegacao li:nth-of-type(4)')
+									.find('.linkSecundario').clone();
+							subMenu = $('#subMenu');
+							subMenu.html(filhos);
+
+						});
+
+				function erroNome() {
+					mostrarErro('#validacaoNome', '#icone-erro-nome');
+				}
+
+				function erroSobreNome() {
+					mostrarErro('#validacaoSobrenome', '#icone-erro-sobre-nome');
+				}
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>
