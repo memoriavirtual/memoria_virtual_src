@@ -79,7 +79,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 
 	@ManagedProperty(value = "#{mensagensMB}")
-	private MensagensMB mensagensMB;
+	private MensagensDeErro mensagensMB;
 
 	private boolean especificarUso = true;
 	private String usoInput = "";
@@ -147,8 +147,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 						.cadastrarBemPatrimonial(bemPatrimonial);
 
 				this.zerar();
-
-				this.mensagensMB.setMensagem("olaaa");
 
 				MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
 						"resultado");
