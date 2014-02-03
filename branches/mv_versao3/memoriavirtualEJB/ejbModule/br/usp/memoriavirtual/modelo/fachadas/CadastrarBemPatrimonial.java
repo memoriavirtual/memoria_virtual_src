@@ -63,7 +63,7 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 				entityManager.persist(a);
 			}
 		}
-		// entityManager.persist(bem);
+		
 		for (Descritor a : bem.getDescritores()) {
 			Query query;
 			query = this.entityManager
@@ -76,13 +76,16 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 				entityManager.persist(a);
 			}
 		}
+
 		try {
 			entityManager.persist(bem);
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
-		for (Titulo a : bem.getTitulos())
-			a.setBempatrimonial(bem);
+
+		for (Titulo t : bem.getTitulos())
+			t.setBempatrimonial(bem);
+
 		for (Autoria a : bem.getAutorias())
 			a.setBemPatrimonial(bem);
 
@@ -111,7 +114,7 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 			Autor a = entityManager.find(Autor.class, new Long(id));
 			return a;
 		} catch (Exception e) {
-			throw new ModeloException();
+			throw new ModeloException(e);
 		}
 	}
 

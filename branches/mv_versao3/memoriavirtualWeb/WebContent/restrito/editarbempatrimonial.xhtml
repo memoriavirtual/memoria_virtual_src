@@ -26,7 +26,8 @@
 				<div class="conteudoTitulo">#{mensagens.editarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.editarBemDescricao}</div>
 
-				<h:form method="post" prependId="false">
+				<h:form method="post"
+					prependId="false">
 
 					<fieldset>
 						<div class="espacador"></div>
@@ -78,19 +79,18 @@
 									action="#{editarBemPatrimonialMB.adicionarTitulo}">#{mensagens.cadastrarBemTituloAdicionar}</h:commandLink>
 							</div>
 							<h:dataTable id="titulosBem" var="titulo" class="titulos"
-								value="#{editarBemPatrimonialMB.titulos}">
-								<div></div>
+								value="#{editarBemPatrimonialMB.bemPatrimonial.titulos}">
 								<h:message id="validacaoTitulo" for="validacaoTitulo"
 									infoClass="sucesso" errorClass="erro" warnClass="aviso">
 								</h:message>
 								<h:column id="coluna">
-									<h:graphicImage id="excluir" library="imagens"
-										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
-										<f:ajax render="@form" event="click" execute="@form"
-											listener="#{editarBemPatrimonialMB.removerTitulo(titulo)}">
-										</f:ajax>
-									</h:graphicImage>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerTitulo(titulo)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
+										</h:graphicImage>
+									</h:commandLink>
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
 									<h:inputText style="width: 40% !important;"
@@ -137,11 +137,10 @@
 							<div>
 								<div class="botoesTituiloTLB">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemAutorias}</h:outputLabel>
-									<h:commandButton type="button" class="botoesTituiloTLB"
-										value="#{mensagens.cadastrarBemAutoriaAdcionar}">
-										<f:ajax render="autoriaBem" execute="@form"
-											listener="#{editarBemPatrimonialMB.adicionarAutoria()}"></f:ajax>
-									</h:commandButton>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.adicionarAutoria}"> 
+										#{mensagens.cadastrarBemAutoriaAdcionar}
+									</h:commandLink>
 									<h:commandButton type="button" class="botoesTituiloTLB"
 										onclick="mostrarfundoNegro()"
 										value="#{mensagens.cadastrarBemCadastrarNovoAutor}">
@@ -150,26 +149,25 @@
 							</div>
 
 							<h:dataTable id="autoriaBem" var="autoria" class="titulos"
-								value="#{editarBemPatrimonialMB.autorias}">
+								value="#{editarBemPatrimonialMB.autoriasUtil}">
 								<h:column id="coluna">
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarAutorNome}</h:outputLabel>
-									<h:selectOneMenu value="#{autoria.autor.nome}">
+									<h:selectOneMenu value="#{autoria.autor}">
 										<f:selectItems
 											value="#{editarBemPatrimonialMB.listarAutores()}" />
 									</h:selectOneMenu>
 									<h:outputLabel class="labels" style="margin-left: 20px;">#{mensagens.cadastrarAutorTipoAutoria}</h:outputLabel>
-									<h:selectOneMenu class="options" value="#{autoria.tipoAutoria}">
+									<h:selectOneMenu class="options" value="#{autoria.tipo}">
 										<f:selectItems value="#{editarBemPatrimonialMB.tiposAutoria}" />
 									</h:selectOneMenu>
-									<h:graphicImage id="excluir" library="imagens"
-										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px 10px;  border: none; ">
-
-										<f:ajax render="@form" event="click" execute="@form"
-											listener="#{editarBemPatrimonialMB.excluirAutoria(autoria)}">
-										</f:ajax>
-									</h:graphicImage>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerAutoria(autoria)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px 10px;  border: none; ">
+										</h:graphicImage>
+									</h:commandLink>
 								</h:column>
 							</h:dataTable>
 						</fieldset>
@@ -179,20 +177,23 @@
 						<fieldset>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoLocal}</h:outputLabel>
-								<h:inputText value="#{editarBemPatrimonialMB.producao.local}" />
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.local}" />
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoAno}</h:outputLabel>
-								<h:inputText value="#{editarBemPatrimonialMB.producao.ano}" />
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.ano}" />
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoEdicao}</h:outputLabel>
-								<h:inputText value="#{editarBemPatrimonialMB.producao.edicao}" />
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.edicao}" />
 							</div>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoOutrasRes}</h:outputLabel>
 								<h:inputText
-									value="#{editarBemPatrimonialMB.producao.outrasResponsabilidades}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.outrasResponsabilidades}" />
 							</div>
 						</fieldset>
 					</mv:containerExpansivo>
@@ -490,25 +491,13 @@
 						</fieldset>
 					</mv:containerExpansivo>
 
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
-						<fieldset>
-							<mv:containerExpansivo id="expansivo"
-								label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-								<mv:uploadFile id="multimidia" nomebean="editarBemPatrimonialMB"
-									bean="#{editarBemPatrimonialMB}"
-									array="#{editarBemPatrimonialMB.apresentaMidias}">
-								</mv:uploadFile>
-							</mv:containerExpansivo>
-						</fieldset>
-					</mv:containerExpansivo>
-
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
 						<fieldset id="grupoIntervencao">
 
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{editarBemPatrimonialMB.diagnostico.estPreservacao}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.diagnostico.estPreservacao}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemEstadoPreser}</h:outputLabel>
 
 									<f:selectItem
@@ -529,7 +518,7 @@
 
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{editarBemPatrimonialMB.diagnostico.estConservacao}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.diagnostico.estConservacao}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemEstadoCOnser}</h:outputLabel>
 
 									<f:selectItem
@@ -554,33 +543,29 @@
 										#{mensagens.cadastrarBemEstadoConservNotas}
 									</h:outputLabel>
 								<h:inputTextarea styleClass="caixadetexto"
-									value="#{editarBemPatrimonialMB.diagnostico.notaEstConservacao}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.diagnostico.notaEstConservacao}" />
 							</div>
 
 							<div>
 								<div class="botoesTituiloTLB">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemIntervencoes}</h:outputLabel>
-									<h:commandButton type="button" class="botoesTituiloTLB"
-										value="#{mensagens.cadastrarBemIntervencoesAdd}">
-										<f:ajax render="intervencao" execute="@form"
-											listener="#{editarBemPatrimonialMB.adicionarIntervencoes}"></f:ajax>
-									</h:commandButton>
+									<h:commandLink type="button" class="botoesTituiloTLB"
+										action="#{editarBemPatrimonialMB.adicionarIntervencoes}">
+										#{mensagens.cadastrarBemIntervencoesAdd}"
+									</h:commandLink>
 								</div>
 							</div>
 
 							<h:dataTable id="intervencao" var="intervencao" class="titulos"
-								value="#{editarBemPatrimonialMB.intervencoes}">
+								value="#{editarBemPatrimonialMB.bemPatrimonial.intervencoes}">
 								<h:column id="coluna">
-
-									<h:graphicImage id="excluir" library="imagens"
-										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
-
-										<f:ajax render="@form" event="click" execute="@form"
-											listener="#{editarBemPatrimonialMB.excluirIntervencao(intervencao)}">
-										</f:ajax>
-									</h:graphicImage>
-
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerIntervencao(intervencao)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
+										</h:graphicImage>
+									</h:commandLink>
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 10px !important;">#{mensagens.cadastrarBemIntervencaData}</h:outputLabel>
 									<h:inputText style="width: 10% !important ;"
@@ -610,7 +595,7 @@
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
 									id="disponibilidade" onchange="mostrarDisponibilidade(this)"
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.disponibilidade}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.disponibilidade}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemDisponibilidade}</h:outputLabel>
 
 									<f:selectItem
@@ -636,7 +621,7 @@
 
 							<div id="disponibilidade:acesso" style="display: none;">
 								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.condicoesAcesso}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.condicoesAcesso}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesDeAcesso}</h:outputLabel>
 
 									<f:selectItem
@@ -653,12 +638,12 @@
 										#{mensagens.cadastrarBemDataRetorno}
 									</h:outputLabel>
 								<h:inputText styleClass="caixadetexto"
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.dataRetorno}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.dataRetorno}" />
 							</div>
 
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.dataRetorno}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.condicoesReproducao}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesReproducao}</h:outputLabel>
 									<f:selectItem
 										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso1}"
@@ -673,14 +658,14 @@
 										#{mensagens.cadastrarBemNotasSobreUsoAproveitamento}
 									</h:outputLabel>
 								<h:inputTextarea styleClass="caixadetexto"
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.notasUsoAproveitamento}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.notasUsoAproveitamento}">
 								</h:inputTextarea>
 								<div></div>
 							</div>
 
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.protecao}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protecao}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemProtecao}</h:outputLabel>
 
 									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
@@ -697,13 +682,13 @@
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicaoProtetora}</h:outputLabel>
 								<h:inputText
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.protetoraInstituicao}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protetoraInstituicao}" />
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemLegislacaoNProcesso}</h:outputLabel>
 								<h:inputText
-									value="#{editarBemPatrimonialMB.disponibilidadeUsoProtecao.legislacao}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.legislacao}" />
 							</div>
 						</fieldset>
 					</mv:containerExpansivo>
@@ -713,7 +698,7 @@
 						<fieldset>
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{editarBemPatrimonialMB.historicoProcedencia.tipoAquisicao}">
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.tipoAquisicao}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoTipo}</h:outputLabel>
 									<f:selectItem
 										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo0}"
@@ -737,39 +722,39 @@
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoValorVenal}</h:outputLabel>
 								<h:inputText
-									value="#{editarBemPatrimonialMB.historicoProcedencia.valorVenalTransacao}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.valorVenalTransacao}" />
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoData}</h:outputLabel>
 								<h:inputText
-									value="#{editarBemPatrimonialMB.historicoProcedencia.dataAquisicao}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dataAquisicao}" />
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoDocumentoDados}</h:outputLabel>
 								<h:inputTextarea
-									value="#{editarBemPatrimonialMB.historicoProcedencia.dadosDocTransacao}"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao}"
 									styleClass="caixadetexto" />
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoPrimeiroProprietario}</h:outputLabel>
 								<h:inputText
-									value="#{editarBemPatrimonialMB.historicoProcedencia.primeiroProprietario}" />
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.primeiroProprietario}" />
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoHistorico}</h:outputLabel>
 								<h:inputTextarea
-									value="#{editarBemPatrimonialMB.historicoProcedencia.historico}"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico}"
 									styleClass="caixadetexto" />
 							</div>
 
 							<div>
 								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoIntrumentosPesquisa}</h:outputLabel>
 								<h:inputTextarea
-									value="#{editarBemPatrimonialMB.historicoProcedencia.instrumentoPesquisa}"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.instrumentoPesquisa}"
 									styleClass="caixadetexto" />
 							</div>
 						</fieldset>
@@ -799,11 +784,10 @@
 							<div>
 								<div class="botoesTituiloTLB">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemFontesInformacao}</h:outputLabel>
-									<h:commandButton type="button" class="botoesTituiloTLB"
-										value="#{mensagens.cadastrarBemFontesInformacaoAdd}">
-										<f:ajax render="fonteinformacao" execute="@form"
-											listener="#{editarBemPatrimonialMB.adicionarFontesInformacao}"></f:ajax>
-									</h:commandButton>
+									<h:commandLink class="botoesTituiloTLB"
+										action="#{editarBemPatrimonialMB.adicionarFontesInformacao}">
+											#{mensagens.cadastrarBemFontesInformacaoAdd}
+									</h:commandLink>
 								</div>
 							</div>
 							<h:dataTable id="fonteinformacao" var="fonteinformacao"
@@ -818,14 +802,13 @@
 										<h:inputTextarea value="#{fonteinformacao.valor}"
 											styleClass="caixadetexto">
 										</h:inputTextarea>
-										<h:graphicImage id="excluir" library="imagens"
-											name="delete.png"
-											style="width: 15px; height: 15px; margin:35px 120px 0px 0px;  border: none; float: right;">
-
-											<f:ajax render="@form" event="click" execute="@form"
-												listener="#{editarBemPatrimonialMB.removerFontesInformacao(fonteinformacao)}">
-											</f:ajax>
-										</h:graphicImage>
+										<h:commandLink
+											action="#{editarBemPatrimonialMB.removerFontesInformacao(fonteinformacao)}">
+											<h:graphicImage id="excluir" library="imagens"
+												name="delete.png"
+												style="width: 15px; height: 15px; margin:35px 120px 0px 0px;  border: none; float: right;">
+											</h:graphicImage>
+										</h:commandLink>
 									</div>
 								</h:column>
 							</h:dataTable>
@@ -838,16 +821,15 @@
 							<div>
 								<div class="botoesTituiloTLB">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemResponsavelPesquisa}</h:outputLabel>
-									<h:commandButton type="button" class="botoesTituiloTLB"
-										value="#{mensagens.cadastrarBemPesquisaAdd}">
-										<f:ajax render="pesquisador" execute="@form"
-											listener="#{editarBemPatrimonialMB.adicionarPesquisador}"></f:ajax>
-									</h:commandButton>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.adicionarPesquisador}">
+										#{mensagens.cadastrarBemPesquisaAdd}
+									</h:commandLink>
 								</div>
 							</div>
 
 							<h:dataTable id="pesquisador" var="pesquisador" class="titulos"
-								value="#{editarBemPatrimonialMB.pesquisadores}">
+								value="#{editarBemPatrimonialMB.bemPatrimonial.pesquisadores}">
 
 								<h:column id="coluna">
 									<h:outputLabel class="labels"
@@ -866,15 +848,13 @@
 									<h:inputTextarea style="width: 45% !important ;"
 										styleClass="caixadetexto"
 										value="#{pesquisador.notasPesquisador}" />
-
-									<h:graphicImage id="excluir" library="imagens"
-										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
-
-										<f:ajax render="@form" event="click" execute="@form"
-											listener="#{editarBemPatrimonialMB.removerPesquisador(pesquisador)}">
-										</f:ajax>
-									</h:graphicImage>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerPesquisador(pesquisador)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
+										</h:graphicImage>
+									</h:commandLink>
 								</h:column>
 
 							</h:dataTable>
@@ -887,10 +867,10 @@
 						<fieldset>
 							<div>
 								<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
-								<h:inputText value="#{editarBemPatrimonialMB.busca}"
+								<h:inputText value="#{editarBemPatrimonialMB.nome}"
 									autocomplete="off">
 									<f:ajax event="keyup" execute="@this" render="sugestoesId"
-										listener="#{editarBemPatrimonialMB.listarBemPatrimonial}" />
+										listener="#{editarBemPatrimonialMB.listarBens}" />
 								</h:inputText>
 							</div>
 
@@ -922,6 +902,19 @@
 									</h:column>
 								</h:dataTable>
 							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+						<fieldset>
+							<mv:containerExpansivo id="expansivo"
+								label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
+								<mv:uploadFile id="multimidia"
+									nomebean="editarBemPatrimonialMB"
+									bean="#{editarBemPatrimonialMB}"
+									array="#{editarBemPatrimonialMB.apresentaMidias}">
+								</mv:uploadFile>
+							</mv:containerExpansivo>
 						</fieldset>
 					</mv:containerExpansivo>
 

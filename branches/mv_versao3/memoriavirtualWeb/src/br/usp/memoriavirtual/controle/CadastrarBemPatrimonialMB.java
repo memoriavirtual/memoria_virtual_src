@@ -35,6 +35,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
+import br.usp.memoriavirtual.utils.AutoriaUtil;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.StringContainer;
 
@@ -60,8 +61,9 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected String assuntos = "";
 	protected String descritores = "";
-	private String busca = "";
+	protected String busca = "";
 	protected List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
+	protected List<AutoriaUtil> autoriasUtil = new ArrayList<AutoriaUtil>();
 
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaSimplesEJB;
@@ -73,7 +75,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
 
 	@EJB
-	private EditarAutorRemote editarAutorEJB;
+	protected EditarAutorRemote editarAutorEJB;
 
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
@@ -85,53 +87,89 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 	private String usoInput = "";
 
 	public CadastrarBemPatrimonialMB() {
-		this.titulos.add(new Titulo());
 	}
 
 	public String cadastrarBemPatrimonial() {
 
-		if (this.bemPatrimonial.getTituloPrincipal() != "") {
-
-			this.bemPatrimonial.setHistoricoProcedencia(historicoProcedencia);
-			this.bemPatrimonial.setTitulos(titulos);
-			this.bemPatrimonial.setAutorias(autorias);
-			this.bemPatrimonial.setProducao(producao);
-			this.bemPatrimonial
-					.setDisponibilidadeUsoProtecao(disponibilidadeUsoProtecao);
-			this.bemPatrimonial.setDiagnostico(diagnostico);
-			this.bemPatrimonial.setIntervencoes(intervencoes);
-			this.bemPatrimonial.setPesquisadores(pesquisadores);
-			this.setContainerMultimidia(containerMultimidia);
-			this.setBensRelacionados(bensRelacionados);
+		if (this.bemPatrimonial.getTituloPrincipal().length() > 0) {
 
 			try {
+				
+				this.containerMultimidia.setMultimidia(this.midias);
+				
+				for(Multimidia m : this.midias)
+					m.setContainerMultimidia(containerMultimidia);
+				
+				this.bemPatrimonial.setContainerMultimidia(containerMultimidia);
 
-				for (Autoria a : this.autorias) {
+				this.autorias.clear();
+
+				for (AutoriaUtil a : this.autoriasUtil) {
+
+					Autoria autoria = new Autoria();
 					Autor autor = this.cadastrarBemPatrimonialEJB
-							.recuperarAutor(a.getAutor().getNome());
-					a.setAutor(autor);
+							.recuperarAutor(a.getAutor());
+					autoria.setAutor(autor);
+					autoria.setTipoAutoria(a.getTipo());
+					autoria.setBemPatrimonial(this.bemPatrimonial);
+					this.autorias.add(autoria);
+
+				}
+
+				this.bemPatrimonial.setAutorias(this.autorias);
+
+				List<Titulo> titulosClone = new ArrayList<Titulo>();
+				titulosClone.addAll(this.titulos);
+
+				for (Titulo t : titulosClone) {
+					if (t.getValor().length() <= 0)
+						this.titulos.remove(t);
+				}
+
+				List<Intervencao> intervencoesClone = new ArrayList<Intervencao>();
+				intervencoesClone.addAll(this.intervencoes);
+
+				for (Intervencao i : intervencoesClone) {
+					if (i.getData().length() <= 0
+							&& i.getDescricao().length() <= 0
+							&& i.getResponsavel().length() <= 0)
+						this.intervencoes.remove(i);
+				}
+
+				List<Pesquisador> pesquisadoresClone = new ArrayList<Pesquisador>();
+				pesquisadoresClone.addAll(this.pesquisadores);
+
+				for (Pesquisador p : pesquisadoresClone) {
+					if (p.getDataPesquisa().length() <= 0
+							&& p.getNome().length() <= 0
+							&& p.getNotasPesquisador().length() <= 0)
+						this.pesquisadores.remove(p);
 				}
 
 				Instituicao i = this.cadastrarBemPatrimonialEJB
 						.recuperarInstituicao(this.instituicao);
 				this.bemPatrimonial.setInstituicao(i);
+
 				Set<Assunto> assuntosSet = new TreeSet<Assunto>();
 				String assuntosArray[] = assuntos.split(" ");
-				Assunto a = new Assunto();
+
 				for (String s : assuntosArray) {
+					Assunto a = new Assunto();
 					a.setAssunto(s);
 					assuntosSet.add(a);
 				}
+				
+				this.bemPatrimonial.setAssuntos(assuntosSet);
 
 				Set<Descritor> descritoresSet = new TreeSet<Descritor>();
 				String descritoresArray[] = this.descritores.split(" ");
-				Descritor d = new Descritor();
+
 				for (String s : descritoresArray) {
+					Descritor d = new Descritor();
 					d.setDescritor(s);
 					descritoresSet.add(d);
 				}
-
-				this.bemPatrimonial.setAssuntos(assuntosSet);
+				
 				this.bemPatrimonial.setDescritores(descritoresSet);
 
 				List<String> fontesInformacaoLista = new ArrayList<String>();
@@ -139,9 +177,24 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 					fontesInformacaoLista.add(s.getValor());
 				}
 
+				this.bemPatrimonial.setFontesInformacao(fontesInformacaoLista);
+
 				this.containerMultimidia.setMultimidia(this.midias);
 				this.bemPatrimonial
 						.setContainerMultimidia(this.containerMultimidia);
+
+				this.bemPatrimonial
+						.setHistoricoProcedencia(historicoProcedencia);
+				this.bemPatrimonial.setTitulos(titulos);
+				this.bemPatrimonial.setAutorias(autorias);
+				this.bemPatrimonial.setProducao(producao);
+				this.bemPatrimonial
+						.setDisponibilidadeUsoProtecao(disponibilidadeUsoProtecao);
+				this.bemPatrimonial.setDiagnostico(diagnostico);
+				this.bemPatrimonial.setIntervencoes(intervencoes);
+				this.bemPatrimonial.setPesquisadores(pesquisadores);
+				
+				this.bemPatrimonial.setBensRelacionados(bensRelacionados);
 
 				this.cadastrarBemPatrimonialEJB
 						.cadastrarBemPatrimonial(bemPatrimonial);
@@ -176,27 +229,29 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 	}
 
 	public String zerar() {
-		bemPatrimonial = null;
+		bemPatrimonial = new BemPatrimonial();
 		instituicao = "";
-		fontesInformacao = null;
-		titulos = null;
-		autorias = null;
-		producao = null;
-		disponibilidadeUsoProtecao = null;
-		historicoProcedencia = null;
-		diagnostico = null;
-		intervencoes = null;
-		pesquisadores = null;
-		bensRelacionados = null;
-		containerMultimidia = null;
-		autores = null;
-		autor = null;
-		ApresentaMidias = null;
-		midias = null;
+		fontesInformacao.clear();
+		titulos.clear();
+		autorias.clear();
+		producao = new Producao();
+		disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao();
+		historicoProcedencia = new HistoricoProcedencia();
+		diagnostico = new Diagnostico();
+		intervencoes.clear();
+		pesquisadores.clear();
+		bensRelacionados.clear();
+		containerMultimidia = new ContainerMultimidia();
+		autores.clear();
+		autor = new Autor();
+		ApresentaMidias.clear();
+		midias.clear();
 		assuntos = "";
 		descritores = "";
 		busca = "";
-		bens = null;
+		bens.clear();
+		especificarUso = true;
+		usoInput = "";
 		return null;
 	}
 
@@ -209,8 +264,19 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		return null;
 	}
 
-	public void removerTitulo(Titulo t) {
+	public String removerTitulo(Titulo t) {
 		this.titulos.remove(t);
+		return null;
+	}
+
+	public String adicionarAutoria() {
+		this.autoriasUtil.add(new AutoriaUtil());
+		return null;
+	}
+
+	public String removerAutoria(AutoriaUtil a) {
+		this.autoriasUtil.remove(a);
+		return null;
 	}
 
 	public List<SelectItem> getTiposTitulo() {
@@ -282,20 +348,14 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		return listaItens;
 	}
 
-	public void adicionarAutoria() {
-		Autoria autoria = new Autoria();
-		Autor autor = new Autor();
-		autoria.setAutor(autor);
-		this.autorias.add(autoria);
-	}
 
 	public List<SelectItem> listarAutores() {
 		List<SelectItem> autores = new ArrayList<SelectItem>();
 		try {
 			List<Autor> autoresLista = this.editarAutorEJB.listarAutores("");
 			for (Autor a : autoresLista) {
-				autores.add(new SelectItem(new Long(a.getId()).toString(), a
-						.getNome() + " " + a.getSobrenome()));
+				autores.add(new SelectItem(a.getId(), a.getNome() + " "
+						+ a.getSobrenome()));
 			}
 		} catch (Exception e) {
 			return null;
@@ -318,32 +378,39 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		return tipos;
 	}
 
-	public void adicionarIntervencoes(AjaxBehaviorEvent e) {
+	public String adicionarIntervencoes() {
 		this.intervencoes.add(new Intervencao());
+		return null;
 	}
 
-	public void excluirIntervencao(Intervencao i) {
+	public String removerIntervencao(Intervencao i) {
 		this.intervencoes.remove(i);
+		return null;
 	}
 
-	public void excluirAutoria(Autoria a) {
+	public String removerAutoria(Autoria a) {
 		this.autorias.remove(a);
+		return null;
 	}
 
-	public void adicionarFontesInformacao(AjaxBehaviorEvent e) {
+	public String adicionarFontesInformacao() {
 		this.fontesInformacao.add(new StringContainer(""));
+		return null;
 	}
 
-	public void removerFontesInformacao(StringContainer s) {
+	public String removerFontesInformacao(StringContainer s) {
 		this.fontesInformacao.remove(s);
+		return null;
 	}
 
-	public void adicionarPesquisador(AjaxBehaviorEvent e) {
+	public String adicionarPesquisador() {
 		this.pesquisadores.add(new Pesquisador());
+		return null;
 	}
 
-	public void removerPesquisador(Pesquisador p) {
+	public String removerPesquisador(Pesquisador p) {
 		this.pesquisadores.remove(p);
+		return null;
 	}
 
 	public void listarBensPatrimoniais(AjaxBehaviorEvent e) {
@@ -355,12 +422,14 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		}
 	}
 
-	public void anexarBemPatrimonial(BemPatrimonial b) {
+	public String anexarBemPatrimonial(BemPatrimonial b) {
 		this.bensRelacionados.add(b);
+		return null;
 	}
 
-	public void removerBemAnexo(BemPatrimonial b) {
+	public String removerBemAnexo(BemPatrimonial b) {
 		this.bensRelacionados.remove(b);
+		return null;
 	}
 
 	// getters e setters
@@ -545,7 +614,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		return this.removeMidia(i);
 	}
 
-	@Override
+
 	public String removeMidia(int index) {
 		this.midias.remove(index);
 
@@ -555,7 +624,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		return null;
 	}
 
-	@Override
+
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
 		return null;
@@ -597,4 +666,11 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		this.bens = bens;
 	}
 
+	public List<AutoriaUtil> getAutoriasUtil() {
+		return autoriasUtil;
+	}
+
+	public void setAutoriasUtil(List<AutoriaUtil> autoriasUtil) {
+		this.autoriasUtil = autoriasUtil;
+	}
 }

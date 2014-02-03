@@ -51,7 +51,7 @@ public class MultiMidiaServlet extends HttpServlet {
 			}
 			
 			
-			//Recuperar Referencia do Bean em questão
+			//Recuperar Referencia do Bean em questï¿½o
 			FacesContext facesContext = FacesUtil.getFacesContext(request, response);
 			ELResolver resolver = facesContext.getApplication().getELResolver();   
 			BeanComMidia  bean = (BeanComMidia) resolver.getValue(facesContext.getELContext(), null, nameBean);
@@ -80,7 +80,6 @@ public class MultiMidiaServlet extends HttpServlet {
         out.println(midia.getContentType());
         out.flush();
         close(out);
-        //System.out.println("tamo ai \n");
 	}
 	protected void enviarStream ( HttpServletResponse response, Multimidia m, Boolean thumb ) throws IOException{
 		
@@ -98,7 +97,7 @@ public class MultiMidiaServlet extends HttpServlet {
         BufferedOutputStream out = null;
 		
         try {
-            // Começa os trabalhos
+            // Comeï¿½a os trabalhos
         	InputStream byteInputStream = new ByteArrayInputStream(midia.getContent(), 0 ,midia.getContent().length );
         	
             in = new BufferedInputStream(  byteInputStream,TAMANHO_PADRAO_BUFFER);
