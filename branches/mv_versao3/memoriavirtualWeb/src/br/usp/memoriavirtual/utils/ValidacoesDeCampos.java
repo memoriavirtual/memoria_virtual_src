@@ -23,7 +23,7 @@ public class ValidacoesDeCampos {
 	
 	public static boolean validarFormatoTelefone(String telefone) {
 
-		String regexp = "*";
+		String regexp = "\\([0-9]{3}?\\).{1}[0-9]{4}?\\-[0-9]{4}?";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(telefone);
 
@@ -35,7 +35,7 @@ public class ValidacoesDeCampos {
 	
 	public static boolean validarFormatoCep(String Cep) {
 
-		String regexp = "*";
+		String regexp = "[0-9]{5}?\\-[0-9]{3}?";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Cep);
 
