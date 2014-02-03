@@ -57,7 +57,6 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	public EditarBemPatrimonialMB() {
 	}
 
-
 	public String editarBemPatrimonial() {
 
 		if (this.bemPatrimonial.getTituloPrincipal().length() > 0) {
@@ -167,11 +166,11 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		this.bemPatrimonial = bem;
 
 		this.ApresentaMidias.clear();
-
+		
 		if (bem.getContainerMultimidia() != null) {
 			if (bem.getContainerMultimidia().getMultimidia() != null) {
 				for (Integer i = 0; i < bem.getContainerMultimidia()
-						.getMultimidia().size() - 1; ++i) {
+						.getMultimidia().size(); ++i) {
 					this.ApresentaMidias.add(i);
 				}
 

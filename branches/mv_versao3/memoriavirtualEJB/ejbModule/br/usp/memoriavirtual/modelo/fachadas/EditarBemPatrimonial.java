@@ -63,7 +63,7 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 				}
 			}
 			
-			query = entityManager.createQuery("UPDATE BemPatrimonial b SET b.containerMultimidia = NULL WHERE b = :bem");
+			/*query = entityManager.createQuery("UPDATE BemPatrimonial b SET b.containerMultimidia = NULL WHERE b = :bem");
 			query.setParameter("bem", bem);
 			query.executeUpdate();
 
@@ -75,7 +75,7 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 			query = entityManager
 					.createQuery("DELETE FROM ContainerMultimidia c WHERE c = :container");
 			query.setParameter("container", bem.getContainerMultimidia());
-			query.executeUpdate();
+			query.executeUpdate();*/
 
 			for (Descritor a : bem.getDescritores()) {
 				query = this.entityManager
