@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
@@ -152,21 +154,48 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		return null;
 	}
 
+	public void listarBensFocus() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		this.bens.clear();
+		BemPatrimonial b = new BemPatrimonial();
+		b.setTituloPrincipal(bundle.getString("listarTodos"));
+		this.bens.add(b);
+	}
+
 	public void listarBens() {
+
+		this.bens.clear();
+
 		try {
 			this.bens = realizarBuscaSimplesEJB.buscar(this.nome);
-		} catch (ModeloException e1) {
-			e1.printStackTrace();
+		} catch (ModeloException e) {
+			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("erro", "resultado");
 		}
+
 	}
 
 	public String selecionarBem(BemPatrimonial bem) {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		String bundleName = "mensagens";
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, bundleName);
+
+		if (bem.getTituloPrincipal().equals(bundle.getString("listarTodos"))) {
+			this.nome = "";
+			this.listarBens();
+			return null;
+		}
+
 		this.bemPatrimonial = bem;
 
 		this.ApresentaMidias.clear();
-		
+
 		if (bem.getContainerMultimidia() != null) {
 			if (bem.getContainerMultimidia().getMultimidia() != null) {
 				for (Integer i = 0; i < bem.getContainerMultimidia()
