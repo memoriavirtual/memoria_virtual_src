@@ -67,7 +67,7 @@ public class ExcluirBemPatrimonialMB implements Serializable {
 		this.bens.clear();
 
 		try {
-			this.bens = realizarBuscaEJB.buscar(this.nome);
+			this.bens = realizarBuscaEJB.buscar(this.nome,1);
 
 		} catch (ModeloException e) {
 			e.printStackTrace();

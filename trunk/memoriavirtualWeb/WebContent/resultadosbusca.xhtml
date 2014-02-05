@@ -6,10 +6,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>#{mensagens.realizarBuscaSimplesResultado}
-	#{realizarBuscaSimplesMB.busca}</title>
-<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>#{mensagens.realizarBuscaSimplesResultado}
+		#{realizarBuscaSimplesMB.busca}</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
 </h:head>
 
 <h:body>
@@ -75,6 +75,15 @@
 							</h:dataTable>
 						</h:column>
 					</h:dataTable>
+					<h:panelGrid columns="2">
+						<h:commandButton value="Página Anterior"
+							action="#{realizarBuscaSimplesMB.paginaAnterior}"
+							disabled="#{realizarBuscaSimplesMB.pagina == 1}"/>
+						<h:commandButton value="Próxima Página"
+							action="#{realizarBuscaSimplesMB.proximaPagina}"
+							disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}"/>
+						
+					</h:panelGrid>
 				</div>
 			</fieldset>
 		</h:form>

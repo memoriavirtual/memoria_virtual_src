@@ -201,8 +201,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 
 				this.zerar();
 
-				this.mensagensMB.setMensagem("olaaa");
-
 				MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
 						"resultado");
 
@@ -418,7 +416,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 	public void listarBensPatrimoniais(AjaxBehaviorEvent e) {
 		this.bens.clear();
 		try {
-			this.bens = realizarBuscaSimplesEJB.buscar(this.busca);
+			this.bens = realizarBuscaSimplesEJB.buscar(this.busca,1);
 		} catch (Exception ex) {
 
 		}

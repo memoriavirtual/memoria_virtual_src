@@ -18,10 +18,10 @@ public class RealizarBuscaSOAPService {
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 
 	@WebMethod(operationName = "buscar")
-	public ArrayList<BemPatrimonial> buscar(@WebParam(name = "stringDeBusca") String stringDeBusca) {
+	public ArrayList<BemPatrimonial> buscar(@WebParam(name = "stringDeBusca") String stringDeBusca,@WebParam(name = "numeroDaPagina") int pagina) {
 		ArrayList<BemPatrimonial> bensPatrimoniais = null;
 		try {
-			bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca);
+			bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca,pagina);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}

@@ -34,7 +34,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	private EntityManager entityManager;
 	@Resource(name = "mail/memoriavirtual")
 	private javax.mail.Session mailSession;
-
+	
 	/**
 	 * Default constructor.
 	 */
@@ -42,6 +42,34 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	}
 
+	
+	/*
+	 * Retorna o numero de bens que uma pagina de busca deve conter
+	 * 
+	 */
+	
+	public Integer getTamanhoPagina(){
+		Context context = null;
+		try {
+			context = new InitialContext();
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return 20;
+		}
+		Properties propriedades = null;
+		try {
+			propriedades = (Properties) context
+					.lookup("memoriavirtual.propriedades");
+		} catch (NamingException e) {
+			return tamanhoPaginaDefault;
+		}
+		if(propriedades.get("searchResultPerPage") == null) 
+			return tamanhoPaginaDefault;
+		
+		Integer result = new Integer((String) propriedades.get("searchResultPerPage"));
+		return  result;
+	}
+	
 	/**
 	 * Retorna o endereco do servidor.
 	 * 

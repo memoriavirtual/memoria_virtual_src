@@ -29,18 +29,28 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	private static final long serialVersionUID = 4130356176853401265L;
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
+	
 	private String busca;
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 	private BemPatrimonial bem;
 	private ArrayList<Integer> apresentaMidias = new ArrayList<Integer>();
 
+	private boolean proximaPaginaDisponivel;
+	private Integer pagina = 1;
+	private Integer numeroDePaginas;
+	
 	public RealizarBuscaSimplesMB() {
 	}
 
 	public String buscar() {
 
 		try {
-			this.bens = realizarBuscaEJB.buscar(this.busca);
+			this.bens = realizarBuscaEJB.buscar(this.busca,pagina);
+			
+			if(realizarBuscaEJB.buscar(this.busca,pagina+1).size() == 0)	
+				proximaPaginaDisponivel = false;
+			else
+				proximaPaginaDisponivel = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
@@ -62,7 +72,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 						"excluirBemPatrimonialMB");
 
 		managedBean.selecionarBem(this.bem);
-		return "/restrito/selecionarbemexclusao.jsf?faces-redirect=true";
+		return "/restrito/selecionarbemexclusao.jsf";
 
 	}
 
@@ -118,7 +128,19 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		return "bempatrimonial";
 
 	}
-
+	
+	public String proximaPagina(){
+		pagina++;
+		buscar();
+		return "resultadosbusca";
+	}
+	
+	public String paginaAnterior(){
+		pagina--;
+		buscar();
+		return "resultadosbusca";
+	}
+	
 	public String voltar() {
 
 		this.apresentaMidias.clear();
@@ -241,9 +263,33 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		return false;
 	}
 
+	public Integer getPagina() {
+		return pagina;
+	}
+
+	public void setPagina(Integer pagina) {
+		this.pagina = pagina;
+	}
+
+	public Integer getNumeroDePaginas() {
+		return numeroDePaginas;
+	}
+
+	public void setNumeroDePaginas(Integer numeroDePaginas) {
+		this.numeroDePaginas = numeroDePaginas;
+	}
+
 	public String url(Integer index) {
 		return "/multimidia?bean=realizarBuscaSimplesMB&indice="
 				+ index.toString() + "&thumb=true&type=false";
+	}
+
+	public boolean isProximaPaginaDisponivel() {
+		return proximaPaginaDisponivel;
+	}
+
+	public void setProximaPaginaDisponivel(boolean proximaPaginaDisponivel) {
+		this.proximaPaginaDisponivel = proximaPaginaDisponivel;
 	}
 
 }

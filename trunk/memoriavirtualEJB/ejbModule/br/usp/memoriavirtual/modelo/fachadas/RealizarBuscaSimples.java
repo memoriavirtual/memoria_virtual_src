@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,33 +20,44 @@ import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 @Stateless(mappedName = "RealizarBuscaSimples")
 public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
+	@EJB
+	private MemoriaVirtualRemote memoriaVirtual;
+
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
+	Integer primeiroElemento = null;
+	Integer ultimoElemento = null;
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<BemPatrimonial> buscar(String busca)
+	public ArrayList<BemPatrimonial> buscar(String busca, Integer pagina)
 			throws ModeloException {
 
-		ArrayList<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
-		List<BemPatrimonial> parcial = new ArrayList<BemPatrimonial>();
+		List<Long> bens = new ArrayList<Long>();
+		List<Long> parcial = new ArrayList<Long>();
+		List<Long> resultado = new ArrayList<Long>();
+
+		ArrayList<BemPatrimonial> bensCompletos = new ArrayList<BemPatrimonial>();
+
 		List<String> stringsDeBusca = new ArrayList<String>();
 		Query query;
+
 		stringsDeBusca = (List<String>) obterStrings(busca);
 
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
 				query = entityManager
-						.createQuery("SELECT b FROM BemPatrimonial b WHERE LOWER(b.tituloPrincipal) LIKE LOWER(:padrao)");
+						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.tituloPrincipal) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
-				parcial = (List<BemPatrimonial>) query.getResultList();
-
-				for (BemPatrimonial b : parcial) {
+				parcial = (List<Long>) query.getResultList();
+				for (Long b : parcial) {
 					if (!bens.contains(b)) {
 						bens.add(b);
 					}
@@ -60,12 +72,12 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			s = s.trim();
 			try {
 				query = entityManager
-						.createQuery("SELECT b FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t "
+						.createQuery("SELECT b.id FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t "
 								+ "WHERE t MEMBER OF b.titulos "
 								+ "AND LOWER(t.valor) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
-				parcial = (List<BemPatrimonial>) query.getResultList();
-				for (BemPatrimonial b : parcial) {
+				parcial = (List<Long>) query.getResultList();
+				for (Long b : parcial) {
 					if (!bens.contains(b))
 						bens.add(b);
 				}
@@ -76,8 +88,23 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			}
 		}
 
-		bens.trimToSize();
-		return bens;
+		if (pagina == 1)
+			primeiroElemento = 0;
+		else
+			primeiroElemento = memoriaVirtual.getTamanhoPagina() * (pagina - 1);
+		ultimoElemento = primeiroElemento + memoriaVirtual.getTamanhoPagina();
+
+		for (int i = primeiroElemento; i < ultimoElemento && i < bens.size(); i++) {
+			resultado.add(bens.get(i));
+		}
+
+		for (int i = 0; i < resultado.size(); i++) {
+			query = entityManager.createQuery("SELECT b FROM BemPatrimonial b WHERE b.id=:identificacao");
+			query.setParameter("identificacao", resultado.get(i));
+			bensCompletos.add((BemPatrimonial) query.getResultList().get(0));
+		}
+
+		return bensCompletos;
 	}
 
 	/**

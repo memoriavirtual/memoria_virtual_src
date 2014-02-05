@@ -14,7 +14,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface RealizarBuscaSimplesRemote {
 
-	public ArrayList<BemPatrimonial> buscar(String busca)
+	public ArrayList<BemPatrimonial> buscar(String busca,Integer pagina)
 			throws ModeloException;
 
 	public List<Multimidia> buscarVideos(BemPatrimonial bem)

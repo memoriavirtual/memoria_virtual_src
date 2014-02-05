@@ -12,6 +12,10 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface MemoriaVirtualRemote {
 
+	public static final Integer tamanhoPaginaDefault = 20;
+	
+	public Integer getTamanhoPagina();
+	
 	public String getURLServidor() throws ModeloException;
 
 	public String getIntervaloTimer() throws ModeloException;

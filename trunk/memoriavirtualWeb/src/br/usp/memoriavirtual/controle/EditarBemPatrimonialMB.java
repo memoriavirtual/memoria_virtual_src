@@ -171,7 +171,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		this.bens.clear();
 
 		try {
-			this.bens = realizarBuscaSimplesEJB.buscar(this.nome);
+			this.bens = realizarBuscaSimplesEJB.buscar(this.nome,1);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("erro", "resultado");

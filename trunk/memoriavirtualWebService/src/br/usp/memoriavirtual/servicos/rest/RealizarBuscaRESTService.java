@@ -26,7 +26,7 @@ public class RealizarBuscaRESTService {
 	public ArrayList<BemPatrimonial> buscar() {
 		ArrayList<BemPatrimonial> bensPatrimoniais = null;
 		try {
-			bensPatrimoniais = this.realizarBuscaEJB.buscar("");
+			bensPatrimoniais = this.realizarBuscaEJB.buscar("",1);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
@@ -34,11 +34,12 @@ public class RealizarBuscaRESTService {
 	}
 
 	@GET
-	@Path("/{stringDeBusca}")
-	public ArrayList<BemPatrimonial> buscar(@PathParam("stringDeBusca") String stringDeBusca) {
+	@Path("/{stringDeBusca}/{numeroDaPagina}")
+	public ArrayList<BemPatrimonial> buscar(@PathParam("stringDeBusca") String stringDeBusca,
+			@PathParam("numeroDaPagina") int pagina) {
 		ArrayList<BemPatrimonial> bensPatrimoniais = null;
 		try {
-			bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca);
+			bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca,pagina);
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
