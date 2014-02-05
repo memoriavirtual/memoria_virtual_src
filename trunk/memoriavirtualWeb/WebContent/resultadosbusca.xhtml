@@ -75,14 +75,23 @@
 							</h:dataTable>
 						</h:column>
 					</h:dataTable>
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="3">
 						<h:commandButton value="Página Anterior"
 							action="#{realizarBuscaSimplesMB.paginaAnterior}"
-							disabled="#{realizarBuscaSimplesMB.pagina == 1}"/>
+							disabled="#{realizarBuscaSimplesMB.pagina == 1}" />
+						<h:dataTable binding="#{realizarBuscaSimplesMB.controlePagina}"
+							value="#{realizarBuscaSimplesMB.paginas}" var="numeroPagina">
+							<h:column>
+								<tr>
+									<h:commandLink
+										action="#{realizarBuscaSimplesMB.selecionaPagina}"
+										value="#{numeroPagina}   " />
+								</tr>
+							</h:column>
+						</h:dataTable>
 						<h:commandButton value="Próxima Página"
 							action="#{realizarBuscaSimplesMB.proximaPagina}"
-							disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}"/>
-						
+							disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}" />
 					</h:panelGrid>
 				</div>
 			</fieldset>

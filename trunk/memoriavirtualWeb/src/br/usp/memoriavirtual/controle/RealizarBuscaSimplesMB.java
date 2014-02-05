@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIData;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
@@ -37,20 +38,45 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 
 	private boolean proximaPaginaDisponivel;
 	private Integer pagina = 1;
-	private Integer numeroDePaginas;
+	private ArrayList<String> paginas;
 	
+	private UIData controlePagina;
+
 	public RealizarBuscaSimplesMB() {
 	}
 
+	private void buscarNovaPagina(Integer pagina){
+		try {
+			this.bens = realizarBuscaEJB.buscar(this.busca,pagina);
+			
+			if(pagina.intValue() == realizarBuscaEJB.getNumeroDePaginasBusca().intValue())	
+				proximaPaginaDisponivel = false;
+			else
+				proximaPaginaDisponivel = true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
+					"resultado");
+		}	
+	}
+	
 	public String buscar() {
 
 		try {
 			this.bens = realizarBuscaEJB.buscar(this.busca,pagina);
 			
-			if(realizarBuscaEJB.buscar(this.busca,pagina+1).size() == 0)	
+			if(pagina == realizarBuscaEJB.getNumeroDePaginasBusca())	
 				proximaPaginaDisponivel = false;
 			else
 				proximaPaginaDisponivel = true;
+			
+			paginas  = new ArrayList<String>();
+			
+			for(int i=0;i<realizarBuscaEJB.getNumeroDePaginasBusca();i++){
+				paginas.add(new Integer(i+1).toString());
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
@@ -129,15 +155,21 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 
 	}
 	
+	public String selecionaPagina(){
+		pagina = new Integer((String) controlePagina.getRowData());
+		buscarNovaPagina(pagina);
+		return "resultadosbusca";
+	}
+	
 	public String proximaPagina(){
 		pagina++;
-		buscar();
+		buscarNovaPagina(pagina);
 		return "resultadosbusca";
 	}
 	
 	public String paginaAnterior(){
 		pagina--;
-		buscar();
+		buscarNovaPagina(pagina);
 		return "resultadosbusca";
 	}
 	
@@ -271,12 +303,12 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		this.pagina = pagina;
 	}
 
-	public Integer getNumeroDePaginas() {
-		return numeroDePaginas;
+	public ArrayList<String> getPaginas() {
+		return paginas;
 	}
 
-	public void setNumeroDePaginas(Integer numeroDePaginas) {
-		this.numeroDePaginas = numeroDePaginas;
+	public void setPaginas(ArrayList<String> paginas) {
+		this.paginas = paginas;
 	}
 
 	public String url(Integer index) {
@@ -290,6 +322,22 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 
 	public void setProximaPaginaDisponivel(boolean proximaPaginaDisponivel) {
 		this.proximaPaginaDisponivel = proximaPaginaDisponivel;
+	}
+	
+	public UIData getControlePagina() {
+		return controlePagina;
+	}
+
+	public void setControlePagina(UIData controlePagina) {
+		this.controlePagina = controlePagina;
+	}
+
+	public RealizarBuscaSimplesRemote getRealizarBuscaEJB() {
+		return realizarBuscaEJB;
+	}
+
+	public void setRealizarBuscaEJB(RealizarBuscaSimplesRemote realizarBuscaEJB) {
+		this.realizarBuscaEJB = realizarBuscaEJB;
 	}
 
 }

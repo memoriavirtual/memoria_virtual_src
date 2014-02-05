@@ -16,6 +16,8 @@ public interface RealizarBuscaSimplesRemote {
 
 	public ArrayList<BemPatrimonial> buscar(String busca,Integer pagina)
 			throws ModeloException;
+	
+	public Integer getNumeroDePaginasBusca();
 
 	public List<Multimidia> buscarVideos(BemPatrimonial bem)
 			throws ModeloException;

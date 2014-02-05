@@ -31,9 +31,19 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	Integer primeiroElemento = null;
-	Integer ultimoElemento = null;
-	
+	private Integer primeiroElemento = null;
+	private Integer ultimoElemento = null;
+
+	private Integer numeroDePaginas;
+
+	@Override
+	public Integer getNumeroDePaginasBusca() {
+		if (numeroDePaginas != null)
+			return numeroDePaginas;
+		else
+			return null;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<BemPatrimonial> buscar(String busca, Integer pagina)
@@ -99,11 +109,13 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		}
 
 		for (int i = 0; i < resultado.size(); i++) {
-			query = entityManager.createQuery("SELECT b FROM BemPatrimonial b WHERE b.id=:identificacao");
+			query = entityManager
+					.createQuery("SELECT b FROM BemPatrimonial b WHERE b.id=:identificacao");
 			query.setParameter("identificacao", resultado.get(i));
 			bensCompletos.add((BemPatrimonial) query.getResultList().get(0));
 		}
-
+		
+		numeroDePaginas = (bens.size()+memoriaVirtual.getTamanhoPagina() -1)/memoriaVirtual.getTamanhoPagina() ;
 		return bensCompletos;
 	}
 
