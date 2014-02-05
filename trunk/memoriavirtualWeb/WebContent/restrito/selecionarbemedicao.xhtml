@@ -24,9 +24,11 @@
 					<div>
 						<h:outputLabel class="labels">#{mensagens.excluirBemPatrimonialNome}</h:outputLabel>
 						<h:inputText value="#{editarBemPatrimonialMB.nome}"
-							autocomplete="off">
+							autocomplete="off">							
+							<f:ajax event="focus" execute="@this" render="sugestoesId"
+								listener="#{editarBemPatrimonialMB.listarBensFocus}" />
 							<f:ajax event="keyup" execute="@this" render="sugestoesId"
-								listener="#{editarBemPatrimonialMB.listarBens()}" />
+								listener="#{editarBemPatrimonialMB.listarBens}" />	
 						</h:inputText>
 					</div>
 					<div id="sugestoes">

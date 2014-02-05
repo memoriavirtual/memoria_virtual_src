@@ -85,13 +85,13 @@
 									infoClass="sucesso" errorClass="erro" warnClass="aviso">
 								</h:message>
 								<h:column id="coluna">
-									<h:graphicImage id="excluir" library="imagens"
-										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
-										<f:ajax render="@form" event="click" execute="@form"
-											listener="#{cadastrarBemPatrimonialMB.removerTitulo(titulo)}">
-										</f:ajax>
-									</h:graphicImage>
+									<h:commandLink
+										action="#{cadastrarBemPatrimonialMB.removerTitulo(titulo)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
+										</h:graphicImage>
+									</h:commandLink>
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
 									<h:inputText style="width: 40% !important;"
@@ -138,11 +138,10 @@
 							<div>
 								<div class="botoesTituiloTLB">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemAutorias}</h:outputLabel>
-									<h:commandButton type="button" class="botoesTituiloTLB"
-										value="#{mensagens.cadastrarBemAutoriaAdcionar}">
-										<f:ajax render="autoriaBem" execute="@form"
-											listener="#{cadastrarBemPatrimonialMB.adicionarAutoria()}"></f:ajax>
-									</h:commandButton>
+									<h:commandLink
+										action="#{cadastrarBemPatrimonialMB.adicionarAutoria}"> 
+										#{mensagens.cadastrarBemAutoriaAdcionar}
+									</h:commandLink>
 									<h:commandButton type="button" class="botoesTituiloTLB"
 										onclick="mostrarfundoNegro()"
 										value="#{mensagens.cadastrarBemCadastrarNovoAutor}">
@@ -151,27 +150,26 @@
 							</div>
 
 							<h:dataTable id="autoriaBem" var="autoria" class="titulos"
-								value="#{cadastrarBemPatrimonialMB.autorias}">
+								value="#{cadastrarBemPatrimonialMB.autoriasUtil}">
 								<h:column id="coluna">
 									<h:outputLabel class="labels"
 										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarAutorNome}</h:outputLabel>
-									<h:selectOneMenu value="#{autoria.autor.nome}">
+									<h:selectOneMenu value="#{autoria.autor}">
 										<f:selectItems
 											value="#{cadastrarBemPatrimonialMB.listarAutores()}" />
 									</h:selectOneMenu>
 									<h:outputLabel class="labels" style="margin-left: 20px;">#{mensagens.cadastrarAutorTipoAutoria}</h:outputLabel>
-									<h:selectOneMenu class="options" value="#{autoria.tipoAutoria}">
+									<h:selectOneMenu class="options" value="#{autoria.tipo}">
 										<f:selectItems
 											value="#{cadastrarBemPatrimonialMB.tiposAutoria}" />
 									</h:selectOneMenu>
-									<h:graphicImage id="excluir" library="imagens"
-										name="delete.png"
-										style="width: 15px; height: 15px; margin: 0px 10px;  border: none; ">
-
-										<f:ajax render="@form" event="click" execute="@form"
-											listener="#{cadastrarBemPatrimonialMB.excluirAutoria(autoria)}">
-										</f:ajax>
-									</h:graphicImage>
+									<h:commandLink
+										action="#{cadastrarBemPatrimonialMB.removerAutoria(autoria)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px 10px;  border: none; ">
+										</h:graphicImage>
+									</h:commandLink>
 								</h:column>
 							</h:dataTable>
 						</fieldset>
@@ -493,19 +491,6 @@
 						</fieldset>
 					</mv:containerExpansivo>
 
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
-						<fieldset>
-							<mv:containerExpansivo id="expansivo"
-								label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-								<mv:uploadFile id="multimidia"
-									nomebean="cadastrarBemPatrimonialMB"
-									bean="#{cadastrarBemPatrimonialMB}"
-									array="#{cadastrarBemPatrimonialMB.apresentaMidias}">
-								</mv:uploadFile>
-							</mv:containerExpansivo>
-						</fieldset>
-					</mv:containerExpansivo>
-
 					<mv:containerExpansivo
 						label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
 						<fieldset id="grupoIntervencao">
@@ -638,7 +623,7 @@
 								</h:selectOneRadio>
 							</div>
 
-							<div id="disponibilidade:acesso" style="display: none;">
+							<div id="disponibilidade:acesso">
 								<h:selectOneRadio layout="pageDirection" class="checks"
 									value="#{cadastrarBemPatrimonialMB.disponibilidadeUsoProtecao.condicoesAcesso}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesDeAcesso}</h:outputLabel>
@@ -662,7 +647,7 @@
 
 							<div>
 								<h:selectOneRadio layout="pageDirection" class="checks"
-									value="#{cadastrarBemPatrimonialMB.disponibilidadeUsoProtecao.dataRetorno}">
+									value="#{cadastrarBemPatrimonialMB.disponibilidadeUsoProtecao.condicoesReproducao}">
 									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesReproducao}</h:outputLabel>
 									<f:selectItem
 										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso1}"
@@ -895,7 +880,7 @@
 								<h:inputText value="#{cadastrarBemPatrimonialMB.busca}"
 									autocomplete="off">
 									<f:ajax event="keyup" execute="@this" render="sugestoesId"
-										listener="#{cadastrarBemPatrimonialMB.listarBemPatrimonial}" />
+										listener="#{cadastrarBemPatrimonialMB.listarBensPatrimoniais}" />
 								</h:inputText>
 							</div>
 
@@ -927,6 +912,20 @@
 									</h:column>
 								</h:dataTable>
 							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+
+					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+						<fieldset>
+							<mv:containerExpansivo id="expansivo"
+								label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
+								<mv:uploadFile id="multimidia"
+									nomebean="cadastrarBemPatrimonialMB"
+									bean="#{cadastrarBemPatrimonialMB}"
+									array="#{cadastrarBemPatrimonialMB.apresentaMidias}">
+								</mv:uploadFile>
+							</mv:containerExpansivo>
 						</fieldset>
 					</mv:containerExpansivo>
 

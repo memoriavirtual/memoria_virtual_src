@@ -62,23 +62,22 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 						"excluirBemPatrimonialMB");
 
 		managedBean.selecionarBem(this.bem);
-		return "/restrito/selecionarbemexclusao.jsf";
+		return "/restrito/selecionarbemexclusao.jsf?faces-redirect=true";
 
 	}
 
 	public String editar() {
 
 		// Inicializando Managed Bean
-		// FacesContext facesContext = FacesContext.getCurrentInstance();
-		// ELResolver resolver = facesContext.getApplication().getELResolver();
-		//
-		// EditarBemPatrimonialMB managedBean = (EditarBemPatrimonialMB)
-		// resolver
-		// .getValue(facesContext.getELContext(), null,
-		// "editarBemPatrimonialMB");
-		//
-		// managedBean.anexarBemPatrimonial(this.bem);
-		return "/restrito/editarbempatrimonial.jsf";
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+
+		EditarBemPatrimonialMB managedBean = (EditarBemPatrimonialMB) resolver
+				.getValue(facesContext.getELContext(), null,
+						"editarBemPatrimonialMB");
+
+		managedBean.selecionarBem(this.bem);
+		return "/restrito/editarbempatrimonial.jsf?faces-redirect=true";
 
 	}
 
