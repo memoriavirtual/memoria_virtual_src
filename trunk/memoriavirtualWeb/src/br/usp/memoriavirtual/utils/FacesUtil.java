@@ -32,9 +32,9 @@ public class FacesUtil {
         if (contexto == null) {
 
             // Cria novo ciclo de vida .
-            LifecycleFactory fatorCicloVida = (LifecycleFactory)
+            LifecycleFactory fabricaCicloVida = (LifecycleFactory)
                 FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY); 
-            Lifecycle cicloVida = fatorCicloVida.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
+            Lifecycle cicloVida = fabricaCicloVida.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
 
             // Cria novo FacesContext.
             FacesContextFactory contextFactory  = (FacesContextFactory)
