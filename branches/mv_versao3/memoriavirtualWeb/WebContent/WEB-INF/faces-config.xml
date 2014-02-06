@@ -30,11 +30,6 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>cadastrarAutorMB</managed-bean-name>
-		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarAutorMB</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<managed-bean-name>editarAutorMB</managed-bean-name>
 		<managed-bean-class>br.usp.memoriavirtual.controle.EditarAutorMB</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
@@ -362,6 +357,9 @@
 			<base-name>br.usp.memoriavirtual.mensagens</base-name>
 			<var>mensagens</var>
 		</resource-bundle>
-
+		<locale-config>
+			<default-locale>pt</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
 	</application>
 </faces-config>
