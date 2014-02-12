@@ -18,7 +18,9 @@
 </h:head>
 
 <h:body>
-	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado"></div>
+	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado">
+		<a href="#" id="fechar">Fechar</a>
+	</div>
 
 	<div class="continente">
 		<div id="usuario">
@@ -249,6 +251,22 @@
 
 		</div>
 	</div>
-
+	<script>
+		$(document).ready(function(){
+			$('a.labels').click(function(){
+				index = $('a.labels').index($(this));
+				index--;
+				mostrarPlayerImagen('editarBemPatrimonialMB', #{editarBemPatrimonialMB.midias.size()-1}, index);
+			});
+			$('#fechar').on('click', function(e){
+				video = $('video');
+				if(video.length > 0){
+					$('video')[0].pause();
+				}
+				$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+				$('.imageNoPlayer').remove();
+			});
+		});
+	</script>
 </h:body>
 </html>

@@ -106,9 +106,7 @@ body {
 #rodape {
 	background: url(../resources/imagens/footer.png) no-repeat;
 	width: 976px;
-
 	text-align: center;
-
 	position: relative;
 	bottom: 0;
 	font-size: 10px;
@@ -426,7 +424,7 @@ table[id*=instituicoes] td:hover {
 	cursor: hand;
 }
 
-table[id*=instituicoes] td{
+table[id*=instituicoes] td {
 	text-align: center;
 }
 
@@ -747,6 +745,7 @@ textarea:focus {
 .imageNoPlayer {
 	height: 80%;
 	margin-top: 5%;
+	z-index: 1001;
 }
 
 .imgbusca {
@@ -878,4 +877,22 @@ a[class*=acaoLink] {
 
 .relacionadosBemList a:hover {
 	color: white;
+}
+
+.midias {
+	width: 100%;
+	text-align: center;
+}
+
+.midias table {
+	width: 100%;
+	text-align: center;
+}
+
+#fechar {
+	font-size: 14pt;
+	text-decoration: none;
+	color: white;
+	display: block;
+	text-align: center;
 }

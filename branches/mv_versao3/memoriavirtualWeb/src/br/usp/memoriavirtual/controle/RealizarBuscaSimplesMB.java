@@ -35,6 +35,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	private ArrayList<Integer> apresentaMidias = new ArrayList<Integer>();
 
 	public RealizarBuscaSimplesMB() {
+
 	}
 
 	public String buscar() {

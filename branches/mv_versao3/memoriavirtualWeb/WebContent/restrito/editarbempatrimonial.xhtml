@@ -26,7 +26,7 @@
 				<div class="conteudoTitulo">#{mensagens.editarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.editarBemDescricao}</div>
 
-				<h:form method="post"
+				<h:form method="post" enctype="multipart/form-data"
 					prependId="false">
 
 					<fieldset>
@@ -905,6 +905,18 @@
 						</fieldset>
 					</mv:containerExpansivo>
 
+					<div class="midias">
+						<h:inputFile label="file" value="#{editarBemPatrimonialMB.part}" />
+						<h:commandButton id="submit"
+							action="#{editarBemPatrimonialMB.uploadFile}" value="upload file" />
+
+						<h:dataTable var="midia" value="#{editarBemPatrimonialMB.midias}">
+							<h:column>
+								<a href="#" class="labels ">#{midia.nome}</a>
+								<h:commandButton action="#{editarBemPatrimonialMB.removerMidia(midia)}" value="#{mensagens.remover}"></h:commandButton>
+							</h:column>
+						</h:dataTable>
+					</div>
 
 					<div class="botao">
 
@@ -925,9 +937,25 @@
 
 					</div>
 				</h:form>
-
 			</div>
-
+			<script type="text/javascript" src="../resources/javascript/jquery.js"></script>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('a.labels').click(function(){
+						index = $('a.labels').index($(this));
+						index--;
+						mostrarPlayerImagen('editarBemPatrimonialMB', #{editarBemPatrimonialMB.midias.size()-1}, index);
+					});
+					$('#fechar').on('click', function(e){
+						video = $('video');
+						if(video.length > 0){
+							$('video')[0].pause();
+						}
+						$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+						$('.imageNoPlayer').remove();
+					});
+				});
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

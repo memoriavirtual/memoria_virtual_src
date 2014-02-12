@@ -3,7 +3,6 @@ package br.usp.memoriavirtual.controle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -304,10 +303,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 
 	public List<SelectItem> recuperarInstituicoes() {
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
 		List<SelectItem> listaItens = new ArrayList<SelectItem>();
 		List<Instituicao> listaInstituicao = null;
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
@@ -334,12 +329,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 			for (Instituicao a : listaInstituicao) {
 				listaItens.add(new SelectItem(a.getId(), a.getNome()));
 			}
-		}
-		if (!(listaItens.size() == 1)) {
-			listaItens.add(
-					0,
-					new SelectItem(bundle
-							.getString("cadastrarBemInstituicaoSelecione")));
 		}
 		if (listaItens.size() == 0) {
 			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",

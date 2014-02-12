@@ -11,7 +11,6 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 
 	this.inicio = function() {
 		classe.player.setAttribute("class", "cadastroNovoAutor");
-		classe.player.addEventListener("click", classe.playerSair, false);
 		classe.player.setAttribute("scrolling-y", "no");
 		{
 			var xmlhttp = new XMLHttpRequest();
@@ -25,7 +24,10 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 										+ classe.nomeDoBean + "&indice="
 										+ classe.thisIndex);
 						image.setAttribute("class", "imageNoPlayer");
-						image.addEventListener("click", classe.rolar, false);
+						image.addEventListener("click", function(e){
+							e.stopPropagation();
+							return false;
+						}, false);
 						classe.player.appendChild(image);
 					} else if (xmlhttp.responseText.match("video.*")) {
 						var video = document.createElement("video");
@@ -36,7 +38,6 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 						video.setAttribute("class", "imageNoPlayer");
 						video.setAttribute("type", xmlhttp.responseText);
 						video.setAttribute("controls", true);
-						video.addEventListener("click", classe.rolar, false);
 						classe.player.appendChild(video);
 					} else if (xmlhttp.responseText.match("audio.*")) {
 						var audio = document.createElement("video");
@@ -47,7 +48,6 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 						audio.setAttribute("class", "imageNoPlayer");
 						audio.setAttribute("type", xmlhttp.responseText);
 						audio.setAttribute("controls", true);
-						audio.addEventListener("click", classe.rolar, false);
 						classe.player.appendChild(audio);
 					} else if (xmlhttp.responseText.match("application/pdf")) {
 						var embed = document.createElement("iframe");
@@ -61,8 +61,6 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 								.setAttribute("src",
 										"/memoriavirtual/javax.faces.resource/seta_direita.png.jsf?ln=imagens");
 						dir.setAttribute("class", "setaRolarEsq");
-						dir.addEventListener("click", classe.rolar, false);
-						esq.addEventListener("click", classe.rolar, false);
 						embed.setAttribute("name", "plugin");
 						embed.setAttribute("type", xmlhttp.responseText);
 						embed.setAttribute("width", "80%");
@@ -72,7 +70,6 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 										+ classe.nomeDoBean + "&indice="
 										+ classe.thisIndex);
 						// embed.setAttribute("class", "imageNoPlayer");
-						embed.addEventListener("click", classe.rolar, false);
 						classe.player.appendChild(esq);
 						classe.player.appendChild(embed);
 						classe.player.appendChild(dir);
@@ -87,116 +84,10 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 	};
 	this.rolar = function(e) {
 
-		e.stopPropagation();
-
-		if ((window.innerHeight / 10) * 7 < e.clientY) {
-			;
-		} else {
-			try {
-				classe.player.innerHTML = "";
-
-			} catch (err) {
-				classe.player.setAttribute("class",
-						"cadastroNovoAutorDesativado");
-			}
-			if ((window.innerWidth / 2) > e.clientX) {
-				classe.thisIndex--;
-				if (classe.thisIndex < 0) {
-					classe.thisIndex = classe.lastIndex;
-				}
-			} else {
-				classe.thisIndex++;
-				if (classe.thisIndex > classe.lastIndex) {
-					classe.thisIndex = 0;
-				}
-			}
-
-			{
-				var xmlhttp = new XMLHttpRequest();
-
-				xmlhttp.onreadystatechange = function() {
-					if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-						if (xmlhttp.responseText.match("image.*")) {
-							var image = document.createElement("img");
-							image.setAttribute("src",
-									"/memoriavirtual/multimidia?bean="
-											+ classe.nomeDoBean + "&indice="
-											+ classe.thisIndex);
-							image.setAttribute("class", "imageNoPlayer");
-							image
-									.addEventListener("click", classe.rolar,
-											false);
-							classe.player.appendChild(image);
-						} else if (xmlhttp.responseText.match("video.*")) {
-							var video = document.createElement("video");
-							video.setAttribute("src",
-									"/memoriavirtual/multimidia?bean="
-											+ classe.nomeDoBean + "&indice="
-											+ classe.thisIndex);
-							video.setAttribute("class", "imageNoPlayer");
-							video.setAttribute("type", xmlhttp.responseText);
-							video.setAttribute("controls", true);
-							video
-									.addEventListener("click", classe.rolar,
-											false);
-							classe.player.appendChild(video);
-						} else if (xmlhttp.responseText.match("audio.*")) {
-							var audio = document.createElement("video");
-							audio.setAttribute("src",
-									"/memoriavirtual/multimidia?bean="
-											+ classe.nomeDoBean + "&indice="
-											+ classe.thisIndex);
-							audio.setAttribute("class", "imageNoPlayer");
-							audio.setAttribute("type", xmlhttp.responseText);
-							audio.setAttribute("controls", true);
-							audio
-									.addEventListener("click", classe.rolar,
-											false);
-							classe.player.appendChild(audio);
-						} else if (xmlhttp.responseText
-								.match("application/pdf")) {
-							var embed = document.createElement("iframe");
-							var esq = document.createElement("img");
-							esq
-									.setAttribute("src",
-											"/memoriavirtual/javax.faces.resource/seta_esquerda.png.jsf?ln=imagens");
-							esq.setAttribute("class", "setaRolarDir");
-							var dir = document.createElement("img");
-							dir
-									.setAttribute("src",
-											"/memoriavirtual/javax.faces.resource/seta_direita.png.jsf?ln=imagens");
-							dir.setAttribute("class", "setaRolarEsq");
-							dir.addEventListener("click", classe.rolar, false);
-							esq.addEventListener("click", classe.rolar, false);
-							embed.setAttribute("name", "plugin");
-							embed.setAttribute("type", xmlhttp.responseText);
-							embed.setAttribute("width", "80%");
-							embed.setAttribute("height", "100%");
-							embed.setAttribute("src",
-									"/memoriavirtual/multimidia?bean="
-											+ classe.nomeDoBean + "&indice="
-											+ classe.thisIndex);
-							// embed.setAttribute("class", "imageNoPlayer");
-							embed
-									.addEventListener("click", classe.rolar,
-											false);
-							classe.player.appendChild(esq);
-							classe.player.appendChild(embed);
-							classe.player.appendChild(dir);
-						}
-				};
-				xmlhttp.open("GET", "/memoriavirtual/multimidia?bean="
-						+ classe.nomeDoBean + "&indice=" + classe.thisIndex
-						+ "&type=true", true);
-				xmlhttp.send();
-			}
-
-		}
 	};
 	this.playerSair = function(e) {
 		try {
 			classe.player.innerHTML = "";
-
 			classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
 		} catch (err) {
 			classe.player.setAttribute("class", "cadastroNovoAutorDesativado");
@@ -212,8 +103,6 @@ mostrarPlayerImagen = (function(nome, fim, index) {
 	var nomeDoBean = new String(nome);
 	var lastIndex = new Number(fim);
 	var thisIndex = new Number(index);
-	// alert(nomeDoBean );
-	// alert(lastIndex );
 	var playerImagen = new PlayerImagen(player, nomeDoBean, lastIndex,
 			thisIndex);
 
@@ -288,13 +177,13 @@ mostrarTableCorreta = (function(index, idtabela) {
 	}
 });
 
-// variáveis estáticas utilizadas nas funções que acertam os campos que devem
+// variï¿½veis estï¿½ticas utilizadas nas funï¿½ï¿½es que acertam os campos que devem
 // ser vistos
 var listaDeDivs;
 var tipoDobemfixo = null;
 
 /**
- * organiza os campos que devem ser vistos no grupo descrição
+ * organiza os campos que devem ser vistos no grupo descriï¿½ï¿½o
  * 
  */
 organizarGrupoDescricao = (function(idfieldset) {
@@ -351,24 +240,24 @@ testAutoSave = (function() {
 });
 
 /**
- * Função chamada quando um novo tipo de bem e escolhido Ela reorganiza os
+ * Funï¿½ï¿½o chamada quando um novo tipo de bem e escolhido Ela reorganiza os
  * campos que devem ser vistos
  */
 mostrarDescricao = (function() {
 
 	var menu = document.getElementById("GeralInfo:tipodobem");
 
-	// variável estática que tem o tipo do bem
+	// variï¿½vel estï¿½tica que tem o tipo do bem
 	tipoDobemfixo = menu.selectedIndex;
 
-	// Acerta os campos vistos no grupo descrição
+	// Acerta os campos vistos no grupo descriï¿½ï¿½o
 	organizarGrupoDescricao("grupoDescricao");
-	// Acerta os campos vistos no grupo Intervenção
+	// Acerta os campos vistos no grupo Intervenï¿½ï¿½o
 	organizarGrupoDescricao("grupoIntervencao");
 });
 
 /**
- * Função chamada quando um novo disponibilidade é escolhida Ela reorganiza os
+ * Funï¿½ï¿½o chamada quando um novo disponibilidade ï¿½ escolhida Ela reorganiza os
  * campos que devem ser vistos
  */
 mostrarDisponibilidade = (function(menu) {
@@ -377,7 +266,7 @@ mostrarDisponibilidade = (function(menu) {
 	var tipodisponibilidade = new Number(menu.getAttribute("id").split(":")[2]);
 
 	if (tipodisponibilidade == 0) {// acervo
-		// mostrar condições de acesso
+		// mostrar condiï¿½ï¿½es de acesso
 		var elem = document.getElementById("disponibilidade:acesso");
 		elem.removeAttribute("style");
 
@@ -393,7 +282,7 @@ mostrarDisponibilidade = (function(menu) {
 		var elem1 = document.getElementById("disponibilidade:data");
 		elem1.setAttribute("style", "display: none;");
 
-		// esconder condições de acesso
+		// esconder condiï¿½ï¿½es de acesso
 		var elem = document.getElementById("disponibilidade:acesso");
 		elem.setAttribute("style", "display: none;");
 		return;
@@ -403,14 +292,14 @@ mostrarDisponibilidade = (function(menu) {
 	var elem = document.getElementById("disponibilidade:data");
 	elem.removeAttribute("style");
 
-	// esconder condições de acesso
+	// esconder condiï¿½ï¿½es de acesso
 	var elem1 = document.getElementById("disponibilidade:acesso");
 	elem1.setAttribute("style", "display: none;");
 });
 
 inicioUnity = (function() {
 	/**
-	 * Integração com o Unity Beta
+	 * Integraï¿½ï¿½o com o Unity Beta
 	 */
 	function unityReady() {
 		// Integrate with Unity!
