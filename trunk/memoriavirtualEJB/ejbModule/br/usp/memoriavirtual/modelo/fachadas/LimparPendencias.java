@@ -151,7 +151,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	public void timeOutInicial() {
 
 		/* Cria o primeiro timer para expirar em 2 segundos */
-		this.criarTimer(2000);
+		this.criarTimer(3000);
 
 		/*
 		 * Pego a lista de Timers criados para est� classe e cancelo o timer
