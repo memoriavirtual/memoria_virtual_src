@@ -26,7 +26,7 @@
 				<div class="conteudoTitulo">#{mensagens.cadastrarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarBemDescricao}</div>
 
-				<h:form method="post" prependId="false">
+				<h:form method="post" prependId="false" enctype="multipart/form-data">
 
 
 					<fieldset>
@@ -915,18 +915,22 @@
 						</fieldset>
 					</mv:containerExpansivo>
 
-
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
-						<fieldset>
-							<mv:containerExpansivo id="expansivo"
-								label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-								<mv:uploadFile id="multimidia"
-									nomebean="cadastrarBemPatrimonialMB"
-									bean="#{cadastrarBemPatrimonialMB}"
-									array="#{cadastrarBemPatrimonialMB.apresentaMidias}">
-								</mv:uploadFile>
-							</mv:containerExpansivo>
-						</fieldset>
+						<div class="midias">
+							<h:inputFile label="file" value="#{cadastrarBemPatrimonialMB.part}" />
+							<h:commandButton id="submit"
+								action="#{cadastrarBemPatrimonialMB.uploadFile}"
+								value="#{mensagens.uploadFile}" />
+
+							<h:dataTable var="midia" value="#{cadastrarBemPatrimonialMB.midias}">
+								<h:column>
+									<a href="#" class="labels ">#{midia.nome}</a>
+									<h:commandButton
+										action="#{cadastrarBemPatrimonialMB.removerMidia(midia)}"
+										value="#{mensagens.remover}"></h:commandButton>
+								</h:column>
+							</h:dataTable>
+						</div>
 					</mv:containerExpansivo>
 
 					<div class="botao">
@@ -950,7 +954,25 @@
 				</h:form>
 
 			</div>
-			<!-- end .formulario-->
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('a.labels').click(function(e){
+						e.preventDefault();
+						var index = $('a.labels').index($(this));
+						index--;
+						mostrarPlayerImagen('cadastrarBemPatrimonialMB', #{cadastrarBemPatrimonialMB.midias.size()-1}, index);
+					});
+					$('#fechar').click(function(e){
+						e.preventDefault();
+						var video = $('video');
+						if(video.length > 0){
+							$('video')[0].pause();
+						}
+						$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+						$('.imageNoPlayer').remove();
+					});
+				});
+			</script>
 
 		</ui:define>
 	</ui:composition>

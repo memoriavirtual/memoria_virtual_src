@@ -328,8 +328,23 @@
 				</h:form>
 
 			</div>
-			<!-- end .formulario-->
-
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('a.labels').click(function(){
+						index = $('a.labels').index($(this));
+						index--;
+						mostrarPlayerImagen('cadastrarBemPatrimonialMB', #{cadastrarBemPatrimonialMB.midias.size()-1}, index);
+					});
+					$('#fechar').click(function(e){
+						video = $('video');
+						if(video.length > 0){
+							$('video')[0].pause();
+						}
+						$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+						$('.imageNoPlayer').remove();
+					});
+				});
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

@@ -258,7 +258,7 @@
 				index--;
 				mostrarPlayerImagen('editarBemPatrimonialMB', #{editarBemPatrimonialMB.midias.size()-1}, index);
 			});
-			$('#fechar').on('click', function(e){
+			$('#fechar').click(function(e){
 				video = $('video');
 				if(video.length > 0){
 					$('video')[0].pause();

@@ -297,10 +297,8 @@ mostrarDisponibilidade = (function(menu) {
 	elem1.setAttribute("style", "display: none;");
 });
 
-inicioUnity = (function() {
-	/**
-	 * Integra��o com o Unity Beta
-	 */
+inicioUnity = (function() {/*
+
 	function unityReady() {
 		// Integrate with Unity!
 	}
@@ -310,5 +308,5 @@ inicioUnity = (function() {
 		name : "Memoria Virtual",
 		iconUrl : "http?://localhost:8080?/memoriavirtual/icon.png",
 		onInit : unityReady
-	});
+	});*/
 });

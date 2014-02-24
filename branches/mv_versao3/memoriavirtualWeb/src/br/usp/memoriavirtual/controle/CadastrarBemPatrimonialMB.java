@@ -1,5 +1,8 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +10,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Part;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
@@ -38,6 +44,8 @@ import br.usp.memoriavirtual.utils.AutoriaUtil;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.StringContainer;
 
+@ManagedBean(name = "cadastrarBemPatrimonialMB")
+@SessionScoped
 public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 
 	private static final long serialVersionUID = 4487901192049535944L;
@@ -85,6 +93,8 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 	private boolean especificarUso = true;
 	private String usoInput = "";
 
+	private Part part;
+
 	public CadastrarBemPatrimonialMB() {
 	}
 
@@ -93,12 +103,12 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		if (this.bemPatrimonial.getTituloPrincipal().length() > 0) {
 
 			try {
-				
+
 				this.containerMultimidia.setMultimidia(this.midias);
-				
-				for(Multimidia m : this.midias)
+
+				for (Multimidia m : this.midias)
 					m.setContainerMultimidia(containerMultimidia);
-				
+
 				this.bemPatrimonial.setContainerMultimidia(containerMultimidia);
 
 				this.autorias.clear();
@@ -157,7 +167,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 					a.setAssunto(s);
 					assuntosSet.add(a);
 				}
-				
+
 				this.bemPatrimonial.setAssuntos(assuntosSet);
 
 				Set<Descritor> descritoresSet = new TreeSet<Descritor>();
@@ -168,7 +178,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 					d.setDescritor(s);
 					descritoresSet.add(d);
 				}
-				
+
 				this.bemPatrimonial.setDescritores(descritoresSet);
 
 				List<String> fontesInformacaoLista = new ArrayList<String>();
@@ -192,7 +202,7 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 				this.bemPatrimonial.setDiagnostico(diagnostico);
 				this.bemPatrimonial.setIntervencoes(intervencoes);
 				this.bemPatrimonial.setPesquisadores(pesquisadores);
-				
+
 				this.bemPatrimonial.setBensRelacionados(bensRelacionados);
 
 				this.cadastrarBemPatrimonialEJB
@@ -337,7 +347,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		return listaItens;
 	}
 
-
 	public List<SelectItem> listarAutores() {
 		List<SelectItem> autores = new ArrayList<SelectItem>();
 		try {
@@ -418,6 +427,58 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 
 	public String removerBemAnexo(BemPatrimonial b) {
 		this.bensRelacionados.remove(b);
+		return null;
+	}
+
+	public String uploadFile() throws IOException {
+
+		String fileName = getFileName(part);
+
+		InputStream inputStream = null;
+		ByteArrayOutputStream out = null;
+		try {
+			inputStream = part.getInputStream();
+			out = new ByteArrayOutputStream();
+
+			int read = 0;
+			final byte[] bytes = new byte[128];
+			while ((read = inputStream.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+
+			out.toByteArray();
+			Multimidia m = new Multimidia();
+			m.setContentType(part.getContentType());
+			m.setNome(fileName);
+			m.setContent(out.toByteArray());
+			m.setContainerMultimidia(this.containerMultimidia);
+			this.midias.add(m);
+			this.ApresentaMidias.add(this.ApresentaMidias.size());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (out != null)
+				out.close();
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
+		return null;
+	}
+
+	private String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(content.indexOf('=') + 1).trim()
+						.replace("\"", "");
+			}
+		}
+		return null;
+	}
+
+	public String removerMidia(Multimidia m) {
+		this.midias.remove(m);
 		return null;
 	}
 
@@ -603,7 +664,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		return this.removeMidia(i);
 	}
 
-
 	public String removeMidia(int index) {
 		this.midias.remove(index);
 
@@ -612,7 +672,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 		}
 		return null;
 	}
-
 
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
@@ -661,5 +720,13 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 
 	public void setAutoriasUtil(List<AutoriaUtil> autoriasUtil) {
 		this.autoriasUtil = autoriasUtil;
+	}
+
+	public Part getPart() {
+		return part;
+	}
+
+	public void setPart(Part part) {
+		this.part = part;
 	}
 }
