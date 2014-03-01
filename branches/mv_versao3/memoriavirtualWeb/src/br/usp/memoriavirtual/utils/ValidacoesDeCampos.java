@@ -57,4 +57,31 @@ public class ValidacoesDeCampos {
 		return true;
 	}
 	
+	public static boolean validaCoordenadaGeografica(String Coordenada) {
+
+		String regexp = "[-]?[0-9]*[.]{0,1}[0-9]{4}";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(Coordenada);
+		
+		
+		if (!matcher.matches() || Coordenada.equals(""))
+			return false;
+
+		return true;
+	}
+	
+	public static boolean validarAltitude(String Altitude) {
+
+		String regexp = "[-]?[0-9]*[.]?{0,1}[0-9]{2}";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(Altitude);
+
+		if (!matcher.matches() || Altitude.equals(""))
+			return false;
+
+		return true;
+	}
+	
+	
+	
 }

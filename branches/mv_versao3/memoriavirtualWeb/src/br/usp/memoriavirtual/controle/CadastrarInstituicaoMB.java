@@ -846,6 +846,11 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 					"cadastrarInstituicaoErroLatitudeVazio",
 					"validacaoLatitude");
 			return false;
+		} else if (!ValidacoesDeCampos.validaCoordenadaGeografica(this.latitude)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroLatitudeInvalido",
+					"validacaoLatitude");
+			return false;
 		}
 		return true;
 	}
@@ -863,6 +868,11 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 					"cadastrarInstituicaoErroLongitudeVazio",
 					"validacaoLongitude");
 			return false;
+		}else if (!ValidacoesDeCampos.validaCoordenadaGeografica(this.longitude)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroLongitudeInvalido",
+					"validacaoLongitude");
+			return false;
 		}
 		return true;
 	}
@@ -878,6 +888,11 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		if (this.altitude.equals("")) {
 			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroAltitudeVazio",
+					"validacaoAltitude");
+			return false;
+		}else if (!ValidacoesDeCampos.validarAltitude(this.altitude)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroAltitudeInvalido",
 					"validacaoAltitude");
 			return false;
 		}

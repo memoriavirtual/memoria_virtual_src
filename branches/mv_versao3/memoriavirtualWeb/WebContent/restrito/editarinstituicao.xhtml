@@ -129,7 +129,7 @@
 								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
 									listener="#{editarInstituicaoMB.validateTelefone}" />
 							</h:inputText>
-							<div></div>
+							<div>(xx)xxxx-xxxx</div>
 							<h:message id="validacaoTelefone" for="validacaoTelefone"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -194,12 +194,12 @@
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-							<h:inputText id="latitude"
+							<h:inputText 
 								value="#{editarInstituicaoMB.latitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLatitude"
 									listener="#{editarInstituicaoMB.validateLatitude}" />
 							</h:inputText>
-							<div>#{mensagens.editarInstituicaoFormatoDMS}</div>
+							<div>-90.0000 a 90.0000</div>
 							<h:message id="validacaoLatitude" for="validacaoLatitude"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -207,12 +207,12 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-							<h:inputText id="longitude"
+							<h:inputText 
 								value="#{editarInstituicaoMB.longitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLongitude"
 									listener="#{editarInstituicaoMB.validateLongitude}" />
 							</h:inputText>
-							<div>#{mensagens.editarInstituicaoFormatoDMS}</div>
+							<div>-180.0000 a 180.0000</div>
 							<h:message id="validacaoLongitude" for="validacaoLongitude"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
@@ -224,7 +224,7 @@
 								<f:ajax event="blur" execute="@this" render="validacaoAltitude"
 									listener="#{editarInstituicaoMB.validateAltitude}" />
 							</h:inputText>
-							<div></div>
+							<div>km (00.00...)</div>
 							<h:message id="validacaoAltitude" for="validacaoAltitude"
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
