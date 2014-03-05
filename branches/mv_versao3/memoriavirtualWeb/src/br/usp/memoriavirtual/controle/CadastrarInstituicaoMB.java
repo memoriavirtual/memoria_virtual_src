@@ -1,5 +1,8 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +11,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Part;
 
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
@@ -20,28 +26,20 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
-/**
- * Mananged Bean responsável pelo controle do cadaStro de uma nova
- * instituição
- */
+@ManagedBean(name = "cadastrarInstituicaoMB")
+@SessionScoped
+public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 
-public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
-
-	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6620103410985404517L;
 	@EJB
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
 	protected String slot = "arquivo0";
-	
+
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
-	
+
 	protected String nome = "";
 	protected String localizacao = "";
 	protected String endereco = "";
@@ -63,23 +61,23 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	protected String legislacao = "";
 	protected String sinteseHistorica = "";
 	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
+	protected Part part;
 
-	/**
-	 * Construtor padrão
-	 */
 	public CadastrarInstituicaoMB() {
 
 	}
 
 	public String cadastrarInstituicao() {
-		if (this.validateNome() &&  this.validateCep() && this.validateTelefone()) {
+		if (this.validateNome() && this.validateCep()
+				&& this.validateTelefone()) {
 			Instituicao instituicao = new Instituicao(this.nome,
-					this.localizacao, this.endereco, this.cidade, this.estado,this.pais,
-					this.cep, this.telefone, this.caixaPostal, this.email,
-					this.URL, this.identificacaoProprietario,
+					this.localizacao, this.endereco, this.cidade, this.estado,
+					this.pais, this.cep, this.telefone, this.caixaPostal,
+					this.email, this.URL, this.identificacaoProprietario,
 					this.administradorPropriedade, this.latitude,
 					this.longitude, this.altitude, this.tipoPropriedade,
-					this.protecaoExistente, this.legislacao , this.sinteseHistorica);
+					this.protecaoExistente, this.legislacao,
+					this.sinteseHistorica);
 			// como n�o � necessario a aprova��o de nenhum outro
 			// administrador
 			// A validade do registro j� � setada como verdadeira.
@@ -103,9 +101,9 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 					.equals(bundle
 							.getString("cadastrarInstituicaoEscolhaProtecaoExistente")))
 				instituicao.setProtecaoExistente("");
-			
-			//adcionando os arquivos a instituicao
-			for(Multimidia i : midias){
+
+			// adcionando os arquivos a instituicao
+			for (Multimidia i : midias) {
 				this.containerMultimidia.addMultimidia(i);
 			}
 			instituicao.setContainerMultimidia(containerMultimidia);
@@ -124,7 +122,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		this.resetCadastrarinstituicao();
 		return null;
 	}
-	
+
 	/**
 	 * @return the midias
 	 */
@@ -133,23 +131,24 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	}
 
 	/**
-	 * @param midias the midias to set
+	 * @param midias
+	 *            the midias to set
 	 */
 	public void setMidias(ArrayList<Multimidia> midias) {
 		this.midias = midias;
 	}
 
-	public void adicionarMidia (Multimidia midia) {
-		this.midias.add( midia);
-		
-		if((this.midias.size() % 4 ) == 1  ){
-			Integer mult = this.midias.size() -1;
+	public void adicionarMidia(Multimidia midia) {
+		this.midias.add(midia);
+
+		if ((this.midias.size() % 4) == 1) {
+			Integer mult = this.midias.size() - 1;
 			this.ApresentaMidias.add(mult);
-			
+
 		}
 	}
-		
-	public String resetCadastrarinstituicao() {	
+
+	public String resetCadastrarinstituicao() {
 		this.nome = "";
 		this.localizacao = "";
 		this.endereco = "";
@@ -172,8 +171,80 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		this.sinteseHistorica = "";
 		this.midias.clear();
 		this.ApresentaMidias.clear();
+		this.midias.clear();
 		return "reset";
 
+	}
+
+	public String removerMidia(Multimidia m) {
+		this.midias.remove(m);
+		return null;
+	}
+
+	public String uploadFile() throws IOException {
+
+		if (part.getSize() > 0) {
+			String fileName = getFileName(part);
+
+			InputStream inputStream = null;
+			ByteArrayOutputStream out = null;
+			try {
+				inputStream = part.getInputStream();
+				out = new ByteArrayOutputStream();
+
+				int read = 0;
+				final byte[] bytes = new byte[128];
+				while ((read = inputStream.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+
+				out.toByteArray();
+				Multimidia m = new Multimidia();
+				m.setContentType(part.getContentType());
+				m.setNome(fileName);
+				m.setContent(out.toByteArray());
+				m.setContainerMultimidia(this.containerMultimidia);
+				this.midias.add(m);
+				this.ApresentaMidias.add(this.ApresentaMidias.size());
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (out != null)
+					out.close();
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			}
+
+		} else {
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErro",
+					"resultado");
+		}
+
+		return null;
+	}
+
+	protected String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(content.indexOf('=') + 1).trim()
+						.replace("\"", "");
+			}
+		}
+		return null;
+	}
+
+	public String imageDisplay(Multimidia m) {
+		return m.isImagem() ? "block" : "none";
+	}
+
+	public String videoDisplay(Multimidia m) {
+		return m.isVideo() ? "block" : "none";
+	}
+
+	public String midiaDisplay(Multimidia m) {
+		return (!m.isImagem() && !m.isVideo()) ? "block" : "none";
 	}
 
 	/**
@@ -614,9 +685,10 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	public boolean validateNome() {
 
 		if (this.nome.equals("")) {
-			
-			String args[] = {"nome"};
-			MensagensDeErro.getErrorMessage("campo_vazio", args, "validacaoNome");
+
+			String args[] = { "nome" };
+			MensagensDeErro.getErrorMessage("campo_vazio", args,
+					"validacaoNome");
 			return false;
 		} else if (!memoriaVirtualEJB
 				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
@@ -846,7 +918,8 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 					"cadastrarInstituicaoErroLatitudeVazio",
 					"validacaoLatitude");
 			return false;
-		} else if (!ValidacoesDeCampos.validaCoordenadaGeografica(this.latitude)) {
+		} else if (!ValidacoesDeCampos
+				.validaCoordenadaGeografica(this.latitude)) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarInstituicaoErroLatitudeInvalido",
 					"validacaoLatitude");
@@ -868,7 +941,8 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 					"cadastrarInstituicaoErroLongitudeVazio",
 					"validacaoLongitude");
 			return false;
-		}else if (!ValidacoesDeCampos.validaCoordenadaGeografica(this.longitude)) {
+		} else if (!ValidacoesDeCampos
+				.validaCoordenadaGeografica(this.longitude)) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarInstituicaoErroLongitudeInvalido",
 					"validacaoLongitude");
@@ -890,7 +964,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 					"cadastrarInstituicaoErroAltitudeVazio",
 					"validacaoAltitude");
 			return false;
-		}else if (!ValidacoesDeCampos.validarAltitude(this.altitude)) {
+		} else if (!ValidacoesDeCampos.validarAltitude(this.altitude)) {
 			MensagensDeErro.getErrorMessage(
 					"cadastrarInstituicaoErroAltitudeInvalido",
 					"validacaoAltitude");
@@ -966,7 +1040,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		}
 		return true;
 	}
-	
+
 	public String getSlot() {
 		return slot;
 	}
@@ -974,6 +1048,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	public void setSlot(String slot) {
 		this.slot = slot;
 	}
+
 	/**
 	 * Validacao do Legislacao
 	 */
@@ -990,7 +1065,7 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Validacao do Legislacao
 	 */
@@ -1007,15 +1082,16 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 		}
 		return true;
 	}
-	
-	
+
 	@Override
 	public List<Multimidia> recuperaColecaoMidia() {
 		return this.midias;
 	}
+
 	public String removeMidia(String midia) {
 		return null;
 	}
+
 	@Override
 	public String removeMidia(Multimidia midia) {
 		this.midias.remove(midia);
@@ -1030,7 +1106,8 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	}
 
 	/**
-	 * @param sinteseHistorica the sinteseHistorica to set
+	 * @param sinteseHistorica
+	 *            the sinteseHistorica to set
 	 */
 	public void setSinteseHistorica(String sinteseHistorica) {
 		this.sinteseHistorica = sinteseHistorica;
@@ -1039,10 +1116,10 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	@Override
 	public String removeMidia(int index) {
 		this.midias.remove(index);
-		
-		if(this.midias.size() % 4  == 0){
-			this.ApresentaMidias.remove(this.ApresentaMidias.size() -1);
-		} 
+
+		if (this.midias.size() % 4 == 0) {
+			this.ApresentaMidias.remove(this.ApresentaMidias.size() - 1);
+		}
 		return null;
 	}
 
@@ -1053,17 +1130,26 @@ public class CadastrarInstituicaoMB implements Serializable,BeanComMidia{
 	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
 		ApresentaMidias = apresentaMidias;
 	}
-	public boolean  isRenderCell(int index) {
-		if(this.midias.size() > index ){
+
+	public boolean isRenderCell(int index) {
+		if (this.midias.size() > index) {
 			return true;
 		}
 		return false;
 	}
-	
-	public String cancelar(){
-		
+
+	public String cancelar() {
+
 		this.resetCadastrarinstituicao();
 		return "/restrito/index.jsf";
-		
+
+	}
+
+	public Part getPart() {
+		return part;
+	}
+
+	public void setPart(Part part) {
+		this.part = part;
 	}
 }

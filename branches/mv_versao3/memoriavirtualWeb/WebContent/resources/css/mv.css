@@ -889,6 +889,11 @@ a[class*=acaoLink] {
 	text-align: center;
 }
 
+.tabelaMidia {
+	margin-top: 10px;
+	margin: auto;
+}
+
 #fechar {
 	font-size: 14pt;
 	text-decoration: none;

@@ -30,7 +30,8 @@
 				<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
 
-				<h:form method="post" prependId="false">
+				<h:form method="post" prependId="false"
+					enctype="multipart/form-data">
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
@@ -274,12 +275,6 @@
 								infoClass="sucesso" errorClass="erro" warnClass="aviso">
 							</h:message>
 						</div>
-						<mv:containerExpansivo id="expansivo"
-							label="#{mensagens.cadastrarInstituicaoItemMultimidia}">
-							<mv:uploadFile id="multimidia" nomebean="editarInstituicaoMB"
-								bean="#{editarInstituicaoMB}"
-								array="#{editarInstituicaoMB.apresentaMidias}"></mv:uploadFile>
-						</mv:containerExpansivo>
 
 						<div>
 							<h:outputLabel class="labels" style="float:left;  heigth: 250px">#{mensagens.cadastrarInstituicaoSinteseHistorica}</h:outputLabel>
@@ -297,6 +292,40 @@
 						</div>
 
 					</fieldset>
+					
+					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+						<div class="midias">
+							<h:inputFile label="file"
+								value="#{editarInstituicaoMB.part}" />
+							<h:commandButton id="submit"
+								action="#{editarInstituicaoMB.uploadFile}"
+								value="#{mensagens.uploadFile}" />
+
+							<h:dataTable var="midia" id="midiasTable"
+								value="#{editarInstituicaoMB.midias}">
+								<h:column>
+									<div>
+										<img class="thumb tabelaMidia" width="150"
+											style="display: #{editarInstituicaoMB.imageDisplay(midia)}"></img>
+										<video class="thumb tabelaMidia" type="#{midia.contentType}"
+											width="150"
+											style="display:#{editarInstituicaoMB.videoDisplay(midia)}"></video>
+										<h:graphicImage width="150" class="tabelaMidia"
+											library="imagens" name="media.png"
+											style="display:#{editarInstituicaoMB.midiaDisplay(midia)}" />
+									</div>
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaNome}</h:outputLabel>
+									<h:inputText value="#{midia.nome}" />
+									<br />
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaDescricao}</h:outputLabel>
+									<h:inputText value="#{midia.descricao}" />
+									<h:commandButton
+										action="#{editarInstituicaoMB.removerMidia(midia)}"
+										value="#{mensagens.remover}"></h:commandButton>
+								</h:column>
+							</h:dataTable>
+						</div>
+					</mv:containerExpansivo>
 
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
@@ -314,7 +343,34 @@
 					</div>
 				</h:form>
 			</div>
-			<!-- end .formulario-->
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('video.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=editarInstituicaoMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('img.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=editarInstituicaoMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('[id*="midiasTable"] tr td div').click(function(e){
+						e.preventDefault();
+						var index = $('[id*="midiasTable"] tr td div').index($(this));
+						mostrarPlayerImagen('editarInstituicaoMB', #{editarInstituicaoMB.midias.size()-1}, index);
+					});
+					$('#fechar').click(function(e){
+						e.preventDefault();
+						var video = $('#cadastroNovoAutor video');
+						if(video.length > 0){
+							$('video')[0].pause();
+						}
+						$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+						$('.imageNoPlayer').remove();
+					});
+				});
+			</script>
 
 		</ui:define>
 	</ui:composition>

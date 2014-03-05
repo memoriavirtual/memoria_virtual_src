@@ -102,8 +102,17 @@ public class Multimidia implements Serializable {
 		this.descricao = descricao;
 	}
 
+	public boolean isImagem(){
+		return this.getContentType().contains("image");
+	}
 	
+	public boolean isVideo(){
+		return this.getContentType().contains("video");
+	}
 	
+	public boolean isAudio(){
+		return this.getContentType().contains("audio");
+	}
 	
 	/**
 	 * @return the nome

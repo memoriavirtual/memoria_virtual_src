@@ -11,7 +11,6 @@ import java.util.TreeSet;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -86,9 +85,6 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-
-	@ManagedProperty(value = "#{mensagensMB}")
-	private MensagensDeErro mensagensMB;
 
 	private boolean especificarUso = true;
 	private String usoInput = "";
@@ -432,39 +428,56 @@ public class CadastrarBemPatrimonialMB implements Serializable, BeanComMidia {
 
 	public String uploadFile() throws IOException {
 
-		String fileName = getFileName(part);
+		if (part.getSize() > 0) {
+			String fileName = getFileName(part);
 
-		InputStream inputStream = null;
-		ByteArrayOutputStream out = null;
-		try {
-			inputStream = part.getInputStream();
-			out = new ByteArrayOutputStream();
+			InputStream inputStream = null;
+			ByteArrayOutputStream out = null;
+			try {
+				inputStream = part.getInputStream();
+				out = new ByteArrayOutputStream();
 
-			int read = 0;
-			final byte[] bytes = new byte[128];
-			while ((read = inputStream.read(bytes)) != -1) {
-				out.write(bytes, 0, read);
+				int read = 0;
+				final byte[] bytes = new byte[128];
+				while ((read = inputStream.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+
+				out.toByteArray();
+				Multimidia m = new Multimidia();
+				m.setContentType(part.getContentType());
+				m.setNome(fileName);
+				m.setContent(out.toByteArray());
+				m.setContainerMultimidia(this.containerMultimidia);
+				this.midias.add(m);
+				this.ApresentaMidias.add(this.ApresentaMidias.size());
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (out != null)
+					out.close();
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			}
-
-			out.toByteArray();
-			Multimidia m = new Multimidia();
-			m.setContentType(part.getContentType());
-			m.setNome(fileName);
-			m.setContent(out.toByteArray());
-			m.setContainerMultimidia(this.containerMultimidia);
-			this.midias.add(m);
-			this.ApresentaMidias.add(this.ApresentaMidias.size());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (out != null)
-				out.close();
-			if (inputStream != null) {
-				inputStream.close();
-			}
+		} else {
+			MensagensDeErro.getErrorMessage("cadastrarBemErro", "resultado");
 		}
+
 		return null;
+	}
+	
+	public String imageDisplay(Multimidia m){
+		return m.isImagem() ? "block" : "none";
+	}
+	
+	public String videoDisplay(Multimidia m){
+		return m.isVideo() ? "block" : "none";
+	}
+	
+	public String midiaDisplay(Multimidia m){
+		return (!m.isImagem() && !m.isVideo()) ? "block" : "none";
 	}
 
 	private String getFileName(Part part) {

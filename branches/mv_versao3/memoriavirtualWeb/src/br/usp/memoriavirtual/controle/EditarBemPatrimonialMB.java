@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
@@ -40,6 +41,7 @@ import br.usp.memoriavirtual.utils.AutoriaUtil;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.StringContainer;
 
+@ManagedBean(name = "editarBemPatrimonialMB")
 @SessionScoped
 public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		Serializable {
@@ -47,6 +49,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	private static final long serialVersionUID = 2482974978856128676L;
 
 	private String nome = "";
+	private Part part;
 
 	@EJB
 	private EditarBemPatrimonialRemote editarBemPatrimonialEJB;
@@ -61,63 +64,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
 
 	public EditarBemPatrimonialMB() {
-	}
 
-	private Part part;
-
-	public Part getPart() {
-		return part;
-	}
-
-	public void setPart(Part part) {
-		this.part = part;
-	}
-
-	public String uploadFile() throws IOException {
-
-		String fileName = getFileName(part);
-
-		InputStream inputStream = null;
-		ByteArrayOutputStream out = null;
-		try {
-			inputStream = part.getInputStream();
-			out = new ByteArrayOutputStream();
-
-			int read = 0;
-			final byte[] bytes = new byte[128];
-			while ((read = inputStream.read(bytes)) != -1) {
-				out.write(bytes, 0, read);
-			}
-
-			out.toByteArray();
-			Multimidia m = new Multimidia();
-			m.setContentType(part.getContentType());
-			m.setNome(fileName);
-			m.setContent(out.toByteArray());
-			m.setContainerMultimidia(this.containerMultimidia);
-			this.midias.add(m);
-			this.ApresentaMidias.add(this.ApresentaMidias.size());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (out != null)
-				out.close();
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		}
-		return null;
-	}
-
-	private String getFileName(Part part) {
-		for (String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				return content.substring(content.indexOf('=') + 1).trim()
-						.replace("\"", "");
-			}
-		}
-		return null;
 	}
 
 	public String editarBemPatrimonial() {
@@ -202,13 +149,14 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 						"resultado");
 
 			} catch (ModeloException e) {
-				MensagensDeErro
-						.getErrorMessage("editarInstituicaoErroEditarFalha", "resultado");
+				MensagensDeErro.getErrorMessage(
+						"editarInstituicaoErroEditarFalha", "resultado");
 				e.printStackTrace();
 				return null;
 			}
 		} else {
-			MensagensDeErro.getErrorMessage("editarInstituicaoErroEditarFalha", "resultado");
+			MensagensDeErro.getErrorMessage("editarInstituicaoErroEditarFalha",
+					"resultado");
 			return null;
 		}
 
@@ -345,8 +293,8 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		this.bemPatrimonial.getTitulos().remove(t);
 		return null;
 	}
-	
-	public String removerMidia(Multimidia m){
+
+	public String removerMidia(Multimidia m) {
 		this.midias.remove(m);
 		return null;
 	}
@@ -377,6 +325,53 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		return null;
 	}
 
+	public String uploadFile() throws IOException {
+
+		String fileName = getFileName(part);
+
+		InputStream inputStream = null;
+		ByteArrayOutputStream out = null;
+		try {
+			inputStream = part.getInputStream();
+			out = new ByteArrayOutputStream();
+
+			int read = 0;
+			final byte[] bytes = new byte[128];
+			while ((read = inputStream.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+
+			out.toByteArray();
+			Multimidia m = new Multimidia();
+			m.setContentType(part.getContentType());
+			m.setNome(fileName);
+			m.setContent(out.toByteArray());
+			m.setContainerMultimidia(this.containerMultimidia);
+			this.midias.add(m);
+			this.ApresentaMidias.add(this.ApresentaMidias.size());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (out != null)
+				out.close();
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
+		return null;
+	}
+
+	private String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(content.indexOf('=') + 1).trim()
+						.replace("\"", "");
+			}
+		}
+		return null;
+	}
+
 	// getters e setters
 
 	public String getNome() {
@@ -401,5 +396,13 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 
 	public void setBens(List<BemPatrimonial> bens) {
 		this.bens = bens;
+	}
+
+	public Part getPart() {
+		return part;
+	}
+
+	public void setPart(Part part) {
+		this.part = part;
 	}
 }

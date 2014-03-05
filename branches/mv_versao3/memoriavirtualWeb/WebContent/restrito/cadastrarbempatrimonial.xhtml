@@ -26,7 +26,8 @@
 				<div class="conteudoTitulo">#{mensagens.cadastrarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarBemDescricao}</div>
 
-				<h:form method="post" prependId="false" enctype="multipart/form-data">
+				<h:form method="post" prependId="false"
+					enctype="multipart/form-data">
 
 
 					<fieldset>
@@ -917,14 +918,30 @@
 
 					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
 						<div class="midias">
-							<h:inputFile label="file" value="#{cadastrarBemPatrimonialMB.part}" />
+							<h:inputFile label="file"
+								value="#{cadastrarBemPatrimonialMB.part}" />
 							<h:commandButton id="submit"
 								action="#{cadastrarBemPatrimonialMB.uploadFile}"
 								value="#{mensagens.uploadFile}" />
 
-							<h:dataTable var="midia" value="#{cadastrarBemPatrimonialMB.midias}">
+							<h:dataTable var="midia" id="midiasTable"
+								value="#{cadastrarBemPatrimonialMB.midias}">
 								<h:column>
-									<a href="#" class="labels ">#{midia.nome}</a>
+									<div>
+										<img class="thumb tabelaMidia" width="150"
+											style="display: #{cadastrarBemPatrimonialMB.imageDisplay(midia)}"></img>
+										<video class="thumb tabelaMidia" type="#{midia.contentType}"
+											width="150"
+											style="display:#{cadastrarBemPatrimonialMB.videoDisplay(midia)}"></video>
+										<h:graphicImage width="150" class="tabelaMidia"
+											library="imagens" name="media.png"
+											style="display:#{cadastrarBemPatrimonialMB.midiaDisplay(midia)}" />
+									</div>
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaNome}</h:outputLabel>
+									<h:inputText value="#{midia.nome}" />
+									<br />
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaDescricao}</h:outputLabel>
+									<h:inputText value="#{midia.descricao}" />
 									<h:commandButton
 										action="#{cadastrarBemPatrimonialMB.removerMidia(midia)}"
 										value="#{mensagens.remover}"></h:commandButton>
@@ -956,15 +973,24 @@
 			</div>
 			<script type="text/javascript">
 				$(document).ready(function(){
-					$('a.labels').click(function(e){
+					$('video.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=cadastrarBemPatrimonialMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('img.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=cadastrarBemPatrimonialMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('[id*="midiasTable"] tr td div').click(function(e){
 						e.preventDefault();
-						var index = $('a.labels').index($(this));
-						index--;
+						var index = $('[id*="midiasTable"] tr td div').index($(this));
 						mostrarPlayerImagen('cadastrarBemPatrimonialMB', #{cadastrarBemPatrimonialMB.midias.size()-1}, index);
 					});
 					$('#fechar').click(function(e){
 						e.preventDefault();
-						var video = $('video');
+						var video = $('#cadastroNovoAutor video');
 						if(video.length > 0){
 							$('video')[0].pause();
 						}
