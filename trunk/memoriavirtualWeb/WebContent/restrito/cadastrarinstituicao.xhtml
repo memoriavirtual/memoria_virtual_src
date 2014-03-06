@@ -28,6 +28,10 @@
 				<h2>#{mensagens.cadastrarInstituicaoDescricao}</h2>
 				<h:form class="form-horizontal" role="form" method="post"
 					prependId="false">
+				<div class="conteudoTitulo">#{mensagens.cadastrarInstituicaoTitle}</div>
+				<div class="conteudoDescricao">#{mensagens.cadastrarInstituicaoDescricao}</div>
+				<h:form method="post" prependId="false" enctype="multipart/form-data">
+					<fieldset>
 
 					<div class="form-group">
 						<h:outputLabel class="col-md-3 text-right control-label"
@@ -129,6 +133,11 @@
 							<h:inputText class="form-control" id="telefone"
 								value="#{cadastrarInstituicaoMB.telefone}">
 							</h:inputText>
+
+							<div>(xx)xxxx-xxxx</div>
+							<h:message id="validacaoTelefone" for="validacaoTelefone"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
 					</div>
 
@@ -182,6 +191,11 @@
 							<h:inputText class="form-control" id="latitude"
 								value="#{cadastrarInstituicaoMB.latitude}">
 							</h:inputText>
+
+							<div>-90.0000 a 90.0000</div>
+							<h:message id="validacaoLatitude" for="validacaoLatitude"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
 						</div>
 					</div>
 
@@ -192,6 +206,12 @@
 							<h:inputText class="form-control" id="longitude"
 								value="#{cadastrarInstituicaoMB.longitude}">
 							</h:inputText>
+
+							<div>-180.0000 a 180.0000</div>
+							<h:message id="validacaoLongitude" for="validacaoLongitude"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+
 						</div>
 					</div>
 
@@ -202,6 +222,12 @@
 							<h:inputText class="form-control" id="altitude"
 								value="#{cadastrarInstituicaoMB.altitude}">
 							</h:inputText>
+
+							<div>km (00.00...)</div>
+							<h:message id="validacaoAltitude" for="validacaoAltitude"
+								infoClass="sucesso" errorClass="erro" warnClass="aviso">
+							</h:message>
+
 						</div>
 					</div>
 
