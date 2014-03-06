@@ -43,6 +43,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	private UIData controlePagina;
 
 	public RealizarBuscaSimplesMB() {
+
 	}
 
 	private void buscarNovaPagina(Integer pagina){

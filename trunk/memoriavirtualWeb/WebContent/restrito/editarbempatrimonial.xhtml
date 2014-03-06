@@ -26,7 +26,7 @@
 				<div class="conteudoTitulo">#{mensagens.editarBemTitulo}</div>
 				<div class="conteudoDescricao">#{mensagens.editarBemDescricao}</div>
 
-				<h:form method="post"
+				<h:form method="post" enctype="multipart/form-data"
 					prependId="false">
 
 					<fieldset>
@@ -903,8 +903,41 @@
 								</h:dataTable>
 							</div>
 						</fieldset>
-					</mv:containerExpansivo>
+					</mv:containerExpansivo >
 
+					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+						<div class="midias">
+							<h:inputFile label="file"
+								value="#{editarBemPatrimonialMB.part}" />
+							<h:commandButton id="submit"
+								action="#{editarBemPatrimonialMB.uploadFile}"
+								value="#{mensagens.uploadFile}" />
+
+							<h:dataTable var="midia" id="midiasTable"
+								value="#{editarBemPatrimonialMB.midias}">
+								<h:column>
+									<div>
+										<img class="thumb tabelaMidia" width="150"
+											style="display: #{editarBemPatrimonialMB.imageDisplay(midia)}"></img>
+										<video class="thumb tabelaMidia" type="#{midia.contentType}"
+											width="150"
+											style="display:#{editarBemPatrimonialMB.videoDisplay(midia)}"></video>
+										<h:graphicImage width="150" class="tabelaMidia"
+											library="imagens" name="media.png"
+											style="display:#{editarBemPatrimonialMB.midiaDisplay(midia)}" />
+									</div>
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaNome}</h:outputLabel>
+									<h:inputText value="#{midia.nome}" />
+									<br />
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaDescricao}</h:outputLabel>
+									<h:inputText value="#{midia.descricao}" />
+									<h:commandButton
+										action="#{editarBemPatrimonialMB.removerMidia(midia)}"
+										value="#{mensagens.remover}"></h:commandButton>
+								</h:column>
+							</h:dataTable>
+						</div>
+					</mv:containerExpansivo>
 
 					<div class="botao">
 
@@ -925,9 +958,35 @@
 
 					</div>
 				</h:form>
-
 			</div>
-
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('video.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=editarBemPatrimonialMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('img.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=editarBemPatrimonialMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('[id*="midiasTable"] tr td div').click(function(e){
+						e.preventDefault();
+						var index = $('[id*="midiasTable"] tr td div').index($(this));
+						mostrarPlayerImagen('editarBemPatrimonialMB', #{editarBemPatrimonialMB.midias.size()-1}, index);
+					});
+					$('#fechar').click(function(e){
+						e.preventDefault();
+						var video = $('#cadastroNovoAutor video');
+						if(video.length > 0){
+							$('video')[0].pause();
+						}
+						$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+						$('.imageNoPlayer').remove();
+					});
+				});
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

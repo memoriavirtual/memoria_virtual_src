@@ -77,6 +77,8 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 				MensagensDeErro.getErrorMessage(
 						"editarInstituicaoErroEditarFalha", "resultado");
 			}
+			
+			this.nomeOriginal = "";
 
 			this.resetCadastrarinstituicao();
 

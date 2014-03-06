@@ -1,6 +1,6 @@
 $(document).ready(function() {	
 
-	$('.linkPrincipal').corner("top");
+	//$('.linkPrincipal').corner("top");
 	//Pega todos os elementos da lista #MenuAbas
   	$('#Abas > ul > li').click(function(){
         

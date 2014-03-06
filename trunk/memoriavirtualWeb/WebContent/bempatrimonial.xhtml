@@ -18,7 +18,9 @@
 </h:head>
 
 <h:body>
-	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado"></div>
+	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado">
+		<a href="#" id="fechar">Fechar</a>
+	</div>
 
 	<div class="continente">
 		<div id="usuario">
@@ -132,7 +134,27 @@
 					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoConteudo} #{realizarBuscaSimplesMB.bem.conteudo}</h:outputLabel>
 
 					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoMeioDeAcesso} #{realizarBuscaSimplesMB.bem.meioAcesso}</h:outputLabel>
-
+					
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoCondicaoTopografica} #{realizarBuscaSimplesMB.bem.condicaoTopografica}</h:outputLabel>
+					
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoAlcova}
+						<h:outputText value="#{mensagens.realizarBuscaSimplesPosui}" rendered="#{realizarBuscaSimplesMB.bem.alcova}"/>
+						<h:outputText value="#{mensagens.realizarBuscaSimplesNaoPosui}" rendered="#{!realizarBuscaSimplesMB.bem.alcova}"/>
+					</h:outputLabel>
+					
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoMeioDeAcesso} 
+						<h:outputText value="#{mensagens.realizarBuscaSimplesPosui}" rendered="#{realizarBuscaSimplesMB.bem.porao}"/>
+						<h:outputText value="#{mensagens.realizarBuscaSimplesNaoPosui}" rendered="#{!realizarBuscaSimplesMB.bem.porao}"/>
+					</h:outputLabel>
+					
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoSotao} 
+						<h:outputText value="#{mensagens.realizarBuscaSimplesPosui}" rendered="#{realizarBuscaSimplesMB.bem.sotao}"/>
+						<h:outputText value="#{mensagens.realizarBuscaSimplesNaoPosui}" rendered="#{!realizarBuscaSimplesMB.bem.sotao}"/>
+					</h:outputLabel>
+					
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoAreaTotal} #{realizarBuscaSimplesMB.bem.areaTotal}</h:outputLabel>
+					
+					<h:outputLabel class="resultadosBusca">#{mensagens.cadastrarBemDescricaoUsoAtual} #{realizarBuscaSimplesMB.bem.uso}</h:outputLabel>
 				</div>
 
 			</mv:containerExpansivo>
@@ -249,6 +271,22 @@
 
 		</div>
 	</div>
-
+	<script>
+		$(document).ready(function(){
+			$('a.labels').click(function(){
+				index = $('a.labels').index($(this));
+				index--;
+				mostrarPlayerImagen('editarBemPatrimonialMB', #{editarBemPatrimonialMB.midias.size()-1}, index);
+			});
+			$('#fechar').click(function(e){
+				video = $('video');
+				if(video.length > 0){
+					$('video')[0].pause();
+				}
+				$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+				$('.imageNoPlayer').remove();
+			});
+		});
+	</script>
 </h:body>
 </html>

@@ -1,5 +1,8 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +11,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Part;
 
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
@@ -24,6 +30,8 @@ import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
  * Mananged Bean responsável pelo controle do cadaStro de uma nova instituição
  */
 
+@ManagedBean(name = "cadastrarInstituicaoMB")
+@SessionScoped
 public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 
 	/**
@@ -60,6 +68,7 @@ public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 	protected String legislacao = "";
 	protected String sinteseHistorica = "";
 	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
+	protected Part part;
 
 	public CadastrarInstituicaoMB() {
 
@@ -167,8 +176,80 @@ public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 		this.sinteseHistorica = "";
 		this.midias.clear();
 		this.ApresentaMidias.clear();
+		this.midias.clear();
 		return "reset";
 
+	}
+
+	public String removerMidia(Multimidia m) {
+		this.midias.remove(m);
+		return null;
+	}
+
+	public String uploadFile() throws IOException {
+
+		if (part.getSize() > 0) {
+			String fileName = getFileName(part);
+
+			InputStream inputStream = null;
+			ByteArrayOutputStream out = null;
+			try {
+				inputStream = part.getInputStream();
+				out = new ByteArrayOutputStream();
+
+				int read = 0;
+				final byte[] bytes = new byte[128];
+				while ((read = inputStream.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+
+				out.toByteArray();
+				Multimidia m = new Multimidia();
+				m.setContentType(part.getContentType());
+				m.setNome(fileName);
+				m.setContent(out.toByteArray());
+				m.setContainerMultimidia(this.containerMultimidia);
+				this.midias.add(m);
+				this.ApresentaMidias.add(this.ApresentaMidias.size());
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (out != null)
+					out.close();
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			}
+
+		} else {
+			MensagensDeErro.getErrorMessage("cadastrarInstituicaoErro",
+					"resultado");
+		}
+
+		return null;
+	}
+
+	protected String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(content.indexOf('=') + 1).trim()
+						.replace("\"", "");
+			}
+		}
+		return null;
+	}
+
+	public String imageDisplay(Multimidia m) {
+		return m.isImagem() ? "block" : "none";
+	}
+
+	public String videoDisplay(Multimidia m) {
+		return m.isVideo() ? "block" : "none";
+	}
+
+	public String midiaDisplay(Multimidia m) {
+		return (!m.isImagem() && !m.isVideo()) ? "block" : "none";
 	}
 
 	/**
@@ -826,6 +907,12 @@ public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 					"cadastrarInstituicaoErroLatitudeVazio",
 					"validacaoLatitude");
 			return false;
+		} else if (!ValidacoesDeCampos
+				.validaCoordenadaGeografica(this.latitude)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroLatitudeInvalido",
+					"validacaoLatitude");
+			return false;
 		}
 		return true;
 	}
@@ -843,6 +930,12 @@ public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 					"cadastrarInstituicaoErroLongitudeVazio",
 					"validacaoLongitude");
 			return false;
+		} else if (!ValidacoesDeCampos
+				.validaCoordenadaGeografica(this.longitude)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroLongitudeInvalido",
+					"validacaoLongitude");
+			return false;
 		}
 		return true;
 	}
@@ -858,6 +951,11 @@ public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 		if (this.altitude.equals("")) {
 			MensagensDeErro.getWarningMessage(
 					"cadastrarInstituicaoErroAltitudeVazio",
+					"validacaoAltitude");
+			return false;
+		} else if (!ValidacoesDeCampos.validarAltitude(this.altitude)) {
+			MensagensDeErro.getErrorMessage(
+					"cadastrarInstituicaoErroAltitudeInvalido",
 					"validacaoAltitude");
 			return false;
 		}
@@ -1034,5 +1132,13 @@ public class CadastrarInstituicaoMB implements Serializable, BeanComMidia {
 		this.resetCadastrarinstituicao();
 		return "/restrito/index.jsf";
 
+	}
+
+	public Part getPart() {
+		return part;
+	}
+
+	public void setPart(Part part) {
+		this.part = part;
 	}
 }
