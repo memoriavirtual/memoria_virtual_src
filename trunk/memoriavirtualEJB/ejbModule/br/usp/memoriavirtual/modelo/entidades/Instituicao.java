@@ -19,10 +19,6 @@ public class Instituicao  implements Serializable {
 	
 	private static final long serialVersionUID = -5996690587044446292L;
 
-	
-	/**
-	 * Serial Version UID
-	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INSTITUICAO_ID")
 	private long id;
@@ -30,9 +26,7 @@ public class Instituicao  implements Serializable {
 	private String localidade;
 	private String endereco;
 	private String cidade;
-	//@Pattern(regexp = "[A-Z]{2}", message = "Estado no formato incorreto (ex: SP e não sp)")
 	private String estado;
-	// @Pattern(regexp = "[0-9]{11}")
 	private String cep;
 	private String telefone;
 	private String caixaPostal;

@@ -8,16 +8,11 @@
 <body>
 	<ui:composition>
 		<div class="row">
-			<div class="col-md-12 text-right right-padding-30">
-				<div id="usuario">
-					<h:form>
-							&lt;<h:outputText value="#{usuario.id}" />&gt;,
-							<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
-					</h:form>
-					<script>
-						inicioUnity();
-					</script>
-				</div>
+			<div class="col-md-12 text-right">
+				<h:form>
+					&lt;<h:outputText value="#{usuario.id}" />&gt;,
+					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
+				</h:form>
 			</div>
 		</div>
 
@@ -33,31 +28,31 @@
 			</div>
 		</div>
 		<div class="row background-black">
-			<div class="col-md-10 col-md-offset-1" id="subMenu">
-			</div>
+			<div class="col-md-10 col-md-offset-1" id="subMenu"></div>
 		</div>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				nivel1 = $('.linkPrincipal');
-				nivel1.on('click', function(event){
-					event.preventDefault();
-					
-					itens = $('.linkPrincipal');
-					itens.each(function(index, el){
-						element = $(el);
-						element.removeClass('itemAtual');
-						element.addClass('outrosItens');
+			$(document).ready(
+					function() {
+						nivel1 = $('.linkPrincipal');
+						nivel1.on('click', function(event) {
+							event.preventDefault();
+
+							itens = $('.linkPrincipal');
+							itens.each(function(index, el) {
+								element = $(el);
+								element.removeClass('itemAtual');
+								element.addClass('outrosItens');
+							});
+
+							$(this).removeClass('outrosItens');
+							$(this).addClass('itemAtual');
+
+							nivel2 = $(this).closest('li').find(
+									'.linkSecundario').clone();
+							subMenu = $('#subMenu');
+							subMenu.html(nivel2);
+						});
 					});
-					
-					$(this).removeClass('outrosItens');
-					$(this).addClass('itemAtual');
-					
-					
-					nivel2 = $(this).closest('li').find('.linkSecundario').clone();
-					subMenu = $('#subMenu');
-					subMenu.html(nivel2);
-				});
-			});
 		</script>
 	</ui:composition>
 </body>

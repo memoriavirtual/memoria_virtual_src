@@ -338,6 +338,7 @@
 	</navigation-rule>
 
 	<application>
+		<resource-handler>br.usp.memoriavirtual.utils.UnmappedResourceHandler</resource-handler>
 		<resource-bundle>
 			<base-name>br.usp.memoriavirtual.mensagens</base-name>
 			<var>mensagens</var>

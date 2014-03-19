@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head />
+<body>
+	<ui:composition>
+		<div class="midias">
+			<div class="row bottom-margin-10">
+				<div class="col-md-4 col-md-offset-4">
+					<h:inputFile label="#{mensagens.file}" id="submit-input"
+						value="#{bean.part}" class="pull-right btn btn-default" />
+				</div>
+				<div class="col-md-4">
+					<h:commandButton action="#{bean.uploadFile}" id="submit-button"
+						class="submit-arquivo btn btn-primary"
+						value="#{mensagens.uploadFile}" />
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="row">
+					<ui:repeat var="midia" value="#{bean.midias}">
+						<div class="col-md-4">
+							<div class="thumbnail">
+								<img class="miniatura carregar" data-toggle="modal"
+									data-target="#midiasModal"
+									style="display:#{cadastrarInstituicaoMB.imageDisplay(midia)}"></img>
+								<video class="miniatura carregar" type="#{midia.contentType}"
+									data-toggle="modal" data-target="#midiasModal"
+									style="display:#{cadastrarInstituicaoMB.videoDisplay(midia)}"></video>
+								<h:graphicImage class="miniatura tabelaMidia" library="imagens"
+									name="media.png" data-toggle="modal" data-target="#midiasModal"
+									style="display:#{cadastrarInstituicaoMB.midiaDisplay(midia)}" />
+								<div class="caption">
+									<div class="form-group">
+										<h:outputLabel class="labels col-md-3 text-right">#{mensagens.cadastrarBemMidiaNome}</h:outputLabel>
+										<div class="col-md-9">
+											<h:inputText class="nomeMidia" value="#{midia.nome}" />
+										</div>
+									</div>
+									<div class="form-group">
+										<h:outputLabel class="labels col-md-3 text-right">#{mensagens.cadastrarBemMidiaDescricao}</h:outputLabel>
+										<div class="col-md-9">
+											<h:inputText value="#{midia.descricao}" />
+										</div>
+									</div>
+									<h:commandLink class="btn btn-danger btn-xs remove-midia" action="#{bean.removerMidia(midia)}">
+										<i class="fa fa-times-circle"></i>
+									</h:commandLink>
+								</div>
+							</div>
+						</div>
+
+					</ui:repeat>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			var inputHeight = $('#submit-input').height();
+			var buttonHeight = $('#submit-button').height();
+
+			if (inputHeight > buttonHeight) {
+				$('#submit-button').height(inputHeight);
+			} else {
+				$('#submit-input').height(buttonHeight);
+			}
+
+			$('.carregar').each(function(index, el) {
+				el = $(el);
+				var idx = $('.thumbnail').index(el.closest('.thumbnail'));
+				var endereco = '/memoriavirtual/multimidia?bean=cadastrarInstituicaoMB&amp;indice=' + idx;
+				el.attr('src', endereco);
+			});
+			$('.carregar').click(function(e) {
+				e.preventDefault();
+				var self = $(this);
+				var index = $('.thumbnails').index(self);
+				var titulo = self.closest('.thumbnail').find('.nomeMidia').val();
+				var modal = $('#midiasModal');
+				modal.find('.modal-title').html(titulo);
+				var clone = self.clone();
+				clone.removeClass('miniatura carregar');
+				clone.attr('data-toggle', '');
+				clone.attr('data-target', '');
+				clone.css('display', 'inline-block');
+				clone.attr('controls', true);
+				clone.css('max-width', $('body').width() - 40);
+				modal.find('.modal-body').html(clone);
+				
+			});
+			$('#fechar').click(function(e) {
+				e.preventDefault();
+				var video = $('#midiasModal video');
+				if (video.length > 0) {
+					console.log('adfasdf');
+					video[0].pause();
+				}
+			});
+		});
+		</script>
+	</ui:composition>
+</body>
+</html>

@@ -1,15 +1,15 @@
 function mostrarErro(messagesId, alvoId) {
 
-	messages = $(messagesId);
+	var messages = $(messagesId);
 
-	erro = messages.hasClass('has-error');
-	warning = messages.hasClass('has-warning');
-	success = messages.hasClass('has-success');
+	var erro = messages.hasClass('has-error');
+	var warning = messages.hasClass('has-warning');
+	var success = messages.hasClass('has-success');
 
-	texto = messages.text();
+	var texto = messages.text();
 
 	if (texto !== '') {
-		alvo = $(alvoId);
+		var alvo = $(alvoId);
 		alvo.attr('title', texto);
 		alvo.attr('data-original-title', texto);
 		alvo.attr('data-toggle', 'tooltip');
@@ -19,7 +19,7 @@ function mostrarErro(messagesId, alvoId) {
 			alvo.addClass('color-error');
 			alvo.removeClass('color-warning');
 			alvo.removeClass('color-success');
-			formGroup = alvo.closest('.form-group');
+			var formGroup = alvo.closest('.form-group');
 			formGroup.addClass('has-error');
 			formGroup.removeClass('has-warning');
 			formGroup.removeClass('has-success');
@@ -27,7 +27,7 @@ function mostrarErro(messagesId, alvoId) {
 			alvo.addClass('color-warning');
 			alvo.removeClass('color-error');
 			alvo.removeClass('color-success');
-			formGroup = alvo.closest('.form-group');
+			var formGroup = alvo.closest('.form-group');
 			formGroup.addClass('has-warning');
 			formGroup.removeClass('has-error');
 			formGroup.removeClass('has-success');
@@ -35,7 +35,7 @@ function mostrarErro(messagesId, alvoId) {
 			alvo.addClass('color-success');
 			alvo.removeClass('color-error');
 			alvo.removeClass('color-warning');
-			formGroup = alvo.closest('.form-group');
+			var formGroup = alvo.closest('.form-group');
 			formGroup.addClass('has-success');
 			formGroup.removeClass('has-error');
 			formGroup.removeClass('has-warning');
@@ -49,16 +49,14 @@ function mostrarErro(messagesId, alvoId) {
 
 function removerErro(alvoId) {
 	alvo = $(alvoId);
-	alvo.attr('title', texto);
-	alvo.attr('data-original-title', texto);
-	alvo.attr('data-toggle', 'tooltip');
-	alvo.tooltip();
 	alvo.addClass('hidden');
-	formGroup = alvo.closest('.form-group');
+	var formGroup = alvo.closest('.form-group');
 	formGroup.removeClass('has-error');
 	formGroup.removeClass('has-warning');
 	formGroup.removeClass('has-success');
 }
+
+
 
 /**
  * Cadastrar bem patrimonial javascript
@@ -86,7 +84,7 @@ function PlayerImagen(player, nomeDoBean, lastIndex, thisIndex) {
 										+ classe.nomeDoBean + "&indice="
 										+ classe.thisIndex);
 						image.setAttribute("class", "imageNoPlayer");
-						image.addEventListener("click", function(e){
+						image.addEventListener("click", function(e) {
 							e.stopPropagation();
 							return false;
 						}, false);
@@ -364,16 +362,16 @@ inicioUnity = (function() {
 	 * Integra��o com o Unity Beta
 	 */
 
-inicioUnity = (function() {/*
-
-	function unityReady() {
-		// Integrate with Unity!
-	}
-	var Unity = external.getUnityObject(1.0);
-
-	Unity.init({
-		name : "Memoria Virtual",
-		iconUrl : "http?://localhost:8080?/memoriavirtual/icon.png",
-		onInit : unityReady
-	});*/
+	inicioUnity = (function() {/*
+								 * 
+								 * function unityReady() { // Integrate with
+								 * Unity! } var Unity =
+								 * external.getUnityObject(1.0);
+								 * 
+								 * Unity.init({ name : "Memoria Virtual",
+								 * iconUrl :
+								 * "http?://localhost:8080?/memoriavirtual/icon.png",
+								 * onInit : unityReady });
+								 */
+	});
 });

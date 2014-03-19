@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head />
+<body>
+	<ui:composition>
+		<div class="form-group">
+			<h:outputLabel class="col-md-3 text-right control-label" for="#{for}">
+				<ui:insert name="label" />
+			</h:outputLabel>
+			<div class="col-md-8">
+				<ui:insert name="input" />
+			</div>
+			<div class="col-md-1">
+				<div class="hidden">
+					<ui:insert name="mensagem" />
+				</div>
+				<ui:insert name="icone" />
+			</div>
+		</div>
+	</ui:composition>
+</body>
+</html>
