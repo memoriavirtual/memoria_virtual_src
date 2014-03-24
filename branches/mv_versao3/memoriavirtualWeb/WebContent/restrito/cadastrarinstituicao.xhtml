@@ -30,7 +30,7 @@
 
 				<div class="conteudoTitulo">#{mensagens.cadastrarInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.cadastrarInstituicaoDescricao}</div>
-				<h:form method="post" prependId="false" enctype="multipart/form-data">
+				<h:form method="post" prependId="false" id="principal">
 					<fieldset>
 
 						<div>
@@ -305,21 +305,23 @@
 						</div>
 
 					</fieldset>
+				</h:form>
 
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+				<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+
+					<h:form method="post" prependId="false" id="midia"
+						enctype="multipart/form-data">
 						<div class="midias">
-							<h:inputFile label="file"
-								value="#{cadastrarInstituicaoMB.part}" />
+							<h:inputFile label="file" value="#{cadastrarInstituicaoMB.part}" />
 							<h:commandButton id="submit"
 								action="#{cadastrarInstituicaoMB.uploadFile}"
 								value="#{mensagens.uploadFile}" />
-
 							<h:dataTable var="midia" id="midiasTable"
 								value="#{cadastrarInstituicaoMB.midias}">
 								<h:column>
 									<div>
 										<img class="thumb tabelaMidia" width="150"
-											style="display: #{cadastrarInstituicaoMB.imageDisplay(midia)}"></img>
+											style="display: #{cadastrarInstituicaoMB.imageDisplay(midia)"></img>
 										<video class="thumb tabelaMidia" type="#{midia.contentType}"
 											width="150"
 											style="display:#{cadastrarInstituicaoMB.videoDisplay(midia)}"></video>
@@ -338,8 +340,10 @@
 								</h:column>
 							</h:dataTable>
 						</div>
-					</mv:containerExpansivo>
+					</h:form>
+				</mv:containerExpansivo>
 
+				<h:form method="post" prependId="false" id="botoes">
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
@@ -360,7 +364,6 @@
 
 					</div>
 				</h:form>
-
 			</div>
 			<script type="text/javascript">
 				$(document).ready(function(){

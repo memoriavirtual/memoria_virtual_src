@@ -65,6 +65,11 @@
 		<managed-bean-class>br.usp.memoriavirtual.controle.RenderizarMenuMB</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>cadastrarAutorMB</managed-bean-name>
+		<managed-bean-class>br.usp.memoriavirtual.controle.CadastrarAutorMB</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>login</display-name>

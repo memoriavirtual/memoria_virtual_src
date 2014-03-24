@@ -30,8 +30,7 @@
 				<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
 				<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
 
-				<h:form method="post" prependId="false"
-					enctype="multipart/form-data">
+				<h:form method="post" prependId="false" id="principal">
 					<fieldset>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
@@ -195,8 +194,7 @@
 						</div>
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-							<h:inputText 
-								value="#{editarInstituicaoMB.latitude}">
+							<h:inputText value="#{editarInstituicaoMB.latitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLatitude"
 									listener="#{editarInstituicaoMB.validateLatitude}" />
 							</h:inputText>
@@ -208,8 +206,7 @@
 
 						<div>
 							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-							<h:inputText 
-								value="#{editarInstituicaoMB.longitude}">
+							<h:inputText value="#{editarInstituicaoMB.longitude}">
 								<f:ajax event="blur" execute="@this" render="validacaoLongitude"
 									listener="#{editarInstituicaoMB.validateLongitude}" />
 							</h:inputText>
@@ -292,15 +289,14 @@
 						</div>
 
 					</fieldset>
-					
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+				</h:form>
+				<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+					<h:form method="post" prependId="false" id="midia" enctype="multipart/form-data">
 						<div class="midias">
-							<h:inputFile label="file"
-								value="#{editarInstituicaoMB.part}" />
+							<h:inputFile label="file" value="#{editarInstituicaoMB.part}" />
 							<h:commandButton id="submit"
 								action="#{editarInstituicaoMB.uploadFile}"
 								value="#{mensagens.uploadFile}" />
-
 							<h:dataTable var="midia" id="midiasTable"
 								value="#{editarInstituicaoMB.midias}">
 								<h:column>
@@ -325,8 +321,9 @@
 								</h:column>
 							</h:dataTable>
 						</div>
-					</mv:containerExpansivo>
-
+					</h:form>
+				</mv:containerExpansivo>
+				<h:form method="post" prependId="false" id="botoes">
 					<div class="botao">
 						<h:commandButton id="botaoCadastrar"
 							value="#{mensagens.editarInstituicaoBotaoSalvar}"
