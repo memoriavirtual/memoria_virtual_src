@@ -26,8 +26,7 @@
 
 				<h1>#{mensagens.cadastrarInstituicaoTitle}</h1>
 				<h2>#{mensagens.cadastrarInstituicaoDescricao}</h2>
-				<h:form class="form-horizontal" role="form" method="post"
-					prependId="false" enctype="multipart/form-data">
+				<h:form class="form-horizontal" role="form" method="post" prependId="false" id="principal">
 
 					<ui:decorate template="/restrito/fragmentos/templates/input.xhtml">
 						<ui:define name="label">#{mensagens.cadastrarInstituicaoNome}</ui:define>
@@ -237,12 +236,7 @@
 							</h:inputTextarea>
 						</ui:define>
 					</ui:decorate>
-
-					<ui:decorate
-						template="/restrito/fragmentos/templates/listademidias.xhtml">
-						<ui:param name="bean" value="#{cadastrarInstituicaoMB}"></ui:param>
-					</ui:decorate>
-
+					
 					<ui:decorate template="/restrito/fragmentos/templates/input.xhtml">
 						<ui:define name="label">#{mensagens.cadastrarInstituicaoSinteseHistorica}</ui:define>
 						<ui:param name="for" value="sinteseHistorica"></ui:param>
@@ -252,7 +246,14 @@
 							</h:inputTextarea>
 						</ui:define>
 					</ui:decorate>
-
+				</h:form>
+				<h:form method="post" prependId="false" id="midia" enctype="multipart/form-data">
+					<ui:decorate
+						template="/restrito/fragmentos/templates/listademidias.xhtml">
+						<ui:param name="bean" value="#{cadastrarInstituicaoMB}"></ui:param>
+					</ui:decorate>
+				</h:form>
+				<h:form method="post" prependId="false" id="botoes">
 					<div class="text-right col-md-11 no-padding no-margin">
 						<h:commandButton class="btn btn-success margin-5"
 							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"

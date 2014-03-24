@@ -23,13 +23,17 @@ public class ValidacoesDeCampos {
 	
 	public static boolean validarFormatoTelefone(String telefone) {
 
-		String regexp = "\\([0-9]{2}?\\){1}[0-9]{4}?\\-[0-9]{4}?";
-		Pattern pattern = Pattern.compile(regexp);
-		Matcher matcher = pattern.matcher(telefone);
-
-		if (!matcher.matches())
+		String regexp8digitos = "\\([0-9]{2}?\\){1}[0-9]{4}?\\-[0-9]{4}?";
+		Pattern pattern8digitos = Pattern.compile(regexp8digitos);
+		Matcher matcher8digitos = pattern8digitos.matcher(telefone);
+		
+		String regexp9digitos = "\\([0-9]{2}?\\){1}[0-9]{5}?\\-[0-9]{4}?";
+		Pattern pattern9digitos = Pattern.compile(regexp9digitos);
+		Matcher matcher9digitos = pattern9digitos.matcher(telefone);
+		
+		if (!matcher8digitos.matches() && !matcher9digitos.matches())
 			return false;
-
+		
 		return true;
 	}
 	
