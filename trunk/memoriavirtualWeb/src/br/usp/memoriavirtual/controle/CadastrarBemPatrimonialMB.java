@@ -47,7 +47,7 @@ import br.usp.memoriavirtual.utils.StringContainer;
 
 @ManagedBean(name = "cadastrarBemPatrimonialMB")
 @SessionScoped
-public class CadastrarBemPatrimonialMB extends MidiaContainer implements
+public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		Serializable, BeanComMidia {
 
 	private static final long serialVersionUID = 4487901192049535944L;

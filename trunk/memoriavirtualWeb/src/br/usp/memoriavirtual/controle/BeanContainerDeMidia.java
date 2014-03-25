@@ -11,14 +11,14 @@ import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-public class MidiaContainer {
+public class BeanContainerDeMidia {
 
 	protected Part part;
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
 	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
 
-	public MidiaContainer() {
+	public BeanContainerDeMidia() {
 
 	}
 

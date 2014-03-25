@@ -9,28 +9,28 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
-import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
+import br.usp.memoriavirtual.utils.MVControleTiposDePropriedade;
+import br.usp.memoriavirtual.utils.MVControleTiposDeProtecaoExistente;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "cadastrarInstituicaoMB")
 @SessionScoped
-public class CadastrarInstituicaoMB extends MidiaContainer implements
-		Serializable{
+public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
+		BeanDeSessao, BeanMemoriaVirtual, Serializable {
 
 	private static final long serialVersionUID = -6620103410985404517L;
 	@EJB
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
-	protected String slot = "arquivo0"; 
 	protected String nome = "";
-	protected String localizacao = "";
+	protected String localidade = "";
 	protected String endereco = "";
 	protected String cidade = "";
 	protected String estado = "";
@@ -39,7 +39,7 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 	protected String telefone = "";
 	protected String caixaPostal = "";
 	protected String email = "";
-	protected String URL = "";
+	protected String url = "";
 	protected String identificacaoProprietario = "";
 	protected String administradorPropriedade = "";
 	protected String latitude = "";
@@ -49,6 +49,8 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 	protected String protecaoExistente = "";
 	protected String legislacao = "";
 	protected String sinteseHistorica = "";
+	protected String legislacaoExistente = "";
+	protected String legislacaoIncidente = "";
 
 	public CadastrarInstituicaoMB() {
 
@@ -56,84 +58,45 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 
 	public String cadastrarInstituicao() {
 
-		if (this.validarNome()) {
+		if (this.validar()) {
 
-			Instituicao instituicao = new Instituicao(this.nome,
-					this.localizacao, this.endereco, this.cidade, this.estado,
-					this.pais, this.cep, this.telefone, this.caixaPostal,
-					this.email, this.URL, this.identificacaoProprietario,
-					this.administradorPropriedade, this.latitude,
-					this.longitude, this.altitude, this.tipoPropriedade,
-					this.protecaoExistente, this.legislacao,
-					this.sinteseHistorica);
-
+			Instituicao instituicao = new Instituicao();
+			instituicao.setNome(this.nome);
+			instituicao.setEndereco(this.endereco);
+			instituicao
+					.setAdministradorPropriedade(this.administradorPropriedade);
+			instituicao.setAltitude(this.altitude);
+			instituicao.setCaixaPostal(this.caixaPostal);
+			instituicao.setCep(this.cep);
+			instituicao.setCidade(this.cidade);
+			instituicao.setEmail(this.email);
+			instituicao.setEndereco(this.endereco);
+			instituicao.setEstado(this.estado);
+			instituicao
+					.setIdentificacaoProprietario(this.identificacaoProprietario);
+			instituicao.setLatitude(this.latitude);
+			instituicao.setLegislacaoExistente(this.legislacaoExistente);
+			instituicao.setLegislacaoIncidente(this.legislacaoIncidente);
+			instituicao.setLocalidade(this.localidade);
+			instituicao.setLongitude(this.longitude);
+			instituicao.setNome(this.nome);
+			instituicao.setPais(this.pais);
+			instituicao.setProtecaoExistente(this.protecaoExistente);
+			instituicao.setSinteseHistorica(this.sinteseHistorica);
+			instituicao.setTelefone(this.telefone);
+			instituicao.setTipoPropriedade(this.tipoPropriedade);
+			instituicao.setUrl(this.url);
 			instituicao.setValidade(true);
 
-			for (Multimidia i : midias) {
-				this.containerMultimidia.addMultimidia(i);
-			}
-
-			instituicao.setContainerMultimidia(containerMultimidia);
-
 			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
-
-			if (!memoriaVirtualEJB
-					.verificarDisponibilidadeNomeInstituicao(this.nome)) {
-				this.resetCadastrarinstituicao();
-				MensagensDeErro
-						.getSucessMessage(
-								"cadastrarInstituicaoSucessocadastramento",
-								"resultado");
-			}
+			this.limpar();
 		}
 
-		this.resetCadastrarinstituicao();
 		return null;
-	}
-
-	public void adicionarMidia(Multimidia midia) {
-		this.midias.add(midia);
-
-		if ((this.midias.size() % 4) == 1) {
-			Integer mult = this.midias.size() - 1;
-			this.ApresentaMidias.add(mult);
-
-		}
-	}
-
-	public String resetCadastrarinstituicao() {
-		this.nome = "";
-		this.localizacao = "";
-		this.endereco = "";
-		this.cidade = "";
-		this.estado = "";
-		this.pais = "";
-		this.cep = "";
-		this.telefone = "";
-		this.caixaPostal = "";
-		this.email = "";
-		this.URL = "";
-		this.identificacaoProprietario = "";
-		this.administradorPropriedade = "";
-		this.latitude = "";
-		this.longitude = "";
-		this.altitude = "";
-		this.tipoPropriedade = "";
-		this.protecaoExistente = "";
-		this.legislacao = "";
-		this.sinteseHistorica = "";
-		this.midias.clear();
-		this.ApresentaMidias.clear();
-		return "reset";
-
 	}
 
 	public String getNome() {
 		return this.nome;
-	}
-
-	public String getLocalizacao() {
-		return this.localizacao;
 	}
 
 	public String getEndereco() {
@@ -156,40 +119,6 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 		return this.telefone;
 	}
 
-	public List<SelectItem> getEstadoSigla() {
-
-		List<SelectItem> estados = new ArrayList<SelectItem>();
-
-		estados.add(new SelectItem("AL", "AL"));
-		estados.add(new SelectItem("AM", "AM"));
-		estados.add(new SelectItem("AP", "AP"));
-		estados.add(new SelectItem("BA", "BA"));
-		estados.add(new SelectItem("CE", "CE"));
-		estados.add(new SelectItem("DF", "DF"));
-		estados.add(new SelectItem("ES", "ES"));
-		estados.add(new SelectItem("GO", "GO"));
-		estados.add(new SelectItem("MA", "MA"));
-		estados.add(new SelectItem("MG", "MG"));
-		estados.add(new SelectItem("MS", "MS"));
-		estados.add(new SelectItem("MT", "MT"));
-		estados.add(new SelectItem("PA", "PA"));
-		estados.add(new SelectItem("PB", "PB"));
-		estados.add(new SelectItem("PE", "PE"));
-		estados.add(new SelectItem("PI", "PI"));
-		estados.add(new SelectItem("PR", "PR"));
-		estados.add(new SelectItem("RJ", "RJ"));
-		estados.add(new SelectItem("RN", "RN"));
-		estados.add(new SelectItem("RO", "RO"));
-		estados.add(new SelectItem("RR", "RR"));
-		estados.add(new SelectItem("RS", "RS"));
-		estados.add(new SelectItem("SC", "SC"));
-		estados.add(new SelectItem("SP", "SP"));
-		estados.add(new SelectItem("SE", "SE"));
-		estados.add(new SelectItem("TO", "TO"));
-
-		return estados;
-	}
-
 	public String getPais() {
 		return pais;
 	}
@@ -200,10 +129,6 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 
 	public String getEmail() {
 		return email;
-	}
-
-	public String getURL() {
-		return URL;
 	}
 
 	public String getIdentificacaoProprietario() {
@@ -228,80 +153,31 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 
 	public List<SelectItem> getTipoPropriedadeLista() {
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
+		ResourceBundle bundle = getResourceBundle();
 		List<SelectItem> tiposPropriedade = new ArrayList<SelectItem>();
 
-		tiposPropriedade
-				.add(new SelectItem(
-						"Publica",
-						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedadePublica")));
-		tiposPropriedade
-				.add(new SelectItem(
-						"Privada",
-						bundle.getString("cadastrarInstituicaoEscolhaTipoPropriedadePrivada")));
-		tiposPropriedade.add(new SelectItem("Mista", bundle
-				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeMista")));
-		tiposPropriedade.add(new SelectItem("Outra", bundle
-				.getString("cadastrarInstituicaoEscolhaTipoPropriedadeOutra")));
+		for (MVControleTiposDePropriedade t : MVControleTiposDePropriedade
+				.values()) {
+			tiposPropriedade.add(new SelectItem(t.toString(), bundle
+					.getString(t.toString())));
+		}
 
 		return tiposPropriedade;
 	}
 
 	public List<SelectItem> getProtecaoExistenteLista() {
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
+		ResourceBundle bundle = this.getResourceBundle();
 
-		List<SelectItem> protecaoExistentes = new ArrayList<SelectItem>();
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
 
-		protecaoExistentes
-				.add(new SelectItem(
-						"Publica",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMundial")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Privada",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalI")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Mista",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteFederalC")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Outra",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualI")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Mista",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEstadualC")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Outra",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalI")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Mista",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteMunicipalC")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Mista",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteDecreto")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Mista",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteEntorno")));
-		protecaoExistentes
-				.add(new SelectItem(
-						"Mista",
-						bundle.getString("cadastrarInstituicaoEscolhaProtecaoExistenteNenhuma")));
+		for (MVControleTiposDeProtecaoExistente t : MVControleTiposDeProtecaoExistente
+				.values()) {
+			opcoes.add(new SelectItem(t.toString(), bundle.getString(t
+					.toString())));
+		}
 
-		return protecaoExistentes;
+		return opcoes;
 	}
 
 	public void setAltitude(String altitude) {
@@ -322,10 +198,6 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 
 	public void setIdentificacaoProprietario(String identificacaoProprietario) {
 		this.identificacaoProprietario = identificacaoProprietario;
-	}
-
-	public void setURL(String uRL) {
-		URL = uRL;
 	}
 
 	public void setEmail(String email) {
@@ -350,10 +222,6 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 
 	public void setNome(String pNome) {
 		this.nome = pNome;
-	}
-
-	public void setLocalizacao(String pLocalizacao) {
-		this.localizacao = pLocalizacao;
 	}
 
 	public void setEndereco(String pEndereco) {
@@ -392,47 +260,26 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 		this.legislacao = legislacao;
 	}
 
-	public void validarNome(AjaxBehaviorEvent event) {
-		this.validarNome();
-	}
-
 	public boolean validarNome() {
 
-		if (this.nome.equals("")) {
-
-			String args[] = { "nome" };
-			MensagensDeErro.getErrorMessage("campo_vazio", args,
+		if (this.nome == null || this.nome.equals("")) {
+			ResourceBundle bundle = this.getResourceBundle();
+			String args[] = { bundle.getString("nomeDoCampoNome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
 					"validacaoNome");
 			return false;
 		} else if (!memoriaVirtualEJB
 				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
-			MensagensDeErro
-					.getErrorMessage(
-							"cadastrarInstituicaoErroNomeJaCadastrado",
-							"validacaoNome");
+			MensagensDeErro.getErrorMessage("erroNomeJaCadastrado",
+					"validacaoNome");
 			return false;
 		}
 		return true;
 	}
 
-	public String getSlot() {
-		return slot;
-	}
-
-	public void setSlot(String slot) {
-		this.slot = slot;
-	}
-
-	public boolean isRenderCell(int index) {
-		if (this.midias.size() > index) {
-			return true;
-		}
-		return false;
-	}
-
 	public String cancelar() {
 
-		this.resetCadastrarinstituicao();
+		this.limpar();
 		return "/restrito/index.jsf";
 
 	}
@@ -443,5 +290,76 @@ public class CadastrarInstituicaoMB extends MidiaContainer implements
 
 	public void setSinteseHistorica(String sinteseHistorica) {
 		this.sinteseHistorica = sinteseHistorica;
+	}
+
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getLegislacaoExistente() {
+		return legislacaoExistente;
+	}
+
+	public void setLegislacaoExistente(String legislacaoExistente) {
+		this.legislacaoExistente = legislacaoExistente;
+	}
+
+	public String getLegislacaoIncidente() {
+		return legislacaoIncidente;
+	}
+
+	public void setLegislacaoIncidente(String legislacaoIncidente) {
+		this.legislacaoIncidente = legislacaoIncidente;
+	}
+
+	@Override
+	public ResourceBundle getResourceBundle() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context.getApplication().getResourceBundle(context,
+				MVControleMemoriaVirtual.bundleName);
+	}
+
+	@Override
+	public String limpar() {
+		this.nome = "";
+		this.localidade = "";
+		this.endereco = "";
+		this.cidade = "";
+		this.estado = "";
+		this.pais = "";
+		this.cep = "";
+		this.telefone = "";
+		this.caixaPostal = "";
+		this.email = "";
+		this.url = "";
+		this.identificacaoProprietario = "";
+		this.administradorPropriedade = "";
+		this.latitude = "";
+		this.longitude = "";
+		this.altitude = "";
+		this.tipoPropriedade = "";
+		this.protecaoExistente = "";
+		this.legislacao = "";
+		this.sinteseHistorica = "";
+		this.legislacaoExistente = "";
+		this.legislacaoIncidente = "";
+		return null;
+	}
+
+	@Override
+	public boolean validar() {
+		return this.validarNome();
 	}
 }

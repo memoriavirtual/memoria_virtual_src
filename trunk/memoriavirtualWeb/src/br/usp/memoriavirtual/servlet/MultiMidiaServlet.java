@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.usp.memoriavirtual.controle.MidiaContainer;
+import br.usp.memoriavirtual.controle.BeanContainerDeMidia;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.utils.FacesUtil;
 
@@ -54,7 +54,7 @@ public class MultiMidiaServlet extends HttpServlet {
 			//Recuperar Referencia do Bean em quest�o
 			FacesContext facesContext = FacesUtil.getFacesContext(request, response);
 			ELResolver resolver = facesContext.getApplication().getELResolver();   
-			MidiaContainer  bean = (MidiaContainer)resolver.getValue(facesContext.getELContext(), null, nameBean);
+			BeanContainerDeMidia  bean = (BeanContainerDeMidia)resolver.getValue(facesContext.getELContext(), null, nameBean);
 			
 			List<Multimidia> midias = bean.getMidias();
 			
