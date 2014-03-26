@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+</head>
+<h:body>
+
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+		<ui:define name="titulo">#{mensagens.editarBemTitulo}</ui:define>
+		<ui:define name="conteudo">
+
+			<div class="formulario">
+
+				<div class="erroPrincipal">
+					<h:messages id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:messages>
+				</div>
+
+				<div class="conteudoTitulo">#{mensagens.editarBemTitulo}</div>
+				<div class="conteudoDescricao">#{mensagens.editarBemDescricao}</div>
+
+				<h:form method="post" enctype="multipart/form-data"
+					prependId="false">
+
+					<fieldset>
+						<div class="espacador"></div>
+						<div>
+							<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicao}</h:outputLabel>
+							<h:selectOneMenu class="options"
+								value="#{editarBemPatrimonialMB.instituicao}">
+								<f:selectItems
+									value="#{editarBemPatrimonialMB.recuperarInstituicoes()}" />
+							</h:selectOneMenu>
+						</div>
+					</fieldset>
+
+					<mv:containerExpansivo id="GeralInfo"
+						label="#{mensagens.cadastrarBemGeralInfo}">
+						<fieldset>
+							<div>
+								<h:selectOneRadio layout="lineDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.externo}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemExterno}</h:outputLabel>
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
+										itemValue="true" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="false" />
+								</h:selectOneRadio>
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemTipoBemPatrimonial}</h:outputLabel>
+								<h:selectOneMenu id="tipodobem" styleClass="options"
+									onchange="mostrarDescricao()"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.tipoBemPatrimonial}">
+									<f:selectItems value="#{editarBemPatrimonialMB.tiposBem}" />
+									<f:ajax event="change" execute="@form"></f:ajax>
+								</h:selectOneMenu>
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemNumRegistro}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.numeroRegistro}" />
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloPrincipal}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.tituloPrincipal}" />
+							</div>
+							<div>
+								<h:outputLabel>#{cadastrarBemTitulos}</h:outputLabel>
+								<h:commandLink class="labels"
+									action="#{editarBemPatrimonialMB.adicionarTitulo}">#{mensagens.cadastrarBemTituloAdicionar}</h:commandLink>
+							</div>
+							<h:dataTable id="titulosBem" var="titulo" class="titulos"
+								value="#{editarBemPatrimonialMB.bemPatrimonial.titulos}">
+								<h:message id="validacaoTitulo" for="validacaoTitulo"
+									infoClass="sucesso" errorClass="erro" warnClass="aviso">
+								</h:message>
+								<h:column id="coluna">
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerTitulo(titulo)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
+										</h:graphicImage>
+									</h:commandLink>
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemTituloDoBem}</h:outputLabel>
+									<h:inputText style="width: 40% !important;"
+										value="#{titulo.valor}">
+									</h:inputText>
+									<h:outputLabel class="labels" style="margin-left: 30px;">#{mensagens.cadastrarBemTipoTitulos}</h:outputLabel>
+									<h:selectOneMenu id="tipodotitulo" class="options"
+										value="#{titulo.tipo}">
+										<f:selectItems
+											value="#{editarBemPatrimonialMB.getTiposTitulo()}" />
+									</h:selectOneMenu>
+								</h:column>
+							</h:dataTable>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloComplemento}</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.complemento}" />
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemTituloColecao}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.colecao}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCoordenadasGeograficas}</h:outputLabel>
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.latitude}" />
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.longitude}" />
+							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo id="containerBemAutoria"
+						label="#{mensagens.cadastrarBemAutoria}">
+						<fieldset>
+							<div>
+								<div class="botoesTituiloTLB">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemAutorias}</h:outputLabel>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.adicionarAutoria}"> 
+										#{mensagens.cadastrarBemAutoriaAdcionar}
+									</h:commandLink>
+									<h:commandButton type="button" class="botoesTituiloTLB"
+										onclick="mostrarfundoNegro()"
+										value="#{mensagens.cadastrarBemCadastrarNovoAutor}">
+									</h:commandButton>
+								</div>
+							</div>
+
+							<h:dataTable id="autoriaBem" var="autoria" class="titulos"
+								value="#{editarBemPatrimonialMB.autoriasUtil}">
+								<h:column id="coluna">
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarAutorNome}</h:outputLabel>
+									<h:selectOneMenu value="#{autoria.autor}">
+										<f:selectItems
+											value="#{editarBemPatrimonialMB.listarAutores()}" />
+									</h:selectOneMenu>
+									<h:outputLabel class="labels" style="margin-left: 20px;">#{mensagens.cadastrarAutorTipoAutoria}</h:outputLabel>
+									<h:selectOneMenu class="options" value="#{autoria.tipo}">
+										<f:selectItems value="#{editarBemPatrimonialMB.tiposAutoria}" />
+									</h:selectOneMenu>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerAutoria(autoria)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px 10px;  border: none; ">
+										</h:graphicImage>
+									</h:commandLink>
+								</h:column>
+							</h:dataTable>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo label="#{mensagens.cadastrarBemProducao}">
+						<fieldset>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoLocal}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.local}" />
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoAno}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.ano}" />
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoEdicao}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.edicao}" />
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemProducaoOutrasRes}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.producao.outrasResponsabilidades}" />
+							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo id="containerDescricao"
+						label="#{mensagens.cadastrarBemDescricaoGrupo}">
+
+						<fieldset id="grupoDescricao">
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDescricaoCaracteristicasFisicas}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.caracteristicasFisicasTecnicasExecutivas}">
+								</h:inputTextarea>
+								<div></div>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoDimensoesEQuantificacoes}</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.dimensoesQuantificacoes}">
+								</h:inputTextarea>
+								<div></div>
+							</div>
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.condicaoTopografica}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoCondicaoTopografica}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoCondicaoTopografica0}"
+										itemValue="#{mensagens.cadastrarBemDescricaoCondicaoTopografica0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoCondicaoTopografica1}"
+										itemValue="#{mensagens.cadastrarBemDescricaoCondicaoTopografica1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoCondicaoTopografica2}"
+										itemValue="#{mensagens.cadastrarBemDescricaoCondicaoTopografica2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoCondicaoTopografica3}"
+										itemValue="#{mensagens.cadastrarBemDescricaoCondicaoTopografica3}" />
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div>
+								<h:selectOneRadio id="selectUso" layout="pageDirection"
+									class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.uso}">
+
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoUso}</h:outputLabel>
+
+									<f:selectItem
+										noSelectionOption="#{not editarBemPatrimonialMB.especificarUso}"
+										itemLabel="#{mensagens.cadastrarBemDescricaoUso0}"
+										itemValue="#{mensagens.cadastrarBemDescricaoUso0}" />
+									<f:selectItem
+										noSelectionOption="#{not editarBemPatrimonialMB.especificarUso}"
+										itemLabel="#{mensagens.cadastrarBemDescricaoUso1}"
+										itemValue="#{mensagens.cadastrarBemDescricaoUso1}" />
+									<f:selectItem
+										noSelectionOption="#{not editarBemPatrimonialMB.especificarUso}"
+										itemLabel="#{mensagens.cadastrarBemDescricaoUso2}"
+										itemValue="#{mensagens.cadastrarBemDescricaoUso2}" />
+									<f:selectItem
+										noSelectionOption="#{not editarBemPatrimonialMB.especificarUso}"
+										itemLabel="#{mensagens.cadastrarBemDescricaoUso3}"
+										itemValue="#{mensagens.cadastrarBemDescricaoUso3}" />
+									<f:selectItem
+										noSelectionOption="#{not editarBemPatrimonialMB.especificarUso}"
+										itemLabel="#{mensagens.cadastrarBemDescricaoUso4}"
+										itemValue="#{mensagens.cadastrarBemDescricaoUso4}" />
+								</h:selectOneRadio>
+							</div>
+
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPavimentos}</h:outputLabel>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoNdeAmbientes}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.numeroAmbientes}" />
+							</div>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoNdePavimentos}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.numeroPavimentos}" />
+							</div>
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.alcova}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAlcova}</h:outputLabel>
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
+										itemValue="true" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="false" />
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.porao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPorao}</h:outputLabel>
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
+										itemValue="true" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="false" />
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.sotao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoSotao}</h:outputLabel>
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
+										itemValue="true" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="false" />
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDescricaoCaracteristicasDoMeioAntropico}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.meioAntropico}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDescricaoCaracteristicasAmbientais}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.caracteristicasAmbientais}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoSitoDaPaisagem}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.sitioPaisagem}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAguaProxima}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.aguaProxima}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPossuiVegetacao}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.possuiVegetacao}" />
+							</div>
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.exposicao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoExposicao}</h:outputLabel>
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoExposicao0}"
+										itemValue="#{mensagens.cadastrarBemDescricaoExposicao0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoExposicao1}"
+										itemValue="#{mensagens.cadastrarBemDescricaoExposicao1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoExposicao2}"
+										itemValue="#{mensagens.cadastrarBemDescricaoExposicao2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDescricaoExposicao3}"
+										itemValue="#{mensagens.cadastrarBemDescricaoExposicao3}" />
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoUsoAtual}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.usoAtual}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoOutros}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.outros}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoMedidasArquitetonico}</h:outputLabel>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAreaTotal}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.areaTotal}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAlturaFachadaFrontal}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.alturaFachadaFrontal}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAlturaFachadaSuperior}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.alturaFachadaPosterior}" />
+							</div>
+
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoLargura}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.largura}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAltura}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.altura}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoProfundidade}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.profundidade}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAlturaDaCumeeira}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.alturaCumeeira}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoAlturaTotal}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.alturaTotal}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPeDireitoTerreo}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.peDireitoTerreo}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoPeDireitoTipo}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.peDireitoTipo}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoComprimento}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.comprimento}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemDescricaoLocalizacao}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.localizacaoFisica}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDescricaoConteudo}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.conteudo}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDescricaoMeioDeAcesso}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.meioAcesso}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDescricaoNotas}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.notas}" />
+							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemDiagnosticoIntervencao}">
+						<fieldset id="grupoIntervencao">
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.diagnostico.estPreservacao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemEstadoPreser}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoPreser0}"
+										itemValue="#{mensagens.cadastrarBemEstadoPreser0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoPreser1}"
+										itemValue="#{mensagens.cadastrarBemEstadoPreser1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoPreser2}"
+										itemValue="#{mensagens.cadastrarBemEstadoPreser2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoPreser3}"
+										itemValue="#{mensagens.cadastrarBemEstadoPreser3}" />
+
+								</h:selectOneRadio>
+							</div>
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.diagnostico.estConservacao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemEstadoCOnser}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoCOnser0}"
+										itemValue="#{mensagens.cadastrarBemEstadoCOnser0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoCOnser1}"
+										itemValue="#{mensagens.cadastrarBemEstadoCOnser1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoCOnser2}"
+										itemValue="#{mensagens.cadastrarBemEstadoCOnser2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemEstadoCOnser3}"
+										itemValue="#{mensagens.cadastrarBemEstadoCOnser3}" />
+
+								</h:selectOneRadio>
+							</div>
+
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemEstadoConservNotas}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.diagnostico.notaEstConservacao}" />
+							</div>
+
+							<div>
+								<div class="botoesTituiloTLB">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemIntervencoes}</h:outputLabel>
+									<h:commandLink type="button" class="botoesTituiloTLB"
+										action="#{editarBemPatrimonialMB.adicionarIntervencoes}">
+										#{mensagens.cadastrarBemIntervencoesAdd}"
+									</h:commandLink>
+								</div>
+							</div>
+
+							<h:dataTable id="intervencao" var="intervencao" class="titulos"
+								value="#{editarBemPatrimonialMB.bemPatrimonial.intervencoes}">
+								<h:column id="coluna">
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerIntervencao(intervencao)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
+										</h:graphicImage>
+									</h:commandLink>
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 10px !important;">#{mensagens.cadastrarBemIntervencaData}</h:outputLabel>
+									<h:inputText style="width: 10% !important ;"
+										value="#{intervencao.data}">
+									</h:inputText>
+
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemIntervencaResoInterven}</h:outputLabel>
+									<h:inputText style="width: 20% !important ;"
+										value="#{intervencao.responsavel}">
+									</h:inputText>
+
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemIntervencaDescricao}</h:outputLabel>
+									<h:inputText style="width: 20% !important ;"
+										value="#{intervencao.descricao}">
+									</h:inputText>
+
+								</h:column>
+							</h:dataTable>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo id="disponibilidade"
+						label="#{mensagens.cadastrarBemDisponibilidadeUsoProtecao}">
+						<fieldset>
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									id="disponibilidade" onchange="mostrarDisponibilidade(this)"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.disponibilidade}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemDisponibilidade}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade0}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade1}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade2}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade3}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade3}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade4}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade4}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemDisponibilidade5}"
+										itemValue="#{mensagens.cadastrarBemDisponibilidade5}" />
+								</h:selectOneRadio>
+							</div>
+
+							<div id="disponibilidade:acesso" style="display: none;">
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.condicoesAcesso}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesDeAcesso}</h:outputLabel>
+
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso0}"
+										itemValue="#{mensagens.cadastrarBemCondicoesDeAcesso0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso1}"
+										itemValue="#{mensagens.cadastrarBemCondicoesDeAcesso1}" />
+								</h:selectOneRadio>
+							</div>
+
+							<div id="disponibilidade:data">
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemDataRetorno}
+									</h:outputLabel>
+								<h:inputText styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.dataRetorno}" />
+							</div>
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.condicoesReproducao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemCondicoesReproducao}</h:outputLabel>
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemCondicoesDeAcesso1}"
+										itemValue="#{mensagens.cadastrarBemCondicoesDeAcesso1}" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="#{mensagens.cadastrarBemNao}" />
+								</h:selectOneRadio>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">
+										#{mensagens.cadastrarBemNotasSobreUsoAproveitamento}
+									</h:outputLabel>
+								<h:inputTextarea styleClass="caixadetexto"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.notasUsoAproveitamento}">
+								</h:inputTextarea>
+								<div></div>
+							</div>
+
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protecao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemProtecao}</h:outputLabel>
+
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemSim}"
+										itemValue="#{mensagens.cadastrarBemSim}" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemNao}"
+										itemValue="#{mensagens.cadastrarBemNao}" />
+									<f:selectItem itemLabel="#{mensagens.cadastrarBemProtecao0}"
+										itemValue="#{mensagens.cadastrarBemProtecao0}" />
+
+								</h:selectOneRadio>
+								<div></div>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemInstituicaoProtetora}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protetoraInstituicao}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemLegislacaoNProcesso}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.legislacao}" />
+							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemHistoricoProcedencia}">
+						<fieldset>
+							<div>
+								<h:selectOneRadio layout="pageDirection" class="checks"
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.tipoAquisicao}">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoTipo}</h:outputLabel>
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo0}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo0}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo1}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo1}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo2}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo2}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo3}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo3}" />
+									<f:selectItem
+										itemLabel="#{mensagens.cadastrarBemHistoricoAquisicaoTipo4}"
+										itemValue="#{mensagens.cadastrarBemHistoricoAquisicaoTipo4}" />
+
+								</h:selectOneRadio>
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoValorVenal}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.valorVenalTransacao}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoData}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dataAquisicao}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoAquisicaoDocumentoDados}</h:outputLabel>
+								<h:inputTextarea
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao}"
+									styleClass="caixadetexto" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoPrimeiroProprietario}</h:outputLabel>
+								<h:inputText
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.primeiroProprietario}" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoHistorico}</h:outputLabel>
+								<h:inputTextarea
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico}"
+									styleClass="caixadetexto" />
+							</div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemHistoricoIntrumentosPesquisa}</h:outputLabel>
+								<h:inputTextarea
+									value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.instrumentoPesquisa}"
+									styleClass="caixadetexto" />
+							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemAssuntoDescritores}">
+						<fieldset>
+							<div class="arqueologico">
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemAssuntoDescritoresAssunto}</h:outputLabel>
+								<h:inputTextarea value="#{editarBemPatrimonialMB.assuntos}"
+									styleClass="caixadetexto" />
+							</div>
+
+							<div class="arqueologico">
+								<h:outputLabel class="labels">#{mensagens.cadastrarBemAssuntoDescritoresDescritores}</h:outputLabel>
+								<h:inputTextarea value="#{editarBemPatrimonialMB.descritores}"
+									styleClass="caixadetexto" />
+							</div>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemFontesInformacao}">
+						<fieldset>
+
+							<div>
+								<div class="botoesTituiloTLB">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemFontesInformacao}</h:outputLabel>
+									<h:commandLink class="botoesTituiloTLB"
+										action="#{editarBemPatrimonialMB.adicionarFontesInformacao}">
+											#{mensagens.cadastrarBemFontesInformacaoAdd}
+									</h:commandLink>
+								</div>
+							</div>
+							<h:dataTable id="fonteinformacao" var="fonteinformacao"
+								class="titulos"
+								value="#{editarBemPatrimonialMB.fontesInformacao}">
+
+								<h:column id="coluna">
+
+									<div>
+										<h:outputLabel class="labels"
+											style="width: 45%; float:left; font-size: 16px !important;">#{mensagens.cadastrarBemFontesInformacaolabel}</h:outputLabel>
+										<h:inputTextarea value="#{fonteinformacao.valor}"
+											styleClass="caixadetexto">
+										</h:inputTextarea>
+										<h:commandLink
+											action="#{editarBemPatrimonialMB.removerFontesInformacao(fonteinformacao)}">
+											<h:graphicImage id="excluir" library="imagens"
+												name="delete.png"
+												style="width: 15px; height: 15px; margin:35px 120px 0px 0px;  border: none; float: right;">
+											</h:graphicImage>
+										</h:commandLink>
+									</div>
+								</h:column>
+							</h:dataTable>
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemResponsavelPesquisa}">
+						<fieldset>
+							<div>
+								<div class="botoesTituiloTLB">
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemResponsavelPesquisa}</h:outputLabel>
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.adicionarPesquisador}">
+										#{mensagens.cadastrarBemPesquisaAdd}
+									</h:commandLink>
+								</div>
+							</div>
+
+							<h:dataTable id="pesquisador" var="pesquisador" class="titulos"
+								value="#{editarBemPatrimonialMB.bemPatrimonial.pesquisadores}">
+
+								<h:column id="coluna">
+									<h:outputLabel class="labels"
+										style="width: 20%; margin-left: 10px !important;">#{mensagens.cadastrarBemPesquisaNome}</h:outputLabel>
+									<h:inputText style="width: 30% !important ;"
+										value="#{pesquisador.nome}">
+									</h:inputText>
+
+									<h:outputLabel class="labels"
+										style="width: auto; margin-left: 30px;">#{mensagens.cadastrarBemPesquisaData}</h:outputLabel>
+									<h:inputText style="width: 30% !important ;"
+										value="#{pesquisador.dataPesquisa}" />
+
+									<h:outputLabel class="labels"
+										style="width: 30%; margin-left: 30px; float: left;">#{mensagens.cadastrarBemPesquisaNotas}</h:outputLabel>
+									<h:inputTextarea style="width: 45% !important ;"
+										styleClass="caixadetexto"
+										value="#{pesquisador.notasPesquisador}" />
+									<h:commandLink
+										action="#{editarBemPatrimonialMB.removerPesquisador(pesquisador)}">
+										<h:graphicImage id="excluir" library="imagens"
+											name="delete.png"
+											style="width: 15px; height: 15px; margin: 0px;  border: none; float: right; margin-right: 20px;">
+										</h:graphicImage>
+									</h:commandLink>
+								</h:column>
+
+							</h:dataTable>
+
+						</fieldset>
+					</mv:containerExpansivo>
+
+					<mv:containerExpansivo
+						label="#{mensagens.cadastrarBemRelacionarBemPatrimonial}">
+						<fieldset>
+							<div>
+								<h:outputLabel class="labels">#{mensagens.realizarBuscaSimplesString}</h:outputLabel>
+								<h:inputText value="#{editarBemPatrimonialMB.nome}"
+									autocomplete="off">
+									<f:ajax event="keyup" execute="@this" render="sugestoesId"
+										listener="#{editarBemPatrimonialMB.listarBens}" />
+								</h:inputText>
+							</div>
+
+							<div id="sugestoes">
+								<h:dataTable id="sugestoesId" styleClass="relacionadosBemList"
+									var="bem" value="#{editarBemPatrimonialMB.bens}">
+									<h:column>
+										<h:commandLink
+											action="#{editarBemPatrimonialMB.anexarBemPatrimonial(bem)}">#{bem.getTituloPrincipal()} </h:commandLink>
+									</h:column>
+								</h:dataTable>
+							</div>
+
+							<div class="espacador"></div>
+
+							<div>
+								<h:outputLabel class="labels">#{mensagens.bensrelacionados}</h:outputLabel>
+							</div>
+							<div class="espacador"></div>
+
+							<div id="relacionadosBem">
+								<h:dataTable styleClass="relacionadosBemList" var="bemP"
+									style="position: relative !important; z-index: 50; margin-left: 350px;"
+									value="#{editarBemPatrimonialMB.bensRelacionados}">
+
+									<h:column>
+										<h:commandLink
+											action="#{editarBemPatrimonialMB.removerBemAnexo(bemP)}">#{bemP.getTituloPrincipal()} </h:commandLink>
+									</h:column>
+								</h:dataTable>
+							</div>
+						</fieldset>
+					</mv:containerExpansivo >
+
+					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
+						<div class="midias">
+							<h:inputFile label="file"
+								value="#{editarBemPatrimonialMB.part}" />
+							<h:commandButton id="submit"
+								action="#{editarBemPatrimonialMB.uploadFile}"
+								value="#{mensagens.uploadFile}" />
+
+							<h:dataTable var="midia" id="midiasTable"
+								value="#{editarBemPatrimonialMB.midias}">
+								<h:column>
+									<div>
+										<img class="thumb tabelaMidia" width="150"
+											style="display: #{editarBemPatrimonialMB.imageDisplay(midia)}"></img>
+										<video class="thumb tabelaMidia" type="#{midia.contentType}"
+											width="150"
+											style="display:#{editarBemPatrimonialMB.videoDisplay(midia)}"></video>
+										<h:graphicImage width="150" class="tabelaMidia"
+											library="imagens" name="media.png"
+											style="display:#{editarBemPatrimonialMB.midiaDisplay(midia)}" />
+									</div>
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaNome}</h:outputLabel>
+									<h:inputText value="#{midia.nome}" />
+									<br />
+									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaDescricao}</h:outputLabel>
+									<h:inputText value="#{midia.descricao}" />
+									<h:commandButton
+										action="#{editarBemPatrimonialMB.removerMidia(midia)}"
+										value="#{mensagens.remover}"></h:commandButton>
+								</h:column>
+							</h:dataTable>
+						</div>
+					</mv:containerExpansivo>
+
+					<div class="botao">
+
+						<h:commandButton id="botaoCadastrar"
+							value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
+							action="#{editarBemPatrimonialMB.editarBemPatrimonial()}">
+						</h:commandButton>
+
+						<h:commandButton id="botaoResetar"
+							value="#{mensagens.cadastrarInstituicaoBotaoResetar}"
+							action="#{editarBemPatrimonialMB.zerar}">
+						</h:commandButton>
+
+						<h:commandButton id="botaoCancelar"
+							value="#{mensagens.cadastrarInstituicaoBotaoCancelar}"
+							action="#{editarBemPatrimonialMB.cancelar()}">
+						</h:commandButton>
+
+					</div>
+				</h:form>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('video.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=editarBemPatrimonialMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('img.thumb').each(function(index, el){
+						var endereco = '/memoriavirtual/multimidia?bean=editarBemPatrimonialMB&amp;indice=' + index;
+						el = $(el);
+						el.attr('src', endereco);
+					});
+					$('[id*="midiasTable"] tr td div').click(function(e){
+						e.preventDefault();
+						var index = $('[id*="midiasTable"] tr td div').index($(this));
+						mostrarPlayerImagen('editarBemPatrimonialMB', #{editarBemPatrimonialMB.midias.size()-1}, index);
+					});
+					$('#fechar').click(function(e){
+						e.preventDefault();
+						var video = $('#cadastroNovoAutor video');
+						if(video.length > 0){
+							$('video')[0].pause();
+						}
+						$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
+						$('.imageNoPlayer').remove();
+					});
+				});
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

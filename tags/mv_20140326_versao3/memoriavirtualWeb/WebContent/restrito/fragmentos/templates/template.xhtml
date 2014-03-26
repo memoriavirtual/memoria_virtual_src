@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title><ui:insert name="titulo">#{mensagens.tituloSistema}</ui:insert></title>
+	<h:outputStylesheet name="mv.css" library="css" />
+	<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
+	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
+	<h:outputScript name="pdfobject.js" library="javascript"></h:outputScript>
+</h:head>
+
+<h:body>
+	<div id="cadastroNovoAutor" class="cadastroNovoAutorDesativado">
+		<a href="#" id="fechar">#{mensagens.fechar}</a>
+	</div>
+	<f:view locale="#{facesContext.externalContext.requestLocale}">
+		<div id="recipiente">
+
+			<div id="cabecalho">
+				<ui:insert name="cabecalho">
+					<ui:include src="/restrito/fragmentos/cabecalhos/cabecalho.xhtml"></ui:include>
+				</ui:insert>
+			</div>
+
+			<div id="conteudo">
+				<ui:insert name="conteudo">
+				</ui:insert>
+			</div>
+			<!-- Fim div#conteudo -->
+
+			<div id="rodape">
+				<ui:insert name="rodape">
+					<ui:include src="/restrito/fragmentos/rodapes/rodape.xhtml"></ui:include>
+
+				</ui:insert>
+			</div>
+
+		</div>
+		<!-- Fim div#tudo -->
+	</f:view>
+</h:body>
+
+</html>
