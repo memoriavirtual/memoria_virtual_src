@@ -89,8 +89,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 
-	@ManagedProperty(value = "#{mensagensMB}")
-	private MensagensMB mensagensMB;
+	//@ManagedProperty(value = "#{mensagensMB}")
+	//private MensagensMB mensagensMB;
 
 	private boolean especificarUso = true;
 	private String usoInput = "";
