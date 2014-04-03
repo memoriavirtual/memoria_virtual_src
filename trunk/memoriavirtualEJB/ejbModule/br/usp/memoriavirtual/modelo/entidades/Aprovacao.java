@@ -30,16 +30,16 @@ public class Aprovacao implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date data;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "APROVADOR")
 	private Usuario aprovador;
 
 	@Temporal(TemporalType.DATE)
 	private Date expiracao;
 
-	private String chaveEstrangeira;
+	private String chaveEstrangeira; //para Instituição, será seu Nome
 
-	private String tabelaEstrangeira;
+	private String tabelaEstrangeira; //Nome da Classe
 
 	public Aprovacao() {
 		super();

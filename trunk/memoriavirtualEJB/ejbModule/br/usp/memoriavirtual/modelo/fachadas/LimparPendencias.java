@@ -1,171 +1,89 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
-import java.lang.reflect.Constructor;
-import java.util.Collection;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
-import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
-import javax.ejb.Singleton;
-import javax.ejb.Timeout;
-import javax.ejb.TimerConfig;
-import javax.ejb.TimerService;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.usp.memoriavirtual.modelo.entidades.Usuario;
-
-import br.usp.memoriavirtual.modelo.entidades.Instituicao;
-import br.usp.memoriavirtual.modelo.comandos.Comando;
-import br.usp.memoriavirtual.modelo.comandos.ControleComandos;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
-@Singleton
+@Stateless
+@Startup
 public class LimparPendencias implements LimparPendenciasrRemote {
-	@Resource
-	TimerService timerService;
-
-	@EJB
-	private MemoriaVirtualRemote memoriaVirtual;
-
+	 
 	@PersistenceContext(unitName = "memoriavirtual")
-	private EntityManager entityManager;
-
-	private Logger logger = Logger
-			.getLogger("br.usp.memoriavirtual.modelo.fachadas.Timer");
-
-	public void criarTimer(long intervalDuration) {
-
-		TimerConfig timerConfig = new TimerConfig();
-		timerConfig.setInfo("Timer para tarefa de limpeza do banco.");
-		timerConfig.setPersistent(true);
+	private EntityManager em;
+	
+	@EJB
+	private ExcluirInstituicaoRemote excluirInstituicao;
+	
+	public LimparPendencias(){
 		
-		timerService.createSingleActionTimer(intervalDuration, timerConfig);
 	}
-
-	@Timeout
-	public void timeOutProgramado(javax.ejb.Timer timer) {
-
-		long intervalo = 2;
-
-		intervalo = Long.valueOf(2000);
-
-		//logger.info("Ocorreu o timer programado e foi programado outro para :"
-		//		+ intervalo + "segundos");
-		/* Passa para hora o tempo de intervalo entre disparos */
-		this.criarTimer(intervalo); // * 1000 * 60 * 60
-
-		/* Realizar os procedimentos de limpeza */
-		ControleComandos controle = new ControleComandos();
-
-		Query query = entityManager.createQuery("SELECT a FROM Aprovacao a");
-
-		@SuppressWarnings("unchecked")
-		List<Aprovacao> aprovacoes = (List<Aprovacao>) query.getResultList();
-
-		for (Aprovacao aprov : aprovacoes) {
-
-			/* Atualiza o valor que está no banco de dado */
-			entityManager.refresh(aprov);
-
-			/* Cria a data atual e verifica se já expirou a data da aprovação */
-			Date dataAtual = new Date();
-			if (dataAtual.before(aprov.getExpiracao()))
-				continue;
+	
+	@SuppressWarnings("unchecked")
+	@Schedule(hour = "*", minute = "*/1")//executa a cada 1 minuto
+	public void executa() throws ModeloException{
+		
+		java.util.Calendar cal = java.util.Calendar.getInstance(); 
+		Date dataAtual = new Date(cal.getTimeInMillis());
+		
+		//Date dataAtual = new Date(2014,12,12); //usado para testes
+		
+		System.out.println("Executando Limpar P�ndencias: "+dataAtual);
+		
+		List<Usuario> usuariosExpirados = null;
+		List<Aprovacao> aprovacoesExpiradas = null;
+		
+		
+		Query q = em.createQuery("Select u from Usuario u WHERE u.validade <:dataAtual");
+		q.setParameter("dataAtual", dataAtual);	
+		usuariosExpirados =  q.getResultList();
+		
+		q = em.createQuery("Select a from Aprovacao a WHERE a.expiracao <:dataAtual");
+		q.setParameter("dataAtual", dataAtual);
+		aprovacoesExpiradas = q.getResultList();
+		
+		
+		for(int i=0;i<usuariosExpirados.size();i++)
+			System.out.println("Usuario Expirado(email):"+usuariosExpirados.get(i).getEmail());
+		
+		for(int i=0;i<aprovacoesExpiradas.size();i++)
+			System.out.println("Aprova��o Expirada(aprovador):"+aprovacoesExpiradas.get(i).getAprovador());
+		
+		for(int i=0;i<usuariosExpirados.size();i++){
+			Usuario u = usuariosExpirados.get(i);
+			em.remove(u);			
+		}
+		
+		for (Aprovacao aprov : aprovacoesExpiradas) {
 
 			/* Extraimos o nome da Entidade que gerou a dependencia */
 			String name = aprov.getTabelaEstrangeira();
 
-			if(name == "ExcluirUsuario"){
-				Usuario user = entityManager.find(Usuario.class, aprov.getChaveEstrangeira());
+			if(name.contains("Usuario")){
+				Usuario user = em.find(Usuario.class, aprov.getChaveEstrangeira());
 				user.setAtivo(true); 
-				entityManager.merge(user);
-				entityManager.flush();
+				em.merge(user);
 
-			}else if(name == "ExcluirInstituicao"){
-				Instituicao inst = entityManager.find(Instituicao.class,aprov.getChaveEstrangeira());
+			}else if(name.contains("Instituicao")){
+				Instituicao inst = em.find(Instituicao.class,aprov.getChaveEstrangeira());
 				inst.setValidade(true); 
-				entityManager.merge(inst);
-				entityManager.flush();
+				em.merge(inst);
 			}
-			entityManager.remove(aprov);
-			
-			StringTokenizer strToken = new StringTokenizer(name, ".");
-			while (strToken.hasMoreTokens()) {
-				name = strToken.nextToken();
-			}
-
-			/*
-			 * Tenta-se criar um comando baseado na entidade que gerou a
-			 * dependencia
-			 */
-			try {
-				/*
-				 * Esse eh o package onde se encontra as implementacoes da
-				 * interface comandos
-				 */
-				String nomeDaDependencia = "br.usp.memoriavirtual.modelo.comandos.pendencias."
-						+ name;
-
-				/*
-				 * Aqui utiliza-se Java Reflection para criar a instancia de uma
-				 * classe escolhida dinamicamente
-				 */
-				Class<?> cls = Class.forName(nomeDaDependencia);
-
-				Class<?> parameter[] = new Class[1];
-				parameter[0] = Aprovacao.class;
-
-				Constructor<?> ct = cls.getConstructor(parameter);
-
-				Object arglist[] = new Object[1];
-				arglist[0] = aprov;
-
-				Object retobj = ct.newInstance(arglist);
-
-				Comando cmd = (Comando) retobj;
-
-				/*
-				 * Adiciona-se na lista de comandos a ser executados para
-				 * exclusão da dependencia
-				 */
-				controle.adicionar(cmd);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		controle.executeAll();
-
-	}
-
-	@Schedule(second = "*/1", minute = "*", hour = "*", persistent = true, info = "Gatilho")
-	public void timeOutInicial() {
-
-		/* Cria o primeiro timer para expirar em 2 segundos */
-		this.criarTimer(3000);
-
-		/*
-		 * Pego a lista de Timers criados para est� classe e cancelo o timer
-		 * criado pelo container EJB via anotações.
-		 */
-		Collection<javax.ejb.Timer> timerList = timerService.getTimers();
-		if (!timerList.isEmpty()) {
-			for (javax.ejb.Timer timer : timerList) {
-				if (timer.getInfo().equals("Gatilho")) {
-					timer.cancel();
-				}
-			}
-		} else {
-			logger.info("Nenhum timer criado.");
+			em.remove(aprov);			
 		}
 	}
+	
+	
 }
