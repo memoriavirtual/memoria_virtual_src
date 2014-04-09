@@ -208,7 +208,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 				instituicao.getId());
 		Usuario u = entityManager.find(Usuario.class, validador.getId());
 		Aprovacao aprovacao = new Aprovacao(data, u, dataValidade,
-				instituicao.getNome(), Instituicao.class.getCanonicalName());
+				Long.toString(instituicao.getId()), Instituicao.class.getCanonicalName());
 		this.entityManager.persist(aprovacao);
 		return aprovacao;
 	}

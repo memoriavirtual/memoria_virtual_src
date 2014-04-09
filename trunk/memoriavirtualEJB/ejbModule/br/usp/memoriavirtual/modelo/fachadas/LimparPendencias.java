@@ -77,13 +77,11 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 				em.merge(user);
 
 			}else if(name.contains("Instituicao")){
-				Instituicao inst = em.find(Instituicao.class,aprov.getChaveEstrangeira());
+				Instituicao inst = em.find(Instituicao.class,Long.parseLong(aprov.getChaveEstrangeira()));
 				inst.setValidade(true); 
 				em.merge(inst);
 			}
 			em.remove(aprov);			
 		}
-	}
-	
-	
+	}	
 }
