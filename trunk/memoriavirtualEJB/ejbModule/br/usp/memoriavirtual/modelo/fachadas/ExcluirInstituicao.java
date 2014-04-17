@@ -169,13 +169,13 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 		return itemAuditoria;
 	}
 
-	public Instituicao recuperarInstituicaoFalse(String pnome)
+	public Instituicao recuperarInstituicaoFalse(Long id)
 			throws ModeloException {
 		Instituicao instituicao;
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Instituicao a WHERE a.nome = :nome AND a.validade = FALSE");
-		query.setParameter("nome", pnome);
+				.createQuery("SELECT a FROM Instituicao a WHERE a.id = :id AND a.validade = FALSE");
+		query.setParameter("id", id);
 		try {
 			instituicao = (Instituicao) query.getResultList().get(0);
 		} catch (Exception e) {

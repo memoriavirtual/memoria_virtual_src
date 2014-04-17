@@ -58,7 +58,7 @@ public class ExcluirInstituicao extends HttpServlet implements Serializable{
 			e.printStackTrace();
 		}
 		try {
-			instituicao = this.excluirInstituicaoEJB.recuperarInstituicaoFalse(aprovacao.getChaveEstrangeira());
+			instituicao = this.excluirInstituicaoEJB.recuperarInstituicaoFalse(Long.parseLong(aprovacao.getChaveEstrangeira()));
 		} catch (ModeloException e) {
 			e.printStackTrace();
 			return;

@@ -33,7 +33,7 @@ public interface ExcluirInstituicaoRemote{
 	
 	/**
 	 * Método faz uma requisição no banco de dados afim de encontrar uma instituição
-	 * cujo nome corresponda a String que é recebida como parâmetro e que não esteja mais ativa no 
+	 * cujo id corresponda ao id que é recebida como parâmetro e que não esteja mais ativa no 
 	 * sistema do memória virtual.
 	 * @param nomeInstituicao
 	 * Parâmetro útil para encontrar a instituição desejada.
@@ -41,7 +41,7 @@ public interface ExcluirInstituicaoRemote{
 	 * Retorna Objeto Instituicao cujo nome coincide com o parâmetro passado.
 	 * @throws ModeloException
 	 */
-	public Instituicao recuperarInstituicaoFalse(String nomeInstituicao) throws ModeloException ;
+	public Instituicao recuperarInstituicaoFalse(Long id) throws ModeloException ;
 	
 	
 	/**
