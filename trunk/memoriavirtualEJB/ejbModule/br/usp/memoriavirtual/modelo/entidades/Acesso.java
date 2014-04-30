@@ -2,39 +2,40 @@ package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 
 @NamedQuery(name = "acessos", query = "SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = true")
 @Entity
+@SequenceGenerator(name = "ACESSO_ID", sequenceName = "ACESSO_SEQ", allocationSize = 1)
 public class Acesso implements Serializable {
-
-	/**
-	 * Serial Version UID
-	 */
+	
 	private static final long serialVersionUID = 7511773311010053091L;
+
 	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACESSO_ID")
+	private long id;
+
+	@ManyToOne
 	@JoinColumn(name = "USUARIO")
 	private Usuario usuario;
-	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne
 	@JoinColumn(name = "INSTITUICAO")
 	private Instituicao instituicao;
-	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne
 	@JoinColumn(name = "GRUPO")
 	private Grupo grupo;
 
 	private Boolean validade;
 
-	/**
-	 * Construtor padrão
-	 */
 	public Acesso() {
 		super();
 	}
@@ -70,24 +71,18 @@ public class Acesso implements Serializable {
 		this.grupo = grupo;
 	}
 
-	@Override
-	public String toString() {
-		return (this.getUsuario().getId() + "," + this.getInstituicao().getNome() + "," + this.getGrupo().getId());
-	}
-
-	/**
-	 * @return the validade
-	 */
 	public Boolean getValidade() {
 		return validade;
 	}
 
-	/**
-	 * @param validade
-	 *            the validade to set
-	 */
 	public void setValidade(Boolean validade) {
 		this.validade = validade;
 	}
 
+	@Override
+	public String toString() {
+		return (this.getUsuario().getId() + ", "
+				+ this.getInstituicao().getNome() + ", "
+				+ this.getGrupo().getId() + ", " + this.getValidade());
+	}
 }

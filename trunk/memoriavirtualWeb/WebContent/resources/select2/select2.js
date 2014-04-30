@@ -416,6 +416,7 @@ the specific language governing permissions and limitations under the Apache Lic
         return function (query) {
             window.clearTimeout(timeout);
             timeout = window.setTimeout(function () {
+            	
                 var data = options.data, // ajax data function
                     url = ajaxUrl, // ajax url string or function
                     transport = options.transport || $.fn.select2.ajaxDefaults.transport,
@@ -429,10 +430,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     params = $.extend({}, $.fn.select2.ajaxDefaults.params, deprecated);
 
                 data = data ? data.call(self, query.term, query.page, query.context) : null;
+
                 url = (typeof url === 'function') ? url.call(self, query.term, query.page, query.context) : url;
-
                 if (handler) { handler.abort(); }
-
                 if (options.params) {
                     if ($.isFunction(options.params)) {
                         $.extend(params, options.params.call(self));

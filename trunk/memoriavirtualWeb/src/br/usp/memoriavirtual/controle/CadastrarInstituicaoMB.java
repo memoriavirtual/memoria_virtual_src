@@ -1,22 +1,28 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.Multimidia;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
 import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
-import br.usp.memoriavirtual.utils.MVControleTiposDePropriedade;
-import br.usp.memoriavirtual.utils.MVControleTiposDeProtecaoExistente;
+import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "cadastrarInstituicaoMB")
@@ -25,10 +31,16 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		BeanDeSessao, BeanMemoriaVirtual, Serializable {
 
 	private static final long serialVersionUID = -6620103410985404517L;
+
 	@EJB
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
+
 	@EJB
 	private CadastrarInstituicaoRemote cadastrarInstituicaoEJB;
+
+	@EJB
+	private UtilMultimidiaRemote utilMultimidiaEJB;
+
 	protected String nome = "";
 	protected String localidade = "";
 	protected String endereco = "";
@@ -45,15 +57,20 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 	protected String latitude = "";
 	protected String longitude = "";
 	protected String altitude = "";
-	protected String tipoPropriedade = "";
-	protected String protecaoExistente = "";
+	protected Instituicao.TipoPropriedade tipoPropriedade = Instituicao.TipoPropriedade.privada;
+	protected Instituicao.TiposProtecaoExistente protecaoExistente = Instituicao.TiposProtecaoExistente.decreto;
 	protected String legislacao = "";
 	protected String sinteseHistorica = "";
-	protected String legislacaoExistente = "";
 	protected String legislacaoIncidente = "";
+	protected Instituicao instituicao = new Instituicao();
+
+	private MensagensMB mensagens;
 
 	public CadastrarInstituicaoMB() {
-
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
 	public String cadastrarInstituicao() {
@@ -75,7 +92,6 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 			instituicao
 					.setIdentificacaoProprietario(this.identificacaoProprietario);
 			instituicao.setLatitude(this.latitude);
-			instituicao.setLegislacaoExistente(this.legislacaoExistente);
 			instituicao.setLegislacaoIncidente(this.legislacaoIncidente);
 			instituicao.setLocalidade(this.localidade);
 			instituicao.setLongitude(this.longitude);
@@ -86,15 +102,290 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 			instituicao.setTelefone(this.telefone);
 			instituicao.setTipoPropriedade(this.tipoPropriedade);
 			instituicao.setUrl(this.url);
+			instituicao.setContainerMultimidia(this.containerMultimidia);
 			instituicao.setValidade(true);
 
-			cadastrarInstituicaoEJB.cadastrarInstituicao(instituicao);
-			this.limpar();
+			try {
+				this.instituicao = cadastrarInstituicaoEJB
+						.cadastrarInstituicao(instituicao);
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				return this.redirecionar(
+						"/restrito/cadastrarinstituicaomultimidia.jsf", true);
+			} catch (ModeloException m) {
+				m.printStackTrace();
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				return this.redirecionar(null, false);
+			}
+		} else {
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
 		}
 
+		return this.redirecionar(null, false);
+	}
+
+	public String finalizar() {
+		if (validarNomeMultimidia()) {
+			for (MVModeloCamposMultimidia c : this.campos) {
+				try {
+					this.utilMultimidiaEJB.atualizarMidia(c.getId(),
+							c.getNome(), c.getDescricao());
+				} catch (ModeloException m) {
+					m.printStackTrace();
+					this.getMensagens().mensagemErro(
+							this.traduzir("erroInterno"));
+					return this.redirecionar(null, false);
+				}
+			}
+			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			this.limpar();
+			return redirecionar("/restrito/index.jsf", true);
+		}
+		return redirecionar(null, false);
+	}
+
+	public List<SelectItem> getTipoPropriedadeLista() {
+
+		List<SelectItem> tiposPropriedade = new ArrayList<SelectItem>();
+
+		for (Instituicao.TipoPropriedade t : Instituicao.TipoPropriedade
+				.values()) {
+			tiposPropriedade
+					.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return tiposPropriedade;
+	}
+
+	public List<SelectItem> getProtecaoExistenteLista() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (Instituicao.TiposProtecaoExistente t : Instituicao.TiposProtecaoExistente
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public boolean validarNome() {
+
+		if (this.nome == null || this.nome.equals("")) {
+			String args[] = { this.traduzir("nome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-nome");
+			return false;
+		} else if (!memoriaVirtualEJB
+				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
+			MensagensDeErro.getErrorMessage("erroNomeJaCadastrado",
+					"validacao-nome");
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validarNomeMultimidia() {
+		boolean valido = true;
+		for (MVModeloCamposMultimidia c : this.campos) {
+			if (c.getNome().equals(null) || c.getNome() == null
+					|| c.getNome().length() == 0) {
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				valido = false;
+			}
+		}
+		return valido;
+	}
+
+	public String cancelar() {
+
+		this.limpar();
+		return this.redirecionar("/restrito/index.jsf", true);
+
+	}
+
+	@Override
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
+	}
+
+	@Override
+	public String limpar() {
+		this.nome = "";
+		this.localidade = "";
+		this.endereco = "";
+		this.cidade = "";
+		this.estado = "";
+		this.pais = "";
+		this.cep = "";
+		this.telefone = "";
+		this.caixaPostal = "";
+		this.email = "";
+		this.url = "";
+		this.identificacaoProprietario = "";
+		this.administradorPropriedade = "";
+		this.latitude = "";
+		this.longitude = "";
+		this.altitude = "";
+		this.tipoPropriedade = Instituicao.TipoPropriedade.privada;
+		this.protecaoExistente = Instituicao.TiposProtecaoExistente.decreto;
+		this.legislacao = "";
+		this.sinteseHistorica = "";
+		this.legislacaoIncidente = "";
+		this.instituicao = new Instituicao();
+		super.limpar();
 		return null;
 	}
 
+	@Override
+	public boolean validar() {
+		return this.validarNome();
+	}
+
+	@Override
+	public String uploadFile() throws IOException {
+		if (this.part.getSize() > 0) {
+
+			String fileName = this.getFileName(this.part);
+
+			if (fileName.equals(null) || fileName == null
+					|| fileName.length() <= 0) {
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroCampoNomeVazio"));
+				return this.redirecionar(null, false);
+			}
+
+			InputStream inputStream = null;
+			ByteArrayOutputStream out = null;
+			try {
+				inputStream = part.getInputStream();
+				out = new ByteArrayOutputStream();
+
+				int read = 0;
+				final byte[] bytes = new byte[128];
+				while ((read = inputStream.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+
+				out.toByteArray();
+				Multimidia m = new Multimidia();
+				m.setContentType(part.getContentType());
+				m.setNome(fileName);
+				m.setContent(out.toByteArray());
+				m.setContainerMultimidia(this.instituicao
+						.getContainerMultimidia());
+				Long id = this.utilMultimidiaEJB.cadastrarMultimidia(m);
+				MVModeloCamposMultimidia campo = new MVModeloCamposMultimidia();
+				campo.setId(id);
+				campo.setNome(m.getNome());
+				campo.setDescricao(m.getDescricao());
+				this.campos.add(campo);
+
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				e.printStackTrace();
+			} finally {
+				if (out != null) {
+					out.close();
+				}
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			}
+		} else {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+		}
+		return this.redirecionar(null, false);
+	}
+
+	@Override
+	public String removerMidia(Long id) {
+		try {
+			this.utilMultimidiaEJB.excluirMultimidia(id.longValue());
+			MVModeloCamposMultimidia remover = null;
+			for (MVModeloCamposMultimidia c : this.campos) {
+				if (c.getId().equals(id)) {
+					remover = c;
+				}
+			}
+			this.campos.remove(remover);
+			return this.redirecionar(null, false);
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return this.redirecionar(null, false);
+		}
+	}
+
+	@Override
+	public String imagemDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return tipo.contains("image") ? "" : "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String videoDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return tipo.contains("video") ? "" : "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String midiaDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return !tipo.contains("image") && !tipo.contains("video") ? ""
+					: "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String redirecionar(String pagina, boolean redirect) {
+		return redirect ? pagina + "?faces-redirect=true" : pagina;
+	}
+
+	@Override
+	public String getContentType(Long id) {
+		try {
+			return this.utilMultimidiaEJB.getContentType(id.longValue());
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	// getters e setters comecam aqui
 	public String getNome() {
 		return this.nome;
 	}
@@ -151,35 +442,6 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		return altitude;
 	}
 
-	public List<SelectItem> getTipoPropriedadeLista() {
-
-		ResourceBundle bundle = getResourceBundle();
-		List<SelectItem> tiposPropriedade = new ArrayList<SelectItem>();
-
-		for (MVControleTiposDePropriedade t : MVControleTiposDePropriedade
-				.values()) {
-			tiposPropriedade.add(new SelectItem(t.toString(), bundle
-					.getString(t.toString())));
-		}
-
-		return tiposPropriedade;
-	}
-
-	public List<SelectItem> getProtecaoExistenteLista() {
-
-		ResourceBundle bundle = this.getResourceBundle();
-
-		List<SelectItem> opcoes = new ArrayList<SelectItem>();
-
-		for (MVControleTiposDeProtecaoExistente t : MVControleTiposDeProtecaoExistente
-				.values()) {
-			opcoes.add(new SelectItem(t.toString(), bundle.getString(t
-					.toString())));
-		}
-
-		return opcoes;
-	}
-
 	public void setAltitude(String altitude) {
 		this.altitude = altitude;
 	}
@@ -212,11 +474,12 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		this.pais = pais;
 	}
 
-	public String getProtecaoExistente() {
+	public Instituicao.TiposProtecaoExistente getProtecaoExistente() {
 		return protecaoExistente;
 	}
 
-	public void setProtecaoExistente(String protecaoExistente) {
+	public void setProtecaoExistente(
+			Instituicao.TiposProtecaoExistente protecaoExistente) {
 		this.protecaoExistente = protecaoExistente;
 	}
 
@@ -244,11 +507,11 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		this.telefone = pTelefone;
 	}
 
-	public String getTipoPropriedade() {
+	public Instituicao.TipoPropriedade getTipoPropriedade() {
 		return tipoPropriedade;
 	}
 
-	public void setTipoPropriedade(String tipoPropriedade) {
+	public void setTipoPropriedade(Instituicao.TipoPropriedade tipoPropriedade) {
 		this.tipoPropriedade = tipoPropriedade;
 	}
 
@@ -258,30 +521,6 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 
 	public void setLegislacao(String legislacao) {
 		this.legislacao = legislacao;
-	}
-
-	public boolean validarNome() {
-
-		if (this.nome == null || this.nome.equals("")) {
-			ResourceBundle bundle = this.getResourceBundle();
-			String args[] = { bundle.getString("nomeDoCampoNome") };
-			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
-					"validacaoNome");
-			return false;
-		} else if (!memoriaVirtualEJB
-				.verificarDisponibilidadeNomeInstituicao(this.nome)) {
-			MensagensDeErro.getErrorMessage("erroNomeJaCadastrado",
-					"validacaoNome");
-			return false;
-		}
-		return true;
-	}
-
-	public String cancelar() {
-
-		this.limpar();
-		return "/restrito/index.jsf";
-
 	}
 
 	public String getSinteseHistorica() {
@@ -308,14 +547,6 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		this.url = url;
 	}
 
-	public String getLegislacaoExistente() {
-		return legislacaoExistente;
-	}
-
-	public void setLegislacaoExistente(String legislacaoExistente) {
-		this.legislacaoExistente = legislacaoExistente;
-	}
-
 	public String getLegislacaoIncidente() {
 		return legislacaoIncidente;
 	}
@@ -324,42 +555,19 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		this.legislacaoIncidente = legislacaoIncidente;
 	}
 
-	@Override
-	public ResourceBundle getResourceBundle() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		return context.getApplication().getResourceBundle(context,
-				MVControleMemoriaVirtual.bundleName);
+	public MensagensMB getMensagens() {
+		return mensagens;
 	}
 
-	@Override
-	public String limpar() {
-		this.nome = "";
-		this.localidade = "";
-		this.endereco = "";
-		this.cidade = "";
-		this.estado = "";
-		this.pais = "";
-		this.cep = "";
-		this.telefone = "";
-		this.caixaPostal = "";
-		this.email = "";
-		this.url = "";
-		this.identificacaoProprietario = "";
-		this.administradorPropriedade = "";
-		this.latitude = "";
-		this.longitude = "";
-		this.altitude = "";
-		this.tipoPropriedade = "";
-		this.protecaoExistente = "";
-		this.legislacao = "";
-		this.sinteseHistorica = "";
-		this.legislacaoExistente = "";
-		this.legislacaoIncidente = "";
-		return null;
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
 	}
 
-	@Override
-	public boolean validar() {
-		return this.validarNome();
+	public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
 	}
 }

@@ -18,84 +18,56 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 @SequenceGenerator(name = "AUTORIA_ID", sequenceName = "AUTORIA_SEQ", allocationSize = 1)
 public class Autoria implements Serializable {
 
-	public enum TipoAutoria {
-		COAUTOR, ORGANIZADOR, AGENCIA, AUTOR, AUTOR_INSTITUCIONAL, COMPILADOR, COORDENADOR, DIRETOR, EDITOR, ENTIDADE_PRODUTORA, ENTREVISTADO, ESTUDIO, FABRICANTE, FIGURINISTA, FOTOGRAFO, ILUSTRADOR, PALESTRANTE, PREFACIADOR, TRADUTOR;
+	public static enum TipoAutoria {
+		coautor, organizador, agencia, autor, autorInstitucional, compilador, coordenador, diretor, editor, entidadeProdutora, entrevistado, estudio, fabricante, figurinista, fotografo, ilustrador, palestrante, prefaciador, tradutor;
 	}
 
 	private static final long serialVersionUID = -2352775687092568864L;
 
-	public Autoria() {
-
-	}
-
-	/**
-	 * @param tipoAutoria
-	 * @param autor
-	 * @param bemPatrimonial
-	 */
-	public Autoria(TipoAutoria tipoAutoria, Autor autor, BemPatrimonial bemPatrimonial) {
-		this.tipoAutoria = tipoAutoria;
-		this.autor = autor;
-		this.bemPatrimonial = bemPatrimonial;
-	}
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTORIA_ID")
 	private long id;
-	
-	private TipoAutoria tipoAutoria;
-	private Autor autor;
+
+	private TipoAutoria tipo = Autoria.TipoAutoria.autor;
+	private Autor autor = new Autor();
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "BEMPATRIMONIAL")
 	@XmlTransient
 	private BemPatrimonial bemPatrimonial;
 
-	public String getNomeAutor() {
-		return autor.getNome() + " " + autor.getSobrenome();
+	public Autoria() {
+
 	}
 
-	/**
-	 * @return the tipoAutoria
-	 */
-	public TipoAutoria getTipoAutoria() {
-		return tipoAutoria;
+	public long getId() {
+		return id;
 	}
 
-	/**
-	 * @param tipoAutoria
-	 *            the tipoAutoria to set
-	 */
-	public void setTipoAutoria(TipoAutoria tipoAutoria) {
-		this.tipoAutoria = tipoAutoria;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	/**
-	 * @return the autor
-	 */
+	public TipoAutoria getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoAutoria tipoAutoria) {
+		this.tipo = tipoAutoria;
+	}
+
 	public Autor getAutor() {
 		return autor;
 	}
 
-	/**
-	 * @param autor
-	 *            the autor to set
-	 */
 	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
 
-	/**
-	 * @return the bemPatrimonial
-	 */
 	public BemPatrimonial getBemPatrimonial() {
 		return bemPatrimonial;
 	}
 
-	/**
-	 * @param bemPatrimonial
-	 *            the bemPatrimonial to set
-	 */
 	public void setBemPatrimonial(BemPatrimonial bemPatrimonial) {
 		this.bemPatrimonial = bemPatrimonial;
 	}

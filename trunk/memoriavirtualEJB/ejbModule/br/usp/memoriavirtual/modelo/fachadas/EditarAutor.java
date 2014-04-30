@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.List;
@@ -12,11 +9,6 @@ import javax.persistence.Query;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
-
-/**
- * @author bigmac
- * 
- */
 
 @Stateless(mappedName = "EditarAutor")
 public class EditarAutor implements EditarAutorRemote {
@@ -31,9 +23,9 @@ public class EditarAutor implements EditarAutorRemote {
 
 		Query query;
 		query = this.entityManager
-				.createQuery("SELECT a FROM Autor a WHERE LOWER(a.nome) like LOWER(:busca) or "
-						+ "LOWER(a.sobrenome) like LOWER(:busca) or "
-						+ "LOWER(a.codinome) like LOWER(:busca) ORDER BY a.nome");
+				.createQuery("SELECT a FROM Autor a WHERE LOWER(a.nome) LIKE LOWER(:busca) OR "
+						+ "LOWER(a.sobrenome) LIKE LOWER(:busca) OR "
+						+ "LOWER(a.codinome) LIKE LOWER(:busca) ORDER BY a.nome");
 		query.setParameter("busca", "%" + strDeBusca + "%");
 		try {
 			lista = (List<Autor>) query.getResultList();
@@ -45,23 +37,20 @@ public class EditarAutor implements EditarAutorRemote {
 
 	@Override
 	public void editarAutor(Autor autor) throws ModeloException {
-		Autor autorAntigo;
-
-		autorAntigo = this.entityManager.find(Autor.class, autor.getId());
-
-		if (autorAntigo != null) {
-			autorAntigo.setAtividade(autor.getAtividade());
-			autorAntigo.setCodinome(autor.getCodinome());
-			autorAntigo.setNascimento(autor.getNascimento());
-			autorAntigo.setNome(autor.getNome());
-			autorAntigo.setObito(autor.getObito());
-			autorAntigo.setSobrenome(autor.getSobrenome());
-		}
 
 		try {
-			entityManager.flush();
+			entityManager.merge(autor);
 		} catch (Exception t) {
 			throw new ModeloException(t);
+		}
+	}
+
+	@Override
+	public Autor getAutor(Long id) throws ModeloException {
+		try {
+			return (Autor) entityManager.find(Autor.class, id);
+		} catch (Exception e) {
+			throw new ModeloException(e);
 		}
 	}
 }

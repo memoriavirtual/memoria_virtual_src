@@ -9,27 +9,16 @@ import javax.persistence.Query;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
-/**
- * EJB de Sessão sem estado responsável por implementar o caso de uso Realizar
- * Login.
- */
 @Stateless(mappedName = "RealizarLogin")
 public class RealizarLogin implements RealizarLoginRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	/**
-	 * Default constructor.
-	 */
 	public RealizarLogin() {
 
 	}
 
-	/**
-	 * @return resultado Resultado da validação do login
-	 * 
-	 */
 	public Usuario realizarLogin(String usuario, String senha)
 			throws ModeloException {
 

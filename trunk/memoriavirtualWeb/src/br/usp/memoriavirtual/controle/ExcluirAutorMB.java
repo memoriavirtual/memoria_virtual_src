@@ -1,138 +1,57 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirAutorRemote;
-import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-@SessionScoped
 @ManagedBean(name = "excluirAutorMB")
-public class ExcluirAutorMB implements Serializable {
-
+@SessionScoped
+public class ExcluirAutorMB extends EditarAutorMB implements Serializable {
 
 	private static final long serialVersionUID = -1769494097935536965L;
-	private String nome;
-	private List<Autor> autores = new ArrayList<Autor>();
+
 	@EJB
 	private ExcluirAutorRemote excluirAutorEJB;
 	@EJB
 	private EditarAutorRemote editarAutorEJB;
-	private Autor autor;
+
+	private MensagensMB mensagens;
 
 	public ExcluirAutorMB() {
-
-	}
-	
-
-	public void listarAutoresFocus(AjaxBehaviorEvent e) {
-		
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		this.autores.clear();
-		Autor autor = new Autor();
-		autor.setNome(bundle.getString("listarTodos"));
-		this.autores.add(0, autor);
-	}
-	
-	public void listarAutores(AjaxBehaviorEvent e) {
-		this.listarAutores();
+		super();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	public void listarAutores() {
-		
-		MensagensDeErro.getWarningMessage("excluirAutorAviso", "resultado");
-		
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
+	public String excluir() {
 		try {
-			this.autores = editarAutorEJB.listarAutores(this.nome);
-			Autor autor = new Autor();
-			autor.setNome(bundle.getString("listarTodos"));
-			this.autores.add(0, autor);
+			Autor autor = this.editarAutorEJB.getAutor(new Long(this.id));
+			this.excluirAutorEJB.excluirAutor(autor);
+			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			return this.redirecionar("/restrito/index.jsf", true);
 		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			m.printStackTrace();
-		}
-	}
-
-	public String selecionarAutor(Autor autor) {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		this.listarAutores();
-
-		if (autor.getNome().equals(bundle.getString("listarTodos"))){
-			
-			this.nome = "";
-			this.listarAutores();
-			this.autores.remove(0);
 			return null;
-			
 		}
-
-		this.autor = autor;
-		this.nome = this.autor.getNome();
-		this.autores.clear();
-		return null;
 	}
 
-	public String excluirAutor() {
-
-		try {
-			this.excluirAutorEJB.excluirAutor(this.autor);
-		} catch (ModeloException m) {
-			MensagensDeErro.getErrorMessage("excluirAutorErro", "resultado");
-			m.printStackTrace();
-		}
-
-		this.autor = null;
-		this.nome = null;
-		MensagensDeErro.getSucessMessage("excluirAutorSucesso", "resultado");
-		return null;
-
-	}
-	
-	public String cancelar(){
-		
-		this.autor = null;
-		this.autores.clear();
-		this.nome = null;
-		return "cancelar";
-		
+	public MensagensMB getMensagens() {
+		return mensagens;
 	}
 
-	public String getNome() {
-		return nome;
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<Autor> getAutores() {
-		return autores;
-	}
-
-	public void setAutores(List<Autor> autores) {
-		this.autores = autores;
-	}
-
 }

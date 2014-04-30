@@ -16,9 +16,8 @@ public class ExcluirAutor implements ExcluirAutorRemote {
 	@Override
 	public void excluirAutor(Autor autor) throws ModeloException {
 		try {
-
-			Autor autorManaged = entityManager.find(Autor.class, autor.getId());
-			entityManager.remove(autorManaged);
+			autor = entityManager.find(Autor.class, autor.getId());
+			entityManager.remove(autor);
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}

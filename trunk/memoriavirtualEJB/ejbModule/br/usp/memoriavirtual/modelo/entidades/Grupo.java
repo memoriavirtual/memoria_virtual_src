@@ -8,15 +8,15 @@ import javax.persistence.Id;
 @Entity
 public class Grupo implements Serializable {
 
-	/**
-	 * Serial Version UID
-	 */
+	public static enum Grupos {
+		gerente, revisor, catalogador;
+	}
+	
 	private static final long serialVersionUID = 9000706222936792545L;
 	@Id
 	private String id;
-	/**
-	 * Construtor padrão
-	 */
+
+	
 	public Grupo() {
 		super();
 	}

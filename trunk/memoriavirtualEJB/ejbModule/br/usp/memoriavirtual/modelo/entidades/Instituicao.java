@@ -11,12 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
-
 @Entity
 @SequenceGenerator(name = "INSTITUICAO_ID", sequenceName = "INSTITUICAO_SEQ", allocationSize = 1)
-public class Instituicao  implements Serializable {
+public class Instituicao implements Serializable {
+
+	public static enum TiposProtecaoExistente {
+		mundial, federalIndividual, federalConjunto, estadualIndividual, estadualConjunto, municipalIndividual, municipalConjunto, decreto, entorno, nenhuma
+	}
 	
-	
+	public static enum TipoPropriedade {
+		publica, privada, mista, outro
+	}
+
 	private static final long serialVersionUID = -5996690587044446292L;
 
 	@Id
@@ -38,443 +44,201 @@ public class Instituicao  implements Serializable {
 	private String latitude;
 	private String longitude;
 	private String altitude;
-	private String tipoPropriedade;
-	private String protecaoExistente;
+	private TipoPropriedade tipoPropriedade;
+	private TiposProtecaoExistente protecaoExistente;
 	private String legislacaoIncidente;
 	private String sinteseHistorica;
 	private Boolean validade;
-	
-	
-	@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-	private ContainerMultimidia containerMultimidia ;
-	/**
-	 * Construtor padrão
-	 */
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private ContainerMultimidia containerMultimidia;
+
 	public Instituicao() {
 		super();
 
 	}
 
-	/**
-	 * Construtor conveniente
-	 * 
-	 * @param Nome
-	 *            Nome da insituição
-	 * @param Local
-	 *            Localização
-	 * @param End
-	 *            Endereço
-	 * @param Cidade
-	 * @param Est
-	 *            Estado
-	 * @param Cep
-	 * @param Tel
-	 *            Telefone
-	 */
-	public Instituicao(String Nome, String Local, String End, String Cidade, String Est,String pais, String Cep, String Tel,
-			String caixaPostal, String email, String url,String identificacaoProprietario, String administradorPropriedade,
-			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente, String legislacao , String sintese) {
-		super();
-		this.nome = Nome;
-		this.localidade = Local;
-		this.endereco = End;
-		this.cidade = Cidade;
-		this.estado = Est;
-		this.pais = pais;
-		this.cep = Cep;
-		this.telefone = Tel;
-		this.caixaPostal = caixaPostal;
-		this.email=email;
-		this.url=url;
-		this.identificacaoProprietario=identificacaoProprietario;
-		this.administradorPropriedade = administradorPropriedade;
-		this.latitude=latitude;
-		this.longitude=longitude;
-		this.altitude=altitude;
-		this.tipoPropriedade=tipoPropriedade;
-		this.protecaoExistente=protecaoExistente;
-		this.legislacaoIncidente = legislacao;
-		this.sinteseHistorica = sintese;
-	}
-	/**
-	 * Cosntrutor com id.
-	 * 
-	 */
-	public Instituicao(long id, String Nome, String Local, String End, String Cidade, String Est, String pais,String Cep, String Tel,
-			String caixaPostal, String email, String url,String identificacaoProprietario, String administradorPropriedade,
-			String latitude, String longitude, String altitude,String tipoPropriedade, String protecaoExistente ,String legislacao , String sintese) {
-		super();
-		this.id = id;
-		this.nome = Nome;
-		this.localidade = Local;
-		this.endereco = End;
-		this.cidade = Cidade;
-		this.estado = Est;
-		this.pais = pais;
-		this.cep = Cep;
-		this.telefone = Tel;
-		this.caixaPostal = caixaPostal;
-		this.email=email;
-		this.url=url;
-		this.identificacaoProprietario=identificacaoProprietario;
-		this.administradorPropriedade = administradorPropriedade;
-		this.latitude=latitude;
-		this.longitude=longitude;
-		this.altitude=altitude;
-		this.tipoPropriedade=tipoPropriedade;
-		this.protecaoExistente=protecaoExistente;
-		this.legislacaoIncidente = legislacao;
-		this.sinteseHistorica = sintese;
-
-	}
-	
-	/**
-	 * @return the id
-	 */
 	public long getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the legislacaoIncidente
-	 */
-	public String getLegislacaoIncidente() {
-		return legislacaoIncidente;
-	}
-
-	/**
-	 * @param legislacaoIncidente the legislacaoIncidente to set
-	 */
-	public void setLegislacaoIncidente(String legislacaoIncidente) {
-		this.legislacaoIncidente = legislacaoIncidente;
-	}
-
-	/**
-	 * @return O nome da instituição
-	 */
 	public String getNome() {
 		return nome;
 	}
 
-	/**
-	 * @param nome
-	 *            Define o nome da instituição
-	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-
-	/**
-	 * @return O endereco da instituição
-	 */
-	public String getEndereco() {
-		return endereco;
-	}
-
-	/**
-	 * @param endereco
-	 *            Define o endereco da instituição
-	 */
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	/**
-	 * @return A cidade da instituição
-	 */
-	public String getCidade() {
-		return cidade;
-	}
-
-	/**
-	 * @param cidade
-	 *            Define a cidade da instituição
-	 */
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	/**
-	 * @return O estado(UF) da instituição
-	 */
-	public String getEstado() {
-		return estado;
-	}
-
-	/**
-	 * @param estado
-	 *            Define o estado(UF) da instituição
-	 */
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	/**
-	 * @return O cep da instituição
-	 */
-	public String getCep() {
-		return cep;
-	}
-
-	/**
-	 * @param cep
-	 *            Define o cep da instituição
-	 */
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	/**
-	 * @return O telefone da instituição
-	 */
-	public String getTelefone() {
-		return telefone;
-	}
-
-	/**
-	 * @param telefone
-	 *            Define o telefone da instituição
-	 */
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	/**
-	 * @return the validade
-	 */
-	public Boolean getValidade() {
-		return validade;
-	}
-
-	/**
-	 * @param validade
-	 *            the validade to set
-	 */
-	public void setValidade(Boolean validade) {
-		this.validade = validade;
-	}
-
-	
-
-	/**
-	 * @return the caixaPostal
-	 */
-	public String getCaixaPostal() {
-		return caixaPostal;
-	}
-
-	/**
-	 * @param caixaPostal the caixaPostal to set
-	 */
-	public void setCaixaPostal(String caixaPostal) {
-		this.caixaPostal = caixaPostal;
-	}
-
-	/**
-	 * @return the pais
-	 */
-	public String getPais() {
-		return pais;
-	}
-
-	/**
-	 * @param pais the pais to set
-	 */
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-	/**
-	 * @return the altitude
-	 */
-	public String getAltitude() {
-		return altitude;
-	}
-
-	/**
-	 * @param altitude the altitude to set
-	 */
-	public void setAltitude(String altitude) {
-		this.altitude = altitude;
-	}
-
-	/**
-	 * @return the tipoPropriedade
-	 */
-	public String getTipoPropriedade() {
-		return tipoPropriedade;
-	}
-
-	/**
-	 * @param tipoPropriedade the tipoPropriedade to set
-	 */
-	public void setTipoPropriedade(String tipoPropriedade) {
-		this.tipoPropriedade = tipoPropriedade;
-	}
-
-	/**
-	 * @return the protecaoExistente
-	 */
-	public String getProtecaoExistente() {
-		return protecaoExistente;
-	}
-
-	/**
-	 * @param protecaoExistente the protecaoExistente to set
-	 */
-	public void setProtecaoExistente(String protecaoExistente) {
-		this.protecaoExistente = protecaoExistente;
-	}
-
-
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url;
-	}
-
-	/**
-	 * @param url the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	/**
-	 * @return the identificacaoProprietario
-	 */
-	public String getIdentificacaoProprietario() {
-		return identificacaoProprietario;
-	}
-
-	/**
-	 * @param identificacaoProprietario the identificacaoProprietario to set
-	 */
-	public void setIdentificacaoProprietario(String identificacaoProprietario) {
-		this.identificacaoProprietario = identificacaoProprietario;
-	}
-
-	/**
-	 * @return the administradorPropriedade
-	 */
-	public String getAdministradorPropriedade() {
-		return administradorPropriedade;
-	}
-
-	/**
-	 * @param administradorPropriedade the administradorPropriedade to set
-	 */
-	public void setAdministradorPropriedade(String administradorPropriedade) {
-		this.administradorPropriedade = administradorPropriedade;
-	}
-
-	/**
-	 * @return the latitude
-	 */
-	public String getLatitude() {
-		return latitude;
-	}
-
-	/**
-	 * @param latitude the latitude to set
-	 */
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	/**
-	 * @return the longitude
-	 */
-	public String getLongitude() {
-		return longitude;
-	}
-
-	/**
-	 * @param longitude the longitude to set
-	 */
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	/**
-	 * @return the localidade
-	 */
 	public String getLocalidade() {
 		return localidade;
 	}
 
-	/**
-	 * @param localidade the localidade to set
-	 */
 	public void setLocalidade(String localidade) {
 		this.localidade = localidade;
 	}
 
-	/**
-	 * @return the legislacaoExistente
-	 */
-	public String getLegislacaoExistente() {
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getCaixaPostal() {
+		return caixaPostal;
+	}
+
+	public void setCaixaPostal(String caixaPostal) {
+		this.caixaPostal = caixaPostal;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getIdentificacaoProprietario() {
+		return identificacaoProprietario;
+	}
+
+	public void setIdentificacaoProprietario(String identificacaoProprietario) {
+		this.identificacaoProprietario = identificacaoProprietario;
+	}
+
+	public String getAdministradorPropriedade() {
+		return administradorPropriedade;
+	}
+
+	public void setAdministradorPropriedade(String administradorPropriedade) {
+		this.administradorPropriedade = administradorPropriedade;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getAltitude() {
+		return altitude;
+	}
+
+	public void setAltitude(String altitude) {
+		this.altitude = altitude;
+	}
+
+	public TipoPropriedade getTipoPropriedade() {
+		return tipoPropriedade;
+	}
+
+	public void setTipoPropriedade(TipoPropriedade tipoPropriedade) {
+		this.tipoPropriedade = tipoPropriedade;
+	}
+
+	public TiposProtecaoExistente getProtecaoExistente() {
+		return protecaoExistente;
+	}
+
+	public void setProtecaoExistente(TiposProtecaoExistente protecaoExistente) {
+		this.protecaoExistente = protecaoExistente;
+	}
+
+	public String getLegislacaoIncidente() {
 		return legislacaoIncidente;
 	}
 
-	/**
-	 * @param legislacaoExistente the legislacaoExistente to set
-	 */
-	public void setLegislacaoExistente(String legislacaoExistente) {
-		this.legislacaoIncidente = legislacaoExistente;
+	public void setLegislacaoIncidente(String legislacaoIncidente) {
+		this.legislacaoIncidente = legislacaoIncidente;
 	}
 
-	/**
-	 * @return the sinteseHistorica
-	 */
 	public String getSinteseHistorica() {
 		return sinteseHistorica;
 	}
 
-	/**
-	 * @param sinteseHistorica the sinteseHistorica to set
-	 */
 	public void setSinteseHistorica(String sinteseHistorica) {
 		this.sinteseHistorica = sinteseHistorica;
 	}
 
-	/**
-	 * @return the containerMultimidia
-	 */
+	public Boolean getValidade() {
+		return validade;
+	}
+
+	public void setValidade(Boolean validade) {
+		this.validade = validade;
+	}
+
 	public ContainerMultimidia getContainerMultimidia() {
 		return containerMultimidia;
 	}
 
-	/**
-	 * @param containerMultimidia the containerMultimidia to set
-	 */
 	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
 		this.containerMultimidia = containerMultimidia;
 	}
-
-	
-
-	
 }

@@ -6,371 +6,318 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Editar Instituicao</title>
-</head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+</h:head>
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-
-		<ui:define name="titulo">#{mensagens.editarInstituicaoTitle}</ui:define>
-
-
+		<ui:define name="titulo">#{mensagens.editarInstituicaoTitulo}</ui:define>
 
 		<ui:define name="conteudo">
-			<div class="formulario">
-
+			<div class="col-md-12">
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro"></h:message>
 				</div>
-
-				<div class="conteudoTitulo">#{mensagens.editarInstituicaoTitle}</div>
-				<div class="conteudoDescricao">#{mensagens.editarInstituicaoDescricao}</div>
-
-				<h:form method="post" prependId="false">
-					<fieldset>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoNome}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.nome}">
-								<f:ajax event="change" execute="@this" render="validacaoNome"
-									listener="#{editarInstituicaoMB.validateNome}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoLocalizacao}</h:outputLabel>
-							<h:inputText id="localizacao"
-								value="#{editarInstituicaoMB.localizacao}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoLocalizacao"
-									listener="#{editarInstituicaoMB.validateLocalizacao}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoLocalizacao" for="validacaoLocalizacao"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEndereco}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.endereco}">
-								<f:ajax event="blur" execute="@this" render="validacaoEndereco"
-									listener="#{editarInstituicaoMB.validateEndereco}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoEndereco" for="validacaoEndereco"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCidade}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.cidade}">
-								<f:ajax event="blur" execute="@this" render="validacaoCidade"
-									listener="#{editarInstituicaoMB.validateCidade}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoCidade" for="validacaoCidade"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoEstado}</h:outputLabel>
-							<h:selectOneMenu value="#{editarInstituicaoMB.estado}">
-								<f:selectItems value="#{editarInstituicaoMB.estadoSigla}" />
-							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoEstado" for="validacaoEstado"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoPais}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.pais}"></h:inputText>
-							<div></div>
-							<h:message id="validacaoPais" for="validacaoPais"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCaixaPostal}</h:outputLabel>
-							<h:inputText id="caixapostal"
-								value="#{editarInstituicaoMB.caixaPostal}">
-							</h:inputText>
-							<div></div>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoCep}</h:outputLabel>
-							<h:inputText id="cep" value="#{editarInstituicaoMB.cep}">
-								<f:ajax event="blur" execute="@this" render="validacaoCep"
-									listener="#{editarInstituicaoMB.validateCep}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoCep" for="validacaoCep"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.editarInstituicaoTelefone}</h:outputLabel>
-							<h:inputText id="telefone"
-								value="#{editarInstituicaoMB.telefone}">
-								<f:ajax event="blur" execute="@this" render="validacaoTelefone"
-									listener="#{editarInstituicaoMB.validateTelefone}" />
-							</h:inputText>
-							<div>(xx)xxxx-xxxx</div>
-							<h:message id="validacaoTelefone" for="validacaoTelefone"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoEmail}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.email}">
-								<f:ajax event="blur" execute="@this" render="validacaoEmail"
-									listener="#{editarInstituicaoMB.validateEmail}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoEmail" for="validacaoEmail"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoURL}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.URL}">
-								<f:ajax event="blur" execute="@this" render="validacaoURL"
-									listener="#{editarInstituicaoMB.validateURL}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoURL" for="validacaoURL"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoIdentificacaoProprietario}</h:outputLabel>
-							<h:inputText
-								value="#{editarInstituicaoMB.identificacaoProprietario}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoIdentificacaoProprietario"
-									listener="#{editarInstituicaoMB.validateIdentificacaoProprietario}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoIdentificacaoProprietario"
-								for="validacaoIdentificacaoProprietario" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoAdministradorPropriedade}</h:outputLabel>
-							<h:inputText
-								value="#{editarInstituicaoMB.administradorPropriedade}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoAdministradorPropriedade"
-									listener="#{editarInstituicaoMB.validateAdministradorPropriedade}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoAdministradorPropriedade"
-								for="validacaoAdministradorPropriedade" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoCoordenadasGeograficas}</h:outputLabel>
-						</div>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.latitude}">
-								<f:ajax event="blur" execute="@this" render="validacaoLatitude"
-									listener="#{editarInstituicaoMB.validateLatitude}" />
-							</h:inputText>
-							<div>-90.0000 a 90.0000</div>
-							<h:message id="validacaoLatitude" for="validacaoLatitude"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLongitude}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.longitude}">
-								<f:ajax event="blur" execute="@this" render="validacaoLongitude"
-									listener="#{editarInstituicaoMB.validateLongitude}" />
-							</h:inputText>
-							<div>-180.0000 a 180.0000</div>
-							<h:message id="validacaoLongitude" for="validacaoLongitude"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoAltitude}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.altitude}">
-								<f:ajax event="blur" execute="@this" render="validacaoAltitude"
-									listener="#{editarInstituicaoMB.validateAltitude}" />
-							</h:inputText>
-							<div>km (00.00...)</div>
-							<h:message id="validacaoAltitude" for="validacaoAltitude"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoTipoPropriedade}</h:outputLabel>
-							<h:selectOneMenu value="#{editarInstituicaoMB.tipoPropriedade}">
-								<f:selectItems
-									value="#{editarInstituicaoMB.tipoPropriedadeLista}" />
-								<f:ajax event="blur" execute="@this"
-									render="validacaoTipoPropriedade"
-									listener="#{editarInstituicaoMB.validateTipoPropriedade}" />
-							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoTipoPropriedade"
-								for="validacaoTipoPropriedade" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoProtecaoExistente}</h:outputLabel>
-							<h:selectOneMenu value="#{editarInstituicaoMB.protecaoExistente}">
-								<f:selectItems
-									value="#{editarInstituicaoMB.protecaoExistenteLista}" />
-								<f:ajax event="blur" execute="@this"
-									render="validacaoProtecaoExistente"
-									listener="#{editarInstituicaoMB.validateProtecaoExistente}" />
-							</h:selectOneMenu>
-							<div></div>
-							<h:message id="validacaoProtecaoExistente"
-								for="validacaoProtecaoExistente" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarInstituicaoLegislacao}</h:outputLabel>
-							<h:inputText value="#{editarInstituicaoMB.legislacao}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoLegislacao"
-									listener="#{editarInstituicaoMB.validateLegislacao}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoLegislacao" for="validacaoLegislacao"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels" style="float:left;  heigth: 250px">#{mensagens.cadastrarInstituicaoSinteseHistorica}</h:outputLabel>
-							<h:inputTextarea class="caixadetexto"
-								value="#{editarInstituicaoMB.sinteseHistorica}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoSinteseHistorica"
-									listener="#{editarInstituicaoMB.validateSinteseHistorica}" />
-							</h:inputTextarea>
-							<div></div>
-							<h:message id="validacaoSinteseHistorica"
-								for="validacaoSinteseHistorica" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-					</fieldset>
-				</h:form>
-				<h:form method="post" prependId="false"
-					enctype="multipart/form-data" id="midia">
-					<mv:containerExpansivo label="#{mensagens.cadastrarBemAudioVisual}">
-						<div class="midias">
-							<h:inputFile label="file" value="#{editarInstituicaoMB.part}" />
-							<h:commandButton id="submit"
-								action="#{editarInstituicaoMB.uploadFile}"
-								value="#{mensagens.uploadFile}" />
-
-							<h:dataTable var="midia" id="midiasTable"
-								value="#{editarInstituicaoMB.midias}">
-								<h:column>
-									<div>
-										<img class="thumb tabelaMidia" width="150"
-											style="display: #{editarInstituicaoMB.imageDisplay(midia)}"></img>
-										<video class="thumb tabelaMidia" type="#{midia.contentType}"
-											width="150"
-											style="display:#{editarInstituicaoMB.videoDisplay(midia)}"></video>
-										<h:graphicImage width="150" class="tabelaMidia"
-											library="imagens" name="media.png"
-											style="display:#{editarInstituicaoMB.midiaDisplay(midia)}" />
-									</div>
-									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaNome}</h:outputLabel>
-									<h:inputText value="#{midia.nome}" />
-									<br />
-									<h:outputLabel class="labels">#{mensagens.cadastrarBemMidiaDescricao}</h:outputLabel>
-									<h:inputText value="#{midia.descricao}" />
-									<h:commandButton
-										action="#{editarInstituicaoMB.removerMidia(midia)}"
-										value="#{mensagens.remover}"></h:commandButton>
-								</h:column>
-							</h:dataTable>
-						</div>
-					</mv:containerExpansivo>
-				</h:form>
-				<h:form method="post" prependId="false" id="botoes">
-					<div class="botao">
-						<h:commandButton id="botaoCadastrar"
-							value="#{mensagens.editarInstituicaoBotaoSalvar}"
-							action="#{editarInstituicaoMB.editarInstituicao}">
-						</h:commandButton>
-						<h:commandButton id="botaoCancelar"
-							value="#{mensagens.editarInstituicaoBotaoCancelar}"
-							action="#{editarInstituicaoMB.cancelar}">
-						</h:commandButton>
-						<h:commandButton id="botaoResetar"
-							value="#{mensagens.editarInstituicaoBotaoResetar}"
-							action="#{editarInstituicaoMB.resetCadastrarinstituicao}">
-						</h:commandButton>
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.editarInstituicaoTitulo}</h1>
+						<h2>#{mensagens.editarInstituicaoDescricao}</h2>
+						<div class="clearfix"></div>
 					</div>
-				</h:form>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h:outputLabel for="nome">
+												#{mensagens.nome}
+											</h:outputLabel>
+											<h:inputText value="#{editarInstituicaoMB.instituicao.nome}"
+												class="form-control" id="nome">
+											</h:inputText>
+											<h:message id="validacao-nome" for="validacao-nome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="cidade">
+												#{mensagens.cidade}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="cidade"
+												value="#{editarInstituicaoMB.instituicao.cidade}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="estado">
+												#{mensagens.estado}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="estado"
+												value="#{editarInstituicaoMB.instituicao.estado}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="pais">
+												#{mensagens.pais}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="pais"
+												value="#{editarInstituicaoMB.instituicao.pais}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="endereco">
+												#{mensagens.endereco}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="endereco"
+												value="#{editarInstituicaoMB.instituicao.endereco}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="localidade">
+												#{mensagens.localidade}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="localidade"
+												value="#{editarInstituicaoMB.instituicao.localidade}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="cep">
+												#{mensagens.cep}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="cep"
+												value="#{editarInstituicaoMB.instituicao.cep}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="caixa-postal">
+												#{mensagens.caixaPostal}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="caixa-postal"
+												value="#{editarInstituicaoMB.instituicao.caixaPostal}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="telefone">
+												#{mensagens.telefone}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="telefone"
+												value="#{editarInstituicaoMB.instituicao.telefone}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="email">
+												#{mensagens.email}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="email"
+												value="#{editarInstituicaoMB.instituicao.email}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="latitude">
+												#{mensagens.latitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="latitude"
+												value="#{editarInstituicaoMB.instituicao.latitude}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="longitude">
+												#{mensagens.longitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="longitude"
+												value="#{editarInstituicaoMB.instituicao.longitude}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="altitude">
+												#{mensagens.altitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="altitude"
+												value="#{editarInstituicaoMB.instituicao.altitude}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label"
+												for="identificacaoProprietario">
+												#{mensagens.identificacaoProprietario}
+											</h:outputLabel>
+											<h:inputText class="form-control"
+												id="identificacaoProprietario"
+												value="#{editarInstituicaoMB.instituicao.identificacaoProprietario}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group">
+											<h:outputLabel class="control-label"
+												for="administradorPropriedade">
+												#{mensagens.administradorPropriedade}
+											</h:outputLabel>
+											<h:inputText class="form-control"
+												id="administradorPropriedade"
+												value="#{editarInstituicaoMB.instituicao.administradorPropriedade}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="url">
+												#{mensagens.url}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="url"
+												value="#{editarInstituicaoMB.instituicao.url}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="tipo-propriedade">
+												#{mensagens.tipoPropriedade}
+											</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="tipo-propriedade"
+												value="#{editarInstituicaoMB.instituicao.tipoPropriedade}">
+												<f:selectItems
+													value="#{editarInstituicaoMB.tipoPropriedadeLista}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="protecao-existente">
+												#{mensagens.protecaoExistente}
+											</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="protecao-existente"
+												value="#{editarInstituicaoMB.instituicao.protecaoExistente}">
+												<f:selectItems
+													value="#{editarInstituicaoMB.protecaoExistenteLista}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="legislacao">
+												#{mensagens.legislacao}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="legislacao"
+												value="#{editarInstituicaoMB.instituicao.legislacaoIncidente}">
+											</h:inputTextarea>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="sintese-historica">
+												#{mensagens.sinteseHistorica}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="sintese-historica"
+												value="#{editarInstituicaoMB.instituicao.sinteseHistorica}">
+											</h:inputTextarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton id="cadastrar"
+											class="btn btn-success margin-5"
+											value="#{mensagens.salvar}"
+											action="#{editarInstituicaoMB.editarInstituicao}">
+										</h:commandButton>
+										<h:commandButton id="reset" class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}"
+											action="#{editarInstituicaoMB.limpar}">
+										</h:commandButton>
+										<h:commandButton id="cancelar"
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{editarInstituicaoMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
 			</div>
 			<script type="text/javascript">
-				$(document).ready(function(){
-					$('video.thumb').each(function(index, el){
-						var endereco = '/memoriavirtual/multimidia?bean=editarInstituicaoMB&amp;indice=' + index;
-						el = $(el);
-						el.attr('src', endereco);
+				$(document).ready(function() {
+					selecionarAbaInstituicao();
+
+					mostrarErro('#validacao-nome');
+
+					$('#protecao-existente').select2({
+						minimumResultsForSearch : -1
 					});
-					$('img.thumb').each(function(index, el){
-						var endereco = '/memoriavirtual/multimidia?bean=editarInstituicaoMB&amp;indice=' + index;
-						el = $(el);
-						el.attr('src', endereco);
-					});
-					$('[id*="midiasTable"] tr td div').click(function(e){
-						e.preventDefault();
-						var index = $('[id*="midiasTable"] tr td div').index($(this));
-						mostrarPlayerImagen('editarInstituicaoMB', #{editarInstituicaoMB.midias.size()-1}, index);
-					});
-					$('#fechar').click(function(e){
-						e.preventDefault();
-						var video = $('#cadastroNovoAutor video');
-						if(video.length > 0){
-							$('video')[0].pause();
-						}
-						$('#cadastroNovoAutor').addClass('cadastroNovoAutorDesativado');
-						$('.imageNoPlayer').remove();
+
+					$('#tipo-propriedade').select2({
+						minimumResultsForSearch : -1
 					});
 				});
 			</script>
-
 		</ui:define>
 	</ui:composition>
 </h:body>

@@ -2,16 +2,22 @@ package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -21,34 +27,26 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
 
-/**
- * EJB Sem estado e singleton que cont�m m�todos comuns ao sistema todo.
- */
 @Singleton(mappedName = "MemoriaVirtual")
 public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
+
 	@Resource(name = "mail/memoriavirtual")
 	private javax.mail.Session mailSession;
-	
-	/**
-	 * Default constructor.
-	 */
+
 	public MemoriaVirtual() {
 
 	}
 
-	
-	/*
-	 * Retorna o numero de bens que uma pagina de busca deve conter
-	 * 
-	 */
-	
-	public Integer getTamanhoPagina(){
+	public Integer getTamanhoPagina() {
 		Context context = null;
 		try {
 			context = new InitialContext();
@@ -63,17 +61,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		} catch (NamingException e) {
 			return tamanhoPaginaDefault;
 		}
-		if(propriedades.get("searchResultPerPage") == null) 
+		if (propriedades.get("searchResultPerPage") == null)
 			return tamanhoPaginaDefault;
-		
-		Integer result = new Integer((String) propriedades.get("searchResultPerPage"));
-		return  result;
+
+		Integer result = new Integer(
+				(String) propriedades.get("searchResultPerPage"));
+		return result;
 	}
-	
-	/**
-	 * Retorna o endereco do servidor.
-	 * 
-	 */
+
 	public String getURLServidor() throws ModeloException {
 
 		Context context = null;
@@ -117,11 +112,11 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	public boolean verificarDisponibilidadeIdUsuario(String id) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
-		query.setParameter("id", id);
-
 		try {
+			Query query = entityManager
+					.createQuery("SELECT u FROM Usuario u WHERE u.identificacao = :id");
+			query.setParameter("id", id);
+
 			query.getSingleResult();
 			return false;
 		} catch (NoResultException e) {
@@ -147,19 +142,28 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 	}
 
-	public boolean verificarDisponibilidadeEmail(String email) {
-
-		Query query = entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
-		query.setParameter("email", email);
+	public boolean verificarDisponibilidadeEmail(String email, Usuario usuario)
+			throws ModeloException {
 
 		try {
+			Query query;
+			if (usuario != null) {
+				query = entityManager
+						.createQuery("SELECT u FROM Usuario u WHERE u.email = :email AND u <> :usuario");
+				query.setParameter("email", email);
+				query.setParameter("usuario", usuario);
+			} else {
+				query = entityManager
+						.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+				query.setParameter("email", email);
+			}
 			query.getSingleResult();
 			return false;
 		} catch (NoResultException e) {
-
+			return true;
+		} catch (Exception e) {
+			throw new ModeloException(e);
 		}
-		return true;
 	}
 
 	public void enviarEmail(String destinatario, String assunto, String mensagem)
@@ -170,19 +174,20 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 				InternetAddress.parse(destinatario, false));
 		message.setSubject(assunto);
 		Date timeStamp = new Date();
-		message.setText(mensagem);
+
+		Multipart multipart = new MimeMultipart("alternative");
+
+		MimeBodyPart htmlPart = new MimeBodyPart();
+		htmlPart.setContent(mensagem, "text/html");
+
+		multipart.addBodyPart(htmlPart);
+		message.setContent(multipart);
 		message.setHeader("X-Mailer", "Memoria virtual mailer");
 		message.setSentDate(timeStamp);
 		// Enviar mensagem
 		Transport.send(message);
 	}
 
-	/**
-	 * Metodo para embaralhar a validade e email do caso de uso Enviar Convite
-	 * 
-	 * @param mensagemOriginal
-	 * @return
-	 */
 	public String embaralhar(String mensagemOriginal) {
 
 		String msgNova = "";
@@ -231,54 +236,41 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return msgNova;
 	}
 
-	/**
-	 * Método para sugestão de usuários retorna todos os usuários do banco
-	 * cujo nome contém o padrão
-	 * 
-	 * @param pnome
-	 *            String a ser comparada com os nomes
-	 * @return Lista de usuários
-	 * @throws ModeloException
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String pnome, Usuario usuario)
+	public List<Usuario> listarUsuarios(String busca, Usuario usuario)
 			throws ModeloException {
 
-		// Lista de usuarios a ser retornada
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		// Query reposavel pela busca no banco
-		Query query = null;
 
-		// Só busca se o nome não for nulo
-		if (!pnome.equals(null)) {
-
-			// query busca todos os usuarios ativos,
-			// cujo nome contém a string fornecida em ordem alfabética
-			query = this.entityManager
-					.createQuery("SELECT u FROM Usuario u "
-							+ "WHERE u.ativo = TRUE "
-							+ "AND LOWER(u.nomeCompleto) LIKE LOWER(:padrao) AND u.id <> :id "
-							+ "ORDER BY u.nomeCompleto");
-			query.setParameter("padrao", "%" + pnome + "%");
-			query.setParameter("id", usuario.getId());
+		if (busca == null) {
+			return usuarios;
 		}
+
 		try {
 
-			// tenta pegar a lista de resultados
-			usuarios = (List<Usuario>) query.getResultList();
+			Query query;
+			if (usuario.isAdministrador()) {
+				query = this.entityManager
+						.createQuery("SELECT u FROM Usuario u "
+								+ "WHERE u.ativo = TRUE "
+								+ "AND LOWER(u.nomeCompleto) LIKE LOWER(:padrao) AND u.id <> :id "
+								+ "ORDER BY u.nomeCompleto");
+				query.setParameter("padrao", "%" + busca + "%");
+				query.setParameter("id", usuario.getId());
+			} else {
+				Grupo grupo = new Grupo("GERENTE");
+				query = entityManager
+						.createQuery("SELECT b.usuario FROM Acesso a, Acesso b WHERE a.usuario = :usuario AND a.grupo = :grupo AND a.instituicao = b.instituicao AND a.ativo = true AND b.ativo = true AND LOWER(b.usuario.nomeCompleto) LIKE LOWER(:padrao) AND b.usuario <> :usuario ORDER BY b.usuario.nomeCompleto");
+				query.setParameter("usuario", usuario);
+				query.setParameter("grupo", grupo);
+				query.setParameter("padrao", "%" + busca + "%");
+			}
 
-			// Cria um usuario para a opcao de listar todos os usuários
-			Usuario opcaoListarTodos = new Usuario();
-			opcaoListarTodos.setNomeCompleto("Listar Todos");
-			opcaoListarTodos.setId("listartodos");
-			usuarios.add(0, opcaoListarTodos);
-
+			return (List<Usuario>) query.getResultList();
 		} catch (Exception e) {
-			// em caso de erro, joga uma exceção
 			throw new ModeloException(e);
 		}
-		return usuarios;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -298,6 +290,54 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 
 		return listaAcessos;
+	}
+
+	@Override
+	public Usuario getUsuario(String id) throws ModeloException {
+		try {
+			return (Usuario) entityManager.find(Usuario.class,
+					new Long(id).longValue());
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
+
+	@Override
+	public String getUrl(MVModeloMapeamentoUrl url,
+			Map<String, String> mapaParametros) throws ModeloException {
+		try {
+			String parametros = "?";
+
+			boolean primeiro = true;
+			Iterator<Entry<String, String>> it = mapaParametros.entrySet()
+					.iterator();
+			while (it.hasNext()) {
+				Map.Entry<String, String> par = (Map.Entry<String, String>) it
+						.next();
+
+				if (primeiro) {
+					parametros = parametros + par.getKey() + "="
+							+ par.getValue();
+					primeiro = false;
+				} else {
+					parametros = "&" + parametros + par.getKey() + "="
+							+ par.getValue();
+				}
+			}
+
+			return this.getURLServidor() + url.toString() + parametros;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
+	}
+
+	@Override
+	public Aprovacao getAprovacao(Long id) throws ModeloException {
+		try {
+			return entityManager.find(Aprovacao.class, id);
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
 	}
 
 }

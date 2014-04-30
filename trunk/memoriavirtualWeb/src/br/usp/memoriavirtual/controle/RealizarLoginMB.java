@@ -2,11 +2,11 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +18,15 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
+@ManagedBean(name = "realizarLoginMB")
+@RequestScoped
 public class RealizarLoginMB implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1005061522826383091L;
+
 	@EJB
 	private RealizarLoginRemote realizarLoginEJB;
+
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private String usuario = "";
@@ -36,15 +37,6 @@ public class RealizarLoginMB implements Serializable {
 		this.redirecionarUsuarioLogado();
 	}
 
-	/**
-	 * Verifica as informacões de usuário e senha na base de dados.
-	 * 
-	 * @return true se o usuário foi autenticado com sucesso ou false caso
-	 *         contrário.
-	 * @throws CloneNotSupportedException
-	 * @throws UnknownHostException
-	 * @throws SocketException
-	 */
 	public String autenticarUsuario() {
 		boolean autenticado = false;
 

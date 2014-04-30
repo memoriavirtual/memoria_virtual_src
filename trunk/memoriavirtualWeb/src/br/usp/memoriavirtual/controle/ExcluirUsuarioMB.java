@@ -2,457 +2,195 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.el.ELResolver;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
 
-import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fabricas.remoto.AuditoriaFabricaRemote;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
-import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.MVModeloAcao;
+import br.usp.memoriavirtual.utils.MVModeloEmailParser;
+import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
+import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
+import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
+import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
-public class ExcluirUsuarioMB implements Serializable {
+@ManagedBean(name = "excluirUsuarioMB")
+@SessionScoped
+public class ExcluirUsuarioMB extends EditarCadastroUsuarioMB implements
+		Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6957046653709643226L;
+
 	@EJB
 	private ExcluirUsuarioRemote excluirUsuarioEJB;
+
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-	@EJB
-	private AuditoriaFabricaRemote auditoriaFabricaEJB;
 
-	private String nome;
-	private int prazoValidade;
-	private String justificativa;
-	private String excluir;
-	private Usuario usuario;
-	private Usuario requerente;
-	private String semelhante;
-	private Usuario validador;
+	private MensagensMB mensagens;
 
-	private FacesContext context = FacesContext.getCurrentInstance();
-	private String bundleName = "mensagens";
-	private ResourceBundle bundle = context.getApplication().getResourceBundle(
-			context, bundleName);
-
-	private List<Usuario> usuarios = new ArrayList<Usuario>();
-	private List<Usuario> semelhantes = new ArrayList<Usuario>();
-	private List<String> nomeSemelhantes = new ArrayList<String>();
-	private List<Acesso> acessos;
-
-	private String aprovacao;
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public ExcluirUsuarioMB() {
+		super();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	public void setPrazoValidade(int prazoValidade) {
-		this.prazoValidade = prazoValidade;
-	}
-
-	public void setJustificativa(String justificativa) {
-		this.justificativa = justificativa;
-	}
-
-	public void setExcluir(String excluir) {
-		this.excluir = excluir;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public void setSemelhantes(List<Usuario> semelhantes) {
-		this.semelhantes = semelhantes;
-		List<String> aux = new ArrayList<String>();
-		for (Usuario u : semelhantes) {
-			aux.add(u.getNomeCompleto());
-		}
-		Collections.sort(aux);
-		setNomeSemelhantes(aux);
-	}
-
-	public void setSemelhante(String semelhante) {
-		this.semelhante = semelhante;
-	}
-
-	public void setNomeSemelhantes(List<String> nomeSemelhantes) {
-		this.nomeSemelhantes = nomeSemelhantes;
-	}
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public int getPrazoValidade() {
-		return this.prazoValidade;
-	}
-
-	public String getJustificativa() {
-		return this.justificativa;
-	}
-
-	public String getExcluir() {
-		return this.excluir;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
-	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public List<Usuario> getSemelhantes() {
-		return this.semelhantes;
-	}
-
-	public String getSemelhante() {
-		return this.semelhante;
-	}
-
-	public List<String> getNomeSemelhantes() {
-		return this.nomeSemelhantes;
-	}
-
-	public void listarUsuarios(AjaxBehaviorEvent event) {
-
-		this.listarUsuarios();
-
-	}
-
-	public void listarUsuariosFocus(AjaxBehaviorEvent e) {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (this.usuarios.isEmpty()) {
-			Usuario todos = new Usuario();
-			todos.setId(bundle.getString("listarTodos"));
-			todos.setNomeCompleto(bundle.getString("listarTodos"));
-			this.usuarios.add(0, todos);
-		}
-
-	}
-
-	public void listarUsuarios() {
-
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		this.requerente = (Usuario) request.getSession()
-				.getAttribute("usuario");
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		this.usuarios = new ArrayList<Usuario>();
-
-		try {
-			this.usuarios = this.excluirUsuarioEJB.listarUsuarios(this.nome,
-					this.requerente, this.requerente.isAdministrador());
-		} catch (ModeloException m) {
-			MensagensDeErro.getErrorMessage(
-					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
-			m.printStackTrace();
-		}
-
-		if (this.usuarios.isEmpty()) {
-			Usuario todos = new Usuario();
-			todos.setId(bundle.getString("listarTodos"));
-			todos.setNomeCompleto(bundle.getString("listarTodos"));
-			this.usuarios.add(0, todos);
-		}
-	}
-
-	public String selecionarUsuario(Usuario usuario) {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (usuario.getNomeCompleto().equals(bundle.getObject("listarTodos"))) {
-			this.nome = "";
-			this.listarUsuarios();
-			this.usuarios.remove(0);
-			return null;
-		}
-
-		this.usuario = usuario;
-		setNome(usuario.getNomeCompleto());
-		this.usuarios.clear();
-		this.listarAcessos();
-		return "etapa2";
-	}
-
+	@Override
 	public String selecionarUsuario() {
-		Usuario usuario = new Usuario();
 		try {
-			usuario = excluirUsuarioEJB.recuperarDadosUsuario(nome);
-		} catch (ModeloException e) {
-			MensagensDeErro.getErrorMessage(
-					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
-			e.printStackTrace();
-			return null;
-		}
-
-		return this.selecionarUsuario(usuario);
-
-	}
-
-	public void listarAcessos() {
-
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		this.requerente = (Usuario) request.getSession()
-				.getAttribute("usuario");
-
-		this.acessos = new ArrayList<Acesso>();
-
-		if (this.usuario == null) {
-			try {
-				this.usuario = this.excluirUsuarioEJB
-						.recuperarDadosUsuario(nome);
-			} catch (ModeloException e) {
-				MensagensDeErro.getErrorMessage(
-						"excluirUsuarioErroRecuperacao", "resultado");
-			}
-
-		}
-
-		if (!requerente.isAdministrador()) {
-			try {
-				this.acessos = excluirUsuarioEJB.listarAcessos(this.usuario);
-			} catch (ModeloException m) {
-				m.printStackTrace();
-			}
-		}
-
-	}
-
-	public List<SelectItem> getAprovadores() {
-
-		List<SelectItem> itens = new ArrayList<SelectItem>();
-		List<Usuario> aprovadores = new ArrayList<Usuario>();
-
-		try {
-			aprovadores = excluirUsuarioEJB.listarAprovadores(this.requerente,
-					this.usuario);
+			this.usuario = this.memoriaVirtualEJB.getUsuario(this.id);
+			return this.redirecionar("/restrito/excluirusuario.jsf", true);
 		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			m.printStackTrace();
-		}
-
-		for (Usuario u : aprovadores) {
-			itens.add(new SelectItem(u.getNomeCompleto(), u.getNomeCompleto()));
-		}
-
-		return itens;
-	}
-
-	public String marcarExclusao() {
-
-		Date dataValidade = new Date();
-		DateFormat formatoData = DateFormat.getDateInstance();
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.add(GregorianCalendar.HOUR, 24 * this.prazoValidade);
-		dataValidade = gc.getTime();
-
-		try {
-			this.validador = (Usuario) this.excluirUsuarioEJB
-					.recuperarDadosUsuario(getSemelhante());
-		} catch (Exception e) {
-			MensagensDeErro.getErrorMessage(
-					"excluiroUsuarioErroUsuarioNaoEncontrado", "resultado");
 			return null;
 		}
+	}
 
+	public String solicitarExclusao() {
+
+		if (this.validar()) {
+			try {
+				Calendar calendario = Calendar.getInstance();
+				calendario.setTime(new Date());
+				calendario.add(Calendar.DATE, 30);
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				String expiraEm = dateFormat.format(calendario.getTime());
+				Aprovacao aprovacao = new Aprovacao();
+				aprovacao.setAcao(MVModeloAcao.excluir_usuario);
+				Usuario analista = memoriaVirtualEJB.getUsuario(this.analista);
+				aprovacao.setAnalista(analista);
+				aprovacao.setExpiraEm(calendario.getTime());
+				aprovacao.setSolicitante(this.solicitante);
+				String dados = "id;"
+						+ new Long(this.usuario.getId()).toString()
+						+ ";justificativa;" + this.justificativa;
+
+				aprovacao.setDados(dados);
+
+				long id = this.excluirUsuarioEJB.solicitarExclusao(
+						this.usuario, aprovacao);
+
+				Map<String, String> tags = new HashMap<String, String>();
+
+				tags.put(MVModeloParametrosEmail.ANALISTA000.toString(),
+						analista.getNomeCompleto());
+				tags.put(MVModeloParametrosEmail.EXPIRACAO000.toString(),
+						expiraEm);
+				tags.put(MVModeloParametrosEmail.JUSTIFICATIVA000.toString(),
+						this.justificativa);
+				tags.put(MVModeloParametrosEmail.SOLICITANTE000.toString(),
+						this.solicitante.getNomeCompleto());
+				tags.put(MVModeloParametrosEmail.USUARIO000.toString(),
+						this.usuario.getNomeCompleto());
+
+				Map<String, String> parametros = new HashMap<String, String>();
+				parametros.put("id", new Long(id).toString());
+				String url = this.memoriaVirtualEJB.getUrl(
+						MVModeloMapeamentoUrl.excluirUsuario, parametros);
+
+				tags.put(MVModeloParametrosEmail.URL000.toString(), url);
+
+				String email = new MVModeloEmailParser().getMensagem(tags,
+						MVModeloEmailTemplates.excluirUsuario);
+				String assunto = this.traduzir("excluirUsuarioAssuntoEmail");
+				this.memoriaVirtualEJB.enviarEmail(analista.getEmail(),
+						assunto, email);
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				return this.redirecionar("/restrito/index.jsf", true);
+
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void carregarAprovacao(Aprovacao aprovacao) {
+		this.aprovacao = aprovacao;
 		try {
+			this.solicitante = this.aprovacao.getSolicitante();
+			String[] dados = aprovacao.getDados().split(";");
 
-			// registra a autoria do pedido de exclus�o
-			this.auditoriaFabricaEJB.auditarExcluirUsuario(this.requerente,
-					this.usuario.getId(), this.justificativa);
-			// registra um objeto Aprovacao
-			Long apr = this.excluirUsuarioEJB.registrarAprovacao(
-					this.validador, this.usuario.getId(), dataValidade);
-			// marca a institui��o a ser exclu�da para que a mesma n�o
-			// seja mais
-			// utilizada
-			this.excluirUsuarioEJB.marcarUsuarioExcluido(this.usuario, false,
-					false);
-
-			String ap = this.memoriaVirtualEJB.embaralhar(String.valueOf(apr));
-			String us = this.memoriaVirtualEJB.embaralhar(this.usuario.getId());
-
-			String acessos = "";
-
-			List<Acesso> acessosList = this.excluirUsuarioEJB
-					.listarAcessos(this.usuario);
-
-			if (this.usuario.isAdministrador()) {
-				acessos = bundle.getString("excluirUsuarioEmailAdministrador");
-			} else {
-				for (Acesso a : acessosList) {
-					acessos = acessos
-							+ bundle.getString("excluirUsuarioEmailGrupo")
-							+ ":"
-							+ a.getGrupo().getId()
-							+ "\n"
-							+ bundle.getString("excluirUsuarioEmailInstituicao")
-							+ ":" + a.getInstituicao().getNome() + "\n";
+			for (int i = 0; i < dados.length; ++i) {
+				if (dados[i].equals("id")) {
+					this.usuario = this.memoriaVirtualEJB
+							.getUsuario(dados[i + 1]);
+				}
+				if (dados[i].equals("justificativa")) {
+					this.justificativa = dados[i + 1];
 				}
 			}
-
-			this.memoriaVirtualEJB
-					.enviarEmail(
-							this.validador.getEmail(),
-							bundle.getString("excluirUsuarioEmailAssunto"),
-							bundle.getString("excluirUsuarioEmailMensagem")
-									+ "\n"
-									+ "\n"
-									+ bundle.getString("excluirUsuarioNome")
-									+ ": "
-									+ this.getNome()
-									+ "\n"
-									+ bundle.getString("excluirUsuarioEmailAcessos")
-									+ ":"
-									+ "\n"
-									+ acessos
-									+ "\n"
-									+ bundle.getString("excluirUsuarioJustificativa")
-									+ ": "
-									+ this.getJustificativa()
-									+ "\n"
-									+ bundle.getString("excluirUsuarioRequisitor")
-									+ ": "
-									+ this.requerente.getNomeCompleto()
-									+ "\n"
-									+ bundle.getString("excluirUsuarioPrazoValidade")
-									+ ": "
-									+ formatoData.format(dataValidade)
-									+ "\n\n"
-									+ bundle.getString("excluirUsuarioEmailMensagemURL")
-									+ "\n"
-									+ "\n"
-									+ memoriaVirtualEJB.getURLServidor()
-									+ "/excluirusuario?"
-									+ "aprovacao="
-									+ ap
-									+ "&usuario="
-									+ us
-									+ "\n\n"
-									+ bundle.getString("excluirUsuarioEmailMensagemFim")
-									+ "\n" + "\n");
-
-			// mensagem de sucesso
-			MensagensDeErro.getSucessMessage("excluirUsuarioEnviandoEmail",
-					"resultado");
 		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			e.printStackTrace();
 		}
-		return "true";
-
 	}
 
-	public String voltarEtapa1() {
-		return "etapa1";
-	}
-
-	public String cancelar() {
-		this.usuario = null;
-		this.nome = "";
-		this.justificativa = "";
-		this.semelhante = "";
-		return "cancelar";
-	}
-
-	public void validateJustificativa(AjaxBehaviorEvent e) {
-		this.validateJustificativa();
-	}
-
-	public boolean validateJustificativa() {
-		if (this.justificativa.equals("")) {
-			MensagensDeErro.getErrorMessage(
-					"excluirUsuarioErroJustificativaVazia",
-					"validacaoJustificativa");
-			return false;
-		} else if (this.justificativa.length() < 10) {
-			MensagensDeErro.getErrorMessage(
-					"excluiroUsuarioErroJustificativaCurta",
-					"validacaoJustificativa");
-			return false;
-		}
-		return true;
-	}
-
-	public List<SelectItem> getPrazos() {
-
-		List<SelectItem> prazos = new ArrayList<SelectItem>();
-
-		for (int i = 1; i <= 30; ++i) {
-			if (i == 1)
-				prazos.add(new SelectItem(i, String.valueOf(i) + " dia"));
-			else
-				prazos.add(new SelectItem(i, String.valueOf(i) + " dias"));
-		}
-
-		return prazos;
-
-	}
-
-	public List<Acesso> getAcessos() {
-		return acessos;
-	}
-
-	public void setAcessos(List<Acesso> acessos) {
-		this.acessos = acessos;
-	}
-
-	public String getAprovacao() {
-		return aprovacao;
-	}
-
-	public void setAprovacao(String aprovacao) {
-		this.aprovacao = aprovacao;
-	}
-
-	public String excluirUsuario() {
+	@Override
+	public String aprovar() {
 		try {
-			this.excluirUsuarioEJB.excluirUsuario(this.aprovacao);
-			MensagensDeErro.getSucessMessage("excluirUsuarioSucessoOperacao",
-					"resultado");
-			// this.auditoriaFabricaEJB.auditarAutorizarExcluirUsuario(autorAcao,
-			// atributoSignificativo, justificativa);
-		} catch (ModeloException m) {
-			m.printStackTrace();
-			MensagensDeErro.getErrorMessage("excluirUsuarioErroOperacao",
-					"resultado");
+			this.aprovacao.setStatus(MVModeloStatusAprovacao.aprovada);
+			this.aprovacao.setAlteradaEm(new Date());
+			String dados = "nome;" + this.usuario.getNomeCompleto()
+					+ ";justificativa;" + this.justificativa;
+			aprovacao.setDados(dados);
+			this.excluirUsuarioEJB.aprovar(this.usuario, this.aprovacao);
+			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			return this.redirecionar("/restrito/index.jsf", true);
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return null;
 		}
+	}
 
-		return null;
+	@Override
+	public String negar() {
+		try {
+			this.aprovacao.setStatus(MVModeloStatusAprovacao.negada);
+			this.aprovacao.setAlteradaEm(new Date());
+			String dados = "nome;" + this.usuario.getNomeCompleto()
+					+ ";justificativa;" + this.justificativa;
+			aprovacao.setDados(dados);
+			this.excluirUsuarioEJB.negar(this.usuario, this.aprovacao);
+			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			return this.redirecionar("/restrito/index.jsf", true);
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public boolean validar() {
+		return this.validarJustificativa();
+	}
+
+	public MensagensMB getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
 	}
 
 }

@@ -14,310 +14,305 @@
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-		<ui:define name="titulo">#{mensagens.cadastrarInstituicaoTitle}</ui:define>
+		<ui:define name="titulo">#{mensagens.cadastrarInstituicaoTitulo}</ui:define>
 
 		<ui:define name="conteudo">
 			<div class="col-md-12">
-
-				<div class="erroPrincipal">
-					<h:message id="resultado" for="resultado" infoClass="sucesso"
-						errorClass="erro"></h:message>
-				</div>
-
 				<div class="widget wgreen">
 					<div class="widget-head">
-						<h1>#{mensagens.cadastrarInstituicaoTitle}</h1>
+						<h1>#{mensagens.cadastrarInstituicaoTitulo}</h1>
 						<h2>#{mensagens.cadastrarInstituicaoDescricao}</h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget-content">
-						<h:form class="form-horizontal" role="form" method="post"
-							prependId="false">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
 
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoNome}</ui:define>
-								<ui:param name="for" value="nome"></ui:param>
-								<ui:define name="input">
-									<h:inputText value="#{cadastrarInstituicaoMB.nome}"
-										class="form-control" id="nome">
-									</h:inputText>
-								</ui:define>
-								<ui:define name="mensagem">
-									<h:message id="validacaoNome" for="validacaoNome"
-										infoClass="has-success" errorClass="has-error"
-										warnClass="has-warning">
-									</h:message>
-								</ui:define>
-								<ui:define name="icone">
-									<i class="fa fa-times font-size-20 hidden" id="icone-erro-nome" />
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoCidade}</ui:define>
-								<ui:param name="for" value="cidade"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="cidade"
-										value="#{cadastrarInstituicaoMB.cidade}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoLocalidade}</ui:define>
-								<ui:param name="for" value="localizacao"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="localidade"
-										value="#{cadastrarInstituicaoMB.localidade}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoEstado}</ui:define>
-								<ui:param name="for" value="estado"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="estado"
-										value="#{cadastrarInstituicaoMB.estado}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoPais}</ui:define>
-								<ui:param name="for" value="pais"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="pais"
-										value="#{cadastrarInstituicaoMB.pais}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoEndereco}</ui:define>
-								<ui:param name="for" value="endereco"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="endereco"
-										value="#{cadastrarInstituicaoMB.endereco}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoCEP}</ui:define>
-								<ui:param name="for" value="cep"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="cep"
-										value="#{cadastrarInstituicaoMB.cep}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoCaixaPostal}</ui:define>
-								<ui:param name="for" value="caixaPostal"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="caixaPostal"
-										value="#{cadastrarInstituicaoMB.caixaPostal}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoTelefone}</ui:define>
-								<ui:param name="for" value="telefone"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="telefone"
-										value="#{cadastrarInstituicaoMB.telefone}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoEmail}</ui:define>
-								<ui:param name="for" value="email"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="email"
-										value="#{cadastrarInstituicaoMB.email}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoURL}</ui:define>
-								<ui:param name="for" value="url"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="url"
-										value="#{cadastrarInstituicaoMB.url}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoIdentificacaoProprietario}</ui:define>
-								<ui:param name="for" value="identificacaoProprietario"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control"
-										id="identificacaoProprietario"
-										value="#{cadastrarInstituicaoMB.identificacaoProprietario}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoAdministradorPropriedade}</ui:define>
-								<ui:param name="for" value="administradorPropriedade"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="administradorPropriedade"
-										value="#{cadastrarInstituicaoMB.administradorPropriedade}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
-
-							<div class="form-group">
-								<h:outputLabel class="col-md-3 text-right control-label"
-									for="latitude">#{mensagens.cadastrarInstituicaoLatitude}</h:outputLabel>
-								<div class="col-md-8">
-									<h:inputText class="form-control" id="latitude"
-										value="#{cadastrarInstituicaoMB.latitude}">
-									</h:inputText>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h:outputLabel for="nome">
+												#{mensagens.nome}
+											</h:outputLabel>
+											<h:inputText value="#{cadastrarInstituicaoMB.nome}"
+												class="form-control" id="nome">
+											</h:inputText>
+											<h:message id="validacao-nome" for="validacao-nome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
 								</div>
-							</div>
 
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoLongitude}</ui:define>
-								<ui:param name="for" value="longitude"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="longitude"
-										value="#{cadastrarInstituicaoMB.longitude}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="cidade">
+												#{mensagens.cidade}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="cidade"
+												value="#{cadastrarInstituicaoMB.cidade}">
+											</h:inputText>
+										</div>
+									</div>
 
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoAltitude}</ui:define>
-								<ui:param name="for" value="altitude"></ui:param>
-								<ui:define name="input">
-									<h:inputText class="form-control" id="altitude"
-										value="#{cadastrarInstituicaoMB.altitude}">
-									</h:inputText>
-								</ui:define>
-							</ui:decorate>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="estado">
+												#{mensagens.estado}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="estado"
+												value="#{cadastrarInstituicaoMB.estado}">
+											</h:inputText>
+										</div>
+									</div>
 
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoTipoPropriedade}</ui:define>
-								<ui:param name="for" value="tipoPropriedade"></ui:param>
-								<ui:define name="input">
-									<h:selectOneMenu class="form-control com-select2"
-										id="tipoPropriedade"
-										value="#{cadastrarInstituicaoMB.tipoPropriedade}">
-										<f:selectItems
-											value="#{cadastrarInstituicaoMB.tipoPropriedadeLista}" />
-									</h:selectOneMenu>
-								</ui:define>
-							</ui:decorate>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="pais">
+												#{mensagens.pais}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="pais"
+												value="#{cadastrarInstituicaoMB.pais}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
 
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoProtecaoExistente}</ui:define>
-								<ui:param name="for" value="protecaoExistente"></ui:param>
-								<ui:define name="input">
-									<h:selectOneMenu class="form-control com-select2"
-										id="protecaoExistente"
-										value="#{cadastrarInstituicaoMB.protecaoExistente}">
-										<f:selectItems
-											value="#{cadastrarInstituicaoMB.protecaoExistenteLista}" />
-									</h:selectOneMenu>
-								</ui:define>
-							</ui:decorate>
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="endereco">
+												#{mensagens.endereco}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="endereco"
+												value="#{cadastrarInstituicaoMB.endereco}">
+											</h:inputText>
+										</div>
+									</div>
 
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoLegislacao}</ui:define>
-								<ui:param name="for" value="legislacao"></ui:param>
-								<ui:define name="input">
-									<h:inputTextarea class="form-control" id="legislacao"
-										value="#{cadastrarInstituicaoMB.legislacao}">
-									</h:inputTextarea>
-								</ui:define>
-							</ui:decorate>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="localidade">
+												#{mensagens.localidade}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="localidade"
+												value="#{cadastrarInstituicaoMB.localidade}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
 
-							<ui:decorate
-								template="/restrito/fragmentos/templates/input.xhtml">
-								<ui:define name="label">#{mensagens.cadastrarInstituicaoSinteseHistorica}</ui:define>
-								<ui:param name="for" value="sinteseHistorica"></ui:param>
-								<ui:define name="input">
-									<h:inputTextarea class="form-control" id="sinteseHistorica"
-										value="#{cadastrarInstituicaoMB.sinteseHistorica}">
-									</h:inputTextarea>
-								</ui:define>
-							</ui:decorate>
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="cep">
+												#{mensagens.cep}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="cep"
+												value="#{cadastrarInstituicaoMB.cep}">
+											</h:inputText>
+										</div>
+									</div>
 
-							<div class="text-right col-md-11 no-padding no-margin">
-								<h:commandButton class="btn btn-success margin-5"
-									value="#{mensagens.cadastrarInstituicaoBotaoCadastrar}"
-									action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
-								</h:commandButton>
-								<h:commandButton class="btn btn-primary margin-5"
-									value="#{mensagens.cadastrarInstituicaoBotaoResetar}"
-									action="#{cadastrarInstituicaoMB.limpar}">
-								</h:commandButton>
-								<h:commandButton
-									class="btn btn-danger margin-left-5 no-right-margin"
-									value="#{mensagens.cadastrarInstituicaoBotaoCancelar}"
-									action="#{cadastrarInstituicaoMB.cancelar}">
-								</h:commandButton>
-							</div>
-						</h:form>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="caixa-postal">
+												#{mensagens.caixaPostal}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="caixa-postal"
+												value="#{cadastrarInstituicaoMB.caixaPostal}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="telefone">
+												#{mensagens.telefone}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="telefone"
+												value="#{cadastrarInstituicaoMB.telefone}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="email">
+												#{mensagens.email}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="email"
+												value="#{cadastrarInstituicaoMB.email}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="latitude">
+												#{mensagens.latitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="latitude"
+												value="#{cadastrarInstituicaoMB.latitude}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="longitude">
+												#{mensagens.longitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="longitude"
+												value="#{cadastrarInstituicaoMB.longitude}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="altitude">
+												#{mensagens.altitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="altitude"
+												value="#{cadastrarInstituicaoMB.altitude}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label"
+												for="identificacaoProprietario">
+												#{mensagens.identificacaoProprietario}
+											</h:outputLabel>
+											<h:inputText class="form-control"
+												id="identificacaoProprietario"
+												value="#{cadastrarInstituicaoMB.identificacaoProprietario}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group">
+											<h:outputLabel class="control-label"
+												for="administradorPropriedade">
+												#{mensagens.administradorPropriedade}
+											</h:outputLabel>
+											<h:inputText class="form-control"
+												id="administradorPropriedade"
+												value="#{cadastrarInstituicaoMB.administradorPropriedade}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="url">
+												#{mensagens.url}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="url"
+												value="#{cadastrarInstituicaoMB.url}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="tipo-propriedade">
+												#{mensagens.tipoPropriedade}
+											</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="tipo-propriedade"
+												value="#{cadastrarInstituicaoMB.tipoPropriedade}">
+												<f:selectItems
+													value="#{cadastrarInstituicaoMB.tipoPropriedadeLista}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="protecao-existente">
+												#{mensagens.protecaoExistente}
+											</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="protecao-existente"
+												value="#{cadastrarInstituicaoMB.protecaoExistente}">
+												<f:selectItems
+													value="#{cadastrarInstituicaoMB.protecaoExistenteLista}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="legislacao">
+												#{mensagens.legislacao}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="legislacao"
+												value="#{cadastrarInstituicaoMB.legislacaoIncidente}">
+											</h:inputTextarea>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="sintese-historica">
+												#{mensagens.sinteseHistorica}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="sintese-historica"
+												value="#{cadastrarInstituicaoMB.sinteseHistorica}">
+											</h:inputTextarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton id="cadastrar"
+											class="btn btn-success margin-5"
+											value="#{mensagens.cadastrar}"
+											action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
+										</h:commandButton>
+										<h:commandButton id="reset" class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}"
+											action="#{cadastrarInstituicaoMB.limpar}">
+										</h:commandButton>
+										<h:commandButton id="cancelar"
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{cadastrarInstituicaoMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
 					</div>
 				</div>
-
-
-
 			</div>
 			<script type="text/javascript">
-				$(document).ready(
-						function() {
-							todosItens = $('.linkPrincipal');
-							todosItens.removeClass('itemAtual');
-							todosItens.addClass('outrosItens');
+				$(document).ready(function() {
+					selecionarAbaInstituicao();
 
-							segundoItemAnchor = $(
-									"#menuNavegacao li:nth-of-type(2)").find(
-									'.linkPrincipal');
-							segundoItemAnchor.addClass('itemAtual');
+					mostrarErro('#validacao-nome');
 
-							filhos = $('#menuNavegacao li:nth-of-type(2)')
-									.find('.linkSecundario').clone();
-							subMenu = $('#subMenu');
-							subMenu.html(filhos);
+					$('#protecao-existente').select2({
+						minimumResultsForSearch : -1
+					});
 
-							$('#protecaoExistente').select2({
-								minimumResultsForSearch : -1
-							});
-							$('#tipoPropriedade').select2({
-								minimumResultsForSearch : -1
-							});
-							
-							mostrarErro('#validacaoNome', '#icone-erro-nome');
-						});
-
+					$('#tipo-propriedade').select2({
+						minimumResultsForSearch : -1
+					});
+				});
 			</script>
 		</ui:define>
 	</ui:composition>

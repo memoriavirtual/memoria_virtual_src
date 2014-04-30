@@ -11,14 +11,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedProperty;
+import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.Part;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
@@ -33,46 +32,37 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.DisponibilidadeUsoP
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.HistoricoProcedencia;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Intervencao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Pesquisador;
-import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Producao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
-import br.usp.memoriavirtual.utils.AutoriaUtil;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
+import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.StringContainer;
 
 @ManagedBean(name = "cadastrarBemPatrimonialMB")
 @SessionScoped
 public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
-		Serializable, BeanComMidia {
+		Serializable, BeanMemoriaVirtual {
 
 	private static final long serialVersionUID = 4487901192049535944L;
 	protected BemPatrimonial bemPatrimonial = new BemPatrimonial();
 	protected String instituicao = "";
 	protected List<StringContainer> fontesInformacao = new ArrayList<StringContainer>();
-	protected List<Titulo> titulos = new ArrayList<Titulo>();
-	protected List<Autoria> autorias = new ArrayList<Autoria>();
-	protected Producao producao = new Producao();
-	protected DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao();
-	protected HistoricoProcedencia historicoProcedencia = new HistoricoProcedencia();
-	protected Diagnostico diagnostico = new Diagnostico();
-	protected List<Intervencao> intervencoes = new ArrayList<Intervencao>();
-	protected List<Pesquisador> pesquisadores = new ArrayList<Pesquisador>();
-	protected List<BemPatrimonial> bensRelacionados = new ArrayList<BemPatrimonial>();
 	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
-	protected List<Autor> autores = new ArrayList<Autor>();
-	protected Autor autor = new Autor();
-	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected String assuntos = "";
 	protected String descritores = "";
 	protected String busca = "";
 	protected List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
-	protected List<AutoriaUtil> autoriasUtil = new ArrayList<AutoriaUtil>();
+
+	@EJB
+	private UtilMultimidiaRemote utilMultimidiaEJB;
 
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaSimplesEJB;
@@ -81,7 +71,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
 
 	@EJB
-	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
+	private EditarInstituicaoRemote editarInstituicaoEJB;
 
 	@EJB
 	protected EditarAutorRemote editarAutorEJB;
@@ -89,78 +79,58 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 
-	//@ManagedProperty(value = "#{mensagensMB}")
-	//private MensagensMB mensagensMB;
 
-	private boolean especificarUso = true;
-	private String usoInput = "";
+	private MensagensMB mensagens;
+
 
 	public CadastrarBemPatrimonialMB() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	public String cadastrarBemPatrimonial() {
+	public String cadastrar() {
 
-		if (this.bemPatrimonial.getTituloPrincipal().length() > 0) {
+		if (this.validar()) {
 
 			try {
 
-				this.containerMultimidia.setMultimidia(this.midias);
-
-				for (Multimidia m : this.midias)
-					m.setContainerMultimidia(containerMultimidia);
-
-				this.bemPatrimonial.setContainerMultimidia(containerMultimidia);
-
-				this.autorias.clear();
-
-				for (AutoriaUtil a : this.autoriasUtil) {
-
-					Autoria autoria = new Autoria();
-					Autor autor = this.cadastrarBemPatrimonialEJB
-							.recuperarAutor(a.getAutor());
-					autoria.setAutor(autor);
-					autoria.setTipoAutoria(a.getTipo());
-					autoria.setBemPatrimonial(this.bemPatrimonial);
-					this.autorias.add(autoria);
-
-				}
-
-				this.bemPatrimonial.setAutorias(this.autorias);
-
 				List<Titulo> titulosClone = new ArrayList<Titulo>();
-				titulosClone.addAll(this.titulos);
+				titulosClone.addAll(this.bemPatrimonial.getTitulos());
 
 				for (Titulo t : titulosClone) {
 					if (t.getValor().length() <= 0)
-						this.titulos.remove(t);
+						this.bemPatrimonial.getTitulos().remove(t);
 				}
 
 				List<Intervencao> intervencoesClone = new ArrayList<Intervencao>();
-				intervencoesClone.addAll(this.intervencoes);
+				intervencoesClone.addAll(this.bemPatrimonial.getIntervencoes());
 
 				for (Intervencao i : intervencoesClone) {
 					if (i.getData().length() <= 0
 							&& i.getDescricao().length() <= 0
 							&& i.getResponsavel().length() <= 0)
-						this.intervencoes.remove(i);
+						this.bemPatrimonial.getIntervencoes().remove(i);
 				}
 
 				List<Pesquisador> pesquisadoresClone = new ArrayList<Pesquisador>();
-				pesquisadoresClone.addAll(this.pesquisadores);
+				pesquisadoresClone.addAll(this.bemPatrimonial
+						.getPesquisadores());
 
 				for (Pesquisador p : pesquisadoresClone) {
 					if (p.getDataPesquisa().length() <= 0
 							&& p.getNome().length() <= 0
 							&& p.getNotasPesquisador().length() <= 0)
-						this.pesquisadores.remove(p);
+						this.bemPatrimonial.getPesquisadores().remove(p);
 				}
 
-				Instituicao i = this.cadastrarBemPatrimonialEJB
-						.recuperarInstituicao(this.instituicao);
+				Instituicao i = this.editarInstituicaoEJB
+						.getInstituicao(new Long(this.instituicao).longValue());
 				this.bemPatrimonial.setInstituicao(i);
 
 				Set<Assunto> assuntosSet = new TreeSet<Assunto>();
-				String assuntosArray[] = assuntos.split(" ");
+				String assuntosArray[] = assuntos.split("\\s+");
 
 				for (String s : assuntosArray) {
 					Assunto a = new Assunto();
@@ -171,7 +141,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				this.bemPatrimonial.setAssuntos(assuntosSet);
 
 				Set<Descritor> descritoresSet = new TreeSet<Descritor>();
-				String descritoresArray[] = this.descritores.split(" ");
+				String descritoresArray[] = this.descritores.split("\\s+");
 
 				for (String s : descritoresArray) {
 					Descritor d = new Descritor();
@@ -188,103 +158,93 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 
 				this.bemPatrimonial.setFontesInformacao(fontesInformacaoLista);
 
-				this.containerMultimidia.setMultimidia(this.midias);
-				this.bemPatrimonial
-						.setContainerMultimidia(this.containerMultimidia);
-
-				this.bemPatrimonial
-						.setHistoricoProcedencia(historicoProcedencia);
-				this.bemPatrimonial.setTitulos(titulos);
-				this.bemPatrimonial.setAutorias(autorias);
-				this.bemPatrimonial.setProducao(producao);
-				this.bemPatrimonial
-						.setDisponibilidadeUsoProtecao(disponibilidadeUsoProtecao);
-				this.bemPatrimonial.setDiagnostico(diagnostico);
-				this.bemPatrimonial.setIntervencoes(intervencoes);
-				this.bemPatrimonial.setPesquisadores(pesquisadores);
-
-				this.bemPatrimonial.setBensRelacionados(bensRelacionados);
-
-				this.cadastrarBemPatrimonialEJB
+				this.bemPatrimonial = this.cadastrarBemPatrimonialEJB
 						.cadastrarBemPatrimonial(bemPatrimonial);
 
-				this.zerar();
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 
-				MensagensDeErro.getSucessMessage("cadastrarBemCadastrado",
-						"resultado");
-
+				return this
+						.redirecionar(
+								"/restrito/cadastrarbempatrimonialmultimidia.jsf",
+								true);
 			} catch (ModeloException e) {
-				MensagensDeErro
-						.getErrorMessage("cadastrarBemErro", "resultado");
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 				e.printStackTrace();
 				return null;
 			}
 		} else {
-			MensagensDeErro.getErrorMessage("cadastrarBemErro", "resultado");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
 			return null;
 		}
-
-		return null;
-
-	}
-
-	public void listarBemPatrimonial(AjaxBehaviorEvent event) {
-
 	}
 
 	public String cancelar() {
-		this.zerar();
+		this.limpar();
 		return "/restrito/index.jsf";
 	}
 
-	public String zerar() {
+	public String limpar() {
 		bemPatrimonial = new BemPatrimonial();
-		instituicao = "";
 		fontesInformacao.clear();
-		titulos.clear();
-		autorias.clear();
-		producao = new Producao();
-		disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao();
-		historicoProcedencia = new HistoricoProcedencia();
-		diagnostico = new Diagnostico();
-		intervencoes.clear();
-		pesquisadores.clear();
-		bensRelacionados.clear();
-		containerMultimidia = new ContainerMultimidia();
-		autores.clear();
-		autor = new Autor();
-		ApresentaMidias.clear();
 		midias.clear();
 		assuntos = "";
 		descritores = "";
 		busca = "";
 		bens.clear();
-		especificarUso = true;
-		usoInput = "";
+		super.limpar();
 		return null;
 	}
 
-	public void usoEspecificar(AjaxBehaviorEvent e) {
+	public String finalizar() {
+		if (validarNomeMultimidia()) {
+			for (MVModeloCamposMultimidia c : this.campos) {
+				try {
+					this.utilMultimidiaEJB.atualizarMidia(c.getId(),
+							c.getNome(), c.getDescricao());
+				} catch (ModeloException m) {
+					m.printStackTrace();
+					this.getMensagens().mensagemErro(
+							this.traduzir("erroInterno"));
+					return this.redirecionar(null, false);
+				}
+			}
+			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			this.limpar();
+			return redirecionar("/restrito/index.jsf", true);
+		}
+		return redirecionar(null, false);
+	}
 
+	public boolean validarNomeMultimidia() {
+		boolean valido = true;
+		for (MVModeloCamposMultimidia c : this.campos) {
+			if (c.getNome().equals(null) || c.getNome() == null
+					|| c.getNome().length() == 0) {
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				valido = false;
+			}
+		}
+		return valido;
 	}
 
 	public String adicionarTitulo() {
-		this.titulos.add(new Titulo());
+		this.bemPatrimonial.getTitulos().add(new Titulo());
 		return null;
 	}
 
 	public String removerTitulo(Titulo t) {
-		this.titulos.remove(t);
+		this.bemPatrimonial.getTitulos().remove(t);
 		return null;
 	}
 
 	public String adicionarAutoria() {
-		this.autoriasUtil.add(new AutoriaUtil());
+		this.bemPatrimonial.getAutorias().add(new Autoria());
 		return null;
 	}
 
-	public String removerAutoria(AutoriaUtil a) {
-		this.autoriasUtil.remove(a);
+	public String removerAutoria(Autoria a) {
+		this.bemPatrimonial.getAutorias().remove(a);
 		return null;
 	}
 
@@ -293,71 +253,81 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		List<SelectItem> tipos = new ArrayList<SelectItem>();
 
 		for (Titulo.TipoTitulo t : Titulo.TipoTitulo.values()) {
-			tipos.add(new SelectItem(t.toString(), t.toString()));
+			tipos.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
 
 		return tipos;
 	}
 
-	public List<SelectItem> getTiposBem() {
+	public List<SelectItem> getInstituicoes() {
 
-		List<SelectItem> tipos = new ArrayList<SelectItem>();
-
-		for (BemPatrimonial.TipoDoBemPatrimonial t : BemPatrimonial.TipoDoBemPatrimonial
-				.values()) {
-			tipos.add(new SelectItem(t.toString(), t.toString()));
-		}
-
-		return tipos;
-	}
-
-	public List<SelectItem> recuperarInstituicoes() {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		List<SelectItem> listaItens = new ArrayList<SelectItem>();
-		List<Instituicao> listaInstituicao = null;
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+		List<Instituicao> instituicoes = null;
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
-
-		if (usuario.isAdministrador()) {
-			try {
-				listaInstituicao = excluirInstituicaoEJB
-						.listarTodasInstituicoes();
-			} catch (ModeloException e) {
-				e.printStackTrace();
+		try {
+			if (usuario.isAdministrador()) {
+				instituicoes = editarInstituicaoEJB.listarInstituicoes(busca);
+			} else {
+				instituicoes = new ArrayList<Instituicao>();
+				List<Instituicao> parcial = null;
+				for (Acesso a : usuario.getAcessos()) {
+					parcial = editarInstituicaoEJB.listarInstituicoes(busca,
+							a.getGrupo(), usuario);
+					instituicoes.addAll(parcial);
+				}
 			}
-			for (Instituicao a : listaInstituicao) {
-				listaItens.add(new SelectItem(a.getId(), a.getNome()));
+			for (Instituicao i : instituicoes) {
+				opcoes.add(new SelectItem(new Long(i.getId()).toString(), i
+						.getNome()));
 			}
-
-		} else {
-			try {
-				listaInstituicao = this.cadastrarBemPatrimonialEJB
-						.listarInstituicao(usuario);
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
-			for (Instituicao a : listaInstituicao) {
-				listaItens.add(new SelectItem(a.getId(), a.getNome()));
-			}
+			return opcoes;
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return opcoes;
 		}
-		if (!(listaItens.size() == 1)) {
-			listaItens.add(
-					0,
-					new SelectItem(bundle
-							.getString("cadastrarBemInstituicaoSelecione")));
-		}
-		if (listaItens.size() == 0) {
-			MensagensDeErro.getErrorMessage("cadastrarBemInstituicaoErro",
-					"resultado");
-		}
-		return listaItens;
 	}
 
-	public List<SelectItem> listarAutores() {
+	public String adicionarBemRelacionado() {
+		try {
+			if (this.busca.length() > 0) {
+				BemPatrimonial bemPatrimonial = cadastrarBemPatrimonialEJB
+						.getBemPatrimonial(new Long(this.busca).longValue());
+
+				if (!this.bemPatrimonial.getBensRelacionados().contains(
+						bemPatrimonial)) {
+					this.bemPatrimonial.getBensRelacionados().add(
+							bemPatrimonial);
+				}
+				return null;
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			return null;
+		}
+	}
+
+	public String removerBemRelacionado(BemPatrimonial bemPatrimonial) {
+		try {
+
+			if (this.bemPatrimonial.getBensRelacionados().contains(
+					bemPatrimonial)) {
+				this.bemPatrimonial.getBensRelacionados()
+						.remove(bemPatrimonial);
+			}
+			return null;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			return null;
+		}
+	}
+
+	public List<SelectItem> getAutores() {
 		List<SelectItem> autores = new ArrayList<SelectItem>();
 		try {
 			List<Autor> autoresLista = this.editarAutorEJB.listarAutores("");
@@ -371,33 +341,24 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		return autores;
 	}
 
-	public void selecionarAutoria(Autor autor) {
-		this.autor = autor;
-	}
-
 	public List<SelectItem> getTiposAutoria() {
 
 		List<SelectItem> tipos = new ArrayList<SelectItem>();
 
 		for (Autoria.TipoAutoria t : Autoria.TipoAutoria.values()) {
-			tipos.add(new SelectItem(t, t.toString()));
+			tipos.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
 
 		return tipos;
 	}
 
-	public String adicionarIntervencoes() {
-		this.intervencoes.add(new Intervencao());
+	public String adicionarIntervencao() {
+		this.bemPatrimonial.getIntervencoes().add(new Intervencao());
 		return null;
 	}
 
 	public String removerIntervencao(Intervencao i) {
-		this.intervencoes.remove(i);
-		return null;
-	}
-
-	public String removerAutoria(Autoria a) {
-		this.autorias.remove(a);
+		this.bemPatrimonial.getIntervencoes().remove(i);
 		return null;
 	}
 
@@ -412,38 +373,27 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	}
 
 	public String adicionarPesquisador() {
-		this.pesquisadores.add(new Pesquisador());
+		this.bemPatrimonial.getPesquisadores().add(new Pesquisador());
 		return null;
 	}
 
 	public String removerPesquisador(Pesquisador p) {
-		this.pesquisadores.remove(p);
+		this.bemPatrimonial.getPesquisadores().remove(p);
 		return null;
 	}
 
-	public void listarBensPatrimoniais(AjaxBehaviorEvent e) {
-		this.bens.clear();
-		try {
-			this.bens = realizarBuscaSimplesEJB.buscar(this.busca, 1);
-		} catch (Exception ex) {
-
-		}
-	}
-
-	public String anexarBemPatrimonial(BemPatrimonial b) {
-		this.bensRelacionados.add(b);
-		return null;
-	}
-
-	public String removerBemAnexo(BemPatrimonial b) {
-		this.bensRelacionados.remove(b);
-		return null;
-	}
-
+	@Override
 	public String uploadFile() throws IOException {
+		if (this.part.getSize() > 0) {
 
-		if (part.getSize() > 0) {
-			String fileName = getFileName(part);
+			String fileName = this.getFileName(this.part);
+
+			if (fileName.equals(null) || fileName == null
+					|| fileName.length() <= 0) {
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroCampoNomeVazio"));
+				return this.redirecionar(null, false);
+			}
 
 			InputStream inputStream = null;
 			ByteArrayOutputStream out = null;
@@ -462,34 +412,137 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				m.setContentType(part.getContentType());
 				m.setNome(fileName);
 				m.setContent(out.toByteArray());
-				m.setContainerMultimidia(this.containerMultimidia);
-				this.midias.add(m);
-				this.ApresentaMidias.add(this.ApresentaMidias.size());
+				m.setContainerMultimidia(this.bemPatrimonial
+						.getContainerMultimidia());
+				Long id = this.utilMultimidiaEJB.cadastrarMultimidia(m);
+				MVModeloCamposMultimidia campo = new MVModeloCamposMultimidia();
+				campo.setId(id);
+				campo.setNome(m.getNome());
+				campo.setDescricao(m.getDescricao());
+				this.campos.add(campo);
 
-			} catch (IOException e) {
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 				e.printStackTrace();
 			} finally {
-				if (out != null)
+				if (out != null) {
 					out.close();
+				}
 				if (inputStream != null) {
 					inputStream.close();
 				}
 			}
 		} else {
-			MensagensDeErro.getErrorMessage("cadastrarBemErro", "resultado");
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 		}
-
-		return null;
+		return this.redirecionar(null, false);
 	}
 
-	private String getFileName(Part part) {
-		for (String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				return content.substring(content.indexOf('=') + 1).trim()
-						.replace("\"", "");
-			}
+	public List<SelectItem> getCondicoesTopograficas() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (BemPatrimonial.condicoesTopograficas t : BemPatrimonial.condicoesTopograficas
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
-		return null;
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getTiposExposicao() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (BemPatrimonial.Exposicao t : BemPatrimonial.Exposicao.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getEstadosPreservacao() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (Diagnostico.EstadoPreservacao t : Diagnostico.EstadoPreservacao
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getEstadosConservacao() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (Diagnostico.EstadoConservacao t : Diagnostico.EstadoConservacao
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getTiposDisponibilidade() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (DisponibilidadeUsoProtecao.Disponibilidade t : DisponibilidadeUsoProtecao.Disponibilidade
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getCondicoesAcesso() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (DisponibilidadeUsoProtecao.CondicoesAcesso t : DisponibilidadeUsoProtecao.CondicoesAcesso
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getCondicoesReproducao() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (DisponibilidadeUsoProtecao.CondicoesReproducao t : DisponibilidadeUsoProtecao.CondicoesReproducao
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getProtecoes() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (DisponibilidadeUsoProtecao.Protecao t : DisponibilidadeUsoProtecao.Protecao
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
+	}
+
+	public List<SelectItem> getTiposAquisicao() {
+
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
+
+		for (HistoricoProcedencia.TipoAquisicao t : HistoricoProcedencia.TipoAquisicao
+				.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
+		}
+
+		return opcoes;
 	}
 
 	// getters e setters
@@ -533,157 +586,6 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		this.fontesInformacao = fontesInformacao;
 	}
 
-	public List<Titulo> getTitulos() {
-		return titulos;
-	}
-
-	public void setTitulos(List<Titulo> titulos) {
-		this.titulos = titulos;
-	}
-
-	public List<Autoria> getAutorias() {
-		return autorias;
-	}
-
-	public void setAutorias(List<Autoria> autorias) {
-		this.autorias = autorias;
-	}
-
-	public Producao getProducao() {
-		return producao;
-	}
-
-	public void setProducao(Producao producao) {
-		this.producao = producao;
-	}
-
-	public DisponibilidadeUsoProtecao getDisponibilidadeUsoProtecao() {
-		return disponibilidadeUsoProtecao;
-	}
-
-	public void setDisponibilidadeUsoProtecao(
-			DisponibilidadeUsoProtecao disponibilidadeUsoProtecao) {
-		this.disponibilidadeUsoProtecao = disponibilidadeUsoProtecao;
-	}
-
-	public HistoricoProcedencia getHistoricoProcedencia() {
-		return historicoProcedencia;
-	}
-
-	public void setHistoricoProcedencia(
-			HistoricoProcedencia historicoProcedencia) {
-		this.historicoProcedencia = historicoProcedencia;
-	}
-
-	public Diagnostico getDiagnostico() {
-		return diagnostico;
-	}
-
-	public void setDiagnostico(Diagnostico diagnostico) {
-		this.diagnostico = diagnostico;
-	}
-
-	public List<Intervencao> getIntervencoes() {
-		return intervencoes;
-	}
-
-	public void setIntervencoes(List<Intervencao> intervencoes) {
-		this.intervencoes = intervencoes;
-	}
-
-	public List<Pesquisador> getPesquisadores() {
-		return pesquisadores;
-	}
-
-	public void setPesquisadores(List<Pesquisador> pesquisadores) {
-		this.pesquisadores = pesquisadores;
-	}
-
-	public List<BemPatrimonial> getBensRelacionados() {
-		return bensRelacionados;
-	}
-
-	public void setBensRelacionados(List<BemPatrimonial> bensRelacionados) {
-		this.bensRelacionados = bensRelacionados;
-	}
-
-	public boolean isEspecificarUso() {
-		return especificarUso;
-	}
-
-	public void setEspecificarUso(boolean especificarUso) {
-		this.especificarUso = especificarUso;
-	}
-
-	public String getUsoInput() {
-		return usoInput;
-	}
-
-	public void setUsoInput(String usoInput) {
-		this.usoInput = usoInput;
-	}
-
-	public List<Autor> getAutores() {
-		return autores;
-	}
-
-	public void setAutores(List<Autor> autores) {
-		this.autores = autores;
-	}
-
-	public Autor getAutor() {
-		return autor;
-	}
-
-	public void setAutor(Autor autor) {
-		this.autor = autor;
-	}
-
-	public List<Multimidia> recuperaColecaoMidia() {
-		return this.midias;
-	}
-
-	public void adicionarMidia(Multimidia midia) {
-		this.midias.add(midia);
-
-		if ((this.midias.size() % 4) == 1) {
-			Integer mult = this.midias.size() - 1;
-			this.ApresentaMidias.add(mult);
-
-		}
-	}
-
-	public String removeMidia(String midia) {
-		Integer i = new Integer(midia);
-		return this.removeMidia(i);
-	}
-
-	public String removeMidia(int index) {
-		this.midias.remove(index);
-
-		if (this.midias.size() % 4 == 0) {
-			this.ApresentaMidias.remove(this.ApresentaMidias.size() - 1);
-		}
-		return null;
-	}
-
-	public String removeMidia(Multimidia midia) {
-		this.midias.remove(midia);
-		return null;
-	}
-
-	public String removeMidia(Long midia) {
-		int index = midia.intValue();
-		return this.removeMidia(index);
-	}
-
-	public boolean isRenderCell(int index) {
-		if (this.midias.size() > index) {
-			return true;
-		}
-		return false;
-	}
-
 	public String getBusca() {
 		return busca;
 	}
@@ -700,11 +602,119 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		this.bens = bens;
 	}
 
-	public List<AutoriaUtil> getAutoriasUtil() {
-		return autoriasUtil;
+	@Override
+	public String removerMidia(Long id) {
+		try {
+			this.utilMultimidiaEJB.excluirMultimidia(id.longValue());
+			MVModeloCamposMultimidia remover = null;
+			for (MVModeloCamposMultimidia c : this.campos) {
+				if (c.getId().equals(id)) {
+					remover = c;
+				}
+			}
+			this.campos.remove(remover);
+			return this.redirecionar(null, false);
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return this.redirecionar(null, false);
+		}
 	}
 
-	public void setAutoriasUtil(List<AutoriaUtil> autoriasUtil) {
-		this.autoriasUtil = autoriasUtil;
+	@Override
+	public String imagemDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return tipo.contains("image") ? "" : "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String videoDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return tipo.contains("video") ? "" : "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String midiaDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return !tipo.contains("image") && !tipo.contains("video") ? ""
+					: "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String getContentType(Long id) {
+		try {
+			return this.utilMultimidiaEJB.getContentType(id.longValue());
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
+	}
+
+	@Override
+	public String redirecionar(String pagina, boolean redirect) {
+		return redirect ? pagina + "?faces-redirect=true" : pagina;
+	}
+
+	@Override
+	public boolean validar() {
+		return this.validarTituloPrincipal();
+	}
+
+	public boolean validarTituloPrincipal() {
+		if (this.bemPatrimonial.getTituloPrincipal() == null
+				|| this.bemPatrimonial.getTituloPrincipal().equals("")) {
+			String args[] = { this.traduzir("tituloPrincipal") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-titulo-principal");
+			return false;
+		}
+		return true;
+	}
+
+	public MensagensMB getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
 	}
 }

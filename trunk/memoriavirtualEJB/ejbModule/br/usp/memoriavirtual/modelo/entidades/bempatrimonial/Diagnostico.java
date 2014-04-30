@@ -4,71 +4,47 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
-
 @Embeddable
 public class Diagnostico implements Serializable {
 
-	/**
-	 * 
-	 */
+	public static enum EstadoConservacao {
+		bom, precario, emArruinamento, arruinado
+	}
+
+	public static enum EstadoPreservacao {
+		integro, poucoAlterado, muitoAlterado, descaracterizado
+	}
+
 	private static final long serialVersionUID = -2256116542157135280L;
-	
-	
+	private EstadoPreservacao estadoPreservacao = Diagnostico.EstadoPreservacao.integro;
+	private EstadoConservacao estadoConservacao = Diagnostico.EstadoConservacao.bom;
+	private String notasEstadoConservacao = "";
+
 	public Diagnostico() {
 		super();
 	}
-	
-	public Diagnostico(String estPreservacao,
-			String notaEstConservacao) {
-		super();
-		this.estPreservacao = estPreservacao;
-		this.estConservacao = "";
-		this.notaEstConservacao = notaEstConservacao;
+
+	public EstadoPreservacao getEstadoPreservacao() {
+		return estadoPreservacao;
 	}
-	public Diagnostico(String estPreservacao, String estConservacao,
-			String notaEstConservacao) {
-		super();
-		this.estPreservacao = estPreservacao;
-		this.estConservacao = estConservacao;
-		this.notaEstConservacao = notaEstConservacao;
+
+	public void setEstadoPreservacao(EstadoPreservacao estadoPreservacao) {
+		this.estadoPreservacao = estadoPreservacao;
 	}
-	private String estPreservacao;
-	private String estConservacao;
-	private String notaEstConservacao;
-	/**
-	 * @return the estPreservacao
-	 */
-	public String getEstPreservacao() {
-		return estPreservacao;
+
+	public EstadoConservacao getEstadoConservacao() {
+		return estadoConservacao;
 	}
-	/**
-	 * @param estPreservacao the estPreservacao to set
-	 */
-	public void setEstPreservacao(String estPreservacao) {
-		this.estPreservacao = estPreservacao;
+
+	public void setEstadoConservacao(EstadoConservacao estadoConservacao) {
+		this.estadoConservacao = estadoConservacao;
 	}
-	/**
-	 * @return the estConservacao
-	 */
-	public String getEstConservacao() {
-		return estConservacao;
+
+	public String getNotasEstadoConservacao() {
+		return notasEstadoConservacao;
 	}
-	/**
-	 * @param estConservacao the estConservacao to set
-	 */
-	public void setEstConservacao(String estConservacao) {
-		this.estConservacao = estConservacao;
-	}
-	/**
-	 * @return the notaEstConservacao
-	 */
-	public String getNotaEstConservacao() {
-		return notaEstConservacao;
-	}
-	/**
-	 * @param notaEstConservacao the notaEstConservacao to set
-	 */
-	public void setNotaEstConservacao(String notaEstConservacao) {
-		this.notaEstConservacao = notaEstConservacao;
+
+	public void setNotasEstadoConservacao(String notasEstadoConservacao) {
+		this.notasEstadoConservacao = notasEstadoConservacao;
 	}
 }

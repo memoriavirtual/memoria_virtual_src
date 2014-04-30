@@ -7,18 +7,9 @@
 <h:body>
 	<ui:composition>
 		<div class="form-group">
-			<h:outputLabel class="col-md-3 text-right control-label" for="#{for}">
-				<ui:insert name="label" />
-			</h:outputLabel>
-			<div class="col-md-8">
-				<ui:insert name="input" />
-			</div>
-			<div class="col-md-1">
-				<div class="hidden">
-					<ui:insert name="mensagem" />
-				</div>
-				<ui:insert name="icone" />
-			</div>
+			<ui:insert name="label" />
+			<ui:insert name="input" />
+			<ui:insert name="mensagem" />
 		</div>
 	</ui:composition>
 </h:body>

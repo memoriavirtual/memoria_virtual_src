@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.el.ELResolver;
@@ -12,23 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.ExcluirUsuarioMB;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
+import br.usp.memoriavirtual.utils.MVModeloAcao;
+import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
-/**
- * Servlet implementation class ExcluirUsuario
- */
 @WebServlet("/excluirusuario")
 public class ExcluirUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
+
 	@EJB
 	private ExcluirUsuarioRemote excluirUsuarioEJB;
+
 	@EJB
 	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
 
@@ -39,62 +43,37 @@ public class ExcluirUsuario extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		String aprovacaoId = request.getParameter("aprovacao");
-		aprovacaoId = this.memoriaVirtualEJB.embaralhar(aprovacaoId);
-
-		String usuarioNome = request.getParameter("usuario");
-		usuarioNome = this.memoriaVirtualEJB.embaralhar(usuarioNome);
-
-		Usuario usuario = (Usuario) request.getSession()
-				.getAttribute("usuario");
-
-		if (!this.editarCadastroUsuarioEJB.isAprovador(usuario, aprovacaoId)) {
-			response.sendRedirect("restrito/excluirusuario_etapa1.jsf");
-			return;
-		}
-
-		boolean expiracao = false;
-
 		try {
-			expiracao = editarCadastroUsuarioEJB
-					.isAprovacaoExpirada(aprovacaoId);
-		} catch (ModeloException m) {
-			m.printStackTrace();
-		}
+			String id = request.getParameter("id");
+			Aprovacao aprovacao = new Aprovacao();
 
-		if (expiracao) {
+			aprovacao = this.editarCadastroUsuarioEJB.getAprovacao(id);
 
-			try {
-				editarCadastroUsuarioEJB.removerAprovacao(aprovacaoId);
-
-				Usuario pendente = excluirUsuarioEJB
-						.recuperarDadosUsuario(usuarioNome);
-
-				excluirUsuarioEJB.marcarUsuarioExcluido(pendente, true, true);
-			} catch (ModeloException m) {
-				m.printStackTrace();
-			}
-
-		}
-
-		else {
-
-			// Inicializando Managed Bean
 			FacesContext facesContext = FacesUtil.getFacesContext(request,
 					response);
-			ELResolver resolver = facesContext.getApplication().getELResolver();
-			ExcluirUsuarioMB managedBean = (ExcluirUsuarioMB) resolver
-					.getValue(facesContext.getELContext(), null,
-							"excluirUsuarioMB");
+			Usuario usuario = (Usuario) facesContext.getExternalContext()
+					.getSessionMap().get("usuario");
 
-			managedBean.setAprovacao(aprovacaoId);
-			managedBean.setNome(usuarioNome);
-			managedBean.setUsuario(null);
-			managedBean.listarAcessos();
+			Date hoje = new Date();
+			if (hoje.after(aprovacao.getExpiraEm())) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			} else if (usuario.getId() != aprovacao.getAnalista().getId()
+					|| aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando
+					|| aprovacao.getAcao() != MVModeloAcao.excluir_usuario) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			} else {
+				ELResolver resolver = facesContext.getApplication()
+						.getELResolver();
+				ExcluirUsuarioMB managedBean = (ExcluirUsuarioMB) resolver
+						.getValue(facesContext.getELContext(), null,
+								"excluirUsuarioMB");
+				managedBean.carregarAprovacao(aprovacao);
+				response.sendRedirect("restrito/validarexclusaousuario.jsf");
 
-			response.sendRedirect("restrito/confirmarexclusao.jsf");
+			}
+		} catch (ModeloException m) {
+			m.printStackTrace();
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
-
 	}
-
 }

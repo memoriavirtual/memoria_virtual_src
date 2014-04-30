@@ -7,70 +7,68 @@ import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.ExcluirInstituicaoMB;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
-import br.usp.memoriavirtual.modelo.entidades.Instituicao;
-import br.usp.memoriavirtual.modelo.entidades.ItemAuditoria;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
+import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
-public class ExcluirInstituicao extends HttpServlet implements Serializable{
+@WebServlet("/excluirinstituicao")
+public class ExcluirInstituicao extends HttpServlet implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1529968971817032604L;
 	@EJB
 	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
-	public void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException, ServletException {
-		
-		//Objeto Aprovação sera utilizado para testar a data de validade do pedido de exclusão
-		Aprovacao aprovacao = new Aprovacao();
-		//Objeto ItemAuditoria sera utilizado para recuperar o requerente do pedido de exclusão
-		ItemAuditoria itemAuditoria = new ItemAuditoria();
-		Instituicao instituicao = new Instituicao();
-		Integer chaveEstrangeira = new Integer (req.getParameter("chaveEstrangeira"));
-		Integer auditoria = new Integer (req.getParameter("auditoria"));
-		System.out.println(auditoria);
-		
-		//Referência no managed bean
-		FacesContext facesContext = FacesUtil.getFacesContext(req, response);
-		ELResolver resolver = facesContext.getApplication().getELResolver();   
-		ExcluirInstituicaoMB  bean = (ExcluirInstituicaoMB) resolver.getValue(facesContext.getELContext(), null, "excluirInstituicaoMB"); 
-		
-		
-		//Recuperando Objetos Aprovação, Instituição, ItemAuditoria
-		
+
+	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
 		try {
-			 aprovacao = this.excluirInstituicaoEJB.recuperarAprovacao( (long)chaveEstrangeira);
-		} catch (ModeloException e) { 
+			FacesContext facesContext = FacesUtil.getFacesContext(request,
+					response);
+
+			Usuario usuario = (Usuario) facesContext.getExternalContext()
+					.getSessionMap().get("usuario");
+
+			String id = request.getParameter("id");
+
+			if (!id.equals(null) && id != null && id.length() > 0) {
+				Aprovacao aprovacao = memoriaVirtualEJB.getAprovacao(new Long(
+						id));
+				if ((aprovacao.getAnalista().getId() != usuario.getId())
+						&& (aprovacao.getStatus() == MVModeloStatusAprovacao.aguardando)) {
+					ELResolver resolver = facesContext.getApplication()
+							.getELResolver();
+					ExcluirInstituicaoMB bean = (ExcluirInstituicaoMB) resolver
+							.getValue(facesContext.getELContext(), null,
+									"excluirInstituicaoMB");
+
+					bean.setAprovacao(aprovacao);
+					bean.carregar();
+					response.sendRedirect("restrito/validarexclusaoinstituicao.jsf");
+				} else {
+					System.out.println(aprovacao.getAnalista().getId() + " "
+							+ usuario.getId());
+					response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				}
+			} else {
+				System.out.println(id);
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
-		
-		try {
-			itemAuditoria = this.excluirInstituicaoEJB.recuperarItemAuditoria((long)auditoria);
-		} catch (ModeloException e) {
-			e.printStackTrace();
-		}
-		try {
-			instituicao = this.excluirInstituicaoEJB.recuperarInstituicaoFalse(Long.parseLong(aprovacao.getChaveEstrangeira()));
-		} catch (ModeloException e) {
-			e.printStackTrace();
-			return;
-		}
-		//setando valores no ManegedBean
-		bean.setInstituicao(instituicao);
-		bean.setItemAuditoria(itemAuditoria);
-		bean.setAprovacao(aprovacao);
-		bean.setRequisitor(itemAuditoria.getAutorAcao());
-		bean.setJustificativa(itemAuditoria.getNotas());
-		bean.listarGerentes(false);	
-		response.sendRedirect("restrito/validarExclusao.jsf");
-		
 	}
 }

@@ -1,359 +1,274 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.el.ELResolver;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ComponentSystemEvent;
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroProprioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
-public class EditarCadastroProprioMB implements Serializable {
+@ManagedBean
+@ViewScoped
+public class EditarCadastroProprioMB implements Serializable,
+		BeanMemoriaVirtual {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8062688859796560352L;
+
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
+
 	@EJB
 	private EditarCadastroProprioRemote editarCadastroProprioEJB;
+
+	@EJB
+	private RealizarLoginRemote realizarLoginEJB;
+
 	private Usuario usuario;
-	private String novoEmail;
-	private String novoNomeCompleto;
-	private String novoTelefone;
-	private String novaSenha;
-	private String confirmacaoNovaSenha;
-	private String mudaSenha;
-	private String habilitaAlteracao;
-	private String senhaConfirmacao;
-	private String id;
-	private String antigaSenha;
+	private String senha = "";
+	private String novaSenha = "";
+	private String confirmarSenha = "";
+	private boolean permissao = true;
+	private boolean alterarSenha = false;
+	private MensagensMB mensagens;
 
 	public EditarCadastroProprioMB() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
+		this.usuario = (Usuario) facesContext.getExternalContext()
+				.getSessionMap().get("usuario");
 	}
-	
-	/*Executa toda vez que a pagina é renderizada*/
-	public void inicializa(ComponentSystemEvent event){
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		if(request.getMethod().matches("GET")){
-			this.usuario = (Usuario) request.getSession().getAttribute("usuario");
-			setId(this.usuario.getId());
+
+	public String editarCadastroProprio() {
+		if (this.validar() && !this.permissao) {
 			try {
-				this.usuario = this.editarCadastroProprioEJB
-						.recuperarDadosUsuario(getId());
-				setAntigaSenha(this.usuario.getSenha());
-			} catch (ModeloException e) {
+				this.usuario.setSenha(this.novaSenha);
+				this.editarCadastroProprioEJB.editar(this.usuario);
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+
+				HttpServletRequest request = (HttpServletRequest) FacesContext
+						.getCurrentInstance().getExternalContext().getRequest();
+				request.getSession().setAttribute("usuario",
+						this.usuario.clone());
+				this.limpar();
+				return this.redirecionar("/restrito/index.jsf", true);
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 				e.printStackTrace();
-			} catch (NullPointerException e) {
-				e.printStackTrace();
+				return null;
 			}
-			setNovoNomeCompleto(this.usuario.getNomeCompleto());
-			setNovoEmail(this.usuario.getEmail());
-			setNovoTelefone(this.usuario.getTelefone());
-			setHabilitaAlteracao("true");
-			setMudaSenha("true");
-		}		
-	}
-
-	@PostConstruct
-	public void carregarDados() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		this.usuario = (Usuario) request.getSession().getAttribute("usuario");
-		setId(this.usuario.getId());
-		try {
-			this.usuario = this.editarCadastroProprioEJB
-					.recuperarDadosUsuario(getId());
-			setAntigaSenha(this.usuario.getSenha());
-		} catch (ModeloException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+		} else if (this.permissao) {
+			this.getMensagens().mensagemErro(this.traduzir("erroLogin"));
+			return null;
 		}
-		setNovoNomeCompleto(this.usuario.getNomeCompleto());
-		setNovoEmail(this.usuario.getEmail());
-		setNovoTelefone(this.usuario.getTelefone());
-		setHabilitaAlteracao("true");
-		setMudaSenha("true");
-	}
-
-	public String descartar() {
-		carregarDados();
 		return null;
 	}
 
-	public void setAntigaSenha(String antigaSenha) {
-		this.antigaSenha = antigaSenha;
+	public boolean validarNome() {
+		if (this.usuario.getNomeCompleto() == null
+				|| this.usuario.getNomeCompleto().equals("")) {
+			String args[] = { this.traduzir("nome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-nome");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
+		}
+		return true;
 	}
 
-	public String getAntigaSenha() {
-		return this.antigaSenha;
+	public boolean validarEmail() {
+
+		try {
+			if (this.usuario.getEmail() == null
+					|| this.usuario.getEmail().equals("")) {
+				String args[] = { this.traduzir("email") };
+				MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+						"validacao-email");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			} else if (!ValidacoesDeCampos.validarFormatoEmail(this.usuario
+					.getEmail())) {
+				MensagensDeErro.getErrorMessage("erroEmailInvalido",
+						"validacao-email");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(
+					this.usuario.getEmail(), this.usuario)) {
+				MensagensDeErro.getErrorMessage("erroEmailIndisponivel",
+						"validacao-email");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public boolean validarSenha() {
+		if (this.alterarSenha) {
+			if (this.novaSenha == null || this.novaSenha.equals("")) {
+				String args[] = { this.traduzir("senha") };
+				MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+						"validacao-senha");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			} else if (this.novaSenha.length() < 6) {
+				MensagensDeErro.getErrorMessage("erroComprimentoSenha",
+						"validacao-senha");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			} else if (!this.novaSenha.equals(this.confirmarSenha)) {
+				MensagensDeErro.getErrorMessage("erroConfirmacaoSenha",
+						"validacao-senha");
+				MensagensDeErro.getErrorMessage("erroConfirmacaoSenha",
+						"validacao-confirmacao-senha");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			}
+		} else {
+			return true;
+		}
+		return true;
 	}
 
-	public String getId() {
-		return this.id;
+	public String autenticar() {
+		try {
+			Usuario usuario = this.realizarLoginEJB.realizarLogin(new Long(
+					this.usuario.getId()).toString(), this.senha);
+			if (usuario != null) {
+				this.permissao = false;
+				return null;
+			} else {
+				this.getMensagens().mensagemErro(this.traduzir("erroLogin"));
+				return null;
+			}
+		} catch (NoResultException n) {
+			this.getMensagens().mensagemErro(this.traduzir("erroLogin"));
+			n.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	public void setNovoEmail(String novoEmail) {
-		this.novoEmail = novoEmail;
+	@Override
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
 	}
 
-	public void setNovoNomeCompleto(String novoNomeCompleto) {
-		this.novoNomeCompleto = novoNomeCompleto;
+	@Override
+	public String redirecionar(String pagina, boolean redirect) {
+		return redirect ? pagina + "?faces-redirect=true" : pagina;
 	}
 
-	public void setNovoTelefone(String novoTelefone) {
-		this.novoTelefone = novoTelefone;
+	@Override
+	public boolean validar() {
+		boolean a, b, c;
+
+		a = this.validarNome();
+		b = this.validarEmail();
+		c = this.validarSenha();
+
+		return (a && b && c);
+	}
+
+	@Override
+	public String cancelar() {
+		this.limpar();
+		return this.redirecionar("/restrito/index.jsf", true);
+	}
+
+	public void limpar() {
+		this.permissao = true;
+		this.usuario = new Usuario();
+		this.senha = "";
+		this.novaSenha = "";
+		this.confirmarSenha = "";
+	}
+
+	// getters e setters
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getNovaSenha() {
+		return novaSenha;
 	}
 
 	public void setNovaSenha(String novaSenha) {
 		this.novaSenha = novaSenha;
 	}
 
-	public void setConfirmacaoNovaSenha(String confirmacaoNovaSenha) {
-		this.confirmacaoNovaSenha = confirmacaoNovaSenha;
+	public MensagensMB getMensagens() {
+		return mensagens;
 	}
 
-	public String getNovoNomeCompleto() {
-		return this.novoNomeCompleto;
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
 	}
 
-	public String getNovoTelefone() {
-		return this.novoTelefone;
+	public boolean isPermissao() {
+		return permissao;
 	}
 
-	public String getNovoEmail() {
-		return this.novoEmail;
+	public void setPermissao(boolean permissao) {
+		this.permissao = permissao;
 	}
 
-	public String getNovaSenha() {
-		return this.novaSenha;
+	public boolean isAlterarSenha() {
+		return alterarSenha;
 	}
 
-	public String getConfirmacaoNovaSenha() {
-		return this.confirmacaoNovaSenha;
+	public void setAlterarSenha(boolean alterarSenha) {
+		this.alterarSenha = alterarSenha;
 	}
 
-	public void setMudaSenha(String mudaSenha) {
-		this.mudaSenha = mudaSenha;
+	public String getConfirmarSenha() {
+		return confirmarSenha;
 	}
 
-	public String getMudaSenha() {
-		return this.mudaSenha;
-	}
-
-	public void setHabilitaAlteracao(String habilitaAlteracao) {
-		this.habilitaAlteracao = habilitaAlteracao;
-	}
-
-	public String getHabilitaAlteracao() {
-		return this.habilitaAlteracao;
-	}
-
-	public void setSenhaConfirmacao(String senhaConfirmacao) {
-		this.senhaConfirmacao = senhaConfirmacao;
-	}
-
-	public String getSenhaConfirmacao() {
-		return this.senhaConfirmacao;
-	}
-
-	public String editarCadastroProprio() {
-		Boolean erro = false;
-		if (this.mudaSenha.matches("false")) {
-			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
-					|| this.novoTelefone.matches("")
-					|| this.novaSenha.matches("")
-					|| this.confirmacaoNovaSenha.matches("")) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioFaltaCampos", "resultado");
-				erro = true;
-			}
-			if (!this.novaSenha.matches(this.confirmacaoNovaSenha)) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioSenhasDiferentes", "resultado");
-				erro = true;
-			}
-			if (this.novaSenha.length() < 6) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioFormatoSenha", "resultado");
-				erro = true;
-			}
-		} else {
-			if (this.novoEmail.matches("") || this.novoNomeCompleto.matches("")
-					|| this.novoTelefone.matches("")) {
-				MensagensDeErro.getErrorMessage(
-						"editarCadastroProprioFaltaCampos", "resultado");
-				erro = true;
-			}
-		}
-		if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioFormatoEmail", "resultado");
-			erro = true;
-		}
-		/*
-		 * if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.novoEmail
-		 * )) { MensagensDeErro.getErrorMessage(
-		 * "editarCadastroProprioDisponibilidadeEmail", "resultado");
-		 * tipoMensagem = 5; erro = true; }
-		 */
-		if (!ValidacoesDeCampos.validarFormatoTelefone(this.novoTelefone)) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioFormatoTelefone", "resultado");
-			erro = true;
-		}
-		if (erro == false) {
-			try {
-				if (this.mudaSenha.matches("false"))
-					this.editarCadastroProprioEJB.atualizarDadosUsuario(
-							getId(), getNovoEmail(), getNovoNomeCompleto(),
-							getNovoTelefone(), getNovaSenha());
-				else
-					this.editarCadastroProprioEJB.atualizarDadosUsuario(
-							getId(), getNovoEmail(), getNovoNomeCompleto(),
-							getNovoTelefone());
-				MensagensDeErro.getSucessMessage(
-						"editarCadastroProprioSucesso", "resultado");
-				/* Salva na sessão */
-				HttpServletRequest request = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-				request.getSession().setAttribute("usuario",
-						this.usuario.clone());
-			} catch (Exception e) {
-				MensagensDeErro.getErrorMessage("editarCadastroProprioErro",
-						"resultado");
-			}
-			carregarDados();
-		}
-		return "Sucesso";
-	}
-
-	public void validateMudaSenha(AjaxBehaviorEvent event) {
-		this.validateMudaSenha();
-	}
-
-	public void validateMudaSenha() {
-
-	}
-
-	public void validateNomeCompleto(AjaxBehaviorEvent event) {
-		this.validateNomeCompleto();
-	}
-
-	public void validateNomeCompleto() {
-		if (this.novoNomeCompleto.matches("")) {
-			String[] argumentos = { "nome_completo" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoNomeCompleto");
-		}
-	}
-
-	public void validateEmail(AjaxBehaviorEvent event) {
-		this.validateEmail();
-	}
-
-	public void validateEmail() {
-
-		if (this.novoEmail.matches("")) {
-			String[] argumentos = { "email" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoEmail");
-		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.novoEmail)) {
-			String[] argumentos = { "email" };
-			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
-					"validacaoEmail");
-		} else if (!memoriaVirtualEJB
-				.verificarDisponibilidadeEmail(this.novoEmail)) {
-			String[] argumentos = { "email" };
-			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
-					"validacaoEmail");
-		}
-	}
-
-	public void validateTelefone(AjaxBehaviorEvent event) {
-		this.validateTelefone();
-	}
-
-	public void validateTelefone() {
-		if (this.novoTelefone.matches("")) {
-			String[] argumentos = { "telefone" };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoTelefone");
-		} else if (!ValidacoesDeCampos
-				.validarFormatoTelefone(this.novoTelefone)) {
-			String[] argumentos = { "telefone" };
-			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
-					"validacaoTelefone");
-		}
-	}
-
-	public void validateSenha(AjaxBehaviorEvent event) {
-		this.validateSenha();
-	}
-
-	public void validateSenha() {
-		if (this.mudaSenha.matches("false")) {
-			if (this.novaSenha.matches("")) {
-				String[] argumentos = { "senha" };
-				MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-						"validacaoSenha");
-			} else if (this.novaSenha.length() < 6) {
-				String[] argumentos = { "senha", "senha_minima" };
-				MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
-						"validacaoSenha");
-			}
-		}
-	}
-
-	public void validateConfirmacaoSenha(AjaxBehaviorEvent event) {
-		this.validateConfirmacaoSenha();
-	}
-
-	public void validateConfirmacaoSenha() {
-		if (this.mudaSenha.matches("false")) {
-			if (confirmacaoNovaSenha.matches("")) {
-				String[] argumentos = { "confirmacao_senha" };
-				MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-						"validacaoConfirmacaoSenha");
-			} else if (!this.confirmacaoNovaSenha.matches(this.novaSenha)) {
-				String[] argumentos = { "confirmacao_senha", "senha" };
-				MensagensDeErro.getErrorMessage("confirmacao_errado",
-						argumentos, "validacaoConfirmacaoSenha");
-			}
-		}
-	}
-
-	public String validarAlteracao() {
-		Boolean erro = false;
-		if (this.senhaConfirmacao.matches("")) {
-			MensagensDeErro.getErrorMessage("editarCadastroProprioSenhaVazia",
-					"resultado");
-			erro = true;
-		} else if (!Usuario.gerarHash(this.senhaConfirmacao).matches(
-				getAntigaSenha())) {
-			MensagensDeErro.getErrorMessage(
-					"editarCadastroProprioSenhaInvalida", "resultado");
-			erro = true;
-		}
-		if (erro == false) {
-			setHabilitaAlteracao("false");
-		}
-		return null;
+	public void setConfirmarSenha(String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
 	}
 
 }

@@ -4,171 +4,138 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>editarAutor</title>
-</head>
-
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+</h:head>
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
-		<ui:define name="titulo">#{mensagens.editarAutorTitle}</ui:define>
-		<ui:define name="conteudo">
-			<div class="formulario">
 
+		<ui:define name="titulo">#{mensagens.editarAutorTitulo}</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="col-md-12">
 				<div class="erroPrincipal">
 					<h:message id="resultado" for="resultado" infoClass="sucesso"
 						errorClass="erro"></h:message>
 				</div>
-				<div class="conteudoTitulo">#{mensagens.editarAutorTitle}</div>
-				<div class="conteudoDescricao">
-					<h:outputLabel rendered="#{editarAutorMB.etapa1}">#{mensagens.editarAutorPassoPrimeiro}</h:outputLabel>
-				</div>
-				<div class="conteudoDescricao">
-					<h:outputLabel rendered="#{editarAutorMB.etapa2}">#{mensagens.editarAutorPassoSegundo}</h:outputLabel>
-				</div>
-
-				<h:form rendered="#{editarAutorMB.etapa1}" method="post" prependId="false">
-					<fieldset>
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
-							<h:inputText value="#{editarAutorMB.strDeBusca}"
-								autocomplete="off">
-								<f:ajax event="keyup" execute="@this" render="sugestoesId"
-									listener="#{editarAutorMB.listarAutores}" />
-								<f:ajax event="focus" execute="@this" render="sugestoesId"
-									listener="#{editarAutorMB.listarAutores}" />
-							</h:inputText>
-
-
-						</div>
-						<div id="sugestoes">
-							<h:dataTable id="sugestoesId" var="autor"
-								value="#{editarAutorMB.autores}">
-								<h:column>
-									<h:commandLink
-										action="#{editarAutorMB.selecionarAutor(autor)}">#{autor.nome} #{autor.sobrenome}</h:commandLink>
-								</h:column>
-							</h:dataTable>
-							<div></div>
-						</div>
-					</fieldset>
-					
-				</h:form>
-				
-				
-				<h:form rendered="#{editarAutorMB.etapa2}" method="post" prependId="false">
-					<fieldset>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNome}</h:outputLabel>
-							<h:inputText value="#{editarAutorMB.nome}">
-								<f:ajax event="blur" execute="@this" render="validacaoNome"
-									listener="#{editarAutorMB.validateNome}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoNome" for="validacaoNome"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorSobrenome}</h:outputLabel>
-							<h:inputText value="#{editarAutorMB.sobrenome}">
-								<f:ajax event="blur" execute="@this" render="validacaoSobrenome"
-									listener="#{editarAutorMB.validateSobrenome}" />
-							</h:inputText>
-							<div></div>
-							<h:message id="validacaoSobrenome" for="validacaoSobrenome"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorCodinome}</h:outputLabel>
-							<h:inputText value="#{editarAutorMB.codinome}">
-
-							</h:inputText>
-							<div></div>
-
-						</div>
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorAtividade}</h:outputLabel>
-							<h:selectOneMenu rendered="#{editarAutorMB.normalAtividade}"
-								value="#{editarAutorMB.atividade}">
-								<f:selectItems value="#{editarAutorMB.listaAtividade}" />
-							</h:selectOneMenu>
-							<h:inputText rendered="#{editarAutorMB.outroAtividade}"
-								value="#{editarAutorMB.atividade}" />
-							<h:commandLink class="outraAutoria"
-								value="#{editarAutorMB.outroLinkAtividade}"
-								action="#{editarAutorMB.abrirAtividadeOutro}" />
-							<div></div>
-							<h:message id="validacaoAtividade" for="validacaoAtividade" infoClass="sucesso"
-								errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorNascimento}</h:outputLabel>
-							<h:inputText value="#{editarAutorMB.nascimento}">
-								<f:ajax event="blur" execute="@this"
-									render="validacaoNascimento"
-									listener="#{editarAutorMB.validateNascimento}" />
-							</h:inputText>
-							<h:commandLink class="outraAutoria"
-								value="#{editarAutorMB.outroLinkNascimento}"
-								action="#{editarAutorMB.abrirNascimentoOutro}" />
-							<div><h:outputLabel rendered="#{editarAutorMB.normalNascimento}">dd/mm/aaaa</h:outputLabel></div>
-							<h:message id="validacaoNascimento" for="validacaoNascimento"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-
-						<div>
-							<h:outputLabel class="labels">#{mensagens.cadastrarAutorObito}</h:outputLabel>
-							<h:inputText value="#{editarAutorMB.obito}">
-								<f:ajax event="blur" execute="@this" render="validacaoObito"
-									listener="#{editarAutorMB.validateObito}" />
-							</h:inputText>
-							<h:commandLink class="outraAutoria"
-								value="#{editarAutorMB.outroLinkObito}"
-								action="#{editarAutorMB.abrirObitoOutro}" />
-							<div><h:outputLabel rendered="#{editarAutorMB.normalObito}">dd/mm/aaaa</h:outputLabel></div>
-							<h:message id="validacaoObito" for="validacaoObito"
-								infoClass="sucesso" errorClass="erro" warnClass="aviso">
-							</h:message>
-						</div>
-
-
-					</fieldset>
-					<div class="botao">
-						<h:commandButton id="botaoCadastrar"
-							value="#{mensagens.editarCadastroUsuarioBotaoSalvar}"
-							action="#{editarAutorMB.salvarEdicaoAutor}">
-
-						</h:commandButton>
-
-						<h:commandButton id="botaoResetar"
-							value="#{mensagens.cadastrarAutorBotaoResetar}"
-							action="#{editarAutorMB.resetEditarAutor()}">
-						</h:commandButton>
-						
-						
-						<h:commandButton id="botaoCancelar"
-							value="#{mensagens.cadastrarAutorBotaoCancelar}" 
-							action="#{editarAutorMB.cancelarEditarAutor}">
-						</h:commandButton>
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.editarAutorTitulo}</h1>
+						<h2>#{mensagens.editarAutorDescricao}</h2>
+						<div class="clearfix"></div>
 					</div>
-				</h:form>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="nome" class="control-label">
+												#{mensagens.nome}
+											</h:outputLabel>
+											<h:inputText value="#{editarAutorMB.autor.nome}"
+												class="form-control" id="nome" />
+											<h:message id="validacao-nome" for="validacao-nome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="sobrenome" class="control-label">
+												#{mensagens.sobrenome}
+											</h:outputLabel>
+											<h:inputText value="#{editarAutorMB.autor.sobrenome}"
+												class="form-control" id="sobrenome" />
+											<h:message id="validacao-sobrenome" for="validacao-sobrenome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="codinome" class="control-label">
+												#{mensagens.codinome}
+											</h:outputLabel>
+											<h:inputText value="#{editarAutorMB.autor.codinome}"
+												class="form-control" id="codinome" />
+										</div>
+									</div>
+								</div>
 
-				<!-- end .formulario-->
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="atividade" class="control-label">#{mensagens.atividade}</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="atividade" value="#{editarAutorMB.autor.atividade}">
+												<f:selectItems value="#{editarAutorMB.listaAtividade}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="nascimento">#{mensagens.nascimento}</h:outputLabel>
+											<h:inputText value="#{editarAutorMB.autor.nascimento}"
+												class="form-control" id="nascimento">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="obito">#{mensagens.obito}</h:outputLabel>
+											<h:inputText value="#{editarAutorMB.autor.obito}"
+												class="form-control" id="obito">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton class="btn btn-success margin-5"
+											value="#{mensagens.editar}"
+											action="#{editarAutorMB.editar}">
+										</h:commandButton>
+										<h:commandButton class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}" action="#{editarAutorMB.limpar}">
+										</h:commandButton>
+										<h:commandButton
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{editarAutorMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
 			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					selecionarAbaAutor();
+
+					mostrarErro('#validacao-nome');
+
+					mostrarErro('#validacao-sobrenome');
+
+					$('#atividade').select2({
+						'minimumResultsForSearch' : -1
+					});
+				});
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

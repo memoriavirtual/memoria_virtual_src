@@ -7,99 +7,123 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="lang" content="pt" />
+	<meta name="charset" content="utf-8" />
+	<h:outputStylesheet name="reset.css" library="css" />
+	<h:outputStylesheet name="bootstrap.css" library="bootstrap/css" />
+	<h:outputStylesheet name="select2.css" library="select2" />
+	<h:outputStylesheet name="font-awesome.css" library="fontawesome/css" />
+	<h:outputStylesheet name="estilo.less" library="css" />
+	<h:outputStylesheet name="bootstrap-switch.css"
+		library="bootstrap-switch-master/dist/css/bootstrap3" />
+	<h:outputScript name="less.min.js" library="javascript" />
+	<h:outputScript name="pdfobject.js" library="javascript"></h:outputScript>
+	<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
+	<h:outputScript name="bootstrap.js" library="bootstrap/js"></h:outputScript>
+	<h:outputScript name="select2.js" library="select2"></h:outputScript>
+	<h:outputScript name="bootstrap-switch.js"
+		library="bootstrap-switch-master/dist/js"></h:outputScript>
+	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
 	<title>#{mensagens.realizarBuscaSimplesResultado}
 		#{realizarBuscaSimplesMB.busca}</title>
-	<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
 </h:head>
 
 <h:body>
-
-	<h:outputScript library="javascript" name="jquery.js" />
-	<h:outputScript library="javascript" name="abas.js" />
-	<h:outputScript library="javascript" name="jquery.corner.js" />
-	<h:outputScript library="javascript" name="mv.js" />
-	<h:outputScript library="css" name="mv.css" />
-
-	<div class="continente">
-		<div id="usuario">
-
-			<h:form>
-				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendSair}"
-					value="restrito/index.jsf">Início</h:outputLink>
-				&lt;<h:outputText value="#{usuario.id}" />&gt;,
-				<h:commandLink rendered="#{realizarBuscaSimplesMB.rendSair}"
-					action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
-				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendLogin}"
-					value="login.jsf">Login</h:outputLink>
-			</h:form>
-
-		</div>
-		<div class="caixabusca">
-			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
-
-			<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesResultado}
-				#{realizarBuscaSimplesMB.busca}</div>
-
-
-			<h:form method="post" prependId="false">
-				<div class="buscadiv">
-					<fieldset>
-						<h:inputText value="#{realizarBuscaSimplesMB.busca}"
-							class="inputbusca" autocomplete="off">
-						</h:inputText>
-
-
-					</fieldset>
-
-					<h:commandButton id="botaoBusca"
-						value="#{mensagens.realizarBuscaSimplesBuscar}"
-						action="#{realizarBuscaSimplesMB.buscar()}">
-
-					</h:commandButton>
+	<div class="col-md-12">
+		<h:form class="form-horizontal" role="form" method="post"
+			prependId="false">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					&lt;
+					<h:outputText value="#{usuario.nomeCompleto}" />
+					&gt;,
+					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">${mensagens.sair}</h:commandLink>
 				</div>
-			</h:form>
+			</div>
+		</h:form>
+	</div>
+
+	<div class="row top-padding-30">
+		<div class="col-md-6 col-md-offset-3">
+			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
 		</div>
-		<h:form>
-			<fieldset>
-				<div id="resultados">
-					<h:dataTable id="resultados" var="bem" class="resultados"
+	</div>
+	<div class="col-md-12">
+		<h:form class="form-horizontal" role="form" method="post"
+			prependId="false">
+			<div class="row">
+				<div class="col-md-offset-3 col-md-6">
+					<div class="form-group">
+						<h:outputLabel class="control-label transparente" for="busca">.</h:outputLabel>
+						<div class="input-group">
+							<h:inputText value="#{realizarBuscaSimplesMB.busca}"
+								class="form-control" id="busca">
+							</h:inputText>
+							<span class="input-group-btn"> <h:commandLink
+									class="btn btn-primary"
+									action="#{realizarBuscaSimplesMB.buscar}">
+									<i class="fa fa-search"></i>
+								#{mensagens.buscar}
+							</h:commandLink>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h:dataTable var="bem" class="table table-bordered table-hover"
 						value="#{realizarBuscaSimplesMB.bens}">
 						<h:column>
-							<h:commandLink class="linkresultado"
-								action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.tituloPrincipal}</h:commandLink>
-							<h:dataTable id="titulos" class="titulo" var="titulo"
-								value="#{bem.titulos}">
+							<h:commandLink action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.tituloPrincipal}</h:commandLink>
+							<h:commandLink rendered="#{!empty bem.titulos}"
+								class="btn btn-default pull-right botao-titulos btn-xs">
+								<f:ajax render="@none" execute="@none" />
+								<i class="fa fa-list"></i>
+							</h:commandLink>
+							<h:dataTable class="hidden" var="titulo" value="#{bem.titulos}">
 								<h:column>
-									<h:outputLabel class="resultadosBusca">#{titulo.valor}</h:outputLabel>
+									<h:outputLabel>#{titulo.valor}</h:outputLabel>
 								</h:column>
 							</h:dataTable>
 						</h:column>
 					</h:dataTable>
-					<h:panelGrid columns="3">
-						<h:commandButton value="Página Anterior"
-							action="#{realizarBuscaSimplesMB.paginaAnterior}"
-							disabled="#{realizarBuscaSimplesMB.pagina == 1}" />
-						<h:dataTable binding="#{realizarBuscaSimplesMB.controlePagina}"
-							value="#{realizarBuscaSimplesMB.paginas}" var="numeroPagina">
-							<h:column>
-								<tr>
-									<h:commandLink
-										action="#{realizarBuscaSimplesMB.selecionaPagina}"
-										value="#{numeroPagina}   " />
-								</tr>
-							</h:column>
-						</h:dataTable>
-						<h:commandButton value="Próxima Página"
-							action="#{realizarBuscaSimplesMB.proximaPagina}"
-							disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}" />
-					</h:panelGrid>
 				</div>
-			</fieldset>
+			</div>
+
+			<h:panelGrid columns="3" class="pull-right">
+				<h:commandButton class="btn btn-primary" value="Página Anterior"
+					action="#{realizarBuscaSimplesMB.paginaAnterior}"
+					disabled="#{realizarBuscaSimplesMB.pagina == 1}" />
+				<h:dataTable binding="#{realizarBuscaSimplesMB.controlePagina}"
+					value="#{realizarBuscaSimplesMB.paginas}" var="numeroPagina">
+					<h:column>
+						<h:commandLink action="#{realizarBuscaSimplesMB.selecionaPagina}"
+							value="#{numeroPagina}   " />
+					</h:column>
+				</h:dataTable>
+				<h:commandButton class="btn btn-primary" value="Próxima Página"
+					action="#{realizarBuscaSimplesMB.proximaPagina}"
+					disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}" />
+			</h:panelGrid>
 		</h:form>
-
 	</div>
-	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
-		de Engenharia de Software - ICMC-USP</p>
-
+	<div class="top-margin-10 col-md-12 text-center">
+		Copyright &copy; 2009 LABES - Laborat&oacute;rio de Engenharia de
+		Software - ICMC-USP<br /> Build Tag: mv_20140205_versao3
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.botao-titulos').each(function(index, element) {
+				element = $(element);
+				element.popover({
+					html : true,
+					placement : 'left',
+					content : element.siblings('table').clone().html()
+				});
+			});
+		});
+	</script>
 </h:body>
 </html>

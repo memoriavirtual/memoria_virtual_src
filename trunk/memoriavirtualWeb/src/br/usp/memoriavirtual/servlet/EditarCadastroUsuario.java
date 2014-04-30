@@ -1,22 +1,28 @@
 package br.usp.memoriavirtual.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.controle.EditarCadastroUsuarioMB;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
+import br.usp.memoriavirtual.utils.MVModeloAcao;
+import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
+@WebServlet("/editarcadastrousuario")
 public class EditarCadastroUsuario extends HttpServlet {
 
 	@EJB
@@ -28,39 +34,37 @@ public class EditarCadastroUsuario extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-
-		String aprovacaoString = request.getParameter("Id");
-		aprovacaoString = this.memoriaVirtualEJB.embaralhar(aprovacaoString);
-		Aprovacao aprovacao = new Aprovacao();
 		try {
-			aprovacao = this.editarCadastroUsuarioEJB
-					.getAprovacao(aprovacaoString);
-		} catch (ModeloException m) {
-			m.printStackTrace();
-		}
+			String id = request.getParameter("id");
+			Aprovacao aprovacao = new Aprovacao();
 
-		try {
-			if (editarCadastroUsuarioEJB.isAprovacaoExpirada(aprovacaoString)) {
-				editarCadastroUsuarioEJB.removerAprovacao(aprovacaoString);
-				response.sendRedirect("restrito/dataexpirada.jsf");
+			aprovacao = this.editarCadastroUsuarioEJB.getAprovacao(id);
+
+			FacesContext facesContext = FacesUtil.getFacesContext(request,
+					response);
+			Usuario usuario = (Usuario) facesContext.getExternalContext()
+					.getSessionMap().get("usuario");
+
+			Date hoje = new Date();
+			if (hoje.after(aprovacao.getExpiraEm())) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			} else if (usuario.getId() != aprovacao.getAnalista().getId()
+					|| aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando
+					|| aprovacao.getAcao() != MVModeloAcao.editar_cadastro_usuario) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 			} else {
-
-				// Inicializando Managed Bean
-				FacesContext facesContext = FacesUtil.getFacesContext(request,
-						response);
 				ELResolver resolver = facesContext.getApplication()
 						.getELResolver();
 				EditarCadastroUsuarioMB managedBean = (EditarCadastroUsuarioMB) resolver
 						.getValue(facesContext.getELContext(), null,
 								"editarCadastroUsuarioMB");
+				managedBean.carregarAprovacao(aprovacao);
+				response.sendRedirect("restrito/validaredicaousuario.jsf");
 
-				managedBean.setAcesso(aprovacaoString);
-				managedBean.setAprovacao(aprovacao);
-				response.sendRedirect("restrito/validaredicao.jsf");
 			}
-		} catch (ModeloException e) {
-			e.printStackTrace();
+		} catch (ModeloException m) {
+			m.printStackTrace();
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
-
 	}
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 
 import java.io.Serializable;
@@ -13,21 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- * @author mac
- * 
- */
 @Entity
 public class Assunto implements Comparable<Assunto>, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4539453445771459458L;
 
-	/**
-	 * 
-	 */
 	public Assunto() {
 	}
 

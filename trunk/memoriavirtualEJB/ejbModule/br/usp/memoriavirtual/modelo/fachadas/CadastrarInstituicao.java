@@ -13,13 +13,16 @@ public class CadastrarInstituicao implements CadastrarInstituicaoRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	
-	
-	public void cadastrarInstituicao(Instituicao instituicao)
-	 {
-		entityManager.persist(instituicao); 
-		entityManager.flush();
+	public Instituicao cadastrarInstituicao(Instituicao instituicao)
+			throws ModeloException {
+		try {
+			entityManager.persist(instituicao.getContainerMultimidia());
+			entityManager.persist(instituicao);
+			entityManager.flush();
+			return instituicao;
+		} catch (Exception e) {
+			throw new ModeloException(e);
+		}
 
 	}
-
 }

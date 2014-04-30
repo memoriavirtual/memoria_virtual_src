@@ -1,13 +1,16 @@
 package br.usp.memoriavirtual.modelo.fachadas.remoto;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Remote;
 import javax.mail.MessagingException;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
 
 @Remote
 public interface MemoriaVirtualRemote {
@@ -29,10 +32,16 @@ public interface MemoriaVirtualRemote {
 
 	public boolean verificarDisponibilidadeIdUsuario(String id);
 
-	public boolean verificarDisponibilidadeEmail(String email);
+	public boolean verificarDisponibilidadeEmail(String email, Usuario usuario) throws ModeloException;
 
 	public boolean verificarDisponibilidadeNomeInstituicao(String Nome);
 
 	public void enviarEmail(String destinatario, String assunto, String mensagem)
 			throws MessagingException;
+	
+	public Usuario getUsuario(String id) throws ModeloException;
+	
+	public String getUrl(MVModeloMapeamentoUrl url, Map<String, String> parametros) throws ModeloException;
+	
+	public Aprovacao getAprovacao(Long id) throws ModeloException;
 }

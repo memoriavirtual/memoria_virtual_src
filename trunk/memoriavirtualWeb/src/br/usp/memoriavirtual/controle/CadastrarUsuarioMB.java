@@ -1,182 +1,201 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.el.ELResolver;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.servlet.http.HttpServletRequest;
 
-import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
-public class CadastrarUsuarioMB implements Serializable {
+@ManagedBean(name = "cadastrarUsuarioMB")
+@RequestScoped
+public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2202578392589624271L;
+
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
+
 	@EJB
 	private CadastrarUsuarioRemote cadastrarUsuarioEJB;
-	private String id = "";
-	private String email = "";
-	private String nomeCompleto = "";
-	private String telefone = "";
+	private String identificacao = "";
 	private String senha = "";
 	private String confirmacaoSenha = "";
-	private Usuario convite = null;
+	private Usuario usuario;
+	private MensagensMB mensagens;
 
 	public CadastrarUsuarioMB() {
+		super();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
 
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	@PostConstruct
-	public void inicializar() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
+	public String cadastrar() {
 
-		Usuario convite = (Usuario) request.getSession()
-				.getAttribute("usuario");
-		this.convite = convite;
-		this.email = convite.getEmail();
-	}
-
-	public String completarCadastro() {
-
-		this.validateId();
-		this.validateEmail();
-		this.validateNomeCompleto();
-		this.validateSenha();
-		this.validateConfirmacaoSenha();
-
-		Usuario usuario = new Usuario(this.id, this.email, this.nomeCompleto,
-				this.telefone, this.senha);
-
-		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-
-			String validacaoConvite = this.convite.getId();
-
+		if (this.validar()) {
 			try {
-				cadastrarUsuarioEJB.cadastrarUsuario(usuario, validacaoConvite);
-			} catch (ModeloException e) {
-				usuario = null;
-				MensagensDeErro
-						.getErrorMessage("convite_invalido", "resultado");
-			} catch (RuntimeException e) {
-				usuario = null;
-				MensagensDeErro.getErrorMessage("erro_cadastramento",
-						"resultado");
+				this.cadastrarUsuarioEJB.cadastrarUsuario(usuario, this.senha);
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				return this.redirecionar("/login.jsf", true);
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				e.printStackTrace();
+				return null;
 			}
 
-			if (usuario != null) {
-				usuario = usuario.clone();
-				HttpServletRequest request = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-				request.getSession().setAttribute("usuario", usuario);
+		}
+		return null;
+	}
 
-				/*
-				 * Coloca a lista de acessos do usuario no sessao para ser
-				 * utilizados na verificação antes de renderizar o menu.
-				 */
-				List<Acesso> listaAcessos = memoriaVirtualEJB
-						.listarAcessos(usuario);
+	@Override
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
+	}
 
-				request.getSession().setAttribute("acessos", listaAcessos);
+	@Override
+	public String redirecionar(String pagina, boolean redirect) {
+		return redirect ? pagina + "?faces-redirect=true" : pagina;
+	}
+
+	@Override
+	public String cancelar() {
+		return null;
+	}
+
+	@Override
+	public boolean validar() {
+		boolean a, b, c, d;
+		a = this.validarNome();
+		b = this.validarEmail();
+		c = this.validarIdentificacao();
+		d = this.validarSenha();
+		return (a && b && c && d);
+	}
+
+	public boolean validarNome() {
+		if (this.usuario.getNomeCompleto() == null
+				|| this.usuario.getNomeCompleto().equals("")) {
+			String args[] = { this.traduzir("nome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-nome");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validarEmail() {
+		try {
+			if (this.usuario.getEmail() == null
+					|| this.usuario.getEmail().length() == 0) {
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				String[] args = { this.traduzir("email") };
+				MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+						"validacao-email");
+				return false;
 			}
-
-			this.id = "";
-			this.email = "";
-			this.nomeCompleto = "";
-			this.telefone = "";
-			this.senha = "";
-			this.confirmacaoSenha = "";
-			this.convite = null;
-
-			MensagensDeErro.getSucessMessage("cadastro_concluido", "resultado");
-
+			boolean erroFormato = false;
+			boolean erroInsdisponivel = false;
+			if (!ValidacoesDeCampos
+					.validarFormatoEmail(this.usuario.getEmail())) {
+				erroFormato = true;
+			} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(
+					this.usuario.getEmail(), this.usuario)) {
+				erroInsdisponivel = true;
+			}
+			if (erroFormato) {
+				MensagensDeErro.getErrorMessage("erroEmailInvalido",
+						"validacao-email");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			}
+			if (erroInsdisponivel) {
+				MensagensDeErro.getErrorMessage("erroEmailIndisponivel",
+						"validacao-email");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			}
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return false;
 		}
-		return "falhou";
+		return true;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void validateId(AjaxBehaviorEvent event) {
-		this.validateId();
-	}
-
-	public void validateId() {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (this.id.equals("")) {
-			String[] argumentos = { bundle.getString("id") };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoId");
-		} else if (this.id.length() < 4) {
-			String[] argumentos = { bundle.getString("id"),
-					bundle.getString("id_minimo") };
-			MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
-					"validacaoId");
-		} else if (!memoriaVirtualEJB
-				.verificarDisponibilidadeIdUsuario(this.id)) {
-			String[] argumentos = { "id" };
-			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
-					"validacaoId");
+	public boolean validarSenha() {
+		if (this.senha == null || this.senha.equals("")) {
+			String args[] = { this.traduzir("senha") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-senha");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
+		} else if (this.senha.length() < 6) {
+			MensagensDeErro.getErrorMessage("erroComprimentoSenha",
+					"validacao-senha");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
+		} else if (!this.senha.equals(this.confirmacaoSenha)) {
+			MensagensDeErro.getErrorMessage("erroConfirmacaoSenha",
+					"validacao-senha");
+			MensagensDeErro.getErrorMessage("erroConfirmacaoSenha",
+					"validacao-confirmacao-senha");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
 		}
+		return true;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void validateEmail(AjaxBehaviorEvent event) {
-		this.validateEmail();
-	}
-
-	public void validateEmail() {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (this.email.equals("")) {
-			String[] argumentos = { bundle.getString("email") };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoEmail");
-		} else if (!ValidacoesDeCampos.validarFormatoEmail(this.email)) {
-			String[] argumentos = { bundle.getString("email") };
-			MensagensDeErro.getErrorMessage("formato_invalido", argumentos,
-					"validacaoEmail");
-		} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(this.email)
-				&& !this.email.equals(this.convite.getEmail())) {
-			String[] argumentos = { "email" };
-			MensagensDeErro.getErrorMessage("ja_cadastrado", argumentos,
-					"validacaoEmail");
+	public boolean validarIdentificacao() {
+		if (this.usuario.getIdentificacao() == null
+				|| this.usuario.getIdentificacao().equals("")) {
+			String args[] = { this.traduzir("identificacao") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-identificacao");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
+		} else if (this.usuario.getIdentificacao().length() < 6) {
+			MensagensDeErro.getErrorMessage("erroComprimentoIdentificacao",
+					"validacao-identificacao");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
+		} else if (!this.memoriaVirtualEJB
+				.verificarDisponibilidadeIdUsuario(this.usuario
+						.getIdentificacao())) {
+			MensagensDeErro.getErrorMessage("erroIdentificacaoIndisponivel",
+					"validacao-identificacao");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
+			return false;
 		}
+		return true;
+	}
+
+	// getters e setters
+
+	public String getIdentificacao() {
+		return identificacao;
+	}
+
+	public void setIdentificacao(String identificacao) {
+		this.identificacao = identificacao;
 	}
 
 	public String getSenha() {
@@ -187,63 +206,6 @@ public class CadastrarUsuarioMB implements Serializable {
 		this.senha = senha;
 	}
 
-	public void validateSenha(AjaxBehaviorEvent event) {
-		this.validateSenha();
-	}
-
-	public void validateSenha() {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (this.senha.equals("")) {
-			String[] argumentos = { bundle.getString("senha") };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoSenha");
-		} else if (this.senha.length() < 6) {
-			String[] argumentos = { bundle.getString("senha"),
-					bundle.getString("senha_minima") };
-			MensagensDeErro.getErrorMessage("tamanho_minimo", argumentos,
-					"validacaoSenha");
-		}
-	}
-
-	public String getNomeCompleto() {
-		return nomeCompleto;
-	}
-
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
-	}
-
-	public void validateNomeCompleto(AjaxBehaviorEvent event) {
-		this.validateNomeCompleto();
-	}
-
-	public void validateNomeCompleto() {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		if (this.nomeCompleto.equals("")) {
-			String[] argumentos = { bundle.getString("nome_completo") };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoNomeCompleto");
-		}
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
 	public String getConfirmacaoSenha() {
 		return confirmacaoSenha;
 	}
@@ -252,27 +214,20 @@ public class CadastrarUsuarioMB implements Serializable {
 		this.confirmacaoSenha = confirmacaoSenha;
 	}
 
-	public void validateConfirmacaoSenha(AjaxBehaviorEvent event) {
-		this.validateConfirmacaoSenha();
+	public MensagensMB getMensagens() {
+		return mensagens;
 	}
 
-	public void validateConfirmacaoSenha() {
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
+	}
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-		if (confirmacaoSenha.equals("")) {
-			String[] argumentos = { bundle.getString("confirmacao_senha") };
-			MensagensDeErro.getErrorMessage("campo_vazio", argumentos,
-					"validacaoConfirmacaoSenha");
-		} else if (!this.confirmacaoSenha.equals(this.senha)) {
-			String[] argumentos = { bundle.getString("confirmacao_senha"),
-					bundle.getString("senha") };
-			MensagensDeErro.getErrorMessage("confirmacao_errado", argumentos,
-					"validacaoConfirmacaoSenha");
-		}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

@@ -1,70 +1,43 @@
 package br.usp.memoriavirtual.controle;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.Part;
 
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
-import br.usp.memoriavirtual.modelo.entidades.Multimidia;
-import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
 
-public class BeanContainerDeMidia {
+public abstract class BeanContainerDeMidia {
 
 	protected Part part;
-	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
-	protected ArrayList<Integer> ApresentaMidias = new ArrayList<Integer>();
+	protected List<MVModeloCamposMultimidia> campos = new ArrayList<MVModeloCamposMultimidia>();
 	protected ContainerMultimidia containerMultimidia = new ContainerMultimidia();
 
 	public BeanContainerDeMidia() {
 
 	}
 
-	public String uploadFile() throws IOException {
+	public abstract String uploadFile() throws IOException;
 
-		if (part.getSize() > 0) {
-			String fileName = getFileName(part);
+	public abstract String removerMidia(Long id);
 
-			InputStream inputStream = null;
-			ByteArrayOutputStream out = null;
-			try {
-				inputStream = part.getInputStream();
-				out = new ByteArrayOutputStream();
+	public abstract String imagemDisplay(Long id);
 
-				int read = 0;
-				final byte[] bytes = new byte[128];
-				while ((read = inputStream.read(bytes)) != -1) {
-					out.write(bytes, 0, read);
-				}
+	public abstract String videoDisplay(Long id);
 
-				out.toByteArray();
-				Multimidia m = new Multimidia();
-				m.setContentType(part.getContentType());
-				m.setNome(fileName);
-				m.setContent(out.toByteArray());
-				m.setContainerMultimidia(this.containerMultimidia);
-				this.midias.add(m);
-				this.ApresentaMidias.add(this.ApresentaMidias.size());
+	public abstract String midiaDisplay(Long id);
+	
+	public abstract String getContentType(Long id);
 
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				if (out != null)
-					out.close();
-				if (inputStream != null) {
-					inputStream.close();
-				}
-			}
-		} else {
-			MensagensDeErro.getErrorMessage("cadastrarBemErro", "resultado");
-		}
-
+	public String limpar() {
+		this.campos.clear();
+		this.containerMultimidia = new ContainerMultimidia();
 		return null;
 	}
-	
-	private String getFileName(Part part) {
+
+	protected String getFileName(Part part) {
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
 				return content.substring(content.indexOf('=') + 1).trim()
@@ -73,46 +46,14 @@ public class BeanContainerDeMidia {
 		}
 		return null;
 	}
-	
-	public String removerMidia(Multimidia m) {
-		this.midias.remove(m);
-		return null;
-	}
-	
-	public String imageDisplay(Multimidia m){
-		return m.isImagem() ? "block" : "none";
-	}
-	
-	public String videoDisplay(Multimidia m){
-		return m.isVideo() ? "block" : "none";
-	}
-	
-	public String midiaDisplay(Multimidia m){
-		return (!m.isImagem() && !m.isVideo()) ? "block" : "none";
-	}
 
+	// getters e setters comecam aqui
 	public Part getPart() {
 		return part;
 	}
 
 	public void setPart(Part part) {
 		this.part = part;
-	}
-
-	public ArrayList<Multimidia> getMidias() {
-		return midias;
-	}
-
-	public void setMidias(ArrayList<Multimidia> midias) {
-		this.midias = midias;
-	}
-
-	public ArrayList<Integer> getApresentaMidias() {
-		return ApresentaMidias;
-	}
-
-	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
-		ApresentaMidias = apresentaMidias;
 	}
 
 	public ContainerMultimidia getContainerMultimidia() {
@@ -122,4 +63,13 @@ public class BeanContainerDeMidia {
 	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
 		this.containerMultimidia = containerMultimidia;
 	}
+
+	public List<MVModeloCamposMultimidia> getCampos() {
+		return campos;
+	}
+
+	public void setCampos(List<MVModeloCamposMultimidia> campos) {
+		this.campos = campos;
+	}
+
 }

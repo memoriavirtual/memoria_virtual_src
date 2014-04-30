@@ -3,6 +3,8 @@ package br.usp.memoriavirtual.controle;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
-public class RenderizarMenuMB implements Serializable{
+@ManagedBean(name = "renderizarMenuMB")
+@RequestScoped
+public class RenderizarMenuMB implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3767548433370852588L;
 	public boolean administrador = false;
 	public boolean gerente = false;
@@ -22,9 +23,6 @@ public class RenderizarMenuMB implements Serializable{
 	@SuppressWarnings("unchecked")
 	public void verificarAcessos(ComponentSystemEvent event) {
 
-		/*
-		 * Pega a lista de acessos do usuario na sessao.
-		 */
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
 

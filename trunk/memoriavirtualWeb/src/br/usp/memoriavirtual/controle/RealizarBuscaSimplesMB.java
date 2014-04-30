@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.el.ELResolver;
@@ -18,66 +19,88 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Assunto;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
+import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.StringContainer;
 
 @ManagedBean(name = "realizarBuscaSimplesMB")
 @SessionScoped
-public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
+public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable {
 
 	private static final long serialVersionUID = 4130356176853401265L;
+
+	@EJB
+	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
+
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
-	
+
+	@EJB
+	private UtilMultimidiaRemote utilMultimidiaEJB;
+
+	private List<MVModeloCamposMultimidia> campos = new ArrayList<MVModeloCamposMultimidia>();
 	private String busca;
 	private List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
-	private BemPatrimonial bem;
-	private ArrayList<Integer> apresentaMidias = new ArrayList<Integer>();
-
+	private BemPatrimonial bemPatrimonial;
+	private String assuntos = "";
+	private String descritores = "";
+	private List<StringContainer> fontesInformacao = new ArrayList<StringContainer>();
 	private boolean proximaPaginaDisponivel;
 	private Integer pagina = 1;
 	private ArrayList<String> paginas;
-	
+
 	private UIData controlePagina;
 
-	public RealizarBuscaSimplesMB() {
+	private MensagensMB mensagens;
 
+	public RealizarBuscaSimplesMB() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	private void buscarNovaPagina(Integer pagina){
+	private void buscarNovaPagina(Integer pagina) {
 		try {
-			this.bens = realizarBuscaEJB.buscar(this.busca,pagina);
-			
-			if(pagina.intValue() == realizarBuscaEJB.getNumeroDePaginasBusca().intValue())	
+			this.bens = realizarBuscaEJB.buscar(this.busca, pagina);
+
+			if (pagina.intValue() == realizarBuscaEJB.getNumeroDePaginasBusca()
+					.intValue())
 				proximaPaginaDisponivel = false;
 			else
 				proximaPaginaDisponivel = true;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
 					"resultado");
-		}	
+		}
 	}
-	
+
 	public String buscar() {
 
 		try {
-			this.bens = realizarBuscaEJB.buscar(this.busca,pagina);
-			
-			if(pagina == realizarBuscaEJB.getNumeroDePaginasBusca())	
+			this.bens = realizarBuscaEJB.buscar(this.busca, pagina);
+
+			if (pagina == realizarBuscaEJB.getNumeroDePaginasBusca())
 				proximaPaginaDisponivel = false;
 			else
 				proximaPaginaDisponivel = true;
-			
-			paginas  = new ArrayList<String>();
-			
-			for(int i=0;i<realizarBuscaEJB.getNumeroDePaginasBusca();i++){
-				paginas.add(new Integer(i+1).toString());
+
+			paginas = new ArrayList<String>();
+
+			for (int i = 0; i < realizarBuscaEJB.getNumeroDePaginasBusca(); i++) {
+				paginas.add(new Integer(i + 1).toString());
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
@@ -90,22 +113,20 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 
 	public String excluir() {
 
-		// Inicializando Managed Bean
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
 
 		ExcluirBemPatrimonialMB managedBean = (ExcluirBemPatrimonialMB) resolver
 				.getValue(facesContext.getELContext(), null,
 						"excluirBemPatrimonialMB");
-
-		managedBean.selecionarBem(this.bem);
+		managedBean.setId(new Long(this.bemPatrimonial.getId()).toString());
+		managedBean.selecionar();
 		return "/restrito/selecionarbemexclusao.jsf";
 
 	}
 
 	public String editar() {
 
-		// Inicializando Managed Bean
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
 
@@ -113,7 +134,8 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 				.getValue(facesContext.getELContext(), null,
 						"editarBemPatrimonialMB");
 
-		managedBean.selecionarBem(this.bem);
+		managedBean.setId(new Long(this.bemPatrimonial.getId()).toString());
+		managedBean.selecionar();
 		return "/restrito/editarbempatrimonial.jsf?faces-redirect=true";
 
 	}
@@ -130,7 +152,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 			if (usuario.isAdministrador())
 				return true;
 			else if (this.realizarBuscaEJB.possuiAcesso(usuario,
-					this.bem.getInstituicao()))
+					this.bemPatrimonial.getInstituicao()))
 				return true;
 			else
 				return false;
@@ -142,41 +164,49 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 
 	public String resultado(BemPatrimonial b) {
 
-		this.bem = b;
+		try {
+			this.bemPatrimonial = b;
+			this.campos = this.utilMultimidiaEJB
+					.listarCampos(this.bemPatrimonial.getContainerMultimidia());
+			for (Descritor d : this.bemPatrimonial.getDescritores()) {
+				this.descritores += d.getDescritor() + " ";
+			}
 
-		for (int i = 0; i < this.bem.getContainerMultimidia().getMultimidia()
-				.size(); ++i) {
+			for (Assunto a : this.bemPatrimonial.getAssuntos()) {
+				this.assuntos += a.getAssunto() + " ";
+			}
 
-			this.apresentaMidias.add(i, i);
-			this.apresentaMidias.trimToSize();
+			for (String s : this.bemPatrimonial.getFontesInformacao()) {
+				this.fontesInformacao.add(new StringContainer(s));
+			}
 
+			return this.redirecionar("/bempatrimonial.jsf", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			return null;
 		}
-
-		return "bempatrimonial";
-
 	}
-	
-	public String selecionaPagina(){
+
+	public String selecionaPagina() {
 		pagina = new Integer((String) controlePagina.getRowData());
 		buscarNovaPagina(pagina);
 		return "resultadosbusca";
 	}
-	
-	public String proximaPagina(){
+
+	public String proximaPagina() {
 		pagina++;
 		buscarNovaPagina(pagina);
 		return "resultadosbusca";
 	}
-	
-	public String paginaAnterior(){
+
+	public String paginaAnterior() {
 		pagina--;
 		buscarNovaPagina(pagina);
 		return "resultadosbusca";
 	}
-	
-	public String voltar() {
 
-		this.apresentaMidias.clear();
+	public String voltar() {
 		return this.buscar();
 	}
 
@@ -187,8 +217,8 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		HttpServletResponse response = (HttpServletResponse) externalContext
 				.getResponse();
 
-		Multimidia midia = this.bem.getContainerMultimidia().getMultimidia()
-				.get(index);
+		Multimidia midia = this.bemPatrimonial.getContainerMultimidia()
+				.getMultimidia().get(index);
 
 		response.reset();
 		response.setContentType(midia.getContentType());
@@ -253,47 +283,12 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 		}
 	}
 
-	public BemPatrimonial getBem() {
-		return bem;
+	public BemPatrimonial getBemPatrimonial() {
+		return bemPatrimonial;
 	}
 
-	public void setBem(BemPatrimonial bem) {
-		this.bem = bem;
-	}
-
-	@Override
-	public List<Multimidia> recuperaColecaoMidia() {
-		return this.bem.getContainerMultimidia().getMultimidia();
-	}
-
-	@Override
-	public void adicionarMidia(Multimidia midia) {
-
-	}
-
-	@Override
-	public String removeMidia(Multimidia midia) {
-		return null;
-	}
-
-	@Override
-	public String removeMidia(int index) {
-		return null;
-	}
-
-	@Override
-	public ArrayList<Integer> getApresentaMidias() {
-		return this.apresentaMidias;
-	}
-
-	@Override
-	public void setApresentaMidias(ArrayList<Integer> apresentaMidias) {
-		this.apresentaMidias = apresentaMidias;
-	}
-
-	@Override
-	public boolean isRenderCell(int index) {
-		return false;
+	public void setBemPatrimonial(BemPatrimonial bem) {
+		this.bemPatrimonial = bem;
 	}
 
 	public Integer getPagina() {
@@ -324,7 +319,7 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 	public void setProximaPaginaDisponivel(boolean proximaPaginaDisponivel) {
 		this.proximaPaginaDisponivel = proximaPaginaDisponivel;
 	}
-	
+
 	public UIData getControlePagina() {
 		return controlePagina;
 	}
@@ -339,6 +334,126 @@ public class RealizarBuscaSimplesMB implements Serializable, BeanComMidia {
 
 	public void setRealizarBuscaEJB(RealizarBuscaSimplesRemote realizarBuscaEJB) {
 		this.realizarBuscaEJB = realizarBuscaEJB;
+	}
+
+	@Override
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
+	}
+
+	@Override
+	public String redirecionar(String pagina, boolean redirect) {
+		return redirect ? pagina + "?faces-redirect=true" : pagina;
+	}
+
+	@Override
+	public String cancelar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean validar() {
+		return false;
+	}
+
+	public String getContentType(Long id) {
+		try {
+			return this.utilMultimidiaEJB.getContentType(id.longValue());
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	public String imagemDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return tipo.contains("image") ? "" : "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	public String videoDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return tipo.contains("video") ? "" : "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	public String midiaDisplay(Long id) {
+		try {
+			if (id.equals(null) || id == null) {
+				throw new ModeloException(
+						"Campo ID para multimidia não pode ser null");
+			}
+			String tipo = this.utilMultimidiaEJB.getContentType(id.longValue());
+			return !tipo.contains("image") && !tipo.contains("video") ? ""
+					: "none";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+
+	public MensagensMB getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
+	}
+
+	public String getAssuntos() {
+		return assuntos;
+	}
+
+	public void setAssuntos(String assuntos) {
+		this.assuntos = assuntos;
+	}
+
+	public String getDescritores() {
+		return descritores;
+	}
+
+	public void setDescritores(String descritores) {
+		this.descritores = descritores;
+	}
+
+	public List<StringContainer> getFontesInformacao() {
+		return fontesInformacao;
+	}
+
+	public void setFontesInformacao(List<StringContainer> fontesInformacao) {
+		this.fontesInformacao = fontesInformacao;
+	}
+
+	public List<MVModeloCamposMultimidia> getCampos() {
+		return campos;
+	}
+
+	public void setCampos(List<MVModeloCamposMultimidia> campos) {
+		this.campos = campos;
 	}
 
 }

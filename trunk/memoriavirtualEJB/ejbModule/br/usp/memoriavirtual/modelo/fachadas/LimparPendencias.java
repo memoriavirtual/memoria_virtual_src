@@ -1,7 +1,9 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+<<<<<<< .mine
 import java.sql.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
@@ -22,6 +24,9 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
 public class LimparPendencias implements LimparPendenciasrRemote {
 	 
 	@PersistenceContext(unitName = "memoriavirtual")
+	private Logger logger = Logger
+			.getLogger("br.usp.memoriavirtual.modelo.fachadas.Timer");
+
 	private EntityManager em;
 	
 	@EJB
@@ -40,7 +45,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		
 		//Date dataAtual = new Date(2014,12,12); //usado para testes
 		
-		System.out.println("Executando Limpar Pêndencias: "+dataAtual);
+		System.out.println("Executando Limpar Pï¿½ndencias: "+dataAtual);
 		
 		List<Usuario> usuariosExpirados = null;
 		List<Aprovacao> aprovacoesExpiradas = null;
@@ -59,7 +64,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 			System.out.println("Usuario Expirado(email):"+usuariosExpirados.get(i).getEmail());
 		
 		for(int i=0;i<aprovacoesExpiradas.size();i++)
-			System.out.println("Aprovação Expirada(aprovador):"+aprovacoesExpiradas.get(i).getAprovador());
+			System.out.println("Aprovaï¿½ï¿½o Expirada(aprovador):"+aprovacoesExpiradas.get(i).getAprovador());
 		
 		for(int i=0;i<usuariosExpirados.size();i++){
 			Usuario u = usuariosExpirados.get(i);
@@ -83,5 +88,5 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 			}
 			em.remove(aprov);			
 		}
-	}	
+	}
 }

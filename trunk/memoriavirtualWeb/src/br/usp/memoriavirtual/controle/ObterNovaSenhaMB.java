@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,11 +13,10 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ObterNovaSenhaRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
+@ManagedBean(name = "obterNovaSenhaMB")
+@RequestScoped
 public class ObterNovaSenhaMB implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5890869630608586063L;
 
 	@EJB

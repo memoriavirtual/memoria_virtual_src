@@ -5,59 +5,77 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>#{mensagens.realizarBuscaSimplesTitle}</title>
-<link rel="stylesheet" type="text/css" href="./resources/css/mv.css" />
-</head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="lang" content="pt" />
+	<meta name="charset" content="utf-8" />
+	<h:outputStylesheet name="reset.css" library="css" />
+	<h:outputStylesheet name="bootstrap.css" library="bootstrap/css" />
+	<h:outputStylesheet name="select2.css" library="select2" />
+	<h:outputStylesheet name="font-awesome.css" library="fontawesome/css" />
+	<h:outputStylesheet name="estilo.less" library="css" />
+	<h:outputStylesheet name="bootstrap-switch.css"
+		library="bootstrap-switch-master/dist/css/bootstrap3" />
+	<h:outputScript name="less.min.js" library="javascript" />
+	<h:outputScript name="pdfobject.js" library="javascript"></h:outputScript>
+	<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
+	<h:outputScript name="bootstrap.js" library="bootstrap/js"></h:outputScript>
+	<h:outputScript name="select2.js" library="select2"></h:outputScript>
+	<h:outputScript name="bootstrap-switch.js"
+		library="bootstrap-switch-master/dist/js"></h:outputScript>
+	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
+	<title>#{mensagens.realizarBuscaSimplesTitulo}</title>
+</h:head>
 
 <h:body>
 
-	<h:outputScript library="javascript" name="jquery.js" />
-	<h:outputScript library="javascript" name="abas.js" />
-	<h:outputScript library="javascript" name="jquery.corner.js" />
-	<h:outputScript library="javascript" name="mv.js" />
-	<h:outputScript library="css" name="mv.css" />
-	<div class="continente">
-		<div id="usuario">
-
-			<h:form>
-				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendSair}"
-					value="restrito/index.jsf">Início</h:outputLink>
-				&lt;<h:outputText value="#{usuario.id}" />&gt;,
-				<h:commandLink rendered="#{realizarBuscaSimplesMB.rendSair}"
-					action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
-				<h:outputLink rendered="#{realizarBuscaSimplesMB.rendLogin}"
-					value="login.jsf">Login</h:outputLink>
-			</h:form>
-
-		</div>
-		<h:graphicImage library="imagens" name="logo_mv_catalogacao.png"
-			class="imgbusca" />
-
-		<div class="conteudoTitulo">#{mensagens.realizarBuscaSimplesTitle}</div>
-
-
-		<h:form method="post" prependId="false">
-			<div class="buscadiv">
-				<fieldset>
-					<h:inputText value="#{realizarBuscaSimplesMB.busca}"
-						class="inputbusca" autocomplete="off">
-					</h:inputText>
-
-
-				</fieldset>
-
-				<h:commandButton id="botaoBusca"
-					value="#{mensagens.realizarBuscaSimplesBuscar}"
-					action="#{realizarBuscaSimplesMB.buscar()}">
-
-				</h:commandButton>
+	<div class="col-md-12">
+		<h:form class="form-horizontal" role="form" method="post"
+			prependId="false">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					&lt;
+					<h:outputText value="#{usuario.nomeCompleto}" />
+					&gt;,
+					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">${mensagens.sair}</h:commandLink>
+				</div>
 			</div>
 		</h:form>
 	</div>
-	<p class="rodape">Copyright &copy; 2009 LABES - Laborat&oacute;rio
-		de Engenharia de Software - ICMC-USP</p>
 
+	<div class="row top-padding-30">
+		<div class="col-md-6 col-md-offset-3">
+			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
+		</div>
+	</div>
+
+	<h:form class="form-horizontal" role="form" method="post"
+		prependId="false">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="form-group">
+					<h:outputLabel class="control-label transparente" for="busca">.</h:outputLabel>
+					<div class="input-group">
+						<h:inputText value="#{realizarBuscaSimplesMB.busca}"
+							class="form-control" id="busca">
+						</h:inputText>
+						<span class="input-group-btn"> <h:commandLink
+								class="btn btn-primary"
+								action="#{realizarBuscaSimplesMB.buscar}">
+								<i class="fa fa-search"></i>
+								#{mensagens.buscar}
+							</h:commandLink>
+						</span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</h:form>
+	<div class="top-margin-10 col-md-12 text-center">
+		Copyright &copy; 2009 LABES - Laborat&oacute;rio de Engenharia de
+		Software - ICMC-USP<br /> Build Tag: mv_20140205_versao3
+	</div>
 </h:body>
 </html>

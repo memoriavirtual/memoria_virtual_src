@@ -13,12 +13,14 @@
 	<h:outputStylesheet name="select2.css" library="select2" />
 	<h:outputStylesheet name="font-awesome.css" library="fontawesome/css" />
 	<h:outputStylesheet name="estilo.less" library="css" />
+	<h:outputStylesheet name="bootstrap-switch.css" library="bootstrap-switch-master/dist/css/bootstrap3" />
 	<h:outputScript name="less.min.js" library="javascript" />
-	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
 	<h:outputScript name="pdfobject.js" library="javascript"></h:outputScript>
 	<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
 	<h:outputScript name="bootstrap.js" library="bootstrap/js"></h:outputScript>
 	<h:outputScript name="select2.js" library="select2"></h:outputScript>
+	<h:outputScript name="bootstrap-switch.js" library="bootstrap-switch-master/dist/js"></h:outputScript>
+	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
 
 	<title><ui:insert name="titulo">#{mensagens.tituloSistema}</ui:insert></title>
 </h:head>
@@ -39,6 +41,10 @@
 			</div>
 		</div>
 	</div>
+	
+	<div id="mensagens" class="#{mensagensMB.classe}">
+		<span>#{mensagensMB.mensagem}</span>
+	</div>
 
 	<f:view locale="#{facesContext.externalContext.requestLocale}">
 		<div>
@@ -58,5 +64,27 @@
 			</div>
 		</div>
 	</f:view>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var pedidoLimpar = false;
+			$('#mensagens').click(function(){
+				if (!pedidoLimpar) {
+					limparMensagens();
+					pedidoLimpar = true;
+				}
+				
+			});
+			
+			$('#mensagens').mouseenter(function(){
+				setTimeout(function(){
+					if (!pedidoLimpar) {
+						limparMensagens();
+						pedidoLimpar = true;
+					}
+				}, 5000);
+			});
+		});
+	</script>
 </h:body>
 </html>

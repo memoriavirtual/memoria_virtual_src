@@ -1,238 +1,129 @@
-/**
- * 
- */
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.el.ELResolver;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-/**
- * @author bigmac
- * 
- */
+@ManagedBean(name = "editarAutorMB")
+@SessionScoped
 public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6035894025134227970L;
-	
-	
-	@EJB
-	private transient EditarAutorRemote editarAutorEJB;
-	private String strDeBusca;
-	private List<Autor> autores = new ArrayList<Autor>();
-	private boolean etapa1 = true;
-	private boolean etapa2 = false;
-	private boolean listarTodos = false;
 
-	/**
-	 * Construtor
-	 */
+	@EJB
+	private EditarAutorRemote editarAutorEJB;
+
+	protected String id = "";
+	protected Autor autor = new Autor();
+	private MensagensMB mensagens;
+
 	public EditarAutorMB() {
 		super();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	/**
-	 * M�todo � chamado enquanto as letras são inseridas no campo de busca.
-	 */
-	public void listarAutores(AjaxBehaviorEvent event) {
-
-		this.listarAutores();
-
-	}
-
-	public String listarAutores() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		this.autores.clear();
-		if (!this.strDeBusca.equals("") || this.listarTodos) {
+	public String editar() {
+		if (this.validar()) {
 			try {
-				this.autores = this.editarAutorEJB
-						.listarAutores(this.strDeBusca);
-
-			} catch (ModeloException e) {
+				this.editarAutorEJB.editarAutor(this.autor);
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				return this.redirecionar("/restrito/index.jsf", true);
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erro"));
 				e.printStackTrace();
+				return null;
 			}
-		} else {
-			Autor autor = new Autor();
-			autor.setNome(bundle.getString("listarTodos"));
-			this.autores.add(0, autor);
 		}
 		return null;
 	}
 
 	public String selecionarAutor() {
-		return null;
-	}
-
-	public String selecionarAutor(Autor autor) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (!autor.getNome().equals(bundle.getString("listarTodos"))) {
-			this.autor = autor;
-			this.etapa1 = false;
-			this.etapa2 = true;
-		} else {
-			this.listarTodos = true;
-			this.strDeBusca = "";
-			try {
-				this.autores = this.editarAutorEJB
-						.listarAutores(this.strDeBusca);
-
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
-		}
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-			format.setLenient(false);
-			format.parse(this.autor.getNascimento());
-		} catch (ParseException e) {
-			if (!this.autor.getNascimento().equals("")) {
-				this.outroNascimento = true;
-				this.normalNascimento = false;
-			}
+			this.autor = this.editarAutorEJB.getAutor(new Long(this.id));
+			return this.redirecionar("/restrito/editarautor.jsf", true);
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
 		}
-		try {
-			format.setLenient(false);
-			format.parse(this.autor.getObito());
-		} catch (ParseException e) {
-			if (!this.autor.getObito().equals("")) {
-				this.outroObito = true;
-				this.normalObito = false;
-			}
-		}
-		int i = 0;
-		while (true) {
-			try {
-				if (!bundle.getString("cadastrarAutorListaAtividade" + i).equals(this.autor.getAtividade()) && !this.autor.getAtividade().equals("")) {
-					this.outroAtividade = true;
-					this.normalAtividade = false;
-				}else{
-					this.outroAtividade = false;
-					this.normalAtividade = true;
-					break;
-				}
-				
-			} catch (MissingResourceException e) {
-				break;
-			}
-			i++;
-		}
-		return null;
-	}
-
-	public String salvarEdicaoAutor() {
-
-		this.validateNome();
-		this.validateSobrenome();
-		this.validateNascimento();
-		this.validateObito();
-		this.validateAtividade();
-
-		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-
-			try {
-				this.editarAutorEJB.editarAutor(this.autor);
-			} catch (ModeloException e) {
-				e.printStackTrace();
-				MensagensDeErro
-						.getErrorMessage("editarAutorError", "resultado");
-			}
-			MensagensDeErro.getSucessMessage("editarAutorSucesso", "resultado");
-			this.resetEditarAutor();
-		}
-		return null;
-	}
-
-	/**
-	 * Volta os atributos a um estado original
-	 */
-	public String resetEditarAutor() {
-		super.resetCadastrarAutor();
-		this.strDeBusca = "";
-		this.autores.clear();
-		this.etapa1 = true;
-		this.etapa2 = false;
-		this.listarTodos = false;
-		return null;
 	}
 
 	public String cancelarEditarAutor() {
-		this.resetEditarAutor();
 		return "cancel";
 	}
 
-	/**
-	 * @return the strBusca
-	 */
-	public String getStrDeBusca() {
-		return strDeBusca;
+	public String limpar() {
+		this.id = "";
+		this.autor = new Autor();
+		super.limpar();
+		return null;
 	}
 
-	/**
-	 * @param strBusca
-	 *            the strBusca to set
-	 */
-	public void setStrDeBusca(String strBusca) {
-		this.strDeBusca = strBusca;
+	@Override
+	public boolean validar() {
+		boolean a = this.validarNome();
+		boolean b = this.validarSobrenome();
+		return (a && b);
 	}
 
-	/**
-	 * @return the autores
-	 */
-	public List<Autor> getAutores() {
-		return autores;
+	@Override
+	public boolean validarNome() {
+		if (this.autor.getNome() == null || this.autor.getNome().equals("")) {
+			String args[] = { this.traduzir("nome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-nome");
+			return false;
+		}
+		return true;
 	}
 
-	/**
-	 * @return the etapa1
-	 */
-	public boolean isEtapa1() {
-		return etapa1;
+	@Override
+	public boolean validarSobrenome() {
+		if (this.autor.getSobrenome() == null
+				|| this.autor.getSobrenome().equals("")) {
+			String args[] = { this.traduzir("sobrenome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-sobrenome");
+			return false;
+		}
+		return true;
 	}
 
-	/**
-	 * @param etapa1
-	 *            the etapa1 to set
-	 */
-	public void setEtapa1(boolean etapa1) {
-		this.etapa1 = etapa1;
+	// getters e setters
+
+	public String getId() {
+		return id;
 	}
 
-	/**
-	 * @return the etapa2
-	 */
-	public boolean isEtapa2() {
-		return etapa2;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	/**
-	 * @param etapa2
-	 *            the etapa2 to set
-	 */
-	public void setEtapa2(boolean etapa2) {
-		this.etapa2 = etapa2;
+	public MensagensMB getMensagens() {
+		return mensagens;
 	}
 
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
+	}
+
+	public Autor getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Autor autor) {
+		this.autor = autor;
+	}
 }

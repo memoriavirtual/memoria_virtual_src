@@ -1,489 +1,201 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.entidades.Autor.Atividade;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarAutorRemote;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "cadastrarAutorMB")
 @RequestScoped
-public class CadastrarAutorMB implements Serializable {
+public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 
 	private static final long serialVersionUID = 5784819830194641882L;
 
 	@EJB
 	private CadastrarAutorRemote cadastrarAutorEJB;
 
-	protected Autor autor = new Autor("", "", "", "", "", "");
-
-	protected boolean outroAtividade = false;
-	protected boolean normalAtividade = true;
-	protected boolean outroNascimento = false;
-	protected boolean normalNascimento = true;
-	protected boolean outroObito = false;
-	protected boolean normalObito = true;
+	protected String nome = "";
+	protected String sobrenome = "";
+	protected String codinome = "";
+	protected Atividade atividade = Autor.Atividade.adaptador;
+	protected String nascimento = "";
+	protected String obito = "";
+	private MensagensMB mensagens;
 
 	public CadastrarAutorMB() {
 		super();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	public String cadastrarAutor() {
-		
-		String retorno = null;
-
-		this.validateNome();
-		this.validateSobrenome();
-		this.validateNascimento();
-		this.validateObito();
-		this.validateAtividade();
-
-		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-
+	public String cadastrar() {
+		if (this.validar()) {
 			try {
-				this.cadastrarAutorEJB.cadastrarAutor(new Autor(this.autor
-						.getNome(), this.autor.getSobrenome(), this.autor
-						.getCodinome(), this.autor.getAtividade(), this.autor
-						.getNascimento(), this.autor.getObito()));
-			} catch (ModeloException e) {
-				MensagensDeErro.getErrorMessage("cadastrarAutorJaCadastrado",
-						"resultado");
-				e.printStackTrace();
-			}
-			MensagensDeErro.getSucessMessage("cadastrarAutorSucesso",
-					"resultado");
-			this.autor.setNome("");
-			this.autor.setSobrenome("");
-			this.autor.setCodinome("");
-			this.autor.setNascimento("");
-			this.autor.setObito("");
-			this.autor.setAtividade("");
-			this.outroAtividade = false;
-			this.normalAtividade = true;
-			outroNascimento = false;
-			normalNascimento = true;
-			outroObito = false;
-			normalObito = true;
+				Autor autor = new Autor();
+				autor.setAtividade(this.atividade);
+				autor.setCodinome(this.codinome);
+				autor.setNascimento(this.nascimento);
+				autor.setNome(this.nome);
+				autor.setObito(this.obito);
+				autor.setSobrenome(this.sobrenome);
 
-		} else {
-			MensagensDeErro.getErrorMessage("cadastrarAutorFalha", "resultado");
+				this.cadastrarAutorEJB.cadastrarAutor(autor);
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				return this.redirecionar("/restrito/index.jsf", true);
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				e.printStackTrace();
+				return null;
+			}
 		}
-		return retorno;
+		return null;
+	}
+
+	public String cadastroRapido(){
+		String resultado = this.cadastrar();
+		if(resultado != null && resultado.equals(this.redirecionar("/restrito/index.jsf", true))){
+			MensagensDeErro.getSucessMessage("sucesso", "resultado");
+		}
+		return null;
+	}
+
+	public String limpar() {
+		this.nome = "";
+		this.sobrenome = "";
+		this.codinome = "";
+		this.atividade = Autor.Atividade.adaptador;
+		this.nascimento = "";
+		this.obito = "";
+		return null;
+	}
+
+	public String cancelar() {
+		this.limpar();
+		return this.redirecionar("/restrito/index.jsf", true);
+	}
+
+	@Override
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
+	}
+
+	@Override
+	public String redirecionar(String pagina, boolean redirect) {
+		return redirect ? pagina + "?faces-redirect=true" : pagina;
+	}
+
+	@Override
+	public boolean validar() {
+		boolean a = this.validarNome();
+		boolean b = this.validarSobrenome();
+		return (a && b);
+	}
+
+	public boolean validarNome() {
+		if (this.nome == null || this.nome.equals("")) {
+			String args[] = { this.traduzir("nome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-nome");
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validarSobrenome() {
+		if (this.sobrenome == null || this.sobrenome.equals("")) {
+			String args[] = { this.traduzir("sobrenome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-sobrenome");
+			return false;
+		}
+		return true;
 	}
 
 	public List<SelectItem> getListaAtividade() {
-		List<SelectItem> atividades = new ArrayList<SelectItem>();
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade1")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade2")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade3")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade4")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade5")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade6")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade7")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade8")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade9")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade10")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade11")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade12")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade13")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade14")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade15")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade16")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade17")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade18")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade19")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade20")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade21")));
-		atividades.add(new SelectItem(bundle
-				.getString("cadastrarAutorListaAtividade22")));
 
-		return atividades;
-	}
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
 
-	public String abrirAtividadeOutro() {
-		this.autor.setAtividade("");
-		this.outroAtividade = !this.outroAtividade;
-		this.normalAtividade = !this.normalAtividade;
-		return null;
-	}
-
-	public String getOutroLinkAtividade() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (this.normalAtividade) {
-			return bundle.getString("cadastrarAutorEspecificar");
-		} else {
-			return bundle.getString("cadastrarAutorSelecionar");
+		for (Autor.Atividade t : Autor.Atividade.values()) {
+			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
 
+		return opcoes;
 	}
 
-	public String abrirNascimentoOutro() {
-		this.autor.setNascimento("");
-		this.outroNascimento = (this.outroNascimento) ? false : true;
-		this.normalNascimento = (this.normalNascimento) ? false : true;
-		return null;
-	}
+	// getters e setters
 
-	public String getOutroLinkNascimento() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (!this.normalNascimento) {
-			return bundle.getString("cadastrarAutorDataEspecifica");
-		} else {
-			return bundle.getString("cadastrarAutorDataImprecisa");
-		}
-
-	}
-
-	public String abrirObitoOutro() {
-		this.setObito("");
-		this.outroObito = !this.outroObito;
-		this.normalObito = !this.normalObito;
-		return null;
-	}
-
-	public String getOutroLinkObito() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String bundleName = "mensagens";
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-		if (!this.normalObito) {
-			return bundle.getString("cadastrarAutorDataEspecifica");
-		} else {
-			return bundle.getString("cadastrarAutorDataImprecisa");
-		}
-
-	}
-
-	public String resetCadastrarAutor() {
-		this.autor.setNome("");
-		this.autor.setSobrenome("");
-		this.autor.setCodinome("");
-		this.autor.setNascimento("");
-		this.autor.setObito("");
-		this.autor.setAtividade("");
-		this.outroAtividade = false;
-		this.normalAtividade = true;
-		outroNascimento = false;
-		normalNascimento = true;
-		outroObito = false;
-		normalObito = true;
-		return "reset";
-	}
-
-	public String cancelarCadastrarAutor() {
-		this.resetCadastrarAutor();
-		return "cancel";
-	}
-
-	public void validateNome(AjaxBehaviorEvent event) {
-		this.validateNome();
-	}
-
-	public boolean validateNome() {
-		if (this.autor.getNome().equals("")) {
-			MensagensDeErro.getErrorMessage("cadastrarAutorNomeVazia",
-					"validacaoNome");
-			return false;
-		}
-		return true;
-	}
-
-	public void validateSobrenome(AjaxBehaviorEvent event) {
-		this.validateSobrenome();
-	}
-
-	public boolean validateSobrenome() {
-		if (this.autor.getSobrenome().equals("")) {
-			MensagensDeErro.getErrorMessage("cadastrarAutorSobrenomeVazia",
-					"validacaoSobrenome");
-			return false;
-		}
-		return true;
-	}
-
-	public void validateAtividade(AjaxBehaviorEvent event) {
-		this.validateAtividade();
-	}
-
-	public boolean validateAtividade() {
-
-		if (this.autor.getAtividade().equals("")) {
-			MensagensDeErro.getErrorMessage("cadastrarAutorAtividadeVazia",
-					"validacaoAtividade");
-		}
-
-		return true;
-	}
-
-	public void validateNascimento(AjaxBehaviorEvent event) {
-		this.validateNascimento();
-	}
-
-	public boolean validateNascimento() {
-		if ((!this.autor.getNascimento().equals("")))
-			if (this.normalNascimento == true) {
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-				try {
-					format.setLenient(false);
-					format.parse(this.autor.getNascimento());
-				} catch (ParseException e) {
-					MensagensDeErro.getErrorMessage(
-							"cadastrarAutorNascimentoIncorreto",
-							"validacaoNascimento");
-					return false;
-				}
-			}
-		return true;
-	}
-
-	public void validateObito(AjaxBehaviorEvent event) {
-		this.validateObito();
-	}
-
-	public boolean validateObito() {
-		if ((!this.autor.getObito().equals(""))) {
-			if (this.normalObito == true) {
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-				try {
-					format.setLenient(false);
-					format.parse(this.autor.getObito());
-				} catch (ParseException e) {
-					MensagensDeErro.getErrorMessage(
-							"cadastrarAutorNascimentoIncorreto",
-							"validacaoObito");
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * @return the outroAtividade
-	 */
-	public boolean isOutroAtividade() {
-		return outroAtividade;
-	}
-
-	/**
-	 * @return the normalAtividade
-	 */
-	public boolean isNormalAtividade() {
-		return normalAtividade;
-	}
-
-	/**
-	 * @param outroAtividade
-	 *            the outroAtividade to set
-	 */
-	public void setOutroAtividade(boolean outroAtividade) {
-		this.outroAtividade = outroAtividade;
-	}
-
-	/**
-	 * @param normalAtividade
-	 *            the normalAtividade to set
-	 */
-	public void setNormalAtividade(boolean normalAtividade) {
-		this.normalAtividade = normalAtividade;
-	}
-
-	/**
-	 * @return the nome
-	 */
 	public String getNome() {
-		return this.autor.getNome();
+		return nome;
 	}
 
-	/**
-	 * @return the sobrenome
-	 */
-	public String getSobrenome() {
-		return this.autor.getSobrenome();
-	}
-
-	/**
-	 * @return the codinome
-	 */
-	public String getCodinome() {
-		return this.autor.getCodinome();
-	}
-
-	/**
-	 * @return the nascimento
-	 */
-	public String getNascimento() {
-		return this.autor.getNascimento();
-	}
-
-	/**
-	 * @return the obito
-	 */
-	public String getObito() {
-		return this.autor.getObito();
-	}
-
-	/**
-	 * @return the atividade
-	 */
-	public String getAtividade() {
-		return this.autor.getAtividade();
-	}
-
-	/**
-	 * @param nome
-	 *            the nome to set
-	 */
 	public void setNome(String nome) {
-		this.autor.setNome(nome);
+		this.nome = nome;
 	}
 
-	/**
-	 * @param sobrenome
-	 *            the sobrenome to set
-	 */
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
 	public void setSobrenome(String sobrenome) {
-		this.autor.setSobrenome(sobrenome);
+		this.sobrenome = sobrenome;
 	}
 
-	/**
-	 * @param codinome
-	 *            the codinome to set
-	 */
+	public String getCodinome() {
+		return codinome;
+	}
+
 	public void setCodinome(String codinome) {
-		this.autor.setCodinome(codinome);
+		this.codinome = codinome;
 	}
 
-	/**
-	 * @param nascimento
-	 *            the nascimento to set
-	 */
+	public Atividade getAtividade() {
+		return atividade;
+	}
+
+	public void setAtividade(Atividade atividade) {
+		this.atividade = atividade;
+	}
+
+	public String getNascimento() {
+		return nascimento;
+	}
+
 	public void setNascimento(String nascimento) {
-		this.autor.setNascimento(nascimento);
+		this.nascimento = nascimento;
 	}
 
-	/**
-	 * @param obito
-	 *            the obito to set
-	 */
+	public String getObito() {
+		return obito;
+	}
+
 	public void setObito(String obito) {
-		this.autor.setObito(obito);
+		this.obito = obito;
 	}
 
-	/**
-	 * @param atividade
-	 *            the atividade to set
-	 */
-	public void setAtividade(String atividade) {
-		this.autor.setAtividade(atividade);
+	public MensagensMB getMensagens() {
+		return mensagens;
 	}
 
-	/**
-	 * @return the normaltipoAutoria
-	 */
-
-	/**
-	 * @return the outroNascimento
-	 */
-	public boolean isOutroNascimento() {
-		return outroNascimento;
-	}
-
-	/**
-	 * @param outroNascimento
-	 *            the outroNascimento to set
-	 */
-	public void setOutroNascimento(boolean outroNascimento) {
-		this.outroNascimento = outroNascimento;
-	}
-
-	/**
-	 * @return the normalNascimento
-	 */
-	public boolean isNormalNascimento() {
-		return normalNascimento;
-	}
-
-	/**
-	 * @param normalNascimento
-	 *            the normalNascimento to set
-	 */
-	public void setNormalNascimento(boolean normalNascimento) {
-		this.normalNascimento = normalNascimento;
-	}
-
-	/**
-	 * @return the outroObito
-	 */
-	public boolean isOutroObito() {
-		return outroObito;
-	}
-
-	/**
-	 * @param outroObito
-	 *            the outroObito to set
-	 */
-	public void setOutroObito(boolean outroObito) {
-		this.outroObito = outroObito;
-	}
-
-	/**
-	 * @return the normalObito
-	 */
-	public boolean isNormalObito() {
-		return normalObito;
-	}
-
-	/**
-	 * @param normalObito
-	 *            the normalObito to set
-	 */
-	public void setNormalObito(boolean normalObito) {
-		this.normalObito = normalObito;
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
 	}
 
 }

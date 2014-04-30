@@ -1,5 +1,0 @@
-package br.usp.memoriavirtual.utils;
-
-public enum MVControleTiposDeProtecaoExistente {
-	protecaoExistenteMundial, protecaoExistenteFederalIndividual, protecaoExistenteFederalConjunto, protecaoExistenteEstadualIndividual, protecaoExistenteEstadualConjunto, protecaoExistenteMunicipalIndividual, protecaoExistenteMunicipalConjunto, protecaoExistenteDecreto, protecaoExistenteEntorno, protecaoExistenteNenhuma
-}

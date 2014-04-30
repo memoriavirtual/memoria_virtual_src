@@ -1,249 +1,218 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
+import javax.el.ELResolver;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.Email;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
+import br.usp.memoriavirtual.utils.MVModeloEmailParser;
+import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
+import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
+import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
-public class EnviarConviteMB implements Serializable {
+@ManagedBean(name = "enviarConviteMB")
+@ViewScoped
+public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4054888655663667241L;
+
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	@EJB
 	private EnviarConviteRemote enviarConviteEJB;
 	private String mensagem = "";
-	private String validade = null;
+	private String validade = "1";
 	private List<Acesso> acessos = new ArrayList<Acesso>();
-	private boolean renderizarInstituicao = true;
-	private List<Email> listaEmails;
+	private List<Email> listaEmails = new ArrayList<Email>();
 	private boolean administrador = false;
+	private String emails = "";
+	private Usuario usuario;
+	private MensagensMB mensagens;
 
 	public EnviarConviteMB() {
-		listaEmails = new ArrayList<Email>();
-		listaEmails.add(new Email());
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
+
+		this.usuario = (Usuario) facesContext.getExternalContext()
+				.getSessionMap().get("usuario");
 	}
 
 	public String enviarConvite() {
 
-		/* Valida os campos preenchidos na tela. */
-		this.validateEmail();
-		this.validateValidade();
-		/* Remove os emails em branco. */
-		for (int i = 0; i < listaEmails.size(); i++) {
-			if (listaEmails.get(i).getEmail().equals("")) {
-				listaEmails.remove(i);
-				i--;
-			}
-		}
-
-		/* Verifica se há ao menos um email preenchido. */
-		if (listaEmails.size() < 1) {
-			MensagensDeErro.getErrorMessage(
-					"enviarConviteNenhumEmailPreenchido", null);
-			listaEmails.add(new Email());
-			return "falha";
-		}
-
-		/*
-		 * Se não há nenhuma mensagem de erro na tela tentamos enviar o
-		 * convite
-		 */
-		if (!FacesContext.getCurrentInstance().getMessages().hasNext()) {
-
-			/* Cria uma lista de strings para guardar os emails preenchidos. */
-			List<String> stringsEmails = new ArrayList<String>();
-			for (Email mail : listaEmails) {
-				stringsEmails.add(mail.getEmail());
-			}
-
+		if (this.validar()) {
 			try {
-				/*
-				 * Envia o convite a todos emails atravez do método
-				 * implementado no EJB.
-				 */
-				System.out.println(this.acessos.size());
-				this.enviarConviteEJB.enviarConvite(stringsEmails, mensagem,
-						validade, administrador, acessos);
+				String[] emails = this.emails.split("\\s+");
 
-				/* Exibe uma mensagem de sucesso. */
-				MensagensDeErro.getSucessMessage("convite_enviado", null);
+				Calendar calendario = Calendar.getInstance();
+				calendario.setTime(new Date());
+				calendario.add(Calendar.DATE, new Integer(this.validade));
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				String expiraEm = dateFormat.format(calendario.getTime());
 
-				/* Limpa a lista de emails na tela e adiciona um novo em branco. */
-				listaEmails = new ArrayList<Email>();
-				listaEmails.add(new Email());
+				long id = this.enviarConviteEJB.enviarConvite(emails,
+						this.mensagem, calendario.getTime(),
+						this.administrador, this.acessos);
 
-			} catch (ModeloException e) {
-				MensagensDeErro.getErrorMessage("erro_envio_convite", null);
+				Map<String, String> tags = new HashMap<String, String>();
+
+				Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+						.getExternalContext().getSessionMap().get("usuario");
+
+				tags.put(MVModeloParametrosEmail.SOLICITANTE000.toString(),
+						usuario.getNomeCompleto());
+
+				tags.put(MVModeloParametrosEmail.MENSAGEM000.toString(),
+						this.mensagem);
+				tags.put(MVModeloParametrosEmail.EXPIRACAO000.toString(),
+						expiraEm);
+
+				Map<String, String> parametros = new HashMap<String, String>();
+				parametros.put("id", this.memoriaVirtualEJB
+						.embaralhar(new Long(id).toString()));
+				String url = this.memoriaVirtualEJB.getUrl(
+						MVModeloMapeamentoUrl.cadastrarUsuario, parametros);
+
+				tags.put(MVModeloParametrosEmail.URL000.toString(), url);
+
+				String email = new MVModeloEmailParser().getMensagem(tags,
+						MVModeloEmailTemplates.enviarConvite);
+
+				for (String s : emails) {
+					this.memoriaVirtualEJB.enviarEmail(s,
+							this.traduzir("enviarConviteAssunto"), email);
+				}
+
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				return this.redirecionar("/restrito/index.jsf", true);
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 				e.printStackTrace();
-				return "falha";
+				return null;
 			}
 		}
-
-		this.acessos.clear();
-		this.listaEmails.clear();
-		this.mensagem = "";
-		
-		return "sucesso";
-	}
-
-	public boolean mostrarAdministrador() {
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
-		return usuario.isAdministrador();
-	}
-
-	public void alterarAdministrador(AjaxBehaviorEvent e) {
-
-		if (this.administrador)
-			this.acessos.clear();
-
-	}
-
-	public List<Email> getListaEmails() {
-		return listaEmails;
-	}
-
-	public void setListaEmails(List<Email> listaEmails) {
-		this.listaEmails = listaEmails;
-	}
-
-	public String addEmail() {
-		Email email = new Email();
-		listaEmails.add(email);
 		return null;
 	}
 
-	public String deleteEmail() {
+	public List<SelectItem> getNiveisAcesso() {
 
-		return null;
-	}
-
-	public String deleteEmail(Email email) {
-		listaEmails.remove(email);
-		return null;
-	}
-
-	public List<SelectItem> getValidadeDias() {
-
-		List<SelectItem> diasValidade = new ArrayList<SelectItem>();
-
-		for (int i = 1; i <= 30; i++) {
-			diasValidade.add(new SelectItem(i, i + " dias"));
-		}
-		return diasValidade;
-	}
-
-	public List<SelectItem> getNiveisPermitidos() {
-
-		/* Pega-se o usuário da sessão para verificar se ele é administrador. */
+		List<SelectItem> opcoes = new ArrayList<SelectItem>();
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get("usuario");
 
-		/*
-		 * Cria a lista que guarda os níveis que o usuario pode utilizar para
-		 * enviar o convite.
-		 */
-		List<SelectItem> niveisPermissao = new ArrayList<SelectItem>();
-
-		/*
-		 * Caso seja administrador pode convidar outros administradores,
-		 * gerentes para qualquer instituição do sistema alem de catalogadores
-		 * e revisores. Caso contrário pode convidar apenas níveis de acesso
-		 * inferiores a Gerente.
-		 */
 		if (usuario.isAdministrador()) {
-			niveisPermissao.add(new SelectItem("GERENTE", "Gerente"));
-			niveisPermissao.add(new SelectItem("CATALOGADOR", "Catalogador"));
-			niveisPermissao.add(new SelectItem("REVISOR", "Revisor"));
+			opcoes.add(new SelectItem("GERENTE", this
+					.traduzir(Grupo.Grupos.gerente.toString())));
+			opcoes.add(new SelectItem("CATALOGADOR", this
+					.traduzir(Grupo.Grupos.catalogador.toString())));
+			opcoes.add(new SelectItem("REVISOR", this
+					.traduzir(Grupo.Grupos.revisor.toString())));
 
 		} else {
-			niveisPermissao.add(new SelectItem("CATALOGADOR", "Catalogador"));
-			niveisPermissao.add(new SelectItem("REVISOR", "Revisor"));
+			opcoes.add(new SelectItem("CATALOGADOR", this
+					.traduzir(Grupo.Grupos.catalogador.toString())));
+			opcoes.add(new SelectItem("REVISOR", this
+					.traduzir(Grupo.Grupos.revisor.toString())));
 		}
 
-		return niveisPermissao;
+		return opcoes;
 	}
 
-	public List<SelectItem> getInstituicoesPermitidas() {
-		/*
-		 * Pega o usuário da seção para procurar as instituição para o qual
-		 * ele pode enviar convite.
-		 */
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("usuario");
+	public List<SelectItem> getInstituicoes() {
 
-		/*
-		 * Se for um administrador passamos o grupo como null para recuperar
-		 * todas instituições do sistema, se for um usuario normal criamos o
-		 * grupo Gerente para recuperar apenas as instituições em que o
-		 * usuário tem nivel de acesso de gerente (apenas gerente pode enviar
-		 * convites).
-		 */
-		Grupo grupo;
-		if (usuario.isAdministrador())
-			grupo = null;
-		else
-			grupo = new Grupo("GERENTE");
+		List<SelectItem> instituicoes = new ArrayList<SelectItem>();
 
-		/*
-		 * Criamos a lista onde será salva as instituições do usuário e em
-		 * seguida recuperamos as instituições pelo método implementado no
-		 * EJB.
-		 */
-		List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
-		instituicoesUsuario = this.enviarConviteEJB.getInstituicoesPermitidas(
-				usuario, grupo);
+		try {
+			List<Instituicao> instituicoesUsuario = new ArrayList<Instituicao>();
+			instituicoesUsuario = this.enviarConviteEJB
+					.listarInstituicoes(usuario);
 
-		/*
-		 * Agora é populado a lista de SelectItem para exibir as opções ao
-		 * usuário.
-		 */
-		List<SelectItem> listaInstituicoes = new ArrayList<SelectItem>();
-		for (Instituicao instituicao : instituicoesUsuario) {
-			listaInstituicoes.add(new SelectItem(instituicao.getNome(),
-					instituicao.getNome()));
-		}
-
-		return listaInstituicoes;
-	}
-
-	public void validateEmail(AjaxBehaviorEvent event) {
-		this.validateEmail();
-	}
-
-	public void validateEmail() {
-		for (Email email : this.listaEmails) {
-			if (!ValidacoesDeCampos.validarFormatoEmail(email.getEmail())
-					&& !email.getEmail().equals("")) {
-				String[] argumentos = { email.getEmail() };
-				MensagensDeErro.getErrorMessage(
-						"enviarConviteFormatoInvalidoEmail", argumentos, null);
-			} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(email
-					.getEmail())) {
-				String[] argumentos = { email.getEmail() };
-				MensagensDeErro.getErrorMessage(
-						"enviarConviteEmailJaCadastrado", argumentos, null);
+			for (Instituicao instituicao : instituicoesUsuario) {
+				instituicoes.add(new SelectItem(instituicao.getId(),
+						instituicao.getNome()));
 			}
+
+			return instituicoes;
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return instituicoes;
 		}
+	}
+
+	public boolean validarAcessos() {
+		if (!this.administrador && this.acessos.isEmpty()) {
+			this.getMensagens().mensagemErro(this.traduzir("erroAcessosVazio"));
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validarEmail() {
+		try {
+			if (this.emails == null || this.emails.length() == 0) {
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				String[] args = { this.traduzir("emails") };
+				MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+						"validacao-emails");
+				return false;
+			}
+			boolean erroFormato = false;
+			boolean erroInsdisponivel = false;
+			String[] emailArray = this.emails.split("\\s+");
+			for (String email : emailArray) {
+				if (!ValidacoesDeCampos.validarFormatoEmail(email)) {
+					erroFormato = true;
+				} else if (!memoriaVirtualEJB.verificarDisponibilidadeEmail(
+						email, null)) {
+					erroInsdisponivel = true;
+				}
+			}
+			if (erroFormato) {
+				MensagensDeErro.getErrorMessage("erroEmailInvalido",
+						"validacao-emails");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			}
+			if (erroInsdisponivel) {
+				MensagensDeErro.getErrorMessage("erroEmailIndisponivel",
+						"validacao-emails");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroFormulario"));
+				return false;
+			}
+		} catch (Exception e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	public String removerAcesso(Acesso a) {
@@ -266,57 +235,6 @@ public class EnviarConviteMB implements Serializable {
 		return null;
 	}
 
-	/**
-	 * @return A mensagem personalizada a ser enviada junto com os convites
-	 */
-	public String getMensagem() {
-		return mensagem;
-	}
-
-	/**
-	 * @param mensagem
-	 *            Define a mensagem personalizada a ser enviada junto com os
-	 *            convites
-	 */
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
-	}
-
-	/**
-	 * @return A validade do convite
-	 */
-	public String getValidade() {
-		return validade;
-	}
-
-	/**
-	 * @param validade
-	 *            Define a validade do convite
-	 */
-	public void setValidade(String validade) {
-		this.validade = validade;
-	}
-
-	public void validateValidade(AjaxBehaviorEvent event) {
-		this.validateValidade();
-	}
-
-	public void validateValidade() {
-
-		if (this.validade == null) {
-			MensagensDeErro.getErrorMessage("enviarconvite_validadevazia",
-					"validacaoValidade");
-		}
-	}
-
-	public boolean isRenderizarInstituicao() {
-		return renderizarInstituicao;
-	}
-
-	public void setRenderizarInstituicao(boolean renderizarInstituicao) {
-		this.renderizarInstituicao = renderizarInstituicao;
-	}
-
 	public List<Acesso> getAcessos() {
 		return acessos;
 	}
@@ -331,6 +249,91 @@ public class EnviarConviteMB implements Serializable {
 
 	public void setAdministrador(boolean administrador) {
 		this.administrador = administrador;
+	}
+
+	@Override
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
+	}
+
+	@Override
+	public String redirecionar(String pagina, boolean redirect) {
+		return redirect ? pagina + "?faces-redirect=true" : pagina;
+	}
+
+	public String limpar() {
+		this.acessos = new ArrayList<Acesso>();
+		this.administrador = false;
+		this.mensagem = "";
+		this.validade = "1";
+		this.emails = "";
+		return null;
+	}
+
+	@Override
+	public String cancelar() {
+		this.limpar();
+		return this.redirecionar("/restrito/index.jsf", true);
+	}
+
+	@Override
+	public boolean validar() {
+		boolean a, b;
+		a = this.validarEmail();
+		b = this.validarAcessos();
+
+		return (a && b);
+	}
+
+	public List<Email> getListaEmails() {
+		return listaEmails;
+	}
+
+	public void setListaEmails(List<Email> listaEmails) {
+		this.listaEmails = listaEmails;
+	}
+
+	public String getEmails() {
+		return emails;
+	}
+
+	public void setEmails(String emails) {
+		this.emails = emails;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public MensagensMB getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
+	}
+
+	public String getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
+
+	public String getValidade() {
+		return validade;
+	}
+
+	public void setValidade(String validade) {
+		this.validade = validade;
 	}
 
 }

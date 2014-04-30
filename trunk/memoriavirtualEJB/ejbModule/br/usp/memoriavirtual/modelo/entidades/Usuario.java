@@ -4,77 +4,57 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.validation.constraints.NotNull;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-@NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.id = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
+@NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.identificacao = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
 @Entity
+@SequenceGenerator(name = "USUARIO_ID", sequenceName = "USUARIO_SEQ", allocationSize = 1)
 public class Usuario implements Serializable, Cloneable {
-	/**
-	 * Serial Version UID
-	 */
+
 	private static final long serialVersionUID = -2966677929188737645L;
+
 	@Id
-	private String id;
-	@NotNull
-	@Column(unique = true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_ID")
+	private long id;
+
+	private String identificacao;
 	private String email;
 	private String nomeCompleto;
 	private String telefone;
 	private String senha;
+
+	@Temporal(TemporalType.DATE)
 	private Date validade;
-	@NotNull
+
 	private Boolean administrador;
-	@NotNull
 	private Boolean ativo;
 
-	/**
-	 * Construtor padrão
-	 */
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", cascade = CascadeType.ALL)
+	private List<Acesso> acessos;
+
 	public Usuario() {
 		super();
 	}
 
-	public Usuario(String id, String email, String nomeCompleto, String telefone, String senha){
-		this.id = id;
-		this.email = email;
-		this.nomeCompleto = nomeCompleto;
-		this.telefone = telefone;
-		this.senha = Usuario.gerarHash(senha);
-	}
-	/**
-	 * @return the login
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @param login
-	 *            the login to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the senha
-	 */
 	public String getSenha() {
 		return senha;
 	}
 
-	/**
-	 * @param senha
-	 *            the senha to set
-	 */
 	public void setSenha(String senha) {
 		String senhaCriptografada = gerarHash(senha);
 		this.senha = senhaCriptografada;
@@ -88,33 +68,20 @@ public class Usuario implements Serializable, Cloneable {
 		this.email = email;
 	}
 
-	/**
-	 * @return validade do cadastro
-	 */
 	public Date getValidade() {
 		return validade;
 	}
 
-	/**
-	 * @param validade
-	 *            a data limite da validade
-	 */
-	public void setValidade(java.util.Date validade) {
-		java.sql.Date temp = new Date(validade.getTime());
-		this.validade = temp;
+	public void setValidade(Date validade) {
+		this.validade = validade;
 	}
 
 	public Boolean isAdministrador() {
-		if(this.administrador == null){
+		if (this.administrador == null) {
 			return false;
 		}
 		return administrador;
 	}
-
-	/**
-	 * @param administrador
-	 *            se o usuario é ou não administrador do sistema
-	 */
 
 	public void setAdministrador(Boolean administrador) {
 		this.administrador = administrador;
@@ -123,11 +90,6 @@ public class Usuario implements Serializable, Cloneable {
 	public Boolean isAtivo() {
 		return ativo;
 	}
-
-	/**
-	 * @param ativo
-	 *            Se o usuario ja fez cadastro
-	 */
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
@@ -141,8 +103,6 @@ public class Usuario implements Serializable, Cloneable {
 		this.nomeCompleto = nomeCompleto;
 	}
 
-	
-	
 	public String getTelefone() {
 		return telefone;
 	}
@@ -151,11 +111,6 @@ public class Usuario implements Serializable, Cloneable {
 		this.telefone = telefone;
 	}
 
-	/**
-	 * @param input
-	 *            a senha para ser criptografada ou o email para criar o id
-	 *            usando no convite
-	 */
 	public static String gerarHash(String input) {
 
 		MessageDigest md = null;
@@ -172,7 +127,7 @@ public class Usuario implements Serializable, Cloneable {
 		} catch (NullPointerException ex) {
 			return null;
 		}
-		// Converte para hexa antes de utilizar a senha criptografada
+
 		StringBuilder hexString = new StringBuilder();
 		for (byte b : messageDigest) {
 			hexString.append(String.format("%02X", 0xFF & b));
@@ -192,5 +147,37 @@ public class Usuario implements Serializable, Cloneable {
 			e.printStackTrace();
 		}
 		return clone;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getIdentificacao() {
+		return identificacao;
+	}
+
+	public void setIdentificacao(String identificacao) {
+		this.identificacao = identificacao;
+	}
+
+	public Boolean getAdministrador() {
+		return administrador;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public List<Acesso> getAcessos() {
+		return acessos;
+	}
+
+	public void setAcessos(List<Acesso> acessos) {
+		this.acessos = acessos;
 	}
 }

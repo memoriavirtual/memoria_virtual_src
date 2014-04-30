@@ -2,7 +2,6 @@ package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,156 +14,103 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlTransient;
 
-
 @Entity
 @SequenceGenerator(name = "MULTIMIDIA_ID", sequenceName = "MULTIMIDIA_SEQ", allocationSize = 1)
 public class Multimidia implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1246434877940087730L;
-	public Multimidia() {
-	}
-	
-	/**
-	 * @param nome
-	 * @param contentType
-	 * @param content
-	 * @param tamanho
-	 */
-	public Multimidia(String nome, byte[] content, String contentType , String descricao, Multimidia thumb ) {
-		super();
-		this.nome = nome;
-		this.content = content;
-		this.descricao = descricao;
-		this.contentType = contentType;
-		this.thumb = thumb;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MULTIMIDIA_ID")
 	private long id;
-	@ManyToOne(cascade=CascadeType.ALL , fetch=FetchType.EAGER)
-	@JoinColumn(name="CONTAINERMULTIMIDIA_ID")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CONTAINERMULTIMIDIA_ID")
 	@XmlTransient
 	private ContainerMultimidia containerMultimidia;
-	private String nome; 
+
+	@Lob
+	@Column(columnDefinition = "BYTEA")
+	private byte[] content;
+
+	@Lob
+	@Column(columnDefinition = "BYTEA")
+	private Multimidia thumb;
+
+	private String nome;
 	private String contentType;
 	private String descricao;
-	@Lob  
-    @Column(columnDefinition = "BYTEA")
-	private byte[] content;
-	@Lob  
-    @Column(columnDefinition = "BYTEA")
-	private Multimidia thumb;
-	/**
-	 * @return the contentType
-	 */
+
+	public Multimidia() {
+		super();
+	}
+
 	public String getContentType() {
 		return contentType;
 	}
 
-	/**
-	 * @param contentType the contentType to set
-	 */
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
 
-		
-	/**
-	 * @return the entidadeComMidia
-	 */
 	@XmlTransient
 	public ContainerMultimidia getEntidadeComMidia() {
 		return containerMultimidia;
 	}
 
-	/**
-	 * @param entidadeComMidia the entidadeComMidia to set
-	 */
 	public void setEntidadeComMidia(ContainerMultimidia entidadeComMidia) {
 		this.containerMultimidia = entidadeComMidia;
 	}
 
-	/**
-	 * @return the descricao
-	 */
 	public String getDescricao() {
 		return descricao;
 	}
 
-	/**
-	 * @param descricao the descricao to set
-	 */
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-	public boolean isImagem(){
+	public boolean isImagem() {
 		return this.getContentType().contains("image");
 	}
-	
-	public boolean isVideo(){
+
+	public boolean isVideo() {
 		return this.getContentType().contains("video");
 	}
-	
-	public boolean isAudio(){
+
+	public boolean isAudio() {
 		return this.getContentType().contains("audio");
 	}
-	
-	/**
-	 * @return the nome
-	 */
+
 	public String getNome() {
 		return nome;
 	}
-	/**
-	 * @param nome the nome to set
-	 */
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	/**
-	 * @return the content
-	 */
+
 	public byte[] getContent() {
 		return content;
 	}
-	/**
-	 * @param content the content to set
-	 */
+
 	public void setContent(byte[] content) {
 		this.content = content;
 	}
-	
-	/**
-	 * @return the id
-	 */
+
 	public long getId() {
 		return id;
 	}
 
-	/**
-	 * @return the containerMultimidia
-	 */
 	@XmlTransient
 	public ContainerMultimidia getContainerMultimidia() {
 		return containerMultimidia;
 	}
 
-	/**
-	 * @param containerMultimidia the containerMultimidia to set
-	 */
 	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
 		this.containerMultimidia = containerMultimidia;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -176,7 +122,4 @@ public class Multimidia implements Serializable {
 	public void setThumb(Multimidia thumb) {
 		this.thumb = thumb;
 	}
-
-	
-	
 }

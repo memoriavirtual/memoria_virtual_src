@@ -14,74 +14,53 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
 
 @Stateless(mappedName = "CadastrarUsuario")
-public class CadastrarUsuario implements CadastrarUsuarioRemote , Serializable {
+public class CadastrarUsuario implements CadastrarUsuarioRemote, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1389418898478564440L;
+
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-	public Usuario verificarConvite(String convite) throws ModeloException {
-		Query query = this.entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
-		query.setParameter("usuario", convite);
-
-		Usuario usuarioAutenticado = null;
-
+	public Usuario verificarConvite(String id) throws ModeloException {
 		try {
-			usuarioAutenticado = (Usuario) query.getSingleResult();
+			return (Usuario) entityManager.find(Usuario.class,
+					new Long(id).longValue());
 		} catch (NoResultException e) {
-			usuarioAutenticado = null;
 			throw new ModeloException(e);
 		}
-
-		return usuarioAutenticado;
 	}
 
 	@SuppressWarnings("unchecked")
-	public void cadastrarUsuario(Usuario usuario, String validacao)
+	public void cadastrarUsuario(Usuario usuario, String senha)
 			throws ModeloException {
 
-		/* Busco pelo convite usando o campo ID na tabela */
-		Query queryUsuario = this.entityManager
-				.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuario");
-		queryUsuario.setParameter("usuario", validacao);
-
-		Usuario convite = null;
-		/*
-		 * Insiro no banco de dados uma nova tupla com os dados cadastrados e
-		 * deleto a tupla usada para enviar o convite
-		 */
 		try {
-			convite = (Usuario) queryUsuario.getSingleResult();
-		} catch (NoResultException e) {
-			throw new ModeloException("Convite invalido", e);
-		}
-		List<Acesso> acessos;
+			Usuario managed = entityManager
+					.find(Usuario.class, usuario.getId());
+			managed.setIdentificacao(usuario.getIdentificacao());
+			managed.setAtivo(true);
+			managed.setNomeCompleto(usuario.getNomeCompleto());
+			managed.setEmail(usuario.getEmail());
+			managed.setSenha(senha);
+			managed.setTelefone(usuario.getTelefone());
+			managed.setValidade(null);
+			entityManager.merge(managed);
 
-		Query queryAcesso = this.entityManager
-				.createQuery("SELECT a FROM Acesso a Where a.usuario = :convite");
-		queryAcesso.setParameter("convite", convite);
+			Query queryAcesso = this.entityManager
+					.createQuery("SELECT a FROM Acesso a Where a.usuario = :usuario");
+			queryAcesso.setParameter("usuario", managed);
 
-		acessos = (List<Acesso>) queryAcesso.getResultList();
+			List<Acesso> acessos = (List<Acesso>) queryAcesso.getResultList();
 
-		for (Acesso acesso : acessos) {
-			entityManager.remove(acesso);
-		}
+			for (Acesso acesso : acessos) {
+				acesso.setUsuario(managed);
+				entityManager.merge(acesso);
+			}
 
-		usuario.setAtivo(true);
-		usuario.setAdministrador(convite.isAdministrador());
-		convite.setEmail("");
-		entityManager.remove(convite);
-		entityManager.persist(usuario);
-
-		for (Acesso acesso : acessos) {
-			Acesso novoAcesso = new Acesso(usuario, acesso.getInstituicao(),
-					acesso.getGrupo());
-			novoAcesso.setValidade(true);
-			entityManager.persist(novoAcesso);
+			entityManager.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ModeloException(e);
 		}
 	}
 }

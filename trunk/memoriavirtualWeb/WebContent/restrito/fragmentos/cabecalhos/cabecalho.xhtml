@@ -10,8 +10,8 @@
 		<div class="row">
 			<div class="col-md-12 text-right">
 				<h:form>
-					&lt;<h:outputText value="#{usuario.id}" />&gt;,
-					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">sair</h:commandLink>
+					&lt;<h:outputText value="#{usuario.nomeCompleto}" />&gt;,
+					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">#{mensagens.sair}</h:commandLink>
 				</h:form>
 			</div>
 		</div>

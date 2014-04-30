@@ -16,79 +16,26 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name = "TITULO_ID", sequenceName = "TITULO_SEQ", allocationSize = 1)
 public class Titulo implements Serializable {
 
-	public enum TipoTitulo{Equivalente, Atribuido, Subtitulo, Anterior, Posterior, Suplemento, Correlato};
-	
+	public enum TipoTitulo {
+		equivalente, atribuido, subtitulo, anterior, posterior, suplemento, correlato
+	};
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TITULO_ID")
 	private long id;
-	
+
 	@XmlTransient
 	@ManyToOne(fetch = FetchType.EAGER)
 	private BemPatrimonial bemPatrimonial;
-	private String tipo;
-	private String valor;
+	private TipoTitulo tipo = Titulo.TipoTitulo.anterior;
+	private String valor = "";
 	@Transient
-	private boolean select;
-
-	/**
-	 * @param tipo
-	 * @param valor
-	 * @param complemento
-	 */
-	public Titulo(String tipo, String valor, String complemento) {
-		super();
-		this.tipo = tipo;
-		this.valor = valor;
-	}
+	private boolean select = false;
 
 	public Titulo() {
-	}
 
-	/**
-	 * @return the tipo
-	 */
-	public String getTipo() {
-		return tipo;
-	}
-
-	/**
-	 * @param tipo
-	 *            the tipo to set
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	/**
-	 * @return the valor
-	 */
-	public String getValor() {
-		return valor;
-	}
-
-	/**
-	 * @param valor
-	 *            the valor to set
-	 */
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
-
-	/**
-	 * @return the select
-	 */
-	public boolean getSelect() {
-		return select;
-	}
-
-	/**
-	 * @param select
-	 *            the select to set
-	 */
-	public void setSelect(boolean select) {
-		this.select = select;
 	}
 
 	@XmlTransient
@@ -107,4 +54,37 @@ public class Titulo implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	public BemPatrimonial getBemPatrimonial() {
+		return bemPatrimonial;
+	}
+
+	public void setBemPatrimonial(BemPatrimonial bemPatrimonial) {
+		this.bemPatrimonial = bemPatrimonial;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public boolean isSelect() {
+		return select;
+	}
+
+	public void setSelect(boolean select) {
+		this.select = select;
+	}
+
+	public TipoTitulo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoTitulo tipo) {
+		this.tipo = tipo;
+	}
+
 }

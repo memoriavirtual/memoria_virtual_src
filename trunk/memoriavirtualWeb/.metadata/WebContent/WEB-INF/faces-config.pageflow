@@ -8,32 +8,15 @@
   <nodes xsi:type="pageflow:PFPage" name="restrito/instituicaocadastrada" x="122" y="2098" id="pf13113571864252" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" path="/restrito/instituicaocadastrada.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastrousuario" x="122" y="2482" id="pf13123873869600" referenceLink="//@navigationRule.3/@fromViewId|" path="/restrito/cadastrarusuario.jsp"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastroconcluido" x="122" y="2866" id="pf13123873869612" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" path="/cadastroconcluido.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="login" x="554" y="3369" id="pf13160985364010" referenceLink="//@navigationRule.15/@navigationCase.0/@toViewId|" outlinks="pf13773755504350 pf13773755504351" inlinks="pf13773755504351 pf13773755504352 pf13773755504353" path="/login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="restrito/index.xhtml" x="770" y="5128" id="pf13160985364014" referenceLink="//@navigationRule.20/@navigationCase.0/@toViewId|" inlinks="pf13773755504350 pf13773755504354 pf13773755504355 pf13773755504356 pf13773755504357 pf13773755504358 pf13773755504359 pf137737555043510 pf137737555043511 pf137737555043512 pf137737555043513 pf137737555043514 pf137737555043515 pf137737555043516 pf137737555043517 pf137737555043518" path="/restrito/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="554" y="3369" id="pf13160985364010" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf13773755504350 pf13773755504351" inlinks="pf13773755504351 pf13773755504352 pf13773755504353" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/index.xhtml" x="770" y="5128" id="pf13160985364014" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13773755504350" path="/restrito/index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="login" x="122" y="3250" id="pf13160985364010" referenceLink="//@navigationRule.15/@navigationCase.0/@toViewId|" path="/login.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="restrito/index.xhtml" x="122" y="3634" id="pf13160985364014" referenceLink="//@navigationRule.21/@navigationCase.0/@toViewId|" path="/restrito/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="logoff" x="338" y="2985" id="pf13160985364015" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13773755504352" path="/restrito/*"/>
-  <nodes xsi:type="pageflow:PFPage" name="editarInstituicao" x="338" y="3753" id="pf13194614660960" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf13201752252731" path="/restrito/selecionarinstituicao.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="logoff" x="338" y="2985" id="pf13160985364015" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13773755504352" path="/restrito/*"/>
   <nodes xsi:type="pageflow:PFPage" name="restrito/descritor.xhtml" x="122" y="4018" id="pf13194614660962" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" path="/restrito/descritor.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="cadastrarInstituicao" x="122" y="4402" id="pf13195887561770" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" outlinks="pf13195887561771" inlinks="pf13195887561771" path="/restrito/cadastrarinstituicao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="editarInstituicao" x="554" y="3753" id="pf13201752252733" referenceLink="//@navigationRule.5/@navigationCase.1/@toViewId|" outlinks="pf13431105332531 pf13773755504356" inlinks="pf13201752252731 pf13431105332531" path="/restrito/editarinstituicao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="cadastrarNovaSenha" x="338" y="3369" id="pf13235647988152" referenceLink="//@navigationRule.15/@fromViewId|" outlinks="pf13773755504353" path="/cadastrarnovasenha.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirInstituicao" x="554" y="5331" id="pf13236447036875" referenceLink="//@navigationRule.9/@navigationCase.1/@toViewId|" outlinks="pf13247405657642 pf13773755504357" inlinks="pf13247405657643 pf13290156668101 pf13290156668102" path="/restrito/excluirInstituicao.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastrarNovaSenha" x="338" y="3369" id="pf13235647988152" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf13773755504353" path="/cadastrarnovasenha.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="excluirInstituicao" x="122" y="4786" id="pf13238411084353" referenceLink="//@navigationRule.4/@fromViewId|" path="/restrito/excluirInstituiçaoXHTMLfiles/confirmarExcluirInstituicao.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="restrito/excluirInstituiçaoXHTMLfiles/emailExcluirInstituicao.xhtml" x="122" y="5170" id="pf13238713732273" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" path="/restrito/excluirInstituiçaoXHTMLfiles/emailExcluirInstituicao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirInstituicao" x="338" y="5352" id="pf13247405657655" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" outlinks="pf13247405657656 pf13247405657643 pf13773755504358" inlinks="pf13247405657642 pf13290156668103" path="/restrito/confirmarExcluirInstituicao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirInstituicao" x="122" y="5554" id="pf13247405657657" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf13290156668103 pf13773755504359 pf137737555043510" inlinks="pf13247405657656" path="/restrito/emailExcluirInstituicao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="selecionarUsuario" x="338" y="4584" id="pf13251910989451" referenceLink="//@navigationRule.16/@fromViewId|" outlinks="pf13251910989452 pf137737555043514" path="/restrito/selecionarusuario.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="editarCadastroUsuario" x="554" y="4521" id="pf13251910989453" referenceLink="//@navigationRule.16/@navigationCase.1/@toViewId|" outlinks="pf13773755504355" inlinks="pf13251910989452" path="/restrito/editarcadastrousuario.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirInstituicao" x="338" y="4968" id="pf13290156668264" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf13290156668101 pf13290156668102 pf137737555043511" path="/restrito/validarExclusao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="editarCadastroUsuario" x="554" y="2601" id="pf13336926942234" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf13773755504354" path="/restrito/validaredicao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="554" y="5778" id="pf13336926942235" referenceLink="//@navigationRule.18/@navigationCase.1/@toViewId|" outlinks="pf137737555043515 pf137737555043719" inlinks="pf137737555043720" path="/restrito/excluirusuario_etapa1.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="338" y="6162" id="pf13336926942237" referenceLink="//@navigationRule.18/@fromViewId|" outlinks="pf137737555043516 pf137737555043720 pf137737555043721" inlinks="pf137737555043719" path="/restrito/excluirusuario_etapa2.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="cadastrarAutor" x="554" y="2985" id="pf13336927220928" referenceLink="//@navigationRule.13/@fromViewId|" outlinks="pf137737555043722 pf137737555043512" inlinks="pf137737555043722" path="/restrito/cadastrarautor.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="554" y="6162" id="pf13364100004924" referenceLink="//@navigationRule.19/@fromViewId|" outlinks="pf137737555043517" inlinks="pf137737555043721" path="/restrito/excluirusuario_etapa3.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="editarAutor" x="554" y="4137" id="pf13364101311195" referenceLink="//@navigationRule.14/@fromViewId|" outlinks="pf137737555043723 pf137737555043513" inlinks="pf137737555043723" path="/restrito/editarautor.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="cadastrarBemPatrimonial" x="122" y="5938" id="pf13431105332552" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" outlinks="pf137737555043724" inlinks="pf137737555043724" path="/restrito/cadastrarbempatrimonial.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="excluirAutor" x="554" y="4926" id="pf13498725832871" referenceLink="//@navigationRule.20/@fromViewId|" outlinks="pf137737555043518" path="/restrito/selecionarautor.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="122" y="6322" id="pf13336926942235" referenceLink="//@navigationRule.18/@navigationCase.1/@toViewId|" path="/restrito/excluirusuario_etapa1.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="122" y="6706" id="pf13336926942237" referenceLink="//@navigationRule.18/@fromViewId|" path="/restrito/excluirusuario_etapa2.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastrarAutor" x="122" y="7090" id="pf13336927220928" referenceLink="//@navigationRule.13/@fromViewId|" path="/restrito/cadastrarautor.xhtml"/>
@@ -41,70 +24,10 @@
   <nodes xsi:type="pageflow:PFPage" name="editarAutor" x="122" y="7858" id="pf13364101311195" referenceLink="//@navigationRule.14/@fromViewId|" path="/restrito/editarautor.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="cadastrarBemPatrimonial" x="122" y="8242" id="pf13431105332552" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" path="/restrito/cadastrarbempatrimonial.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="excluirAutor" x="122" y="8626" id="pf13498725832871" referenceLink="//@navigationRule.21/@fromViewId|" path="/restrito/selecionarautor.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="editarBemPatrimonial" x="122" y="9010" id="pf13616830555010" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" outlinks="pf13616830555011" inlinks="pf13616830555011" path="/restrito/editarbempatrimonial.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="realizarBuscaSimples" x="122" y="9394" id="pf137737555043825" referenceLink="//@navigationRule.21/@fromViewId|" outlinks="pf137737555043826" path="realizarbuscasimples.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="resultadosbusca.xhtml" x="338" y="9394" id="pf137737555043827" referenceLink="//@navigationRule.21/@navigationCase.0/@toViewId|" inlinks="pf137737555043826" path="resultadosbusca.xhtml"/>
-  <links id="pf13201752252731" target="pf13201752252733" source="pf13194614660960" outcome="sucesso"/>
-  <links id="pf13247405657642" target="pf13247405657655" source="pf13236447036875" outcome="Instselecionada"/>
-  <links id="pf13247405657656" target="pf13247405657657" source="pf13247405657655" outcome="confirmarexcluir"/>
-  <links id="pf13247405657643" target="pf13236447036875" source="pf13247405657655" outcome="voltar"/>
-  <links id="pf13251910989452" target="pf13251910989453" source="pf13251910989451" outcome="sucesso"/>
-  <links id="pf13290156668101" target="pf13236447036875" source="pf13290156668264" outcome="dskfsdf"/>
-  <links id="pf13290156668102" target="pf13236447036875" source="pf13290156668264" outcome="voltar"/>
-  <links id="pf13290156668103" target="pf13247405657655" source="pf13247405657657" outcome="voltar1"/>
   <links id="pf13773755504350" target="pf13160985364014" source="pf13160985364010" outcome="sucesso" redirect="true"/>
-  <links id="pf13773755504354" target="pf13160985364014" source="pf13336926942234" outcome="cancelar" redirect="true"/>
-  <links id="pf13773755504355" target="pf13160985364014" source="pf13251910989453" outcome="cancelar" redirect="true"/>
   <links id="pf13773755504352" target="pf13160985364010" source="pf13160985364015" outcome="logout" redirect="true"/>
-  <links id="pf13773755504356" target="pf13160985364014" source="pf13201752252733" outcome="cancelar"/>
-  <links id="pf13773755504357" target="pf13160985364014" source="pf13236447036875" outcome="cancelar"/>
-  <links id="pf13773755504358" target="pf13160985364014" source="pf13247405657655" outcome="cancelar"/>
-  <links id="pf13773755504359" target="pf13160985364014" source="pf13247405657657" outcome="cancelar"/>
-  <links id="pf137737555043510" target="pf13160985364014" source="pf13247405657657" outcome="restrito"/>
-  <links id="pf137737555043511" target="pf13160985364014" source="pf13290156668264" outcome="cancelar"/>
-  <links id="pf137737555043512" target="pf13160985364014" source="pf13336927220928" outcome="cancel" redirect="true"/>
-  <links id="pf137737555043513" target="pf13160985364014" source="pf13364101311195" outcome="cancel" redirect="true"/>
   <links id="pf13773755504353" target="pf13160985364010" source="pf13235647988152" outcome="sucesso" redirect="true"/>
-  <links id="pf137737555043514" target="pf13160985364014" source="pf13251910989451" outcome="cancelar"/>
-  <links id="pf137737555043515" target="pf13160985364014" source="pf13336926942235" outcome="cancelar"/>
-  <links id="pf137737555043719" target="pf13336926942237" source="pf13336926942235" outcome="etapa2"/>
-  <links id="pf137737555043516" target="pf13160985364014" source="pf13336926942237" outcome="cancelar"/>
-  <links id="pf137737555043720" target="pf13336926942235" source="pf13336926942237" outcome="etapa1"/>
-  <links id="pf137737555043721" target="pf13364100004924" source="pf13336926942237" outcome="etapa3"/>
-  <links id="pf137737555043517" target="pf13160985364014" source="pf13364100004924" outcome="cancelar"/>
-  <links id="pf137737555043518" target="pf13160985364014" source="pf13498725832871" outcome="cancelar" redirect="true"/>
-  <links id="pf137737555043826" target="pf137737555043827" source="pf137737555043825" outcome="resultados"/>
-  <links id="pf13195887561771" target="pf13195887561770" source="pf13195887561770" outcome="reset" redirect="true">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
-  <links id="pf13431105332531" target="pf13201752252733" source="pf13201752252733" outcome="reset">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
-  <links id="pf13616830555011" target="pf13616830555010" source="pf13616830555010" outcome="reset" redirect="true">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
   <links id="pf13773755504351" target="pf13160985364010" source="pf13160985364010" outcome="falha">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
-  <links id="pf137737555043724" target="pf13431105332552" source="pf13431105332552" outcome="reset" redirect="true">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
-  <links id="pf137737555043722" target="pf13336927220928" source="pf13336927220928" outcome="reset" redirect="true">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
-  <links id="pf137737555043723" target="pf13364101311195" source="pf13364101311195" outcome="reset" redirect="true">
     <bendPoints d1Height="-36" d2Height="-36"/>
     <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
     <bendPoints d1Width="-64" d2Width="-64"/>

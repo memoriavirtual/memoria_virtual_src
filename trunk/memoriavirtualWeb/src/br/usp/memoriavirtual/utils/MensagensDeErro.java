@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
 
 public class MensagensDeErro {
 
-	private static String bundleName = "mensagens";
+	private static String bundleName = MVControleMemoriaVirtual.bundleName;
 
 	public static boolean getErrorMessage(String msg, String target) {
 		return getMessageFromResourceBundle(msg, target,
@@ -38,47 +38,6 @@ public class MensagensDeErro {
 
 		return true;
 	}
-/*
-	public static boolean getErrorMessage(String msg, Object[] argumentos,
-			String target) {
-		return getMessageFromResourceBundle(msg, argumentos,target,
-				FacesMessage.SEVERITY_ERROR);
-	}
-
-	public static boolean getSucessMessage(String msg, Object[] argumentos,
-			String target) {
-		return getMessageFromResourceBundle(msg, argumentos,target,
-				FacesMessage.SEVERITY_INFO);
-	}
-
-	public static boolean getWarningMessage(String msg, Object[] argumentos,
-			String target) {
-		return getMessageFromResourceBundle(msg, argumentos, target,
-				FacesMessage.SEVERITY_WARN);
-	}
-
-	private static boolean getMessageFromResourceBundle(String msg,
-			Object[] argumentos, String target, FacesMessage.Severity severity) {
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = context.getApplication().getResourceBundle(
-				context, bundleName);
-
-		Object[] args = new String[argumentos.length];
-
-		for (int i = 0; i < argumentos.length; i++) {
-			args[i] = bundle.getString(argumentos[i].toString());
-		}
-		
-		String message = bundle.getString(msg);
-		String messageFinal = MessageFormat.format(message, args);
-
-		FacesContext.getCurrentInstance().addMessage(target,
-				new FacesMessage(severity, messageFinal, null));
-
-		return true;
-	}*/
-	
 	
 	public static boolean getErrorMessage(String msg, Object[] argumentos,
 			String target) {
@@ -114,6 +73,4 @@ public class MensagensDeErro {
 
 		return true;
 	}
-	
-	
 }
