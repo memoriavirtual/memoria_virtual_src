@@ -118,9 +118,83 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		numeroDePaginas = (bens.size()+memoriaVirtual.getTamanhoPagina() -1)/memoriaVirtual.getTamanhoPagina() ;
 		return bensCompletos;
 	}
+	
+	@Override
+	public ArrayList<BemPatrimonial> buscarExterno(String busca, Integer pagina)
+			throws ModeloException {
 
+		List<Long> bens = new ArrayList<Long>();
+		List<Long> parcial = new ArrayList<Long>();
+		List<Long> resultado = new ArrayList<Long>();
+
+		ArrayList<BemPatrimonial> bensCompletos = new ArrayList<BemPatrimonial>();
+
+		List<String> stringsDeBusca = new ArrayList<String>();
+		Query query;
+
+		stringsDeBusca = (List<String>) obterStrings(busca);
+
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE b.externo = TRUE AND LOWER(b.tituloPrincipal) LIKE LOWER(:padrao)");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<Long>) query.getResultList();
+				for (Long b : parcial) {
+					if (!bens.contains(b)) {
+						bens.add(b);
+					}
+				}
+				parcial.clear();
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b.id FROM BemPatrimonial b, BEMPATRIMONIAL_TITULOS t "
+								+ "WHERE t MEMBER OF b.titulos AND b.externo = TRUE "
+								+ "AND LOWER(t.valor) LIKE LOWER(:padrao)");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<Long>) query.getResultList();
+				for (Long b : parcial) {
+					if (!bens.contains(b))
+						bens.add(b);
+				}
+				parcial.clear();
+
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+
+		if (pagina == 1)
+			primeiroElemento = 0;
+		else
+			primeiroElemento = memoriaVirtual.getTamanhoPagina() * (pagina - 1);
+		ultimoElemento = primeiroElemento + memoriaVirtual.getTamanhoPagina();
+
+		for (int i = primeiroElemento; i < ultimoElemento && i < bens.size(); i++) {
+			resultado.add(bens.get(i));
+		}
+
+		for (int i = 0; i < resultado.size(); i++) {
+			query = entityManager
+					.createQuery("SELECT b FROM BemPatrimonial b WHERE b.id=:identificacao");
+			query.setParameter("identificacao", resultado.get(i));
+			bensCompletos.add((BemPatrimonial) query.getResultList().get(0));
+		}
+		
+		numeroDePaginas = (bens.size()+memoriaVirtual.getTamanhoPagina() -1)/memoriaVirtual.getTamanhoPagina() ;
+		return bensCompletos;
+	}
+	
 	/**
-	 * M�todo para gerar uma lista de strings a serem buscadas no banco a partir
+	 * Metodo para gerar uma lista de strings a serem buscadas no banco a partir
 	 * de uma busca do usu�rio
 	 * 
 	 * @param busca
@@ -303,5 +377,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 		return false;
 	}
+
+
 
 }
