@@ -1,6 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
-<<<<<<< .mine
+
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,6 +18,7 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
+import br.usp.memoriavirtual.utils.MVModeloAcao;
 
 @Stateless
 @Startup
@@ -45,7 +46,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		
 		//Date dataAtual = new Date(2014,12,12); //usado para testes
 		
-		System.out.println("Executando Limpar Pï¿½ndencias: "+dataAtual);
+		System.out.println("Executando Limpar Pêndencias: "+dataAtual);
 		
 		List<Usuario> usuariosExpirados = null;
 		List<Aprovacao> aprovacoesExpiradas = null;
@@ -64,7 +65,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 			System.out.println("Usuario Expirado(email):"+usuariosExpirados.get(i).getEmail());
 		
 		for(int i=0;i<aprovacoesExpiradas.size();i++)
-			System.out.println("Aprovaï¿½ï¿½o Expirada(aprovador):"+aprovacoesExpiradas.get(i).getAprovador());
+			System.out.println("Aprovação Expirada(aprovador):"+aprovacoesExpiradas.get(i).getAnalista());
 		
 		for(int i=0;i<usuariosExpirados.size();i++){
 			Usuario u = usuariosExpirados.get(i);
@@ -73,16 +74,18 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		
 		for (Aprovacao aprov : aprovacoesExpiradas) {
 
-			/* Extraimos o nome da Entidade que gerou a dependencia */
-			String name = aprov.getTabelaEstrangeira();
+			/* Extraimos o nome da Ação que gerou a pêndencia */
+			MVModeloAcao acao = aprov.getAcao();
 
-			if(name.contains("Usuario")){
-				Usuario user = em.find(Usuario.class, aprov.getChaveEstrangeira());
+			if(acao.equals(MVModeloAcao.excluir_usuario)){
+				String[] dados = aprov.getDados().split(";");
+				Usuario user = em.find(Usuario.class, dados[1]);
 				user.setAtivo(true); 
 				em.merge(user);
 
-			}else if(name.contains("Instituicao")){
-				Instituicao inst = em.find(Instituicao.class,Long.parseLong(aprov.getChaveEstrangeira()));
+			}else if(acao.equals(MVModeloAcao.excluir_instituicao)){
+				String[] dados = aprov.getDados().split(";");
+				Instituicao inst = em.find(Instituicao.class,Long.parseLong(dados[1]));
 				inst.setValidade(true); 
 				em.merge(inst);
 			}
