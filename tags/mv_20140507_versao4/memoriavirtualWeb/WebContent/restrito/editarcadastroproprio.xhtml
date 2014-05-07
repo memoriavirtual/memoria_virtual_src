@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+</h:head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+		<ui:define name="titulo">#{mensagens.editarContaTitulo}</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.editarContaTitulo}</h1>
+						<h2>#{mensagens.editarContaDescricao}</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+								<div class="row">
+									<div class="col-md-offset-3 col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="autenticar">#{mensagens.senha}</h:outputLabel>
+											<div class="input-group">
+												<h:inputSecret class="form-control" id="autenticar"
+													value="#{editarCadastroProprioMB.senha}"
+													disabled="#{!editarCadastroProprioMB.permissao}">
+												</h:inputSecret>
+												<span class="input-group-btn"> <h:commandButton
+														class="btn btn-default" value="#{mensagens.autenticar}"
+														disabled="#{!editarCadastroProprioMB.permissao}"
+														action="#{editarCadastroProprioMB.autenticar}">
+													</h:commandButton>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="nome">#{mensagens.nome}</h:outputLabel>
+											<h:inputText class="form-control" id="nome"
+												value="#{editarCadastroProprioMB.usuario.nomeCompleto}"
+												disabled="#{editarCadastroProprioMB.permissao}">
+											</h:inputText>
+											<h:message id="validacao-nome" for="validacao-nome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="email">#{mensagens.email}</h:outputLabel>
+											<h:inputText value="#{editarCadastroProprioMB.usuario.email}"
+												id="email" class="form-control"
+												disabled="#{editarCadastroProprioMB.permissao}">
+											</h:inputText>
+											<h:message id="validacao-email" for="validacao-email"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="telefone">#{mensagens.telefone}</h:outputLabel>
+											<h:inputText
+												value="#{editarCadastroProprioMB.usuario.telefone}"
+												class="form-control" id="telefone"
+												disabled="#{editarCadastroProprioMB.permissao}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="mudar-senha">#{mensagens.alterarSenha}</h:outputLabel>
+											<div class="pull-right">
+												<h:selectBooleanCheckbox id="mudar-senha"
+													value="#{editarCadastroProprioMB.alterarSenha}"
+													disabled="#{editarCadastroProprioMB.permissao}">
+												</h:selectBooleanCheckbox>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="senha">#{mensagens.senha}</h:outputLabel>
+											<h:inputSecret id="senha" class="form-control"
+												value="#{editarCadastroProprioMB.novaSenha}"
+												disabled="#{!editarCadastroProprioMB.alterarSenha}">
+											</h:inputSecret>
+											<h:message id="validacao-senha" for="validacao-senha"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="confirmar-senha">#{mensagens.confirmarSenha}</h:outputLabel>
+											<h:inputSecret id="confirmar-senha" class="form-control"
+												value="#{editarCadastroProprioMB.confirmarSenha}"
+												disabled="#{!editarCadastroProprioMB.alterarSenha}">
+											</h:inputSecret>
+											<h:message id="validacao-confirmacao-senha"
+												for="validacao-confirmacao-senha"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton class="btn btn-success margin-5"
+											value="#{mensagens.salvar}"
+											action="#{editarCadastroProprioMB.editarCadastroProprio}"
+											disabled="#{editarCadastroProprioMB.permissao}">
+										</h:commandButton>
+										<h:commandButton id="cancelar"
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{editarCadastroProprioMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					selecionarAbaConta();
+
+					mostrarErro('#validacao-nome');
+
+					mostrarErro('#validacao-email');
+
+					mostrarErro('#validacao-senha');
+
+					mostrarErro('#validacao-confirmacao-senha');
+
+					$('#mudar-senha').bootstrapSwitch({
+						onText : '#{mensagens.sim}',
+						offText : '#{mensagens.nao}',
+						onSwitchChange : function(event, status) {
+							if (status) {
+								$('#senha').attr('disabled', false);
+								$('#confirmar-senha').attr('disabled', false);
+							} else {
+								$('#senha').attr('disabled', true);
+								$('#confirmar-senha').attr('disabled', true);
+							}
+						}
+					});
+				});
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
