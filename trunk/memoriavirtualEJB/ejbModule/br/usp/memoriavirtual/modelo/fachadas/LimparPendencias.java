@@ -3,7 +3,6 @@ package br.usp.memoriavirtual.modelo.fachadas;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
@@ -25,9 +24,6 @@ import br.usp.memoriavirtual.utils.MVModeloAcao;
 public class LimparPendencias implements LimparPendenciasrRemote {
 	 
 	@PersistenceContext(unitName = "memoriavirtual")
-	private Logger logger = Logger
-			.getLogger("br.usp.memoriavirtual.modelo.fachadas.Timer");
-
 	private EntityManager em;
 	
 	@EJB
@@ -38,7 +34,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Schedule(hour = "*", minute = "*/1")//executa a cada 1 minuto
+	@Schedule  //Sem Anotação executa Todos os dias a meia noite
 	public void executa() throws ModeloException{
 		
 		java.util.Calendar cal = java.util.Calendar.getInstance(); 
@@ -56,7 +52,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		q.setParameter("dataAtual", dataAtual);	
 		usuariosExpirados =  q.getResultList();
 		
-		q = em.createQuery("Select a from Aprovacao a WHERE a.expiracao <:dataAtual");
+		q = em.createQuery("Select a from Aprovacao a WHERE a.expiraEm <:dataAtual");
 		q.setParameter("dataAtual", dataAtual);
 		aprovacoesExpiradas = q.getResultList();
 		
