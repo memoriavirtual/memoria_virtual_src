@@ -52,7 +52,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			context = new InitialContext();
 		} catch (NamingException e) {
 			new ModeloException(e);
-			return 20;
+			return tamanhoPaginaDefault;
 		}
 		Properties propriedades = null;
 		try {

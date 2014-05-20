@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @SequenceGenerator(name = "CONTAINERMULTIMIDIA_ID", sequenceName = "CONTAINERMULTIMIDIA_SEQ", allocationSize = 1)
@@ -23,6 +24,7 @@ public class ContainerMultimidia implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTAINERMULTIMIDIA_ID")
 	protected long id;
 
+	@XmlTransient
 	@OneToMany(mappedBy = "containerMultimidia", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	protected List<Multimidia> multimidia = new ArrayList<Multimidia>();
 
@@ -38,6 +40,7 @@ public class ContainerMultimidia implements Serializable {
 		this.id = id;
 	}
 
+	@XmlTransient
 	public List<Multimidia> getMultimidia() {
 		return multimidia;
 	}

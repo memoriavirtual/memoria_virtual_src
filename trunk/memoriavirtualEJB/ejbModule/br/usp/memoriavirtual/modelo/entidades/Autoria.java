@@ -10,12 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 
 @Entity
 @SequenceGenerator(name = "AUTORIA_ID", sequenceName = "AUTORIA_SEQ", allocationSize = 1)
+@XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Autoria implements Serializable {
 
 	public static enum TipoAutoria {

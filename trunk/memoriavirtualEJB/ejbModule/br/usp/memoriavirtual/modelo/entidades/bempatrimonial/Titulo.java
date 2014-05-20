@@ -10,10 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity(name = "BEMPATRIMONIAL_TITULOS")
 @SequenceGenerator(name = "TITULO_ID", sequenceName = "TITULO_SEQ", allocationSize = 1)
+@XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Titulo implements Serializable {
 
 	public enum TipoTitulo {

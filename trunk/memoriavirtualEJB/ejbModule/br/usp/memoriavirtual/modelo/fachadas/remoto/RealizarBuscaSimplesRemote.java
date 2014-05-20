@@ -33,6 +33,10 @@ public interface RealizarBuscaSimplesRemote {
 
 	public boolean possuiAcesso(Usuario usuario, Instituicao instituicao)
 			throws ModeloException;
+
+	public ArrayList<BemPatrimonial> buscarPorInstituicao(String busca, Integer pagina,Integer tamanhoPagina,String nomeInstituicao) throws ModeloException;
+
+	List<Multimidia> getMidias(Long container);
 	
 
 }

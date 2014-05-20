@@ -18,7 +18,7 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
 
-
+	
 	@Override
 	public void editarBemPatrimonial(BemPatrimonial bem) throws ModeloException {
 

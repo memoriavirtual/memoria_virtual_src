@@ -34,7 +34,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Schedule  //Sem Anotação executa Todos os dias a meia noite
+	@Schedule
 	public void executa() throws ModeloException{
 		
 		java.util.Calendar cal = java.util.Calendar.getInstance(); 
