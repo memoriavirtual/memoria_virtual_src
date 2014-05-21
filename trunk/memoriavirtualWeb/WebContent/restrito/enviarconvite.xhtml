@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
@@ -61,14 +62,14 @@
 										<div class="form-group">
 											<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
 											<div class="input-group mv-input-number">
-												<h:inputText disabled="true"
+												<h:inputText
 													value="#{enviarConviteMB.validade}" class="form-control"
-													id="validade" />
-												<span class="clicavel aumentar input-group-addon"> <i
+													id="validade" p:type="number" />
+												<!-- span class="clicavel aumentar input-group-addon"> <i
 													class="fa fa-caret-up"></i>
 												</span> <span class="clicavel diminuir input-group-addon"> <i
 													class="fa fa-caret-down"></i>
-												</span>
+												</span-->
 											</div>
 										</div>
 									</div>
