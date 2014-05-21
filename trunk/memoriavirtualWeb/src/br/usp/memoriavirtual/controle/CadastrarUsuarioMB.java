@@ -1,12 +1,14 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -17,7 +19,7 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "cadastrarUsuarioMB")
-@RequestScoped
+@ViewScoped
 public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 
 	private static final long serialVersionUID = 2202578392589624271L;
@@ -27,26 +29,52 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 
 	@EJB
 	private CadastrarUsuarioRemote cadastrarUsuarioEJB;
-	private String identificacao = "";
 	private String senha = "";
 	private String confirmacaoSenha = "";
 	private Usuario usuario;
 	private MensagensMB mensagens;
 
-	public CadastrarUsuarioMB() {
+	
+	public CadastrarUsuarioMB(){
 		super();
+	}
+	
+	@PostConstruct
+	public void run() {
+		Usuario usuarioLogado = (Usuario) FacesContext.getCurrentInstance().getExternalContext()
+				.getSessionMap().get("usuario");
+		try {
+			if (usuarioLogado != null) {
+				FacesContext.getCurrentInstance().getExternalContext().responseSendError(404, "Página Não Encontrada");
+			} else {
+					String validacao = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+					validacao = memoriaVirtualEJB.embaralhar(validacao);
+	
+					usuario = null;
+	
+					usuario = cadastrarUsuarioEJB.verificarConvite(validacao);
+					if ((usuario == null) || (usuario.isAtivo())) {
+						FacesContext.getCurrentInstance().getExternalContext().responseSendError(404, "Página Não Encontrada");
+					}else{
+						usuario.setIdentificacao("");
+						usuario.setNomeCompleto("");
+						usuario.setTelefone("");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().responseSendError(404, "Página Não Encontrada");
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
 
 		this.mensagens = (MensagensMB) resolver.getValue(
 				facesContext.getELContext(), null, "mensagensMB");
-		if(facesContext.getExternalContext().getSessionMap().get("usuarioAutenticadoCadastro") == null){
-			facesContext.getExternalContext().setResponseStatus(404);
-		}
-		else{
-			usuario = (Usuario) facesContext.getExternalContext().getSessionMap().get("usuarioAutenticadoCadastro");
-			facesContext.getExternalContext().getSessionMap().remove("usuarioAutenticadoCadastro");
-		}			
 	}
 
 	public String cadastrar() {
@@ -196,14 +224,6 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 	}
 
 	// getters e setters
-
-	public String getIdentificacao() {
-		return identificacao;
-	}
-
-	public void setIdentificacao(String identificacao) {
-		this.identificacao = identificacao;
-	}
 
 	public String getSenha() {
 		return senha;

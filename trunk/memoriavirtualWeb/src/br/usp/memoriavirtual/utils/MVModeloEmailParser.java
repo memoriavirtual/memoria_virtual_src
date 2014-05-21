@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 
 public class MVModeloEmailParser {
@@ -20,12 +23,18 @@ public class MVModeloEmailParser {
 	public String getMensagem(Map<String, String> tags,
 			MVModeloEmailTemplates template) throws ModeloException {
 		try {
-			String email = lerArquivo(template.toString(),
+			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+	                .getExternalContext().getContext();
+	        String deploymentDirectoryPath = ctx.getRealPath("/");
+			
+			String path = deploymentDirectoryPath+"WEB-INF/classes/br/usp/memoriavirtual/utils/emailtemplates/"+template.toString();
+			String email = lerArquivo(path,
 					Charset.defaultCharset());
 
 			Iterator<Entry<String, String>> it = tags.entrySet().iterator();
 			while (it.hasNext()) {
-				Map.Entry<String, String> par = (Map.Entry<String, String>) it.next();
+				Map.Entry<String, String> par = (Map.Entry<String, String>) it
+						.next();
 				email = email.replace(par.getKey(), par.getValue());
 			}
 
@@ -37,8 +46,9 @@ public class MVModeloEmailParser {
 
 	static String lerArquivo(String caminho, Charset encoding)
 			throws IOException {
-		
-		byte[] encoded = Files.readAllBytes(Paths.get(new File(caminho).getAbsolutePath()));
+
+		byte[] encoded = Files.readAllBytes(Paths.get(new File(caminho)
+				.getAbsolutePath()));
 		return new String(encoded, encoding);
 	}
 
