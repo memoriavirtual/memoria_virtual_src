@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head />
+<h:body>
+	<ui:composition>
+		<div class="input-group mv-input-number">
+			<h:inputText disabled="true" value="#{value}" class="#{class}" id="#{id}" />
+			<span class="clicavel aumentar input-group-addon"> <i
+				class="fa fa-caret-up"></i>
+			</span> <span class="clicavel diminuir input-group-addon"> <i
+				class="fa fa-caret-down"></i>
+			</span>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var input = $('#' + '#{id}');
+				input.val(#{minimo});
+				input.closest('div').find('.aumentar').click(function(){ 
+					if (#{maximo} > input.val().valueOf()) {
+						input.val(parseInt(input.val()) + 1);
+					}
+				});
+				input.closest('div').find('.diminuir').click(function(){ 
+					if(input.val().valueOf() > #{minimo}){
+						input.val(input.val() - 1);
+					}
+				});			
+			});
+		</script>
+	</ui:composition>
+</h:body>
+</html>

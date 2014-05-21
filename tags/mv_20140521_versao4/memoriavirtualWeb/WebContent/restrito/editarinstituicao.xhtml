@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+</h:head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+		<ui:define name="titulo">#{mensagens.editarInstituicaoTitulo}</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.editarInstituicaoTitulo}</h1>
+						<h2>#{mensagens.editarInstituicaoDescricao}</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h:outputLabel for="nome">
+												#{mensagens.nome}
+											</h:outputLabel>
+											<h:inputText value="#{editarInstituicaoMB.instituicao.nome}"
+												class="form-control" id="nome">
+											</h:inputText>
+											<h:message id="validacao-nome" for="validacao-nome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="cidade">
+												#{mensagens.cidade}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="cidade"
+												value="#{editarInstituicaoMB.instituicao.cidade}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="estado">
+												#{mensagens.estado}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="estado"
+												value="#{editarInstituicaoMB.instituicao.estado}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="pais">
+												#{mensagens.pais}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="pais"
+												value="#{editarInstituicaoMB.instituicao.pais}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="endereco">
+												#{mensagens.endereco}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="endereco"
+												value="#{editarInstituicaoMB.instituicao.endereco}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="localidade">
+												#{mensagens.localidade}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="localidade"
+												value="#{editarInstituicaoMB.instituicao.localidade}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="cep">
+												#{mensagens.cep}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="cep"
+												value="#{editarInstituicaoMB.instituicao.cep}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="caixa-postal">
+												#{mensagens.caixaPostal}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="caixa-postal"
+												value="#{editarInstituicaoMB.instituicao.caixaPostal}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="telefone">
+												#{mensagens.telefone}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="telefone"
+												value="#{editarInstituicaoMB.instituicao.telefone}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="email">
+												#{mensagens.email}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="email"
+												value="#{editarInstituicaoMB.instituicao.email}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="latitude">
+												#{mensagens.latitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="latitude"
+												value="#{editarInstituicaoMB.instituicao.latitude}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="longitude">
+												#{mensagens.longitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="longitude"
+												value="#{editarInstituicaoMB.instituicao.longitude}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="altitude">
+												#{mensagens.altitude}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="altitude"
+												value="#{editarInstituicaoMB.instituicao.altitude}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label"
+												for="identificacaoProprietario">
+												#{mensagens.identificacaoProprietario}
+											</h:outputLabel>
+											<h:inputText class="form-control"
+												id="identificacaoProprietario"
+												value="#{editarInstituicaoMB.instituicao.identificacaoProprietario}">
+											</h:inputText>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group">
+											<h:outputLabel class="control-label"
+												for="administradorPropriedade">
+												#{mensagens.administradorPropriedade}
+											</h:outputLabel>
+											<h:inputText class="form-control"
+												id="administradorPropriedade"
+												value="#{editarInstituicaoMB.instituicao.administradorPropriedade}">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="url">
+												#{mensagens.url}
+											</h:outputLabel>
+											<h:inputText class="form-control" id="url"
+												value="#{editarInstituicaoMB.instituicao.url}">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="tipo-propriedade">
+												#{mensagens.tipoPropriedade}
+											</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="tipo-propriedade"
+												value="#{editarInstituicaoMB.instituicao.tipoPropriedade}">
+												<f:selectItems
+													value="#{editarInstituicaoMB.tipoPropriedadeLista}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="protecao-existente">
+												#{mensagens.protecaoExistente}
+											</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="protecao-existente"
+												value="#{editarInstituicaoMB.instituicao.protecaoExistente}">
+												<f:selectItems
+													value="#{editarInstituicaoMB.protecaoExistenteLista}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="legislacao">
+												#{mensagens.legislacao}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="legislacao"
+												value="#{editarInstituicaoMB.instituicao.legislacaoIncidente}">
+											</h:inputTextarea>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="sintese-historica">
+												#{mensagens.sinteseHistorica}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="sintese-historica"
+												value="#{editarInstituicaoMB.instituicao.sinteseHistorica}">
+											</h:inputTextarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton id="cadastrar"
+											class="btn btn-success margin-5"
+											value="#{mensagens.salvar}"
+											action="#{editarInstituicaoMB.editarInstituicao}">
+										</h:commandButton>
+										<h:commandButton id="reset" class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}"
+											action="#{editarInstituicaoMB.limpar}">
+										</h:commandButton>
+										<h:commandButton id="cancelar"
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{editarInstituicaoMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					selecionarAbaInstituicao();
+
+					mostrarErro('#validacao-nome');
+
+					$('#protecao-existente').select2({
+						minimumResultsForSearch : -1
+					});
+
+					$('#tipo-propriedade').select2({
+						minimumResultsForSearch : -1
+					});
+				});
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
