@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </h:head>
@@ -417,7 +418,7 @@
 															<h:outputLabel class="label-control"
 																for="numero-ambientes">#{mensagens.numeroAmbientes}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-ambientes"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroAmbientes}" />
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroAmbientes}" p:type="number"/>  
 														</div>
 													</div>
 													<div class="col-md-3">
@@ -425,7 +426,7 @@
 															<h:outputLabel class="label-control"
 																for="numero-pavimentos">#{mensagens.numeroPavimentos}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-pavimentos"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroPavimentos}" />
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroPavimentos}" p:type="number" />
 														</div>
 													</div>
 												</div>
