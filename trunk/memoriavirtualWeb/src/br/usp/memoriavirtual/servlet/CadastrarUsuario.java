@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
-import javax.el.ELResolver;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.usp.memoriavirtual.controle.CadastrarUsuarioMB;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
@@ -41,12 +39,7 @@ public class CadastrarUsuario extends HttpServlet implements Serializable {
 		if (usuario != null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} else {
-			String validacao = request.getParameter("id");
-			ELResolver resolver = facesContext.getApplication().getELResolver();
-
-			CadastrarUsuarioMB cadastrarUsuarioMB = (CadastrarUsuarioMB) resolver
-					.getValue(facesContext.getELContext(), null,
-							"cadastrarUsuarioMB");
+			String validacao = request.getParameter("id");	
 
 			try {
 				validacao = memoriaVirtualEJB.embaralhar(validacao);
@@ -58,7 +51,7 @@ public class CadastrarUsuario extends HttpServlet implements Serializable {
 
 				if ((usuarioAutenticado != null)
 						&& (!usuarioAutenticado.isAtivo())) {
-					cadastrarUsuarioMB.setUsuario(usuarioAutenticado);
+					facesContext.getExternalContext().getSessionMap().put("usuarioAutenticadoCadastro", usuarioAutenticado);
 					response.sendRedirect("cadastrarusuario.jsf");
 				} else {
 					response.sendError(HttpServletResponse.SC_NOT_FOUND);

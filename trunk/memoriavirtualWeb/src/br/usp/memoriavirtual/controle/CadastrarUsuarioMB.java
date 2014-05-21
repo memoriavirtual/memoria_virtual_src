@@ -40,6 +40,13 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 
 		this.mensagens = (MensagensMB) resolver.getValue(
 				facesContext.getELContext(), null, "mensagensMB");
+		if(facesContext.getExternalContext().getSessionMap().get("usuarioAutenticadoCadastro") == null){
+			facesContext.getExternalContext().setResponseStatus(404);
+		}
+		else{
+			usuario = (Usuario) facesContext.getExternalContext().getSessionMap().get("usuarioAutenticadoCadastro");
+			facesContext.getExternalContext().getSessionMap().remove("usuarioAutenticadoCadastro");
+		}			
 	}
 
 	public String cadastrar() {
