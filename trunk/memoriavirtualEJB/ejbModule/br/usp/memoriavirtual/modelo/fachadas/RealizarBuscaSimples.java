@@ -194,61 +194,29 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			s = s.trim();
 			try {
 				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE b.externo = TRUE AND LOWER(b.tituloPrincipal) LIKE LOWER(:padrao)");
+						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE b.externo = TRUE AND ("
+								+ "LOWER(b.tituloPrincipal) LIKE LOWER(:padrao) OR "
+								+ "LOWER(b.numeroRegistro) LIKE LOWER(:padrao) OR "
+								+ "LOWER(b.localizacaoFisica) LIKE LOWER(:padrao)"
+								+ ")");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
-					if (!bens.contains(b)) {
+					if (!bens.contains(b))
 						bens.add(b);
-					}
 				}
 				parcial.clear();
+
 			} catch (Exception e) {
 				throw new ModeloException(e);
 			}
 		}
-
+		
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
 				query = entityManager
 						.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.titulos t WHERE b.externo = TRUE AND LOWER(t.valor) LIKE LOWER(:padrao)");
-				query.setParameter("padrao", "%" + s + "%");
-				parcial = (List<Long>) query.getResultList();
-				for (Long b : parcial) {
-					if (!bens.contains(b))
-						bens.add(b);
-				}
-				parcial.clear();
-
-			} catch (Exception e) {
-				throw new ModeloException(e);
-			}
-		}
-		
-		for (String s : stringsDeBusca) {
-			s = s.trim();
-			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE b.externo = TRUE AND LOWER(b.numeroRegistro) LIKE LOWER(:padrao)");
-				query.setParameter("padrao", "%" + s + "%");
-				parcial = (List<Long>) query.getResultList();
-				for (Long b : parcial) {
-					if (!bens.contains(b))
-						bens.add(b);
-				}
-				parcial.clear();
-
-			} catch (Exception e) {
-				throw new ModeloException(e);
-			}
-		}
-		
-		for (String s : stringsDeBusca) {
-			s = s.trim();
-			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE b.externo = TRUE AND LOWER(b.localizacaoFisica) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
