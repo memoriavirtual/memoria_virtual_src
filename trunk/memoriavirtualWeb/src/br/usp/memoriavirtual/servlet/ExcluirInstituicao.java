@@ -45,7 +45,7 @@ public class ExcluirInstituicao extends HttpServlet implements Serializable {
 			if (!id.equals(null) && id != null && id.length() > 0) {
 				Aprovacao aprovacao = memoriaVirtualEJB.getAprovacao(new Long(
 						id));
-				if ((aprovacao.getAnalista().getId() != usuario.getId())
+				if ((aprovacao.getAnalista().getId() == usuario.getId())
 						&& (aprovacao.getStatus() == MVModeloStatusAprovacao.aguardando)) {
 					ELResolver resolver = facesContext.getApplication()
 							.getELResolver();
