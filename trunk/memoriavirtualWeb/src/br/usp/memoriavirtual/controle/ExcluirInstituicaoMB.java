@@ -24,7 +24,6 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
 import br.usp.memoriavirtual.utils.MVModeloAcao;
 import br.usp.memoriavirtual.utils.MVModeloEmailParser;
 import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
@@ -48,9 +47,6 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
 
-	@EJB
-	private UtilMultimidiaRemote utilMultimidiaEJB;
-
 	private Instituicao instituicao = new Instituicao();
 	private String validade = "1";
 	private String justificativa = "";
@@ -66,19 +62,26 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	@Override
 	public String selecionarInstituicao() {
-		try {
-			this.instituicao = this.editarInstituicaoEJB
-					.getInstituicao(this.id);
-			return this.redirecionar("/restrito/excluirinstituicao.jsf", true);
-		} catch (ModeloException m) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			m.printStackTrace();
+		if (this.id != -1) {
+			try {
+				this.instituicao = this.editarInstituicaoEJB
+						.getInstituicao(this.id);
+				return this.redirecionar("/restrito/excluirinstituicao.jsf", true);
+			} catch (ModeloException m) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				m.printStackTrace();
+				return null;
+			}
+		} else {
+			String args[] = { this.traduzir("nome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-nome");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
 			return null;
 		}
 	}
-
+	
 	public List<SelectItem> getAnalistas() {
 		List<SelectItem> opcoes = new ArrayList<SelectItem>();
 
