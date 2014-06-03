@@ -5,8 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </h:head>
@@ -79,6 +78,12 @@
 																for="numero-registro">#{mensagens.numeroRegistro}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-registro"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.numeroRegistro}" />
+															<h:message id="validacao-numero-registro"
+																for="validacao-numero-registro"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -87,6 +92,12 @@
 																for="titulo-principal">#{mensagens.tituloPrincipal}</h:outputLabel>
 															<h:inputText class="form-control" id="titulo-principal"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.tituloPrincipal}" />
+															<h:message id="validacao-titulo-principal"
+																for="validacao-titulo-principal"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -1238,6 +1249,9 @@
 										offText : '#{mensagens.nao}'
 									});
 
+									mostrarErro('#validacao-titulo-principal');
+									mostrarErro('#validacao-numero-registro');
+
 									$('.select').select2({
 										minimumResultsForSearch : -1
 									});
@@ -1268,8 +1282,8 @@
 													});
 
 									window.reformar = function(data) {
-										mostrarErro('#validacao-nome');
-										mostrarErro('#validacao-sobrenome');
+										mostrarErro('#validacao-titulo-principal');
+										mostrarErro('#validacao-numero-registro');
 
 										var texto = $('#resultado').text();
 										if (texto !== '') {

@@ -1,11 +1,23 @@
 package br.usp.memoriavirtual.utils;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-   
 
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
+import br.usp.memoriavirtual.modelo.fachadas.remoto.ValidacaoRemote;
+
+@ManagedBean(name = "validacaoMB")
+@RequestScoped
 public class ValidacoesDeCampos {
+
+	@EJB
+	private ValidacaoRemote validacaoEJB;
+
+	public static final int LIMITE_PADRAO_CAMPO_TEXTO = 10;
 
 	public static boolean validarFormatoEmail(String email) {
 
@@ -20,23 +32,23 @@ public class ValidacoesDeCampos {
 
 		return true;
 	}
-	
+
 	public static boolean validarFormatoTelefone(String telefone) {
 
 		String regexp8digitos = "\\([0-9]{2}?\\){1}[0-9]{4}?\\-[0-9]{4}?";
 		Pattern pattern8digitos = Pattern.compile(regexp8digitos);
 		Matcher matcher8digitos = pattern8digitos.matcher(telefone);
-		
+
 		String regexp9digitos = "\\([0-9]{2}?\\){1}[0-9]{5}?\\-[0-9]{4}?";
 		Pattern pattern9digitos = Pattern.compile(regexp9digitos);
 		Matcher matcher9digitos = pattern9digitos.matcher(telefone);
-		
+
 		if (!matcher8digitos.matches() && !matcher9digitos.matches())
 			return false;
-		
+
 		return true;
 	}
-	
+
 	public static boolean validarFormatoCep(String Cep) {
 
 		String regexp = "[0-9]{5}?\\-[0-9]{3}?";
@@ -48,7 +60,7 @@ public class ValidacoesDeCampos {
 
 		return true;
 	}
-	
+
 	public static boolean validarFormatoLocalizacao(String Localizacao) {
 
 		String regexp = "[0-9]{3}";
@@ -60,20 +72,19 @@ public class ValidacoesDeCampos {
 
 		return true;
 	}
-	
+
 	public static boolean validaCoordenadaGeografica(String Coordenada) {
 
 		String regexp = "[-]?[0-9]*[.]{0,1}[0-9]{4}";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Coordenada);
-		
-		
+
 		if (!matcher.matches() || Coordenada.equals(""))
 			return false;
 
 		return true;
 	}
-	
+
 	public static boolean validarAltitude(String Altitude) {
 
 		String regexp = "[-]?[0-9]*[.]?{0,1}[0-9]{2}";
@@ -85,7 +96,44 @@ public class ValidacoesDeCampos {
 
 		return true;
 	}
-	
-	
-	
+
+	public static boolean validarNaoNulo(Object o) {
+		if (o == null) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean validarStringNaoVazia(String s) {
+		if (s.length() == 0) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean validarComprimento(String s, int l) {
+		if (s.length() == l) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean validarUnico(String query, Object o,
+			Map<String, Object> parametros) throws Exception {
+		try {
+			return this.validacaoEJB.validacaoUnico(query, o, parametros);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public boolean validarNaoExiste(String query, Object o,
+			Map<String, Object> parametros) throws Exception {
+		try {
+			return this.validacaoEJB.validacaoNaoExiste(query, o, parametros);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 }

@@ -5,8 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </h:head>
@@ -79,6 +78,12 @@
 																for="numero-registro">#{mensagens.numeroRegistro}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-registro"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro}" />
+															<h:message id="validacao-numero-registro"
+																for="validacao-numero-registro"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -159,7 +164,7 @@
 															<div class="row">
 																<div class="col-md-offset-5 col-md-2 text-center">
 																	<h:commandLink class="btn btn-success"
-																		actionListener="#{cadastrarBemPatrimonialMB.adicionarTitulo}">
+																		action="#{cadastrarBemPatrimonialMB.adicionarTitulo}">
 																		<i class="fa fa-plus"></i>
 																		<f:ajax execute="@form"
 																			render=":form-cadastro-bem-patrimonial:grupo-titulos" />
@@ -418,7 +423,7 @@
 															<h:outputLabel class="label-control"
 																for="numero-ambientes">#{mensagens.numeroAmbientes}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-ambientes"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroAmbientes}" p:type="number"/>  
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroAmbientes}" />
 														</div>
 													</div>
 													<div class="col-md-3">
@@ -426,7 +431,7 @@
 															<h:outputLabel class="label-control"
 																for="numero-pavimentos">#{mensagens.numeroPavimentos}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-pavimentos"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroPavimentos}" p:type="number" />
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroPavimentos}" />
 														</div>
 													</div>
 												</div>
@@ -1239,6 +1244,8 @@
 									selecionarAbaPatrimonio();
 
 									mostrarErro('#validacao-titulo-principal');
+									
+									mostrarErro('#validacao-numero-registro');
 
 									$('.switch').bootstrapSwitch({
 										onText : '#{mensagens.sim}',

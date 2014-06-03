@@ -19,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -31,14 +33,17 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 @Entity
 @SequenceGenerator(name = "BEMPATRIMONIAL_ID", sequenceName = "BEMPATRIMONIAL_SEQ", allocationSize = 1)
 @XmlRootElement
+@NamedQueries({
+		@NamedQuery(name = "unicoRegistro", query = "SELECT b FROM BemPatrimonial b WHERE b.numeroRegistro = :numero"),
+		@NamedQuery(name = "unicoRegistroComId", query = "SELECT b FROM BemPatrimonial b WHERE b.numeroRegistro = :numero AND b.id <> :id") })
 public class BemPatrimonial implements Serializable {
 
 	private static final long serialVersionUID = 3790813768470746267L;
-	
+
 	public static enum condicoesTopograficas {
 		levementeAcidentado, acidentado, muitoAcidentado, plano
 	}
-	
+
 	public static enum Exposicao {
 		aberto, alojado, submerso, soterrado, exposto
 	}
@@ -46,7 +51,7 @@ public class BemPatrimonial implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
 	private long id;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Instituicao instituicao = new Instituicao();
 
@@ -218,7 +223,8 @@ public class BemPatrimonial implements Serializable {
 		return historicoProcedencia;
 	}
 
-	public void setHistoricoProcedencia(HistoricoProcedencia historicoProcedencia) {
+	public void setHistoricoProcedencia(
+			HistoricoProcedencia historicoProcedencia) {
 		this.historicoProcedencia = historicoProcedencia;
 	}
 

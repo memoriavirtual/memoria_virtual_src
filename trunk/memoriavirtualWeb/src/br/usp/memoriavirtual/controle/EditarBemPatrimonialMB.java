@@ -2,7 +2,9 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -21,11 +23,11 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
 import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.StringContainer;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "editarBemPatrimonialMB")
 @SessionScoped
@@ -40,18 +42,13 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	private EditarBemPatrimonialRemote editarBemPatrimonialEJB;
 
 	@EJB
-	private RealizarBuscaSimplesRemote realizarBuscaSimplesEJB;
-
-	@EJB
-	private ExcluirInstituicaoRemote excluirInstituicaoEJB;
-
-	@EJB
 	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
 
 	@EJB
 	private UtilMultimidiaRemote utilMultimidiaEJB;
 
 	private MensagensMB mensagens;
+	private ValidacoesDeCampos validacao;
 
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
@@ -61,6 +58,8 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		ELResolver resolver = facesContext.getApplication().getELResolver();
 		this.mensagens = (MensagensMB) resolver.getValue(
 				facesContext.getELContext(), null, "mensagensMB");
+		this.validacao = (ValidacoesDeCampos) resolver.getValue(
+				facesContext.getELContext(), null, "validacaoMB");
 	}
 
 	public String editar() {
@@ -158,7 +157,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 
 	@Override
 	public boolean validar() {
-		return this.validarTituloPrincipal();
+		return this.validarTituloPrincipal() && this.validarNumeroRegistro();
 	}
 
 	@Override
@@ -177,6 +176,48 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			m.printStackTrace();
 			return this.redirecionar(null, false);
+		}
+	}
+
+	public boolean validarNumeroRegistro() {
+		if (ValidacoesDeCampos.validarNaoNulo((Object) this.bemPatrimonial
+				.getNumeroRegistro())
+				&& ValidacoesDeCampos.validarStringNaoVazia(this.bemPatrimonial
+						.getNumeroRegistro())) {
+			try {
+				Map<String, Object> parametrosNaoExiste = new HashMap<String, Object>();
+				parametrosNaoExiste.put("numero",
+						(Object) this.bemPatrimonial.getNumeroRegistro());
+				Map<String, Object> parametrosUnico = new HashMap<String, Object>();
+				parametrosUnico.put("numero",
+						(Object) this.bemPatrimonial.getNumeroRegistro());
+				parametrosUnico.put("id",
+						(Object) this.bemPatrimonial.getId());
+				
+				boolean a = this.validacao.validarNaoExiste("unicoRegistro",
+						(Object) this.bemPatrimonial, parametrosNaoExiste);
+				boolean b = this.validacao.validarUnico("unicoRegistroComId",
+						(Object) this.bemPatrimonial, parametrosUnico);
+				
+				System.out.println(a);
+				System.out.println(b);
+				
+				if (a || b) {
+					return true;
+				} else {
+					String args[] = { this.traduzir("numeroRegistro"),
+							this.bemPatrimonial.getNumeroRegistro() };
+					MensagensDeErro.getErrorMessage("erroJaExiste", args,
+							"validacao-numero-registro");
+					return false;
+				}
+			} catch (Exception e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				e.printStackTrace();
+				return false;
+			}
+		} else {
+			return true;
 		}
 	}
 
