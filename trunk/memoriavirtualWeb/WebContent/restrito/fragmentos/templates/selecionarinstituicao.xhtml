@@ -29,6 +29,11 @@
 										<h:outputLabel for="id">#{mensagens.nome}</h:outputLabel>
 										<h:inputHidden value="#{bean.id}" id="id">
 										</h:inputHidden>
+										<h:message id="validacao-nome" for="validacao-nome"
+											infoClass="help-block has-success"
+											errorClass="help-block has-error"
+											warnClass="help-block has-warning">
+										</h:message>
 									</div>
 								</div>
 							</div>
@@ -52,6 +57,8 @@
 			$(document).ready(function() {
 				selecionarAbaInstituicao();
 
+				mostrarErro('#validacao-nome');
+				
 				$("#id").select2({
 					minimumInputLength : 1,
 					allowClear : true,

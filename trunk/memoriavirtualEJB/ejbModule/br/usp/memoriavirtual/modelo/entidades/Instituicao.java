@@ -49,6 +49,7 @@ public class Instituicao implements Serializable {
 	private String legislacaoIncidente;
 	private String sinteseHistorica;
 	private Boolean validade;
+	private Boolean revisao;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ContainerMultimidia containerMultimidia;
@@ -240,5 +241,13 @@ public class Instituicao implements Serializable {
 
 	public void setContainerMultimidia(ContainerMultimidia containerMultimidia) {
 		this.containerMultimidia = containerMultimidia;
+	}
+
+	public Boolean getRevisao() {
+		return revisao;
+	}
+
+	public void setRevisao(Boolean revisao) {
+		this.revisao = revisao;
 	}
 }

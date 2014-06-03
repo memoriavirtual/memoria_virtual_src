@@ -24,6 +24,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
 import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "cadastrarInstituicaoMB")
 @SessionScoped
@@ -31,7 +32,6 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		BeanDeSessao, BeanMemoriaVirtual, Serializable {
 
 	private static final long serialVersionUID = -6620103410985404517L;
-
 	@EJB
 	protected MemoriaVirtualRemote memoriaVirtualEJB;
 
@@ -62,9 +62,10 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 	protected String legislacao = "";
 	protected String sinteseHistorica = "";
 	protected String legislacaoIncidente = "";
+	protected Boolean revisao = false;
 	protected Instituicao instituicao = new Instituicao();
-
 	private MensagensMB mensagens;
+	
 
 	public CadastrarInstituicaoMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -104,6 +105,7 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 			instituicao.setUrl(this.url);
 			instituicao.setContainerMultimidia(this.containerMultimidia);
 			instituicao.setValidade(true);
+			instituicao.setRevisao(this.revisao);
 
 			try {
 				this.instituicao = cadastrarInstituicaoEJB
@@ -569,5 +571,18 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 
 	public void setInstituicao(Instituicao instituicao) {
 		this.instituicao = instituicao;
+	}
+
+	@Override
+	public int getLimiteCampoTexto() {
+		return ValidacoesDeCampos.LIMITE_PADRAO_CAMPO_TEXTO;
+	}
+
+	public Boolean getRevisao() {
+		return revisao;
+	}
+
+	public void setRevisao(Boolean revisao) {
+		this.revisao = revisao;
 	}
 }

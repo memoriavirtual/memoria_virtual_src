@@ -30,19 +30,30 @@
 								prependId="false">
 
 								<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-10">
 										<div class="form-group">
 											<h:outputLabel for="nome">
 												#{mensagens.nome}
 											</h:outputLabel>
 											<h:inputText value="#{cadastrarInstituicaoMB.nome}"
-												class="form-control" id="nome">
+												class="form-control"
+												id="nome">
 											</h:inputText>
 											<h:message id="validacao-nome" for="validacao-nome"
 												infoClass="help-block has-success"
 												errorClass="help-block has-error"
 												warnClass="help-block has-warning">
 											</h:message>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="externo">#{mensagens.revisao}</h:outputLabel>
+											<div class="form-control pull-right com-switch">
+												<h:selectBooleanCheckbox id="revisao" class="switch"
+													value="#{cadastrarInstituicaoMB.revisao}">
+												</h:selectBooleanCheckbox>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -300,19 +311,25 @@
 				</div>
 			</div>
 			<script type="text/javascript">
-				$(document).ready(function() {
-					selecionarAbaInstituicao();
+				$(document).ready(
+						function() {
+							selecionarAbaInstituicao();
 
-					mostrarErro('#validacao-nome');
+							mostrarErro('#validacao-nome');
 
-					$('#protecao-existente').select2({
-						minimumResultsForSearch : -1
-					});
+							$('#protecao-existente').select2({
+								minimumResultsForSearch : -1
+							});
 
-					$('#tipo-propriedade').select2({
-						minimumResultsForSearch : -1
-					});
-				});
+							$('#tipo-propriedade').select2({
+								minimumResultsForSearch : -1
+							});
+
+							$('.switch').bootstrapSwitch({
+								onText : '#{mensagens.sim}',
+								offText : '#{mensagens.nao}'
+							});
+						});
 			</script>
 		</ui:define>
 	</ui:composition>

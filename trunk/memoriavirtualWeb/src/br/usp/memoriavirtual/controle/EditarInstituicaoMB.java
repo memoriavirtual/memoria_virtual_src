@@ -28,7 +28,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 
 	@EJB
 	private UtilMultimidiaRemote utilMultimidiaEJB;
-	protected long id;
+	protected long id = -1;
 
 	private MensagensMB mensagens;
 
@@ -45,31 +45,39 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 			try {
 				this.editarInstituicaoEJB.editarInstituicao(instituicao);
 				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-				return this
-						.redirecionar(
-								"/restrito/editarinstituicaomultimidia.jsf",
-								true);
+				return this.redirecionar(
+						"/restrito/editarinstituicaomultimidia.jsf", true);
 			} catch (ModeloException e) {
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 				e.printStackTrace();
 				return null;
 			}
 
+		} else {
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
 		}
 		return null;
 	}
 
 	public String selecionarInstituicao() {
-		try {
-			this.instituicao = this.editarInstituicaoEJB
-					.getInstituicao(this.id);
-			this.campos = this.utilMultimidiaEJB.listarCampos(this.instituicao
-					.getContainerMultimidia());
-			return this.redirecionar(
-					"/restrito/editarinstituicao.jsf", true);
-		} catch (ModeloException m) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			m.printStackTrace();
+		if (this.id != -1) {
+			try {
+				this.instituicao = this.editarInstituicaoEJB
+						.getInstituicao(this.id);
+				this.campos = this.utilMultimidiaEJB
+						.listarCampos(this.instituicao.getContainerMultimidia());
+				return this.redirecionar("/restrito/editarinstituicao.jsf",
+						true);
+			} catch (ModeloException m) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				m.printStackTrace();
+				return null;
+			}
+		} else {
+			String args[] = { this.traduzir("nome") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
+					"validacao-nome");
+			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
 			return null;
 		}
 	}

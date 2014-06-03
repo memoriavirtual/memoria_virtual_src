@@ -34,7 +34,7 @@
 								prependId="false">
 
 								<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-10">
 										<div class="form-group">
 											<h:outputLabel for="nome">
 												#{mensagens.nome}
@@ -47,6 +47,16 @@
 												errorClass="help-block has-error"
 												warnClass="help-block has-warning">
 											</h:message>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="externo">#{mensagens.revisao}</h:outputLabel>
+											<div class="form-control pull-right com-switch">
+												<h:selectBooleanCheckbox id="revisao" class="switch"
+													value="#{editarInstituicaoMB.instituicao.revisao}">
+												</h:selectBooleanCheckbox>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -283,8 +293,7 @@
 								<div class="text-right row">
 									<div class="col-md-12">
 										<h:commandButton id="cadastrar"
-											class="btn btn-success margin-5"
-											value="#{mensagens.salvar}"
+											class="btn btn-success margin-5" value="#{mensagens.salvar}"
 											action="#{editarInstituicaoMB.editarInstituicao}">
 										</h:commandButton>
 										<h:commandButton id="reset" class="btn btn-primary margin-5"
@@ -315,6 +324,12 @@
 
 					$('#tipo-propriedade').select2({
 						minimumResultsForSearch : -1
+					});
+					
+
+					$('.switch').bootstrapSwitch({
+						onText : '#{mensagens.sim}',
+						offText : '#{mensagens.nao}'
 					});
 				});
 			</script>
