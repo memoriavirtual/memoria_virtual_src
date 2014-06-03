@@ -154,6 +154,8 @@
 																									'.select-titulo')
 																									.select2(
 																											{
+																												allowClear: true,
+																												placeholder: '#{mensagens.selecione}',
 																												minimumResultsForSearch : -1
 																											});
 																						});
@@ -289,6 +291,8 @@
 																									'.select-autoria')
 																									.select2(
 																											{
+																												allowClear: true,
+																												placeholder: '#{mensagens.selecione}',
 																												minimumResultsForSearch : -1
 																											});
 																						});
@@ -1253,12 +1257,15 @@
 									mostrarErro('#validacao-numero-registro');
 
 									$('.select').select2({
+										allowClear: true,
+										placeholder: '#{mensagens.selecione}',
 										minimumResultsForSearch : -1
 									});
 
 									$('#busca')
 											.select2(
 													{
+														placeholder: '#{mensagens.selecione}',
 														minimumInputLength : 3,
 														allowClear : true,
 														ajax : {

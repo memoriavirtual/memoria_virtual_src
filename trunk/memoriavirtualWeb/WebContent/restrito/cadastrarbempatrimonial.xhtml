@@ -154,6 +154,8 @@
 																									'.select-titulo')
 																									.select2(
 																											{
+																												allowClear: true,
+																												placeholder: '#{mensagens.selecione}',
 																												minimumResultsForSearch : -1
 																											});
 																						});
@@ -289,6 +291,8 @@
 																									'.select-autoria')
 																									.select2(
 																											{
+																												allowClear: true,
+																												placeholder: '#{mensagens.selecione}',
 																												minimumResultsForSearch : -1
 																											});
 																						});
@@ -1244,7 +1248,7 @@
 									selecionarAbaPatrimonio();
 
 									mostrarErro('#validacao-titulo-principal');
-									
+
 									mostrarErro('#validacao-numero-registro');
 
 									$('.switch').bootstrapSwitch({
@@ -1253,12 +1257,15 @@
 									});
 
 									$('.select').select2({
+										allowClear : true,
+										placeholder : "#{mensagens.selecione}",
 										minimumResultsForSearch : -1
 									});
 
 									$('#busca')
 											.select2(
 													{
+														placeholder : "#{mensagens.selecione}",
 														minimumInputLength : 3,
 														allowClear : true,
 														ajax : {
@@ -1291,9 +1298,7 @@
 													'hide');
 											mensagensSucesso('#{mensagens.sucesso}');
 											$('#resultado').text('');
-											$(
-													'#cadastrar-autor-modal input.form-control')
-													.val('');
+											$('#cadastrar-autor-modal input.form-control').val('');
 										}
 									}
 								});

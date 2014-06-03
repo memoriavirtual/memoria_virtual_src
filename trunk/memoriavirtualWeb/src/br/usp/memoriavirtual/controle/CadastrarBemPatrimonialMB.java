@@ -251,6 +251,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		for (Titulo.TipoTitulo t : Titulo.TipoTitulo.values()) {
 			tipos.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		tipos.add(0, new SelectItem(null, ""));
 
 		return tipos;
 	}
@@ -334,6 +336,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		} catch (Exception e) {
 			return null;
 		}
+		autores.add(0, new SelectItem(null, ""));
 		return autores;
 	}
 
@@ -345,6 +348,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 			tipos.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
 
+		tipos.add(0, new SelectItem(null, ""));
 		return tipos;
 	}
 
@@ -442,6 +446,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -453,6 +459,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		for (BemPatrimonial.Exposicao t : BemPatrimonial.Exposicao.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -465,6 +473,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -477,6 +487,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -489,6 +501,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -501,6 +515,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -513,6 +529,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -525,6 +543,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
@@ -537,6 +557,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.values()) {
 			opcoes.add(new SelectItem(t, this.traduzir(t.toString())));
 		}
+		
+		opcoes.add(0, new SelectItem(null, ""));
 
 		return opcoes;
 	}
