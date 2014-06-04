@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+</h:head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+		<ui:define name="titulo">#{mensagens.cadastrarAutorTitulo}</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+				<div class="erroPrincipal">
+					<h:message id="resultado" for="resultado" infoClass="sucesso"
+						errorClass="erro"></h:message>
+				</div>
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.cadastrarAutorTitulo}</h1>
+						<h2>#{mensagens.cadastrarAutorDescricao}</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="nome" class="control-label">
+												#{mensagens.nome}
+											</h:outputLabel>
+											<h:inputText value="#{cadastrarAutorMB.nome}"
+												class="form-control" id="nome" />
+											<h:message id="validacao-nome" for="validacao-nome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="sobrenome" class="control-label">
+												#{mensagens.sobrenome}
+											</h:outputLabel>
+											<h:inputText value="#{cadastrarAutorMB.sobrenome}"
+												class="form-control" id="sobrenome" />
+											<h:message id="validacao-sobrenome" for="validacao-sobrenome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="codinome" class="control-label">
+												#{mensagens.codinome}
+											</h:outputLabel>
+											<h:inputText value="#{cadastrarAutorMB.codinome}"
+												class="form-control" id="codinome" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel for="atividade" class="control-label">#{mensagens.atividade}</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="atividade" value="#{cadastrarAutorMB.atividade}">
+												<f:selectItems value="#{cadastrarAutorMB.listaAtividade}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="nascimento">#{mensagens.nascimento}</h:outputLabel>
+											<h:inputText value="#{cadastrarAutorMB.nascimento}"
+												class="form-control" id="nascimento">
+											</h:inputText>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="obito">#{mensagens.obito}</h:outputLabel>
+											<h:inputText value="#{cadastrarAutorMB.obito}"
+												class="form-control" id="obito">
+											</h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton class="btn btn-success margin-5"
+											value="#{mensagens.cadastrar}"
+											action="#{cadastrarAutorMB.cadastrar}">
+										</h:commandButton>
+										<h:commandButton class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}"
+											action="#{cadastrarAutorMB.limpar}">
+										</h:commandButton>
+										<h:commandButton
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{cadastrarAutorMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					selecionarAbaAutor();
+
+					mostrarErro('#validacao-nome');
+
+					mostrarErro('#validacao-sobrenome');
+
+					$('#atividade').select2({
+						'minimumResultsForSearch' : -1
+					});
+				});
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

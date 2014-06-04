@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="lang" content="pt" />
+	<meta name="charset" content="utf-8" />
+	<h:outputStylesheet name="reset.css" library="css" />
+	<h:outputStylesheet name="bootstrap.css" library="bootstrap/css" />
+	<h:outputStylesheet name="select2.css" library="select2" />
+	<h:outputStylesheet name="font-awesome.css" library="fontawesome/css" />
+	<h:outputStylesheet name="estilo.less" library="css" />
+	<h:outputStylesheet name="bootstrap-switch.css"
+		library="bootstrap-switch-master/dist/css/bootstrap3" />
+	<h:outputScript name="less.min.js" library="javascript" />
+	<h:outputScript name="pdfobject.js" library="javascript"></h:outputScript>
+	<h:outputScript name="jquery.js" library="javascript"></h:outputScript>
+	<h:outputScript name="bootstrap.js" library="bootstrap/js"></h:outputScript>
+	<h:outputScript name="select2.js" library="select2"></h:outputScript>
+	<h:outputScript name="bootstrap-switch.js"
+		library="bootstrap-switch-master/dist/js"></h:outputScript>
+	<h:outputScript name="mv.js" library="javascript"></h:outputScript>
+	<title>#{mensagens.realizarBuscaSimplesTitulo}</title>
+</h:head>
+
+<h:body>
+
+	<div class="col-md-12">
+		<h:form class="form-horizontal" role="form" method="post"
+			prependId="false">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					&lt;
+					<h:outputText value="#{usuario.nomeCompleto}" />
+					&gt;,
+					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">${mensagens.sair}</h:commandLink>
+				</div>
+			</div>
+		</h:form>
+	</div>
+
+	<div class="row top-padding-30">
+		<div class="col-md-6 col-md-offset-3">
+			<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
+		</div>
+	</div>
+
+	<h:form class="form-horizontal" role="form" method="post"
+		prependId="false">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="form-group">
+					<h:outputLabel class="control-label transparente" for="busca">.</h:outputLabel>
+					<div class="input-group">
+						<h:inputText value="#{realizarBuscaSimplesMB.busca}"
+							class="form-control" id="busca">
+						</h:inputText>
+						<span class="input-group-btn"> <h:commandLink
+								class="btn btn-primary"
+								action="#{realizarBuscaSimplesMB.buscar}">
+								<i class="fa fa-search"></i>
+								#{mensagens.buscar}
+							</h:commandLink>
+						</span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</h:form>
+	<div class="top-margin-10 col-md-12 text-center">
+		Copyright &copy; 2009 LABES - Laborat&oacute;rio de Engenharia de
+		Software - ICMC-USP<br /> Build Tag: mv_20140603_versao3
+	</div>
+</h:body>
+</html>
