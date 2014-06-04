@@ -573,7 +573,6 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		this.instituicao = instituicao;
 	}
 
-	@Override
 	public int getLimiteCampoTexto() {
 		return ValidacoesDeCampos.LIMITE_PADRAO_CAMPO_TEXTO;
 	}
