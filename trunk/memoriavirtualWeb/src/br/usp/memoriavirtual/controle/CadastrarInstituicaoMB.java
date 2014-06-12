@@ -185,6 +185,17 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 		}
 		return true;
 	}
+	
+	public boolean validarCep(){
+		if(ValidacoesDeCampos.validarFormatoCep(this.cep)){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoCep",
+					"validacao-cep");
+			return false;
+		}
+	}
 
 	public boolean validarNomeMultimidia() {
 		boolean valido = true;
@@ -244,7 +255,7 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 
 	@Override
 	public boolean validar() {
-		return this.validarNome();
+		return this.validarNome() && this.validarCep();
 	}
 
 	@Override

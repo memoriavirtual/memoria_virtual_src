@@ -13,6 +13,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "editarInstituicaoMB")
 @SessionScoped
@@ -92,13 +93,24 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 					"validacao-nome");
 			return false;
 		}
-
 		return true;
+	}
+	
+	@Override
+	public boolean validarCep(){
+		if(ValidacoesDeCampos.validarFormatoCep(this.instituicao.getCep())){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoCep",
+					"validacao-cep");
+			return false;
+		}
 	}
 
 	@Override
 	public boolean validar() {
-		return this.validarNome();
+		return this.validarNome() && this.validarCep();
 	}
 
 	public long getId() {

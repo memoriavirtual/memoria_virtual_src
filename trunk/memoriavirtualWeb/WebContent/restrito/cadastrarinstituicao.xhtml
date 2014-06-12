@@ -126,6 +126,11 @@
 											<h:inputText class="form-control" id="cep"
 												value="#{cadastrarInstituicaoMB.cep}">
 											</h:inputText>
+											<h:message id="validacao-cep" for="validacao-cep"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -316,6 +321,7 @@
 							selecionarAbaInstituicao();
 
 							mostrarErro('#validacao-nome');
+							mostrarErro('#validacao-cep');
 
 							$('#protecao-existente').select2({
 								minimumResultsForSearch : -1
