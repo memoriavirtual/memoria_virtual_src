@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
@@ -33,63 +34,70 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 	private String confirmacaoSenha = "";
 	private Usuario usuario;
 	private MensagensMB mensagens;
+	
+	private boolean podeCadastrar = true;
 
-	
-	public CadastrarUsuarioMB(){
+	public CadastrarUsuarioMB() {
 		super();
-	}
-	
-	@PostConstruct
-	public void run() {
-		Usuario usuarioLogado = (Usuario) FacesContext.getCurrentInstance().getExternalContext()
-				.getSessionMap().get("usuario");
-		try {
-			if (usuarioLogado != null) {
-				FacesContext.getCurrentInstance().getExternalContext().responseSendError(404, "Página Não Encontrada");
-			} else {
-					String validacao = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-					validacao = memoriaVirtualEJB.embaralhar(validacao);
-	
-					usuario = null;
-	
-					usuario = cadastrarUsuarioEJB.verificarConvite(validacao);
-					if ((usuario == null) || (usuario.isAtivo())) {
-						FacesContext.getCurrentInstance().getExternalContext().responseSendError(404, "Página Não Encontrada");
-					}else{
-						usuario.setIdentificacao("");
-						usuario.setNomeCompleto("");
-						usuario.setTelefone("");
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				try {
-					FacesContext.getCurrentInstance().getExternalContext().responseSendError(404, "Página Não Encontrada");
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
+	}
 
-		this.mensagens = (MensagensMB) resolver.getValue(
-				facesContext.getELContext(), null, "mensagensMB");
+	@PostConstruct
+	public void run() {
+		Usuario usuarioLogado = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+		try {
+			if (usuarioLogado != null) {
+				this.getMensagens().mensagemErro(this.traduzir("erroUsuarioLogado"));
+				FacesContext.getCurrentInstance().getExternalContext().redirect("restrito/index.jsf");
+			} else {
+				String validacao = (String) FacesContext.getCurrentInstance()
+						.getExternalContext().getRequestParameterMap()
+						.get("id");
+				validacao = memoriaVirtualEJB.embaralhar(validacao);
+
+				usuario = null;
+
+				usuario = cadastrarUsuarioEJB.verificarConvite(validacao);
+				if (usuario == null) {
+					this.getMensagens().mensagemErro(this.traduzir("conviteInexistente"));
+					podeCadastrar = false;
+				} else if (usuario.isAtivo()) {
+					this.getMensagens().mensagemErro(this.traduzir("conviteJaUtilizado"));
+					podeCadastrar = false;
+				} else {
+					usuario.setIdentificacao("");
+					usuario.setNomeCompleto("");
+					usuario.setTelefone("");
+				}
+			}
+		} catch (ModeloException e) {
+			e.printStackTrace();
+			this.getMensagens().mensagemErro(this.traduzir("conviteInexistente"));
+			podeCadastrar = false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			podeCadastrar = false;
+		}
 	}
 
 	public String cadastrar() {
-
-		if (this.validar()) {
-			try {
-				this.cadastrarUsuarioEJB.cadastrarUsuario(usuario, this.senha);
-				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-				return this.redirecionar("/login.jsf", true);
-			} catch (Exception e) {
-				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-				e.printStackTrace();
-				return null;
+		if(podeCadastrar){
+			if (this.validar()) {
+				try {
+					this.cadastrarUsuarioEJB.cadastrarUsuario(usuario, this.senha);
+					this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+					return this.redirecionar("/login.jsf", true);
+				} catch (Exception e) {
+					this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+					e.printStackTrace();
+					return null;
+				}
+	
 			}
-
 		}
 		return null;
 	}
@@ -255,6 +263,14 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public boolean isPodeCadastrar() {
+		return podeCadastrar;
+	}
+
+	public void setPodeCadastrar(boolean podeCadastrar) {
+		this.podeCadastrar = podeCadastrar;
 	}
 
 }

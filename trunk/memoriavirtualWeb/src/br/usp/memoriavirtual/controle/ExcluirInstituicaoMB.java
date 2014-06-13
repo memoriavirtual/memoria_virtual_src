@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,10 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -29,10 +31,11 @@ import br.usp.memoriavirtual.utils.MVModeloEmailParser;
 import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
 import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
 import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
+import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "excluirInstituicaoMB")
-@SessionScoped
+@ViewScoped
 public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 		Serializable {
 
@@ -62,6 +65,44 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 				facesContext.getELContext(), null, "mensagensMB");
 	}
 
+	@PostConstruct
+	public void run(){
+		if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")!=null){//aprovacao
+			try {
+				Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext()
+						.getSessionMap().get("usuario");
+	
+				String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+	
+				if (!id.equals(null) && id != null && id.length() > 0) {
+					Aprovacao aprovacao = memoriaVirtualEJB.getAprovacao(new Long(
+							id));
+					if ((aprovacao.getAnalista().getId() == usuario.getId())
+							&& (aprovacao.getStatus() == MVModeloStatusAprovacao.aguardando)) {	
+						this.setAprovacao(aprovacao);
+					} else {
+						System.out.println(aprovacao.getAnalista().getId() + " "+ usuario.getId());
+						this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+						FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+					}
+				} else {
+					System.out.println(id);
+					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				}
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public String selecionarInstituicao() {
 		if (this.id != -1) {
 			try {

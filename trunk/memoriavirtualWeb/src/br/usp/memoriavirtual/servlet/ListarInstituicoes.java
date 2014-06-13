@@ -22,7 +22,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
 @WebServlet("/huhu")
-public class Teste extends HttpServlet {
+public class ListarInstituicoes extends HttpServlet {
 
 	private static final long serialVersionUID = -3455546327228843100L;
 
@@ -32,7 +32,7 @@ public class Teste extends HttpServlet {
 	@EJB
 	MemoriaVirtualRemote memoriaVirtualEJB;
 
-	public Teste() {
+	public ListarInstituicoes() {
 		super();
 	}
 

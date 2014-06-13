@@ -1,7 +1,10 @@
 package br.usp.memoriavirtual.utils;
 
 public enum MVModeloMapeamentoUrl {
-	excluirInstituicao("/excluirinstituicao"), cadastrarUsuario("/cadastrarusuario.jsf"), editarCadastroUsuario("/editarcadastrousuario"), excluirUsuario("/excluirusuario");
+	excluirInstituicao("/restrito/validarexclusaoinstituicao.jsf"), 
+	cadastrarUsuario("/cadastrarusuario.jsf"), 
+	editarCadastroUsuario("/restrito/validaredicaousuario.jsf"), 
+	excluirUsuario("/restrito/validarexclusaousuario.jsf");
 	
     private String url;       
 

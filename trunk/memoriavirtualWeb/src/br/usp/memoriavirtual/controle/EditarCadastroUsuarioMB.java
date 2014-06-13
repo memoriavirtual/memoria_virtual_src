@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,10 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -37,7 +39,7 @@ import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "editarCadastroUsuarioMB")
-@SessionScoped
+@ViewScoped
 public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 		Serializable {
 
@@ -64,11 +66,44 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 		super();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
-		this.mensagens = (MensagensMB) resolver.getValue(
-				facesContext.getELContext(), null, "mensagensMB");
-
-		this.solicitante = (Usuario) facesContext.getExternalContext()
-				.getSessionMap().get("usuario");
+		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
+		this.solicitante = (Usuario) facesContext.getExternalContext().getSessionMap().get("usuario");
+	}
+	
+	@PostConstruct
+	public void run(){
+		if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")!=null){//entra aki se for uma aprovação
+			try {
+				String id = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+				this.aprovacao = this.editarCadastroUsuarioEJB.getAprovacao(id);
+	
+				Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext()
+						.getSessionMap().get("usuario");
+	
+				Date hoje = new Date();
+				if (hoje.after(this.aprovacao.getExpiraEm())) {
+					this.getMensagens().mensagemErro(this.traduzir("linkExpirado"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				} else if (usuario.getId() != this.aprovacao.getAnalista().getId()) {
+					this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				} else if(this.aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando
+						|| this.aprovacao.getAcao() != MVModeloAcao.editar_cadastro_usuario){
+					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				} else{
+					this.carregarAprovacao(this.aprovacao);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public String solicitarAprovacao() {

@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,15 +9,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MVModeloAcao;
@@ -27,7 +30,7 @@ import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
 import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
 @ManagedBean(name = "excluirUsuarioMB")
-@SessionScoped
+@ViewScoped
 public class ExcluirUsuarioMB extends EditarCadastroUsuarioMB implements
 		Serializable {
 
@@ -39,6 +42,9 @@ public class ExcluirUsuarioMB extends EditarCadastroUsuarioMB implements
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 
+	@EJB
+	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
+	
 	private MensagensMB mensagens;
 
 	public ExcluirUsuarioMB() {
@@ -47,6 +53,45 @@ public class ExcluirUsuarioMB extends EditarCadastroUsuarioMB implements
 		ELResolver resolver = facesContext.getApplication().getELResolver();
 		this.mensagens = (MensagensMB) resolver.getValue(
 				facesContext.getELContext(), null, "mensagensMB");
+	}
+	
+	@PostConstruct
+	public void run(){
+		if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")!=null){//aprovacao
+			try {
+				String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+				Aprovacao aprovacao = new Aprovacao();
+	
+				aprovacao = this.editarCadastroUsuarioEJB.getAprovacao(id);
+
+				Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext()
+						.getSessionMap().get("usuario");
+	
+				Date hoje = new Date();
+				if (hoje.after(aprovacao.getExpiraEm())) {
+					this.getMensagens().mensagemErro(this.traduzir("linkExpirado"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				} else if (usuario.getId() != aprovacao.getAnalista().getId()) {
+					this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				}else if(aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando
+						|| aprovacao.getAcao() != MVModeloAcao.excluir_usuario){
+					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				}	
+				else {
+					this.carregarAprovacao(aprovacao);	
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override

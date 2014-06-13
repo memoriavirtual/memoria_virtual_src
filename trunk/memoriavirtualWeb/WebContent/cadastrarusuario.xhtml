@@ -132,12 +132,14 @@
 									<div class="col-md-12">
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.cadastrar}"
-											action="#{cadastrarUsuarioMB.cadastrar}">
+											action="#{cadastrarUsuarioMB.cadastrar}"
+											disabled="#{!cadastrarUsuarioMB.podeCadastrar}">
 										</h:commandButton>
 										<h:commandButton
 											class="btn btn-primary margin-left-5 no-right-margin"
 											value="#{mensagens.limpar}"
-											action="#{cadastrarUsuarioMB.limpar}">
+											action="#{cadastrarUsuarioMB.limpar}"
+											disabled="#{!cadastrarUsuarioMB.podeCadastrar}">
 										</h:commandButton>
 									</div>
 								</div>
