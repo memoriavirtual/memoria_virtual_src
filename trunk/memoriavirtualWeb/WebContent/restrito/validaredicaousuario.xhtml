@@ -26,7 +26,7 @@
 					<div class="widget-head">
 						<h1>#{mensagens.editarCadastroUsuarioTitulo}</h1>
 						<h2>#{mensagens.editarCadastroUsuarioDescricao}</h2>
-						<h3>#{editarCadastroUsuarioMB.usuario.nomeCompleto}</h3>
+						<h3>#{validarEdicaoUsuarioMB.usuario.nomeCompleto}</h3>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget-content">
@@ -38,11 +38,11 @@
 									<div class="col-md-offset-3 col-md-6">
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="administrador"
-												rendered="#{editarCadastroUsuarioMB.usuario.administrador}">
+												rendered="#{validarEdicaoUsuarioMB.usuario.administrador}">
 												#{mensagens.administrador}
 											</h:outputLabel>
 											<h:outputLabel id="administrador" class="form-control"
-												rendered="#{editarCadastroUsuarioMB.usuario.administrador}">
+												rendered="#{validarEdicaoUsuarioMB.usuario.administrador}">
 													#{mensagens.sim}
 											</h:outputLabel>
 										</div>
@@ -51,8 +51,8 @@
 								<div class="row">
 									<div class="col-md-offset-3 col-md-6">
 										<h:dataTable var="acesso"
-											rendered="#{!editarCadastroUsuarioMB.usuario.administrador}"
-											value="#{editarCadastroUsuarioMB.usuario.acessos}"
+											rendered="#{!validarEdicaoUsuarioMB.usuario.administrador}"
+											value="#{validarEdicaoUsuarioMB.usuario.acessos}"
 											class="table table-bordered table-hover">
 											<h:column>
 												<div class="row">
@@ -83,7 +83,7 @@
 											<h:outputLabel class="control-label" for="justificativa"
 												value="#{mensagens.justificativa}"></h:outputLabel>
 											<span class="form-control" id="justificativa">
-												#{editarCadastroUsuarioMB.justificativa} </span>
+												#{validarEdicaoUsuarioMB.justificativa} </span>
 										</div>
 									</div>
 								</div>
@@ -91,16 +91,16 @@
 									<div class="col-md-12">
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.aprovar}"
-											action="#{editarCadastroUsuarioMB.aprovar}">
+											action="#{validarEdicaoUsuarioMB.aprovar}">
 										</h:commandButton>
 										<h:commandButton class="btn btn-primary margin-5"
 											value="#{mensagens.cancelar}"
-											action="#{editarCadastroUsuarioMB.cancelar}">
+											action="#{validarEdicaoUsuarioMB.cancelar}">
 										</h:commandButton>
 										<h:commandButton
 											class="btn btn-danger margin-left-5 no-right-margin"
 											value="#{mensagens.negar}"
-											action="#{editarCadastroUsuarioMB.negar}">
+											action="#{validarEdicaoUsuarioMB.negar}">
 										</h:commandButton>
 									</div>
 								</div>

@@ -1,6 +1,5 @@
 package br.usp.memoriavirtual.controle;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,11 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -35,11 +33,10 @@ import br.usp.memoriavirtual.utils.MVModeloEmailParser;
 import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
 import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
 import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
-import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "editarCadastroUsuarioMB")
-@ViewScoped
+@SessionScoped
 public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 		Serializable {
 
@@ -70,41 +67,7 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 		this.solicitante = (Usuario) facesContext.getExternalContext().getSessionMap().get("usuario");
 	}
 	
-	@PostConstruct
-	public void run(){
-		if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")!=null){//entra aki se for uma aprovação
-			try {
-				String id = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-				this.aprovacao = this.editarCadastroUsuarioEJB.getAprovacao(id);
 	
-				Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext()
-						.getSessionMap().get("usuario");
-	
-				Date hoje = new Date();
-				if (hoje.after(this.aprovacao.getExpiraEm())) {
-					this.getMensagens().mensagemErro(this.traduzir("linkExpirado"));
-					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-				} else if (usuario.getId() != this.aprovacao.getAnalista().getId()) {
-					this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
-					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-				} else if(this.aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando
-						|| this.aprovacao.getAcao() != MVModeloAcao.editar_cadastro_usuario){
-					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
-					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-				} else{
-					this.carregarAprovacao(this.aprovacao);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-				try {
-					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		}
-	}
 
 	public String solicitarAprovacao() {
 
@@ -176,97 +139,6 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 			}
 		}
 		return null;
-	}
-
-	public void carregarAprovacao(Aprovacao aprovacao) {
-		this.aprovacao = aprovacao;
-		try {
-			String[] dados = aprovacao.getDados().split(";");
-			List<Acesso> acessos = new ArrayList<Acesso>();
-
-			for (int i = 0; i < dados.length; ++i) {
-				if (dados[i].equals("id")) {
-					this.usuario = this.memoriaVirtualEJB
-							.getUsuario(dados[i + 1]);
-				}
-				if (dados[i].equals("administrador")) {
-					this.usuario.setAdministrador(true);
-				}
-				if (dados[i].equals("grupo")
-						&& dados[i + 2].equals("instituicao")) {
-					this.usuario.setAdministrador(false);
-					Grupo grupo = new Grupo(dados[i + 1]);
-					Instituicao instituicao = this.editarInstituicaoEJB
-							.getInstituicao(new Long(dados[i + 3]).longValue());
-					Acesso a = new Acesso();
-					a.setUsuario(this.usuario);
-					a.setGrupo(grupo);
-					a.setInstituicao(instituicao);
-					acessos.add(a);
-				}
-				if (dados[i].equals("justificativa")) {
-					this.justificativa = dados[i + 1];
-				}
-			}
-			if (!this.usuario.isAdministrador()) {
-				this.usuario.setAcessos(acessos);
-			}
-		} catch (Exception e) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			e.printStackTrace();
-		}
-	}
-
-	public String aprovar() {
-		try {
-			this.aprovacao.setStatus(MVModeloStatusAprovacao.aprovada);
-			this.aprovacao.setAlteradaEm(new Date());
-			String dados = "nome;" + this.usuario.getNomeCompleto();
-
-			if (this.usuario.isAdministrador()) {
-				dados += ";administrador";
-			} else {
-				for (Acesso a : this.usuario.getAcessos()) {
-					dados += ";grupo;" + a.getGrupo().getId() + ";instituicao;"
-							+ a.getInstituicao().getNome();
-				}
-			}
-			dados += ";justificativa;" + this.justificativa;
-			aprovacao.setDados(dados);
-			this.editarCadastroUsuarioEJB.aprovar(this.usuario, this.aprovacao);
-			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-			return this.redirecionar("/restrito/index.jsf", true);
-		} catch (Exception e) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public String negar() {
-		try {
-			this.aprovacao.setStatus(MVModeloStatusAprovacao.negada);
-			this.aprovacao.setAlteradaEm(new Date());
-			String dados = "nome;" + this.usuario.getNomeCompleto();
-
-			if (this.usuario.isAdministrador()) {
-				dados += ";administrador";
-			} else {
-				for (Acesso a : this.usuario.getAcessos()) {
-					dados += ";grupo;" + a.getGrupo().getId() + ";instituicao;"
-							+ a.getInstituicao().getNome();
-				}
-			}
-			dados += ";justificativa;" + this.justificativa;
-			aprovacao.setDados(dados);
-			this.editarCadastroUsuarioEJB.negar(this.aprovacao);
-			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-			return this.redirecionar("/restrito/index.jsf", true);
-		} catch (Exception e) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	public List<SelectItem> getAnalistas() {

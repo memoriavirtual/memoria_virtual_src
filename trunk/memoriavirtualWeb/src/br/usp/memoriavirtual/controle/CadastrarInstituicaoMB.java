@@ -191,8 +191,7 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 			return true;
 		}
 		else{
-			MensagensDeErro.getErrorMessage("erroFormatoCep",
-					"validacao-cep");
+			MensagensDeErro.getErrorMessage("erroFormatoCep","validacao-cep");
 			return false;
 		}
 	}

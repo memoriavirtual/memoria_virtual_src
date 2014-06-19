@@ -1,6 +1,5 @@
 package br.usp.memoriavirtual.controle;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,11 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -31,11 +29,10 @@ import br.usp.memoriavirtual.utils.MVModeloEmailParser;
 import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
 import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
 import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
-import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "excluirInstituicaoMB")
-@ViewScoped
+@SessionScoped
 public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 		Serializable {
 
@@ -61,46 +58,7 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 	public ExcluirInstituicaoMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
-		this.mensagens = (MensagensMB) resolver.getValue(
-				facesContext.getELContext(), null, "mensagensMB");
-	}
-
-	@PostConstruct
-	public void run(){
-		if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")!=null){//aprovacao
-			try {
-				Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext()
-						.getSessionMap().get("usuario");
-	
-				String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-	
-				if (!id.equals(null) && id != null && id.length() > 0) {
-					Aprovacao aprovacao = memoriaVirtualEJB.getAprovacao(new Long(
-							id));
-					if ((aprovacao.getAnalista().getId() == usuario.getId())
-							&& (aprovacao.getStatus() == MVModeloStatusAprovacao.aguardando)) {	
-						this.setAprovacao(aprovacao);
-					} else {
-						System.out.println(aprovacao.getAnalista().getId() + " "+ usuario.getId());
-						this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
-						FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-					}
-				} else {
-					System.out.println(id);
-					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
-					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-				}
-	
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-				try {
-					FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		}
+		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
 	}
 	
 	public String selecionarInstituicao() {
@@ -199,57 +157,6 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 			}
 		}
 		return null;
-	}
-
-	public String aprovar() {
-		try {
-			this.aprovacao.setDados("instituicao;" + this.instituicao.getNome()
-					+ ";justificativa;" + this.justificativa);
-			this.excluirInstituicaoEJB
-					.aprovar(this.instituicao, this.aprovacao);
-			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-			return this.redirecionar("/restrito/index.jsf", true);
-		} catch (Exception e) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public String negar() {
-		try {
-			this.aprovacao.setDados("instituicao;" + this.instituicao.getNome()
-					+ ";justificativa;" + this.justificativa);
-			this.excluirInstituicaoEJB.negar(this.instituicao, this.aprovacao);
-			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-			return this.redirecionar("/restrito/index.jsf", true);
-		} catch (Exception e) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public void carregar() {
-		try {
-			String dados = this.aprovacao.getDados();
-			String[] tokens = dados.split(";");
-
-			for (int i = 0; i < tokens.length; ++i) {
-				if (tokens[i].equals("id")) {
-					this.instituicao = editarInstituicaoEJB
-							.getInstituicao(new Long(tokens[i + 1]));
-				}
-				if (tokens[i].equals("justificativa")) {
-					this.justificativa = tokens[i + 1];
-				}
-			}
-
-			this.solicitante = aprovacao.getSolicitante();
-		} catch (Exception e) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			e.printStackTrace();
-		}
 	}
 
 	@Override

@@ -42,31 +42,31 @@
 								prependId="false">
 								<div class="row">
 									<label class="col-md-6 text-right">#{mensagens.instituicao}</label>
-									<span class="col-md-6 text-left">#{excluirInstituicaoMB.instituicao.nome}</span>
+									<span class="col-md-6 text-left">#{validarExclusaoInstituicaoMB.instituicao.nome}</span>
 								</div>
 								<div class="row">
 									<label class="col-md-6 text-right">#{mensagens.solicitante}</label>
-									<span class="col-md-6 text-left">#{excluirInstituicaoMB.solicitante.nomeCompleto}</span>
+									<span class="col-md-6 text-left">#{validarExclusaoInstituicaoMB.solicitante.nomeCompleto}</span>
 								</div>
 								<div class="row">
 									<label class="col-md-6 text-right">#{mensagens.justificativa}</label>
-									<span class="col-md-6 text-left">#{excluirInstituicaoMB.justificativa}</span>
+									<span class="col-md-6 text-left">#{validarExclusaoInstituicaoMB.justificativa}</span>
 								</div>
 								<div class="text-right row">
 									<div class="col-md-12">
 										<h:commandButton 
 											class="btn btn-success margin-5"
 											value="#{mensagens.aprovar}"
-											action="#{excluirInstituicaoMB.aprovar}">
+											action="#{validarExclusaoInstituicaoMB.aprovar}">
 										</h:commandButton>
 										<h:commandButton  class="btn btn-primary margin-5"
 											value="#{mensagens.cancelar}"
-											action="#{excluirInstituicaoMB.cancelar}">
+											action="#{validarExclusaoInstituicaoMB.cancelar}">
 										</h:commandButton>
 										<h:commandButton 
 											class="btn btn-danger margin-left-5 no-right-margin"
 											value="#{mensagens.negar}"
-											action="#{excluirInstituicaoMB.negar}">
+											action="#{validarExclusaoInstituicaoMB.negar}">
 										</h:commandButton>
 									</div>
 								</div>

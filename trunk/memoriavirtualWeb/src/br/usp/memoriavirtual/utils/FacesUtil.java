@@ -1,5 +1,8 @@
 package br.usp.memoriavirtual.utils;
 
+import java.io.IOException;
+import java.util.ResourceBundle;
+
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -8,8 +11,6 @@ import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
 
 /**
  * @author MAC
@@ -61,6 +62,20 @@ public class FacesUtil {
         protected static void setCurrentInstance(FacesContext facesContext) {
             FacesContext.setCurrentInstance(facesContext);
         }
-    }     
+    }
+    
+    public static void redirecionar(String url){
+    	try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+	public static String getMessageFromBundle(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
+	}
 
 }

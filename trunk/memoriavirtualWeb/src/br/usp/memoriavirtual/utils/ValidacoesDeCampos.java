@@ -49,8 +49,10 @@ public class ValidacoesDeCampos {
 		return true;
 	}
 
-	public static boolean validarFormatoCep(String Cep) {
-
+	public static boolean validarFormatoCep(String Cep) {//Cep tem que seguir o formato XXXXX-XXX ou estar em branco
+		if(Cep.isEmpty())
+			return true;
+		
 		String regexp = "[0-9]{5}?\\-[0-9]{3}?";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Cep);
