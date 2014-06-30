@@ -49,10 +49,18 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 		return null;
 	}
 
+	public String voltar(){
+		return "selecionarautoredicao.jsf";
+	}
+	
 	public String selecionarAutor() {
+		if(id.isEmpty()){
+			this.getMensagens().mensagemErro(this.traduzir("mensagemErroExcluirAutorEmBranco"));
+			return null;
+		}
 		try {
 			this.autor = this.editarAutorEJB.getAutor(new Long(this.id));
-			return this.redirecionar("/restrito/editarautor.jsf", true);
+			return this.redirecionar("/restrito/editarautor.jsf", false);
 		} catch (ModeloException m) {
 			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			m.printStackTrace();

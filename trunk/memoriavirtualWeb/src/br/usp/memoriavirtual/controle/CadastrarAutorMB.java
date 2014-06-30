@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -19,7 +19,7 @@ import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "cadastrarAutorMB")
-@RequestScoped
+@SessionScoped
 public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 
 	private static final long serialVersionUID = 5784819830194641882L;
@@ -56,6 +56,7 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 
 				this.cadastrarAutorEJB.cadastrarAutor(autor);
 				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				this.limpar();
 				return this.redirecionar("/restrito/index.jsf", true);
 			} catch (Exception e) {
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));

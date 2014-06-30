@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarAutorRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirAutorRemote;
@@ -27,17 +26,35 @@ public class ExcluirAutorMB extends EditarAutorMB implements Serializable {
 	private MensagensMB mensagens;
 
 	public ExcluirAutorMB() {
-		super();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
-		this.mensagens = (MensagensMB) resolver.getValue(
-				facesContext.getELContext(), null, "mensagensMB");
+		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
 	}
-
+	
+	@Override
+	public String selecionarAutor() {
+		if(id.isEmpty()){
+			this.getMensagens().mensagemErro(this.traduzir("mensagemErroExcluirAutorEmBranco"));
+			return null;
+		}
+		try {
+			this.autor = this.editarAutorEJB.getAutor(new Long(this.id));
+			return "excluirautor.jsf";
+		} catch (ModeloException m) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			m.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public String voltar(){
+		return "selecionarautorexclusao.jsf";
+	}
+	
 	public String excluir() {
 		try {
-			Autor autor = this.editarAutorEJB.getAutor(new Long(this.id));
-			this.excluirAutorEJB.excluirAutor(autor);
+			this.excluirAutorEJB.excluirAutor(this.autor);
 			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 			return this.redirecionar("/restrito/index.jsf", true);
 		} catch (ModeloException m) {

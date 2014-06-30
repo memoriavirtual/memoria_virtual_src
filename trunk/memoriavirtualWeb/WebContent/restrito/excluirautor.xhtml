@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+</h:head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+		<ui:define name="titulo">#{mensagens.excluirAutorTitulo}</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.excluirAutorTitulo}</h1>
+						<h2>#{mensagens.excluirAutorMensagemBensFicaraoSemAutor}</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+								<div class="row">
+									<label class="col-md-6 text-right">#{mensagens.nome}</label>
+									<span class="col-md-6 text-left">#{excluirAutorMB.autor.nome}</span>
+								</div>
+								<div class="row">
+									<label class="col-md-6 text-right">#{mensagens.sobrenome}</label>
+									<span class="col-md-6 text-left">#{excluirAutorMB.autor.sobrenome}</span>
+								</div>
+								<div class="row">
+									<label class="col-md-6 text-right">#{mensagens.codinome}</label>
+									<span class="col-md-6 text-left">#{excluirAutorMB.autor.codinome}</span>
+								</div>
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton 
+											class="btn btn-success margin-5"
+											value="#{mensagens.confirmar}"
+											action="#{excluirAutorMB.excluir}">
+										</h:commandButton>
+										<h:commandButton 
+											class="btn btn-primary margin-5"
+											value="#{mensagens.voltar}" 
+											action="#{excluirAutorMB.voltar}">
+										</h:commandButton>
+										<h:commandButton 
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{excluirAutorMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					selecionarAbaAutor();
+				});
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
