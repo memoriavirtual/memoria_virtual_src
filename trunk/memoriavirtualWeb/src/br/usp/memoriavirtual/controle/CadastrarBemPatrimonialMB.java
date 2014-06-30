@@ -59,7 +59,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	protected ArrayList<Multimidia> midias = new ArrayList<Multimidia>();
 	protected String assuntos = "";
 	protected String descritores = "";
-	protected String busca = "";
+	protected String buscaInstituicao = "";
+	protected String buscaBem = "";
 	protected List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 
 	@EJB
@@ -185,7 +186,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		midias.clear();
 		assuntos = "";
 		descritores = "";
-		busca = "";
+		buscaInstituicao = "";
+		buscaBem = "";
 		bens.clear();
 		super.limpar();
 		return null;
@@ -265,12 +267,12 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				.getExternalContext().getSessionMap().get("usuario");
 		try {
 			if (usuario.isAdministrador()) {
-				instituicoes = editarInstituicaoEJB.listarInstituicoes(busca);
+				instituicoes = editarInstituicaoEJB.listarInstituicoes(buscaInstituicao);
 			} else {
 				instituicoes = new ArrayList<Instituicao>();
 				List<Instituicao> parcial = null;
 				for (Acesso a : usuario.getAcessos()) {
-					parcial = editarInstituicaoEJB.listarInstituicoes(busca,
+					parcial = editarInstituicaoEJB.listarInstituicoes(buscaInstituicao,
 							a.getGrupo(), usuario);
 					instituicoes.addAll(parcial);
 				}
@@ -289,9 +291,9 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 
 	public String adicionarBemRelacionado() {
 		try {
-			if (this.busca.length() > 0) {
+			if (this.buscaBem.length() > 0) {
 				BemPatrimonial bemPatrimonial = cadastrarBemPatrimonialEJB
-						.getBemPatrimonial(new Long(this.busca).longValue());
+						.getBemPatrimonial(new Long(this.buscaBem).longValue());
 
 				if (!this.bemPatrimonial.getBensRelacionados().contains(
 						bemPatrimonial)) {
@@ -604,14 +606,6 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		this.fontesInformacao = fontesInformacao;
 	}
 
-	public String getBusca() {
-		return busca;
-	}
-
-	public void setBusca(String busca) {
-		this.busca = busca;
-	}
-
 	public List<BemPatrimonial> getBens() {
 		return bens;
 	}
@@ -763,5 +757,21 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 
 	public void setMensagens(MensagensMB mensagens) {
 		this.mensagens = mensagens;
+	}
+
+	public String getBuscaInstituicao() {
+		return buscaInstituicao;
+	}
+
+	public void setBuscaInstituicao(String buscaInstituicao) {
+		this.buscaInstituicao = buscaInstituicao;
+	}
+
+	public String getBuscaBem() {
+		return buscaBem;
+	}
+
+	public void setBuscaBem(String buscaBem) {
+		this.buscaBem = buscaBem;
 	}
 }
