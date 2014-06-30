@@ -57,6 +57,7 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 	protected String analista;
 	protected Usuario solicitante;
 	protected Aprovacao aprovacao;
+	protected String validade = "1";
 	private MensagensMB mensagens;
 
 	public EditarCadastroUsuarioMB() {
@@ -73,9 +74,10 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 
 		if (this.validar()) {
 			try {
+				int dias = Integer.parseInt(validade);
 				Calendar calendario = Calendar.getInstance();
 				calendario.setTime(new Date());
-				calendario.add(Calendar.DATE, 30);
+				calendario.add(Calendar.DATE, dias);
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				String expiraEm = dateFormat.format(calendario.getTime());
 				Aprovacao aprovacao = new Aprovacao();
@@ -159,7 +161,7 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 
 	public String cancelar() {
 		this.limpar();
-		return "cancelar";
+		return "selecionarusuarioedicao.jsf";
 	}
 
 	public String selecionarUsuario() {
@@ -355,6 +357,18 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 
 	public void setAprovacao(Aprovacao aprovacao) {
 		this.aprovacao = aprovacao;
+	}
+
+
+
+	public String getValidade() {
+		return validade;
+	}
+
+
+
+	public void setValidade(String validade) {
+		this.validade = validade;
 	}
 
 }

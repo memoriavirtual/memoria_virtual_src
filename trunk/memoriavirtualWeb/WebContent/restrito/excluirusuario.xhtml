@@ -26,7 +26,22 @@
 							<h:form class="form-vertical" role="form" method="post"
 								prependId="false">
 								<div class="row">
-									<div class="col-md-offset-3 col-md-6">
+									<div class="col-md-offset-3 col-md-2">
+										<div class="form-group">
+											<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
+											<div class="input-group mv-input-number">
+												<h:inputText disabled="true"
+													value="#{excluirUsuarioMB.validade}"
+													class="form-control" id="validade" />
+												<span class="clicavel aumentar input-group-addon"> <i
+													class="fa fa-caret-up"></i>
+												</span> <span class="clicavel diminuir input-group-addon"> <i
+													class="fa fa-caret-down"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="analista">#{mensagens.analista}</h:outputLabel>
 											<h:selectOneMenu class="form-control com-select2"
@@ -60,6 +75,10 @@
 											value="#{mensagens.solicitarExclusao}"
 											action="#{excluirUsuarioMB.solicitarExclusao}">
 										</h:commandButton>
+										<h:commandButton class="btn btn-primary margin-5"
+											value="#{mensagens.voltar}"
+											action="#{excluirUsuarioMB.voltar}">
+										</h:commandButton>
 										<h:commandButton id="cancelar"
 											class="btn btn-danger margin-left-5 no-right-margin"
 											value="#{mensagens.cancelar}"
@@ -75,6 +94,24 @@
 			<script type="text/javascript">
 				$('document').ready(function() {
 					selecionarAbaAdministracao();
+					
+					var input = $('#validade');
+					var maximo = 30;
+					var minimo = 1;
+					input.closest('div').find('.aumentar').click(function() {
+						if (maximo.valueOf() > input.val().valueOf()) {
+							var valor = parseInt(input.val().valueOf()) + 1;
+							input.val(valor);
+						}
+					});
+					
+
+					input.closest('div').find('.diminuir').click(function() {
+						if (input.val().valueOf() > minimo.valueOf()) {
+							var valor = parseInt(input.val().valueOf()) - 1;
+							input.val(valor);
+						}
+					});
 					
 					$('#analista').select2({
 						minimumResultsForSearch : 5

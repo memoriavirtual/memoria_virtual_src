@@ -63,13 +63,18 @@ public class ExcluirUsuarioMB extends EditarCadastroUsuarioMB implements
 		}
 	}
 
+	public String voltar(){
+		return "selecionarusuarioexclusao.jsf";
+	}
+	
 	public String solicitarExclusao() {
 
 		if (this.validar()) {
 			try {
+				int dias = Integer.parseInt(validade);
 				Calendar calendario = Calendar.getInstance();
 				calendario.setTime(new Date());
-				calendario.add(Calendar.DATE, 30);
+				calendario.add(Calendar.DATE, dias);
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				String expiraEm = dateFormat.format(calendario.getTime());
 				Aprovacao aprovacao = new Aprovacao();
