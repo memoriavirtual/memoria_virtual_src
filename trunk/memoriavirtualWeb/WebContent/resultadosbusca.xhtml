@@ -95,17 +95,16 @@
 			<h:panelGrid columns="3" class="pull-right">
 				<h:commandButton class="btn btn-primary" value="Página Anterior"
 					action="#{realizarBuscaSimplesMB.paginaAnterior}"
-					disabled="#{realizarBuscaSimplesMB.pagina == 1}" />
-				<h:dataTable binding="#{realizarBuscaSimplesMB.controlePagina}"
-					value="#{realizarBuscaSimplesMB.paginas}" var="numeroPagina">
-					<h:column>
-						<h:commandLink action="#{realizarBuscaSimplesMB.selecionaPagina}"
-							value="#{numeroPagina}   " />
-					</h:column>
-				</h:dataTable>
+					disabled="#{realizarBuscaSimplesMB.pagina == 1}" 
+					style="margin-right: 5px"/>
+				<ui:repeat value="#{realizarBuscaSimplesMB.paginas}" var="numeroPagina">
+					<h:commandLink action="#{realizarBuscaSimplesMB.selecionaPagina(numeroPagina)}" value="#{numeroPagina}" 
+						disabled="#{numeroPagina == realizarBuscaSimplesMB.pagina}" style="margin-right: 10px"/>
+				</ui:repeat>
 				<h:commandButton class="btn btn-primary" value="Próxima Página"
 					action="#{realizarBuscaSimplesMB.proximaPagina}"
-					disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}" />
+					disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}"
+					style="margin-left: -5px" />
 			</h:panelGrid>
 		</h:form>
 	</div>

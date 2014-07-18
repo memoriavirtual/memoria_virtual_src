@@ -77,7 +77,8 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 				proximaPaginaDisponivel = false;
 			else
 				proximaPaginaDisponivel = true;
-
+			
+			this.pagina = pagina;
 		} catch (Exception e) {
 			e.printStackTrace();
 			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
@@ -188,9 +189,8 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 		}
 	}
 
-	public String selecionaPagina() {
-		pagina = new Integer((String) controlePagina.getRowData());
-		buscarNovaPagina(pagina);
+	public String selecionaPagina(Integer numeroPagina) {
+		buscarNovaPagina(numeroPagina);
 		return "resultadosbusca";
 	}
 
