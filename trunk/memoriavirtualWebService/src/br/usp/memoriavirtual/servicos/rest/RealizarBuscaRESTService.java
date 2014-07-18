@@ -38,17 +38,12 @@ public class RealizarBuscaRESTService {
 	private HttpServletRequest request;
 
 	@GET
-	public ArrayList<BemPatrimonial> buscar() {
-		if (validaClient()) {
-			ArrayList<BemPatrimonial> bensPatrimoniais = null;
-			try {
-				bensPatrimoniais = this.realizarBuscaEJB.buscar("", 1);
-			} catch (ModeloException e) {
-				e.printStackTrace();
-			}
-			return bensPatrimoniais;
+	public String buscar() {
+		if(validaClient()){
+			return "cliente Validado com sucesso";
+		}else{
+			return "falha na validação do cliente";
 		}
-		return null;
 	}
 
 	@GET

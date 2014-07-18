@@ -34,6 +34,16 @@ public class RealizarBuscaSOAPService {
 	@EJB
 	private RealizarLoginRemote realizarLoginEJB;
 	
+	@WebMethod(operationName = "testarAutenticacao")
+	public String testarAutenticacao(){
+		if(validaClient()){
+			return "cliente Validado com sucesso";
+		}else{
+			return "falha na validação do cliente";
+		}
+		
+	}
+	
 	@WebMethod(operationName = "buscar")
 	public ArrayList<BemPatrimonial> buscar(@WebParam(name = "stringDeBusca") String stringDeBusca,@WebParam(name = "numeroDaPagina") int pagina) {
 		if(validaClient()){
@@ -108,7 +118,7 @@ public class RealizarBuscaSOAPService {
 		return autentica(username, password);
 	}
 	
-	public boolean autentica(String usuario,String senha){
+	private boolean autentica(String usuario,String senha){
 		boolean autenticado = false;
 		
 		Usuario usuarioAutenticado = null;
