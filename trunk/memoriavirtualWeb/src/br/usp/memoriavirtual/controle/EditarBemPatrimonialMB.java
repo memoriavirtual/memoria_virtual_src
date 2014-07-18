@@ -185,24 +185,13 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				&& ValidacoesDeCampos.validarStringNaoVazia(this.bemPatrimonial
 						.getNumeroRegistro())) {
 			try {
-				Map<String, Object> parametrosNaoExiste = new HashMap<String, Object>();
-				parametrosNaoExiste.put("numero",
-						(Object) this.bemPatrimonial.getNumeroRegistro());
-				Map<String, Object> parametrosUnico = new HashMap<String, Object>();
-				parametrosUnico.put("numero",
-						(Object) this.bemPatrimonial.getNumeroRegistro());
-				parametrosUnico.put("id",
-						(Object) this.bemPatrimonial.getId());
+				Map<String, Object> parametroNumeroRegistro = new HashMap<String, Object>();
+				parametroNumeroRegistro.put("numero", (Object) this.bemPatrimonial.getNumeroRegistro());
 				
 				boolean a = this.validacao.validarNaoExiste("unicoRegistro",
-						(Object) this.bemPatrimonial, parametrosNaoExiste);
-				boolean b = this.validacao.validarUnico("unicoRegistroComId",
-						(Object) this.bemPatrimonial, parametrosUnico);
+						(Object) this.bemPatrimonial, parametroNumeroRegistro);
 				
-				System.out.println(a);
-				System.out.println(b);
-				
-				if (a || b) {
+				if (a) {
 					return true;
 				} else {
 					String args[] = { this.traduzir("numeroRegistro"),
