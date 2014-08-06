@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
 
 @ManagedBean(name = "excluirBemPatrimonialMB")
@@ -31,17 +30,12 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements
 				facesContext.getELContext(), null, "mensagensMB");
 	}
 
-	public String excluir() {
+	public String selecionar() {
 
-		try {
-			this.excluirBemPatrimonialEJB.excluir(new Long(this.id).longValue());
-			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-			return this.redirecionar("/restrito/index.jsf", true);
-		} catch (ModeloException m) {
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-			m.printStackTrace();
-			return null;
-		}
+		System.out.println("FOI");
+		return this
+				.redirecionar("/restrito/excluirbempatrimonial.jsf", true);
+		
 	}
 
 	public String getId() {

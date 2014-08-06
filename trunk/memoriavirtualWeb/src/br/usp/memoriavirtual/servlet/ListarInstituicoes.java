@@ -21,7 +21,7 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 
-@WebServlet("/huhu")
+@WebServlet("/listarinstituicoes")
 public class ListarInstituicoes extends HttpServlet {
 
 	private static final long serialVersionUID = -3455546327228843100L;
@@ -98,11 +98,6 @@ public class ListarInstituicoes extends HttpServlet {
 		} catch (ModeloException m) {
 			m.printStackTrace();
 		}
-	}
-
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-
 	}
 
 }
