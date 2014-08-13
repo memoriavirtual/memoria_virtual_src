@@ -52,7 +52,7 @@
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<h:outputLabel class="control-label" for="analista">#{mensagens.analista}</h:outputLabel>
+											<h:outputLabel class="control-label" for="analista">#{mensagens.usuarioAprovador}</h:outputLabel>
 											<h:selectOneMenu class="form-control com-select2"
 												id="analista" value="#{excluirInstituicaoMB.analista}">
 												<f:selectItems value="#{excluirInstituicaoMB.analistas}"></f:selectItems>
@@ -80,6 +80,10 @@
 								</div>
 								<div class="text-right row">
 									<div class="col-md-12">
+									
+									
+									
+									
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.solicitarExclusao}"
 											action="#{excluirInstituicaoMB.solicitarExclusao}">

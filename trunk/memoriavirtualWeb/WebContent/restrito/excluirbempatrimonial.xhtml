@@ -12,7 +12,7 @@
 <h:body>
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
-		<ui:define name="titulo">#{mensagens.excluirInstituicaoTitulo}</ui:define>
+		<ui:define name="titulo">#{mensagens.excluirBemPatrimonialTitulo}</ui:define>
 		<ui:define name="conteudo">
 			<div class="col-md-12">
 				<div
@@ -21,28 +21,122 @@
 						<i class="fa fa-warning font-size-50"></i>
 					</div>
 					<div class="pull-left col-md-8">
-						<h4>#{mensagens.excluirInstituicaoAviso}</h4>
+						<h4>#{mensagens.excluirBemPatrimonialAviso}</h4>
 					</div>
 				</div>
 				<div class="widget wgreen">
 					<div class="widget-head">
-						<h1 class="top-margin-100">#{mensagens.excluirInstituicaoTitulo}</h1>
-						<h2>#{mensagens.excluirInstituicaoDescricao}</h2>
+						<h1 class="top-margin-100">#{mensagens.excluirBemPatrimonialTitulo}</h1>
+						<h2>#{mensagens.excluirBemPatrimonialDescricao}</h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget-content">
 						<div class="col-md-12">
 							<h:form class="form-vertical" role="form" method="post"
 								prependId="false">
-								
-								
-								
+
+
+								<div class="row">
+									<div class="col-md-offset-3 col-md-2">
+										<div class="form-group">
+											<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
+											<div class="input-group mv-input-number">
+												<h:inputText disabled="true"
+													value="#{excluirBemPatrimonialMB.validade} "
+													class="form-control" id="validade" />
+												<span class="clicavel aumentar input-group-addon"> <i
+													class="fa fa-caret-up"></i>
+												</span> <span class="clicavel diminuir input-group-addon"> <i
+													class="fa fa-caret-down"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="analista">#{mensagens.usuarioAprovador}</h:outputLabel>
+											<h:selectOneMenu class="form-control com-select2"
+												id="analista" value="#{excluirInstituicaoMB.analista}">
+												<f:selectItems value="#{excluirInstituicaoMB.analistas}"></f:selectItems>
+											</h:selectOneMenu>
+										</div>
+									</div>
+
+
+
+
+
+
+
+								</div>
+
+								<div class="row">
+									<div class="col-md-offset-3 col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="justificativa">
+												#{mensagens.justificativa}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="justificativa"
+												value="#{excluirBemPatrimonialMB.justificativa}">
+											</h:inputTextarea>
+											<h:message id="validacao-justificativa"
+												for="validacao-justificativa"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+
+
+
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton class="btn btn-success margin-5"
+											value="#{mensagens.solicitarExclusao}"
+											action="#{excluirBemPatrimonialMB.solicitarExclusao}">
+										</h:commandButton>
+										<h:commandButton id="cancelar"
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}" action=" ">
+										</h:commandButton>
+									</div>
+								</div>
+
+
 							</h:form>
 						</div>
 					</div>
 				</div>
 			</div>
-			
+			<script type="text/javascript">
+				$('document').ready(function() {
+					selecionarAbaPatrimonio();
+					$('#analista').select2({
+						minimumResultsForSearch : 5
+					});
+
+					var input = $('#validade');
+					var maximo = 30;
+					var minimo = 1;
+					input.closest('div').find('.aumentar').click(function() {
+						if (maximo.valueOf() > input.val().valueOf()) {
+							var valor = parseInt(input.val().valueOf()) + 1;
+							input.val(valor);
+						}
+					});
+					input.closest('div').find('.diminuir').click(function() {
+						if (input.val().valueOf() > minimo.valueOf()) {
+							var valor = parseInt(input.val().valueOf()) - 1;
+							input.val(valor);
+						}
+					});
+
+					mostrarErro('#validacao-justificativa');
+				});
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>
