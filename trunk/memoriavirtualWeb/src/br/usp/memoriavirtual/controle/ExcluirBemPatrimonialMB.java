@@ -11,6 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
 
 @ManagedBean(name = "excluirBemPatrimonialMB")
@@ -105,6 +107,16 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	 */
 	public List<SelectItem> getUsuariosAprovadores() {
 		List<SelectItem> usuarios = new ArrayList<SelectItem>();
+
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
+		try {
+			// TODO Fazer um loop "for" preechendo a lista de objetos "SelectItem"
+			// Olhar o método ExcluirInstituicaoMB.getAnalistas()
+			this.excluirBemPatrimonialEJB.listarUsuariosAprovadores(this.bemPatrimonial.getInstituicao(), usuario);
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		}
 
 		return usuarios;
 	}
