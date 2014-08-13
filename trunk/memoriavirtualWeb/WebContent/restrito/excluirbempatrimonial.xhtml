@@ -57,17 +57,11 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="analista">#{mensagens.usuarioAprovador}</h:outputLabel>
 											<h:selectOneMenu class="form-control com-select2"
-												id="analista" value="#{excluirInstituicaoMB.analista}">
-												<f:selectItems value="#{excluirInstituicaoMB.analistas}"></f:selectItems>
+												id="usuarioAprovador" value="#{excluirBemPatrimonialMB.usuarioAprovador}">
+												<f:selectItems value="#{excluirBemPatrimonialMB.usuariosAprovadores}"></f:selectItems>
 											</h:selectOneMenu>
 										</div>
 									</div>
-
-
-
-
-
-
 
 								</div>
 
@@ -89,8 +83,6 @@
 										</div>
 									</div>
 								</div>
-
-
 
 								<div class="text-right row">
 									<div class="col-md-12">
@@ -114,7 +106,7 @@
 			<script type="text/javascript">
 				$('document').ready(function() {
 					selecionarAbaPatrimonio();
-					$('#analista').select2({
+					$('#usuarioAprovador').select2({
 						minimumResultsForSearch : 5
 					});
 
