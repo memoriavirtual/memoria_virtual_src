@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </h:head>
@@ -76,12 +77,14 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="numero-registro">#{mensagens.numeroRegistro}</h:outputLabel>
-															<h:inputText class="form-control" id="numero-registro" maxlength="255"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro}" >
-																<f:ajax event="keyup" render="validacao-numero-registro" onevent="mostrarErro('#validacao-numero-registro')"
+															<h:inputText class="form-control" id="numero-registro"
+																maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro}">
+																<f:ajax event="keyup" render="validacao-numero-registro"
+																	onevent="mostrarErro('#validacao-numero-registro')"
 																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-numero-registro',mensagens.numeroRegistro,
-																	cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro)}"/>
-															</h:inputText>	
+																	cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro)}" />
+															</h:inputText>
 															<h:message id="validacao-numero-registro"
 																for="validacao-numero-registro"
 																infoClass="help-block has-success"
@@ -94,11 +97,14 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="titulo-principal">#{mensagens.tituloPrincipal}</h:outputLabel>
-															<h:inputText class="form-control" id="titulo-principal" maxlength="255"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal}" >
-																<f:ajax event="keyup" render="validacao-titulo-principal" onevent="mostrarErro('#validacao-titulo-principal')"
+															<h:inputText class="form-control" id="titulo-principal"
+																maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal}">
+																<f:ajax event="keyup"
+																	render="validacao-titulo-principal"
+																	onevent="mostrarErro('#validacao-titulo-principal')"
 																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-titulo-principal',mensagens.tituloPrincipal,
-																	cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal)}"/>
+																	cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal)}" />
 															</h:inputText>
 															<h:message id="validacao-titulo-principal"
 																for="validacao-titulo-principal"
@@ -137,6 +143,12 @@
 																				<h:inputText class="form-control" id="titulo"
 																					value="#{titulo.valor}">
 																				</h:inputText>
+																				<h:message id="validacao-titulo"
+																					for="validacao-titulo"
+																					infoClass="help-block has-success"
+																					errorClass="help-block has-error"
+																					warnClass="help-block has-warning">
+																				</h:message>
 																			</div>
 																		</div>
 																		<div class="col-md-1">
@@ -162,8 +174,8 @@
 																									'.select-titulo')
 																									.select2(
 																											{
-																												allowClear: true,
-																												placeholder: '#{mensagens.selecione}',
+																												allowClear : true,
+																												placeholder : '#{mensagens.selecione}',
 																												minimumResultsForSearch : -1
 																											});
 																						});
@@ -192,6 +204,12 @@
 															<h:outputLabel class="label-control" for="complemento">#{mensagens.complemento}</h:outputLabel>
 															<h:inputTextarea class="form-control" id="complemento"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.complemento}" />
+															<h:message id="validacao-complemento"
+																for="validacao-complemento"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -201,6 +219,11 @@
 															<h:outputLabel class="label-control" for="colecao">#{mensagens.colecao}</h:outputLabel>
 															<h:inputText class="form-control" id="colecao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.colecao}" />
+															<h:message id="validacao-colecao" for="validacao-colecao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -208,6 +231,12 @@
 															<h:outputLabel class="label-control" for="latitude">#{mensagens.latitude}</h:outputLabel>
 															<h:inputText class="form-control" id="latitude"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.latitude}" />
+															<h:message id="validacao-latitude"
+																for="validacao-latitude"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -215,6 +244,12 @@
 															<h:outputLabel class="label-control" for="longitude">#{mensagens.longitude}</h:outputLabel>
 															<h:inputText class="form-control" id="longitude"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.longitude}" />
+															<h:message id="validacao-longitude"
+																for="validacao-longitude"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -299,8 +334,8 @@
 																									'.select-autoria')
 																									.select2(
 																											{
-																												allowClear: true,
-																												placeholder: '#{mensagens.selecione}',
+																												allowClear : true,
+																												placeholder : '#{mensagens.selecione}',
 																												minimumResultsForSearch : -1
 																											});
 																						});
@@ -343,6 +378,11 @@
 															<h:outputLabel class="label-control" for="producao-local">#{mensagens.local}</h:outputLabel>
 															<h:inputText class="form-control" id="producao-local"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.local}" />
+															<h:message id="validacao-local" for="validacao-local"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-5">
@@ -350,6 +390,11 @@
 															<h:outputLabel class="label-control" for="producao-ano">#{mensagens.ano}</h:outputLabel>
 															<h:inputText class="form-control" id="producao-ano"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.ano}" />
+															<h:message id="validacao-ano" for="validacao-ano"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -360,6 +405,11 @@
 																for="producao-edicao">#{mensagens.edicao}</h:outputLabel>
 															<h:inputText class="form-control" id="producao-edicao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.edicao}" />
+															<h:message id="validacao-edicao" for="validacao-edicao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-5">
@@ -369,6 +419,12 @@
 															<h:inputText class="form-control"
 																id="producao-outras-responsabilidades"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.outrasResponsabilidades}" />
+															<h:message id="validacao-responsabilidades"
+																for="validacao-responsabilidades"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -398,6 +454,13 @@
 																id="caracteristicas-fisicas-tecnicas-executivas"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasFisicasTecnicasExecutivas}">
 															</h:inputTextarea>
+															<h:message
+																id="validacao-caracteristicas-fisicas-tecnicas-executivas"
+																for="validacao-caracteristicas-fisicas-tecnicas-executivas"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -407,6 +470,12 @@
 															<h:inputTextarea class="form-control"
 																id="dimensoes-quantificacoes"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.dimensoesQuantificacoes}" />
+															<h:message id="validacao-dimensoes-quantificacoes"
+																for="validacao-dimensoes-quantificacoes"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -428,6 +497,11 @@
 															<h:outputLabel class="label-control" for="uso">#{mensagens.uso}</h:outputLabel>
 															<h:inputText id="uso" class="form-control"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.uso}" />
+															<h:message id="validacao-uso" for="validacao-uso"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-3">
@@ -435,6 +509,7 @@
 															<h:outputLabel class="label-control"
 																for="numero-ambientes">#{mensagens.numeroAmbientes}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-ambientes"
+																p:type="number" p:min="0"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroAmbientes}" />
 														</div>
 													</div>
@@ -443,6 +518,7 @@
 															<h:outputLabel class="label-control"
 																for="numero-pavimentos">#{mensagens.numeroPavimentos}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-pavimentos"
+																p:type="number" p:min="0"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroPavimentos}" />
 														</div>
 													</div>
@@ -493,6 +569,12 @@
 															</h:outputLabel>
 															<h:inputTextarea class="form-control" id="meio-antropico"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.meioAntropico}" />
+															<h:message id="validacao-meio-antropico"
+																for="validacao-meio-antropico"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -504,6 +586,12 @@
 															<h:inputTextarea class="form-control"
 																id="caracteristicas-ambientais"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasAmbientais}" />
+															<h:message id="validacao-caracteristicas-ambientais"
+																for="validacao-caracteristicas-ambientais"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -514,6 +602,12 @@
 															<h:outputLabel class="label-control" for="sitio-paisagem">#{mensagens.sitioPaisagem}</h:outputLabel>
 															<h:inputText class="form-control" id="sitio-paisagem"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.sitioPaisagem}" />
+															<h:message id="validacao-sitio-paisagem"
+																for="validacao-sitio-paisagem"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -521,6 +615,12 @@
 															<h:outputLabel class="label-control" for="agua-proxima">#{mensagens.aguaProxima}</h:outputLabel>
 															<h:inputText class="form-control" id="agua-proxima"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.aguaProxima}" />
+															<h:message id="validacao-agua-proxima"
+																for="validacao-agua-proxima"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -528,6 +628,12 @@
 															<h:outputLabel class="label-control" for="vegetacao">#{mensagens.vegetacao}</h:outputLabel>
 															<h:inputText class="form-control" id="vegetacao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.vegetacao}" />
+															<h:message id="validacao-vegetacao"
+																for="validacao-vegetacao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -549,6 +655,12 @@
 															<h:outputLabel class="label-control" for="uso-atual">#{mensagens.usoAtual}</h:outputLabel>
 															<h:inputText class="form-control" id="uso-atual"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.usoAtual}" />
+															<h:message id="validacao-uso-atual"
+																for="validacao-uso-atual"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -556,6 +668,11 @@
 															<h:outputLabel class="label-control" for="outros">#{mensagens.outros}</h:outputLabel>
 															<h:inputText class="form-control" id="outros"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.outros}" />
+															<h:message id="validacao-outros" for="validacao-outros"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -566,6 +683,12 @@
 															<h:outputLabel class="label-control" for="area-total">#{mensagens.areaTotal}</h:outputLabel>
 															<h:inputText class="form-control" id="area-total"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.areaTotal}" />
+															<h:message id="validacao-area-total"
+																for="validacao-area-total"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -575,6 +698,12 @@
 															<h:inputText class="form-control"
 																id="altura-fachada-frontal"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaFachadaFrontal}" />
+															<h:message id="validacao-altura-fachada-frontal"
+																for="validacao-altura-fachada-frontal"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -584,6 +713,12 @@
 															<h:inputText class="form-control"
 																id="altura-fachada-posterior"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaFachadaPosterior}" />
+															<h:message id="validacao-altura-fachada-posterior"
+																for="validacao-altura-fachada-posterior"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -593,6 +728,11 @@
 															<h:outputLabel class="label-control" for="largura">#{mensagens.largura}</h:outputLabel>
 															<h:inputText class="form-control" id="largura"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.largura}" />
+															<h:message id="validacao-largura" for="validacao-largura"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 
@@ -601,6 +741,11 @@
 															<h:outputLabel class="label-control" for="altura">#{mensagens.altura}</h:outputLabel>
 															<h:inputText class="form-control" id="altura"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.altura}" />
+															<h:message id="validacao-altura" for="validacao-altura"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -608,6 +753,12 @@
 															<h:outputLabel class="label-control" for="profundidade">#{mensagens.profundidade}</h:outputLabel>
 															<h:inputText class="form-control" id="profundidade"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.profundidade}" />
+															<h:message id="validacao-profundidade"
+																for="validacao-profundidade"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -618,6 +769,12 @@
 																for="altura-cumeeira">#{mensagens.alturaCumeeira}</h:outputLabel>
 															<h:inputText class="form-control" id="altura-cumeeira"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaCumeeira}" />
+															<h:message id="validacao-altura-cumeeira"
+																for="validacao-altura-cumeeira"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -625,6 +782,12 @@
 															<h:outputLabel class="label-control" for="altura-total">#{mensagens.alturaTotal}</h:outputLabel>
 															<h:inputText class="form-control" id="altura-total"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaTotal}" />
+															<h:message id="validacao-altura-total"
+																for="validacao-altura-total"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -633,6 +796,12 @@
 																for="pe-direito-terreo">#{mensagens.peDireitoTerreo}</h:outputLabel>
 															<h:inputText class="form-control" id="pe-direito-terreo"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.peDireitoTerreo}" />
+															<h:message id="validacao-pe-direito-terreo"
+																for="validacao-pe-direito-terreo"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -643,6 +812,12 @@
 																for="pe-direito-tipo">#{mensagens.peDireitoTipo}</h:outputLabel>
 															<h:inputText class="form-control" id="pe-direito-tipo"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.peDireitoTipo}" />
+															<h:message id="validacao-pe-direito-tipo"
+																for="validacao-pe-direito-tipo"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -650,6 +825,12 @@
 															<h:outputLabel class="label-control" for="comprimento">#{mensagens.comprimento}</h:outputLabel>
 															<h:inputText class="form-control" id="comprimento"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.comprimento}" />
+															<h:message id="validacao-comprimento"
+																for="validacao-comprimento"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -658,6 +839,12 @@
 																for="localizacao-fisica">#{mensagens.localizacaoFisica}</h:outputLabel>
 															<h:inputText class="form-control" id="localizacao-fisica"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.localizacaoFisica}" />
+															<h:message id="validacao-localizacao-fisica"
+																for="validacao-localizacao-fisica"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -672,6 +859,12 @@
 															<h:inputTextarea class="form-control"
 																id="conteudo-bem-patrimonial"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.conteudo}" />
+															<h:message id="validacao-conteudo-bem-patrimonial"
+																for="validacao-conteudo-bem-patrimonial"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -681,6 +874,12 @@
 															</h:outputLabel>
 															<h:inputTextarea class="form-control" id="meio-acesso"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.meioAcesso}" />
+															<h:message id="validacao-meio-acesso"
+																for="validacao-meio-acesso"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -690,6 +889,11 @@
 															</h:outputLabel>
 															<h:inputTextarea class="form-control" id="notas"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.notas}" />
+															<h:message id="validacao-notas" for="validacao-notas"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -744,12 +948,18 @@
 															<h:inputTextarea class="form-control"
 																id="notas-estado-conservacao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.diagnostico.notasEstadoConservacao}" />
+															<h:message id="validacao-notas-estado-conservacao"
+																for="validacao-notas-estado-conservacao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
 												<div>
 													<h:panelGroup id="grupo-intervencoes">
-														<h:dataTable id="intervencao" var="intervencao"
+														<h:dataTable id="v" var="intervencao"
 															class="table table-hover table-bordered"
 															value="#{cadastrarBemPatrimonialMB.bemPatrimonial.intervencoes}">
 															<h:column>
@@ -760,6 +970,11 @@
 																			<h:inputText class="form-control" id="data"
 																				value="#{intervencao.data}">
 																			</h:inputText>
+																			<h:message id="validacao-data" for="validacao-data"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
 																		</div>
 																	</div>
 																	<div class="col-md-4">
@@ -769,6 +984,12 @@
 																			<h:inputText class="form-control" id="responsavel"
 																				value="#{intervencao.responsavel}">
 																			</h:inputText>
+																			<h:message id="validacao-responsavel"
+																				for="validacao-responsavel"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
 																		</div>
 																	</div>
 																	<div class="col-md-5">
@@ -777,6 +998,12 @@
 																			<h:inputText class="form-control" id="descricao"
 																				value="#{intervencao.descricao}">
 																			</h:inputText>
+																			<h:message id="validacao-descricao"
+																				for="validacao-descricao"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
 																		</div>
 																	</div>
 																	<div class="col-md-1">
@@ -879,6 +1106,12 @@
 															<h:inputText class="form-control"
 																id="instituicao-protetora"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protetoraInstituicao}" />
+															<h:message id="validacao-instituicao-protetora"
+																for="validacao-instituicao-protetora"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -887,6 +1120,12 @@
 																for="numero-processo">#{mensagens.numeroProcesso}</h:outputLabel>
 															<h:inputText class="form-control" id="numero-processo"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.legislacao}" />
+															<h:message id="validacao-numero-processo"
+																for="validacao-numero-processo"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -898,6 +1137,12 @@
 															</h:outputLabel>
 															<h:inputTextarea class="form-control" id="data-retorno"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.dataRetorno}" />
+															<h:message id="validacao-data-retorno"
+																for="validacao-data-retorno"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -910,6 +1155,12 @@
 																id="notas-uso-aproveitamento"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.notasUsoAproveitamento}">
 															</h:inputTextarea>
+															<h:message id="validacao-notas-uso-aproveitamento"
+																for="validacao-notas-uso-aproveitamento"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -946,6 +1197,12 @@
 															<h:outputLabel class="label-control" for="valor-venal">#{mensagens.valorVenal}</h:outputLabel>
 															<h:inputText class="form-control" id="valor-venal"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.valorVenalTransacao}" />
+															<h:message id="validacao-valor-venal"
+																for="validacao-valor-venal"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-3">
@@ -953,6 +1210,12 @@
 															<h:outputLabel class="label-control" for="data-aquisicao">#{mensagens.data}</h:outputLabel>
 															<h:inputText class="form-control" id="data-aquisicao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dataAquisicao}" />
+															<h:message id="validacao-data-aquisicao"
+																for="validacao-data-aquisicao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-3">
@@ -962,6 +1225,12 @@
 															<h:inputText class="form-control"
 																id="primeiro-proprietario"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.primeiroProprietario}" />
+															<h:message id="validacao-primeiro-proprietario"
+																for="validacao-primeiro-proprietario"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -973,6 +1242,12 @@
 															<h:inputTextarea class="form-control"
 																id="dados-transacao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao}" />
+															<h:message id="validacao-dados-transacao"
+																for="validacao-dados-transacao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -980,6 +1255,12 @@
 															<h:outputLabel class="label-control" for="historico">#{mensagens.historico}</h:outputLabel>
 															<h:inputTextarea class="form-control" id="historico"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico}" />
+															<h:message id="validacao-historico"
+																for="validacao-historico"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -989,6 +1270,12 @@
 															<h:inputTextarea class="form-control"
 																id="instrumento-pesquisa"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.instrumentoPesquisa}" />
+															<h:message id="validacao-instrumento-pesquisa"
+																for="validacao-instrumento-pesquisa"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -1013,8 +1300,20 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="assuntos">#{mensagens.assuntos}</h:outputLabel>
-															<h:inputTextarea class="form-control" id="assuntos"
-																value="#{cadastrarBemPatrimonialMB.assuntos}" />
+															<h:inputTextarea class="form-control" id="assuntos" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.assuntos}">
+																<f:ajax event="keyup"
+																	render="validacao-assuntos"
+																	onevent="mostrarErro('#validacao-assuntos')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-assuntos',mensagens.assuntos,
+																	cadastrarBemPatrimonialMB.assuntos)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-assuntos"
+																for="validacao-assuntos"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -1022,6 +1321,12 @@
 															<h:outputLabel class="label-control" for="descritores">#{mensagens.descritores}</h:outputLabel>
 															<h:inputTextarea class="form-control" id="descritores"
 																value="#{cadastrarBemPatrimonialMB.descritores}" />
+															<h:message id="validacao-descritores"
+																for="validacao-descritores"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
 														</div>
 													</div>
 												</div>
@@ -1055,9 +1360,19 @@
 																			<h:outputLabel class="label-control"
 																				for="fontes-informacao">#{mensagens.fontesInformacao}</h:outputLabel>
 																			<h:inputText class="form-control"
-																				id="fontes-informacao"
+																				id="fontes-informacao" maxlength="255"
 																				value="#{fonteinformacao.valor}">
+																				<f:ajax event="keyup"
+																					render="validacao-fontes-informacao"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-fontes-informacao',
+																					mensagens.fontesInformacao,fonteinformacao.valor)}" />
 																			</h:inputText>
+																			<h:message id="validacao-fontes-informacao"
+																				for="validacao-fontes-informacao"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
 																		</div>
 																	</div>
 																	<div class="col-md-1">
@@ -1125,6 +1440,12 @@
 																			<h:inputText class="form-control"
 																				id="nome-pesquisador" value="#{pesquisador.nome}">
 																			</h:inputText>
+																			<h:message id="validacao-nome-pesquisador"
+																				for="validacao-nome-pesquisador"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
 																		</div>
 																	</div>
 																	<div class="col-md-5">
@@ -1133,6 +1454,12 @@
 																				for="notas-pesquisa">#{mensagens.notas}</h:outputLabel>
 																			<h:inputText class="form-control" id="notas-pesquisa"
 																				value="#{pesquisador.notasPesquisador}" />
+																			<h:message id="validacao-notas-pesquisa"
+																				for="validacao-notas-pesquisa"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
 																		</div>
 																	</div>
 																	<div class="col-md-1">
@@ -1250,10 +1577,10 @@
 				</div>
 			</div>
 			<script type="text/javascript">
-				function carregarErros(){
-					
-				}	
-			
+				function carregarErros() {
+
+				}
+
 				$(document)
 						.ready(
 								function() {
@@ -1310,7 +1637,9 @@
 													'hide');
 											mensagensSucesso('#{mensagens.sucesso}');
 											$('#resultado').text('');
-											$('#cadastrar-autor-modal input.form-control').val('');
+											$(
+													'#cadastrar-autor-modal input.form-control')
+													.val('');
 										}
 									}
 								});

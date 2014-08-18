@@ -711,11 +711,34 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		return this.validarTituloPrincipal() && this.validarNumeroRegistro();
 	}
 	
+	public void validarLatitude(String nomeCampo){
+		
+	}
+	
+	public void validarLongitude(String nomeCampo){
+		
+	}
+	
 	public void validarCampo(String nomeCampoMensagem, String nomeCampo, String campo){
 		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
 			String args[] = {"255"};
 			MensagensDeErro.getErrorMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
 		}
+	}
+	
+	public void validarCampoComHeranca(String nomeInicialComponente,String nomeCampoMensagem, String nomeCampo, String campo){
+		String componente = nomeInicialComponente.split(":")[0] +":"+ nomeInicialComponente.split(":")[1] + ":";
+		componente = componente + nomeCampoMensagem;
+		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
+			String args[] = {"255"};
+			MensagensDeErro.getErrorMessage("erroMaximoCaracteres", args, componente);
+		}
+	}
+	
+	public String gerarComponenteValidacaoComHeranca(String componente, String campoValidacao){
+		String comp = componente.split(":")[0] +":"+ componente.split(":")[1] + ":";
+		comp = comp + campoValidacao;
+		return comp;
 	}
 	
 	public boolean validarTituloPrincipal() {
