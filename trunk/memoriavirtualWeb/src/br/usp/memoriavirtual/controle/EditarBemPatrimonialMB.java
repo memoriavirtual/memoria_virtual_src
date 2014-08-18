@@ -180,13 +180,12 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	}
 
 	public boolean validarNumeroRegistro() {
-		if (ValidacoesDeCampos.validarNaoNulo((Object) this.bemPatrimonial
-				.getNumeroRegistro())
-				&& ValidacoesDeCampos.validarStringNaoVazia(this.bemPatrimonial
-						.getNumeroRegistro())) {
+		if (ValidacoesDeCampos.validarNaoNulo((Object) this.bemPatrimonial.getNumeroRegistro())
+				&& ValidacoesDeCampos.validarStringNaoVazia(this.bemPatrimonial.getNumeroRegistro())) {
 			try {
 				Map<String, Object> parametroNumeroRegistro = new HashMap<String, Object>();
 				parametroNumeroRegistro.put("numero", (Object) this.bemPatrimonial.getNumeroRegistro());
+				parametroNumeroRegistro.put("id", (Object) this.bemPatrimonial.getId());
 				
 				boolean a = this.validacao.validarNaoExiste("unicoRegistro",
 						(Object) this.bemPatrimonial, parametroNumeroRegistro);
@@ -206,7 +205,9 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				return false;
 			}
 		} else {
-			return true;
+			String args[] = { this.traduzir("numeroRegistro") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,"validacao-numero-registro");
+			return false;
 		}
 	}
 

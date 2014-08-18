@@ -710,7 +710,14 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	public boolean validar() {
 		return this.validarTituloPrincipal() && this.validarNumeroRegistro();
 	}
-
+	
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo, String campo){
+		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
+			String args[] = {"255"};
+			MensagensDeErro.getErrorMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}
+	}
+	
 	public boolean validarTituloPrincipal() {
 		if (this.bemPatrimonial.getTituloPrincipal() == null
 				|| this.bemPatrimonial.getTituloPrincipal().equals("")) {
@@ -723,10 +730,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	}
 
 	public boolean validarNumeroRegistro() {
-		if (ValidacoesDeCampos.validarNaoNulo((Object) this.bemPatrimonial
-				.getNumeroRegistro())
-				&& ValidacoesDeCampos.validarStringNaoVazia(this.bemPatrimonial
-						.getNumeroRegistro())) {
+		if (ValidacoesDeCampos.validarNaoNulo((Object) this.bemPatrimonial.getNumeroRegistro())
+				&& ValidacoesDeCampos.validarStringNaoVazia(this.bemPatrimonial.getNumeroRegistro())) {
 			try {
 				Map<String, Object> parametros = new HashMap<String, Object>();
 				parametros.put("numero",
@@ -747,7 +752,9 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				return false;
 			}
 		} else {
-			return true;
+			String args[] = { this.traduzir("numeroRegistro") };
+			MensagensDeErro.getErrorMessage("erroCampoVazio", args,"validacao-numero-registro");
+			return false;
 		}
 	}
 

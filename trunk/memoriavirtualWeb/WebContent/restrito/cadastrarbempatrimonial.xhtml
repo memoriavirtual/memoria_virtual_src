@@ -76,8 +76,12 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="numero-registro">#{mensagens.numeroRegistro}</h:outputLabel>
-															<h:inputText class="form-control" id="numero-registro"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro}" />
+															<h:inputText class="form-control" id="numero-registro" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro}" >
+																<f:ajax event="keyup" render="validacao-numero-registro" onevent="mostrarErro('#validacao-numero-registro')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-numero-registro',mensagens.numeroRegistro,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro)}"/>
+															</h:inputText>	
 															<h:message id="validacao-numero-registro"
 																for="validacao-numero-registro"
 																infoClass="help-block has-success"
@@ -90,8 +94,12 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="titulo-principal">#{mensagens.tituloPrincipal}</h:outputLabel>
-															<h:inputText class="form-control" id="titulo-principal"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal}" />
+															<h:inputText class="form-control" id="titulo-principal" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal}" >
+																<f:ajax event="keyup" render="validacao-titulo-principal" onevent="mostrarErro('#validacao-titulo-principal')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-titulo-principal',mensagens.tituloPrincipal,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal)}"/>
+															</h:inputText>
 															<h:message id="validacao-titulo-principal"
 																for="validacao-titulo-principal"
 																infoClass="help-block has-success"
@@ -1242,6 +1250,10 @@
 				</div>
 			</div>
 			<script type="text/javascript">
+				function carregarErros(){
+					
+				}	
+			
 				$(document)
 						.ready(
 								function() {
