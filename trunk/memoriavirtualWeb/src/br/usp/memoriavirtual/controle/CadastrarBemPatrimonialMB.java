@@ -722,7 +722,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	public void validarCampo(String nomeCampoMensagem, String nomeCampo, String campo){
 		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
 			String args[] = {"255"};
-			MensagensDeErro.getErrorMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
 		}
 	}
 	
@@ -731,7 +731,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		componente = componente + nomeCampoMensagem;
 		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
 			String args[] = {"255"};
-			MensagensDeErro.getErrorMessage("erroMaximoCaracteres", args, componente);
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, componente);
 		}
 	}
 	
@@ -757,8 +757,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				&& ValidacoesDeCampos.validarStringNaoVazia(this.bemPatrimonial.getNumeroRegistro())) {
 			try {
 				Map<String, Object> parametros = new HashMap<String, Object>();
-				parametros.put("numero",
-						(Object) this.bemPatrimonial.getNumeroRegistro());
+				parametros.put("numero", (Object) this.bemPatrimonial.getNumeroRegistro());
+				
 				if (this.validacao.validarNaoExiste("unicoRegistro",
 						(Object) this.bemPatrimonial, parametros)) {
 					return true;

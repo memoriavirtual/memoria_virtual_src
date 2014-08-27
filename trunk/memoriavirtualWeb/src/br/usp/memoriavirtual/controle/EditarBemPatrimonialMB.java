@@ -187,7 +187,7 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				parametroNumeroRegistro.put("numero", (Object) this.bemPatrimonial.getNumeroRegistro());
 				parametroNumeroRegistro.put("id", (Object) this.bemPatrimonial.getId());
 				
-				boolean a = this.validacao.validarNaoExiste("unicoRegistro",
+				boolean a = this.validacao.validarNaoExiste("unicoRegistroSemId",
 						(Object) this.bemPatrimonial, parametroNumeroRegistro);
 				
 				if (a) {

@@ -34,7 +34,8 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 @SequenceGenerator(name = "BEMPATRIMONIAL_ID", sequenceName = "BEMPATRIMONIAL_SEQ", allocationSize = 1)
 @XmlRootElement
 @NamedQueries({
-		@NamedQuery(name = "unicoRegistro", query = "SELECT b FROM BemPatrimonial b WHERE b.numeroRegistro = :numero AND b.id <> :id"),
+		@NamedQuery(name = "unicoRegistroSemId", query = "SELECT b FROM BemPatrimonial b WHERE b.numeroRegistro = :numero AND b.id <> :id"),
+		@NamedQuery(name = "unicoRegistro", query = "SELECT b FROM BemPatrimonial b WHERE b.numeroRegistro = :numero"),
 		@NamedQuery(name = "unicoRegistroComId", query = "SELECT b FROM BemPatrimonial b WHERE b.numeroRegistro = :numero AND b.id = :id") })
 public class BemPatrimonial implements Serializable {
 
