@@ -489,27 +489,6 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		return bensCompletos;
 	}
 
-	@Override
-	public List<Multimidia> buscarVideos(BemPatrimonial bem)
-			throws ModeloException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Multimidia> buscarImagens(BemPatrimonial bem)
-			throws ModeloException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Multimidia> buscarAudio(BemPatrimonial bem)
-			throws ModeloException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/**
 	 * Classe utilizada para estabelecer os crit�rios de compara��o entre duas
 	 * strings ponderadas.

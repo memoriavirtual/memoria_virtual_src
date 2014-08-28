@@ -39,10 +39,10 @@ public class RealizarBuscaRESTService {
 
 	@GET
 	public String buscar() {
-		if(validaClient()){
+		if(validaCliente()){
 			return "cliente Validado com sucesso";
 		}else{
-			return "falha na validação do cliente";
+			return "falha na validaï¿½ï¿½o do cliente";
 		}
 	}
 
@@ -51,7 +51,7 @@ public class RealizarBuscaRESTService {
 	public ArrayList<BemPatrimonial> buscar(
 			@PathParam("stringDeBusca") String stringDeBusca,
 			@PathParam("numeroDaPagina") int pagina) {
-		if (validaClient()) {
+		if (validaCliente()) {
 			ArrayList<BemPatrimonial> bensPatrimoniais = null;
 			try {
 				bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca,
@@ -75,7 +75,7 @@ public class RealizarBuscaRESTService {
 			@PathParam("numeroDaPagina") int pagina,
 			@PathParam("tamanhoPagina") int tamanhoPagina,
 			@PathParam("nomeInstituicao") String nomeInstituicao) {
-		if (validaClient()) {
+		if (validaCliente()) {
 			ArrayList<BemPatrimonial> bensPatrimoniais = null;
 
 			try {
@@ -94,7 +94,7 @@ public class RealizarBuscaRESTService {
 	@Path("/{container}")
 	public List<Multimidia> buscarMidiaPorContainer(
 			@PathParam("container") String idContainer) {
-		if (validaClient()) {
+		if (validaCliente()) {
 			List<Multimidia> midias = null;
 			midias = this.realizarBuscaEJB.getMidias(Long
 					.parseLong(idContainer));
@@ -103,7 +103,7 @@ public class RealizarBuscaRESTService {
 		return null;
 	}
 
-	private boolean validaClient() {
+	private boolean validaCliente() {
 
 		String username = "";
 		String password = "";

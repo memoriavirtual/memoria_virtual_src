@@ -14,29 +14,17 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 @Remote
 public interface RealizarBuscaSimplesRemote {
 
-	public ArrayList<BemPatrimonial> buscar(String busca,Integer pagina)
-			throws ModeloException;
-	
-	public ArrayList<BemPatrimonial> buscarExterno(String busca,Integer pagina)
-			throws ModeloException;
-	
+	public ArrayList<BemPatrimonial> buscar(String busca, Integer pagina) throws ModeloException;
+
+	public ArrayList<BemPatrimonial> buscarExterno(String busca, Integer pagina) throws ModeloException;
+
 	public Integer getNumeroDePaginasBusca();
 
-	public List<Multimidia> buscarVideos(BemPatrimonial bem)
-			throws ModeloException;
+	public boolean possuiAcesso(Usuario usuario, Instituicao instituicao) throws ModeloException;
 
-	public List<Multimidia> buscarImagens(BemPatrimonial bem)
-			throws ModeloException;
+	public ArrayList<BemPatrimonial> buscarPorInstituicao(String busca, Integer pagina, Integer tamanhoPagina,
+			String nomeInstituicao) throws ModeloException;
 
-	public List<Multimidia> buscarAudio(BemPatrimonial bem)
-			throws ModeloException;
-
-	public boolean possuiAcesso(Usuario usuario, Instituicao instituicao)
-			throws ModeloException;
-
-	public ArrayList<BemPatrimonial> buscarPorInstituicao(String busca, Integer pagina,Integer tamanhoPagina,String nomeInstituicao) throws ModeloException;
-
-	List<Multimidia> getMidias(Long container);
-	
+	public List<Multimidia> getMidias(Long container);
 
 }
