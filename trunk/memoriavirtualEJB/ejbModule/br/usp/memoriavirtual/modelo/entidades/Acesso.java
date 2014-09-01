@@ -10,10 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedQuery(name = "acessos", query = "SELECT a FROM Acesso a WHERE a.usuario = :usuario AND a.validade = true")
 @Entity
 @SequenceGenerator(name = "ACESSO_ID", sequenceName = "ACESSO_SEQ", allocationSize = 1)
+@XmlRootElement
 public class Acesso implements Serializable {
 	
 	private static final long serialVersionUID = 7511773311010053091L;

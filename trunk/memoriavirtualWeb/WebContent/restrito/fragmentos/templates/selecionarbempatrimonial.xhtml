@@ -56,7 +56,7 @@
 					minimumInputLength : 1,
 					allowClear : true,
 					ajax : {
-						url : "/memoriavirtual/listarbempatrimonial",
+						url : "/memoriavirtual/listar/listarbempatrimonial",
 						quietMillis : 250,
 						type : 'GET',
 						datatype : 'json',
@@ -65,11 +65,16 @@
 								busca : term,
 							};
 						},
-						results : function(data, page) {
-							return {
-								results : data
-							};
-						}
+						results: function (data) {
+				          var results = [];
+				          $.each(data, function(index, item){
+				            results.push({
+				              id: item.id,
+				              text: item.tituloPrincipal
+				            });
+				          });
+				          return { results: results };
+				        }
 					}
 				});
 			});

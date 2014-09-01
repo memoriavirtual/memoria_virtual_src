@@ -63,7 +63,7 @@
 					minimumInputLength : 1,
 					allowClear : true,
 					ajax : {
-						url : "/memoriavirtual/listarinstituicoes",
+						url : "/memoriavirtual/listar/listarinstituicoes",
 						quietMillis : 250,
 						type : 'GET',
 						datatype : 'json',
@@ -72,11 +72,16 @@
 								busca : term,
 							};
 						},
-						results : function(data, page) {
-							return {
-								results : data
-							};
-						}
+						results: function (data) {
+				          var results = [];
+				          $.each(data, function(index, item){
+				            results.push({
+				              id: item.id,
+				              text: item.nome
+				            });
+				          });
+				          return { results: results };
+				        }
 					}
 				});
 			});

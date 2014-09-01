@@ -20,13 +20,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-@NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.identificacao = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
 @Entity
+@NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.identificacao = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
 @SequenceGenerator(name = "USUARIO_ID", sequenceName = "USUARIO_SEQ", allocationSize = 1)
+@XmlRootElement
 public class Usuario implements Serializable, Cloneable {
 
-	private static final long serialVersionUID = -2966677929188737645L;
+	private static final long serialVersionUID = 3549872070434704343L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_ID")
@@ -36,6 +39,7 @@ public class Usuario implements Serializable, Cloneable {
 	private String email;
 	private String nomeCompleto;
 	private String telefone;
+	@XmlTransient
 	private String senha;
 
 	@Temporal(TemporalType.DATE)
@@ -173,6 +177,7 @@ public class Usuario implements Serializable, Cloneable {
 		return ativo;
 	}
 
+	@XmlTransient
 	public List<Acesso> getAcessos() {
 		return acessos;
 	}
