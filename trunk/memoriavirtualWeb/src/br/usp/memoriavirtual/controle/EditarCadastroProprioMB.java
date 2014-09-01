@@ -148,6 +148,7 @@ public class EditarCadastroProprioMB implements Serializable,
 				return false;
 			}
 		} else {
+			novaSenha = getSenha();
 			return true;
 		}
 		return true;
@@ -155,8 +156,7 @@ public class EditarCadastroProprioMB implements Serializable,
 
 	public String autenticar() {
 		try {
-			Usuario usuario = this.realizarLoginEJB.realizarLogin(new Long(
-					this.usuario.getId()).toString(), this.senha);
+			Usuario usuario = this.realizarLoginEJB.realizarLogin(this.usuario.getIdentificacao(), this.senha);
 			if (usuario != null) {
 				this.permissao = false;
 				return null;
@@ -271,4 +271,18 @@ public class EditarCadastroProprioMB implements Serializable,
 		this.confirmarSenha = confirmarSenha;
 	}
 
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 30)){
+			String args[] = {"30"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
+	
+	public void validarEmail(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 100)){
+			String args[] = {"100"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
 }

@@ -51,7 +51,12 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="identificacao">#{mensagens.identificacao}</h:outputLabel>
 											<h:inputText value="#{cadastrarUsuarioMB.usuario.identificacao}"
-												class="form-control" id="identificacao">
+												class="form-control" id="identificacao" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-identificacao"
+													onevent="mostrarErro('#validacao-identificacao')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-identificacao',mensagens.identificacao,
+													cadastrarUsuarioMB.usuario.identificacao)}" />
 											</h:inputText>
 											<h:message id="validacao-identificacao"
 												for="validacao-identificacao"
@@ -66,7 +71,12 @@
 											<h:outputLabel class="control-label" for="nome">#{mensagens.nome}</h:outputLabel>
 											<h:inputText
 												value="#{cadastrarUsuarioMB.usuario.nomeCompleto}"
-												class="form-control" id="nome">
+												class="form-control" id="nome" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-nome"
+													onevent="mostrarErro('#validacao-nome')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-nome',mensagens.nome,
+													cadastrarUsuarioMB.usuario.nomeCompleto)}" />
 											</h:inputText>
 											<h:message id="validacao-nome" for="validacao-nome"
 												infoClass="help-block has-succes"
@@ -81,7 +91,12 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="email">#{mensagens.email}</h:outputLabel>
 											<h:inputText value="#{cadastrarUsuarioMB.usuario.email}"
-												class="form-control" id="email">
+												class="form-control" id="email" maxlength="100">
+												<f:ajax event="keyup"
+													render="validacao-email"
+													onevent="mostrarErro('#validacao-email')"
+													listener="#{cadastrarUsuarioMB.validarEmail('validacao-email',mensagens.email,
+													cadastrarUsuarioMB.usuario.email)}" />
 											</h:inputText>
 											<h:message id="validacao-email" for="validacao-email"
 												infoClass="help-block has-succes"
@@ -94,8 +109,18 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="telefone">#{mensagens.telefone}</h:outputLabel>
 											<h:inputText id="telefone" class="form-control"
-												value="#{cadastrarUsuarioMB.usuario.telefone}">
+												value="#{cadastrarUsuarioMB.usuario.telefone}" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-telefone"
+													onevent="mostrarErro('#validacao-telefone')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-telefone',mensagens.telefone,
+													cadastrarUsuarioMB.usuario.telefone)}" />
 											</h:inputText>
+											<h:message id="validacao-telefone" for="validacao-telefone"
+												infoClass="help-block has-succes"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -104,7 +129,12 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="senha">#{mensagens.senha}</h:outputLabel>
 											<h:inputSecret value="#{cadastrarUsuarioMB.senha}"
-												class="form-control" id="senha">
+												class="form-control" id="senha" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-senha"
+													onevent="mostrarErro('#validacao-senha')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-senha',mensagens.senha,
+													cadastrarUsuarioMB.senha)}" />
 											</h:inputSecret>
 											<h:message id="validacao-senha" for="validacao-senha"
 												infoClass="help-block has-succes"
@@ -117,7 +147,12 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="confirmacao-senha">#{mensagens.confirmarSenha}</h:outputLabel>
 											<h:inputSecret id="confirmacao-senha" class="form-control"
-												value="#{cadastrarUsuarioMB.confirmacaoSenha}">
+												value="#{cadastrarUsuarioMB.confirmacaoSenha}" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-confirmacao-senha"
+													onevent="mostrarErro('#validacao-confirmacao-senha')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-confirmacao-senha',mensagens.confirmarSenha,
+													cadastrarUsuarioMB.confirmacaoSenha)}" />
 											</h:inputSecret>
 											<h:message id="validacao-confirmacao-senha"
 												for="validacao-confirmacao-senha"
@@ -138,7 +173,7 @@
 										<h:commandButton
 											class="btn btn-primary margin-left-5 no-right-margin"
 											value="#{mensagens.limpar}"
-											action="#{cadastrarUsuarioMB.limpar}"
+											actionListener="#{cadastrarUsuarioMB.limpar}"
 											disabled="#{!cadastrarUsuarioMB.podeCadastrar}">
 										</h:commandButton>
 									</div>

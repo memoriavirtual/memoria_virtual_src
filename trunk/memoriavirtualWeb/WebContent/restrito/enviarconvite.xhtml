@@ -52,8 +52,19 @@
 												#{mensagens.mensagem}
 											</h:outputLabel>
 											<h:inputTextarea class="form-control" id="mensagem"
-												value="#{enviarConviteMB.mensagem}">
+												value="#{enviarConviteMB.mensagem}"
+												p:maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-mensagem"
+													onevent="mostrarErro('#validacao-mensagem')"
+													listener="#{enviarConviteMB.validarCampo('validacao-mensagem',mensagens.mensagem,
+													enviarConviteMB.mensagem)}" />
 											</h:inputTextarea>
+											<h:message id="validacao-mensagem" for="validacao-mensagem"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>

@@ -594,4 +594,12 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 	public void setRevisao(Boolean revisao) {
 		this.revisao = revisao;
 	}
+
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
+			String args[] = {"255"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
 }

@@ -39,7 +39,13 @@
 												#{mensagens.nome}
 											</h:outputLabel>
 											<h:inputText value="#{cadastrarAutorMB.nome}"
-												class="form-control" id="nome" />
+												class="form-control" id="nome" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-nome"
+													onevent="mostrarErro('#validacao-nome')"
+													listener="#{cadastrarAutorMB.validarCampo('validacao-nome',mensagens.nome,
+													cadastrarAutorMB.nome)}" />
+											</h:inputText>
 											<h:message id="validacao-nome" for="validacao-nome"
 												infoClass="help-block has-success"
 												errorClass="help-block has-error"
@@ -53,7 +59,13 @@
 												#{mensagens.sobrenome}
 											</h:outputLabel>
 											<h:inputText value="#{cadastrarAutorMB.sobrenome}"
-												class="form-control" id="sobrenome" />
+												class="form-control" id="sobrenome" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-sobrenome"
+													onevent="mostrarErro('#validacao-sobrenome')"
+													listener="#{cadastrarAutorMB.validarCampo('validacao-sobrenome',mensagens.sobrenome,
+													cadastrarAutorMB.sobrenome)}" />
+											</h:inputText>
 											<h:message id="validacao-sobrenome" for="validacao-sobrenome"
 												infoClass="help-block has-success"
 												errorClass="help-block has-error"
@@ -67,7 +79,18 @@
 												#{mensagens.codinome}
 											</h:outputLabel>
 											<h:inputText value="#{cadastrarAutorMB.codinome}"
-												class="form-control" id="codinome" />
+												class="form-control" id="codinome" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-codinome"
+													onevent="mostrarErro('#validacao-codinome')"
+													listener="#{cadastrarAutorMB.validarCampo('validacao-codinome',mensagens.codinome,
+													cadastrarAutorMB.codinome)}" />
+											</h:inputText>
+											<h:message id="validacao-codinome" for="validacao-codinome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -87,8 +110,18 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="nascimento">#{mensagens.nascimento}</h:outputLabel>
 											<h:inputText value="#{cadastrarAutorMB.nascimento}"
-												class="form-control" id="nascimento">
+												class="form-control" id="nascimento" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-nascimento"
+													onevent="mostrarErro('#validacao-nascimento')"
+													listener="#{cadastrarAutorMB.validarCampo('validacao-nascimento',mensagens.nascimento,
+													cadastrarAutorMB.nascimento)}" />
 											</h:inputText>
+											<h:message id="validacao-nascimento" for="validacao-nascimento"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -96,8 +129,18 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="obito">#{mensagens.obito}</h:outputLabel>
 											<h:inputText value="#{cadastrarAutorMB.obito}"
-												class="form-control" id="obito">
+												class="form-control" id="obito" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-obito"
+													onevent="mostrarErro('#validacao-obito')"
+													listener="#{cadastrarAutorMB.validarCampo('validacao-obito',mensagens.obito,
+													cadastrarAutorMB.obito)}" />
 											</h:inputText>
+											<h:message id="validacao-obito" for="validacao-obito"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>

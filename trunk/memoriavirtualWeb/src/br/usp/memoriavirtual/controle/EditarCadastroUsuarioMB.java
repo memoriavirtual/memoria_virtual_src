@@ -34,6 +34,7 @@ import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
 import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
 import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "editarCadastroUsuarioMB")
 @SessionScoped
@@ -159,11 +160,16 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 		return opcoes;
 	}
 
-	public String cancelar() {
+	public String voltar() {
 		this.limpar();
 		return "selecionarusuarioedicao.jsf";
 	}
 
+	public String cancelar() {
+		this.limpar();
+		return "index.jsf";
+	}
+	
 	public String selecionarUsuario() {
 		try {
 			this.usuario = this.memoriaVirtualEJB.getUsuario(this.id);
@@ -369,6 +375,14 @@ public class EditarCadastroUsuarioMB implements BeanMemoriaVirtual,
 
 	public void setValidade(String validade) {
 		this.validade = validade;
+	}
+
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
+			String args[] = {"255"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
 	}
 
 }

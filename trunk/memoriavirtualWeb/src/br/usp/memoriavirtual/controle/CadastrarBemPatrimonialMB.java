@@ -719,6 +719,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		
 	}
 	
+	@Override
 	public void validarCampo(String nomeCampoMensagem, String nomeCampo, String campo){
 		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
 			String args[] = {"255"};

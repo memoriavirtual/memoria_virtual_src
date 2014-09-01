@@ -14,7 +14,7 @@
 	<ui:composition
 		template="/restrito/fragmentos/templates/template.xhtml">
 
-		<ui:define name="titulo">#{mensagens.editarAutorTitulo}</ui:define>
+		<ui:define name="titulo">#{mensagens.cadastrarAutorTitulo}</ui:define>
 
 		<ui:define name="conteudo">
 			<div class="col-md-12">
@@ -24,8 +24,8 @@
 				</div>
 				<div class="widget wgreen">
 					<div class="widget-head">
-						<h1>#{mensagens.editarAutorTitulo}</h1>
-						<h2>#{mensagens.editarAutorDescricao}</h2>
+						<h1>#{mensagens.cadastrarAutorTitulo}</h1>
+						<h2>#{mensagens.cadastrarAutorDescricao}</h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget-content">
@@ -39,7 +39,13 @@
 												#{mensagens.nome}
 											</h:outputLabel>
 											<h:inputText value="#{editarAutorMB.autor.nome}"
-												class="form-control" id="nome" />
+												class="form-control" id="nome" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-nome"
+													onevent="mostrarErro('#validacao-nome')"
+													listener="#{editarAutorMB.validarCampo('validacao-nome',mensagens.nome,
+													editarAutorMB.autor.nome)}" />
+											</h:inputText>
 											<h:message id="validacao-nome" for="validacao-nome"
 												infoClass="help-block has-success"
 												errorClass="help-block has-error"
@@ -53,7 +59,13 @@
 												#{mensagens.sobrenome}
 											</h:outputLabel>
 											<h:inputText value="#{editarAutorMB.autor.sobrenome}"
-												class="form-control" id="sobrenome" />
+												class="form-control" id="sobrenome" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-sobrenome"
+													onevent="mostrarErro('#validacao-sobrenome')"
+													listener="#{editarAutorMB.validarCampo('validacao-sobrenome',mensagens.sobrenome,
+													editarAutorMB.autor.sobrenome)}" />
+											</h:inputText>
 											<h:message id="validacao-sobrenome" for="validacao-sobrenome"
 												infoClass="help-block has-success"
 												errorClass="help-block has-error"
@@ -67,7 +79,18 @@
 												#{mensagens.codinome}
 											</h:outputLabel>
 											<h:inputText value="#{editarAutorMB.autor.codinome}"
-												class="form-control" id="codinome" />
+												class="form-control" id="codinome" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-codinome"
+													onevent="mostrarErro('#validacao-codinome')"
+													listener="#{editarAutorMB.validarCampo('validacao-codinome',mensagens.codinome,
+													editarAutorMB.autor.codinome)}" />
+											</h:inputText>
+											<h:message id="validacao-codinome" for="validacao-codinome"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -77,7 +100,7 @@
 										<div class="form-group">
 											<h:outputLabel for="atividade" class="control-label">#{mensagens.atividade}</h:outputLabel>
 											<h:selectOneMenu class="form-control com-select2"
-												id="atividade" value="#{editarAutorMB.autor.atividade}">
+												id="atividade" value="#{editarAutorMB.atividade}">
 												<f:selectItems value="#{editarAutorMB.listaAtividade}" />
 											</h:selectOneMenu>
 										</div>
@@ -87,8 +110,18 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="nascimento">#{mensagens.nascimento}</h:outputLabel>
 											<h:inputText value="#{editarAutorMB.autor.nascimento}"
-												class="form-control" id="nascimento">
+												class="form-control" id="nascimento" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-nascimento"
+													onevent="mostrarErro('#validacao-nascimento')"
+													listener="#{editarAutorMB.validarCampo('validacao-nascimento',mensagens.nascimento,
+													editarAutorMB.autor.nascimento)}" />
 											</h:inputText>
+											<h:message id="validacao-nascimento" for="validacao-nascimento"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -96,8 +129,18 @@
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="obito">#{mensagens.obito}</h:outputLabel>
 											<h:inputText value="#{editarAutorMB.autor.obito}"
-												class="form-control" id="obito">
+												class="form-control" id="obito" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-obito"
+													onevent="mostrarErro('#validacao-obito')"
+													listener="#{editarAutorMB.validarCampo('validacao-obito',mensagens.obito,
+													editarAutorMB.autor.obito)}" />
 											</h:inputText>
+											<h:message id="validacao-obito" for="validacao-obito"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>

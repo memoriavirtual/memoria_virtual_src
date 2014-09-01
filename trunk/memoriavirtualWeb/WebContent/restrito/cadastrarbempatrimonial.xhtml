@@ -2001,7 +2001,7 @@
 													#{mensagens.sobrenome}
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.sobrenome}"
-													class="form-control" id="sobrenome-autor" >
+													class="form-control" id="sobrenome-autor" maxlength="255">
 													<f:ajax event="keyup"
 														render="validacao-sobrenome"
 														onevent="mostrarErro('#validacao-sobrenome')"
@@ -2024,7 +2024,7 @@
 													#{mensagens.codinome}
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.codinome}"
-													class="form-control" id="codinome-autor">
+													class="form-control" id="codinome-autor" maxlength="255">
 													<f:ajax event="keyup"
 														render="validacao-codinome-autor"
 														onevent="mostrarErro('#validacao-codinome-autor')"
@@ -2060,7 +2060,7 @@
 													#{mensagens.nascimento}
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.nascimento}"
-													class="form-control" id="nascimento-autor">
+													class="form-control" id="nascimento-autor" maxlength="255">
 													<f:ajax event="keyup"
 														render="validacao-nascimento-autor"
 														onevent="mostrarErro('#validacao-nascimento-autor')"
@@ -2083,7 +2083,7 @@
 													#{mensagens.obito}
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.obito}"
-													class="form-control" id="obito-autor">
+													class="form-control" id="obito-autor" maxlength="255">
 													<f:ajax event="keyup"
 														render="validacao-obito-autor"
 														onevent="mostrarErro('#validacao-obito-autor')"

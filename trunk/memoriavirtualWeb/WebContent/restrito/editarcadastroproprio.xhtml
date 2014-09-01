@@ -39,9 +39,11 @@
 											<div class="input-group">
 												<h:inputSecret class="form-control" id="autenticar"
 													value="#{editarCadastroProprioMB.senha}"
-													disabled="#{!editarCadastroProprioMB.permissao}">
+													disabled="#{!editarCadastroProprioMB.permissao}"
+													maxlength="100">
 												</h:inputSecret>
-												<span class="input-group-btn"> <h:commandButton
+												<span class="input-group-btn"> 
+													<h:commandButton
 														class="btn btn-default" value="#{mensagens.autenticar}"
 														disabled="#{!editarCadastroProprioMB.permissao}"
 														action="#{editarCadastroProprioMB.autenticar}">
@@ -57,7 +59,12 @@
 											<h:outputLabel class="control-label" for="nome">#{mensagens.nome}</h:outputLabel>
 											<h:inputText class="form-control" id="nome"
 												value="#{editarCadastroProprioMB.usuario.nomeCompleto}"
-												disabled="#{editarCadastroProprioMB.permissao}">
+												disabled="#{editarCadastroProprioMB.permissao}" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-nome"
+													onevent="mostrarErro('#validacao-nome')"
+													listener="#{editarCadastroProprioMB.validarCampo('validacao-nome',mensagens.nome,
+													editarCadastroProprioMB.usuario.nomeCompleto)}" />
 											</h:inputText>
 											<h:message id="validacao-nome" for="validacao-nome"
 												infoClass="help-block has-success"
@@ -73,7 +80,13 @@
 											<h:outputLabel class="control-label" for="email">#{mensagens.email}</h:outputLabel>
 											<h:inputText value="#{editarCadastroProprioMB.usuario.email}"
 												id="email" class="form-control"
-												disabled="#{editarCadastroProprioMB.permissao}">
+												disabled="#{editarCadastroProprioMB.permissao}"
+												maxlength="100">
+												<f:ajax event="keyup"
+													render="validacao-email"
+													onevent="mostrarErro('#validacao-email')"
+													listener="#{editarCadastroProprioMB.validarEmail('validacao-email',mensagens.email,
+													editarCadastroProprioMB.usuario.email)}" />
 											</h:inputText>
 											<h:message id="validacao-email" for="validacao-email"
 												infoClass="help-block has-success"
@@ -88,8 +101,19 @@
 											<h:inputText
 												value="#{editarCadastroProprioMB.usuario.telefone}"
 												class="form-control" id="telefone"
-												disabled="#{editarCadastroProprioMB.permissao}">
+												disabled="#{editarCadastroProprioMB.permissao}"
+												maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-telefone"
+													onevent="mostrarErro('#validacao-telefone')"
+													listener="#{editarCadastroProprioMB.validarCampo('validacao-telefone',mensagens.telefone,
+													editarCadastroProprioMB.usuario.telefone)}" />
 											</h:inputText>
+											<h:message id="validacao-telefone" for="validacao-telefone"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -112,7 +136,13 @@
 											<h:outputLabel class="control-label" for="senha">#{mensagens.senha}</h:outputLabel>
 											<h:inputSecret id="senha" class="form-control"
 												value="#{editarCadastroProprioMB.novaSenha}"
-												disabled="#{!editarCadastroProprioMB.alterarSenha}">
+												disabled="#{!editarCadastroProprioMB.alterarSenha}"
+												maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-senha"
+													onevent="mostrarErro('#validacao-senha')"
+													listener="#{editarCadastroProprioMB.validarCampo('validacao-senha',mensagens.senha,
+													editarCadastroProprioMB.novaSenha)}" />
 											</h:inputSecret>
 											<h:message id="validacao-senha" for="validacao-senha"
 												infoClass="help-block has-success"
@@ -126,7 +156,13 @@
 											<h:outputLabel class="control-label" for="confirmar-senha">#{mensagens.confirmarSenha}</h:outputLabel>
 											<h:inputSecret id="confirmar-senha" class="form-control"
 												value="#{editarCadastroProprioMB.confirmarSenha}"
-												disabled="#{!editarCadastroProprioMB.alterarSenha}">
+												disabled="#{!editarCadastroProprioMB.alterarSenha}"
+												maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-confirmacao-senha"
+													onevent="mostrarErro('#validacao-confirmacao-senha')"
+													listener="#{editarCadastroProprioMB.validarCampo('validacao-nome',mensagens.confirmarSenha,
+													editarCadastroProprioMB.confirmarSenha)}" />
 											</h:inputSecret>
 											<h:message id="validacao-confirmacao-senha"
 												for="validacao-confirmacao-senha"

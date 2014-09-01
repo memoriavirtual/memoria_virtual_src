@@ -53,7 +53,7 @@ public class ValidacoesDeCampos {
 		if(Cep.isEmpty())
 			return true;
 		
-		String regexp = "[0-9]{5}?\\-[0-9]{3}?";
+		String regexp = "^[0-9]{5}-?[0-9]{3}$";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Cep);
 

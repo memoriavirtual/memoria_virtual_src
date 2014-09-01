@@ -273,4 +273,24 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 		this.podeCadastrar = podeCadastrar;
 	}
 
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 30)){
+			String args[] = {"30"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
+	
+	public void validarEmail(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 100)){
+			String args[] = {"100"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
+	
+	public void limpar(){
+		usuario.setNomeCompleto("");
+		usuario.setTelefone("");
+		usuario.setIdentificacao("");
+	}
 }

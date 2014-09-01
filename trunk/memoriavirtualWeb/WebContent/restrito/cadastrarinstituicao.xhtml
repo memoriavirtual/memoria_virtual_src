@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
@@ -37,7 +38,12 @@
 											</h:outputLabel>
 											<h:inputText value="#{cadastrarInstituicaoMB.nome}"
 												class="form-control"
-												id="nome">
+												id="nome" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-nome"
+													onevent="mostrarErro('#validacao-nome')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-nome',mensagens.nome,
+													cadastrarInstituicaoMB.nome)}" />
 											</h:inputText>
 											<h:message id="validacao-nome" for="validacao-nome"
 												infoClass="help-block has-success"
@@ -65,8 +71,18 @@
 												#{mensagens.cidade}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="cidade"
-												value="#{cadastrarInstituicaoMB.cidade}">
+												value="#{cadastrarInstituicaoMB.cidade}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-cidade"
+													onevent="mostrarErro('#validacao-cidade')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-cidade',mensagens.cidade,
+													cadastrarInstituicaoMB.cidade)}" />
 											</h:inputText>
+											<h:message id="validacao-cidade" for="validacao-cidade"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -76,8 +92,18 @@
 												#{mensagens.estado}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="estado"
-												value="#{cadastrarInstituicaoMB.estado}">
+												value="#{cadastrarInstituicaoMB.estado}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-estado"
+													onevent="mostrarErro('#validacao-estado')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-estado',mensagens.estado,
+													cadastrarInstituicaoMB.estado)}" />
 											</h:inputText>
+											<h:message id="validacao-estado" for="validacao-estado"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -87,8 +113,18 @@
 												#{mensagens.pais}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="pais"
-												value="#{cadastrarInstituicaoMB.pais}">
+												value="#{cadastrarInstituicaoMB.pais}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-pais"
+													onevent="mostrarErro('#validacao-pais')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-pais',mensagens.pais,
+													cadastrarInstituicaoMB.pais)}" />
 											</h:inputText>
+											<h:message id="validacao-pais" for="validacao-pais"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -100,8 +136,18 @@
 												#{mensagens.endereco}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="endereco"
-												value="#{cadastrarInstituicaoMB.endereco}">
+												value="#{cadastrarInstituicaoMB.endereco}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-endereco"
+													onevent="mostrarErro('#validacao-endereco')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-endereco',mensagens.endereco,
+													cadastrarInstituicaoMB.endereco)}" />
 											</h:inputText>
+											<h:message id="validacao-endereco" for="validacao-endereco"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -111,8 +157,18 @@
 												#{mensagens.localidade}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="localidade"
-												value="#{cadastrarInstituicaoMB.localidade}">
+												value="#{cadastrarInstituicaoMB.localidade}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-localidade"
+													onevent="mostrarErro('#validacao-localidade')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-localidade',mensagens.localidade,
+													cadastrarInstituicaoMB.localidade)}" />
 											</h:inputText>
+											<h:message id="validacao-localidade" for="validacao-localidade"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -124,7 +180,13 @@
 												#{mensagens.cep}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="cep"
-												value="#{cadastrarInstituicaoMB.cep}">
+												value="#{cadastrarInstituicaoMB.cep}" p:pattern="^[0-9]{5}-?[0-9]{3}$" p:title="#{mensagens.erroFormatoCep}"
+												maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-cep"
+													onevent="mostrarErro('#validacao-cep')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-cep',mensagens.cep,
+													cadastrarInstituicaoMB.cep)}" />
 											</h:inputText>
 											<h:message id="validacao-cep" for="validacao-cep"
 												infoClass="help-block has-success"
@@ -140,8 +202,18 @@
 												#{mensagens.caixaPostal}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="caixa-postal"
-												value="#{cadastrarInstituicaoMB.caixaPostal}">
+												value="#{cadastrarInstituicaoMB.caixaPostal}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-caixa-postal"
+													onevent="mostrarErro('#validacao-caixa-postal')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-caixa-postal',mensagens.caixaPostal,
+													cadastrarInstituicaoMB.caixaPostal)}" />
 											</h:inputText>
+											<h:message id="validacao-caixa-postal" for="validacao-caixa-postal"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -151,8 +223,18 @@
 												#{mensagens.telefone}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="telefone"
-												value="#{cadastrarInstituicaoMB.telefone}">
+												value="#{cadastrarInstituicaoMB.telefone}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-telefone"
+													onevent="mostrarErro('#validacao-telefone')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-telefone',mensagens.telefone,
+													cadastrarInstituicaoMB.telefone)}" />
 											</h:inputText>
+											<h:message id="validacao-telefone" for="validacao-telefone"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -162,8 +244,18 @@
 												#{mensagens.email}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="email"
-												value="#{cadastrarInstituicaoMB.email}">
+												value="#{cadastrarInstituicaoMB.email}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-email"
+													onevent="mostrarErro('#validacao-email')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-email',mensagens.email,
+													cadastrarInstituicaoMB.email)}" />
 											</h:inputText>
+											<h:message id="validacao-email" for="validacao-email"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -175,8 +267,18 @@
 												#{mensagens.latitude}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="latitude"
-												value="#{cadastrarInstituicaoMB.latitude}">
+												value="#{cadastrarInstituicaoMB.latitude}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-latitude"
+													onevent="mostrarErro('#validacao-latitude')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-latitude',mensagens.latitude,
+													cadastrarInstituicaoMB.latitude)}" />
 											</h:inputText>
+											<h:message id="validacao-latitude" for="validacao-latitude"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 									<div class="col-md-4">
@@ -185,8 +287,18 @@
 												#{mensagens.longitude}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="longitude"
-												value="#{cadastrarInstituicaoMB.longitude}">
+												value="#{cadastrarInstituicaoMB.longitude}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-longitude"
+													onevent="mostrarErro('#validacao-longitude')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-longitude',mensagens.longitude,
+													cadastrarInstituicaoMB.longitude)}" />
 											</h:inputText>
+											<h:message id="validacao-longitude" for="validacao-longitude"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 									<div class="col-md-4">
@@ -195,8 +307,18 @@
 												#{mensagens.altitude}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="altitude"
-												value="#{cadastrarInstituicaoMB.altitude}">
+												value="#{cadastrarInstituicaoMB.altitude}" maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-altitude"
+													onevent="mostrarErro('#validacao-altitude')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-altitude',mensagens.altitude,
+													cadastrarInstituicaoMB.altitude)}" />
 											</h:inputText>
+											<h:message id="validacao-altitude" for="validacao-altitude"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -210,8 +332,19 @@
 											</h:outputLabel>
 											<h:inputText class="form-control"
 												id="identificacaoProprietario"
-												value="#{cadastrarInstituicaoMB.identificacaoProprietario}">
+												value="#{cadastrarInstituicaoMB.identificacaoProprietario}"
+												maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-identificacaoProprietario"
+													onevent="mostrarErro('#validacao-identificacaoProprietario')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-identificacaoProprietario',mensagens.identificacaoProprietario,
+													cadastrarInstituicaoMB.identificacaoProprietario)}" />
 											</h:inputText>
+											<h:message id="validacao-identificacaoProprietario" for="validacao-identificacaoProprietario"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 									<div class="col-md-8">
@@ -222,8 +355,19 @@
 											</h:outputLabel>
 											<h:inputText class="form-control"
 												id="administradorPropriedade"
-												value="#{cadastrarInstituicaoMB.administradorPropriedade}">
+												value="#{cadastrarInstituicaoMB.administradorPropriedade}"
+												maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-administradorPropriedade"
+													onevent="mostrarErro('#validacao-administradorPropriedade')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-administradorPropriedade',mensagens.administradorPropriedade,
+													cadastrarInstituicaoMB.administradorPropriedade)}" />
 											</h:inputText>
+											<h:message id="validacao-administradorPropriedade" for="validacao-administradorPropriedade"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>
@@ -235,8 +379,19 @@
 												#{mensagens.url}
 											</h:outputLabel>
 											<h:inputText class="form-control" id="url"
-												value="#{cadastrarInstituicaoMB.url}">
+												value="#{cadastrarInstituicaoMB.url}"
+												maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-url"
+													onevent="mostrarErro('#validacao-url')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-url',mensagens.url,
+													cadastrarInstituicaoMB.url)}" />
 											</h:inputText>
+											<h:message id="validacao-url" for="validacao-url"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 
@@ -276,8 +431,19 @@
 												#{mensagens.legislacao}
 											</h:outputLabel>
 											<h:inputTextarea class="form-control" id="legislacao"
-												value="#{cadastrarInstituicaoMB.legislacaoIncidente}">
+												value="#{cadastrarInstituicaoMB.legislacaoIncidente}"
+												p:maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-legislacao"
+													onevent="mostrarErro('#validacao-legislacao')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-legislacao',mensagens.legislacao,
+													cadastrarInstituicaoMB.legislacaoIncidente)}" />
 											</h:inputTextarea>
+											<h:message id="validacao-legislacao" for="validacao-legislacao"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -286,8 +452,19 @@
 												#{mensagens.sinteseHistorica}
 											</h:outputLabel>
 											<h:inputTextarea class="form-control" id="sintese-historica"
-												value="#{cadastrarInstituicaoMB.sinteseHistorica}">
+												value="#{cadastrarInstituicaoMB.sinteseHistorica}"
+												p:maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-sinteseHistorica"
+													onevent="mostrarErro('#validacao-sinteseHistorica')"
+													listener="#{cadastrarInstituicaoMB.validarCampo('validacao-sinteseHistorica',mensagens.sinteseHistorica,
+													cadastrarInstituicaoMB.sinteseHistorica)}" />
 											</h:inputTextarea>
+											<h:message id="validacao-sinteseHistorica" for="validacao-sinteseHistorica"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
 										</div>
 									</div>
 								</div>

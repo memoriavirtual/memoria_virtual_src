@@ -456,4 +456,10 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 		this.campos = campos;
 	}
 
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,
+			String campo) {
+		//Não há requisito para validação do campo de busca		
+	}
+
 }

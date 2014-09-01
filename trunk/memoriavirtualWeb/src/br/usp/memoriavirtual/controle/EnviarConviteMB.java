@@ -336,4 +336,11 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 		this.validade = validade;
 	}
 
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
+			String args[] = {"255"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
 }

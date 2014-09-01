@@ -17,6 +17,7 @@ import br.usp.memoriavirtual.modelo.entidades.Autor.Atividade;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarAutorRemote;
 import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
+import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
 
 @ManagedBean(name = "cadastrarAutorMB")
 @SessionScoped
@@ -197,6 +198,14 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 
 	public void setMensagens(MensagensMB mensagens) {
 		this.mensagens = mensagens;
+	}
+
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
+			String args[] = {"255"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
 	}
 
 }

@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent">
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
@@ -131,7 +132,12 @@
 												value="#{mensagens.justificativa}"></h:outputLabel>
 											<h:inputTextarea class="form-control"
 												value="#{editarCadastroUsuarioMB.justificativa}"
-												id="justificativa">
+												id="justificativa" p:maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-justificativa"
+													onevent="mostrarErro('#validacao-justificativa')"
+													listener="#{editarCadastroUsuarioMB.validarCampo('validacao-justificativa',mensagens.justificativa,
+													editarCadastroUsuarioMB.justificativa)}" />
 											</h:inputTextarea>
 											<h:message id="validacao-justificativa"
 												for="validacao-justificativa"
@@ -149,8 +155,8 @@
 											action="#{editarCadastroUsuarioMB.solicitarAprovacao}">
 										</h:commandButton>
 										<h:commandButton class="btn btn-primary margin-5"
-											value="#{mensagens.cancelar}"
-											action="#{editarCadastroUsuarioMB.cancelar}">
+											value="#{mensagens.voltar}"
+											action="#{editarCadastroUsuarioMB.voltar}">
 										</h:commandButton>
 										<h:commandButton
 											class="btn btn-danger margin-left-5 no-right-margin"
