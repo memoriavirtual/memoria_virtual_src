@@ -20,7 +20,6 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 @Stateless
@@ -38,6 +37,7 @@ public class RealizarBuscaRESTService {
 	@Produces("text/html")
 	public String buscar(@Context HttpServletRequest request) {
 		if(validaCliente(request)){
+			System.out.println("eita");
 			return "<html><head></head><body>"
 					+ "Cliente Validado Com Sucesso!<br/>"
 					+ "Servi&ccedil;os Disponiveis:<br/>"
@@ -57,7 +57,10 @@ public class RealizarBuscaRESTService {
 					+ "</table>"
 					+ "</body></html>";
 		}else{
-			return "Falha na Valida&ccedil;&atilde;o do Cliente";
+			return "<html><head></head><body>"
+					+ "Falha na Valida&ccedil;&atilde;o do Cliente<br/>"
+					+ "Use um header de &lt;Authorization&gt; HTTP"
+					+ "</body></html>";
 		}
 	}
 
@@ -81,7 +84,6 @@ public class RealizarBuscaRESTService {
 			return bensPatrimoniais;
 		}
 		return null;
-
 	}
 
 	@GET
@@ -122,20 +124,15 @@ public class RealizarBuscaRESTService {
 	}
 
 	private boolean validaCliente(HttpServletRequest request) {
-
 		String username = "";
 		String password = "";
 		try {
 			String header = request.getHeader("authorization");
-			
 			String encodedText = header.substring(header.indexOf(" ") + 1);
-
+			
 			byte[] buf = null;
-			try {
-				buf = Base64.decode(encodedText.getBytes());
-			} catch (Base64DecodingException e) {
-				e.printStackTrace();
-			}
+			buf = Base64.decode(encodedText.getBytes());
+			
 			String credentials = new String(buf);
 
 			int p = credentials.indexOf(":");
@@ -144,9 +141,10 @@ public class RealizarBuscaRESTService {
 				username = credentials.substring(0, p);
 				password = credentials.substring(p + 1);
 			} else {
-				throw new RuntimeException("Error in decoding");
+				return false;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		return autentica(username, password);
