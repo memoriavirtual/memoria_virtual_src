@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputScript name="cadastrarMultimidia.js" library="javascript"></h:outputScript>
+</h:head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+		<ui:define name="titulo">#{mensagens.enviarConviteTitulo}</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.enviarConviteTitulo}</h1>
+						<h2>#{mensagens.enviarConviteDescricao}</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="emails">
+												#{mensagens.emails}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="emails"
+												value="#{enviarConviteMB.emails}">
+											</h:inputTextarea>
+											<h:message id="validacao-emails" for="validacao-emails"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="mensagem">
+												#{mensagens.mensagem}
+											</h:outputLabel>
+											<h:inputTextarea class="form-control" id="mensagem"
+												value="#{enviarConviteMB.mensagem}"
+												p:maxlength="255">
+												<f:ajax event="keyup"
+													render="validacao-mensagem"
+													onevent="mostrarErro('#validacao-mensagem')"
+													listener="#{enviarConviteMB.validarCampo('validacao-mensagem',mensagens.mensagem,
+													enviarConviteMB.mensagem)}" />
+											</h:inputTextarea>
+											<h:message id="validacao-mensagem" for="validacao-mensagem"
+												infoClass="help-block has-success"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-4 col-md-2">
+										<div class="form-group">
+											<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
+											<div class="input-group mv-input-number">
+												<h:inputText
+													value="#{enviarConviteMB.validade}" class="form-control"
+													id="validade" p:type="number" />
+												<!-- span class="clicavel aumentar input-group-addon"> <i
+													class="fa fa-caret-up"></i>
+												</span> <span class="clicavel diminuir input-group-addon"> <i
+													class="fa fa-caret-down"></i>
+												</span-->
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="mudar-senha">#{mensagens.administrador}</h:outputLabel>
+											<div class="pull-right form-control com-switch">
+												<h:selectBooleanCheckbox id="administrador"
+													value="#{enviarConviteMB.administrador}">
+												</h:selectBooleanCheckbox>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<h:dataTable value="#{enviarConviteMB.acessos}" var="acesso"
+										class="table table-bordered table-hover">
+										<h:column>
+											<div class="row">
+												<div class="col-md-5">
+													<div class="form-group">
+														<h:outputLabel class="control-label">#{mensagens.nivel}</h:outputLabel>
+														<h:selectOneMenu value="#{acesso.grupo.id}"
+															class="form-control select com-select2">
+															<f:selectItems value="#{enviarConviteMB.niveisAcesso}"></f:selectItems>
+														</h:selectOneMenu>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<h:outputLabel class="control-label">#{mensagens.instituicao}</h:outputLabel>
+														<h:selectOneMenu value="#{acesso.instituicao.id}"
+															class="form-control select com-select2">
+															<f:selectItems value="#{enviarConviteMB.instituicoes}"></f:selectItems>
+														</h:selectOneMenu>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group">
+														<h:outputLabel class="control-label transparente">.</h:outputLabel>
+														<h:commandLink class="btn btn-danger form-control"
+															action="#{enviarConviteMB.removerAcesso(acesso)}">
+															<i class="fa fa-times"> </i>
+														</h:commandLink>
+													</div>
+												</div>
+											</div>
+										</h:column>
+									</h:dataTable>
+									<div class="col-md-offset-5 col-md-2">
+										<h:commandLink class="btn btn-success" id="adicionar-acesso"
+											action="#{enviarConviteMB.adicionarAcesso()}">
+											<i class="fa fa-plus"></i>
+										#{mensagens.adicionarAcesso}
+										</h:commandLink>
+									</div>
+								</div>
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton id="cadastrar"
+											class="btn btn-success margin-5"
+											value="#{mensagens.enviar}"
+											action="#{enviarConviteMB.enviarConvite}">
+										</h:commandButton>
+										<h:commandButton id="reset" class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}"
+											action="#{enviarConviteMB.limpar}">
+										</h:commandButton>
+										<h:commandButton id="cancelar"
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{enviarConviteMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					selecionarAbaAdministracao();
+					
+					mostrarErro("#validacao-emails");
+
+					$('#administrador').bootstrapSwitch({
+						onText : '#{mensagens.sim}',
+						offText : '#{mensagens.nao}',
+						onSwitchChange : function(event, status) {
+							if (status) {
+								$('.table').hide();
+								$('#adicionar-acesso').attr('disabled', true);
+							} else {
+								$('.table').show();
+								$('#adicionar-acesso').attr('disabled', false);
+							}
+						}
+					});
+
+					if ($('#administrador').is(":checked")) {
+						$('.table').hide();
+						$('#adicionar-acesso').attr('disabled', true);
+					}
+
+					$('.select').select2({
+						minimumResultsForSearch : -1
+					});
+				});
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
