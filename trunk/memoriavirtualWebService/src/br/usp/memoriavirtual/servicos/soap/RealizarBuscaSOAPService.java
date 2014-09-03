@@ -37,9 +37,9 @@ public class RealizarBuscaSOAPService {
 	@WebMethod(operationName = "testarAutenticacao")
 	public String testarAutenticacao(){
 		if(validaClient()){
-			return "cliente Validado com sucesso";
+			return "Cliente Validado com sucesso";
 		}else{
-			return "falha na validação do cliente";
+			return "Falha na autentica&ccedil;&atilde;o do cliente: credenciais incorretas";
 		}
 		
 	}
@@ -91,30 +91,35 @@ public class RealizarBuscaSOAPService {
 		String username = null;
 		String password = null;
 		
-		List t = (List)http_headers.get("Authorization");
-		if(t == null || t.size() == 0) {
-			throw new RuntimeException("Auth failed");
+		try{
+		
+			List t = (List)http_headers.get("Authorization");
+			if(t == null || t.size() == 0) {
+				throw new RuntimeException("Cliente Validado com sucesso");
+			}
+			
+			String encodedText = ((String) t.get(0)).substring(5);		
+			
+			byte[] buf = null;
+			try {
+				buf = Base64.decode(encodedText.getBytes());
+			} catch (Base64DecodingException e) {
+				e.printStackTrace();
+			}
+			String credentials = new String(buf);
+			
+			int p = credentials.indexOf(":");
+			
+			if(p > -1){
+				username = credentials.substring(0,p);
+				password = credentials.substring(p+1);
+			} else {
+				throw new RuntimeException("Erro na decodificação");
+			}
+		
+		}catch(Exception e){
+			throw new RuntimeException("Falha na autentica&ccedil;&atilde;o do cliente: faltando cabe&ccedil;alho HTTP &l;tAuthorization&gt;");
 		}
-		
-		String encodedText = ((String) t.get(0)).substring(5);		
-		
-		byte[] buf = null;
-		try {
-			buf = Base64.decode(encodedText.getBytes());
-		} catch (Base64DecodingException e) {
-			e.printStackTrace();
-		}
-		String credentials = new String(buf);
-		
-		int p = credentials.indexOf(":");
-		
-		if(p > -1){
-			username = credentials.substring(0,p);
-			password = credentials.substring(p+1);
-		} else {
-			throw new RuntimeException("Error in decoding");
-		}
-		
 		return autentica(username, password);
 	}
 	

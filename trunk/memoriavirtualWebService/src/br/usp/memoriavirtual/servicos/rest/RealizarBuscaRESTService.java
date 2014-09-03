@@ -34,15 +34,30 @@ public class RealizarBuscaRESTService {
 	@EJB
 	private RealizarBuscaSimplesRemote realizarBuscaEJB;
 
-	@Context
-	private HttpServletRequest request;
-
 	@GET
-	public String buscar() {
-		if(validaCliente()){
-			return "cliente Validado com sucesso";
+	@Produces("text/html")
+	public String buscar(@Context HttpServletRequest request) {
+		if(validaCliente(request)){
+			return "<html><head></head><body>"
+					+ "Cliente Validado Com Sucesso!<br/>"
+					+ "Servi&ccedil;os Disponiveis:<br/>"
+					+ "<table style='border: solid 1px;'>"
+					+ "	<tr>"
+					+ "		<td>buscar</td>"
+					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}</td>"
+					+"	</tr>"
+					+ "	<tr>"
+					+ "		<td>buscarPorInstituicao</td>"
+					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}</td>"
+					+ " </tr>"
+					+ "	<tr>"
+					+ "		<td>buscarMidiaPorContainer</td>"
+					+ "		<td>path: /{container}</td>"
+					+ "	</tr>"
+					+ "</table>"
+					+ "</body></html>";
 		}else{
-			return "falha na valida��o do cliente";
+			return "Falha na Valida&ccedil;&atilde;o do Cliente";
 		}
 	}
 
@@ -50,8 +65,9 @@ public class RealizarBuscaRESTService {
 	@Path("/{stringDeBusca}/{numeroDaPagina}")
 	public ArrayList<BemPatrimonial> buscar(
 			@PathParam("stringDeBusca") String stringDeBusca,
-			@PathParam("numeroDaPagina") int pagina) {
-		if (validaCliente()) {
+			@PathParam("numeroDaPagina") int pagina,
+			@Context HttpServletRequest request) {
+		if (validaCliente(request)) {
 			ArrayList<BemPatrimonial> bensPatrimoniais = null;
 			try {
 				bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca,
@@ -69,13 +85,14 @@ public class RealizarBuscaRESTService {
 	}
 
 	@GET
-	@Path("/{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}/")
+	@Path("/{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}")
 	public ArrayList<BemPatrimonial> buscarPorInstituicao(
 			@PathParam("stringDeBusca") String stringDeBusca,
 			@PathParam("numeroDaPagina") int pagina,
 			@PathParam("tamanhoPagina") int tamanhoPagina,
-			@PathParam("nomeInstituicao") String nomeInstituicao) {
-		if (validaCliente()) {
+			@PathParam("nomeInstituicao") String nomeInstituicao,
+			@Context HttpServletRequest request) {
+		if (validaCliente(request)) {
 			ArrayList<BemPatrimonial> bensPatrimoniais = null;
 
 			try {
@@ -93,8 +110,9 @@ public class RealizarBuscaRESTService {
 	@GET
 	@Path("/{container}")
 	public List<Multimidia> buscarMidiaPorContainer(
-			@PathParam("container") String idContainer) {
-		if (validaCliente()) {
+			@PathParam("container") String idContainer,
+			@Context HttpServletRequest request) {
+		if (validaCliente(request)) {
 			List<Multimidia> midias = null;
 			midias = this.realizarBuscaEJB.getMidias(Long
 					.parseLong(idContainer));
@@ -103,13 +121,13 @@ public class RealizarBuscaRESTService {
 		return null;
 	}
 
-	private boolean validaCliente() {
+	private boolean validaCliente(HttpServletRequest request) {
 
 		String username = "";
 		String password = "";
 		try {
 			String header = request.getHeader("authorization");
-
+			
 			String encodedText = header.substring(header.indexOf(" ") + 1);
 
 			byte[] buf = null;
@@ -119,7 +137,6 @@ public class RealizarBuscaRESTService {
 				e.printStackTrace();
 			}
 			String credentials = new String(buf);
-			System.out.println("decoded text: " + credentials);
 
 			int p = credentials.indexOf(":");
 
@@ -130,7 +147,7 @@ public class RealizarBuscaRESTService {
 				throw new RuntimeException("Error in decoding");
 			}
 		} catch (Exception e) {
-			
+			return false;
 		}
 		return autentica(username, password);
 	}
