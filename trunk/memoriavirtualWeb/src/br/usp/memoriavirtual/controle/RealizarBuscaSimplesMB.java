@@ -70,7 +70,10 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 
 	private void buscarNovaPagina(Integer pagina) {
 		try {
-			this.bens = realizarBuscaEJB.buscarExterno(this.busca, pagina);
+			if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario")!=null)
+				this.bens = realizarBuscaEJB.buscar(this.busca, pagina);
+			else
+				this.bens = realizarBuscaEJB.buscarExterno(this.busca, pagina);
 
 			if (pagina.intValue() == realizarBuscaEJB.getNumeroDePaginasBusca()
 					.intValue())
@@ -89,7 +92,10 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 	public String buscar() {
 
 		try {
-			this.bens = realizarBuscaEJB.buscarExterno(this.busca, pagina);
+			if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario")!=null)
+				this.bens = realizarBuscaEJB.buscar(this.busca, pagina);
+			else
+				this.bens = realizarBuscaEJB.buscarExterno(this.busca, pagina);
 
 			if (pagina == realizarBuscaEJB.getNumeroDePaginasBusca())
 				proximaPaginaDisponivel = false;

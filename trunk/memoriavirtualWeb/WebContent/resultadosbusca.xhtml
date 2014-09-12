@@ -92,20 +92,26 @@
 				</div>
 			</div>
 
-			<h:panelGrid columns="3" class="pull-right">
-				<h:commandButton class="btn btn-primary" value="Página Anterior"
-					action="#{realizarBuscaSimplesMB.paginaAnterior}"
-					disabled="#{realizarBuscaSimplesMB.pagina == 1}" 
-					style="margin-right: 5px"/>
+			<ul class="pagination">
+				<li>
+					<h:commandLink class="btn btn-primary" value="&laquo;"
+						action="#{realizarBuscaSimplesMB.paginaAnterior}"
+						disabled="#{realizarBuscaSimplesMB.pagina == 1}"
+						style="color: blue;"/>
+				</li>
 				<ui:repeat value="#{realizarBuscaSimplesMB.paginas}" var="numeroPagina">
-					<h:commandLink action="#{realizarBuscaSimplesMB.selecionaPagina(numeroPagina)}" value="#{numeroPagina}" 
-						disabled="#{numeroPagina == realizarBuscaSimplesMB.pagina}" style="margin-right: 10px"/>
+				<li>
+				<h:commandLink action="#{realizarBuscaSimplesMB.selecionaPagina(numeroPagina)}" value="#{numeroPagina}" 
+					disabled="#{numeroPagina == realizarBuscaSimplesMB.pagina}"/>
+				</li>
 				</ui:repeat>
-				<h:commandButton class="btn btn-primary" value="Próxima Página"
-					action="#{realizarBuscaSimplesMB.proximaPagina}"
-					disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}"
-					style="margin-left: -5px" />
-			</h:panelGrid>
+				<li>
+					<h:commandLink class="btn btn-primary" value="&raquo;"
+						action="#{realizarBuscaSimplesMB.proximaPagina}"
+						disabled="#{!realizarBuscaSimplesMB.proximaPaginaDisponivel}"
+						style="color: blue;"/>
+				</li>
+			</ul>
 		</h:form>
 	</div>
 	<div class="top-margin-10 col-md-12 text-center">
