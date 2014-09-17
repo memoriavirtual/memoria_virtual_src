@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main activity -->
+    <item name="content_fragment" type="id"></item>
+</resources>

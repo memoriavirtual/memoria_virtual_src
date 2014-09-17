@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="br.usp.mvmobile.Activity.LoginActivity">
+
+    <FrameLayout
+        android:layout_weight="0.4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_weight="0.6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/login_user"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:text="@string/login_organization"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:text="@string/login_password"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+     </LinearLayout>
+</LinearLayout>
