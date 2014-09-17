@@ -1,9 +1,11 @@
-package br.usp.mvmobile;
+package br.usp.mvmobile.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import br.usp.mvmobile.R;
 
 
 public class MainActivity extends Activity {
