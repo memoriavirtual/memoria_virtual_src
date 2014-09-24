@@ -57,22 +57,27 @@ public class ValidarExclusaoInstituicaoMB implements Serializable{
 				String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
 
 				if (!id.equals(null) && id != null && id.length() > 0) {
+					
 					this.aprovacao = memoriaVirtualEJB.getAprovacao(new Long(id));
-					if ((aprovacao.getAnalista().getId() == usuario.getId())&& (aprovacao.getStatus() == MVModeloStatusAprovacao.aguardando)) {
-						this.setAprovacao(aprovacao);
-					} else {
-						System.out.println(aprovacao.getAnalista().getId()+ " " + usuario.getId());
-						this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+					
+					if(aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando){
+						this.getMensagens().mensagemErro(this.traduzir("solicitacaoInvalida"));
 						FacesUtil.redirecionar("index.jsf");
+					}else{	
+						if (aprovacao.getAnalista().getId() == usuario.getId()) {
+							this.setAprovacao(aprovacao);
+						} else {
+							this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+							FacesUtil.redirecionar("index.jsf");
+						}
 					}
 				} else {
-					System.out.println(id);
 					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
 					FacesUtil.redirecionar("index.jsf");
 				}
 				carregarAprovacao(aprovacao);
 			} else {
-				this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
+				this.getMensagens().mensagemErro(this.traduzir("cliqueNovamenteExclusao"));
 				FacesUtil.redirecionar("index.jsf");
 			}
 

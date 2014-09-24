@@ -8,10 +8,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
@@ -73,6 +75,28 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 			entityManager.merge(aprovacao);
 
 			instituicao = entityManager.find(Instituicao.class, instituicao.getId());
+			
+			Query query;
+			query = this.entityManager.createQuery("Select a from Acesso a where a.instituicao.id = :i");
+			query.setParameter("i", instituicao.getId());
+			
+			@SuppressWarnings("unchecked")
+			List<Acesso> acessos = query.getResultList();
+			
+			for(Acesso a: acessos){
+				entityManager.remove(a);
+			}
+			
+			query = this.entityManager.createQuery("Select b from BemPatrimonial b where b.instituicao.id = :i");
+			query.setParameter("i", instituicao.getId());
+			
+			@SuppressWarnings("unchecked")
+			List<BemPatrimonial> bens = query.getResultList();
+			
+			for(BemPatrimonial b: bens){
+				entityManager.remove(b);
+			}
+			
 			entityManager.remove(instituicao);
 		} catch (Exception e) {
 			throw new ModeloException(e);

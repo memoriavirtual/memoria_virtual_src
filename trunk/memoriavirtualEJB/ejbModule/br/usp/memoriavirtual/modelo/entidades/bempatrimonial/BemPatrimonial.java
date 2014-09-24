@@ -53,7 +53,7 @@ public class BemPatrimonial implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BEMPATRIMONIAL_ID")
 	private long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.REMOVE,fetch = FetchType.EAGER)
 	private Instituicao instituicao = new Instituicao();
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
