@@ -1915,31 +1915,31 @@
 										minimumResultsForSearch : -1
 									});
 
-									$('#busca')
-											.select2(
-													{
-														placeholder : "#{mensagens.selecione}",
-														minimumInputLength : 3,
-														allowClear : true,
-														ajax : {
-															url : "/memoriavirtual/listarbempatrimonial",
-															quietMillis : 250,
-															type : 'GET',
-															datatype : 'json',
-															data : function(
-																	term, page) {
-																return {
-																	busca : term,
-																};
-															},
-															results : function(
-																	data, page) {
-																return {
-																	results : data
-																};
-															}
-														}
-													});
+									$("#busca").select2({
+										minimumInputLength : 1,
+										allowClear : true,
+										ajax : {
+											url : "/memoriavirtual/listar/listarbempatrimonial",
+											quietMillis : 250,
+											type : 'GET',
+											datatype : 'json',
+											data : function(term, page) {
+												return {
+													busca : term,
+												};
+											},
+											results: function (data) {
+									          var results = [];
+									          $.each(data, function(index, item){
+									            results.push({
+									              id: item.id,
+									              text: item.tituloPrincipal
+									            });
+									          });
+									          return { results: results };
+									        }
+										}
+									});
 
 									window.reformar = function(data) {
 										mostrarErro('#validacao-nome');
