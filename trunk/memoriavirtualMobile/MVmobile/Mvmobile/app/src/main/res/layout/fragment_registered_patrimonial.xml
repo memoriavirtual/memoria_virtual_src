@@ -1,0 +1,17 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.usp.mvmobile.Fragment.RegisteredPatrimonialFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/not_registered_patrimonial"
+        android:gravity="center"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+</FrameLayout>

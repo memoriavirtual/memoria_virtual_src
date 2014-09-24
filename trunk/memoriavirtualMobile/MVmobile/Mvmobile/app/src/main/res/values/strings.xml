@@ -8,6 +8,10 @@
     <string name="login_user">Usuário ou email</string>
     <string name="login_organization">Instituição</string>
     <string name="login_password">Senha</string>
+    <string name="login_enter">Entrar</string>
+
+    <!-- Registered Patrimonial -->
+    <string name="not_registered_patrimonial">Nenhum bem patrimonial cadastrado.\nClique aqui para cadastrar.</string>
 
 
     <string name="action_settings">Settings</string>
