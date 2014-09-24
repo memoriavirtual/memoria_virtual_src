@@ -59,23 +59,27 @@ public class ValidarExclusaoInstituicaoMB implements Serializable{
 				if (!id.equals(null) && id != null && id.length() > 0) {
 					
 					this.aprovacao = memoriaVirtualEJB.getAprovacao(new Long(id));
-					
-					if(aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando){
-						this.getMensagens().mensagemErro(this.traduzir("solicitacaoInvalida"));
+					if(aprovacao == null){
+						this.getMensagens().mensagemErro(this.traduzir("aprovacaoExpiradaOuInvalida"));
 						FacesUtil.redirecionar("index.jsf");
-					}else{	
-						if (aprovacao.getAnalista().getId() == usuario.getId()) {
-							this.setAprovacao(aprovacao);
-						} else {
-							this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+					}else{
+						if(aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando){
+							this.getMensagens().mensagemErro(this.traduzir("solicitacaoInvalida"));
 							FacesUtil.redirecionar("index.jsf");
+						}else{	
+							if (aprovacao.getAnalista().getId() == usuario.getId()) {
+								this.setAprovacao(aprovacao);
+							} else {
+								this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+								FacesUtil.redirecionar("index.jsf");
+							}
 						}
+						carregarAprovacao(aprovacao);
 					}
 				} else {
 					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
 					FacesUtil.redirecionar("index.jsf");
 				}
-				carregarAprovacao(aprovacao);
 			} else {
 				this.getMensagens().mensagemErro(this.traduzir("cliqueNovamenteExclusao"));
 				FacesUtil.redirecionar("index.jsf");
@@ -113,8 +117,7 @@ public class ValidarExclusaoInstituicaoMB implements Serializable{
 		try {
 			this.aprovacao.setDados("instituicao;" + this.instituicao.getNome()
 					+ ";justificativa;" + this.justificativa);
-			this.excluirInstituicaoEJB
-					.aprovar(this.instituicao, this.aprovacao);
+			this.excluirInstituicaoEJB.aprovar(this.instituicao, this.aprovacao);
 			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 			FacesUtil.redirecionar("index.jsf");
 		} catch (Exception e) {

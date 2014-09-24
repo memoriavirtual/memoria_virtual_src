@@ -44,6 +44,7 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 			usuarios = (List<Usuario>) query.getResultList();
 			return usuarios;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ModeloException(e);
 		}
 
@@ -61,7 +62,7 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 				Multimidia midia = this.entityManager.find(Multimidia.class, midiaGenerica.getId());
 				this.entityManager.remove(midia);
 			}
-
+			
 			this.entityManager.remove(bemPatrimonial.getContainerMultimidia());
 
 			this.entityManager.remove(bemPatrimonial);

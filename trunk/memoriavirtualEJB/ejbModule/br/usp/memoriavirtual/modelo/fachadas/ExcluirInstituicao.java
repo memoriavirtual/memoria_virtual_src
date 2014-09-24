@@ -15,7 +15,6 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
 @Stateless(mappedName = "ExcluirInstituicao")
@@ -23,9 +22,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
-
-	MemoriaVirtualRemote memoriaVirtualEJB;
-
+	
 	public ExcluirInstituicao() {
 
 	}
@@ -99,6 +96,7 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 			
 			entityManager.remove(instituicao);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ModeloException(e);
 		}
 

@@ -26,6 +26,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.eclipse.persistence.annotations.CascadeOnDelete;
+
 import br.usp.memoriavirtual.modelo.entidades.Autoria;
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
@@ -94,6 +96,7 @@ public class BemPatrimonial implements Serializable {
 	@CollectionTable(name = "BEMPATRIMONIAL_PESQUISADORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	private List<Pesquisador> pesquisadores = new ArrayList<Pesquisador>();
 
+	@CascadeOnDelete
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", inverseJoinColumns = @JoinColumn(name = "BENSRELACIONADOS_ID"), joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	private List<BemPatrimonial> bensRelacionados = new ArrayList<BemPatrimonial>();
