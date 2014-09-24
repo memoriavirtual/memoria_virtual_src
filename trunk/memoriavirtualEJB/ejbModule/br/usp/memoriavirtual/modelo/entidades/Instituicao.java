@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,8 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 
 @Entity
 @SequenceGenerator(name = "INSTITUICAO_ID", sequenceName = "INSTITUICAO_SEQ", allocationSize = 1)
@@ -18,7 +22,7 @@ public class Instituicao implements Serializable {
 	public static enum TiposProtecaoExistente {
 		mundial, federalIndividual, federalConjunto, estadualIndividual, estadualConjunto, municipalIndividual, municipalConjunto, decreto, entorno, nenhuma
 	}
-	
+
 	public static enum TipoPropriedade {
 		publica, privada, mista, outro
 	}
@@ -53,6 +57,9 @@ public class Instituicao implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ContainerMultimidia containerMultimidia;
+
+	@OneToMany(mappedBy = "instituicao", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<BemPatrimonial> bens;
 
 	public Instituicao() {
 		super();
