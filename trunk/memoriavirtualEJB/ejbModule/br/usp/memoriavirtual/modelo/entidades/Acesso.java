@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.modelo.entidades;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Acesso implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACESSO_ID")
 	private long id;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "USUARIO")
 	private Usuario usuario;
 
