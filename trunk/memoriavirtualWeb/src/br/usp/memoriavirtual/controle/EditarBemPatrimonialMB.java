@@ -15,7 +15,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
+import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Assunto;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
@@ -126,33 +128,60 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 
 	public String selecionar() {
 		try {
-			this.bemPatrimonial = cadastrarBemPatrimonialEJB
-					.getBemPatrimonial(new Long(this.id).longValue());
+		
+		this.bemPatrimonial = cadastrarBemPatrimonialEJB
+				.getBemPatrimonial(new Long(this.id).longValue());
 
+		boolean canEdit = false;
+		
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
+		
+		if(usuario.isAdministrador()){
+			canEdit = true;
+		}else{
+			List<Instituicao> instituicoes = new ArrayList<Instituicao>();
+			List<Instituicao> parcial = null;
+			for (Acesso a : usuario.getAcessos()) {
+				parcial = editarInstituicaoEJB.listarInstituicoes(buscaInstituicao,a.getGrupo(), usuario);
+				instituicoes.addAll(parcial);
+			}
+	
+			for(Instituicao i : instituicoes){
+				if(i.getId()==bemPatrimonial.getInstituicao().getId())
+					canEdit = true;
+			}
+		}
+		
+		if(canEdit){		
 			this.instituicao = new Long(this.bemPatrimonial.getInstituicao()
 					.getId()).toString();
-
+	
 			this.campos = this.utilMultimidiaEJB
 					.listarCampos(this.bemPatrimonial.getContainerMultimidia());
 			for (Descritor d : this.bemPatrimonial.getDescritores()) {
 				this.descritores += d.getDescritor() + " ";
 			}
-
+	
 			for (Assunto a : this.bemPatrimonial.getAssuntos()) {
 				this.assuntos += a.getAssunto() + " ";
 			}
-
+	
 			for (String s : this.bemPatrimonial.getFontesInformacao()) {
 				this.fontesInformacao.add(new StringContainer(s));
 			}
-
+			
 			return this
 					.redirecionar("/restrito/editarbempatrimonial.jsf", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+		}else{
+			this.getMensagens().mensagemErro(this.traduzir("naoPossuiAcessoAoBem"));
 			return null;
 		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+		return null;
+	}
 	}
 
 	@Override
