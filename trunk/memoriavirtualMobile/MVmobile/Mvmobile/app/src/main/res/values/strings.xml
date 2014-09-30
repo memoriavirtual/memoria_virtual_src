@@ -13,6 +13,11 @@
     <!-- Registered Patrimonial -->
     <string name="not_registered_patrimonial">Nenhum bem patrimonial cadastrado.\nClique aqui para cadastrar.</string>
 
+    <!-- Add Patrimonial -->
+    <string name="add_button">Cadastrar</string>
+    <string name="add_patrimonial_name">Nome</string>
+    <string name="add_patrimonial_instituition">Instituição</string>
+    <string name="add_patrimonial_author">Autor</string>
 
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

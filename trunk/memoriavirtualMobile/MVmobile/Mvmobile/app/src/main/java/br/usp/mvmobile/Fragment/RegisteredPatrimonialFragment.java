@@ -13,7 +13,7 @@ import br.usp.mvmobile.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RegisteredPatrimonialFragment.OnFragmentInteractionListener} interface
+ * {@link RegisteredPatrimonialFragment.OnRegistedInteractionListener} interface
  * to handle interaction events.
  * Use the {@link RegisteredPatrimonialFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -29,7 +29,7 @@ public class RegisteredPatrimonialFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnRegistedInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -71,7 +71,7 @@ public class RegisteredPatrimonialFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onRegistedInteraction(uri);
         }
     }
 
@@ -79,7 +79,7 @@ public class RegisteredPatrimonialFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnRegistedInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -102,9 +102,9 @@ public class RegisteredPatrimonialFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnRegistedInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onRegistedInteraction(Uri uri);
     }
 
 }
