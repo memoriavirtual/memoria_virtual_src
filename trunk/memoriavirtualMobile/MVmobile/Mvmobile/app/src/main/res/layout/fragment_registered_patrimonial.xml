@@ -2,16 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.usp.mvmobile.Fragment.RegisteredPatrimonialFragment">
+    android:background="@color/background_gray"
+    tools:context="br.usp.mvmobile.Fragment.Registered.RegisteredPatrimonialFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/not_registered_patrimonial"
         android:gravity="center"/>
-    <ListView
+    <ListView android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background_gray"
+        android:divider="@android:color/transparent">
     </ListView>
 
 </FrameLayout>

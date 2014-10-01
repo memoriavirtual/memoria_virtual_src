@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import br.usp.mvmobile.Fragment.FormFragment;
-import br.usp.mvmobile.Fragment.RegisteredPatrimonialFragment;
+import br.usp.mvmobile.Fragment.Registered.RegisteredPatrimonialFragment;
 import br.usp.mvmobile.R;
 
 public class MainActivity extends Activity implements RegisteredPatrimonialFragment.OnRegistedInteractionListener, FormFragment.OnFragmentInteractionListener{

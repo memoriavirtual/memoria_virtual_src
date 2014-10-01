@@ -3,4 +3,11 @@
 
     <!-- Main activity -->
     <item name="content_fragment" type="id"></item>
+
+    <!-- Registered Patrimonial -->
+    <item name="registered_patrimonial_image" type="id"></item>
+    <item name="registered_patrimonial_content" type="id"></item>
+    <item name="registered_patrimonial_name" type="id"></item>
+    <item name="registered_patrimonial_author" type="id"></item>
+
 </resources>

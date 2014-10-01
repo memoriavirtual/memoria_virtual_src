@@ -2,4 +2,8 @@
 <resources>
 
     <item name="color_app" type="color">#00aced</item>
+
+    <color name="background_gray">#EEEEEE</color>
+    <color name="card_white">#ffffffff</color>
+    <color name="card_shadow">#D3D3D3'</color>
 </resources>
