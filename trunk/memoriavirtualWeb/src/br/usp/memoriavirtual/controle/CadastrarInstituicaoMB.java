@@ -195,6 +195,43 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 			return false;
 		}
 	}
+	
+	public boolean validarCaixaPostal(){
+		if(ValidacoesDeCampos.validarFormatoCep(this.caixaPostal)){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoCaixaPostal","validacao-caixa-postal");
+			return false;
+		}
+	}
+	public boolean validarTelefone(){
+		if(ValidacoesDeCampos.validarFormatoTelefone(this.telefone)){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoTelefone","validacao-telefone");
+			return false;
+		}
+	}
+	public boolean validarEmail(){
+		if(ValidacoesDeCampos.validarFormatoEmail(this.email)){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoEmail","validacao-email");
+			return false;
+		}
+	}
+	public boolean validarWebsite(){
+		if(ValidacoesDeCampos.validarFormatoWebSite(this.url)){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoUrl","validacao-url");
+			return false;
+		}
+	}
 
 	public boolean validarNomeMultimidia() {
 		boolean valido = true;
@@ -254,7 +291,9 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 
 	@Override
 	public boolean validar() {
-		return this.validarNome() && this.validarCep();
+		return this.validarNome() && this.validarCep() 
+				&& this.validarCaixaPostal() && this.validarTelefone()
+				&& this.validarEmail() && this.validarWebsite();
 	}
 
 	@Override

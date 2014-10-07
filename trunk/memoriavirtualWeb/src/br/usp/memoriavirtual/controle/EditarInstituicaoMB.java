@@ -106,17 +106,63 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 			return true;
 		}
 		else{
-			MensagensDeErro.getErrorMessage("erroFormatoCep",
-					"validacao-cep");
+			MensagensDeErro.getErrorMessage("erroFormatoCep", "validacao-cep");
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean validarCaixaPostal(){
+		if(ValidacoesDeCampos.validarFormatoCep(this.instituicao.getCaixaPostal())){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoCaixaPostal","validacao-caixa-postal");
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean validarTelefone(){
+		if(ValidacoesDeCampos.validarFormatoTelefone(this.instituicao.getTelefone())){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoTelefone","validacao-telefone");
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean validarEmail(){
+		if(ValidacoesDeCampos.validarFormatoEmail(this.instituicao.getEmail())){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoEmail","validacao-email");
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean validarWebsite(){
+		if(ValidacoesDeCampos.validarFormatoWebSite(this.instituicao.getUrl())){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoUrl","validacao-url");
 			return false;
 		}
 	}
 
+
 	@Override
 	public boolean validar() {
-		return this.validarNome() && this.validarCep();
+		return this.validarNome() && this.validarCep() 
+				&& this.validarCaixaPostal() && this.validarTelefone()
+				&& this.validarEmail() && this.validarWebsite();
 	}
-
+	
 	public long getId() {
 		return id;
 	}

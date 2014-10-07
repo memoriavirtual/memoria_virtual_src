@@ -32,14 +32,26 @@ public class ValidacoesDeCampos {
 
 		return true;
 	}
+	
+	public static boolean validarFormatoWebSite(String url) {
+
+		String regexp = "(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(http://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(url);
+
+		if (!matcher.matches())
+			return false;
+
+		return true;
+	}
 
 	public static boolean validarFormatoTelefone(String telefone) {
 
-		String regexp8digitos = "\\([0-9]{2}?\\){1}[0-9]{4}?\\-[0-9]{4}?";
+		String regexp8digitos = "^\\([0-9]{2}\\)[0-9]{4}-?[0-9]{4}$";
 		Pattern pattern8digitos = Pattern.compile(regexp8digitos);
 		Matcher matcher8digitos = pattern8digitos.matcher(telefone);
 
-		String regexp9digitos = "\\([0-9]{2}?\\){1}[0-9]{5}?\\-[0-9]{4}?";
+		String regexp9digitos = "^\\([0-9]{2}\\)[0-9]{5}-?[0-9]{4}$";
 		Pattern pattern9digitos = Pattern.compile(regexp9digitos);
 		Matcher matcher9digitos = pattern9digitos.matcher(telefone);
 
