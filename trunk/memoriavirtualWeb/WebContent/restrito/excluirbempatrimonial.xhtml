@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </head>
@@ -40,15 +41,15 @@
 									<div class="col-md-offset-3 col-md-2">
 										<div class="form-group">
 											<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
-											<div class="input-group mv-input-number">
-												<h:inputText disabled="true"
-													value="#{excluirBemPatrimonialMB.validade} "
-													class="form-control" id="validade" />
-												<span class="clicavel aumentar input-group-addon"> <i
-													class="fa fa-caret-up"></i>
-												</span> <span class="clicavel diminuir input-group-addon"> <i
-													class="fa fa-caret-down"></i>
-												</span>
+											<div class="mv-input-number" style="width: 100%;">
+												<h:inputText value="#{excluirBemPatrimonialMB.validade}"
+													class="form-control" id="validade" p:type="number" p:max="30" p:min="1"/>
+												<h:message id="validacao-validade"
+													for="validacao-validade"
+													infoClass="help-block has-success"
+													errorClass="help-block has-error"
+													warnClass="help-block has-warning">
+												</h:message>
 											</div>
 										</div>
 									</div>
@@ -56,9 +57,10 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="analista">#{mensagens.usuarioAprovador}</h:outputLabel>
-											<h:selectOneMenu class="form-control com-select2"
-												id="usuarioAprovador" value="#{excluirBemPatrimonialMB.usuarioAprovador}">
-												<f:selectItems value="#{excluirBemPatrimonialMB.usuariosAprovadores}"></f:selectItems>
+											<h:selectOneMenu class="form-control com-select2" onchange="verificaConfirmar();"
+												id="analista" value="#{excluirBemPatrimonialMB.usuarioAprovador}">
+												<f:selectItem itemLabel="#{mensagens.selecioneUmItem}" itemValue="disabled"/>
+												<f:selectItems value="#{excluirBemPatrimonialMB.usuariosAprovadores}" />
 											</h:selectOneMenu>
 										</div>
 									</div>
@@ -88,7 +90,8 @@
 									<div class="col-md-12">
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.solicitarExclusao}"
-											action="#{excluirBemPatrimonialMB.solicitarExclusao}">
+											action="#{excluirBemPatrimonialMB.solicitarExclusao}"
+											id="confirm">
 										</h:commandButton>
 										<h:commandButton id="cancelar"
 											class="btn btn-danger margin-left-5 no-right-margin"
@@ -104,9 +107,20 @@
 				</div>
 			</div>
 			<script type="text/javascript">
+				function verificaConfirmar(){
+					var u = document.getElementById("analista");
+					if(u.value == 'disabled'){
+						var b = document.getElementById("confirm");
+						b.disabled = true;
+					}else{
+						var b = document.getElementById("confirm");
+						b.disabled = false;
+					}
+				}
+			
 				$('document').ready(function() {
 					selecionarAbaPatrimonio();
-					$('#usuarioAprovador').select2({
+					$('#analista').select2({
 						minimumResultsForSearch : 5
 					});
 
@@ -127,7 +141,10 @@
 					});
 
 					mostrarErro('#validacao-justificativa');
-				});
+					mostrarErro('#validacao-validade');
+					
+					verificaConfirmar();
+					});
 			</script>
 		</ui:define>
 	</ui:composition>

@@ -14,6 +14,7 @@ import javax.faces.model.SelectItem;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
+import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "excluirBemPatrimonialMB")
 @SessionScoped
@@ -26,7 +27,7 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	private ExcluirBemPatrimonialRemote excluirBemPatrimonialEJB;
 
 	private MensagensMB mensagens;
-	private String validade = "1";
+	private Integer validade = 1;
 	private String justificativa = "";
 	private String usuarioAprovador = "";
 
@@ -38,14 +39,43 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 
 	public String selecionar() {
 		return this.redirecionar("/restrito/excluirbempatrimonial.jsf", true);
-
 	}
 
 	public String solicitarExclusao() {
-
+		if(validar()){
+			
+			
+		}
 		return null;
 	}
 
+	@Override
+	public boolean validar(){
+		return validarValidade() && validarUsuario() && validarJustificativa();		
+	}
+	
+	public boolean validarValidade(){		
+		if(this.validade<1 || this.validade >30){
+			MensagensDeErro.getErrorMessage("erroValidadeInvalida", "validacao-validade");
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean validarUsuario(){
+		if(usuarioAprovador.equals("disabled"))
+			return false;
+		else
+			return true;
+	}
+	
+	public boolean validarJustificativa(){
+		if(justificativa.isEmpty())
+			return false;
+		else
+			return true;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -61,49 +91,28 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	public void setMensagens(MensagensMB mensagens) {
 		this.mensagens = mensagens;
 	}
-
-	public String getValidade() {
-		return validade;
-	}
-
-	public void setValidade(String validade) {
-		this.validade = validade;
-	}
-
-	/**
-	 * @return the justificativa
-	 */
+	
 	public String getJustificativa() {
 		return justificativa;
 	}
 
-	/**
-	 * @param justificativa
-	 *           the justificativa to set
-	 */
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
 
-	/**
-	 * @return the usuarioAprovador
-	 */
+
 	public String getUsuarioAprovador() {
 		return usuarioAprovador;
 	}
 
-	/**
-	 * @param usuarioAprovador
-	 *           the usuarioAprovador to set
-	 */
+
 	public void setUsuarioAprovador(String usuarioAprovador) {
 		this.usuarioAprovador = usuarioAprovador;
 	}
 
 	/**
-	 * Retorna a lista de usu√°rios que ser√£o mostrados no campo "Select"
+	 * Retorna a lista de usu·rios que ser„o mostrados no campo "Select"
 	 * 
-	 * @return
 	 */
 	public List<SelectItem> getUsuariosAprovadores() {
 		List<SelectItem> usuarios = new ArrayList<SelectItem>();
@@ -111,13 +120,22 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 
 		try {
-			// TODO Fazer um loop "for" preechendo a lista de objetos "SelectItem"
-			// Olhar o m√©todo ExcluirInstituicaoMB.getAnalistas()
-			this.excluirBemPatrimonialEJB.listarUsuariosAprovadores(this.bemPatrimonial.getInstituicao(), usuario);
+			List<Usuario> listaUsuarios = this.excluirBemPatrimonialEJB.listarUsuariosAprovadores(this.bemPatrimonial.getInstituicao(), usuario);
+			for(Usuario u : listaUsuarios){
+				usuarios.add(new SelectItem(u.getId(),u.getNomeCompleto()));
+			}
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
 
 		return usuarios;
+	}
+
+	public Integer getValidade() {
+		return validade;
+	}
+
+	public void setValidade(Integer validade) {
+		this.validade = validade;
 	}
 }
