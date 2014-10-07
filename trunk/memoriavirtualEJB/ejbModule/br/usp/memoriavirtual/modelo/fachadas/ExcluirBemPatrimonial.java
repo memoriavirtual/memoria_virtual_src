@@ -35,13 +35,18 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 			Query query;
 			query = this.entityManager.createQuery("SELECT a.usuario FROM Acesso a WHERE "
 					+ "a.grupo = :grupo AND a.instituicao = :instituicao AND a.validade = true AND "
-					+ "a.usuario <> :usuario UNION SELECT u FROM Usuario u WHERE "
-					+ "u.administrador = true AND u <> :usuario");
+					+ "a.usuario <> :usuario");
 			query.setParameter("grupo", grupo);
 			query.setParameter("instituicao", instituicao);
 			query.setParameter("usuario", usuario);
 
 			usuarios = (List<Usuario>) query.getResultList();
+			
+			query = this.entityManager.createQuery("SELECT u FROM Usuario u WHERE "
+					+ "u.administrador = true AND u <> :usuario");
+			query.setParameter("usuario", usuario);
+			usuarios.addAll((List<Usuario>) query.getResultList());
+			
 			return usuarios;
 		} catch (Exception e) {
 			e.printStackTrace();
