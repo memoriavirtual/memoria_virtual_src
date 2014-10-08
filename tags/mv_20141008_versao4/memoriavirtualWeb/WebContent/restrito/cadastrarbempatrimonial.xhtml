@@ -1,0 +1,2133 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mv="http://java.sun.com/jsf/composite/mvjsfcomponent"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+</h:head>
+<h:body>
+
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+		<ui:define name="titulo">#{mensagens.cadastrarBemPatrimonialTitulo}</ui:define>
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.cadastrarBemPatrimonialTitulo}</h1>
+						<h2>#{mensagens.cadastrarBemPatrimonialDescricao}</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false" id="form-cadastro-bem-patrimonial">
+
+								<div class="row">
+									<div class="col-md-6 col-md-offset-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="instituicao">#{mensagens.instituicao}</h:outputLabel>
+											<h:selectOneMenu class="form-control select com-select2"
+												id="instituicao"
+												value="#{cadastrarBemPatrimonialMB.instituicao}">
+												<f:selectItems
+													value="#{cadastrarBemPatrimonialMB.instituicoes}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="informacoes-gerais">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#informacoes-gerais"
+													href="#sanfona-informacoes-gerais">#{mensagens.informacoesGerais}</a>
+											</h4>
+										</div>
+										<div id="sanfona-informacoes-gerais"
+											class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-2">
+														<div class="form-group">
+															<h:outputLabel class="control-label" for="externo">#{mensagens.externo}</h:outputLabel>
+															<div class="form-control pull-right com-switch">
+																<h:selectBooleanCheckbox id="externo" class="switch"
+																	value="#{cadastrarBemPatrimonialMB.bemPatrimonial.externo}">
+																</h:selectBooleanCheckbox>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="control-label" for="tipo">#{mensagens.tipo}</h:outputLabel>
+															<h:inputText class="form-control" id="tipo" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.tipoBemPatrimonial}">
+																<f:ajax event="keyup"
+																	render="validacao-tipo"
+																	onevent="mostrarErro('#validacao-tipo')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-tipo',mensagens.tipo,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.tipoBemPatrimonial)}" />
+															</h:inputText>
+															<h:message id="validacao-tipo"
+																for="validacao-tipo"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="numero-registro">#{mensagens.numeroRegistro}</h:outputLabel>
+															<h:inputText class="form-control" id="numero-registro"
+																maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro}">
+																<f:ajax event="keyup" render="validacao-numero-registro"
+																	onevent="mostrarErro('#validacao-numero-registro')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-numero-registro',mensagens.numeroRegistro,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.numeroRegistro)}" />
+															</h:inputText>
+															<h:message id="validacao-numero-registro"
+																for="validacao-numero-registro"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="titulo-principal">#{mensagens.tituloPrincipal}</h:outputLabel>
+															<h:inputText class="form-control" id="titulo-principal"
+																maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal}">
+																<f:ajax event="keyup"
+																	render="validacao-titulo-principal"
+																	onevent="mostrarErro('#validacao-titulo-principal')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-titulo-principal',mensagens.tituloPrincipal,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.tituloPrincipal)}" />
+															</h:inputText>
+															<h:message id="validacao-titulo-principal"
+																for="validacao-titulo-principal"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<h:panelGroup id="grupo-titulos">
+															<h:dataTable var="titulo" id="tabela-titulos"
+																class="table table-hover table-bordered"
+																footerClass="hidden"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.titulos}">
+																<f:facet name="caption">#{mensagens.titulos}</f:facet>
+																<h:column>
+																	<div class="row">
+																		<div class="col-md-5">
+																			<div class="form-group">
+																				<h:outputLabel class="label-control"
+																					for="tipo-titulo">#{mensagens.tipo}</h:outputLabel>
+																				<h:selectOneMenu id="tipo-titulo"
+																					class="form-control select-titulo com-select2"
+																					value="#{titulo.tipo}">
+																					<f:selectItems
+																						value="#{cadastrarBemPatrimonialMB.tiposTitulo}" />
+																				</h:selectOneMenu>
+																			</div>
+																		</div>
+																		<div class="col-md-6">
+																			<div class="form-group">
+																				<h:outputLabel class="label-control" for="titulo">#{mensagens.titulo}</h:outputLabel>
+																				<h:inputText class="form-control" id="titulo"
+																					value="#{titulo.valor}" maxlength="255">
+																					<f:ajax event="keyup"
+																						render="validacao-titulo"
+																						listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-titulo',
+																						mensagens.titulo,titulo.valor)}" />
+																				</h:inputText>
+																				<h:message id="validacao-titulo"
+																					for="validacao-titulo"
+																					infoClass="help-block has-success"
+																					errorClass="help-block has-error"
+																					warnClass="help-block has-warning">
+																				</h:message>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<div class="form-group">
+																				<h:outputLabel class="control-label transparente">.</h:outputLabel>
+																				<h:commandLink class="btn btn-danger form-control"
+																					action="#{cadastrarBemPatrimonialMB.removerTitulo(titulo)}">
+																					<i class="fa fa-times"> </i>
+																					<f:ajax
+																						render=":form-cadastro-bem-patrimonial:grupo-titulos" />
+																				</h:commandLink>
+																			</div>
+																		</div>
+																	</div>
+																</h:column>
+																<f:facet name="footer">
+																	<script type="text/javascript">
+																		$(
+																				document)
+																				.ready(
+																						function() {
+																							$(
+																									'.select-titulo')
+																									.select2(
+																											{
+																												allowClear : true,
+																												placeholder : '#{mensagens.selecione}',
+																												minimumResultsForSearch : -1
+																											});
+																						});
+																	</script>
+																</f:facet>
+															</h:dataTable>
+
+															<div class="row">
+																<div class="col-md-offset-5 col-md-2 text-center">
+																	<h:commandLink class="btn btn-success"
+																		action="#{cadastrarBemPatrimonialMB.adicionarTitulo}">
+																		<i class="fa fa-plus"></i>
+																		<f:ajax execute="@form"
+																			render=":form-cadastro-bem-patrimonial:grupo-titulos" />
+																	#{mensagens.adicionarTitulo}
+																</h:commandLink>
+																</div>
+															</div>
+														</h:panelGroup>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="complemento">#{mensagens.complemento}</h:outputLabel>
+															<h:inputTextarea class="form-control" id="complemento" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.complemento}" >
+																<f:ajax event="keyup"
+																		render="validacao-complemento"
+																		onevent="mostrarErro('#validacao-complemento')"
+																		listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-complemento',mensagens.complemento,
+																		cadastrarBemPatrimonialMB.bemPatrimonial.complemento)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-complemento"
+																for="validacao-complemento"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="colecao">#{mensagens.colecao}</h:outputLabel>
+															<h:inputText class="form-control" id="colecao" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.colecao}">
+																<f:ajax event="keyup"
+																	render="validacao-colecao"
+																	onevent="mostrarErro('#validacao-colecao')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-colecao',mensagens.colecao,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.colecao)}" />
+															</h:inputText>
+															<h:message id="validacao-colecao" for="validacao-colecao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="latitude">#{mensagens.latitude}</h:outputLabel>
+															<h:inputText class="form-control" id="latitude" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.latitude}" >
+																<f:ajax event="keyup"
+																	render="validacao-latitude"
+																	onevent="mostrarErro('#validacao-latitude')"
+																	listener="#{cadastrarBemPatrimonialMB.validarLatitude('validacao-latitude')}" />
+															</h:inputText>
+															<h:message id="validacao-latitude"
+																for="validacao-latitude"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="longitude">#{mensagens.longitude}</h:outputLabel>
+															<h:inputText class="form-control" id="longitude" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.longitude}" >
+																<f:ajax event="keyup"
+																	render="validacao-longitude"
+																	onevent="mostrarErro('#validacao-longitude')"
+																	listener="#{cadastrarBemPatrimonialMB.validarLongitude('validacao-longitude')}" />
+															</h:inputText>
+															<h:message id="validacao-longitude"
+																for="validacao-longitude"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="autorias">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#autorias"
+													href="#sanfona-autorias">#{mensagens.autorias}</a>
+											</h4>
+										</div>
+										<div id="sanfona-autorias" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-12 text-right">
+														<button class="btn btn-primary" data-toggle="modal"
+															data-target="#cadastrar-autor-modal"
+															data-backdrop="static">
+															<i class="fa fa-user"></i> #{mensagens.cadastrarAutor}
+														</button>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<h:panelGroup id="grupo-autorias">
+															<h:dataTable var="autoria" id="tabela-autorias"
+																class="table table-bordered table-hover"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.autorias}"
+																footerClass="hidden">
+																<f:facet name="caption">#{mensagens.autorias}</f:facet>
+																<h:column>
+																	<div class="row">
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<h:outputLabel class="label-control"
+																					for="nome-autor">#{mensagens.autor}</h:outputLabel>
+																				<h:selectOneMenu value="#{autoria.autor.id}"
+																					id="nome-autor"
+																					class="form-control select-autoria com-select2">
+																					<f:selectItems
+																						value="#{cadastrarBemPatrimonialMB.autores}" />
+																				</h:selectOneMenu>
+																			</div>
+																		</div>
+																		<div class="col-md-4">
+																			<div class="form-group">
+																				<h:outputLabel class="label-control"
+																					for="tipo-autoria">#{mensagens.tipoAutoria}</h:outputLabel>
+																				<h:selectOneMenu
+																					class="form-control select-autoria com-select2"
+																					id="tipo-autoria" value="#{autoria.tipo}">
+																					<f:selectItems
+																						value="#{cadastrarBemPatrimonialMB.tiposAutoria}" />
+																				</h:selectOneMenu>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<div class="form-group">
+																				<h:outputLabel class="control-label transparente">.</h:outputLabel>
+																				<h:commandLink class="btn btn-danger form-control"
+																					action="#{cadastrarBemPatrimonialMB.removerAutoria(autoria)}">
+																					<i class="fa fa-times"> </i>
+																					<f:ajax
+																						render=":form-cadastro-bem-patrimonial:grupo-autorias"></f:ajax>
+																				</h:commandLink>
+																			</div>
+																		</div>
+																	</div>
+																</h:column>
+																<f:facet name="footer">
+																	<script type="text/javascript">
+																		$(
+																				document)
+																				.ready(
+																						function() {
+																							$(
+																									'.select-autoria')
+																									.select2(
+																											{
+																												allowClear : true,
+																												placeholder : '#{mensagens.selecione}',
+																												minimumResultsForSearch : -1
+																											});
+																						});
+																	</script>
+																</f:facet>
+
+															</h:dataTable>
+															<div class="row">
+																<div class="col-md-offset-5 col-md-2 text-center">
+																	<h:commandLink class="btn btn-success"
+																		action="#{cadastrarBemPatrimonialMB.adicionarAutoria}">
+																		<i class="fa fa-plus"></i>
+																	#{mensagens.adicionarAutoria}
+																	<f:ajax execute="@form"
+																			render=":form-cadastro-bem-patrimonial:grupo-autorias" />
+																	</h:commandLink>
+																</div>
+															</div>
+														</h:panelGroup>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="producao">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#producao"
+													href="#sanfona-producao">#{mensagens.producao}</a>
+											</h4>
+										</div>
+										<div id="sanfona-producao" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-offset-1 col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="producao-local">#{mensagens.local}</h:outputLabel>
+															<h:inputText class="form-control" id="producao-local" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.local}">
+																<f:ajax event="keyup"
+																	render="validacao-local"
+																	onevent="mostrarErro('#validacao-local')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-local',mensagens.local,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.producao.local)}" />
+															</h:inputText>
+															<h:message id="validacao-local" for="validacao-local"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="producao-ano">#{mensagens.ano}</h:outputLabel>
+															<h:inputText class="form-control" id="producao-ano" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.ano}">
+																<f:ajax event="keyup"
+																	render="validacao-ano"
+																	onevent="mostrarErro('#validacao-ano')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-ano',mensagens.ano,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.producao.ano)}" />
+															</h:inputText>
+															<h:message id="validacao-ano" for="validacao-ano"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-offset-1 col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="producao-edicao">#{mensagens.edicao}</h:outputLabel>
+															<h:inputText class="form-control" id="producao-edicao" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.edicao}">
+																<f:ajax event="keyup"
+																	render="validacao-edicao"
+																	onevent="mostrarErro('#validacao-edicao')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-edicao',mensagens.edicao,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.producao.edicao)}" />
+															</h:inputText>
+															<h:message id="validacao-edicao" for="validacao-edicao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="producao-outras-responsabilidades">#{mensagens.outrasResponsabilidades}</h:outputLabel>
+															<h:inputText class="form-control" maxlength="255"
+																id="producao-outras-responsabilidades"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.outrasResponsabilidades}">
+																<f:ajax event="keyup"
+																	render="validacao-responsabilidades"
+																	onevent="mostrarErro('#validacao-responsabilidades')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-responsabilidades',mensagens.outrasResponsabilidades,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.producao.outrasResponsabilidades)}" />
+															</h:inputText>
+															<h:message id="validacao-responsabilidades"
+																for="validacao-responsabilidades"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="descricao">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#descricao"
+													href="#sanfona-descricao">#{mensagens.descricao}</a>
+											</h4>
+										</div>
+										<div id="sanfona-descricao" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="caracteristicas-fisicas-tecnicas-executivas">
+																#{mensagens.caracteristicasFisicasTecnicasExecutivas}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control" p:maxlength="255"
+																id="caracteristicas-fisicas-tecnicas-executivas"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasFisicasTecnicasExecutivas}">
+																<f:ajax event="keyup"
+																	render="validacao-caracteristicas-fisicas-tecnicas-executivas"
+																	onevent="mostrarErro('#validacao-caracteristicas-fisicas-tecnicas-executivas')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-caracteristicas-fisicas-tecnicas-executivas',
+																	mensagens.caracteristicasFisicasTecnicasExecutivas,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasFisicasTecnicasExecutivas)}" />
+															</h:inputTextarea>
+															<h:message
+																id="validacao-caracteristicas-fisicas-tecnicas-executivas"
+																for="validacao-caracteristicas-fisicas-tecnicas-executivas"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="dimensoes-quantificacoes">#{mensagens.dimensoesQuantificacoes}</h:outputLabel>
+															<h:inputTextarea class="form-control"
+																id="dimensoes-quantificacoes" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.dimensoesQuantificacoes}">
+																<f:ajax event="keyup"
+																	render="validacao-dimensoes-quantificacoes"
+																	onevent="mostrarErro('#validacao-dimensoes-quantificacoes')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-dimensoes-quantificacoes',mensagens.dimensoesQuantificacoes,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.dimensoesQuantificacoes)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-dimensoes-quantificacoes"
+																for="validacao-dimensoes-quantificacoes"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="condicao-topografica">#{mensagens.condicaoTopografica}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="condicao-topografica"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.condicaoTopografica}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.condicoesTopograficas}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="uso">#{mensagens.uso}</h:outputLabel>
+															<h:inputText id="uso" class="form-control" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.uso}" />
+																<f:ajax event="keyup"
+																	render="validacao-uso"
+																	onevent="mostrarErro('#validacao-uso')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-uso',mensagens.uso,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.uso)}" />
+															<h:message id="validacao-uso" for="validacao-uso"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="numero-ambientes">#{mensagens.numeroAmbientes}</h:outputLabel>
+															<h:inputText class="form-control" id="numero-ambientes"
+																p:type="number" p:min="0"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroAmbientes}" />
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="numero-pavimentos">#{mensagens.numeroPavimentos}</h:outputLabel>
+															<h:inputText class="form-control" id="numero-pavimentos"
+																p:type="number" p:min="0"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.numeroPavimentos}">
+															</h:inputText>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="alcova">#{mensagens.alcova}</h:outputLabel>
+															<div class="form-control pull-right com-switch">
+																<div class="form-control pull-right com-switch">
+																	<h:selectBooleanCheckbox id="alcova" class="switch"
+																		value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alcova}">
+																	</h:selectBooleanCheckbox>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="porao">#{mensagens.porao}</h:outputLabel>
+															<div class="form-control pull-right com-switch">
+																<div class="form-control pull-right com-switch">
+																	<h:selectBooleanCheckbox id="porao" class="switch"
+																		value="#{cadastrarBemPatrimonialMB.bemPatrimonial.porao}">
+																	</h:selectBooleanCheckbox>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="sotao">#{mensagens.sotao}</h:outputLabel>
+															<div class="form-control pull-right com-switch">
+																<div class="form-control pull-right com-switch">
+																	<h:selectBooleanCheckbox id="sotao" class="switch"
+																		value="#{cadastrarBemPatrimonialMB.bemPatrimonial.sotao}">
+																	</h:selectBooleanCheckbox>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="meio-antropico">
+																#{mensagens.meioAntropico}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control" id="meio-antropico" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.meioAntropico}">
+																<f:ajax event="keyup"
+																	render="validacao-meio-antropico"
+																	onevent="mostrarErro('#validacao-meio-antropico')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-meio-antropico',mensagens.meioAntropico,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.meioAntropico)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-meio-antropico"
+																for="validacao-meio-antropico"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="caracteristicas-ambientais">
+																#{mensagens.caracteristicasAmbientais}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control" p:maxlength="255"
+																id="caracteristicas-ambientais"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasAmbientais}">
+																<f:ajax event="keyup"
+																	render="validacao-caracteristicas-ambientais"
+																	onevent="mostrarErro('#validacao-caracteristicas-ambientais')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-caracteristicas-ambientais',mensagens.caracteristicasAmbientais,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasAmbientais)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-caracteristicas-ambientais"
+																for="validacao-caracteristicas-ambientais"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="sitio-paisagem">#{mensagens.sitioPaisagem}</h:outputLabel>
+															<h:inputText class="form-control" id="sitio-paisagem" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.sitioPaisagem}">
+																<f:ajax event="keyup"
+																	render="validacao-sitio-paisagem"
+																	onevent="mostrarErro('#validacao-sitio-paisagem')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-sitio-paisagem',mensagens.sitioPaisagem,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.sitioPaisagem)}" />
+															</h:inputText>
+															<h:message id="validacao-sitio-paisagem"
+																for="validacao-sitio-paisagem"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="agua-proxima">#{mensagens.aguaProxima}</h:outputLabel>
+															<h:inputText class="form-control" id="agua-proxima" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.aguaProxima}">
+																<f:ajax event="keyup"
+																	render="validacao-agua-proxima"
+																	onevent="mostrarErro('#validacao-agua-proxima')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-agua-proxima',mensagens.aguaProxima,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.aguaProxima)}" />
+															</h:inputText>
+															<h:message id="validacao-agua-proxima"
+																for="validacao-agua-proxima"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="vegetacao">#{mensagens.vegetacao}</h:outputLabel>
+															<h:inputText class="form-control" id="vegetacao" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.vegetacao}">
+																<f:ajax event="keyup"
+																	render="validacao-vegetacao"
+																	onevent="mostrarErro('#validacao-vegetacao')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-vegetacao',mensagens.vegetacao,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.vegetacao)}" />
+															</h:inputText>
+															<h:message id="validacao-vegetacao"
+																for="validacao-vegetacao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="exposicao">#{mensagens.exposicao}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="exposicao"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.exposicao}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.tiposExposicao}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="uso-atual">#{mensagens.usoAtual}</h:outputLabel>
+															<h:inputText class="form-control" id="uso-atual" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.usoAtual}">
+																<f:ajax event="keyup"
+																	render="validacao-uso-atual"
+																	onevent="mostrarErro('#validacao-uso-atual')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-uso-atual',mensagens.usoAtual,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.usoAtual)}" />
+															</h:inputText>
+															<h:message id="validacao-uso-atual"
+																for="validacao-uso-atual"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="outros">#{mensagens.outros}</h:outputLabel>
+															<h:inputText class="form-control" id="outros" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.outros}">
+																<f:ajax event="keyup"
+																	render="validacao-outros"
+																	onevent="mostrarErro('#validacao-outros')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-outros',mensagens.outros,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.outros)}" />
+															</h:inputText>
+															<h:message id="validacao-outros" for="validacao-outros"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="area-total">#{mensagens.areaTotal}</h:outputLabel>
+															<h:inputText class="form-control" id="area-total" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.areaTotal}">
+																<f:ajax event="keyup"
+																	render="validacao-area-total"
+																	onevent="mostrarErro('#validacao-area-total')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-area-total',mensagens.areaTotal,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.areaTotal)}" />
+															</h:inputText>
+															<h:message id="validacao-area-total"
+																for="validacao-area-total"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="altura-fachada-frontal">#{mensagens.alturaFachadaFrontal}</h:outputLabel>
+															<h:inputText class="form-control"
+																id="altura-fachada-frontal" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaFachadaFrontal}">
+																<f:ajax event="keyup"
+																	render="validacao-altura-fachada-frontal"
+																	onevent="mostrarErro('#validacao-altura-fachada-frontal')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-altura-fachada-frontal',mensagens.alturaFachadaFrontal,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.alturaFachadaFrontal)}" />
+															</h:inputText>
+															<h:message id="validacao-altura-fachada-frontal"
+																for="validacao-altura-fachada-frontal"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="altura-fachada-posterior">#{mensagens.alturaFachadaPosterior}</h:outputLabel>
+															<h:inputText class="form-control" maxlength="255"
+																id="altura-fachada-posterior"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaFachadaPosterior}">
+																<f:ajax event="keyup"
+																	render="validacao-altura-fachada-posterior"
+																	onevent="mostrarErro('#validacao-altura-fachada-posterior')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-altura-fachada-posterior',mensagens.alturaFachadaPosterior,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.alturaFachadaPosterior)}" />
+															</h:inputText>
+															<h:message id="validacao-altura-fachada-posterior"
+																for="validacao-altura-fachada-posterior"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="largura">#{mensagens.largura}</h:outputLabel>
+															<h:inputText class="form-control" id="largura" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.largura}">
+																<f:ajax event="keyup"
+																	render="validacao-largura"
+																	onevent="mostrarErro('#validacao-largura')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-largura',mensagens.largura,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.largura)}" />
+															</h:inputText>
+															<h:message id="validacao-largura" for="validacao-largura"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="altura">#{mensagens.altura}</h:outputLabel>
+															<h:inputText class="form-control" id="altura" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.altura}">
+																<f:ajax event="keyup"
+																	render="validacao-altura"
+																	onevent="mostrarErro('#validacao-altura')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-altura',mensagens.altura,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.altura)}" />
+															</h:inputText>
+															<h:message id="validacao-altura" for="validacao-altura"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="profundidade">#{mensagens.profundidade}</h:outputLabel>
+															<h:inputText class="form-control" id="profundidade" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.profundidade}">
+																<f:ajax event="keyup"
+																	render="validacao-profundidade"
+																	onevent="mostrarErro('#validacao-profundidade')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-profundidade',mensagens.profundidade,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.profundidade)}" />
+															</h:inputText>
+															<h:message id="validacao-profundidade"
+																for="validacao-profundidade"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="altura-cumeeira">#{mensagens.alturaCumeeira}</h:outputLabel>
+															<h:inputText class="form-control" id="altura-cumeeira" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaCumeeira}">
+																<f:ajax event="keyup"
+																	render="validacao-altura-cumeeira"
+																	onevent="mostrarErro('#validacao-altura-cumeeira')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-altura-cumeeira',mensagens.alturaCumeeira,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.alturaCumeeira)}" />
+															</h:inputText>
+															<h:message id="validacao-altura-cumeeira"
+																for="validacao-altura-cumeeira"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="altura-total">#{mensagens.alturaTotal}</h:outputLabel>
+															<h:inputText class="form-control" id="altura-total" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.alturaTotal}">
+																<f:ajax event="keyup"
+																	render="validacao-altura-total"
+																	onevent="mostrarErro('#validacao-altura-total')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-altura-total',mensagens.alturaTotal,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.alturaTotal)}" />
+															</h:inputText>
+															<h:message id="validacao-altura-total"
+																for="validacao-altura-total"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="pe-direito-terreo">#{mensagens.peDireitoTerreo}</h:outputLabel>
+															<h:inputText class="form-control" id="pe-direito-terreo" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.peDireitoTerreo}">
+																<f:ajax event="keyup"
+																	render="validacao-pe-direito-terreo"
+																	onevent="mostrarErro('#validacao-pe-direito-terreo')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-pe-direito-terreo',mensagens.peDireitoTerreo,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.peDireitoTerreo)}" />
+															</h:inputText>
+															<h:message id="validacao-pe-direito-terreo"
+																for="validacao-pe-direito-terreo"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="pe-direito-tipo">#{mensagens.peDireitoTipo}</h:outputLabel>
+															<h:inputText class="form-control" id="pe-direito-tipo" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.peDireitoTipo}">
+																<f:ajax event="keyup"
+																	render="validacao-pe-direito-tipo"
+																	onevent="mostrarErro('#validacao-pe-direito-tipo')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-pe-direito-tipo',mensagens.peDireitoTipo,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.peDireitoTipo)}" />
+															</h:inputText>
+															<h:message id="validacao-pe-direito-tipo"
+																for="validacao-pe-direito-tipo"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="comprimento">#{mensagens.comprimento}</h:outputLabel>
+															<h:inputText class="form-control" id="comprimento" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.comprimento}">
+																<f:ajax event="keyup"
+																	render="validacao-comprimento"
+																	onevent="mostrarErro('#validacao-comprimento')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-comprimento',mensagens.comprimento,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.comprimento)}" />
+															</h:inputText>
+															<h:message id="validacao-comprimento"
+																for="validacao-comprimento"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="localizacao-fisica">#{mensagens.localizacaoFisica}</h:outputLabel>
+															<h:inputText class="form-control" id="localizacao-fisica" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.localizacaoFisica}">
+																<f:ajax event="keyup"
+																	render="validacao-localizacao-fisica"
+																	onevent="mostrarErro('#validacao-localizacao-fisica')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-localizacao-fisica',mensagens.localizacaoFisica,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.localizacaoFisica)}" />
+															</h:inputText>
+															<h:message id="validacao-localizacao-fisica"
+																for="validacao-localizacao-fisica"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="conteudo-bem-patrimonial">
+																#{mensagens.conteudo}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control"
+																id="conteudo-bem-patrimonial" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.conteudo}">
+																<f:ajax event="keyup"
+																	render="validacao-conteudo-bem-patrimonial"
+																	onevent="mostrarErro('#validacao-conteudo-bem-patrimonial')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-conteudo-bem-patrimonial',mensagens.conteudo,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.conteudo)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-conteudo-bem-patrimonial"
+																for="validacao-conteudo-bem-patrimonial"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="meio-acesso">
+																#{mensagens.meioAcesso}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control" id="meio-acesso" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.meioAcesso}">
+																<f:ajax event="keyup"
+																	render="validacao-meio-acesso"
+																	onevent="mostrarErro('#validacao-meio-acesso')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-meio-acesso',mensagens.meioAcesso,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.meioAcesso)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-meio-acesso"
+																for="validacao-meio-acesso"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="notas">
+																#{mensagens.notas}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control" id="notas" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.notas}">
+																<f:ajax event="keyup"
+																	render="validacao-notas"
+																	onevent="mostrarErro('#validacao-notas')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-notas',mensagens.notas,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.notas)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-notas" for="validacao-notas"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="estado">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#estado"
+													href="#sanfona-estado">#{mensagens.estado}</a>
+											</h4>
+										</div>
+										<div id="sanfona-estado" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-offset-3 col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="estado-preservacao">#{mensagens.estadoPreservacao}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="estado-preservacao"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.diagnostico.estadoPreservacao}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.estadosPreservacao}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="estado-conservacao">#{mensagens.estadoConservacao}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="estado-conservacao"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.diagnostico.estadoConservacao}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.estadosConservacao}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-offset-3 col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="notas-estado-conservacao">
+																#{mensagens.notasEstadoConservacao}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control"
+																id="notas-estado-conservacao" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.diagnostico.notasEstadoConservacao}">
+																<f:ajax event="keyup"
+																	render="validacao-notas-estado-conservacao"
+																	onevent="mostrarErro('#validacao-notas-estado-conservacao')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-notas-estado-conservacao',mensagens.notasEstadoConservacao,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.diagnostico.notasEstadoConservacao)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-notas-estado-conservacao"
+																for="validacao-notas-estado-conservacao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div>
+													<h:panelGroup id="grupo-intervencoes">
+														<h:dataTable id="v" var="intervencao"
+															class="table table-hover table-bordered"
+															value="#{cadastrarBemPatrimonialMB.bemPatrimonial.intervencoes}">
+															<h:column>
+																<div class="row">
+																	<div class="col-md-2">
+																		<div class="form-group">
+																			<h:outputLabel class="label-control" for="data">#{mensagens.data}</h:outputLabel>
+																			<h:inputText class="form-control" id="data" maxlength="255"
+																				value="#{intervencao.data}">
+																				<f:ajax event="keyup"
+																					render="validacao-data"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-data',
+																					mensagens.data,intervencao.data)}" />
+																			</h:inputText>
+																			<h:message id="validacao-data" for="validacao-data"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<h:outputLabel class="label-control"
+																				for="responsavel">#{mensagens.responsavel}</h:outputLabel>
+																			<h:inputText class="form-control" id="responsavel" maxlength="255"
+																				value="#{intervencao.responsavel}">
+																				<f:ajax event="keyup"
+																					render="validacao-responsavel"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-responsavel',
+																					mensagens.responsavel,intervencao.responsavel)}" />
+																			</h:inputText>
+																			<h:message id="validacao-responsavel"
+																				for="validacao-responsavel"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
+																		</div>
+																	</div>
+																	<div class="col-md-5">
+																		<div class="form-group">
+																			<h:outputLabel class="label-control" for="descricao">#{mensagens.descricao}</h:outputLabel>
+																			<h:inputText class="form-control" id="descricao" maxlength="255"
+																				value="#{intervencao.descricao}">
+																				<f:ajax event="keyup"
+																					render="validacao-descricao"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-descricao',
+																					mensagens.descricao,intervencao.descricao)}" />
+																			</h:inputText>
+																			<h:message id="validacao-descricao"
+																				for="validacao-descricao"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<div class="form-group">
+																			<h:outputLabel class="control-label transparente">.</h:outputLabel>
+																			<h:commandLink class="btn btn-danger form-control"
+																				action="#{cadastrarBemPatrimonialMB.removerIntervencao(intervencao)}">
+																				<i class="fa fa-times"> </i>
+																				<f:ajax
+																					render=":form-cadastro-bem-patrimonial:grupo-intervencoes" />
+																			</h:commandLink>
+																		</div>
+																	</div>
+																</div>
+															</h:column>
+														</h:dataTable>
+														<div class="row">
+															<div class="col-md-offset-5 col-md-2 text-center">
+																<h:commandLink class="btn btn-success"
+																	action="#{cadastrarBemPatrimonialMB.adicionarIntervencao}">
+																	<i class="fa fa-plus"></i> #{mensagens.adicionarIntervencao}
+																<f:ajax execute="@form"
+																		render=":form-cadastro-bem-patrimonial:grupo-intervencoes" />
+																</h:commandLink>
+															</div>
+														</div>
+													</h:panelGroup>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="disponibilidade">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#disponibilidade"
+													href="#sanfona-disponibilidade">#{mensagens.disponibilidade}</a>
+											</h4>
+										</div>
+										<div id="sanfona-disponibilidade"
+											class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="disponibilidade">#{mensagens.disponibilidade}</h:outputLabel>
+															<h:selectOneMenu layout="pageDirection"
+																class="form-control select com-select2"
+																id="disponibilidade"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.disponibilidade}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.tiposDisponibilidade}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="condicoes-acesso">#{mensagens.condicoesAcesso}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="condicoes-acesso"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.condicoesAcesso}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.condicoesAcesso}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="condicoes-reproducao">#{mensagens.condicoesReproducao}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="condicoes-reproducao"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.condicoesReproducao}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.condicoesReproducao}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="protecao">#{mensagens.protecao}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="protecao"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protecao}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.protecoes}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="instituicao-protetora">#{mensagens.instituicaoProtetora}</h:outputLabel>
+															<h:inputText class="form-control" maxlength="255"
+																id="instituicao-protetora"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protetoraInstituicao}">
+																<f:ajax event="keyup"
+																	render="validacao-instituicao-protetora"
+																	onevent="mostrarErro('#validacao-instituicao-protetora')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-instituicao-protetora',mensagens.instituicaoProtetora,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.protetoraInstituicao)}" />
+															</h:inputText>
+															<h:message id="validacao-instituicao-protetora"
+																for="validacao-instituicao-protetora"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="numero-processo">#{mensagens.numeroProcesso}</h:outputLabel>
+															<h:inputText class="form-control" id="numero-processo" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.legislacao}">
+																<f:ajax event="keyup"
+																	render="validacao-numero-processo"
+																	onevent="mostrarErro('#validacao-numero-processo')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-numero-processo',mensagens.numeroProcesso,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.legislacao)}" />
+															</h:inputText>
+															<h:message id="validacao-numero-processo"
+																for="validacao-numero-processo"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="data-retorno">
+																#{mensagens.dataRetorno}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control" id="data-retorno" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.dataRetorno}">
+																<f:ajax event="keyup"
+																	render="validacao-data-retorno"
+																	onevent="mostrarErro('#validacao-data-retorno')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-data-retorno',mensagens.dataRetorno,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.dataRetorno)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-data-retorno"
+																for="validacao-data-retorno"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="notas-uso-aproveitamento">
+																#{mensagens.notasUsoAproveitamento}
+															</h:outputLabel>
+															<h:inputTextarea class="form-control" p:maxlength="255"
+																id="notas-uso-aproveitamento"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.notasUsoAproveitamento}">
+																<f:ajax event="keyup"
+																	render="validacao-notas-uso-aproveitamento"
+																	onevent="mostrarErro('#validacao-notas-uso-aproveitamento')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-notas-uso-aproveitamento',mensagens.notasUsoAproveitamento,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.notasUsoAproveitamento)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-notas-uso-aproveitamento"
+																for="validacao-notas-uso-aproveitamento"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="procedencia">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#procedencia"
+													href="#sanfona-procedencia">#{mensagens.procedencia}</a>
+											</h4>
+										</div>
+										<div id="sanfona-procedencia"
+											class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="tipo-aquisicao">#{mensagens.tipoAquisicao}</h:outputLabel>
+															<h:selectOneMenu class="form-control select com-select2"
+																id="tipo-aquisicao"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.tipoAquisicao}">
+																<f:selectItems
+																	value="#{cadastrarBemPatrimonialMB.tiposAquisicao}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="valor-venal">#{mensagens.valorVenal}</h:outputLabel>
+															<h:inputText class="form-control" id="valor-venal" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.valorVenalTransacao}">
+																<f:ajax event="keyup"
+																	render="validacao-valor-venal"
+																	onevent="mostrarErro('#validacao-valor-venal')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-valor-venal',mensagens.valorVenal,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.valorVenalTransacao)}" />
+															</h:inputText>
+															<h:message id="validacao-valor-venal"
+																for="validacao-valor-venal"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="data-aquisicao">#{mensagens.data}</h:outputLabel>
+															<h:inputText class="form-control" id="data-aquisicao" maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dataAquisicao}">
+																<f:ajax event="keyup"
+																	render="validacao-data-aquisicao"
+																	onevent="mostrarErro('#validacao-data-aquisicao')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-data-aquisicao',mensagens.data,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dataAquisicao)}" />
+															</h:inputText>
+															<h:message id="validacao-data-aquisicao"
+																for="validacao-data-aquisicao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="primeiro-proprietario">#{mensagens.primeiroProprietario}</h:outputLabel>
+															<h:inputText class="form-control" maxlength="255"
+																id="primeiro-proprietario"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.primeiroProprietario}">
+																<f:ajax event="keyup"
+																	render="validacao-primeiro-proprietario"
+																	onevent="mostrarErro('#validacao-primeiro-proprietario')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-primeiro-proprietario',mensagens.primeiroProprietario,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.primeiroProprietario)}" />
+															</h:inputText>
+															<h:message id="validacao-primeiro-proprietario"
+																for="validacao-primeiro-proprietario"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="dados-transacao">#{mensagens.dadosTransacao}</h:outputLabel>
+															<h:inputTextarea class="form-control" p:maxlength="255"
+																id="dados-transacao"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao}">
+																<f:ajax event="keyup"
+																	render="validacao-dados-transacao"
+																	onevent="mostrarErro('#validacao-dados-transacao')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-dados-transacao',mensagens.dadosTransacao,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-dados-transacao"
+																for="validacao-dados-transacao"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="historico">#{mensagens.historico}</h:outputLabel>
+															<h:inputTextarea class="form-control" id="historico" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico}">
+																<f:ajax event="keyup"
+																	render="validacao-historico"
+																	onevent="mostrarErro('#validacao-historico')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-historico',mensagens.historico,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-historico"
+																for="validacao-historico"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="instrumento-pesquisa">#{mensagens.intrumentoPesquisa}</h:outputLabel>
+															<h:inputTextarea class="form-control"
+																id="instrumento-pesquisa" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.instrumentoPesquisa}">
+																<f:ajax event="keyup"
+																	render="validacao-instrumento-pesquisa"
+																	onevent="mostrarErro('#validacao-instrumento-pesquisa')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-instrumento-pesquisa',mensagens.intrumentoPesquisa,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.instrumentoPesquisa)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-instrumento-pesquisa"
+																for="validacao-instrumento-pesquisa"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10" id="assuntos-descritores">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse"
+													data-parent="#assuntos-descritores"
+													href="#sanfona-assuntos-descritores">#{mensagens.assuntosDescritores}</a>
+											</h4>
+										</div>
+										<div id="sanfona-assuntos-descritores"
+											class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="assuntos">#{mensagens.assuntos}</h:outputLabel>
+															<h:inputTextarea class="form-control" id="assuntos" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.assuntos}">
+																<f:ajax event="keyup"
+																	render="validacao-assuntos"
+																	onevent="mostrarErro('#validacao-assuntos')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-assuntos',mensagens.assuntos,
+																	cadastrarBemPatrimonialMB.assuntos)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-assuntos"
+																for="validacao-assuntos"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="descritores">#{mensagens.descritores}</h:outputLabel>
+															<h:inputTextarea class="form-control" id="descritores" p:maxlength="255"
+																value="#{cadastrarBemPatrimonialMB.descritores}">
+																<f:ajax event="keyup"
+																	render="validacao-descritores"
+																	onevent="mostrarErro('#validacao-descritores')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-descritores',mensagens.descritores,
+																	cadastrarBemPatrimonialMB.descritores)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-descritores"
+																for="validacao-descritores"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-group top-margin-10"
+									id="fontes-informacao-container">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse"
+													data-parent="#fontes-informacao-container"
+													href="#sanfona-fontes-informacao-container">#{mensagens.fontesInformacao}</a>
+											</h4>
+										</div>
+										<div id="sanfona-fontes-informacao-container"
+											class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div>
+													<h:panelGroup id="grupo-fontes-informacao">
+														<h:dataTable var="fonteinformacao"
+															class="table table-bordered table-hover"
+															value="#{cadastrarBemPatrimonialMB.fontesInformacao}">
+															<h:column>
+																<div class="row">
+																	<div class="col-md-11">
+																		<div class="form-group">
+																			<h:outputLabel class="label-control"
+																				for="fontes-informacao">#{mensagens.fontesInformacao}</h:outputLabel>
+																			<h:inputText class="form-control"
+																				id="fontes-informacao" maxlength="255"
+																				value="#{fonteinformacao.valor}">
+																				 <f:ajax event="keyup"
+																					render="validacao-fontes-informacao"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-fontes-informacao',
+																					mensagens.fontesInformacao,fonteinformacao.valor)}" /> 
+																			</h:inputText>
+																			<h:message id="validacao-fontes-informacao"
+																				for="validacao-fontes-informacao"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<div class="form-group">
+																			<h:outputLabel class="control-label transparente">.</h:outputLabel>
+																			<h:commandLink class="btn btn-danger form-control"
+																				action="#{cadastrarBemPatrimonialMB.removerFontesInformacao(fonteinformacao)}">
+																				<i class="fa fa-times"> </i>
+																				<f:ajax
+																					render=":form-cadastro-bem-patrimonial:grupo-fontes-informacao" />
+																			</h:commandLink>
+																		</div>
+																	</div>
+																</div>
+															</h:column>
+														</h:dataTable>
+														<div class="row">
+															<div class="col-md-offset-5 col-md-2 text-center">
+																<h:commandLink class="btn btn-success"
+																	action="#{cadastrarBemPatrimonialMB.adicionarFontesInformacao}">
+																	<i class="fa fa-plus"></i>
+																	<f:ajax execute="@form"
+																		render=":form-cadastro-bem-patrimonial:grupo-fontes-informacao" />
+																		#{mensagens.adicionarFonteInformacao}
+																</h:commandLink>
+															</div>
+														</div>
+													</h:panelGroup>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="panel-group top-margin-10" id="pesquisadores">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#pesquisadores"
+													href="#sanfona-pesquisadores">#{mensagens.pesquisadores}</a>
+											</h4>
+										</div>
+										<div id="sanfona-pesquisadores"
+											class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div>
+													<h:panelGroup id="grupo-pesquisadores">
+														<h:dataTable var="pesquisador" id="tabela-pesquisadores"
+															class="table table-bordered table-hover"
+															value="#{cadastrarBemPatrimonialMB.bemPatrimonial.pesquisadores}">
+
+															<h:column>
+																<div class="row">
+																	<div class="col-md-2">
+																		<div class="form-group">
+																			<h:outputLabel class="label-control"
+																				for="data-pesquisa">#{mensagens.data}</h:outputLabel>
+																			<h:inputText class="form-control" id="data-pesquisa"
+																				value="#{pesquisador.dataPesquisa}" maxlength="255">
+																				<f:ajax event="keyup"
+																					render="validacao-data-pesquisa"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-data-pesquisa',
+																					mensagens.data,pesquisador.dataPesquisa)}" />
+																			</h:inputText>
+																			<h:message id="validacao-data-pesquisa"
+																				for="validacao-data-pesquisa"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<h:outputLabel class="label-control"
+																				for="nome-pesquisador">#{mensagens.nome}</h:outputLabel>
+																			<h:inputText class="form-control" maxlength="255"
+																				id="nome-pesquisador" value="#{pesquisador.nome}">
+																				<f:ajax event="keyup"
+																					render="validacao-nome-pesquisador"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-nome-pesquisador',
+																					mensagens.nome,pesquisador.nome)}" />
+																			</h:inputText>
+																			<h:message id="validacao-nome-pesquisador"
+																				for="validacao-nome-pesquisador"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
+																		</div>
+																	</div>
+																	<div class="col-md-5">
+																		<div class="form-group">
+																			<h:outputLabel class="label-control"
+																				for="notas-pesquisa">#{mensagens.notas}</h:outputLabel>
+																			<h:inputText class="form-control" id="notas-pesquisa" maxlength="255"
+																				value="#{pesquisador.notasPesquisador}">
+																				<f:ajax event="keyup"
+																					render="validacao-notas-pesquisa"
+																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-notas-pesquisa',
+																					mensagens.notas,pesquisador.notasPesquisador)}" />
+																			</h:inputText>
+																			<h:message id="validacao-notas-pesquisa"
+																				for="validacao-notas-pesquisa"
+																				infoClass="help-block has-success"
+																				errorClass="help-block has-error"
+																				warnClass="help-block has-warning">
+																			</h:message>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<div class="form-group">
+																			<h:outputLabel class="control-label transparente">.</h:outputLabel>
+																			<h:commandLink class="btn btn-danger form-control"
+																				action="#{cadastrarBemPatrimonialMB.removerPesquisador(pesquisador)}">
+																				<i class="fa fa-times"> </i>
+																				<f:ajax
+																					render=":form-cadastro-bem-patrimonial:grupo-pesquisadores" />
+																			</h:commandLink>
+																		</div>
+																	</div>
+																</div>
+															</h:column>
+
+														</h:dataTable>
+														<div class="row">
+															<div class="col-md-offset-5 col-md-2 text-center">
+																<h:commandLink class="btn btn-success"
+																	action="#{cadastrarBemPatrimonialMB.adicionarPesquisador}">
+																	<i class="fa fa-plus"></i>
+																	<f:ajax execute="@form"
+																		render=":form-cadastro-bem-patrimonial:grupo-pesquisadores" />
+																		#{mensagens.adicionarPesquisador}
+															</h:commandLink>
+															</div>
+														</div>
+													</h:panelGroup>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="panel-group top-margin-10"
+									id="relacionar-bem-patrimonial">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse"
+													data-parent="#relacionar-bem-patrimonial"
+													href="#sanfona-relacionar-bem-patrimonial">#{mensagens.relacionarBemPatrimonial}</a>
+											</h4>
+										</div>
+										<div id="sanfona-relacionar-bem-patrimonial"
+											class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="busca">#{mensagens.buscar}</h:outputLabel>
+															<div
+																class="input-group select2-bootstrap-append contem-select2-input-group">
+																<h:inputHidden class="form-control" id="busca"
+																	value="#{cadastrarBemPatrimonialMB.buscaBem}">
+																</h:inputHidden>
+																<span class="input-group-btn"> <h:commandLink
+																		class="btn btn-success btn-sm"
+																		action="#{cadastrarBemPatrimonialMB.adicionarBemRelacionado}">
+																		<i class="fa fa-plus"></i>
+																		<f:ajax execute="@form"
+																			render=":form-cadastro-bem-patrimonial:grupo-bens-relacionados" />
+																	</h:commandLink>
+																</span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div>
+													<h:panelGroup id="grupo-bens-relacionados">
+														<h:dataTable var="bem" id="tabela-bens-relacionados"
+															class="table table-bordered table-hover"
+															value="#{cadastrarBemPatrimonialMB.bemPatrimonial.bensRelacionados}">
+															<h:column>
+																<div class="row">
+																	<div class="col-md-offset-2 col-md-7">
+																		#{bem.tituloPrincipal}</div>
+																	<div class="col-md-1">
+																		<h:commandLink class="btn btn-danger"
+																			action="#{cadastrarBemPatrimonialMB.removerBemRelacionado(bem)}">
+																			<i class="fa fa-times"></i>
+																			<f:ajax execute="@form"
+																				render=":form-cadastro-bem-patrimonial:grupo-bens-relacionados" />
+																		</h:commandLink>
+																	</div>
+																</div>
+															</h:column>
+														</h:dataTable>
+													</h:panelGroup>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton class="btn btn-success margin-5"
+											value="#{mensagens.salvar}"
+											action="#{cadastrarBemPatrimonialMB.cadastrar}">
+										</h:commandButton>
+										<h:commandButton class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}"
+											action="#{cadastrarBemPatrimonialMB.limpar}">
+										</h:commandButton>
+										<h:commandButton
+											class="btn btn-danger margin-left-5 no-right-margin"
+											value="#{mensagens.cancelar}"
+											action="#{cadastrarBemPatrimonialMB.cancelar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				function carregarErros() {
+
+				}
+
+				$(document)
+						.ready(
+								function() {
+									selecionarAbaPatrimonio();
+
+									mostrarErro('#validacao-titulo-principal');
+
+									mostrarErro('#validacao-numero-registro');
+
+									$('.switch').bootstrapSwitch({
+										onText : '#{mensagens.sim}',
+										offText : '#{mensagens.nao}'
+									});
+
+									$('.select').select2({
+										allowClear : true,
+										placeholder : "#{mensagens.selecione}",
+										minimumResultsForSearch : -1
+									});
+
+									$("#busca").select2({
+										minimumInputLength : 1,
+										allowClear : true,
+										ajax : {
+											url : "/memoriavirtual/listar/listarbempatrimonial",
+											quietMillis : 250,
+											type : 'GET',
+											datatype : 'json',
+											data : function(term, page) {
+												return {
+													busca : term,
+												};
+											},
+											results: function (data) {
+									          var results = [];
+									          $.each(data, function(index, item){
+									            results.push({
+									              id: item.id,
+									              text: item.tituloPrincipal
+									            });
+									          });
+									          return { results: results };
+									        }
+										}
+									});
+
+									window.reformar = function(data) {
+										mostrarErro('#validacao-nome');
+										mostrarErro('#validacao-sobrenome');
+
+										var texto = $('#resultado').text();
+										if (texto !== '') {
+											$('#cadastrar-autor-modal').modal(
+													'hide');
+											mensagensSucesso('#{mensagens.sucesso}');
+											$('#resultado').text('');
+											$(
+													'#cadastrar-autor-modal input.form-control')
+													.val('');
+										}
+									}
+								});
+			</script>
+			<div class="modal fade" id="cadastrar-autor-modal" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<h:form class="form-vertical" role="form" method="post"
+						prependId="false">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title">#{mensagens.cadastrarAutorTitulo}</h4>
+							</div>
+							<div class="modal-body">
+								<div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<h:outputLabel for="nome-autor" class="control-label">
+													#{mensagens.nome}
+												</h:outputLabel>
+												<h:inputText value="#{cadastrarAutorMB.nome}" maxlength="255"
+													class="form-control" id="nome-autor">
+													<f:ajax event="keyup"
+														render="validacao-nome-autor"
+														onevent="mostrarErro('#validacao-nome-autor')"
+														listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-nome-autor',mensagens.nome,
+														cadastrarAutorMB.nome)}" />
+												</h:inputText>
+												<h:message id="validacao-nome-autor" 
+													for="validacao-nome-autor"
+													infoClass="help-block has-success"
+													errorClass="help-block has-error"
+													warnClass="help-block has-warning">
+												</h:message>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<h:outputLabel for="sobrenome-autor" class="control-label">
+													#{mensagens.sobrenome}
+												</h:outputLabel>
+												<h:inputText value="#{cadastrarAutorMB.sobrenome}"
+													class="form-control" id="sobrenome-autor" maxlength="255">
+													<f:ajax event="keyup"
+														render="validacao-sobrenome"
+														onevent="mostrarErro('#validacao-sobrenome')"
+														listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-sobrenome',mensagens.sobrenome,
+														cadastrarAutorMB.sobrenome)}" />
+												</h:inputText>
+												<h:message id="validacao-sobrenome"
+													for="validacao-sobrenome"
+													infoClass="help-block has-success"
+													errorClass="help-block has-error"
+													warnClass="help-block has-warning">
+												</h:message>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<h:outputLabel for="codinome-autor" class="control-label">
+													#{mensagens.codinome}
+												</h:outputLabel>
+												<h:inputText value="#{cadastrarAutorMB.codinome}"
+													class="form-control" id="codinome-autor" maxlength="255">
+													<f:ajax event="keyup"
+														render="validacao-codinome-autor"
+														onevent="mostrarErro('#validacao-codinome-autor')"
+														listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-codinome-autor',mensagens.codinome,
+														cadastrarAutorMB.codinome)}" />
+												</h:inputText>
+												<h:message id="validacao-codinome-autor"
+													for="validacao-codinome-autor"
+													infoClass="help-block has-success"
+													errorClass="help-block has-error"
+													warnClass="help-block has-warning">
+												</h:message>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<h:outputLabel for="atividade-autor" class="control-label">
+													#{mensagens.atividade}
+												</h:outputLabel>
+												<h:selectOneMenu class="form-control select com-select2"
+													id="atividade-autor" value="#{cadastrarAutorMB.atividade}">
+													<f:selectItems value="#{cadastrarAutorMB.listaAtividade}" />
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<h:outputLabel class="control-label" for="nascimento-autor">
+													#{mensagens.nascimento}
+												</h:outputLabel>
+												<h:inputText value="#{cadastrarAutorMB.nascimento}"
+													class="form-control" id="nascimento-autor" maxlength="255">
+													<f:ajax event="keyup"
+														render="validacao-nascimento-autor"
+														onevent="mostrarErro('#validacao-nascimento-autor')"
+														listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-nascimento-autor',mensagens.nascimento,
+														cadastrarAutorMB.nascimento)}" />
+												</h:inputText>
+												<h:message id="validacao-nascimento-autor"
+													for="validacao-nascimento-autor"
+													infoClass="help-block has-success"
+													errorClass="help-block has-error"
+													warnClass="help-block has-warning">
+												</h:message>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<h:outputLabel class="control-label" for="obito-autor">
+													#{mensagens.obito}
+												</h:outputLabel>
+												<h:inputText value="#{cadastrarAutorMB.obito}"
+													class="form-control" id="obito-autor" maxlength="255">
+													<f:ajax event="keyup"
+														render="validacao-obito-autor"
+														onevent="mostrarErro('#validacao-obito-autor')"
+														listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-obito-autor',mensagens.obito,
+														cadastrarAutorMB.obito)}" />
+												</h:inputText>
+												<h:message id="validacao-obito-autor"
+													for="validacao-obito-autor"
+													infoClass="help-block has-success"
+													errorClass="help-block has-error"
+													warnClass="help-block has-warning">
+												</h:message>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="modal-footer">
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:message id="resultado" for="resultado"
+											infoClass="help-block has-success"
+											errorClass="help-block has-error"
+											warnClass="help-block has-warning">
+										</h:message>
+										<h:commandButton class="btn btn-success margin-5"
+											value="#{mensagens.cadastrar}"
+											action="#{cadastrarAutorMB.cadastroRapido}">
+											<f:ajax execute="@form"
+												render="validacao-sobrenome validacao-nome-autor resultado"
+												onevent="function(data) {window.reformar(data)}" />
+										</h:commandButton>
+										<button type="button"
+											class="btn btn-danger margin-left-5 no-right-margin"
+											data-dismiss="modal">#{mensagens.cancelar}</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
