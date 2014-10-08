@@ -88,7 +88,6 @@ public class ExcluirInstituicao implements ExcluirInstituicaoRemote {
 			e.printStackTrace();
 			throw new ModeloException(e);
 		}
-
 	}
 
 	@Override

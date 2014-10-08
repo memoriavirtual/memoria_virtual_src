@@ -4,7 +4,8 @@ public enum MVModeloEmailTemplates {
 	excluirInstituicao("excluirInstituicao.html"), 
 	enviarConvite("enviarConvite.html"), 
 	editarCadastroUsuario("solicitarEdicaoUsuario.html"), 
-	excluirUsuario("solicitarExclusaoUsuario.html");
+	excluirUsuario("solicitarExclusaoUsuario.html"),
+	excluirBem("excluirBemPatrimonial.html");
 
 	private String local;
 

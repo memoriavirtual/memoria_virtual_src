@@ -4,7 +4,8 @@ public enum MVModeloMapeamentoUrl {
 	excluirInstituicao("/restrito/validarexclusaoinstituicao.jsf"), 
 	cadastrarUsuario("/cadastrarusuario.jsf"), 
 	editarCadastroUsuario("/restrito/validaredicaousuario.jsf"), 
-	excluirUsuario("/restrito/validarexclusaousuario.jsf");
+	excluirUsuario("/restrito/validarexclusaousuario.jsf"),
+	excluirBem("/restrito/validarExclusaoBem.jsf");
 	
     private String url;       
 

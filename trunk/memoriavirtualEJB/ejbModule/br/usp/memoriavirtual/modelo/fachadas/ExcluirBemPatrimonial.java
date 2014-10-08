@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.modelo.fachadas;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
@@ -16,6 +18,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
 import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
+import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
 @Stateless(mappedName = "ExcluirBemPatrimonial")
 public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
@@ -75,5 +78,31 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 			e.printStackTrace();
 			throw new ModeloException(e);
 		}
+	}
+	
+	@Override
+	public long solicitarExclusao(BemPatrimonial bem, Aprovacao aprovacao) {
+		//TODO set validade FALSE
+		entityManager.persist(aprovacao);
+		return aprovacao.getId();
+	}
+
+	@Override
+	public void aprovarExclusao(BemPatrimonial bem, Aprovacao aprovacao) throws ModeloException {
+		aprovacao.setStatus(MVModeloStatusAprovacao.aprovada);
+		aprovacao.setAlteradaEm(new Date());
+		entityManager.merge(aprovacao);
+		
+		this.excluir(bem.getId());
+	}
+	
+	@Override
+	public void negarExclusao(BemPatrimonial bem, Aprovacao aprovacao)  throws ModeloException{
+		aprovacao.setStatus(MVModeloStatusAprovacao.negada);
+		aprovacao.setAlteradaEm(new Date());
+		entityManager.merge(aprovacao);
+
+		//bem.setValidade(true);
+		entityManager.merge(bem);
 	}
 }

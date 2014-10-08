@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -21,6 +22,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
+import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MVModeloAcao;
 import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
@@ -54,33 +56,59 @@ public class ValidarEdicaoUsuarioMB implements Serializable{
 	@PostConstruct
 	public void run(){
 		try {
-			if(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id")!=null){
-				String id = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-				this.aprovacao = this.editarCadastroUsuarioEJB.getAprovacao(id);
-	
-				Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-	
-				Date hoje = new Date();
-				if (hoje.after(this.aprovacao.getExpiraEm())) {
-					this.getMensagens().mensagemErro(FacesUtil.getMessageFromBundle("linkExpirado"));
+			if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id") != null) {// aprovacao
+				Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+						.getExternalContext().getSessionMap().get("usuario");
+
+				String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+
+				if (!id.equals(null) && id != null && id.length() > 0) {
+					
+					this.aprovacao = memoriaVirtualEJB.getAprovacao(new Long(id));
+					if(aprovacao == null){
+						this.getMensagens().mensagemErro(this.traduzir("aprovacaoInvalida"));
+						FacesUtil.redirecionar("index.jsf");
+					}else{
+						if(aprovacao.getAcao() != MVModeloAcao.editar_cadastro_usuario){
+							this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
+							FacesUtil.redirecionar("index.jsf");
+						}
+						if(aprovacao.getStatus() == MVModeloStatusAprovacao.expirada){
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoExpirada"));
+							FacesUtil.redirecionar("index.jsf");
+						}
+						else if(aprovacao.getStatus() == MVModeloStatusAprovacao.aprovada){
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoJaAprovada"));
+							FacesUtil.redirecionar("index.jsf");
+						}else if(aprovacao.getStatus() == MVModeloStatusAprovacao.negada){
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoNegada"));
+							FacesUtil.redirecionar("index.jsf");
+						}
+						else if(aprovacao.getStatus() == MVModeloStatusAprovacao.aguardando){
+							if (aprovacao.getAnalista().getId() == usuario.getId()) {
+								this.setAprovacao(aprovacao);
+							} else {
+								this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
+								FacesUtil.redirecionar("index.jsf");
+							}
+						}else{
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoInvalida"));
+							FacesUtil.redirecionar("index.jsf");
+						}
+						carregarAprovacao(aprovacao);
+					}
+				} else {
+					this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
 					FacesUtil.redirecionar("index.jsf");
-				} else if (usuario.getId() != this.aprovacao.getAnalista().getId()) {
-					this.getMensagens().mensagemErro(FacesUtil.getMessageFromBundle("solitacaoNaoEhParaEsteUsuario"));
-					FacesUtil.redirecionar("index.jsf");
-				} else if(this.aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando
-						|| this.aprovacao.getAcao() != MVModeloAcao.editar_cadastro_usuario){
-					this.getMensagens().mensagemErro(FacesUtil.getMessageFromBundle("acaoInvalida"));
-					FacesUtil.redirecionar("index.jsf");
-				} else{
-					this.carregarAprovacao(this.aprovacao);
 				}
-			}else{
-				this.getMensagens().mensagemErro(FacesUtil.getMessageFromBundle("acaoInvalida"));
+			} else {
+				this.getMensagens().mensagemErro(this.traduzir("cliqueNovamenteExclusao"));
 				FacesUtil.redirecionar("index.jsf");
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.getMensagens().mensagemErro(FacesUtil.getMessageFromBundle("erroInterno"));
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			FacesUtil.redirecionar("index.jsf");
 		}
 	}
@@ -172,6 +200,13 @@ public class ValidarEdicaoUsuarioMB implements Serializable{
 			this.getMensagens().mensagemErro(FacesUtil.getMessageFromBundle("erroInterno"));
 			e.printStackTrace();
 		}
+	}
+	
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
 	}
 	
 	public void cancelar() {

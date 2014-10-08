@@ -18,6 +18,7 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
 import br.usp.memoriavirtual.utils.MVModeloAcao;
+import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
 @Stateless
 @Startup
@@ -56,13 +57,6 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		q.setParameter("dataAtual", dataAtual);
 		aprovacoesExpiradas = q.getResultList();
 		
-		
-		for(int i=0;i<usuariosExpirados.size();i++)
-			System.out.println("Usuario Expirado(email):"+usuariosExpirados.get(i).getEmail());
-		
-		for(int i=0;i<aprovacoesExpiradas.size();i++)
-			System.out.println("Aprovação Expirada(aprovador):"+aprovacoesExpiradas.get(i).getAnalista());
-		
 		for(int i=0;i<usuariosExpirados.size();i++){
 			Usuario u = usuariosExpirados.get(i);
 			em.remove(u);			
@@ -76,16 +70,21 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 			if(acao.equals(MVModeloAcao.excluir_usuario)){
 				String[] dados = aprov.getDados().split(";");
 				Usuario user = em.find(Usuario.class, dados[1]);
-				user.setAtivo(true); 
+				user.setAtivo(true);
 				em.merge(user);
 
 			}else if(acao.equals(MVModeloAcao.excluir_instituicao)){
 				String[] dados = aprov.getDados().split(";");
 				Instituicao inst = em.find(Instituicao.class,Long.parseLong(dados[1]));
-				inst.setValidade(true); 
+				inst.setValidade(true);
 				em.merge(inst);
+			}else if(acao.equals(MVModeloAcao.excluir_bem)){
+				//TODO set validade true
+			}else if(acao.equals(MVModeloAcao.editar_cadastro_usuario)){
+				//TODO algo ?
 			}
-			em.remove(aprov);			
+			aprov.setStatus(MVModeloStatusAprovacao.expirada);
+			em.merge(aprov);			
 		}
 	}
 }

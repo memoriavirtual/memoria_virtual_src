@@ -1,7 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
@@ -13,36 +12,37 @@ import javax.faces.context.FacesContext;
 
 import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroUsuarioRemote;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirUsuarioRemote;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
 import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MVModeloAcao;
 import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
-@ManagedBean(name = "validarExclusaoUsuarioMB")
+@ManagedBean(name="validarExclusaoBemMB")
 @ViewScoped
-public class ValidarExclusaoUsuarioMB implements Serializable{
-	
-	private static final long serialVersionUID = 983205004967620803L;
+public class validarExclusaoBem implements Serializable{
 
-	@EJB
-	private ExcluirUsuarioRemote excluirUsuarioEJB;
-	
-	@EJB
-	private EditarCadastroUsuarioRemote editarCadastroUsuarioEJB;
+	private static final long serialVersionUID = 3565639588547927353L;
 
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	
-	private MensagensMB mensagens;
+	@EJB
+	private CadastrarBemPatrimonialRemote cadastrarBemEJB;
+	
+	@EJB
+	private ExcluirBemPatrimonialRemote excluirBemEJB;
+	
 	private Aprovacao aprovacao;
+	private MensagensMB mensagens;
+	private BemPatrimonial bem;
 	private Usuario solicitante;
-	private Usuario usuario;
 	private String justificativa;
 	
-	public ValidarExclusaoUsuarioMB(){
+	public validarExclusaoBem(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
 		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
@@ -64,7 +64,7 @@ public class ValidarExclusaoUsuarioMB implements Serializable{
 						this.getMensagens().mensagemErro(this.traduzir("aprovacaoInvalida"));
 						FacesUtil.redirecionar("index.jsf");
 					}else{
-						if(aprovacao.getAcao() != MVModeloAcao.excluir_usuario){
+						if(aprovacao.getAcao() != MVModeloAcao.excluir_bem){
 							this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
 							FacesUtil.redirecionar("index.jsf");
 						}
@@ -107,41 +107,32 @@ public class ValidarExclusaoUsuarioMB implements Serializable{
 			FacesUtil.redirecionar("index.jsf");
 		}
 	}
-
+	
 	public void carregarAprovacao(Aprovacao aprovacao) {
-		this.aprovacao = aprovacao;
 		try {
-			this.solicitante = this.aprovacao.getSolicitante();
-			String[] dados = aprovacao.getDados().split(";");
+			String dados = aprovacao.getDados();
+			String[] tokens = dados.split(";");
 
-			for (int i = 0; i < dados.length; ++i) {
-				if (dados[i].equals("id")) {
-					this.usuario = this.memoriaVirtualEJB.getUsuario(dados[i + 1]);
+			for (int i = 0; i < tokens.length; ++i) {
+				if (tokens[i].equals("id")) {
+					this.bem = cadastrarBemEJB.getBemPatrimonial(new Long(tokens[i + 1]));
 				}
-				if (dados[i].equals("justificativa")) {
-					this.justificativa = dados[i + 1];
+				if (tokens[i].equals("justificativa")) {
+					this.justificativa = tokens[i + 1];
 				}
 			}
+
+			this.solicitante = aprovacao.getSolicitante();
 		} catch (Exception e) {
 			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			e.printStackTrace();
 		}
 	}
-	
-	public String traduzir(String chave) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = context.getApplication().getResourceBundle(context, MVControleMemoriaVirtual.bundleName);
-		return bundle.getString(chave);
-	}
-	
+
 	public void aprovar() {
 		try {
-			this.aprovacao.setStatus(MVModeloStatusAprovacao.aprovada);
-			this.aprovacao.setAlteradaEm(new Date());
-			String dados = "nome;" + this.usuario.getNomeCompleto()
-					+ ";justificativa;" + this.justificativa;
-			aprovacao.setDados(dados);
-			this.excluirUsuarioEJB.aprovar(this.usuario, this.aprovacao);
+			this.aprovacao.setDados("registro;" + this.bem.getNumeroRegistro()+ ";justificativa;" + this.justificativa);
+			this.excluirBemEJB.aprovarExclusao(this.bem, this.aprovacao);
 			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 			FacesUtil.redirecionar("index.jsf");
 		} catch (Exception e) {
@@ -152,12 +143,9 @@ public class ValidarExclusaoUsuarioMB implements Serializable{
 
 	public void negar() {
 		try {
-			this.aprovacao.setStatus(MVModeloStatusAprovacao.negada);
-			this.aprovacao.setAlteradaEm(new Date());
-			String dados = "nome;" + this.usuario.getNomeCompleto()
-					+ ";justificativa;" + this.justificativa;
-			aprovacao.setDados(dados);
-			this.excluirUsuarioEJB.negar(this.usuario, this.aprovacao);
+			this.aprovacao.setDados("registro;" + this.bem.getNumeroRegistro()
+					+ ";justificativa;" + this.justificativa);
+			this.excluirBemEJB.negarExclusao(this.bem, this.aprovacao);
 			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 			FacesUtil.redirecionar("index.jsf");
 		} catch (Exception e) {
@@ -170,12 +158,11 @@ public class ValidarExclusaoUsuarioMB implements Serializable{
 		FacesUtil.redirecionar("index.jsf");
 	}
 	
-	public MensagensMB getMensagens() {
-		return mensagens;
-	}
-
-	public void setMensagens(MensagensMB mensagens) {
-		this.mensagens = mensagens;
+	public String traduzir(String chave) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(
+				context, MVControleMemoriaVirtual.bundleName);
+		return bundle.getString(chave);
 	}
 
 	public Aprovacao getAprovacao() {
@@ -184,6 +171,14 @@ public class ValidarExclusaoUsuarioMB implements Serializable{
 
 	public void setAprovacao(Aprovacao aprovacao) {
 		this.aprovacao = aprovacao;
+	}
+	
+	public MensagensMB getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(MensagensMB mensagens) {
+		this.mensagens = mensagens;
 	}
 
 	public Usuario getSolicitante() {
@@ -194,14 +189,6 @@ public class ValidarExclusaoUsuarioMB implements Serializable{
 		this.solicitante = solicitante;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public String getJustificativa() {
 		return justificativa;
 	}
@@ -210,4 +197,12 @@ public class ValidarExclusaoUsuarioMB implements Serializable{
 		this.justificativa = justificativa;
 	}
 
+	public BemPatrimonial getBem() {
+		return bem;
+	}
+
+	public void setBem(BemPatrimonial bem) {
+		this.bem = bem;
+	}
+	
 }

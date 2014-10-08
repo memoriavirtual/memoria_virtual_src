@@ -18,6 +18,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.FacesUtil;
 import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
+import br.usp.memoriavirtual.utils.MVModeloAcao;
 import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
 @ManagedBean(name="validarExclusaoInstituicaoMB")
@@ -60,19 +61,34 @@ public class ValidarExclusaoInstituicaoMB implements Serializable{
 					
 					this.aprovacao = memoriaVirtualEJB.getAprovacao(new Long(id));
 					if(aprovacao == null){
-						this.getMensagens().mensagemErro(this.traduzir("aprovacaoExpiradaOuInvalida"));
+						this.getMensagens().mensagemErro(this.traduzir("aprovacaoInvalida"));
 						FacesUtil.redirecionar("index.jsf");
 					}else{
-						if(aprovacao.getStatus() != MVModeloStatusAprovacao.aguardando){
-							this.getMensagens().mensagemErro(this.traduzir("solicitacaoInvalida"));
+						if(aprovacao.getAcao() != MVModeloAcao.excluir_instituicao){
+							this.getMensagens().mensagemErro(this.traduzir("acaoInvalida"));
 							FacesUtil.redirecionar("index.jsf");
-						}else{	
+						}
+						if(aprovacao.getStatus() == MVModeloStatusAprovacao.expirada){
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoExpirada"));
+							FacesUtil.redirecionar("index.jsf");
+						}
+						else if(aprovacao.getStatus() == MVModeloStatusAprovacao.aprovada){
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoJaAprovada"));
+							FacesUtil.redirecionar("index.jsf");
+						}else if(aprovacao.getStatus() == MVModeloStatusAprovacao.negada){
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoNegada"));
+							FacesUtil.redirecionar("index.jsf");
+						}
+						else if(aprovacao.getStatus() == MVModeloStatusAprovacao.aguardando){
 							if (aprovacao.getAnalista().getId() == usuario.getId()) {
 								this.setAprovacao(aprovacao);
 							} else {
 								this.getMensagens().mensagemErro(this.traduzir("solitacaoNaoEhParaEsteUsuario"));
 								FacesUtil.redirecionar("index.jsf");
 							}
+						}else{
+							this.getMensagens().mensagemErro(this.traduzir("aprovacaoInvalida"));
+							FacesUtil.redirecionar("index.jsf");
 						}
 						carregarAprovacao(aprovacao);
 					}

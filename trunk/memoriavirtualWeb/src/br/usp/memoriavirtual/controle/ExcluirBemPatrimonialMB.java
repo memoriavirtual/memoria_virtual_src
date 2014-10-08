@@ -1,8 +1,14 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.el.ELResolver;
@@ -11,9 +17,17 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import br.usp.memoriavirtual.modelo.entidades.Aprovacao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirBemPatrimonialRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.utils.MVModeloAcao;
+import br.usp.memoriavirtual.utils.MVModeloEmailParser;
+import br.usp.memoriavirtual.utils.MVModeloEmailTemplates;
+import br.usp.memoriavirtual.utils.MVModeloMapeamentoUrl;
+import br.usp.memoriavirtual.utils.MVModeloParametrosEmail;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "excluirBemPatrimonialMB")
@@ -23,9 +37,17 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	private static final long serialVersionUID = -5120759550692482010L;
 	private String id = "";
 
+	private List<SelectItem> usuariosAprovadores = null;
+	
 	@EJB
 	private ExcluirBemPatrimonialRemote excluirBemPatrimonialEJB;
 
+	@EJB
+	private MemoriaVirtualRemote memoriaVirtualEJB;
+	
+	@EJB
+	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
+	
 	private MensagensMB mensagens;
 	private Integer validade = 1;
 	private String justificativa = "";
@@ -38,12 +60,77 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	}
 
 	public String selecionar() {
-		return this.redirecionar("/restrito/excluirbempatrimonial.jsf", true);
+		updateAprovadores();
+		Long id = new Long(this.id);
+		if(id>0){
+			try {
+				this.bemPatrimonial = cadastrarBemPatrimonialEJB.getBemPatrimonial(id);
+			} catch (ModeloException e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				e.printStackTrace();
+				return null;
+			}			
+			return this.redirecionar("/restrito/excluirbempatrimonial.jsf", true);
+		}else{
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			return null;
+		}
 	}
 
 	public String solicitarExclusao() {
 		if(validar()){
-			
+			try {
+				int dias = new Integer(this.validade).intValue();
+				Calendar calendario = Calendar.getInstance();
+				calendario.setTime(new Date());
+				calendario.add(Calendar.DATE, dias);
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				String expiraEm = dateFormat.format(calendario.getTime());
+				Aprovacao aprovacao = new Aprovacao();
+				aprovacao.setAcao(MVModeloAcao.excluir_bem);
+				Usuario analista = memoriaVirtualEJB.getUsuario(this.usuarioAprovador);
+				aprovacao.setAnalista(analista);
+				aprovacao.setDados("id;" + this.bemPatrimonial.getId()
+						+ ";justificativa;" + this.justificativa);
+				aprovacao.setExpiraEm(calendario.getTime());
+				Usuario solicitante = (Usuario) FacesContext
+						.getCurrentInstance().getExternalContext()
+						.getSessionMap().get("usuario");
+				aprovacao.setSolicitante(solicitante);
+
+				Long idAprovacao = this.excluirBemPatrimonialEJB.solicitarExclusao(bemPatrimonial, aprovacao);
+
+				Map<String, String> tags = new HashMap<String, String>();
+				tags.put(MVModeloParametrosEmail.ANALISTA000.toString(),
+						analista.getNomeCompleto());
+				tags.put(MVModeloParametrosEmail.EXPIRACAO000.toString(),
+						expiraEm);
+				tags.put(MVModeloParametrosEmail.BEM000.toString(),
+						this.bemPatrimonial.getTituloPrincipal());
+				tags.put(MVModeloParametrosEmail.REG000.toString(),
+						this.bemPatrimonial.getNumeroRegistro());
+				tags.put(MVModeloParametrosEmail.JUSTIFICATIVA000.toString(),
+						this.justificativa);
+				tags.put(MVModeloParametrosEmail.SOLICITANTE000.toString(),
+						solicitante.getNomeCompleto());
+
+				Map<String, String> parametros = new HashMap<String, String>();
+				parametros.put("id", idAprovacao.toString());
+				String url = this.memoriaVirtualEJB.getUrl(
+						MVModeloMapeamentoUrl.excluirBem, parametros);
+
+				tags.put(MVModeloParametrosEmail.URL000.toString(), url);
+
+				String email = new MVModeloEmailParser().getMensagem(tags,
+						MVModeloEmailTemplates.excluirBem);
+				String assunto = this.traduzir("excluirBemoAssuntoEmail");
+				this.memoriaVirtualEJB.enviarEmail(analista.getEmail(),
+						assunto, email);
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			}
 			
 		}
 		return null;
@@ -109,26 +196,22 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	public void setUsuarioAprovador(String usuarioAprovador) {
 		this.usuarioAprovador = usuarioAprovador;
 	}
-
-	/**
-	 * Retorna a lista de usuários que serão mostrados no campo "Select"
-	 * 
-	 */
-	public List<SelectItem> getUsuariosAprovadores() {
-		List<SelectItem> usuarios = new ArrayList<SelectItem>();
-
+	
+	public void updateAprovadores(){
+		usuariosAprovadores = new ArrayList<SelectItem>();
 		Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-
 		try {
 			List<Usuario> listaUsuarios = this.excluirBemPatrimonialEJB.listarUsuariosAprovadores(this.bemPatrimonial.getInstituicao(), usuario);
 			for(Usuario u : listaUsuarios){
-				usuarios.add(new SelectItem(u.getId(),u.getNomeCompleto()));
+				usuariosAprovadores.add(new SelectItem(u.getId(),u.getNomeCompleto()));
 			}
 		} catch (ModeloException e) {
 			e.printStackTrace();
-		}
-
-		return usuarios;
+		}		
+	}
+	
+	public List<SelectItem> getUsuariosAprovadores() {
+		return usuariosAprovadores;
 	}
 
 	public Integer getValidade() {
