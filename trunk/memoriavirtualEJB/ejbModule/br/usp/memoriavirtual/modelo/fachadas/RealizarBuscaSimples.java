@@ -600,6 +600,113 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<BemPatrimonial> buscar(String busca)
+			throws ModeloException {
+
+		ArrayList<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
+		List<BemPatrimonial> parcial = new ArrayList<BemPatrimonial>();
+
+		List<String> stringsDeBusca = new ArrayList<String>();
+		Query query;
+
+		stringsDeBusca = (List<String>) obterStrings(busca);
+
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b FROM BemPatrimonial b WHERE LOWER(b.tituloPrincipal) LIKE LOWER(:padrao)");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<BemPatrimonial>) query.getResultList();
+				for (BemPatrimonial b : parcial) {
+					if (!bens.contains(b)) {
+						bens.add(b);
+					}
+				}
+				parcial.clear();
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b FROM BemPatrimonial b JOIN b.titulos t WHERE LOWER(t.valor) LIKE LOWER(:padrao)");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<BemPatrimonial>) query.getResultList();
+				for (BemPatrimonial b : parcial) {
+					if (!bens.contains(b))
+						bens.add(b);
+				}
+				parcial.clear();
+
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+		
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b FROM BemPatrimonial b WHERE LOWER(b.numeroRegistro) LIKE LOWER(:padrao)");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<BemPatrimonial>) query.getResultList();
+				for (BemPatrimonial b : parcial) {
+					if (!bens.contains(b))
+						bens.add(b);
+				}
+				parcial.clear();
+
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+		
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b FROM BemPatrimonial b WHERE LOWER(b.localizacaoFisica) LIKE LOWER(:padrao)");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<BemPatrimonial>) query.getResultList();
+				for (BemPatrimonial b : parcial) {
+					if (!bens.contains(b))
+						bens.add(b);
+				}
+				parcial.clear();
+
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+		
+		for (String s : stringsDeBusca) {
+			s = s.trim();
+			try {
+				query = entityManager
+						.createQuery("SELECT b FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
+								+ "WHERE LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
+								+ "LOWER(au.codinome) LIKE LOWER(:padrao)");
+				query.setParameter("padrao", "%" + s + "%");
+				parcial = (List<BemPatrimonial>) query.getResultList();
+				for (BemPatrimonial b : parcial) {
+					if (!bens.contains(b))
+						bens.add(b);
+				}
+				parcial.clear();
+
+			} catch (Exception e) {
+				throw new ModeloException(e);
+			}
+		}
+		return bens;
+	}
 	
 
 }

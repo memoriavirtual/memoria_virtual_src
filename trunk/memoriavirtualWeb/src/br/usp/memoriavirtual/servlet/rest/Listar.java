@@ -92,19 +92,37 @@ public class Listar{
 		return null;
 	}
 	
+	boolean verificaAcesso(BemPatrimonial b, List<Acesso> acessos){
+		boolean temAcesso = false;
+		for(Acesso a : acessos){
+			if(a.getInstituicao().getId()==b.getInstituicao().getId()){
+				temAcesso = true;
+			}
+		}
+		return temAcesso;
+	}
+	
 	@GET
 	@Path("/listarbempatrimonial")
 	public List<BemPatrimonial> listarBens(@QueryParam("busca") String busca,@Context HttpServletRequest request){
-
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 		try {
-			List<BemPatrimonial> bensPatrimoniais = realizarBuscaSimplesEJB.buscar(busca, 1);
-
+			List<BemPatrimonial> bensPatrimoniais = realizarBuscaSimplesEJB.buscar(busca);
+			List<BemPatrimonial> excluir = new ArrayList<BemPatrimonial>();
+			if(!usuario.isAdministrador()){
+				for(BemPatrimonial b : bensPatrimoniais){
+					if(!verificaAcesso(b, usuario.getAcessos())){
+						excluir.add(b);
+					}
+				}
+				bensPatrimoniais.removeAll(excluir);
+			}
+			
 			return bensPatrimoniais;
 			
 		} catch (ModeloException m) {
 			m.printStackTrace();
-		}
-		
+		}		
 		return null;
 	}
 	

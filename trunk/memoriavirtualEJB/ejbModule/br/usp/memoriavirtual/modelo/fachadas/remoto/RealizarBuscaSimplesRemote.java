@@ -17,6 +17,8 @@ public interface RealizarBuscaSimplesRemote {
 	public ArrayList<BemPatrimonial> buscar(String busca, Integer pagina) throws ModeloException;
 
 	public ArrayList<BemPatrimonial> buscarExterno(String busca, Integer pagina) throws ModeloException;
+	
+	public ArrayList<BemPatrimonial> buscar(String busca) throws ModeloException;
 
 	public Integer getNumeroDePaginasBusca();
 
