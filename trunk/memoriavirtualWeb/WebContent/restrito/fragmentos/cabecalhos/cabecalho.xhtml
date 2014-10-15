@@ -11,6 +11,7 @@
 			<div class="col-md-12 text-right">
 				<h:form>
 					&lt;<h:outputText value="#{usuario.nomeCompleto}" />&gt;,
+					<a href="../index.jsf" style="color: blue;">#{mensagens.busca}</a>,
 					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">#{mensagens.sair}</h:commandLink>
 				</h:form>
 			</div>

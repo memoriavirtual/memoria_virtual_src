@@ -6,7 +6,7 @@
 	<display-name>memoriavirtualWeb</display-name>
 	<distributable />
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsf</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
