@@ -20,6 +20,8 @@ public class ValidacoesDeCampos {
 	public static final int LIMITE_PADRAO_CAMPO_TEXTO = 10;
 
 	public static boolean validarFormatoEmail(String email) {
+		
+		if (email.isEmpty()) return true;
 
 		String regexp = "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+(?:\\."
 				+ "[a-z0-9!#$%&’*+/=?^_‘{|}~-]+)*@"
@@ -34,6 +36,8 @@ public class ValidacoesDeCampos {
 	}
 	
 	public static boolean validarFormatoWebSite(String url) {
+		
+		if (url.isEmpty()) return true;
 
 		String regexp = "(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(http://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?";
 		Pattern pattern = Pattern.compile(regexp);
@@ -47,6 +51,8 @@ public class ValidacoesDeCampos {
 
 	public static boolean validarFormatoTelefone(String telefone) {
 
+		if (telefone.isEmpty()) return true;
+		
 		String regexp8digitos = "^\\([0-9]{2}\\)[0-9]{4}-?[0-9]{4}$";
 		Pattern pattern8digitos = Pattern.compile(regexp8digitos);
 		Matcher matcher8digitos = pattern8digitos.matcher(telefone);
