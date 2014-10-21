@@ -101,6 +101,17 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	}
 	
 	@Override
+	public boolean validarEstado(){
+		if(ValidacoesDeCampos.validarFormatoEstado(this.instituicao.getEstado())){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoEstado","validacao-estado");
+			return false;
+		}
+	}
+	
+	@Override
 	public boolean validarCep(){
 		if(ValidacoesDeCampos.validarFormatoCep(this.instituicao.getCep())){
 			return true;
@@ -113,7 +124,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 	
 	@Override
 	public boolean validarCaixaPostal(){
-		if(ValidacoesDeCampos.validarFormatoCep(this.instituicao.getCaixaPostal())){
+		if(ValidacoesDeCampos.validarFormatoCaixaPostal(this.instituicao.getCaixaPostal())){
 			return true;
 		}
 		else{
@@ -158,7 +169,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 
 	@Override
 	public boolean validar() {
-		return this.validarNome() && this.validarCep() 
+		return this.validarNome() && this.validarEstado() && this.validarCep() 
 				&& this.validarCaixaPostal() && this.validarTelefone()
 				&& this.validarEmail() && this.validarWebsite();
 	}

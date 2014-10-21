@@ -18,6 +18,18 @@ public class ValidacoesDeCampos {
 	private ValidacaoRemote validacaoEJB;
 
 	public static final int LIMITE_PADRAO_CAMPO_TEXTO = 10;
+	
+	public static boolean validarFormatoEstado(String estado) {
+		
+		String regexp = "[A-Z]{2}";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(estado);
+
+		if (!matcher.matches())
+			return false;
+
+		return true;
+	}
 
 	public static boolean validarFormatoEmail(String email) {
 		
@@ -74,6 +86,20 @@ public class ValidacoesDeCampos {
 		String regexp = "^[0-9]{5}-?[0-9]{3}$";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Cep);
+
+		if (!matcher.matches())
+			return false;
+
+		return true;
+	}
+	
+	public static boolean validarFormatoCaixaPostal(String CaixaPostal) {
+		if(CaixaPostal.isEmpty())
+			return true;
+		
+		String regexp = "^[0-9]{5}-?[0-9]{3}$";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(CaixaPostal);
 
 		if (!matcher.matches())
 			return false;
