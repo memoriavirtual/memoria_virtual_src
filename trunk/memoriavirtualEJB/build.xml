@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<project name="memoriavirtual" default="memJar" basedir="..\">
+	
+	  
+    <property name= "target.jar" location = "jar\target.jar"/>
+
+	<property name= "ejb.dir" location = "memoriavirtualEJB\ejbModule"/>
+	
+	<property name= "ejb.build.classes" location = "memoriavirtualEJB\build\classes"/>
+
+	<property name= "web.build.classes" location = "memoriavirtualWeb\build\classes"/>
+
+	<loadproperties srcfile="./memoriavirtualEJB/build.properties"></loadproperties>	
+	
+	
+
+	
+	<target name="init">
+
+		<mkdir dir="build\classes"/>
+		<mkdir dir="build\src"/>
+	</target>
+		
+	<path id="glassfish.classpath">
+		<fileset dir="${glassfish.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	
+        
+
+	<target name="compile" depends="init">
+	<javac srcdir="${ejb.dir}"
+		destdir="build\classes" encoding="ISO-8859-1" includeantruntime="false">
+			<classpath refid="glassfish.classpath"/>
+	</javac>
+	
+	<echo>compilation complete</echo>
+	</target>
+
+	
+	<target name="memJar" depends="compile">
+		<jar jarfile="memoriavirtualEJB.jar"
+			duplicate="preserve"
+			compress="true">
+			<fileset dir="${ejb.build.classes}"/>
+		</jar>
+		
+	</target>
+
+</project>
+	
