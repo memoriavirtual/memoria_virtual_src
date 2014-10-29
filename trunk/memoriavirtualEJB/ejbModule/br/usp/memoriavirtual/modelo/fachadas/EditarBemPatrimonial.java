@@ -12,12 +12,13 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
 @Stateless(mappedName = "EditarBemPatrimonial")
 public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 	public EditarBemPatrimonial() {
-
+		
 	}
 
+	
 	@PersistenceContext(unitName = "memoriavirtual")
 	private EntityManager entityManager;
-
+	
 	
 	@Override
 	public void editarBemPatrimonial(BemPatrimonial bem) throws ModeloException {
@@ -29,7 +30,7 @@ public class EditarBemPatrimonial implements EditarBemPatrimonialRemote {
 				a.setBempatrimonial(bem);
 			for (Autoria a : bem.getAutorias())
 				a.setBemPatrimonial(bem);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ModeloException(e);

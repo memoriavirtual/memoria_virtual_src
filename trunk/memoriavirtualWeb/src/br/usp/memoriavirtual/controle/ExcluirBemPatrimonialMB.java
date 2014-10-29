@@ -32,22 +32,23 @@ import br.usp.memoriavirtual.utils.MensagensDeErro;
 
 @ManagedBean(name = "excluirBemPatrimonialMB")
 @SessionScoped
-public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements Serializable {
+public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements
+		Serializable {
 
 	private static final long serialVersionUID = -5120759550692482010L;
 	private String id = "";
 
 	private List<SelectItem> usuariosAprovadores = null;
-	
+
 	@EJB
 	private ExcluirBemPatrimonialRemote excluirBemPatrimonialEJB;
 
 	@EJB
 	private MemoriaVirtualRemote memoriaVirtualEJB;
-	
+
 	@EJB
 	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
-	
+
 	private MensagensMB mensagens;
 	private Integer validade = 1;
 	private String justificativa = "";
@@ -56,29 +57,32 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	public ExcluirBemPatrimonialMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
-		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
 	public String selecionar() {
 		updateAprovadores();
 		Long id = new Long(this.id);
-		if(id>0){
+		if (id > 0) {
 			try {
-				this.bemPatrimonial = cadastrarBemPatrimonialEJB.getBemPatrimonial(id);
+				this.bemPatrimonial = cadastrarBemPatrimonialEJB
+						.getBemPatrimonial(id);
 			} catch (ModeloException e) {
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 				e.printStackTrace();
 				return null;
-			}			
-			return this.redirecionar("/restrito/excluirbempatrimonial.jsf", true);
-		}else{
+			}
+			return this.redirecionar("/restrito/excluirbempatrimonial.jsf",
+					true);
+		} else {
 			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			return null;
 		}
 	}
 
 	public String solicitarExclusao() {
-		if(validar()){
+		if (validar()) {
 			try {
 				int dias = new Integer(this.validade).intValue();
 				Calendar calendario = Calendar.getInstance();
@@ -88,7 +92,8 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 				String expiraEm = dateFormat.format(calendario.getTime());
 				Aprovacao aprovacao = new Aprovacao();
 				aprovacao.setAcao(MVModeloAcao.excluir_bem);
-				Usuario analista = memoriaVirtualEJB.getUsuario(this.usuarioAprovador);
+				Usuario analista = memoriaVirtualEJB
+						.getUsuario(this.usuarioAprovador);
 				aprovacao.setAnalista(analista);
 				aprovacao.setDados("id;" + this.bemPatrimonial.getId()
 						+ ";justificativa;" + this.justificativa);
@@ -98,7 +103,8 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 						.getSessionMap().get("usuario");
 				aprovacao.setSolicitante(solicitante);
 
-				Long idAprovacao = this.excluirBemPatrimonialEJB.solicitarExclusao(bemPatrimonial, aprovacao);
+				Long idAprovacao = this.excluirBemPatrimonialEJB
+						.solicitarExclusao(bemPatrimonial, aprovacao);
 
 				Map<String, String> tags = new HashMap<String, String>();
 				tags.put(MVModeloParametrosEmail.ANALISTA000.toString(),
@@ -131,38 +137,39 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 				e.printStackTrace();
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			}
-			
+
 		}
 		return null;
 	}
 
 	@Override
-	public boolean validar(){
-		return validarValidade() && validarUsuario() && validarJustificativa();		
+	public boolean validar() {
+		return validarValidade() && validarUsuario() && validarJustificativa();
 	}
-	
-	public boolean validarValidade(){		
-		if(this.validade<1 || this.validade >30){
-			MensagensDeErro.getErrorMessage("erroValidadeInvalida", "validacao-validade");
+
+	public boolean validarValidade() {
+		if (this.validade < 1 || this.validade > 30) {
+			MensagensDeErro.getErrorMessage("erroValidadeInvalida",
+					"validacao-validade");
 			return false;
 		}
 		return true;
 	}
-	
-	public boolean validarUsuario(){
-		if(usuarioAprovador.equals("disabled"))
+
+	public boolean validarUsuario() {
+		if (usuarioAprovador.equals("disabled"))
 			return false;
 		else
 			return true;
 	}
-	
-	public boolean validarJustificativa(){
-		if(justificativa.isEmpty())
+
+	public boolean validarJustificativa() {
+		if (justificativa.isEmpty())
 			return false;
 		else
 			return true;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -178,7 +185,7 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 	public void setMensagens(MensagensMB mensagens) {
 		this.mensagens = mensagens;
 	}
-	
+
 	public String getJustificativa() {
 		return justificativa;
 	}
@@ -187,29 +194,31 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements S
 		this.justificativa = justificativa;
 	}
 
-
 	public String getUsuarioAprovador() {
 		return usuarioAprovador;
 	}
 
-
 	public void setUsuarioAprovador(String usuarioAprovador) {
 		this.usuarioAprovador = usuarioAprovador;
 	}
-	
-	public void updateAprovadores(){
+
+	public void updateAprovadores() {
 		usuariosAprovadores = new ArrayList<SelectItem>();
-		Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+		Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get("usuario");
 		try {
-			List<Usuario> listaUsuarios = this.excluirBemPatrimonialEJB.listarUsuariosAprovadores(this.bemPatrimonial.getInstituicao(), usuario);
-			for(Usuario u : listaUsuarios){
-				usuariosAprovadores.add(new SelectItem(u.getId(),u.getNomeCompleto()));
+			List<Usuario> listaUsuarios = this.excluirBemPatrimonialEJB
+					.listarUsuariosAprovadores(
+							this.bemPatrimonial.getInstituicao(), usuario);
+			for (Usuario u : listaUsuarios) {
+				usuariosAprovadores.add(new SelectItem(u.getId(), u
+						.getNomeCompleto()));
 			}
 		} catch (ModeloException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
+
 	public List<SelectItem> getUsuariosAprovadores() {
 		return usuariosAprovadores;
 	}
