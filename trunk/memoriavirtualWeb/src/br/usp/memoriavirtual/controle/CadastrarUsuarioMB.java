@@ -122,14 +122,25 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 
 	@Override
 	public boolean validar() {
-		boolean a, b, c, d;
+		boolean a, b, c, d, e;
 		a = this.validarNome();
 		b = this.validarEmail();
 		c = this.validarIdentificacao();
 		d = this.validarSenha();
-		return (a && b && c && d);
+		e = this.validarTelefone();
+		return (a && b && c && d && e);
 	}
-
+	
+	public boolean validarTelefone(){
+		if(ValidacoesDeCampos.validarFormatoTelefone(this.usuario.getTelefone())){
+			return true;
+		}
+		else{
+			MensagensDeErro.getErrorMessage("erroFormatoTelefone","validacao-telefone");
+			return false;
+		}
+	}
+	
 	public boolean validarNome() {
 		if (this.usuario.getNomeCompleto() == null
 				|| this.usuario.getNomeCompleto().equals("")) {

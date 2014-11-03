@@ -84,6 +84,7 @@
 											</div>
 										</div>
 									</div>
+									<h:panelGroup rendered="#{renderizarMenuMB.administrador}">
 									<div class="col-md-4">
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="mudar-senha">#{mensagens.administrador}</h:outputLabel>
@@ -94,6 +95,7 @@
 											</div>
 										</div>
 									</div>
+									</h:panelGroup>
 								</div>
 								<div>
 									<h:dataTable value="#{enviarConviteMB.acessos}" var="acesso"
