@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head />
 <h:body>
 	<ui:composition>
@@ -27,8 +28,7 @@
 								<div class="col-md-6 col-md-offset-3">
 									<div class="form-group contem-select2">
 										<h:outputLabel for="id">#{mensagens.nome}</h:outputLabel>
-										<h:inputHidden value="#{bean.id}" id="id">
-										</h:inputHidden>
+										<h:inputHidden value="#{bean.id}" id="id" p:onChange="onIdChange();"/>
 										<h:message id="validacao-nome" for="validacao-nome"
 											infoClass="help-block has-success"
 											errorClass="help-block has-error"
@@ -40,7 +40,8 @@
 							<div class="text-right row">
 								<div class="col-md-12">
 									<h:commandButton class="btn btn-success margin-5"
-										value="#{acao}" action="#{bean.selecionarInstituicao}">
+										value="#{acao}" action="#{bean.selecionarInstituicao}"
+										id="selecionar">
 									</h:commandButton>
 									<h:commandButton id="cancelar"
 										class="btn btn-danger margin-left-5 no-right-margin"
@@ -54,9 +55,21 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+			function onIdChange(){
+				var s = document.getElementById("selecionar");
+				if(s.value == ""){
+					s.disabled = true;
+				}else{
+					s.disabled = false;
+				}
+			}
+		
 			$(document).ready(function() {
 				selecionarAbaInstituicao();
 
+				var s = document.getElementById("selecionar");
+				s.disabled = true;
+				
 				mostrarErro('#validacao-nome');
 				
 				$("#id").select2({

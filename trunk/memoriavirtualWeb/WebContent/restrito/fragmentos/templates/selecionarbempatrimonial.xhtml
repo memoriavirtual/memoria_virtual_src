@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <h:head />
 <h:body>
 	<ui:composition>
@@ -27,15 +28,15 @@
 								<div class="col-md-6 col-md-offset-3">
 									<div class="form-group contem-select2">
 										<h:outputLabel for="id">#{mensagens.tituloPrincipal}</h:outputLabel>
-										<h:inputHidden value="#{bean.id}" id="id">
-										</h:inputHidden>
+										<h:inputHidden value="#{bean.id}" id="id" p:onChange="onIdChange();"/>
 									</div>
 								</div>
 							</div>
 							<div class="text-right row">
 								<div class="col-md-12">
 									<h:commandButton class="btn btn-success margin-5"
-										value="#{acao}" action="#{bean.selecionar}">
+										value="#{acao}" action="#{bean.selecionar}"
+										id="selecionar">
 									</h:commandButton>
 									<h:commandButton id="cancelar"
 										class="btn btn-danger margin-left-5 no-right-margin"
@@ -49,9 +50,21 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+			function onIdChange(){
+				var s = document.getElementById("selecionar");
+				if(s.value == ""){
+					s.disabled = true;
+				}else{
+					s.disabled = false;
+				}
+			}
+		
 			$(document).ready(function() {
 				selecionarAbaPatrimonio();
-
+				
+				var s = document.getElementById("selecionar");
+				s.disabled = true;
+				
 				$("#id").select2({
 					minimumInputLength : 1,
 					allowClear : true,
