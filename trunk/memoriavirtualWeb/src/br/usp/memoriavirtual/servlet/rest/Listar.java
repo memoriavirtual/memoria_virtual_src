@@ -54,15 +54,18 @@ public class Listar{
 			List<Instituicao> instituicoes = null;
 			
 			if (usuario.isAdministrador()) {
-				instituicoes = editarInstituicaoEJB
-						.listarInstituicoes(busca);
+				instituicoes = editarInstituicaoEJB.listarInstituicoes(busca);
 			}
 			else {
 				instituicoes = new ArrayList<Instituicao>();
 				List<Instituicao> parcial = null;
 				for(Acesso a : usuario.getAcessos()){
 					parcial = editarInstituicaoEJB.listarInstituicoes(busca, a.getGrupo(), usuario);
-					instituicoes.addAll(parcial);
+					for(Instituicao i: parcial){
+						if(!instituicoes.contains(i)){
+							instituicoes.add(i);
+						}
+					}
 				}
 			}
 			

@@ -66,6 +66,15 @@ public class Instituicao implements Serializable {
 
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Instituicao i = (Instituicao) obj;
+		if(this.id == i.getId())
+			return true;
+		else
+			return false;
+	};
+	
 	public long getId() {
 		return id;
 	}

@@ -261,7 +261,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			} else {
 				Grupo grupo = new Grupo("GERENTE");
 				query = entityManager
-						.createQuery("SELECT b.usuario FROM Acesso a, Acesso b WHERE a.usuario = :usuario AND a.grupo = :grupo AND a.instituicao = b.instituicao AND a.ativo = true AND b.ativo = true AND LOWER(b.usuario.nomeCompleto) LIKE LOWER(:padrao) AND b.usuario <> :usuario ORDER BY b.usuario.nomeCompleto");
+						.createQuery("SELECT b.usuario FROM Acesso a, Acesso b WHERE a.usuario = :usuario AND a.grupo = :grupo AND a.instituicao = b.instituicao AND LOWER(b.usuario.nomeCompleto) LIKE LOWER(:padrao) AND b.usuario <> :usuario ORDER BY b.usuario.nomeCompleto");
 				query.setParameter("usuario", usuario);
 				query.setParameter("grupo", grupo);
 				query.setParameter("padrao", "%" + busca + "%");
