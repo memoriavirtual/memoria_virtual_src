@@ -37,6 +37,19 @@
 								prependId="false">
 								<div class="row">
 									<div class="col-md-offset-3 col-md-2">
+										<h3>#{mensagens.gerente}</h3>
+									</div>
+									<div class="col-md-4">
+										<h:panelGroup rendered="#{excluirInstituicaoMB.primeiroGerente ==null}">
+											<h3>#{mensagens.naoPossuiGerente}</h3>
+										</h:panelGroup>										
+										<h:panelGroup rendered="#{excluirInstituicaoMB.primeiroGerente !=null}">
+											<h3>#{excluirInstituicaoMB.primeiroGerente.nomeCompleto}</h3>
+										</h:panelGroup>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-2">
 										<div class="form-group">
 											<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
 											<div class="mv-input-number" style="width: 100%;">
@@ -81,16 +94,16 @@
 									</div>
 								</div>
 								<div class="text-right row">
-									<div class="col-md-12">		
-										<h:commandButton 
-											class="btn btn-primary margin-5"
-											value="#{mensagens.voltar}" 
-											action="#{excluirInstituicaoMB.voltar}">
-										</h:commandButton>					
+									<div class="col-md-12">								
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.salvar}"
 											action="#{excluirInstituicaoMB.solicitarExclusao}"
 											id="confirm">
+										</h:commandButton>
+										<h:commandButton class="btn btn-primary margin-5"
+											value="#{mensagens.voltar}"
+											action="#{excluirInstituicaoMB.voltar}"
+											id="back">
 										</h:commandButton>
 										<h:commandButton id="cancelar"
 											class="btn btn-danger margin-left-5 no-right-margin"

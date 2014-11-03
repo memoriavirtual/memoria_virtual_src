@@ -54,6 +54,7 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 	private String analista;
 	private MensagensMB mensagens;
 	private Usuario solicitante = new Usuario();
+	private Usuario primeiroGerente;
 
 	public ExcluirInstituicaoMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -61,11 +62,19 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
 	}
 	
+	@Override
+	public String voltar(){
+		return "selecionarinstituicaoexclusao.jsf";
+	}	
+	
 	public String selecionarInstituicao() {
 		if (this.id != -1) {
+			primeiroGerente = null;
 			try {
-				this.instituicao = this.editarInstituicaoEJB
-						.getInstituicao(this.id);
+				this.instituicao = this.editarInstituicaoEJB.getInstituicao(this.id);
+				if(this.editarInstituicaoEJB.getGerentes(this.instituicao).size()>0){
+					this.primeiroGerente = this.editarInstituicaoEJB.getGerentes(this.instituicao).get(0);
+				}
 				return this.redirecionar("/restrito/excluirinstituicao.jsf", true);
 			} catch (ModeloException m) {
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
@@ -79,11 +88,6 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 			this.getMensagens().mensagemErro(this.traduzir("erroFormulario"));
 			return null;
 		}
-	}
-	
-	@Override
-	public String voltar(){
-		return "selecionarinstituicaoexclusao.jsf";
 	}
 	
 	public List<SelectItem> getAnalistas() {
@@ -245,5 +249,13 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 
 	public void setSolicitante(Usuario solicitante) {
 		this.solicitante = solicitante;
+	}
+
+	public Usuario getPrimeiroGerente() {
+		return primeiroGerente;
+	}
+
+	public void setPrimeiroGerente(Usuario primeiroGerente) {
+		this.primeiroGerente = primeiroGerente;
 	}
 }

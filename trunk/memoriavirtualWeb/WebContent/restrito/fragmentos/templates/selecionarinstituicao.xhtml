@@ -56,19 +56,19 @@
 		</div>
 		<script type="text/javascript">
 			function onIdChange(){
-				var s = document.getElementById("selecionar");
-				if(s.value == ""){
-					s.disabled = true;
+				var id = document.getElementById("id");
+				var b = document.getElementById("selecionar");
+				if(id.value == "-1"){
+					b.disabled = true;
 				}else{
-					s.disabled = false;
+					b.disabled = false;
 				}
 			}
 		
 			$(document).ready(function() {
 				selecionarAbaInstituicao();
 
-				var s = document.getElementById("selecionar");
-				s.disabled = true;
+				onIdChange();
 				
 				mostrarErro('#validacao-nome');
 				

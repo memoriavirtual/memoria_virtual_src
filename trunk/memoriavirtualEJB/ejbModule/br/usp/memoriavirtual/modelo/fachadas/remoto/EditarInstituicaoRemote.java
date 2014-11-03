@@ -26,4 +26,6 @@ public interface EditarInstituicaoRemote {
 	public List<Instituicao> listarInstituicoes(String pnome, Grupo grupo,
 			Usuario usuario) throws ModeloException;
 
+	public List<Usuario> getGerentes(Instituicao i);
+	
 }

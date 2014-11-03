@@ -98,4 +98,13 @@ public class EditarInstituicao implements EditarInstituicaoRemote {
 
 		return instituicoes;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getGerentes(Instituicao i){
+		Grupo g = new Grupo("GERENTE");
+		Query q = entityManager.createQuery("SELECT a.usuario FROM Acesso a where a.grupo = :grupo AND a.instituicao = :ins");
+		q.setParameter("ins", i);
+		q.setParameter("grupo", g);
+		return q.getResultList();
+	}
 }
