@@ -2,7 +2,9 @@ package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -14,7 +16,9 @@ import javax.faces.model.SelectItem;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autor.Atividade;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarAutorRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.ValidacaoRemote;
 import br.usp.memoriavirtual.utils.MVControleMemoriaVirtual;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.ValidacoesDeCampos;
@@ -27,6 +31,9 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 
 	@EJB
 	private CadastrarAutorRemote cadastrarAutorEJB;
+	
+	@EJB
+	private ValidacaoRemote validacao;
 
 	protected String nome = "";
 	protected String sobrenome = "";
@@ -54,7 +61,7 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 				autor.setNome(this.nome);
 				autor.setObito(this.obito);
 				autor.setSobrenome(this.sobrenome);
-
+				
 				this.cadastrarAutorEJB.cadastrarAutor(autor);
 				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 				this.limpar();
@@ -108,9 +115,30 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 	public boolean validar() {
 		boolean a = this.validarNome();
 		boolean b = this.validarSobrenome();
-		return (a && b);
+		boolean c = this.validarUnico();
+		return (a && b && c);
 	}
 
+	public boolean validarUnico(){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("nome", this.nome);
+		parametros.put("sobre", this.sobrenome);
+		parametros.put("atividade", this.atividade);
+		
+		try {
+			if(validacao.validacaoNaoExiste("unicidadeAutor", Autor.class, parametros)){
+				return true;
+			}else{
+				this.getMensagens().mensagemErro(this.traduzir("autorJaCadastrado"));
+				return false;
+			}
+		} catch (ModeloException e) {
+			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public boolean validarNome() {
 		if (this.nome == null || this.nome.equals("")) {
 			String args[] = { this.traduzir("nome") };

@@ -6,10 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "AUTOR_ID", sequenceName = "AUTOR_SEQ", allocationSize = 1)
+@NamedQueries({
+	@NamedQuery(name="unicidadeAutor", query="Select a from Autor a where a.nome = :nome AND a.sobrenome = :sobre AND a.atividade = :atividade")
+})
 public class Autor implements Serializable {
 
 	public static enum Atividade {

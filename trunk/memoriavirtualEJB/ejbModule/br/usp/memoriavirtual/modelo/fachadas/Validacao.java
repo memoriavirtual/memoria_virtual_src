@@ -37,6 +37,7 @@ public class Validacao implements ValidacaoRemote {
 		} catch (NonUniqueResultException n) {
 			return false;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ModeloException(e);
 		}
 	}
