@@ -84,8 +84,7 @@
 											</div>
 										</div>
 									</div>
-									<h:panelGroup rendered="#{renderizarMenuMB.administrador}">
-									<div class="col-md-4">
+									<div class="col-md-4" id="adm_sistema">
 										<div class="form-group">
 											<h:outputLabel class="control-label" for="mudar-senha">#{mensagens.administrador}</h:outputLabel>
 											<div class="pull-right form-control com-switch">
@@ -95,7 +94,6 @@
 											</div>
 										</div>
 									</div>
-									</h:panelGroup>
 								</div>
 								<div>
 									<h:dataTable value="#{enviarConviteMB.acessos}" var="acesso"
@@ -166,6 +164,13 @@
 			<script type="text/javascript">
 				$(document).ready(function() {
 					selecionarAbaAdministracao();
+					
+					var adm = document.getElementById("adm_sistema");
+					if(#{renderizarMenuMB.administrador}){
+						
+					}else{
+						adm.remove();
+					}
 					
 					mostrarErro("#validacao-emails");
 

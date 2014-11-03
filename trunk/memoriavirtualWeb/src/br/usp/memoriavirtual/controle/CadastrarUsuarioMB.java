@@ -304,4 +304,8 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 		usuario.setTelefone("");
 		usuario.setIdentificacao("");
 	}
+	
+	public String voltar(){
+		return "index.jsf";
+	}
 }

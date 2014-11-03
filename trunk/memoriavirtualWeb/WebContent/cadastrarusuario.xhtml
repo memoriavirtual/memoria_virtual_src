@@ -171,10 +171,15 @@
 											disabled="#{!cadastrarUsuarioMB.podeCadastrar}">
 										</h:commandButton>
 										<h:commandButton
-											class="btn btn-primary margin-left-5 no-right-margin"
+											class="btn btn-primary margin-5"
 											value="#{mensagens.limpar}"
 											actionListener="#{cadastrarUsuarioMB.limpar}"
 											disabled="#{!cadastrarUsuarioMB.podeCadastrar}">
+										</h:commandButton>
+										<h:commandButton
+											class="btn btn-danger margin-5 no-right-margin"
+											value="#{mensagens.voltar}"
+											action="#{cadastrarUsuarioMB.voltar}">
 										</h:commandButton>
 									</div>
 								</div>

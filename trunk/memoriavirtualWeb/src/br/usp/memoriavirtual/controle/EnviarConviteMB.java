@@ -165,6 +165,7 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 	}
 
 	public boolean validarAcessos() {
+		System.out.println("teste:"+administrador);
 		if (!this.administrador && this.acessos.isEmpty()) {
 			this.getMensagens().mensagemErro(this.traduzir("erroAcessosVazio"));
 			return false;
