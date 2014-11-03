@@ -81,7 +81,12 @@
 									</div>
 								</div>
 								<div class="text-right row">
-									<div class="col-md-12">								
+									<div class="col-md-12">		
+										<h:commandButton 
+											class="btn btn-primary margin-5"
+											value="#{mensagens.voltar}" 
+											action="#{excluirInstituicaoMB.voltar}">
+										</h:commandButton>					
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.salvar}"
 											action="#{excluirInstituicaoMB.solicitarExclusao}"

@@ -73,14 +73,14 @@
 								</div>
 								<div class="text-right row">
 									<div class="col-md-12">
+										<h:commandButton class="btn btn-primary margin-5"
+											value="#{mensagens.voltar}"
+											action="#{excluirUsuarioMB.voltar}">
+										</h:commandButton>
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.salvar}"
 											action="#{excluirUsuarioMB.solicitarExclusao}"
 											id="confirm">
-										</h:commandButton>
-										<h:commandButton class="btn btn-primary margin-5"
-											value="#{mensagens.voltar}"
-											action="#{excluirUsuarioMB.voltar}">
 										</h:commandButton>
 										<h:commandButton id="cancelar"
 											class="btn btn-danger margin-left-5 no-right-margin"
