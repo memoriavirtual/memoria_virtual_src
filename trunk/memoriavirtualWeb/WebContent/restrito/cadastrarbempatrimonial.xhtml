@@ -1870,13 +1870,13 @@
 								</div>
 								<div class="text-right row">
 									<div class="col-md-12">
+										<h:commandButton class="btn btn-warning margin-5"
+											value="#{mensagens.limpar}"
+											action="#{cadastrarBemPatrimonialMB.limpar}">
+										</h:commandButton>
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.salvar}"
 											action="#{cadastrarBemPatrimonialMB.cadastrar}">
-										</h:commandButton>
-										<h:commandButton class="btn btn-primary margin-5"
-											value="#{mensagens.limpar}"
-											action="#{cadastrarBemPatrimonialMB.limpar}">
 										</h:commandButton>
 										<h:commandButton
 											class="btn btn-danger margin-left-5 no-right-margin"
@@ -2111,7 +2111,7 @@
 											warnClass="help-block has-warning">
 										</h:message>
 										<h:commandButton class="btn btn-success margin-5"
-											value="#{mensagens.cadastrar}"
+											value="#{mensagens.salvar}"
 											action="#{cadastrarAutorMB.cadastroRapido}">
 											<f:ajax execute="@form"
 												render="validacao-sobrenome validacao-nome-autor resultado"

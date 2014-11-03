@@ -80,6 +80,11 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements
 			return null;
 		}
 	}
+	
+	@Override
+	public String voltar(){
+		return "selecionarbempatrimonialexclusao.jsf";
+	}
 
 	public String solicitarExclusao() {
 		if (validar()) {

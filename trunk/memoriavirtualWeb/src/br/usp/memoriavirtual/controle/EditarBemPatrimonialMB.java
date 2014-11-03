@@ -125,6 +125,10 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			return null;
 		}
 	}
+	
+	public String voltar(){
+		return "selecionarbempatrimonialedicao.jsf";
+	}
 
 	public String selecionar() {
 		try {

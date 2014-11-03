@@ -471,14 +471,14 @@
 
 								<div class="text-right row">
 									<div class="col-md-12">
+										<h:commandButton id="reset" class="btn btn-warning margin-5"
+											value="#{mensagens.limpar}"
+											action="#{cadastrarInstituicaoMB.limpar}">
+										</h:commandButton>
 										<h:commandButton id="cadastrar"
 											class="btn btn-success margin-5"
 											value="#{mensagens.salvar}"
 											action="#{cadastrarInstituicaoMB.cadastrarInstituicao}">
-										</h:commandButton>
-										<h:commandButton id="reset" class="btn btn-primary margin-5"
-											value="#{mensagens.limpar}"
-											action="#{cadastrarInstituicaoMB.limpar}">
 										</h:commandButton>
 										<h:commandButton id="cancelar"
 											class="btn btn-danger margin-left-5 no-right-margin"

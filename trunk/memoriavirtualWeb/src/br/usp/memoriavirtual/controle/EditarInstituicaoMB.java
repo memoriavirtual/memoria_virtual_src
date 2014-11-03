@@ -62,7 +62,7 @@ public class EditarInstituicaoMB extends CadastrarInstituicaoMB implements
 
 	public String voltar(){
 		return "selecionarinstituicaoedicao.jsf";
-	}
+	}	
 	
 	public String selecionarInstituicao() {
 		if (this.id != -1) {

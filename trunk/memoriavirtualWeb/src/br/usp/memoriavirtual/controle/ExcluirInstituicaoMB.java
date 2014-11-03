@@ -81,6 +81,11 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 		}
 	}
 	
+	@Override
+	public String voltar(){
+		return "selecionarinstituicaoexclusao.jsf";
+	}
+	
 	public List<SelectItem> getAnalistas() {
 		List<SelectItem> opcoes = new ArrayList<SelectItem>();
 
