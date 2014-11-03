@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 public class Autor implements Serializable {
 
 	public static enum Atividade {
-		adaptador, arquiteto, arranjador, classificador, comentador, compilador, cozinheiro, designer, engenheiro, escritor, escultor, fundador, fotografo, horticulturista, ilustrador, interprete, jardineiro, pintor, reporter, revisor, roteirista
+		adaptador, arquiteto, arranjador, classificador, comentador, compilador, cozinheiro, designer, engenheiro, escritor, escultor, fundador, fotografo, horticulturista, ilustrador, interprete, jardineiro, pintor, reporter, revisor, roteirista, outras
 	}
 
 	private static final long serialVersionUID = 238135871232282769L;
