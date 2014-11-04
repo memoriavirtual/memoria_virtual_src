@@ -35,7 +35,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Schedule
+	@Schedule(hour="*", minute="*")
 	public void executa() throws ModeloException{
 		
 		java.util.Calendar cal = java.util.Calendar.getInstance(); 
@@ -69,7 +69,10 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 
 			if(acao.equals(MVModeloAcao.excluir_usuario)){
 				String[] dados = aprov.getDados().split(";");
-				Usuario user = em.find(Usuario.class, dados[1]);
+				Long id = new Long(dados[1]);
+				Query query = em.createQuery("SELECT u from Usuario u where u.id = :id");
+				query.setParameter("id", id);
+				Usuario user = (Usuario) query.getSingleResult();
 				user.setAtivo(true);
 				em.merge(user);
 

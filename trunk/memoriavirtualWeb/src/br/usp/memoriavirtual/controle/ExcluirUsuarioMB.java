@@ -88,7 +88,6 @@ public class ExcluirUsuarioMB extends EditarCadastroUsuarioMB implements
 						+ ";justificativa;" + this.justificativa;
 
 				aprovacao.setDados(dados);
-
 				long id = this.excluirUsuarioEJB.solicitarExclusao(
 						this.usuario, aprovacao);
 
