@@ -35,6 +35,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Schedule
 	public void executa() throws ModeloException{
 		
 		java.util.Calendar cal = java.util.Calendar.getInstance(); 
