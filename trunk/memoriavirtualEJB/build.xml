@@ -1,18 +1,17 @@
 <?xml version="1.0" ?>
-<project name="memoriavirtual" default="memJar" basedir="..\">
+<project name="memoriavirtualEJB" default="memJar" basedir=".">
 	
 	  
     <property name= "target.jar" location = "jar\target.jar"/>
 
-	<property name= "ejb.dir" location = "memoriavirtualEJB\ejbModule"/>
+	<property name= "ejb.dir" location = "ejbModule"/>
 	
-	<property name= "ejb.build.classes" location = "memoriavirtualEJB\build\classes"/>
+	<property name= "ejb.build.classes" location = "build\classes"/>
 
-	<property name= "web.build.classes" location = "memoriavirtualWeb\build\classes"/>
+	<property name= "web.build.classes" location = "build\classes"/>
 
-	<loadproperties srcfile="./memoriavirtualEJB/build.properties"></loadproperties>	
-	
-	
+	<loadproperties srcfile="build.properties"></loadproperties>	
+
 
 	
 	<target name="init">
@@ -39,12 +38,21 @@
 	<echo>compilation complete</echo>
 	</target>
 
-	
+
 	<target name="memJar" depends="compile">
-		<jar jarfile="memoriavirtualEJB.jar"
+		<jar jarfile="../memoriavirtualEJB.jar"
 			duplicate="preserve"
 			compress="true">
-			<fileset dir="${ejb.build.classes}"/>
+			<fileset dir="${ejb.build.classes}" />
+			<zipfileset dir="ejbModule/META-INF" includes="ejb-jar.xml"
+				fullpath="META-INF/ejb-jar.xml"/>
+			<zipfileset dir="ejbModule/META-INF" includes="persistence.xml"
+							fullpath="META-INF/persistence.xml"/>
+			
+			
+			
+			
+			
 		</jar>
 		
 	</target>
