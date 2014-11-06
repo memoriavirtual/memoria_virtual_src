@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<project name="memoriavirtualEAR" default="build" basedir=".">
+
+
+	<target name="build">
+		<delete>
+		    <fileset dir="../" includes="*.jar, *.war"/>
+		  </delete>
+		<ant antfile="build.xml" dir="../memoriavirtualEJB/" >
+		</ant>
+		<ant antfile="build.xml" dir="../memoriavirtualWeb/">
+		</ant>
+		<ant antfile="build.xml" dir="../memoriavirtualWebService/">
+		</ant>
+
+		<ear destfile="../memoriavirtual.ear" appxml="EarContent\META-INF\application.xml">
+			<fileset dir="../" includes="*.jar,*.war" />
+
+		</ear>
+
+	</target>
+
+
+</project>
+
