@@ -1,19 +1,19 @@
 <?xml version="1.0" ?>
-<project name="memoriavirtual" default="memJar" basedir="..\">
+<project name="memoriavirtualWeb" default="memJar" basedir=".">
 	
 	  
     
-	<property name= "memoriavirtualWeb.war" location = "memoravirtualWeb.war"/>
+	<property name= "memoriavirtualWeb.war" location = "../memoriavirtualWeb.war"/>
 	
-	<property name= "web.dir" location = "memoriavirtualWeb\src"/>
+	<property name= "web.dir" location = "src"/>
 
-	<property name= "web.build.classes" location = "memoriavirtualWeb\build\classes"/>
-	<property name= "web" location = "memoriavirtualWeb\WebContent"/>
+	<property name= "web.build.classes" location = "build\classes"/>
+	<property name= "web" location = "WebContent"/>
 	<property name= "web.lib" location = "${web}\WEB-INF\lib"/>
 	<property name= "web.xml" location = "${web}\WEB-INF\web.xml"/>
 	
 	
-	<loadproperties srcfile="./memoriavirtualWeb/build.properties"></loadproperties>	
+	<loadproperties srcfile="build.properties"></loadproperties>	
 
 	
 	<target name="init">
@@ -21,14 +21,23 @@
 		<mkdir dir="build\classes"/>
 		<mkdir dir="build\src"/>
 	</target>
+	
+	<target name="compile" depends="init">
+	<javac srcdir="${web.dir}"
+		destdir="build\classes" encoding="ISO-8859-1" includeantruntime="false">
+			<classpath refid="glassfish.classpath"/>
+	</javac>
+	
+	<echo>compilation complete</echo>
+	</target>
 		
 	<path id="glassfish.classpath">
 		<fileset dir="${glassfish.dir}">
-			<include name="**/*.jar"/>
+			<include name="**/*"/>
 		</fileset>
 	</path>
 	
-	<target name="memJar">
+	<target name="memJar" depends="compile">
 		
 		<war destfile="${memoriavirtualWeb.war}" webxml="${web.xml}">
 			<fileset dir="${web}"/>

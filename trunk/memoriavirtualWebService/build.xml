@@ -1,18 +1,18 @@
 <?xml version="1.0" ?>
-<project name="memoriavirtual" default="memWar" basedir="..\">
+<project name="memoriavirtualWebService" default="memWar" basedir=".">
 	
 	  
-    <property name= "memoriavirtualWebService.war" location = "memoriavirtualWebService.war"/>
+    <property name= "memoriavirtualWebService.war" location = "../memoriavirtualWebService.war"/>
 
-	<property name= "ws.dir" location = "memoriavirtualWebService\src"/>
+	<property name= "ws.dir" location = "src"/>
 	
-	<property name= "ws.build.classes" location = "memoriavirtualWebService\build\classes"/>
+	<property name= "ws.build.classes" location = "build\classes"/>
 	
-	<property name= "web.xml" location = "memoriavirtualWebService\WebContent\WEB-INF"/>
+	<property name= "web.xml" location = "WebContent\WEB-INF"/>
 	
-	<property name= "web.lib" location = "memoriavirtualWebService\WebContent\WEB-INF\lib"/>
+	<property name= "web.lib" location = "WebContent\WEB-INF\lib"/>
 
-	<loadproperties srcfile="./memoriavirtualWebService/build.properties"></loadproperties>	
+	<loadproperties srcfile="build.properties"></loadproperties>	
 
 	
 	<target name="init">
