@@ -1,50 +1,42 @@
 <?xml version="1.0" ?>
 <project name="memoriavirtualWebService" default="memWar" basedir=".">
-	
-	  
-    <property name= "memoriavirtualWebService.war" location = "../memoriavirtualWebService.war"/>
 
-	<property name= "ws.dir" location = "src"/>
-	
-	<property name= "ws.build.classes" location = "build\classes"/>
-	
-	<property name= "web.xml" location = "WebContent\WEB-INF"/>
-	
-	<property name= "web.lib" location = "WebContent\WEB-INF\lib"/>
 
-	<loadproperties srcfile="build.properties"></loadproperties>	
+	<property name="memoriavirtualWebService.war" location="../memoriavirtualWebService.war" />
 
-	
+	<property name="web.build.classes" location="build\classes" />
+	<property name="web" location="WebContent" />
+	<property name="web.lib" location="${web}\WEB-INF\lib" />
+	<property name="web.xml" location="${web}\WEB-INF\web.xml" />
+
+	<loadproperties srcfile="build.properties">
+	</loadproperties>
+
+
 	<target name="init">
-		<mkdir dir="build\classes"/>
-		<mkdir dir="build\src"/>
+		<mkdir dir="build\classes" />
+		<mkdir dir="build\src" />
 		<!--delete>
 			<fileset dir="build"/>
 		</delete-->
-	
-		<mkdir dir="build\classes"/>
-		<mkdir dir="build\src"/>
-		
-		<path id="glassfish.classpath">
-				<fileset dir="${glassfish.dir}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</path>
-	</target>
-	
 
-		
-	
-	
-	
+		<mkdir dir="build\classes" />
+		<mkdir dir="build\src" />
+
+		<path id="glassfish.classpath">
+			<fileset dir="${glassfish.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</target>
+
 	<target name="memWar" depends="init">
-		<war destfile="${memoriavirtualWebService.war}" webxml="${web.xml}"
-			compress="true">
-			<fileset dir="${ws.build.classes}"/>
-			<lib dir="${web.lib}"/>
+		<war destfile="${memoriavirtualWebService.war}" webxml="${web.xml}" compress="true">
+			<fileset dir="${web.build.classes}" />
+			<lib dir="${web.lib}" />
 		</war>
 
 	</target>
 
 </project>
-	
+

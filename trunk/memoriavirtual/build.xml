@@ -4,9 +4,9 @@
 
 	<target name="build">
 		<delete>
-		    <fileset dir="../" includes="*.jar, *.war"/>
-		  </delete>
-		<ant antfile="build.xml" dir="../memoriavirtualEJB/" >
+			<fileset dir="../" includes="*.jar, *.war" />
+		</delete>
+		<ant antfile="build.xml" dir="../memoriavirtualEJB/">
 		</ant>
 		<ant antfile="build.xml" dir="../memoriavirtualWeb/">
 		</ant>
@@ -15,9 +15,7 @@
 
 		<ear destfile="../memoriavirtual.ear" appxml="EarContent\META-INF\application.xml">
 			<fileset dir="../" includes="*.jar,*.war" />
-
 		</ear>
-
 	</target>
 
 

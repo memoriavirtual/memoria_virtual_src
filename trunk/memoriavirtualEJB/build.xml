@@ -1,19 +1,20 @@
 <?xml version="1.0" ?>
 <project name="memoriavirtualEJB" default="memJar" basedir=".">
-	
-	  
-    <property name= "target.jar" location = "jar\target.jar"/>
-
-	<property name= "ejb.dir" location = "ejbModule"/>
-	
-	<property name= "ejb.build.classes" location = "build\classes"/>
-
-	<property name= "web.build.classes" location = "build\classes"/>
-
-	<loadproperties srcfile="build.properties"></loadproperties>	
 
 
-	
+	<property name="target.jar" location="jar\target.jar" />
+
+	<property name="ejb.dir" location="ejbModule" />
+
+	<property name="ejb.build.classes" location="build\classes" />
+
+	<property name="web.build.classes" location="build\classes" />
+
+	<loadproperties srcfile="build.properties">
+	</loadproperties>
+
+
+
 	<target name="init">
 
 		<!--delete>
@@ -21,52 +22,50 @@
 			<fileset dir=".\META-INF"/>
 			<fileset dir="..\memoriavirtual\META-INF"/>
 		</delete-->
-		<mkdir dir="build\classes"/>
-		<mkdir dir="build\src"/>
-		 <copy todir="build">
-		    <fileset dir="ejbModule/META-INF"/>
-		  </copy>
+		<mkdir dir="build\classes" />
+		<mkdir dir="build\src" />
+		<copy todir="build">
+			<fileset dir="ejbModule/META-INF" />
+		</copy>
 		<copy todir=".\META-INF">
-				    <fileset dir="ejbModule/META-INF"/>
-				  </copy>
+			<fileset dir="ejbModule/META-INF" />
+		</copy>
 		<copy todir="..\memoriavirtual\META-INF">
-						    <fileset dir="ejbModule/META-INF"/>
-						  </copy>
+			<fileset dir="ejbModule/META-INF" />
+		</copy>
 	</target>
-		
+
 	<path id="glassfish.classpath">
 		<fileset dir="${glassfish.dir}">
-			<include name="**/*.jar"/>
+			<include name="**/*.jar" />
 		</fileset>
 	</path>
-	    
+
 
 	<target name="compile" depends="init">
-	<javac srcdir="${ejb.dir}"
-		destdir="build\classes" encoding="ISO-8859-1" includeantruntime="false">
-			<classpath refid="glassfish.classpath"/>		
-	</javac>
-	
-	<echo>EJB compilation complete</echo>
+		<javac srcdir="${ejb.dir}" destdir="build\classes" encoding="ISO-8859-1" includeantruntime="false">
+			<classpath refid="glassfish.classpath" />
+		</javac>
+
+		<echo>EJB compilation complete</echo>
 	</target>
 
 
 	<target name="memJar" depends="compile">
-		<jar destfile="../memoriavirtualEJB.jar"
-			compress="true">
+		<jar destfile="../memoriavirtualEJB.jar" compress="true">
 			<fileset dir="${ejb.build.classes}" />
 			<metainf dir="ejbModule/META-INF">
-				<include name="ejb-jar.xml"/>
-				<include name="persistence.xml"/>
+				<include name="ejb-jar.xml" />
+				<include name="persistence.xml" />
 			</metainf>
-			
-			
-				
-			
+
+
+
+
 		</jar>
-		
+
 	</target>
-	
+
 	<!--target name="memJar1" depends="compile" description="Packages the EJB archive for deployment.">
 	        <jar destfile="${build.dir}/${ejb.name}" basedir="${build.classes.dir}">
 	            <include name="org/apache/qpid/jca/example/ejb/**/*.class"/>
@@ -78,4 +77,4 @@
 	    </target-->
 
 </project>
-	
+
