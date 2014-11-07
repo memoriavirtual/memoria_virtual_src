@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="memoriavirtualWeb" default="memJar" basedir=".">
+<project name="memoriavirtualWeb" default="memWar" basedir=".">
 	
 	  
     
@@ -17,27 +17,25 @@
 
 	
 	<target name="init">
-
 		<mkdir dir="build\classes"/>
 		<mkdir dir="build\src"/>
-	</target>
-	
-	<target name="compile" depends="init">
-	<javac srcdir="${web.dir}"
-		destdir="build\classes" encoding="ISO-8859-1" includeantruntime="false">
-			<classpath refid="glassfish.classpath"/>
-	</javac>
-	
-	<echo>compilation complete</echo>
-	</target>
+		<!--delete>
+			<fileset dir="build"/>
+		</delete-->
+		<mkdir dir="build\classes"/>
+		<mkdir dir="build\src"/>
 		
-	<path id="glassfish.classpath">
-		<fileset dir="${glassfish.dir}">
-			<include name="**/*"/>
-		</fileset>
-	</path>
+		<path id="glassfish.classpath">
+					<fileset dir="${glassfish.dir}">
+						<include name="**/*.jar"/>
+					</fileset>
+				</path>
+		
+	</target>
 	
-	<target name="memJar" depends="compile">
+		
+	
+	<target name="memWar" depends="init">
 		
 		<war destfile="${memoriavirtualWeb.war}" webxml="${web.xml}">
 			<fileset dir="${web}"/>

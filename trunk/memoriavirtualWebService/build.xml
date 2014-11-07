@@ -16,19 +16,28 @@
 
 	
 	<target name="init">
+		<mkdir dir="build\classes"/>
+		<mkdir dir="build\src"/>
+		<!--delete>
+			<fileset dir="build"/>
+		</delete-->
 	
 		<mkdir dir="build\classes"/>
 		<mkdir dir="build\src"/>
-	</target>
 		
-	<path id="glassfish.classpath">
-		<fileset dir="${glassfish.dir}">
-			<include name="**/*.war"/>
-		</fileset>
-	</path>
+		<path id="glassfish.classpath">
+				<fileset dir="${glassfish.dir}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</path>
+	</target>
+	
+
+		
 	
 	
-	<target name="memWar">
+	
+	<target name="memWar" depends="init">
 		<war destfile="${memoriavirtualWebService.war}" webxml="${web.xml}"
 			compress="true">
 			<fileset dir="${ws.build.classes}"/>
