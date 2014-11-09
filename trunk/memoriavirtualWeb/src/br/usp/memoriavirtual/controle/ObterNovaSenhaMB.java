@@ -47,6 +47,8 @@ public class ObterNovaSenhaMB implements Serializable {
 
 		try {
 			this.obterNovaSenhaEJB.obterNovaSenha(this.email);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correct", "Correct");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (ModeloException e) {
 			MensagensDeErro.getErrorMessage("obterNovaSenhaErro", "resultado");
 			e.printStackTrace();
