@@ -83,7 +83,7 @@
 				          $.each(data, function(index, item){
 				            results.push({
 				              id: item.id,
-				              text: item.tituloPrincipal
+				              text:item.numeroRegistro + ' - ' + item.tituloPrincipal 
 				            });
 				          });
 				          return { results: results };
