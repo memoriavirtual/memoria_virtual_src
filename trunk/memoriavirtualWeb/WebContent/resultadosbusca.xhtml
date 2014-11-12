@@ -33,14 +33,22 @@
 	<div class="col-md-12">
 		<h:form class="form-horizontal" role="form" method="post"
 			prependId="false">
-			<div class="row">
-				<div class="col-md-12 text-right">
-					&lt;
-					<h:outputText value="#{usuario.nomeCompleto}" />
-					&gt;,
-					<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">${mensagens.sair}</h:commandLink>
+			<h:panelGroup rendered="#{usuario!=null}">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						&lt;<h:outputText value="#{usuario.nomeCompleto}" />&gt;,
+						<a href="restrito/index.jsf" style="color: blue;">#{mensagens.catalogacao}</a>,
+						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">${mensagens.sair}</h:commandLink>
+					</div>
 				</div>
-			</div>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{usuario==null}">	
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<a href="login.jsf" style="color: blue;">#{mensagens.login}</a>
+					</div>
+				</div>
+			</h:panelGroup>
 		</h:form>
 	</div>
 
@@ -116,7 +124,7 @@
 	</div>
 	<div class="top-margin-10 col-md-12 text-center">
 		Copyright &copy; 2009 LABES - Laborat&oacute;rio de Engenharia de
-		Software - ICMC-USP<br /> Build Tag: #{strings.buildtag}
+		Software - ICMC-USP<br /> Build Tag: #{build.buildtag}
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {

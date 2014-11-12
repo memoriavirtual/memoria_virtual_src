@@ -44,6 +44,10 @@
 			<base-name>br.usp.memoriavirtual.mensagens</base-name>
 			<var>mensagens</var>
 		</resource-bundle>
+		<resource-bundle>
+			<base-name>build</base-name>
+			<var>build</var>
+		</resource-bundle>
 		<locale-config>
 			<default-locale>pt</default-locale>
 			<supported-locale>en</supported-locale>
