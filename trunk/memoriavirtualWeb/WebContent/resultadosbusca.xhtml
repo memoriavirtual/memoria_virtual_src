@@ -76,7 +76,7 @@
 					<h:dataTable var="bem" class="table table-bordered table-hover"
 						value="#{realizarBuscaSimplesMB.bens}">
 						<h:column>
-							<h:commandLink action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.tituloPrincipal}</h:commandLink>
+							<h:commandLink action="#{realizarBuscaSimplesMB.resultado(bem)}">#{bem.numeroRegistro} - #{bem.tituloPrincipal}</h:commandLink>
 							<h:commandLink rendered="#{!empty bem.titulos}"
 								class="btn btn-default pull-right botao-titulos btn-xs">
 								<f:ajax render="@none" execute="@none" />
