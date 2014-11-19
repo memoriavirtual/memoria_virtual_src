@@ -48,10 +48,14 @@
 					#{mensagens.bempatrimonial}
 				</h:outputLink>
 				<ul class="linkSecundario">
-					<li><h:outputLink rendered="true"
-							value="cadastrarbempatrimonial.jsf">
-							#{mensagens.menuCadastrarBemPatrimonial}
-						</h:outputLink></li>
+					<h:form>
+						<li>
+							<h:commandLink rendered="true"
+								action="#{renderizarMenuMB.cadastrarBemAction}">
+								#{mensagens.menuCadastrarBemPatrimonial}
+							</h:commandLink>
+						</li>
+					</h:form>
 					<li><h:outputLink rendered="true"
 							value="selecionarbempatrimonialedicao.jsf">
 							#{mensagens.menuEditarBemPatrimonial}

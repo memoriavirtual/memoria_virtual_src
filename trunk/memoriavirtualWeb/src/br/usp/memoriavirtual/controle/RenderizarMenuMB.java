@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.controle;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -20,6 +21,8 @@ public class RenderizarMenuMB implements Serializable {
 	public boolean administrador = false;
 	public boolean gerente = false;
 
+	private CadastrarBemPatrimonialMB beanCadastroBem;
+	
 	@SuppressWarnings("unchecked")
 	public void verificarAcessos(ComponentSystemEvent event) {
 
@@ -37,12 +40,19 @@ public class RenderizarMenuMB implements Serializable {
 		} else {
 
 			for (Acesso acesso : listaAcessos) {
-				if (acesso.getGrupo().getId().equalsIgnoreCase("GERENTE")
-						&& acesso.getValidade()) {
+				if (acesso.getGrupo().getId().equalsIgnoreCase("GERENTE") && acesso.getValidade()) {
 					this.gerente = true;
 				}
 			}
 		}
+	}
+	
+	public String cadastrarBemAction(){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ELResolver resolver = facesContext.getApplication().getELResolver();
+		this.beanCadastroBem = (CadastrarBemPatrimonialMB) resolver.getValue(facesContext.getELContext(), null, "cadastrarBemPatrimonialMB");
+		beanCadastroBem.limpar();
+		return "cadastrarbempatrimonial.jsf";
 	}
 
 	public boolean isAdministrador() {
