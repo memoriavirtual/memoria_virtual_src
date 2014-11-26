@@ -33,6 +33,8 @@ public class RealizarLogin implements RealizarLoginRemote {
 
 		try {
 			usuarioAutenticado = (Usuario) query.getSingleResult();
+			entityManager.refresh(usuarioAutenticado);
+			
 			if (usuarioAutenticado.isAtivo()) {
 				usuarioClone = usuarioAutenticado.clone();
 			}
