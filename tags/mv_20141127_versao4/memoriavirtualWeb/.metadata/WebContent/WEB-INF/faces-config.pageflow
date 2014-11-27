@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13107591827080" configfile="/memoriavirtualWeb/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index" x="122" y="178" id="pf13107593541961" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" path="/index.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="logoff" x="122" y="562" id="pf13107593541965" referenceLink="//@navigationRule.4/@navigationCase.1/@toViewId|" path="/restrito/mv.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="convite" x="122" y="946" id="pf13107593541976" referenceLink="//@navigationRule.1/@fromViewId|" path="/restrito/enviarconvite.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/conviteenviado" x="122" y="1330" id="pf13107593541978" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" path="/restrito/conviteenviado.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastrarinstituicao" x="122" y="1714" id="pf13113571864250" referenceLink="//@navigationRule.4/@fromViewId|" path="/restrito/cadastrarinstituicao.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/instituicaocadastrada" x="122" y="2098" id="pf13113571864252" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" path="/restrito/instituicaocadastrada.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastrousuario" x="122" y="2482" id="pf13123873869600" referenceLink="//@navigationRule.3/@fromViewId|" path="/restrito/cadastrarusuario.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastroconcluido" x="122" y="2866" id="pf13123873869612" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" path="/cadastroconcluido.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="554" y="3369" id="pf13160985364010" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf14133992721203 pf14150471664090" inlinks="pf14133992721203 pf14150471664091" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/descritor.xhtml" x="122" y="4018" id="pf13194614660962" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" path="/restrito/descritor.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="excluirInstituicao" x="122" y="4786" id="pf13238411084353" referenceLink="//@navigationRule.4/@fromViewId|" path="/restrito/excluirInstituiçaoXHTMLfiles/confirmarExcluirInstituicao.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/excluirInstituiçaoXHTMLfiles/emailExcluirInstituicao.xhtml" x="122" y="5170" id="pf13238713732273" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" path="/restrito/excluirInstituiçaoXHTMLfiles/emailExcluirInstituicao.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="122" y="6322" id="pf13336926942235" referenceLink="//@navigationRule.18/@navigationCase.1/@toViewId|" path="/restrito/excluirusuario_etapa1.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="122" y="6706" id="pf13336926942237" referenceLink="//@navigationRule.18/@fromViewId|" path="/restrito/excluirusuario_etapa2.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastrarAutor" x="122" y="7090" id="pf13336927220928" referenceLink="//@navigationRule.13/@fromViewId|" path="/restrito/cadastrarautor.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="excluirUsuario" x="122" y="7474" id="pf13364100004924" referenceLink="//@navigationRule.19/@fromViewId|" path="/restrito/excluirusuario_etapa3.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="editarAutor" x="122" y="7858" id="pf13364101311195" referenceLink="//@navigationRule.14/@fromViewId|" path="/restrito/editarautor.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastrarBemPatrimonial" x="122" y="8242" id="pf13431105332552" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" path="/restrito/cadastrarbempatrimonial.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="excluirAutor" x="122" y="8626" id="pf13498725832871" referenceLink="//@navigationRule.21/@fromViewId|" path="/restrito/selecionarautor.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="logoff" id="pf14133992133230" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14133992133231" path="/restrito/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" id="pf14133992133232" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14133992133231" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="cadastrarNovaSenha" id="pf14150471664192" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14150471664091" path="/cadastrarnovasenha.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="restrito/index.xhtml" id="pf14150471664193" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14150471664090" path="/restrito/index.xhtml"/>
+  <links id="pf14133992133231" target="pf14133992133232" source="pf14133992133230" outcome="logout" redirect="true"/>
+  <links id="pf14133992721203" target="pf13160985364010" source="pf13160985364010" outcome="falha"/>
+  <links id="pf14150471664091" target="pf13160985364010" source="pf14150471664192" outcome="sucesso" redirect="true"/>
+  <links id="pf14150471664090" target="pf14150471664193" source="pf13160985364010" outcome="sucesso" redirect="true"/>
+</pageflow:Pageflow>

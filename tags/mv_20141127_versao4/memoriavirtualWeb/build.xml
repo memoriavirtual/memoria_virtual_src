@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<project name="memoriavirtualWeb" default="memWar" basedir=".">
+
+
+
+	<property name="memoriavirtualWeb.war" location="../memoriavirtualWeb.war" />
+
+	<property name="web.build.classes" location="build\classes" />
+	<property name="web" location="WebContent" />
+	<property name="web.lib" location="${web}\WEB-INF\lib" />
+	<property name="web.xml" location="${web}\WEB-INF\web.xml" />
+
+
+	<loadproperties srcfile="build.properties">
+	</loadproperties>
+
+
+	<target name="init">
+		<mkdir dir="build\classes" />
+		<mkdir dir="build\src" />
+		<!--delete>
+			<fileset dir="build"/>
+		</delete-->
+		<mkdir dir="build\classes" />
+		<mkdir dir="build\src" />
+
+		<path id="glassfish.classpath">
+			<fileset dir="${glassfish.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+	</target>
+
+
+
+	<target name="memWar" depends="init">
+
+		<war destfile="${memoriavirtualWeb.war}" webxml="${web.xml}">
+			<fileset dir="${web}" />
+			<lib dir="${web.lib}" />
+			<classes dir="${web.build.classes}" />
+		</war>
+
+
+	</target>
+
+</project>
+
