@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Eexpires" content="0" />
@@ -26,10 +27,15 @@
 					<div>
 						<h:inputText value="#{obterNovaSenhaMB.email}" required="true" />
 					</div>
-					<br></br>
+					<br></br>				
+
+		            <div>
+						<p:messages id="msg"/>
+           				<p:captcha id="captcha" theme="blackglass"></p:captcha>
+					</div>
 					<div>
 						<h:commandButton action="#{obterNovaSenhaMB.obterNovaSenha}"
-							value="Enviar email" />
+							value="Enviar email" ajax="false" />
 					</div>
 				</h:form>
 			</div>
