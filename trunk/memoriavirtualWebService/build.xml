@@ -7,6 +7,8 @@
 	
 	<property name= "ws.build.classes" location = "../build_WS/classes"/>
 	
+	<property name= "ws.dir" location = "../build_WS/src"/>
+	
 	<property name= "web.xml" location = "WebContent/WEB-INF"/>
 	
 	<property name= "web.lib" location = "WebContent/WEB-INF/lib"/>
