@@ -71,17 +71,17 @@
 					#{mensagens.autoria}
 				</h:outputLink>
 				<ul class="linkSecundario">
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink rendered="true"
 							value="cadastrarautor.jsf">
 							#{mensagens.menuCadastrarAutor}
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink rendered="true"
 							value="selecionarautoredicao.jsf">
 							#{mensagens.menuEditarAutor}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink rendered="true"
 							value="selecionarautorexclusao.jsf">
 							#{mensagens.menuExcluirAutor}							
 							<f:ajax event="click" render="@none" execute="@this" />
