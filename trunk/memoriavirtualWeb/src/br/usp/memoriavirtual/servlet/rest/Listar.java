@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -76,6 +77,32 @@ public class Listar{
 		}
 		  catch (Exception e) {
 			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@GET
+	@Path("/listarbempatrimonial/{inst}")
+	public List<BemPatrimonial> listarBensInstituicao(@PathParam("inst") String inst, @QueryParam("busca") String busca, 
+			@Context HttpServletRequest request) {
+		
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+		Integer instituicaoId = Integer.parseInt(inst);
+
+		try {
+			List<BemPatrimonial> bensPatrimoniais = realizarBuscaSimplesEJB.buscar(busca);
+			List<BemPatrimonial> resultado = new ArrayList<BemPatrimonial>();
+			
+			for (BemPatrimonial b : bensPatrimoniais) {
+				if (b.getInstituicao().getId() == instituicaoId) {
+					resultado.add(b);
+				}
+			}
+
+			return resultado;
+
+		} catch (ModeloException m) {
+			m.printStackTrace();
 		}
 		return null;
 	}

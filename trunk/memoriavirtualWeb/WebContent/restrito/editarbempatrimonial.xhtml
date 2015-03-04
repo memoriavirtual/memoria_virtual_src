@@ -38,6 +38,8 @@
 												value="#{editarBemPatrimonialMB.instituicao}">
 												<f:selectItems
 													value="#{editarBemPatrimonialMB.instituicoes}" />
+												<f:ajax event="change" onevent="criaBuscaBem" listener="#{editarBemPatrimonialMB.limparBensRelacionados}"
+												 render="grupo-bens-relacionados"/>
 											</h:selectOneMenu>
 										</div>
 									</div>
@@ -1919,7 +1921,7 @@
 										minimumInputLength : 1,
 										allowClear : true,
 										ajax : {
-											url : "/memoriavirtual/listar/listarbempatrimonial",
+											url : "/memoriavirtual/listar/listarbempatrimonial/"+$("#instituicao").val(),
 											quietMillis : 250,
 											type : 'GET',
 											datatype : 'json',
@@ -1939,8 +1941,8 @@
 									          return { results: results };
 									        }
 										}
-									});
-
+										});
+									
 									window.reformar = function(data) {
 										mostrarErro('#validacao-nome');
 										mostrarErro('#validacao-sobrenome');
@@ -1957,6 +1959,36 @@
 										}
 									}
 								});
+				
+				function criaBuscaBem(event){
+					if(event.status == 'success'){
+					$("#busca").select2({
+						minimumInputLength : 1,
+						allowClear : true,
+						ajax : {
+							url : "/memoriavirtual/listar/listarbempatrimonial/"+$("#instituicao").val(),
+							quietMillis : 250,
+							type : 'GET',
+							datatype : 'json',
+							data : function(term, page) {
+								return {
+									busca : term,
+								};
+							},
+							results: function (data) {
+					          var results = [];
+					          $.each(data, function(index, item){
+					            results.push({
+					              id: item.id,
+					              text: item.tituloPrincipal
+					            });
+					          });
+					          return { results: results };
+					        }
+						}
+						});
+					}
+				}
 			</script>
 			<div class="modal fade" id="cadastrar-autor-modal" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

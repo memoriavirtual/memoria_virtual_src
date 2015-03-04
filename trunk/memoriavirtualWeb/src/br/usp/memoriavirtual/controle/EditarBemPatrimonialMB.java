@@ -129,6 +129,10 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 	public String voltar(){
 		return "selecionarbempatrimonialedicao.jsf";
 	}
+	
+	public void limparBensRelacionados(){
+		this.bemPatrimonial.setBensRelacionados(new ArrayList<BemPatrimonial>());
+	}
 
 	public String selecionar() {
 		try {

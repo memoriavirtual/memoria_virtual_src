@@ -38,6 +38,8 @@
 												value="#{cadastrarBemPatrimonialMB.instituicao}">
 												<f:selectItems
 													value="#{cadastrarBemPatrimonialMB.instituicoes}" />
+												<f:ajax event="change" onevent="criaBuscaBem" listener="#{cadastrarBemPatrimonialMB.limparBensRelacionados}"
+												 render="grupo-bens-relacionados"/>
 											</h:selectOneMenu>
 										</div>
 									</div>
@@ -1890,6 +1892,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<script type="text/javascript">
 				function carregarErros() {
 
@@ -1914,12 +1917,54 @@
 										placeholder : "#{mensagens.selecione}",
 										minimumResultsForSearch : -1
 									});
+									
+									$("#busca").select2({
+										inimumInputLength : 1,
+										allowClear : true,
+										ajax : {
+											url : "/memoriavirtual/listar/listarbempatrimonial/"+$("#instituicao").val(),
+											quietMillis : 500,
+											type : 'GET',
+											datatype : 'json',
+											data : function(term, page) {
+												return {
+													busca : term,
+												};
+											},
+											results: function (data) {
+									          var results = [];
+									          $.each(data, function(index, item){
+									            results.push({
+									              id: item.id,
+									              text: item.tituloPrincipal
+									            });
+									          });
+						          	return { results: results };}}});								
 
+									window.reformar = function(data) {
+										mostrarErro('#validacao-nome');
+										mostrarErro('#validacao-sobrenome');
+
+										var texto = $('#resultado').text();
+										if (texto !== '') {
+											$('#cadastrar-autor-modal').modal(
+													'hide');
+											mensagensSucesso('#{mensagens.sucesso}');
+											$('#resultado').text('');
+											$(
+													'#cadastrar-autor-modal input.form-control')
+													.val('');
+										}
+									}
+								});
+								
+								function criaBuscaBem(event){
+									if(event.status == 'success'){
 									$("#busca").select2({
 										minimumInputLength : 1,
 										allowClear : true,
 										ajax : {
-											url : "/memoriavirtual/listar/listarbempatrimonial",
+											url : "/memoriavirtual/listar/listarbempatrimonial/"+$("#instituicao").val(),
 											quietMillis : 250,
 											type : 'GET',
 											datatype : 'json',
@@ -1940,23 +1985,8 @@
 									        }
 										}
 									});
-
-									window.reformar = function(data) {
-										mostrarErro('#validacao-nome');
-										mostrarErro('#validacao-sobrenome');
-
-										var texto = $('#resultado').text();
-										if (texto !== '') {
-											$('#cadastrar-autor-modal').modal(
-													'hide');
-											mensagensSucesso('#{mensagens.sucesso}');
-											$('#resultado').text('');
-											$(
-													'#cadastrar-autor-modal input.form-control')
-													.val('');
-										}
-									}
-								});
+								}
+					}
 			</script>
 			<div class="modal fade" id="cadastrar-autor-modal" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

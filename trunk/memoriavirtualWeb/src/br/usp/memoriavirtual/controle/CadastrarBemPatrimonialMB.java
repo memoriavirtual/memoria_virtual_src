@@ -288,7 +288,11 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 			return opcoes;
 		}
 	}
-
+	
+	public void limparBensRelacionados(){
+		this.bemPatrimonial.setBensRelacionados(new ArrayList<BemPatrimonial>());
+	}
+	
 	public String adicionarBemRelacionado() {
 		try {
 			if (this.buscaBem.length() > 0) {
@@ -297,8 +301,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 
 				if (!this.bemPatrimonial.getBensRelacionados().contains(
 						bemPatrimonial)) {
-					this.bemPatrimonial.getBensRelacionados().add(
-							bemPatrimonial);
+					this.bemPatrimonial.getBensRelacionados().add(bemPatrimonial);
 				}
 				return null;
 			}
@@ -319,6 +322,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 						.remove(bemPatrimonial);
 			}
 			return null;
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -326,6 +330,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 			return null;
 		}
 	}
+
 
 	public List<SelectItem> getAutores() {
 		List<SelectItem> autores = new ArrayList<SelectItem>();
