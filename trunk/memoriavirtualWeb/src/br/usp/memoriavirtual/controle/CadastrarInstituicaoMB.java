@@ -197,7 +197,7 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 	}
 	
 	public boolean validarEstado(){
-		if(ValidacoesDeCampos.validarFormatoEstado(this.estado)){
+		if(ValidacoesDeCampos.validarFormatoEstado(this.estado) || this.estado.isEmpty()){
 			return true;
 		}
 		else{
