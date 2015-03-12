@@ -1,0 +1,39 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    tools:context="mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormAutor">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                style="@style/TextView"
+                android:id="@+id/name_textview_test"
+                android:text="@string/cadastro_autoria"/>
+            <EditText
+                android:id="@id/cadastro_autoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <Button
+                android:text="@string/cadastro_proximo_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/color_app"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:onClick="onNextButtonClick"/>/>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
