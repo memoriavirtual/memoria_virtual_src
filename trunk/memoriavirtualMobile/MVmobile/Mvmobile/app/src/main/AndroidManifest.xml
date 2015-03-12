@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.usp.mvmobile" >
+    package="mobile.memoriavirtual.usp.mvmobile" >
 
     <application
         android:allowBackup="true"
@@ -17,9 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:name=".Activity.AddBemPatrimonialActivity"
+            android:label="@string/title_activity_add_bem_patrimonial" >
         </activity>
     </application>
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>
