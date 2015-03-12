@@ -44,6 +44,4 @@
         <item name="android:typeface">monospace</item>
         <item name="android:layout_marginTop">25dp</item>
     </style>
-
-
 </resources>

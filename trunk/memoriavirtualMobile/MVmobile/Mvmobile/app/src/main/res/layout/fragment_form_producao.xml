@@ -57,13 +57,13 @@
                 android:textSize="18sp"/>
 
             <Button
+                android:background="@drawable/border_button"
+                android:textColor="@color/material_statusbar"
                 android:text="@string/cadastro_proximo_button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/color_app"
                 android:textSize="18sp"
-                android:textColor="@android:color/white"
                 android:onClick="onNextButtonClick"/>
 
         </LinearLayout>

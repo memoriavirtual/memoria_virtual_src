@@ -50,6 +50,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
 
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
+        mPager.setOffscreenPageLimit(10); //nao destroi as fragments escondidos
     }
 
     @Override

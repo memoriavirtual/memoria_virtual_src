@@ -26,13 +26,13 @@
                 android:textSize="18sp"/>
 
             <Button
+                android:background="@color/material_statusbar"
+                android:textColor="@android:color/white"
                 android:text="@string/cadastro_add_button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/material_statusbar"
                 android:textSize="18sp"
-                android:textColor="@android:color/white"
                 android:onClick="onAddButtonClick"/>
             />
         </LinearLayout>

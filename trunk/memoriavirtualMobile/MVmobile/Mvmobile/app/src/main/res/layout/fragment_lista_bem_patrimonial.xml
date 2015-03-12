@@ -33,13 +33,13 @@
             android:gravity="top">
 
             <Button
+                android:background="@drawable/border_button"
                 android:layout_above="@id/nenhum_bem_patrimonial_cadastrado"
                 android:id="@id/lista_add_button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="@string/clique_aqui_para_cadastrar"
                 android:textSize="16sp"
-                android:textColor="@color/material_navigationbar"
                 android:layout_margin="30dp"
                />
         </FrameLayout>
