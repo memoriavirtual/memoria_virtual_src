@@ -452,8 +452,7 @@
 												#{mensagens.sinteseHistorica}
 											</h:outputLabel>
 											<h:inputTextarea class="form-control" id="sintese-historica"
-												value="#{cadastrarInstituicaoMB.sinteseHistorica}"
-												p:maxlength="255">
+												value="#{cadastrarInstituicaoMB.sinteseHistorica}">
 												<f:ajax event="keyup"
 													render="validacao-sinteseHistorica"
 													onevent="mostrarErro('#validacao-sinteseHistorica')"

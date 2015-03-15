@@ -219,7 +219,7 @@
 													<div class="col-md-12">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="complemento">#{mensagens.complemento}</h:outputLabel>
-															<h:inputTextarea class="form-control" id="complemento" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="complemento"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.complemento}" >
 																<f:ajax event="keyup"
 																		render="validacao-complemento"
@@ -450,7 +450,7 @@
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-md-offset-1 col-md-5">
+													<div class="col-md-offset-1 col-md-10">
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="producao-edicao">#{mensagens.edicao}</h:outputLabel>
@@ -469,11 +469,11 @@
 															</h:message>
 														</div>
 													</div>
-													<div class="col-md-5">
+													<div class="col-md-offset-2 col-md-8">
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="producao-outras-responsabilidades">#{mensagens.outrasResponsabilidades}</h:outputLabel>
-															<h:inputText class="form-control" maxlength="255"
+															<h:inputTextarea class="form-control"
 																id="producao-outras-responsabilidades"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.producao.outrasResponsabilidades}">
 																<f:ajax event="keyup"
@@ -481,7 +481,7 @@
 																	onevent="mostrarErro('#validacao-responsabilidades')"
 																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-responsabilidades',mensagens.outrasResponsabilidades,
 																	cadastrarBemPatrimonialMB.bemPatrimonial.producao.outrasResponsabilidades)}" />
-															</h:inputText>
+															</h:inputTextarea>
 															<h:message id="validacao-responsabilidades"
 																for="validacao-responsabilidades"
 																infoClass="help-block has-success"
@@ -513,7 +513,7 @@
 																for="caracteristicas-fisicas-tecnicas-executivas">
 																#{mensagens.caracteristicasFisicasTecnicasExecutivas}
 															</h:outputLabel>
-															<h:inputTextarea class="form-control" p:maxlength="255"
+															<h:inputTextarea class="form-control"
 																id="caracteristicas-fisicas-tecnicas-executivas"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasFisicasTecnicasExecutivas}">
 																<f:ajax event="keyup"
@@ -648,7 +648,7 @@
 															<h:outputLabel class="label-control" for="meio-antropico">
 																#{mensagens.meioAntropico}
 															</h:outputLabel>
-															<h:inputTextarea class="form-control" id="meio-antropico" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="meio-antropico"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.meioAntropico}">
 																<f:ajax event="keyup"
 																	render="validacao-meio-antropico"
@@ -670,7 +670,7 @@
 																for="caracteristicas-ambientais">
 																#{mensagens.caracteristicasAmbientais}
 															</h:outputLabel>
-															<h:inputTextarea class="form-control" p:maxlength="255"
+															<h:inputTextarea class="form-control"
 																id="caracteristicas-ambientais"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.caracteristicasAmbientais}">
 																<f:ajax event="keyup"
@@ -761,7 +761,7 @@
 															</h:selectOneMenu>
 														</div>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-8">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="uso-atual">#{mensagens.usoAtual}</h:outputLabel>
 															<h:inputText class="form-control" id="uso-atual" maxlength="255"
@@ -774,24 +774,6 @@
 															</h:inputText>
 															<h:message id="validacao-uso-atual"
 																for="validacao-uso-atual"
-																infoClass="help-block has-success"
-																errorClass="help-block has-error"
-																warnClass="help-block has-warning">
-															</h:message>
-														</div>
-													</div>
-													<div class="col-md-4">
-														<div class="form-group">
-															<h:outputLabel class="label-control" for="outros">#{mensagens.outros}</h:outputLabel>
-															<h:inputText class="form-control" id="outros" maxlength="255"
-																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.outros}">
-																<f:ajax event="keyup"
-																	render="validacao-outros"
-																	onevent="mostrarErro('#validacao-outros')"
-																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-outros',mensagens.outros,
-																	cadastrarBemPatrimonialMB.bemPatrimonial.outros)}" />
-															</h:inputText>
-															<h:message id="validacao-outros" for="validacao-outros"
 																infoClass="help-block has-success"
 																errorClass="help-block has-error"
 																warnClass="help-block has-warning">
@@ -1052,7 +1034,7 @@
 																#{mensagens.conteudo}
 															</h:outputLabel>
 															<h:inputTextarea class="form-control"
-																id="conteudo-bem-patrimonial" p:maxlength="255"
+																id="conteudo-bem-patrimonial"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.conteudo}">
 																<f:ajax event="keyup"
 																	render="validacao-conteudo-bem-patrimonial"
@@ -1073,7 +1055,7 @@
 															<h:outputLabel class="label-control" for="meio-acesso">
 																#{mensagens.meioAcesso}
 															</h:outputLabel>
-															<h:inputTextarea class="form-control" id="meio-acesso" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="meio-acesso"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.meioAcesso}">
 																<f:ajax event="keyup"
 																	render="validacao-meio-acesso"
@@ -1094,7 +1076,7 @@
 															<h:outputLabel class="label-control" for="notas">
 																#{mensagens.notas}
 															</h:outputLabel>
-															<h:inputTextarea class="form-control" id="notas" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="notas"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.notas}">
 																<f:ajax event="keyup"
 																	render="validacao-notas"
@@ -1103,6 +1085,24 @@
 																	cadastrarBemPatrimonialMB.bemPatrimonial.notas)}" />
 															</h:inputTextarea>
 															<h:message id="validacao-notas" for="validacao-notas"
+																infoClass="help-block has-success"
+																errorClass="help-block has-error"
+																warnClass="help-block has-warning">
+															</h:message>
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="outros">#{mensagens.outros}</h:outputLabel>
+															<h:inputTextarea class="form-control" id="outros"
+																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.outros}">
+																<f:ajax event="keyup"
+																	render="validacao-outros"
+																	onevent="mostrarErro('#validacao-outros')"
+																	listener="#{cadastrarBemPatrimonialMB.validarCampo('validacao-outros',mensagens.outros,
+																	cadastrarBemPatrimonialMB.bemPatrimonial.outros)}" />
+															</h:inputTextarea>
+															<h:message id="validacao-outros" for="validacao-outros"
 																infoClass="help-block has-success"
 																errorClass="help-block has-error"
 																warnClass="help-block has-warning">
@@ -1159,7 +1159,7 @@
 																#{mensagens.notasEstadoConservacao}
 															</h:outputLabel>
 															<h:inputTextarea class="form-control"
-																id="notas-estado-conservacao" p:maxlength="255"
+																id="notas-estado-conservacao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.diagnostico.notasEstadoConservacao}">
 																<f:ajax event="keyup"
 																	render="validacao-notas-estado-conservacao"
@@ -1400,7 +1400,7 @@
 																for="notas-uso-aproveitamento">
 																#{mensagens.notasUsoAproveitamento}
 															</h:outputLabel>
-															<h:inputTextarea class="form-control" p:maxlength="255"
+															<h:inputTextarea class="form-control"
 																id="notas-uso-aproveitamento"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.notasUsoAproveitamento}">
 																<f:ajax event="keyup"
@@ -1511,7 +1511,7 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="dados-transacao">#{mensagens.dadosTransacao}</h:outputLabel>
-															<h:inputTextarea class="form-control" p:maxlength="255"
+															<h:inputTextarea class="form-control"
 																id="dados-transacao"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao}">
 																<f:ajax event="keyup"
@@ -1531,7 +1531,7 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="historico">#{mensagens.historico}</h:outputLabel>
-															<h:inputTextarea class="form-control" id="historico" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="historico"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico}">
 																<f:ajax event="keyup"
 																	render="validacao-historico"
@@ -1552,7 +1552,7 @@
 															<h:outputLabel class="label-control"
 																for="instrumento-pesquisa">#{mensagens.intrumentoPesquisa}</h:outputLabel>
 															<h:inputTextarea class="form-control"
-																id="instrumento-pesquisa" p:maxlength="255"
+																id="instrumento-pesquisa"
 																value="#{cadastrarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.instrumentoPesquisa}">
 																<f:ajax event="keyup"
 																	render="validacao-instrumento-pesquisa"
@@ -1655,14 +1655,14 @@
 																		<div class="form-group">
 																			<h:outputLabel class="label-control"
 																				for="fontes-informacao">#{mensagens.fontesInformacao}</h:outputLabel>
-																			<h:inputText class="form-control"
-																				id="fontes-informacao" maxlength="255"
+																			<h:inputTextarea class="form-control"
+																				id="fontes-informacao"
 																				value="#{fonteinformacao.valor}">
 																				 <f:ajax event="keyup"
 																					render="validacao-fontes-informacao"
 																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-fontes-informacao',
 																					mensagens.fontesInformacao,fonteinformacao.valor)}" /> 
-																			</h:inputText>
+																			</h:inputTextarea>
 																			<h:message id="validacao-fontes-informacao"
 																				for="validacao-fontes-informacao"
 																				infoClass="help-block has-success"
@@ -1744,13 +1744,13 @@
 																		<div class="form-group">
 																			<h:outputLabel class="label-control"
 																				for="nome-pesquisador">#{mensagens.nome}</h:outputLabel>
-																			<h:inputText class="form-control" maxlength="255"
+																			<h:inputTextarea class="form-control"
 																				id="nome-pesquisador" value="#{pesquisador.nome}">
 																				<f:ajax event="keyup"
 																					render="validacao-nome-pesquisador"
 																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-nome-pesquisador',
 																					mensagens.nome,pesquisador.nome)}" />
-																			</h:inputText>
+																			</h:inputTextarea>
 																			<h:message id="validacao-nome-pesquisador"
 																				for="validacao-nome-pesquisador"
 																				infoClass="help-block has-success"
@@ -1763,13 +1763,13 @@
 																		<div class="form-group">
 																			<h:outputLabel class="label-control"
 																				for="notas-pesquisa">#{mensagens.notas}</h:outputLabel>
-																			<h:inputText class="form-control" id="notas-pesquisa" maxlength="255"
+																			<h:inputTextarea class="form-control" id="notas-pesquisa"
 																				value="#{pesquisador.notasPesquisador}">
 																				<f:ajax event="keyup"
 																					render="validacao-notas-pesquisa"
 																					listener="#{cadastrarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-notas-pesquisa',
 																					mensagens.notas,pesquisador.notasPesquisador)}" />
-																			</h:inputText>
+																			</h:inputTextarea>
 																			<h:message id="validacao-notas-pesquisa"
 																				for="validacao-notas-pesquisa"
 																				infoClass="help-block has-success"
