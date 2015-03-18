@@ -79,10 +79,6 @@ ALTER TABLE instituicao ADD COLUMN sintesehistorica text;
 ALTER TABLE bempatrimonial_fontesinformacao DROP COLUMN fontesinformacao;
 ALTER TABLE bempatrimonial_fontesinformacao ADD COLUMN fontesinformacao text;
 
--- Column: nome
-ALTER TABLE bempatrimonial_pesquisadores DROP COLUMN nome;
-ALTER TABLE bempatrimonial_pesquisadores ADD COLUMN nome text;
-
 -- Column: notaspesquisador --adicionado por inferencia
 ALTER TABLE bempatrimonial_pesquisadores DROP COLUMN notaspesquisador;
 ALTER TABLE bempatrimonial_pesquisadores ADD COLUMN notaspesquisador text;
