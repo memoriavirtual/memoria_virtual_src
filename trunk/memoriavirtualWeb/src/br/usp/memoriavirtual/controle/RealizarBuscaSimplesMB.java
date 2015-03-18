@@ -64,8 +64,7 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 	public RealizarBuscaSimplesMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
-		this.mensagens = (MensagensMB) resolver.getValue(
-				facesContext.getELContext(), null, "mensagensMB");
+		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
 	}
 
 	private void buscarNovaPagina(Integer pagina) {
@@ -173,8 +172,8 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 
 		try {
 			this.bemPatrimonial = b;
-			this.campos = this.utilMultimidiaEJB
-					.listarCampos(this.bemPatrimonial.getContainerMultimidia());
+			this.campos = this.utilMultimidiaEJB.listarCampos(this.bemPatrimonial.getContainerMultimidia());
+			
 			for (Descritor d : this.bemPatrimonial.getDescritores()) {
 				this.descritores += d.getDescritor() + " ";
 			}

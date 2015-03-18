@@ -36,14 +36,16 @@
 											<h:selectOneMenu class="form-control select com-select2"
 												id="instituicao"
 												value="#{editarBemPatrimonialMB.instituicao}">
-												<f:selectItems
-													value="#{editarBemPatrimonialMB.instituicoes}" />
+												<f:selectItems value="#{editarBemPatrimonialMB.instituicoes}" />
+												<f:ajax render=":externoCheck" onevent="checkSwitch"  event="change" listener="#{editarBemPatrimonialMB.checkRevisaoInstituicao}"/>
 												<f:ajax event="change" onevent="criaBuscaBem" listener="#{editarBemPatrimonialMB.limparBensRelacionados}"
 												 render="grupo-bens-relacionados"/>
 											</h:selectOneMenu>
 										</div>
 									</div>
 								</div>
+								
+								<h:outputText id="externoCheck" value="#{editarBemPatrimonialMB.instituicaoTemRevisao}"  style="visibility: hidden;"/>
 
 								<div class="panel-group top-margin-10" id="informacoes-gerais">
 									<div class="panel panel-default">
@@ -58,11 +60,19 @@
 											<div class="panel-body">
 												<div class="row">
 													<div class="col-md-2">
-														<div class="form-group">
+														<div class="form-group col-md-6">
 															<h:outputLabel class="control-label" for="externo">#{mensagens.externo}</h:outputLabel>
 															<div class="form-control pull-right com-switch">
 																<h:selectBooleanCheckbox id="externo" class="switch"
 																	value="#{editarBemPatrimonialMB.bemPatrimonial.externo}">
+																</h:selectBooleanCheckbox>
+															</div>
+														</div>
+														<div class="form-group col-md-6">
+															<h:outputLabel class="control-label" for="revisado">#{mensagens.revisado}</h:outputLabel>
+															<div class="form-control pull-right com-switch">
+																<h:selectBooleanCheckbox id="revisado"
+																	class="switch" value="#{editarBemPatrimonialMB.bemPatrimonial.revisao}">
 																</h:selectBooleanCheckbox>
 															</div>
 														</div>
@@ -1897,6 +1907,30 @@
 
 				}
 
+				function checkSwitch(data) {
+				    var status = data.status; // Can be "begin", "complete" or "success".
+				    var source = data.source; // The parent HTML DOM element.
+
+				    switch (status) {
+				        case "begin": // Before the ajax request is sent.
+				            // ...
+				            break;
+
+				        case "complete": // After the ajax response is arrived.
+				        	// ..
+				            break;
+
+				        case "success": // After update of HTML DOM based on ajax response.
+				        	if($('#externoCheck').text() == 'true'){
+								$('#externo').bootstrapSwitch('disabled',true);				        		
+				        	}
+							else{
+								$('#externo').bootstrapSwitch('disabled',false);
+							}
+				            break;
+				    }
+				}
+				
 				$(document)
 						.ready(
 								function() {
@@ -1910,13 +1944,22 @@
 										onText : '#{mensagens.sim}',
 										offText : '#{mensagens.nao}'
 									});
-
+									
+									$('#revisado').bootstrapSwitch('disabled',true);
+									
+									if('#{editarBemPatrimonialMB.instituicaoTemRevisao}' == 'true'){
+										$('#externo').bootstrapSwitch('disabled',true);
+									}
+									else{
+										$('#externo').bootstrapSwitch('disabled',false);
+									}
+									
 									$('.select').select2({
 										allowClear : true,
 										placeholder : "#{mensagens.selecione}",
 										minimumResultsForSearch : -1
 									});
-
+									
 									$("#busca").select2({
 										minimumInputLength : 1,
 										allowClear : true,

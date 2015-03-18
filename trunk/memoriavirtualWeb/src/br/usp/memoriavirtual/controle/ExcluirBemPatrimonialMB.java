@@ -87,7 +87,15 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements
 	}
 
 	public String solicitarExclusao() {
-		if (validar()) {
+		if(validarBemNaoRevisado()){
+			try {
+				excluirBemPatrimonialEJB.excluir(bemPatrimonial.getId());
+				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			} catch (ModeloException e) {
+				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+				e.printStackTrace();
+			}
+		}else if (validar()) {
 			try {
 				int dias = new Integer(this.validade).intValue();
 				Calendar calendario = Calendar.getInstance();
@@ -142,9 +150,15 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements
 				e.printStackTrace();
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
 			}
-
 		}
-		return null;
+		return "index.jsf";
+	}
+
+	private boolean validarBemNaoRevisado() {
+		if(bemPatrimonial.getInstituicao().getRevisao() == true && bemPatrimonial.isRevisao() == false){
+			return true;
+		}
+		return false;
 	}
 
 	@Override

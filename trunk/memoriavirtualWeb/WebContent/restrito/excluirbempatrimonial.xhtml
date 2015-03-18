@@ -36,16 +36,47 @@
 							<h:form class="form-vertical" role="form" method="post"
 								prependId="false">
 
-
-								<div class="row">
-									<div class="col-md-offset-3 col-md-2">
-										<div class="form-group">
-											<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
-											<div class="mv-input-number" style="width: 100%;">
-												<h:inputText value="#{excluirBemPatrimonialMB.validade}"
-													class="form-control" id="validade" p:type="number" p:max="30" p:min="1"/>
-												<h:message id="validacao-validade"
-													for="validacao-validade"
+								<h:panelGroup rendered="#{excluirBemPatrimonialMB.bemPatrimonial.instituicao.revisao &amp;&amp; excluirBemPatrimonialMB.bemPatrimonial.revisao || !excluirBemPatrimonialMB.bemPatrimonial.instituicao.revisao}">
+									<div class="row">
+										<div class="col-md-offset-3 col-md-2">
+											<div class="form-group">
+												<h:outputLabel for="validade">#{mensagens.validade}</h:outputLabel>
+												<div class="mv-input-number" style="width: 100%;">
+													<h:inputText value="#{excluirBemPatrimonialMB.validade}"
+														class="form-control" id="validade" p:type="number" p:max="30" p:min="1"/>
+													<h:message id="validacao-validade"
+														for="validacao-validade"
+														infoClass="help-block has-success"
+														errorClass="help-block has-error"
+														warnClass="help-block has-warning">
+													</h:message>
+												</div>
+											</div>
+										</div>
+	
+										<div class="col-md-4">
+											<div class="form-group">
+												<h:outputLabel class="control-label" for="analista">#{mensagens.usuarioAprovador}</h:outputLabel>
+												<h:selectOneMenu class="form-control com-select2" onchange="verificaConfirmar();"
+													id="analista" value="#{excluirBemPatrimonialMB.usuarioAprovador}">
+													<f:selectItem itemLabel="#{mensagens.selecioneUmItem}" itemValue="disabled"/>
+													<f:selectItems value="#{excluirBemPatrimonialMB.usuariosAprovadores}" />
+												</h:selectOneMenu>
+											</div>
+										</div>
+	
+									</div>								
+									<div class="row">
+										<div class="col-md-offset-3 col-md-6">
+											<div class="form-group">
+												<h:outputLabel class="control-label" for="justificativa">
+													#{mensagens.justificativa}
+												</h:outputLabel>
+												<h:inputTextarea class="form-control" id="justificativa"
+													value="#{excluirBemPatrimonialMB.justificativa}">
+												</h:inputTextarea>
+												<h:message id="validacao-justificativa"
+													for="validacao-justificativa"
 													infoClass="help-block has-success"
 													errorClass="help-block has-error"
 													warnClass="help-block has-warning">
@@ -53,39 +84,14 @@
 											</div>
 										</div>
 									</div>
-
-									<div class="col-md-4">
-										<div class="form-group">
-											<h:outputLabel class="control-label" for="analista">#{mensagens.usuarioAprovador}</h:outputLabel>
-											<h:selectOneMenu class="form-control com-select2" onchange="verificaConfirmar();"
-												id="analista" value="#{excluirBemPatrimonialMB.usuarioAprovador}">
-												<f:selectItem itemLabel="#{mensagens.selecioneUmItem}" itemValue="disabled"/>
-												<f:selectItems value="#{excluirBemPatrimonialMB.usuariosAprovadores}" />
-											</h:selectOneMenu>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{excluirBemPatrimonialMB.bemPatrimonial.instituicao.revisao &amp;&amp; !excluirBemPatrimonialMB.bemPatrimonial.revisao}">
+									<div class="row">
+										<div class="col-md-offset-3 col-md-6" style="text-align: center">
+											<h:outputText value="#{mensagens.mensagemExcluirBemSemRevisao}" styleClass="h4"/>
 										</div>
 									</div>
-
-								</div>
-
-								<div class="row">
-									<div class="col-md-offset-3 col-md-6">
-										<div class="form-group">
-											<h:outputLabel class="control-label" for="justificativa">
-												#{mensagens.justificativa}
-											</h:outputLabel>
-											<h:inputTextarea class="form-control" id="justificativa"
-												value="#{excluirBemPatrimonialMB.justificativa}">
-											</h:inputTextarea>
-											<h:message id="validacao-justificativa"
-												for="validacao-justificativa"
-												infoClass="help-block has-success"
-												errorClass="help-block has-error"
-												warnClass="help-block has-warning">
-											</h:message>
-										</div>
-									</div>
-								</div>
-
+								</h:panelGroup>
 								<div class="text-right row">
 									<div class="col-md-12">
 										<h:commandButton 

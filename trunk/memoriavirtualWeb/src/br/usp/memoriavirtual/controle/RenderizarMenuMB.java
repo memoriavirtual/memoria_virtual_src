@@ -18,9 +18,11 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 public class RenderizarMenuMB implements Serializable {
 
 	private static final long serialVersionUID = -3767548433370852588L;
-	public boolean administrador = false;
-	public boolean gerente = false;
-
+	private boolean administrador = false;
+	private boolean gerente = false;
+	private boolean revisor = false;
+	
+	
 	private CadastrarBemPatrimonialMB beanCadastroBem;
 	
 	@SuppressWarnings("unchecked")
@@ -36,12 +38,15 @@ public class RenderizarMenuMB implements Serializable {
 				.getAttribute("usuario");
 
 		if (usuario.isAdministrador() && usuario.isAtivo()) {
-			this.administrador = this.gerente = true;
+			this.administrador = this.gerente = this.revisor = true;
 		} else {
 
 			for (Acesso acesso : listaAcessos) {
 				if (acesso.getGrupo().getId().equalsIgnoreCase("GERENTE") && acesso.getValidade()) {
 					this.gerente = true;
+				}
+				if (acesso.getGrupo().getId().equalsIgnoreCase("REVISOR") && acesso.getValidade()) {
+					this.revisor = true;
 				}
 			}
 		}
@@ -69,6 +74,14 @@ public class RenderizarMenuMB implements Serializable {
 
 	public void setGerente(boolean gerente) {
 		this.gerente = gerente;
+	}
+
+	public boolean isRevisor() {
+		return revisor;
+	}
+
+	public void setRevisor(boolean revisor) {
+		this.revisor = revisor;
 	}
 
 }

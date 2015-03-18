@@ -19,16 +19,20 @@ function selecionarAbaPatrimonio() {
 	selecionarAba("3");
 }
 
-function selecionarAbaAutor() {
+function selecionarAbaRevisao() {
 	selecionarAba("4");
 }
 
-function selecionarAbaAdministracao() {
+function selecionarAbaAutor() {
 	selecionarAba("5");
 }
 
-function selecionarAbaConta() {
+function selecionarAbaAdministracao() {
 	selecionarAba("6");
+}
+
+function selecionarAbaConta() {
+	selecionarAba("7");
 }
 
 function selecionarAba(i) {

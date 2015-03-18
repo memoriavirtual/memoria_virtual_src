@@ -1,10 +1,10 @@
 package br.usp.memoriavirtual.servlet.rest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,10 +25,12 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 
-@Stateless
 @Path("/")
 @Produces({ MediaType.APPLICATION_JSON })
-public class Listar{
+@javax.enterprise.context.RequestScoped
+public class Listar implements Serializable{
+
+	private static final long serialVersionUID = 6983171202115368169L;
 
 	@EJB
 	EditarInstituicaoRemote editarInstituicaoEJB;
@@ -153,6 +155,32 @@ public class Listar{
 		} catch (ModeloException m) {
 			m.printStackTrace();
 		}		
+		return null;
+	}
+	
+	@GET
+	@Path("/listarbempatrimonialrevisao")
+	public List<BemPatrimonial> listarBensRevisao(@QueryParam("busca") String busca,@Context HttpServletRequest request){
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+			try {
+			List<BemPatrimonial> bensPatrimoniais = realizarBuscaSimplesEJB.buscar(busca);
+			List<BemPatrimonial> excluir = new ArrayList<BemPatrimonial>();
+			if(!usuario.isAdministrador()){
+				for(BemPatrimonial b : bensPatrimoniais){
+					if(!verificaAcesso(b, usuario.getAcessos())){
+						excluir.add(b);
+					}
+				}
+			}
+			for(BemPatrimonial b : bensPatrimoniais){
+				if(b.getInstituicao().getRevisao() == false)
+					excluir.add(b);
+			}
+			bensPatrimoniais.removeAll(excluir);
+			return bensPatrimoniais;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 	

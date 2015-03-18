@@ -29,7 +29,12 @@
 </h:head>
 
 <h:body>
-
+	<style type="text/css">
+		a:visited{
+				color:#428bca;
+				background-color:#428bca;
+				}
+	</style>
 	<div class="col-md-12">
 		<h:form class="form-horizontal" role="form" method="post"
 			prependId="false">
@@ -68,7 +73,8 @@
 						<h:inputText value="#{realizarBuscaSimplesMB.busca}"
 							class="form-control" id="busca">
 						</h:inputText>
-						<span class="input-group-btn"> <h:commandLink
+						<span class="input-group-btn"> 
+							<h:commandLink
 								class="btn btn-primary"
 								action="#{realizarBuscaSimplesMB.buscar}">
 								<i class="fa fa-search"></i>

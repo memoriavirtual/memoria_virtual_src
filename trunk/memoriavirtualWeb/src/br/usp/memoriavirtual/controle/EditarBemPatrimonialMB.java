@@ -90,6 +90,11 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 				}
 				this.bemPatrimonial.setAssuntos(assuntosSet);
 
+				if(instituicaoTemRevisao)
+					this.bemPatrimonial.setExterno(false);
+				
+				this.bemPatrimonial.setRevisao(false);
+				
 				this.descritores.trim();
 				Set<Descritor> descritoresSet = new TreeSet<Descritor>();
 				String descritoresArray[] = this.descritores.split("\\s+");

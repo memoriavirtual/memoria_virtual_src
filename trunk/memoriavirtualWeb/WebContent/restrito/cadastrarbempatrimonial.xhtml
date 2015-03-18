@@ -36,15 +36,17 @@
 											<h:selectOneMenu class="form-control select com-select2"
 												id="instituicao"
 												value="#{cadastrarBemPatrimonialMB.instituicao}">
-												<f:selectItems
-													value="#{cadastrarBemPatrimonialMB.instituicoes}" />
+												<f:selectItems value="#{cadastrarBemPatrimonialMB.instituicoes}" />
+												<f:ajax render=":externoCheck" onevent="checkSwitch"  event="change" listener="#{cadastrarBemPatrimonialMB.checkRevisaoInstituicao}"/>
 												<f:ajax event="change" onevent="criaBuscaBem" listener="#{cadastrarBemPatrimonialMB.limparBensRelacionados}"
 												 render="grupo-bens-relacionados"/>
 											</h:selectOneMenu>
 										</div>
 									</div>
 								</div>
-
+								
+								<h:outputText id="externoCheck" value="#{cadastrarBemPatrimonialMB.instituicaoTemRevisao}"  style="visibility: hidden;"/>
+								
 								<div class="panel-group top-margin-10" id="informacoes-gerais">
 									<div class="panel panel-default">
 										<div class="panel-heading">
@@ -61,7 +63,7 @@
 														<div class="form-group">
 															<h:outputLabel class="control-label" for="externo">#{mensagens.externo}</h:outputLabel>
 															<div class="form-control pull-right com-switch">
-																<h:selectBooleanCheckbox id="externo" class="switch"
+																<h:selectBooleanCheckbox id="externo" styleClass="switch"
 																	value="#{cadastrarBemPatrimonialMB.bemPatrimonial.externo}">
 																</h:selectBooleanCheckbox>
 															</div>
@@ -1897,7 +1899,30 @@
 				function carregarErros() {
 
 				}
+				
+				function checkSwitch(data) {
+				    var status = data.status; // Can be "begin", "complete" or "success".
+				    var source = data.source; // The parent HTML DOM element.
 
+				    switch (status) {
+				        case "begin": // Before the ajax request is sent.
+				            // ...
+				            break;
+
+				        case "complete": // After the ajax response is arrived.
+				        	// ..
+				            break;
+
+				        case "success": // After update of HTML DOM based on ajax response.
+				        	if($('#externoCheck').text() == 'true')
+								$('#externo').bootstrapSwitch('disabled',true);
+							else
+								$('#externo').bootstrapSwitch('disabled',false);
+				            break;
+				    }
+				}
+				
+				
 				$(document)
 						.ready(
 								function() {
@@ -1906,12 +1931,17 @@
 									mostrarErro('#validacao-titulo-principal');
 
 									mostrarErro('#validacao-numero-registro');
-
+									
 									$('.switch').bootstrapSwitch({
 										onText : '#{mensagens.sim}',
 										offText : '#{mensagens.nao}'
 									});
-
+									
+									if('#{cadastrarBemPatrimonialMB.instituicaoTemRevisao}' == 'true')
+										$('#externo').bootstrapSwitch('disabled',true);
+									else
+										$('#externo').bootstrapSwitch('disabled',false);
+									
 									$('.select').select2({
 										allowClear : true,
 										placeholder : "#{mensagens.selecione}",

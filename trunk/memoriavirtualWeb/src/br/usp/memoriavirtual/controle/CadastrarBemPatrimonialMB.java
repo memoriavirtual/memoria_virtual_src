@@ -62,7 +62,8 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 	protected String buscaInstituicao = "";
 	protected String buscaBem = "";
 	protected List<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
-
+	protected boolean instituicaoTemRevisao;
+	
 	@EJB
 	private UtilMultimidiaRemote utilMultimidiaEJB;
 
@@ -122,10 +123,12 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 						this.bemPatrimonial.getPesquisadores().remove(p);
 				}
 
-				Instituicao i = this.editarInstituicaoEJB
-						.getInstituicao(new Long(this.instituicao).longValue());
+				Instituicao i = this.editarInstituicaoEJB.getInstituicao(new Long(this.instituicao).longValue());
 				this.bemPatrimonial.setInstituicao(i);
 
+				if(instituicaoTemRevisao)
+					this.bemPatrimonial.setExterno(false);
+					
 				Set<Assunto> assuntosSet = new TreeSet<Assunto>();
 				String assuntosArray[] = assuntos.split("\\s+");
 
@@ -225,7 +228,23 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 		}
 		return valido;
 	}
+	
+	public void checkRevisaoInstituicao() throws NumberFormatException, ModeloException{
+		Instituicao i = this.editarInstituicaoEJB.getInstituicao(new Long(this.instituicao).longValue());
+		if (i.getRevisao())
+			instituicaoTemRevisao = true;
+		else
+			instituicaoTemRevisao = false;
+	}
 
+	
+	public boolean isInstituicaoTemRevisao() {
+		return instituicaoTemRevisao;
+	}
+
+	public void setInstituicaoTemRevisao(boolean instituicaoTemRevisao) {
+		this.instituicaoTemRevisao = instituicaoTemRevisao;
+	}
 	public String adicionarTitulo() {
 		this.bemPatrimonial.getTitulos().add(new Titulo());
 		return null;
@@ -278,9 +297,13 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 				}
 			}
 			for (Instituicao i : instituicoes) {
-				opcoes.add(new SelectItem(new Long(i.getId()).toString(), i
-						.getNome()));
+				opcoes.add(new SelectItem(new Long(i.getId()).toString(), i.getNome()));
 			}
+			
+			instituicao = (String) opcoes.get(0).getValue();
+			
+			checkRevisaoInstituicao();
+			
 			return opcoes;
 		} catch (Exception e) {
 			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));

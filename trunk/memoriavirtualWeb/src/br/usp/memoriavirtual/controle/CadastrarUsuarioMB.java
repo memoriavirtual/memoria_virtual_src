@@ -79,7 +79,7 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 			podeCadastrar = false;
 		} catch (IOException e) {
 			e.printStackTrace();
-			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+			this.getMensagens().mensagemSucesso(this.traduzir("erroInterno"));
 			podeCadastrar = false;
 		}
 	}

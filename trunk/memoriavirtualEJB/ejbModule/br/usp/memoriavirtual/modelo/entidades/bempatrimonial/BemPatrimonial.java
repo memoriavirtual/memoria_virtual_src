@@ -103,7 +103,10 @@ public class BemPatrimonial implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ContainerMultimidia containerMultimidia = new ContainerMultimidia();
-
+	
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="bemPatrimonial",cascade = CascadeType.MERGE)
+	private List<Revisao> revisoes = new ArrayList<Revisao>();
+	
 	private String condicaoTopografica = "";
 	private String sitioPaisagem = "";
 	private String aguaProxima = "";
@@ -124,6 +127,7 @@ public class BemPatrimonial implements Serializable {
 	private boolean porao = false;
 	private boolean sotao = false;
 	private boolean externo = false;
+	private boolean revisao = false;
 	private String alturaFachadaFrontal = "";
 	private String alturaFachadaPosterior = "";
 	private String alturaTotal = "";
@@ -145,6 +149,7 @@ public class BemPatrimonial implements Serializable {
 	private String complemento = "";
 	private String meioAntropico = "";
 	private String caracteristicasAmbientais = "";
+	
 
 	public BemPatrimonial() {
 		super();
@@ -599,5 +604,21 @@ public class BemPatrimonial implements Serializable {
 
 	public void setCaracteristicasAmbientais(String caracteristicasAmbientais) {
 		this.caracteristicasAmbientais = caracteristicasAmbientais;
+	}
+
+	public boolean isRevisao() {
+		return revisao;
+	}
+
+	public void setRevisao(boolean revisao) {
+		this.revisao = revisao;
+	}
+
+	public List<Revisao> getRevisoes() {
+		return revisoes;
+	}
+
+	public void setRevisoes(List<Revisao> revisoes) {
+		this.revisoes = revisoes;
 	}
 }

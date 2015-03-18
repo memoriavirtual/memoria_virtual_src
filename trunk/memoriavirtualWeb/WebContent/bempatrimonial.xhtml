@@ -29,6 +29,12 @@
 		#{realizarBuscaSimplesMB.busca}</title>
 </h:head>
 <h:body>
+	<style type="text/css">
+		a:visited{
+				color:#428bca;
+				background-color:#428bca;
+				}
+	</style>
 	<div class="modal fade" id="midiasModal" tabindex="-1" role="dialog"
 		data-backdrop="static" aria-labelledby="midiasModalLabel"
 		aria-hidden="true">
@@ -71,17 +77,17 @@
 			</div>
 			<div class="col-md-4 top-margin-75 text-right">
 				<h:form>
-					<h:commandLink class="margin-5 btn btn-danger"
+					<h:commandButton class="margin-5 btn btn-danger"
 						rendered="#{realizarBuscaSimplesMB.permissao()}"
-						action="#{realizarBuscaSimplesMB.excluir()}">
-						<i class="fa fa-times"></i> #{mensagens.excluir}</h:commandLink>
-					<h:commandLink class="margin-5 btn btn-primary"
+						action="#{realizarBuscaSimplesMB.excluir}"
+						value="#{mensagens.excluir}"/>
+					<h:commandButton class="margin-5 btn btn-primary"
 						rendered="#{realizarBuscaSimplesMB.permissao()}"
-						action="#{realizarBuscaSimplesMB.editar()}">
-						<i class="fa fa-pencil"></i> #{mensagens.editar}</h:commandLink>
-					<h:commandLink class="margin-5 btn btn-default"
-						action="#{realizarBuscaSimplesMB.voltar()}">
-						<i class="fa fa-arrow-circle-left"></i> #{mensagens.voltar}</h:commandLink>
+						action="#{realizarBuscaSimplesMB.editar}"
+						value="#{mensagens.editar}"/>
+					<h:commandButton class="margin-5 btn btn-default"
+						action="#{realizarBuscaSimplesMB.voltar}"
+						value="#{mensagens.voltar}"/>
 				</h:form>
 			</div>
 		</div>
@@ -112,12 +118,20 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-2">
-									<div class="form-group">
+									<div class="form-group col-md-6">
 										<h:outputLabel class="control-label" for="externo">#{mensagens.externo}</h:outputLabel>
 										<div class="form-control pull-right com-switch">
 											<h:selectBooleanCheckbox disabled="true" id="externo"
 												class="switch"
 												value="#{realizarBuscaSimplesMB.bemPatrimonial.externo}">
+											</h:selectBooleanCheckbox>
+										</div>
+									</div>
+									<div class="form-group col-md-6">
+										<h:outputLabel class="control-label" for="externo">#{mensagens.revisao}</h:outputLabel>
+										<div class="form-control pull-right com-switch">
+											<h:selectBooleanCheckbox disabled="true" id="revisado"
+												class="switch" value="#{realizarBuscaSimplesMB.bemPatrimonial.revisao}">
 											</h:selectBooleanCheckbox>
 										</div>
 									</div>
@@ -1135,6 +1149,36 @@
 					</div>
 				</div>
 			</div>
+			<div class="panel-group top-margin-10" id="revisoes-anteriores">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#revisoes-anteriores"
+									href="#sanfona-assuntos-descritores">#{mensagens.revisoes}</a>
+							</h4>
+						</div>
+						<div id="sanfona-revisoes-anteriores"
+							class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<ui:repeat var="revisao" value="#{realizarBuscaSimplesMB.bemPatrimonial.revisoes}">
+										<div class="col-md-12">
+											<div class="col-md-2">
+												<h:outputLabel class="label-control" for="dataRevisao">#{mensagens.data}</h:outputLabel>
+												<div style="clear:both;"></div>
+												<h:inputText value="#{revisao.dataRevisao}" disabled="true" id="dataRevisao"/>
+											</div>
+											<div class="col-md-10">
+												<h:outputLabel class="label-control" for="anotacaoRevisao">#{mensagens.anotacao}</h:outputLabel>
+												<h:inputTextarea disabled="true" class="form-control" id="anotacaoRevisao" value="#{revisao.anotacao}" />
+											</div>
+										</div>
+									</ui:repeat>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 		</h:form>
 	</div>
 	<script type="text/javascript">
