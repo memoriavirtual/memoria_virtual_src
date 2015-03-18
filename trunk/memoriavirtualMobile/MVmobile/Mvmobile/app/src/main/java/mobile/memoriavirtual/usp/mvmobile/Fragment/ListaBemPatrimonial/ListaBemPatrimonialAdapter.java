@@ -33,8 +33,8 @@ public class ListaBemPatrimonialAdapter extends ArrayAdapter<BemPatrimonial> {
         TextView name = (TextView) rowView.findViewById(R.id.registered_patrimonial_name);
         TextView author = (TextView) rowView.findViewById(R.id.registered_patrimonial_author);
 
-        name.setText(patrimonial.getTipo());
-        author.setText("Autor: " + patrimonial.getNumRegistro());
+        name.setText(patrimonial.getCadastro_tipo());
+        author.setText("Autor: " + patrimonial.getCadastro_num_registro());
 
         return rowView;
     }

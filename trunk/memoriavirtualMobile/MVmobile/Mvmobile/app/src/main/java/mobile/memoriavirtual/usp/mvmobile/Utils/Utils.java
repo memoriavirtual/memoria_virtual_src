@@ -38,8 +38,9 @@ public class Utils {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         Map<String, String> map = new HashMap<String, String>();
-        map.put(mContext.getString(R.string.cadastro_tipo), bemPatrimonial.getTipo());
-        map.put(mContext.getString(R.string.cadastro_num_registro), bemPatrimonial.getNumRegistro());
+        map.put(mContext.getString(R.string.cadastro_externo), bemPatrimonial.getCadastro_externo());
+        map.put(mContext.getString(R.string.cadastro_tipo), bemPatrimonial.getCadastro_tipo());
+        map.put(mContext.getString(R.string.cadastro_num_registro), bemPatrimonial.getCadastro_num_registro());
 
         //transforma Map em JSONObject
         JSONObject json = new JSONObject(map);
@@ -126,4 +127,15 @@ public class Utils {
             editor.commit();
         }
     }
+
+
+    public static String safeString(JSONObject json, String string) throws JSONException {
+        if (json.has(string)){
+            return json.getString(string);
+        }
+        else{
+            return "";
+        }
+    }
+
 }
