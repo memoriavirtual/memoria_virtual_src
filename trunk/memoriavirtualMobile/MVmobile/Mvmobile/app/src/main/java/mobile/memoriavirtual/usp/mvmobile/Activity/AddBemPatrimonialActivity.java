@@ -1,9 +1,7 @@
 package mobile.memoriavirtual.usp.mvmobile.Activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -14,12 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormAssuntos;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormAutor;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormDescricao;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormDisponibilidade;
@@ -33,10 +26,11 @@ import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
-public class AddBemPatrimonialActivity extends ActionBarActivity implements FormMidia.OnFragmentInteractionListener,FormInformacoes.OnFragmentInteractionListener, FormAutor.OnFragmentInteractionListener,FormProducao.OnFragmentInteractionListener,FormDescricao.OnFragmentInteractionListener,FormEstado.OnFragmentInteractionListener,FormDisponibilidade.OnFragmentInteractionListener,FormProcedencia.OnFragmentInteractionListener,FormAssuntos.OnFragmentInteractionListener,FormOutros.OnFragmentInteractionListener {
+public class AddBemPatrimonialActivity extends ActionBarActivity implements FormMidia.OnFragmentInteractionListener,FormInformacoes.OnFragmentInteractionListener, FormAutor.OnFragmentInteractionListener,FormProducao.OnFragmentInteractionListener,FormDescricao.OnFragmentInteractionListener,FormEstado.OnFragmentInteractionListener,FormDisponibilidade.OnFragmentInteractionListener,FormProcedencia.OnFragmentInteractionListener,FormOutros.OnFragmentInteractionListener {
 
     AddBemPatrimonialAdapter mAdapter;
     ViewPager mPager;
+    BemPatrimonial mBemPatrimonial;
 
     EditText tipo;
     EditText numRegistro;
@@ -50,7 +44,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
 
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
-        mPager.setOffscreenPageLimit(10); //nao destroi as fragments escondidos
+        mPager.setOffscreenPageLimit(9); //nao destroi as fragments escondidos
     }
 
     @Override
@@ -92,6 +86,12 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     }
     public void onNextButtonClick(View v) {
         nextTouched();
+    }
+
+
+    private void getData()
+    {
+
     }
 
     private void addTouched()

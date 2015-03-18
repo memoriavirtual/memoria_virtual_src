@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
         mDrawerLista.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item, mDrawerTitulos));
         mDrawerLista.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerLista.setItemChecked(0, true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.drawer_open, R.string.drawer_close);
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
     private void selectItem(int position) {
 
         // update selected item and title, then close the drawer
-        selectDrawer(position);
+        //selectDrawer(position);
 
         // update the main content by replacing fragments
         Fragment fragment = null;
@@ -90,6 +91,7 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
             case 1:
                 Intent intent = new Intent(this, AddBemPatrimonialActivity.class);
                 startActivity(intent);
+                mDrawerLayout.closeDrawer(mDrawerLista);
                 break;
         }
     }
@@ -100,9 +102,9 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
             mDrawerLayout.closeDrawer(mDrawerLista);
         }
         else{
-            mDrawerLista.setItemChecked(position, true);
+            //mDrawerLista.setItemChecked(position, true);
             setTitle(mDrawerTitulos[position]);
-            mDrawerLayout.closeDrawer(mDrawerLista);
+            //mDrawerLayout.closeDrawer(mDrawerLista);
         }
     }
 

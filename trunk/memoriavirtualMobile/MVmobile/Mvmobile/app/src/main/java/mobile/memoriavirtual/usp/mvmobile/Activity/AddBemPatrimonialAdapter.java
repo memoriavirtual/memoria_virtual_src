@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.Locale;
 
-import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormAssuntos;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormAutor;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormDescricao;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormDisponibilidade;
@@ -22,7 +21,7 @@ import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
 public class AddBemPatrimonialAdapter extends FragmentPagerAdapter {
 
-    final int PAGE_COUNT = 10;
+    final int PAGE_COUNT = 9;
 
     public AddBemPatrimonialAdapter(FragmentManager fm) {
         super(fm);
@@ -69,10 +68,6 @@ public class AddBemPatrimonialAdapter extends FragmentPagerAdapter {
                 return fragment7;
 
             case 8:
-                FormAssuntos fragment8 = new FormAssuntos();
-                return fragment8;
-
-            case 9:
                 FormOutros fragment9 = new FormOutros();
                 return fragment9;
         }
@@ -106,8 +101,6 @@ public class AddBemPatrimonialAdapter extends FragmentPagerAdapter {
             case 7:
                 return Utils.getContext().getString(R.string.titulo_cadastro_procedencia).toUpperCase();
             case 8:
-                return Utils.getContext().getString(R.string.titulo_cadastro_assuntos).toUpperCase();
-            case 9:
                 return Utils.getContext().getString(R.string.titulo_cadastro_outros).toUpperCase();
         }
         return null;

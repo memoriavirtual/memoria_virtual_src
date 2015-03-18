@@ -87,23 +87,46 @@
     <!-- Estado -->
     <string name="titulo_cadastro_estado">Estado</string>
 
+    <string name="cadastro_estado_preservacao">Estado de preservação</string>
+    <string name="cadastro_estado_convervacao">Estado de conservação</string>
+    <string name="cadastro_notas_estado_convervacao">Notas do estado de conservação</string>
+
     <!-- Disponibilidade -->
     <string name="titulo_cadastro_disponibilidade">Disponibilidade</string>
+
+    <string name="cadastro_disponibilidade">Disponibilidade</string>
+    <string name="cadastro_condicao_acesso">Condições de acesso</string>
+    <string name="cadastro_condicao_reproducao">Condições de reprodução</string>
+    <string name="cadastro_protecao">Proteção</string>
+    <string name="cadastro_numero_processo">Número de processo</string>
+    <string name="cadastro_data_retorno">Data de retorno</string>
+    <string name="cadastro_notas_uso_aproveitamento">Notas de uso e aproveitamento</string>
 
     <!-- Procedência -->
     <string name="titulo_cadastro_procedencia">Procedência</string>
 
-    <!-- Assuntos -->
-    <string name="titulo_cadastro_assuntos">Assuntos</string>
+    <string name="cadastro_tipo_aquisicao">Tipo de aquisição</string>
+    <string name="cadastro_valor_venal">Valor venal</string>
+    <string name="cadastro_data">Data</string>
+    <string name="cadastro_primeiro_proprietario">Primeiro proprietário</string>
+    <string name="cadastro_dados_transacao">Dados da transação</string>
+    <string name="cadastro_historico">Histórico</string>
+    <string name="cadastro_instrumento_pesquisa">Instrumento de pesquisa</string>
 
     <!-- Outros -->
     <string name="titulo_cadastro_outros">Outros</string>
 
+    <string name="cadastro_assuntos">Assuntos</string>
+    <string name="cadastro_descritores">Descritores</string>
+    <string name="cadastro_fontes_informacao">Fontes de informação</string>
+    <string name="cadastro_pesquisadores">Pesquisadores</string>
+    <string name="cadastro_relacionar_outros_bens">Relacionar com outros bens</string>
+
 
 
     <!-- Botoes -->
-    <string name="cadastro_add_button">Salvar</string>
-    <string name="cadastro_proximo_button">Próximo</string>
+    <string name="cadastro_add_button">SALVAR</string>
+    <string name="cadastro_proximo_button">PRÓXIMO</string>
 
 
 </resources>

@@ -67,9 +67,39 @@
     <item name="cadastro_meio_acesso" type="id"></item>
     <item name="cadastro_notas" type="id"></item>
 
+    <!-- Estado -->
+    <item name="cadastro_estado_preservacao" type="id"></item>
+    <item name="cadastro_estado_convervacao" type="id"></item>
+    <item name="cadastro_notas_estado_convervacao" type="id"></item>
 
-    <!-- Botoes -->
-    <item name="cadastro_add_button" type="id"></item>
+    <!-- Disponibilidade -->
+    <item name="cadastro_disponibilidade" type="id"></item>
+    <item name="cadastro_condicao_acesso" type="id"></item>
+    <item name="cadastro_condicao_reproducao" type="id"></item>
+    <item name="cadastro_protecao" type="id"></item>
+    <item name="cadastro_numero_processo" type="id"></item>
+    <item name="cadastro_data_retorno" type="id"></item>
+    <item name="cadastro_notas_uso_aproveitamento" type="id"></item>
+
+    <!-- Procedência -->
+    <item name="cadastro_tipo_aquisicao" type="id"></item>
+    <item name="cadastro_valor_venal" type="id"></item>
+    <item name="cadastro_data" type="id"></item>
+    <item name="cadastro_primeiro_proprietario" type="id"></item>
+    <item name="cadastro_dados_transacao" type="id"></item>
+    <item name="cadastro_historico" type="id"></item>
+    <item name="cadastro_instrumento_pesquisa" type="id"></item>
+
+    <!-- Outros -->
+    <item name="cadastro_assuntos" type="id"></item>
+    <item name="cadastro_descritores" type="id"></item>
+    <item name="cadastro_fontes_informacao" type="id"></item>
+    <item name="cadastro_pesquisadores" type="id"></item>
+    <item name="cadastro_relacionar_outros_bens" type="id"></item>
+
+
+    <!-- Action -->
     <item name="action_add_bem_patrimonial" type="id"></item>
+
 
 </resources>
