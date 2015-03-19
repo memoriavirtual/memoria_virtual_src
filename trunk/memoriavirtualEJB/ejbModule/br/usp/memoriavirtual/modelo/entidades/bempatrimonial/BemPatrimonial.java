@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -68,6 +69,7 @@ public class BemPatrimonial implements Serializable {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_FONTESINFORMACAO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
+	@Lob
 	private List<String> fontesInformacao = new ArrayList<String>();
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
@@ -113,7 +115,9 @@ public class BemPatrimonial implements Serializable {
 	private String vegetacao = "";
 	private Exposicao exposicao = BemPatrimonial.Exposicao.exposto;
 	private String usoAtual = "";
+	@Lob
 	private String outros = "";
+	@Lob
 	private String notas = "";
 	private String areaTotal = "";
 	private String comprimento = "";
@@ -142,12 +146,18 @@ public class BemPatrimonial implements Serializable {
 	private String latitude = "";
 	private String longitude = "";
 	private String tituloPrincipal = "";
+	@Lob
 	private String caracteristicasFisicasTecnicasExecutivas = "";
+	@Lob
 	private String conteudo = "";
+	@Lob
 	private String meioAcesso = "";
 	private String idMidia = "";
+	@Lob
 	private String complemento = "";
+	@Lob
 	private String meioAntropico = "";
+	@Lob
 	private String caracteristicasAmbientais = "";
 	
 

@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 
 @Embeddable
 public class HistoricoProcedencia implements Serializable {
@@ -14,9 +15,12 @@ public class HistoricoProcedencia implements Serializable {
 	private static final long serialVersionUID = 8644876249752710680L;
 	private TipoAquisicao tipoAquisicao = HistoricoProcedencia.TipoAquisicao.comprado;
 	private String valorVenalTransacao = "";
+	@Lob
 	private String dadosDocTransacao = "";
 	private String primeiroProprietario = "";
+	@Lob
 	private String historico = "";
+	@Lob
 	private String instrumentoPesquisa = "";
 	private String dataAquisicao = "";
 

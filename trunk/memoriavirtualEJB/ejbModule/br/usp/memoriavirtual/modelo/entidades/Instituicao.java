@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -51,6 +52,7 @@ public class Instituicao implements Serializable {
 	private TipoPropriedade tipoPropriedade;
 	private TiposProtecaoExistente protecaoExistente;
 	private String legislacaoIncidente;
+	@Lob
 	private String sinteseHistorica;
 	private Boolean validade;
 	private Boolean revisao;

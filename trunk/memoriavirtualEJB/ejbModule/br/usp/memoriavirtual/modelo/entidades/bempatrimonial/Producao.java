@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 
 @Embeddable
 public class Producao implements Serializable {
@@ -11,6 +12,7 @@ public class Producao implements Serializable {
 	private String local = "";
 	private String ano = "";
 	private String edicao = "";
+	@Lob
 	private String outrasResponsabilidades = "";
 
 	public Producao() {

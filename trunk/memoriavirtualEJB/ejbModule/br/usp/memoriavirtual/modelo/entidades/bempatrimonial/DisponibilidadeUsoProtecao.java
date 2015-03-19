@@ -3,6 +3,7 @@ package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 
 @Embeddable
 public class DisponibilidadeUsoProtecao implements Serializable {
@@ -29,6 +30,7 @@ public class DisponibilidadeUsoProtecao implements Serializable {
 	private CondicoesAcesso condicoesAcesso = DisponibilidadeUsoProtecao.CondicoesAcesso.livre;
 	private CondicoesReproducao condicoesReproducao = DisponibilidadeUsoProtecao.CondicoesReproducao.livre;
 	private String dataRetorno = "";
+	@Lob
 	private String notasUsoAproveitamento = "";
 	private Protecao protecao = DisponibilidadeUsoProtecao.Protecao.nao;
 	private String legislacao = "";
