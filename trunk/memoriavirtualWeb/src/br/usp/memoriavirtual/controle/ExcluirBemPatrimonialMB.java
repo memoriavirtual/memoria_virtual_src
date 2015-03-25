@@ -83,6 +83,7 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements
 	
 	@Override
 	public String voltar(){
+		id = "";
 		return "selecionarbempatrimonialexclusao.jsf";
 	}
 
