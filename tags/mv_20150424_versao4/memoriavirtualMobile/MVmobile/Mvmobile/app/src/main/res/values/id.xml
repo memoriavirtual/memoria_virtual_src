@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main activity -->
+    <item name="main_content_fragment" type="id"></item>
+    <item name="drawer_layout" type="id"></item>
+
+    <!-- Lista de Bem Patrimoniais -->
+    <item name="nenhum_bem_patrimonial_cadastrado" type="id"></item>
+    <item name="lista_add_button" type="id"></item>
+    <item name="registered_patrimonial_image" type="id"></item>
+    <item name="registered_patrimonial_content" type="id"></item>
+    <item name="registered_patrimonial_name" type="id"></item>
+    <item name="registered_patrimonial_author" type="id"></item>
+
+    <!-- Cadastrar Bem Patrimonial -->
+
+    <!-- Informações gerais -->
+    <item name="cadastro_externo" type="id"></item>
+    <item name="cadastro_tipo" type="id"></item>
+    <item name="cadastro_num_registro" type="id"></item>
+    <item name="cadastro_titulo_principal" type="id"></item>
+    <item name="cadastro_complemento" type="id"></item>
+    <item name="cadastro_colecao" type="id"></item>
+    <item name="cadastro_latitude" type="id"></item>
+    <item name="cadastro_longitude" type="id"></item>
+
+    <!-- Autor -->
+    <item name="cadastro_autoria" type="id"></item>
+
+    <!-- Produção -->
+    <item name="cadastro_local" type="id"></item>
+    <item name="cadastro_ano" type="id"></item>
+    <item name="cadastro_edicao" type="id"></item>
+    <item name="cadastro_outras_responsabilidades" type="id"></item>
+
+    <!-- Descrição -->
+    <item name="cadastro_caracteristicas" type="id"></item>
+    <item name="cadastro_dimensoes_quantificacoes" type="id"></item>
+    <item name="cadastro_condicao_topografica" type="id"></item>
+    <item name="cadastro_uso" type="id"></item>
+    <item name="cadastro_num_ambientes" type="id"></item>
+    <item name="cadastro_num_pavimentos" type="id"></item>
+    <item name="cadastro_alcova" type="id"></item>
+    <item name="cadastro_porao" type="id"></item>
+    <item name="cadastro_sotao" type="id"></item>
+    <item name="cadastro_meio_antropico" type="id"></item>
+    <item name="cadastro_carac_ambientais" type="id"></item>
+    <item name="cadastro_sitio_paisagem" type="id"></item>
+    <item name="cadastro_agua_proxima" type="id"></item>
+    <item name="cadastro_vegetacao" type="id"></item>
+    <item name="cadastro_exposicao" type="id"></item>
+    <item name="cadastro_uso_atual" type="id"></item>
+    <item name="cadastro_outros" type="id"></item>
+    <item name="cadastro_area_total" type="id"></item>
+    <item name="cadastro_altura_fachada_frontal" type="id"></item>
+    <item name="cadastro_altura_fachada_posterior" type="id"></item>
+    <item name="cadastro_largura" type="id"></item>
+    <item name="cadastro_altura" type="id"></item>
+    <item name="cadastro_profundidade" type="id"></item>
+    <item name="cadastro_altura_cumeeira" type="id"></item>
+    <item name="cadastro_altura_total" type="id"></item>
+    <item name="cadastro_pe_direito_terreo" type="id"></item>
+    <item name="cadastro_tipo_pe_direito" type="id"></item>
+    <item name="cadastro_comprimento" type="id"></item>
+    <item name="cadastro_localizacao_fisica" type="id"></item>
+    <item name="cadastro_conteudo" type="id"></item>
+    <item name="cadastro_meio_acesso" type="id"></item>
+    <item name="cadastro_notas" type="id"></item>
+
+    <!-- Estado -->
+    <item name="cadastro_estado_preservacao" type="id"></item>
+    <item name="cadastro_estado_convervacao" type="id"></item>
+    <item name="cadastro_notas_estado_convervacao" type="id"></item>
+
+    <!-- Disponibilidade -->
+    <item name="cadastro_disponibilidade" type="id"></item>
+    <item name="cadastro_condicao_acesso" type="id"></item>
+    <item name="cadastro_condicao_reproducao" type="id"></item>
+    <item name="cadastro_protecao" type="id"></item>
+    <item name="cadastro_numero_processo" type="id"></item>
+    <item name="cadastro_data_retorno" type="id"></item>
+    <item name="cadastro_notas_uso_aproveitamento" type="id"></item>
+
+    <!-- Procedência -->
+    <item name="cadastro_tipo_aquisicao" type="id"></item>
+    <item name="cadastro_valor_venal" type="id"></item>
+    <item name="cadastro_data" type="id"></item>
+    <item name="cadastro_primeiro_proprietario" type="id"></item>
+    <item name="cadastro_dados_transacao" type="id"></item>
+    <item name="cadastro_historico" type="id"></item>
+    <item name="cadastro_instrumento_pesquisa" type="id"></item>
+
+    <!-- Outros -->
+    <item name="cadastro_assuntos" type="id"></item>
+    <item name="cadastro_descritores" type="id"></item>
+    <item name="cadastro_fontes_informacao" type="id"></item>
+    <item name="cadastro_pesquisadores" type="id"></item>
+    <item name="cadastro_relacionar_outros_bens" type="id"></item>
+
+
+    <!-- Action -->
+    <item name="action_add_bem_patrimonial" type="id"></item>
+
+
+</resources>

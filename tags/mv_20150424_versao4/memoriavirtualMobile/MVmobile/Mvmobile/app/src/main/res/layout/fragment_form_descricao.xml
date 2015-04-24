@@ -1,0 +1,338 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormInformacoes">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp"
+            android:gravity="center">
+
+            <TextView
+                android:text="@string/cadastro_caracteristicas"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_caracteristicas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_dimensoes_quantificacoes"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_dimensoes_quantificacoes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <!-- COMBOBOX -->
+            <TextView
+                android:text="@string/cadastro_condicao_topografica"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_condicao_topografica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_uso"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_uso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_num_ambientes"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_num_ambientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_num_pavimentos"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_num_pavimentos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"/>
+
+            <CheckBox
+                android:id="@id/cadastro_alcova"
+                android:text="@string/cadastro_alcova"
+                style="@style/TextView"/>
+
+            <CheckBox
+                android:id="@id/cadastro_porao"
+                android:text="@string/cadastro_porao"
+                style="@style/TextView"/>
+
+            <CheckBox
+                android:id="@id/cadastro_sotao"
+                android:text="@string/cadastro_sotao"
+                style="@style/TextView"/>
+
+            <TextView
+                android:text="@string/cadastro_meio_antropico"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_meio_antropico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_carac_ambientais"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_carac_ambientais"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_sitio_paisagem"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_sitio_paisagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_agua_proxima"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_agua_proxima"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_vegetacao"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_vegetacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <!-- COMBOBOX -->
+            <TextView
+                android:text="@string/cadastro_exposicao"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_exposicao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_uso_atual"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_uso_atual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_outros"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_outros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_area_total"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_area_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_altura_fachada_frontal"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_altura_fachada_frontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_altura_fachada_posterior"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_altura_fachada_posterior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_largura"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_largura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_altura"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_altura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_profundidade"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_profundidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_altura_cumeeira"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_altura_cumeeira"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_altura_total"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_altura_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_pe_direito_terreo"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_pe_direito_terreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_tipo_pe_direito"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_tipo_pe_direito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_comprimento"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_comprimento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_localizacao_fisica"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_localizacao_fisica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_conteudo"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_conteudo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_meio_acesso"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_meio_acesso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_notas"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_notas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <Button
+                android:background="@drawable/border_button"
+                android:textColor="@color/material_statusbar"
+                android:text="@string/cadastro_proximo_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:textSize="18sp"
+                android:onClick="onNextButtonClick"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

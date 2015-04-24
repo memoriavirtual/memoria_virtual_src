@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Memória Virtual</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nenhum_bem_patrimonial_cadastrado">Nenhum bem patrimonial cadastrado.</string>
+    <string name="clique_aqui_para_cadastrar">Clique aqui para cadastrar</string>
+
+    <!-- Drawer -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- SharedPreferences -->
+    <string name="cache_bens_patrimoniais">bem_patrimonial</string>
+
+    <!-- Activities -->
+    <string name="title_activity_add_bem_patrimonial">Cadastrar Bem Patrimonial</string>
+
+    <!-- Cadastro de Bem patrimonial -->
+
+
+    <!-- Mídia -->
+    <string name="titulo_cadastro_midia">Mídia</string>
+
+
+    <!-- Informações gerais -->
+    <string name="titulo_cadastro_informacoes_gerais">Informações Gerais</string>
+    <string name="cadastro_externo">Uso externo?</string>
+    <string name="cadastro_tipo">Tipo</string>
+    <string name="cadastro_num_registro">Número de registro</string>
+    <string name="cadastro_titulo_principal">Título principal</string>
+    <string name="cadastro_complemento">Complemento</string>
+    <string name="cadastro_colecao">Coleção</string>
+    <string name="cadastro_latitude">Latitude</string>
+    <string name="cadastro_longitude">Longitude</string>
+
+    <!-- Autor -->
+    <string name="titulo_cadastro_autor">Autor</string>
+    <string name="cadastro_autoria">Autoria</string>
+
+    <!-- Produção -->
+    <string name="titulo_cadastro_producao">Produção</string>
+
+    <string name="cadastro_local">Local</string>
+    <string name="cadastro_ano">Ano</string>
+    <string name="cadastro_edicao">Edição</string>
+    <string name="cadastro_outras_responsabilidades">Outras Responsabilidades</string>
+
+    <!-- Descrição -->
+    <string name="titulo_cadastro_descricao">Descrição</string>
+
+    <string name="cadastro_caracteristicas">Características físicas técnicas e executivas</string>
+    <string name="cadastro_dimensoes_quantificacoes">Dimensões e quantificações</string>
+    <string name="cadastro_condicao_topografica">Condição topográfica</string>
+    <string name="cadastro_uso">Uso</string>
+    <string name="cadastro_num_ambientes">Número de ambientes</string>
+    <string name="cadastro_num_pavimentos">Número de pavimentos</string>
+    <string name="cadastro_alcova">Alcova?</string>
+    <string name="cadastro_porao">Porão?</string>
+    <string name="cadastro_sotao">Sótao?</string>
+    <string name="cadastro_meio_antropico">Meio antrópico</string>
+    <string name="cadastro_carac_ambientais">Características ambientais</string>
+    <string name="cadastro_sitio_paisagem">Sítio da paisagem</string>
+    <string name="cadastro_agua_proxima">Água próxima</string>
+    <string name="cadastro_vegetacao">Vegetação</string>
+    <string name="cadastro_exposicao">Exposição</string>
+    <string name="cadastro_uso_atual">Uso atual</string>
+    <string name="cadastro_outros">Outros</string>
+    <string name="cadastro_area_total">Área total</string>
+    <string name="cadastro_altura_fachada_frontal">Altura da fachada frontal</string>
+    <string name="cadastro_altura_fachada_posterior">Altura da fachada posterior</string>
+    <string name="cadastro_largura">Largura</string>
+    <string name="cadastro_altura">Altura</string>
+    <string name="cadastro_profundidade">Profundidade</string>
+    <string name="cadastro_altura_cumeeira">Altura da cumeeira</string>
+    <string name="cadastro_altura_total">Altura total</string>
+    <string name="cadastro_pe_direito_terreo">Pé direto térreo</string>
+    <string name="cadastro_tipo_pe_direito">Tipo de pé direito</string>
+    <string name="cadastro_comprimento">Comprimento</string>
+    <string name="cadastro_localizacao_fisica">Localização física</string>
+    <string name="cadastro_conteudo">Conteúdo</string>
+    <string name="cadastro_meio_acesso">Meio de acesso</string>
+    <string name="cadastro_notas">Notas</string>
+
+    <!-- Estado -->
+    <string name="titulo_cadastro_estado">Estado</string>
+
+    <string name="cadastro_estado_preservacao">Estado de preservação</string>
+    <string name="cadastro_estado_convervacao">Estado de conservação</string>
+    <string name="cadastro_notas_estado_convervacao">Notas do estado de conservação</string>
+
+    <!-- Disponibilidade -->
+    <string name="titulo_cadastro_disponibilidade">Disponibilidade</string>
+
+    <string name="cadastro_disponibilidade">Disponibilidade</string>
+    <string name="cadastro_condicao_acesso">Condições de acesso</string>
+    <string name="cadastro_condicao_reproducao">Condições de reprodução</string>
+    <string name="cadastro_protecao">Proteção</string>
+    <string name="cadastro_numero_processo">Número de processo</string>
+    <string name="cadastro_data_retorno">Data de retorno</string>
+    <string name="cadastro_notas_uso_aproveitamento">Notas de uso e aproveitamento</string>
+
+    <!-- Procedência -->
+    <string name="titulo_cadastro_procedencia">Procedência</string>
+
+    <string name="cadastro_tipo_aquisicao">Tipo de aquisição</string>
+    <string name="cadastro_valor_venal">Valor venal</string>
+    <string name="cadastro_data">Data</string>
+    <string name="cadastro_primeiro_proprietario">Primeiro proprietário</string>
+    <string name="cadastro_dados_transacao">Dados da transação</string>
+    <string name="cadastro_historico">Histórico</string>
+    <string name="cadastro_instrumento_pesquisa">Instrumento de pesquisa</string>
+
+    <!-- Outros -->
+    <string name="titulo_cadastro_outros">Outros</string>
+
+    <string name="cadastro_assuntos">Assuntos</string>
+    <string name="cadastro_descritores">Descritores</string>
+    <string name="cadastro_fontes_informacao">Fontes de informação</string>
+    <string name="cadastro_pesquisadores">Pesquisadores</string>
+    <string name="cadastro_relacionar_outros_bens">Relacionar com outros bens</string>
+
+
+
+    <!-- Botoes -->
+    <string name="cadastro_add_button">SALVAR</string>
+    <string name="cadastro_proximo_button">PRÓXIMO</string>
+
+
+</resources>
