@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Material http://www.google.com/design/spec/style/color.html#color-color-palette -->
+
+    <color name="color_app">#009688</color>
+    <color name="material_navigationbar">#009688</color>
+    <color name="material_statusbar">#00796B</color>
+    <color name="material_others">#26A69A</color>
+
+    <color name="background_pagerView">#B2DFDB</color>
+
+    <color name="text_dark">#666666</color>
+
+    <!-- Cards -->
+    <color name="background_gray">#EEEEEE</color>
+    <color name="card_white">#ffffffff</color>
+    <color name="card_shadow">#D3D3D3</color>
+</resources>

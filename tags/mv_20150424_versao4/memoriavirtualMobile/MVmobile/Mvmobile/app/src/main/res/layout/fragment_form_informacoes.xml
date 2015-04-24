@@ -1,0 +1,106 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormInformacoes">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@id/cadastro_externo"
+                android:text="@string/cadastro_externo"
+                style="@style/TextView"/>
+
+            <TextView
+                android:text="@string/cadastro_tipo"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_tipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_num_registro"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_num_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_titulo_principal"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_titulo_principal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_complemento"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_complemento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_colecao"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_colecao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:text="@string/cadastro_latitude"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_latitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"/>
+
+            <TextView
+                android:text="@string/cadastro_longitude"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_longitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <Button
+                android:background="@drawable/border_button"
+                android:textColor="@color/material_statusbar"
+                android:text="@string/cadastro_proximo_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:textSize="18sp"
+                android:onClick="onNextButtonClick"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
