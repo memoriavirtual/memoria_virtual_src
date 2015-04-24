@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.el.ELResolver;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -109,8 +110,7 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 
 				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "O código digitado está incorreto!",null));
+				FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "O código digitado está incorreto!",null));
 				
 				return this.redirecionar("/restrito/index.jsf", true);
 			} catch (Exception e) {
