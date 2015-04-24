@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head />
+<h:body>
+	<ui:composition>
+		<h:form class="form-horizontal" role="form" method="post"
+			prependId="false" enctype="multipart/form-data">
+			<div class="midias">
+				<div class="row bottom-margin-10">
+					<div class="col-md-5 col-md-offset-3">
+						<h:inputFile label="#{mensagens.file}" id="submit-input"
+							value="#{bean.part}" class="pull-right btn btn-default btn-block">
+						</h:inputFile>
+					</div>
+					<div class="col-md-1">
+						<h:commandButton action="#{bean.uploadFile}" id="submit-button"
+							class="submit-arquivo btn btn-primary"
+							value="#{mensagens.enviar}">
+						</h:commandButton>
+					</div>
+					<div class="col-md-1">
+						<h:commandButton id="finish-button" class="btn btn-success"
+							value="#{mensagens.finalizar}"
+							action="#{bean.finalizar}">
+						</h:commandButton>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<ui:repeat var="midia" value="#{bean.campos}">
+								<div class="col-md-4">
+									<div class="thumbnail ao-centro" data-id="#{midia.id}">
+										<img class="miniatura carregar clicavel auto-margin"
+											data-toggle="modal" data-target="#midiasModal"
+											style="display: #{bean.imagemDisplay(midia.id)};"></img>
+										<video class="miniatura carregar clicavel auto-margin"
+											type="#{bean.getContentType(midia.id)}" data-toggle="modal"
+											data-target="#midiasModal"
+											style="display:#{bean.videoDisplay(midia.id)};"></video>
+										<h:graphicImage class="miniatura tabelaMidia clicavel"
+											library="imagens" name="media.png" data-toggle="modal"
+											data-target="#midiasModal"
+											style="display:#{bean.midiaDisplay(midia.id)};" />
+										<div class="caption">
+											<div class="form-group">
+												<h:outputLabel
+													class="a-esquerda labels col-md-3 control-label" for="nome">#{mensagens.nome}</h:outputLabel>
+												<div class="col-md-9">
+													<h:inputText class="nome-midia form-control"
+														value="#{midia.nome}" id="nome"></h:inputText>
+													<h:message id="validacao-nome" for="validacao-nome"
+														infoClass="help-block has-success"
+														errorClass="help-block has-error"
+														warnClass="help-block has-warning">
+													</h:message>
+												</div>
+											</div>
+											<div class="form-group">
+												<h:outputLabel
+													class="a-esquerda labels col-md-3 control-label"
+													for="descricao">#{mensagens.descricao}</h:outputLabel>
+												<div class="col-md-9">
+													<h:inputText class="form-control"
+														value="#{midia.descricao}" id="descricao"></h:inputText>
+												</div>
+											</div>
+											<h:commandLink class="btn btn-danger btn-xs remove-midia"
+												action="#{bean.removerMidia(midia.id)}">
+												<i class="fa fa-times-circle"></i>
+											</h:commandLink>
+										</div>
+									</div>
+								</div>
+							</ui:repeat>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					mostrarErro('[id*="name"]');
+
+					var inputHeight = $('#submit-input').height();
+					var buttonHeight = $('#submit-button').height();
+					var submitHeight = $('#finish-button').height();
+					
+					buttonHeight = submitHeight > buttonHeight ? submitHeight : buttonHeight;
+
+					if (inputHeight > buttonHeight) {
+						$('#submit-button').height(inputHeight);
+						$('#finish-button').height(inputHeight);
+					} else {
+						$('#submit-input').height(buttonHeight);
+						$('#finish-button').height(buttonHeight);
+					}
+
+					$('.carregar').each(function(index, el) {
+						el = $(el);
+						var id = el.closest('div').data('id');
+						var endereco = '/memoriavirtual/multimidia?bean=#{nomeBean}&amp;id=' + id;
+						el.attr('src', endereco);
+					});
+
+					$('.carregar').click(function(e) {
+						e.preventDefault();
+						var self = $(this);
+						var titulo = self.closest('.thumbnail').find('.nome-midia').val();
+						var modal = $('#midiasModal');
+						modal.find('.modal-title').html(titulo);
+						var clone = self.clone();
+						clone.removeClass('miniatura carregar clicavel');
+						clone.attr('data-toggle', '');
+						clone.attr('data-target', '');
+						clone.attr('controls', true);
+						clone.css('max-width', $('body').width() - 40);
+						modal.find('.modal-body').html(clone);
+					});
+
+					$('#fechar').click(function(e) {
+						e.preventDefault();
+						var video = $('#midiasModal video');
+						if (video.length > 0) {
+							video[0].pause();
+						}
+					});
+				});
+			</script>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

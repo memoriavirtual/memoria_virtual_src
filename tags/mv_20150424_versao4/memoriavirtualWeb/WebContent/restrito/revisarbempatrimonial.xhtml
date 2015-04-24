@@ -1,0 +1,1160 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+</head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+		<ui:define name="titulo">#{mensagens.revisaoBemPatrimonialTitulo}</ui:define>
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+
+				<div class="row">
+					<div class="col-md-12" style="text-align: center">
+						<h:outputLabel class="control-label" for="instituicao">#{mensagens.instituicao} :</h:outputLabel>
+						<h:outputText id="instituicao" value="&nbsp;#{revisarbemMB.b.instituicao.nome}"></h:outputText>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="informacoes-gerais">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#informacoes-gerais"
+									href="#sanfona-informacoes-gerais">#{mensagens.informacoesGerais}</a>
+							</h4>
+						</div>
+						<div id="sanfona-informacoes-gerais"
+							class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-group col-md-6">
+											<h:outputLabel class="control-label" for="externo">#{mensagens.externo}</h:outputLabel>
+											<div class="form-control pull-right com-switch">
+												<h:selectBooleanCheckbox disabled="true" id="externo"
+													class="switch" value="#{revisarbemMB.b.externo}">
+												</h:selectBooleanCheckbox>
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<h:outputLabel class="control-label" for="externo">#{mensagens.revisao}</h:outputLabel>
+											<div class="form-control pull-right com-switch">
+												<h:selectBooleanCheckbox disabled="true" id="revisado"
+													class="switch" value="#{revisarbemMB.b.revisao}">
+												</h:selectBooleanCheckbox>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="tipo">#{mensagens.tipo}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control" id="tipo"
+												value="#{revisarbemMB.b.tipoBemPatrimonial}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="numero-registro">#{mensagens.numeroRegistro}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="numero-registro"
+												value="#{revisarbemMB.b.numeroRegistro}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="titulo-principal">#{mensagens.tituloPrincipal}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="titulo-principal"
+												value="#{revisarbemMB.b.tituloPrincipal}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<h:panelGroup id="grupo-titulos">
+											<h:dataTable var="titulo" id="tabela-titulos"
+												class="table table-hover table-bordered"
+												footerClass="hidden" value="#{revisarbemMB.b.titulos}">
+												<f:facet name="caption">#{mensagens.titulos}</f:facet>
+												<h:column>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<h:outputLabel class="label-control" for="tipo-titulo">#{mensagens.tipo}</h:outputLabel>
+																<h:outputText disabled="true" id="tipo-titulo"
+																	class="form-control" value="#{titulo.tipo}">
+																</h:outputText>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<h:outputLabel class="label-control" for="titulo">#{mensagens.titulo}</h:outputLabel>
+																<h:outputText disabled="true" class="form-control"
+																	id="titulo" value="#{titulo.valor}">
+																</h:outputText>
+															</div>
+														</div>
+													</div>
+												</h:column>
+											</h:dataTable>
+										</h:panelGroup>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="complemento">#{mensagens.complemento}</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="complemento" value="#{revisarbemMB.b.complemento}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="colecao">#{mensagens.colecao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="colecao" value="#{revisarbemMB.b.colecao}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="latitude">#{mensagens.latitude}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="latitude" value="#{revisarbemMB.b.latitude}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="longitude">#{mensagens.longitude}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="longitude" value="#{revisarbemMB.b.longitude}" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="autorias">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#autorias"
+									href="#sanfona-autorias">#{mensagens.autorias}</a>
+							</h4>
+						</div>
+						<div id="sanfona-autorias" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+										<h:panelGroup id="grupo-autorias">
+											<h:dataTable var="autoria" id="tabela-autorias"
+												class="table table-bordered table-hover"
+												value="#{revisarbemMB.b.autorias}" footerClass="hidden">
+												<f:facet name="caption">#{mensagens.autorias}</f:facet>
+												<h:column>
+													<div class="row">
+														<div class="col-md-7">
+															<div class="form-group">
+																<h:outputLabel class="label-control" for="nome-autor">#{mensagens.autor}</h:outputLabel>
+																<h:outputText disabled="true"
+																	value="#{autoria.autor.nome}" id="nome-autor"
+																	class="form-control">
+																</h:outputText>
+															</div>
+														</div>
+														<div class="col-md-5">
+															<div class="form-group">
+																<h:outputLabel class="label-control" for="tipo-autoria">#{mensagens.tipoAutoria}</h:outputLabel>
+																<h:outputText disabled="true" class="form-control"
+																	id="tipo-autoria" value="#{autoria.tipo}">
+																</h:outputText>
+															</div>
+														</div>
+
+													</div>
+												</h:column>
+											</h:dataTable>
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="producao">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#producao"
+									href="#sanfona-producao">#{mensagens.producao}</a>
+							</h4>
+						</div>
+						<div id="sanfona-producao" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-offset-1 col-md-5">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="producao-local">#{mensagens.local}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="producao-local" value="#{revisarbemMB.b.producao.local}" />
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="producao-ano">#{mensagens.ano}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="producao-ano" value="#{revisarbemMB.b.producao.ano}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-1 col-md-5">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="producao-edicao">#{mensagens.edicao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="producao-edicao"
+												value="#{revisarbemMB.b.producao.edicao}" />
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="producao-outras-responsabilidades">#{mensagens.outrasResponsabilidades}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="producao-outras-responsabilidades"
+												value="#{revisarbemMB.b.producao.outrasResponsabilidades}" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="descricao">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#descricao"
+									href="#sanfona-descricao">#{mensagens.descricao}</a>
+							</h4>
+						</div>
+						<div id="sanfona-descricao" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="caracteristicas-fisicas-tecnicas-executivas">
+																#{mensagens.caracteristicasFisicasTecnicasExecutivas}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="caracteristicas-fisicas-tecnicas-executivas"
+												value="#{revisarbemMB.b.caracteristicasFisicasTecnicasExecutivas}">
+											</h:inputTextarea>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="dimensoes-quantificacoes">#{mensagens.dimensoesQuantificacoes}</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="dimensoes-quantificacoes"
+												value="#{revisarbemMB.b.dimensoesQuantificacoes}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="condicao-topografica">#{mensagens.condicaoTopografica}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control "
+												id="condicao-topografica"
+												value="#{revisarbemMB.b.condicaoTopografica}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="uso">#{mensagens.uso}</h:outputLabel>
+											<h:outputText disabled="true" id="uso" class="form-control"
+												value="#{revisarbemMB.b.uso}" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="numero-ambientes">#{mensagens.numeroAmbientes}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="numero-ambientes"
+												value="#{revisarbemMB.b.numeroAmbientes}" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="numero-pavimentos">#{mensagens.numeroPavimentos}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="numero-pavimentos"
+												value="#{revisarbemMB.b.numeroPavimentos}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="alcova">#{mensagens.alcova}</h:outputLabel>
+											<div class="form-control pull-right com-switch">
+												<div class="form-control pull-right com-switch">
+													<h:selectBooleanCheckbox disabled="true" id="alcova"
+														class="switch" value="#{revisarbemMB.b.alcova}">
+													</h:selectBooleanCheckbox>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="porao">#{mensagens.porao}</h:outputLabel>
+											<div class="form-control pull-right com-switch">
+												<div class="form-control pull-right com-switch">
+													<h:selectBooleanCheckbox disabled="true" id="porao"
+														class="switch" value="#{revisarbemMB.b.porao}">
+													</h:selectBooleanCheckbox>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="sotao">#{mensagens.sotao}</h:outputLabel>
+											<div class="form-control pull-right com-switch">
+												<div class="form-control pull-right com-switch">
+													<h:selectBooleanCheckbox disabled="true" id="sotao"
+														class="switch" value="#{revisarbemMB.b.sotao}">
+													</h:selectBooleanCheckbox>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="meio-antropico">
+																#{mensagens.meioAntropico}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="meio-antropico" value="#{revisarbemMB.b.meioAntropico}" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="caracteristicas-ambientais">
+																#{mensagens.caracteristicasAmbientais}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="caracteristicas-ambientais"
+												value="#{revisarbemMB.b.caracteristicasAmbientais}" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="sitio-paisagem">#{mensagens.sitioPaisagem}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="sitio-paisagem" value="#{revisarbemMB.b.sitioPaisagem}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="agua-proxima">#{mensagens.aguaProxima}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="agua-proxima" value="#{revisarbemMB.b.aguaProxima}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="vegetacao">#{mensagens.vegetacao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="vegetacao" value="#{revisarbemMB.b.vegetacao}" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="exposicao">#{mensagens.exposicao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="exposicao" value="#{revisarbemMB.b.exposicao}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="uso-atual">#{mensagens.usoAtual}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="uso-atual" value="#{revisarbemMB.b.usoAtual}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="outros">#{mensagens.outros}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="outros" value="#{revisarbemMB.b.outros}" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="area-total">#{mensagens.areaTotal}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="area-total" value="#{revisarbemMB.b.areaTotal}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="altura-fachada-frontal">#{mensagens.alturaFachadaFrontal}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="altura-fachada-frontal"
+												value="#{revisarbemMB.b.alturaFachadaFrontal}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="altura-fachada-posterior">#{mensagens.alturaFachadaPosterior}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="altura-fachada-posterior"
+												value="#{revisarbemMB.b.alturaFachadaPosterior}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="largura">#{mensagens.largura}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="largura" value="#{revisarbemMB.b.largura}" />
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="altura">#{mensagens.altura}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="altura" value="#{revisarbemMB.b.altura}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="profundidade">#{mensagens.profundidade}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="profundidade" value="#{revisarbemMB.b.profundidade}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="altura-cumeeira">#{mensagens.alturaCumeeira}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="altura-cumeeira"
+												value="#{revisarbemMB.b.alturaCumeeira}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="altura-total">#{mensagens.alturaTotal}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="altura-total" value="#{revisarbemMB.b.alturaTotal}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="pe-direito-terreo">#{mensagens.peDireitoTerreo}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="pe-direito-terreo"
+												value="#{revisarbemMB.b.peDireitoTerreo}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="pe-direito-tipo">#{mensagens.peDireitoTipo}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="pe-direito-tipo" value="#{revisarbemMB.b.peDireitoTipo}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="comprimento">#{mensagens.comprimento}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="comprimento" value="#{revisarbemMB.b.comprimento}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="localizacao-fisica">#{mensagens.localizacaoFisica}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="localizacao-fisica"
+												value="#{revisarbemMB.b.localizacaoFisica}" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="conteudo-bem-patrimonial">
+																#{mensagens.conteudo}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="conteudo-bem-patrimonial"
+												value="#{revisarbemMB.b.conteudo}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="meio-acesso">
+																#{mensagens.meioAcesso}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="meio-acesso" value="#{revisarbemMB.b.meioAcesso}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="notas">
+																#{mensagens.notas}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="notas" value="#{revisarbemMB.b.notas}" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="estado">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#estado"
+									href="#sanfona-estado">#{mensagens.estado}</a>
+							</h4>
+						</div>
+						<div id="sanfona-estado" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-offset-3 col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="estado-preservacao">#{mensagens.estadoPreservacao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="estado-preservacao"
+												value="#{revisarbemMB.b.diagnostico.estadoPreservacao}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="estado-conservacao">#{mensagens.estadoConservacao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="estado-conservacao"
+												value="#{revisarbemMB.b.diagnostico.estadoConservacao}">
+											</h:outputText>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="notas-estado-conservacao">
+																#{mensagens.notasEstadoConservacao}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="notas-estado-conservacao"
+												value="#{revisarbemMB.b.diagnostico.notasEstadoConservacao}" />
+										</div>
+									</div>
+								</div>
+								<div>
+									<h:panelGroup id="grupo-intervencoes">
+										<h:dataTable id="intervencao" var="intervencao"
+											class="table table-hover table-bordered"
+											value="#{revisarbemMB.b.intervencoes}">
+											<h:column>
+												<div class="row">
+													<div class="col-md-2">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="data">#{mensagens.data}</h:outputLabel>
+															<h:outputText disabled="true" class="form-control"
+																id="data" value="#{intervencao.data}">
+															</h:outputText>
+														</div>
+													</div>
+													<div class="col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="responsavel">#{mensagens.responsavel}</h:outputLabel>
+															<h:outputText disabled="true" class="form-control"
+																id="responsavel" value="#{intervencao.responsavel}">
+															</h:outputText>
+														</div>
+													</div>
+													<div class="col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="descricao">#{mensagens.descricao}</h:outputLabel>
+															<h:outputText disabled="true" class="form-control"
+																id="descricao" value="#{intervencao.descricao}">
+															</h:outputText>
+														</div>
+													</div>
+												</div>
+											</h:column>
+										</h:dataTable>
+									</h:panelGroup>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="disponibilidade">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#disponibilidade"
+									href="#sanfona-disponibilidade">#{mensagens.disponibilidade}</a>
+							</h4>
+						</div>
+						<div id="sanfona-disponibilidade"
+							class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="disponibilidade">#{mensagens.disponibilidade}</h:outputLabel>
+											<h:outputText disabled="true" layout="pageDirection"
+												class="form-control" id="disponibilidade"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.disponibilidade}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="condicoes-acesso">#{mensagens.condicoesAcesso}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="condicoes-acesso"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.condicoesAcesso}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="condicoes-reproducao">#{mensagens.condicoesReproducao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="condicoes-reproducao"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.condicoesReproducao}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="protecao">#{mensagens.protecao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="protecao"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.protecao}">
+											</h:outputText>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="instituicao-protetora">#{mensagens.instituicaoProtetora}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="instituicao-protetora"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.protetoraInstituicao}" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="numero-processo">#{mensagens.numeroProcesso}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="numero-processo"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.legislacao}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="data-retorno">
+											#{mensagens.dataRetorno}
+										</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="data-retorno"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.dataRetorno}" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="notas-uso-aproveitamento">
+																#{mensagens.notasUsoAproveitamento}
+															</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="notas-uso-aproveitamento"
+												value="#{revisarbemMB.b.disponibilidadeUsoProtecao.notasUsoAproveitamento}">
+											</h:inputTextarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="procedencia">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#procedencia"
+									href="#sanfona-procedencia">#{mensagens.procedencia}</a>
+							</h4>
+						</div>
+						<div id="sanfona-procedencia" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="tipo-aquisicao">#{mensagens.tipoAquisicao}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="tipo-aquisicao"
+												value="#{revisarbemMB.b.historicoProcedencia.tipoAquisicao}">
+											</h:outputText>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="valor-venal">#{mensagens.valorVenal}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="valor-venal"
+												value="#{revisarbemMB.b.historicoProcedencia.valorVenalTransacao}" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="data-aquisicao">#{mensagens.data}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="data-aquisicao"
+												value="#{revisarbemMB.b.historicoProcedencia.dataAquisicao}" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="primeiro-proprietario">#{mensagens.primeiroProprietario}</h:outputLabel>
+											<h:outputText disabled="true" class="form-control"
+												id="primeiro-proprietario"
+												value="#{revisarbemMB.b.historicoProcedencia.primeiroProprietario}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="dados-transacao">#{mensagens.dadosTransacao}</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="dados-transacao"
+												value="#{revisarbemMB.b.historicoProcedencia.dadosDocTransacao}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="historico">#{mensagens.historico}</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="historico"
+												value="#{revisarbemMB.b.historicoProcedencia.historico}" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="label-control"
+												for="instrumento-pesquisa">#{mensagens.intrumentoPesquisa}</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="instrumento-pesquisa"
+												value="#{revisarbemMB.b.historicoProcedencia.instrumentoPesquisa}" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10" id="assuntos-descritores">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#assuntos-descritores"
+									href="#sanfona-assuntos-descritores">#{mensagens.assuntosDescritores}</a>
+							</h4>
+						</div>
+						<div id="sanfona-assuntos-descritores"
+							class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="assuntos">#{mensagens.assuntos}</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="assuntos" value="#{revisarbemMB.assuntos}" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<h:outputLabel class="label-control" for="descritores">#{mensagens.descritores}</h:outputLabel>
+											<h:inputTextarea disabled="true" class="form-control"
+												id="descritores" value="#{revisarbemMB.descritores}" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-group top-margin-10"
+					id="fontes-informacao-container">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse"
+									data-parent="#fontes-informacao-container"
+									href="#sanfona-fontes-informacao-container">#{mensagens.fontesInformacao}</a>
+							</h4>
+						</div>
+						<div id="sanfona-fontes-informacao-container"
+							class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div>
+									<h:panelGroup id="grupo-fontes-informacao">
+										<h:dataTable var="fonteinformacao"
+											class="table table-bordered table-hover"
+											value="#{revisarbemMB.fontesInformacao}">
+											<h:column>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="fontes-informacao">#{mensagens.fontesInformacao}</h:outputLabel>
+															<h:outputText disabled="true" class="form-control"
+																id="fontes-informacao" value="#{fonteinformacao.valor}">
+															</h:outputText>
+														</div>
+													</div>
+												</div>
+											</h:column>
+										</h:dataTable>
+									</h:panelGroup>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-group top-margin-10" id="pesquisadores">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#pesquisadores"
+									href="#sanfona-pesquisadores">#{mensagens.pesquisadores}</a>
+							</h4>
+						</div>
+						<div id="sanfona-pesquisadores" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div>
+									<h:panelGroup id="grupo-pesquisadores">
+										<h:dataTable var="pesquisador" id="tabela-pesquisadores"
+											class="table table-bordered table-hover"
+											value="#{revisarbemMB.b.pesquisadores}">
+
+											<h:column>
+												<div class="row">
+													<div class="col-md-2">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="data-pesquisa">#{mensagens.data}</h:outputLabel>
+															<h:outputText disabled="true" class="form-control"
+																id="data-pesquisa" value="#{pesquisador.dataPesquisa}" />
+														</div>
+													</div>
+													<div class="col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control"
+																for="nome-pesquisador">#{mensagens.nome}</h:outputLabel>
+															<h:outputText disabled="true" class="form-control"
+																id="nome-pesquisador" value="#{pesquisador.nome}">
+															</h:outputText>
+														</div>
+													</div>
+													<div class="col-md-5">
+														<div class="form-group">
+															<h:outputLabel class="label-control" for="notas-pesquisa">#{mensagens.notas}</h:outputLabel>
+															<h:outputText disabled="true" class="form-control"
+																id="notas-pesquisa"
+																value="#{pesquisador.notasPesquisador}" />
+														</div>
+													</div>
+												</div>
+											</h:column>
+
+										</h:dataTable>
+									</h:panelGroup>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-group top-margin-10"
+					id="relacionar-bem-patrimonial">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse"
+									data-parent="#relacionar-bem-patrimonial"
+									href="#sanfona-relacionar-bem-patrimonial">#{mensagens.bensRelacionados}</a>
+							</h4>
+						</div>
+						<div id="sanfona-relacionar-bem-patrimonial"
+							class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div>
+										<h:panelGroup id="grupo-bens-relacionados">
+											<h:dataTable var="bem" id="tabela-bens-relacionados"
+												class="table table-bordered table-hover"
+												value="#{revisarbemMB.b.bensRelacionados}">
+												<h:column>
+													<div class="row">
+														<div class="col-md-offset-2 col-md-8">
+															#{bem.tituloPrincipal}</div>
+													</div>
+												</h:column>
+											</h:dataTable>
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!-- Midia -->
+				<div class="panel-group top-margin-10" id="multimidia">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#multimidia"
+									href="#sanfona-multimidia">#{mensagens.multimidia}</a>
+							</h4>
+						</div>
+						<div id="sanfona-multimidia" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="midias">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="row">
+												<ui:repeat var="midia"
+													value="#{revisarbemMB.campos}">
+													<div class="col-md-4">
+														<div class="thumbnail ao-centro" data-id="#{midia.id}">
+															<img class="miniatura carregar clicavel auto-margin"
+																data-toggle="modal" data-target="#midiasModal"
+																style="display: #{revisarbemMB.imagemDisplay(midia.id)}"></img>
+															<video class="miniatura carregar clicavel auto-margin"
+																type="#{revisarbemMB.getContentType(midia.id)}"
+																data-toggle="modal" data-target="#midiasModal"
+																style="display:#{revisarbemMB.videoDisplay(midia.id)};"></video>
+															<h:graphicImage class="miniatura tabelaMidia clicavel"
+																library="imagens" name="media.png" data-toggle="modal"
+																data-target="#midiasModal"
+																style="display:#{revisarbemMB.midiaDisplay(midia.id)};" />
+															<div class="caption table-display">
+																<div class="form-group">
+																	<h:outputLabel
+																		class="a-esquerda labels col-md-3 control-label"
+																		for="nome">#{mensagens.nome}</h:outputLabel>
+																	<div class="col-md-9">
+																		<h:inputText disabled="true"
+																			class="nome-midia form-control" value="#{midia.nome}"
+																			id="nome"></h:inputText>
+																		<h:message id="validacao-nome" for="validacao-nome"
+																			infoClass="help-block has-success"
+																			errorClass="help-block has-error"
+																			warnClass="help-block has-warning">
+																		</h:message>
+																	</div>
+																</div>
+																<div class="form-group">
+																	<h:outputLabel
+																		class="a-esquerda labels col-md-3 control-label"
+																		for="descricao">#{mensagens.descricao}</h:outputLabel>
+																	<div class="col-md-9">
+																		<h:inputText disabled="true" class="form-control"
+																			value="#{midia.descricao}" id="descricao"></h:inputText>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</ui:repeat>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-group top-margin-10" id="revisoes-anteriores">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#revisoes-anteriores"
+									href="#sanfona-assuntos-descritores">#{mensagens.revisoesAnteriores}</a>
+							</h4>
+						</div>
+						<div id="sanfona-revisoes-anteriores"
+							class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<ui:repeat var="revisao" value="#{revisarbemMB.revisoesAnteriores}">
+										<div class="col-md-12">
+											<div class="col-md-2">
+												<h:outputLabel class="label-control" for="dataRevisao">#{mensagens.data}</h:outputLabel>
+												<div style="clear:both;"></div>
+												<h:inputText value="#{revisao.dataRevisao}" disabled="true" id="dataRevisao"/>
+											</div>
+											<div class="col-md-10">
+												<h:outputLabel class="label-control" for="anotacaoRevisao">#{mensagens.anotacao}</h:outputLabel>
+												<h:inputTextarea disabled="true" class="form-control" id="anotacaoRevisao" value="#{revisao.anotacao}" />
+											</div>
+										</div>
+									</ui:repeat>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h:form>
+					<div id="sanfona-revisoes-atual"
+						class="panel-collapse collapse in">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<h:outputLabel class="label-control" for="anotacaoRevisao">#{mensagens.anotacaoRevisao}</h:outputLabel>
+									<h:inputTextarea class="form-control" id="anotacaoRevisao" value="#{revisarbemMB.anotacao}" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="text-right row">
+						<div class="col-md-12">
+							<h:commandButton class="btn btn-warning margin-5"
+								value="#{mensagens.voltar}"
+								action="#{revisarbemMB.voltar}">
+							</h:commandButton>
+							<h:commandButton
+								class="btn btn-danger margin-left-5 no-right-margin"
+								value="#{mensagens.cancelar}"
+								action="#{revisarbemMB.cancelar}">
+							</h:commandButton>						
+							<h:commandButton class="btn btn-success margin-5"
+								value="#{mensagens.revisar}"
+								action="#{revisarbemMB.revisar}">
+							</h:commandButton>
+						</div>
+					</div>
+				</h:form>
+			</div>
+			<script>
+				$(document).ready(function() {
+					selecionarAbaRevisao();
+
+					$('.switch').bootstrapSwitch({
+						onText : '#{mensagens.sim}',
+						offText : '#{mensagens.nao}'
+					});
+					
+					$('.carregar')
+					.each(
+							function(index, el) {
+								el = $(el);
+								var id = el.closest('div')
+										.data('id');
+								var endereco = '/memoriavirtual/multimidia?bean=#{nomeBean}&amp;id='
+										+ id;
+								el.attr('src', endereco);
+							});
+
+					$('.carregar')
+							.click(
+									function(e) {
+										e.preventDefault();
+										var self = $(this);
+										var titulo = self.closest(
+												'.thumbnail').find(
+												'.nome-midia').val();
+										var modal = $('#midiasModal');
+										modal.find('.modal-title')
+												.html(titulo);
+										var clone = self.clone();
+										clone
+												.removeClass('miniatura carregar clicavel');
+										clone.attr('data-toggle', '');
+										clone.attr('data-target', '');
+										clone.attr('controls', true);
+										clone.css('max-width',
+												$('body').width() - 40);
+										modal.find('.modal-body').html(
+												clone);
+									});
+		
+					$('#fechar').click(function(e) {
+						e.preventDefault();
+						var video = $('#midiasModal video');
+						if (video.length > 0) {
+							video[0].pause();
+						}
+					});
+				});
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
