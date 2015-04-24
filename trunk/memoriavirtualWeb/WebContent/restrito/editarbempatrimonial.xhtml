@@ -37,7 +37,7 @@
 												id="instituicao"
 												value="#{editarBemPatrimonialMB.instituicao}">
 												<f:selectItems value="#{editarBemPatrimonialMB.instituicoes}" />
-												<f:ajax render=":externoCheck" onevent="checkSwitch"  event="change" listener="#{editarBemPatrimonialMB.checkRevisaoInstituicao}"/>
+												<f:ajax render="externoCheck" onevent="checkSwitch"  event="change" listener="#{editarBemPatrimonialMB.checkRevisaoInstituicao}"/>
 												<f:ajax event="change" onevent="criaBuscaBem" listener="#{editarBemPatrimonialMB.limparBensRelacionados}"
 												 render="grupo-bens-relacionados"/>
 											</h:selectOneMenu>

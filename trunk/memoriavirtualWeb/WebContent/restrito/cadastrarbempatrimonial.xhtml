@@ -37,7 +37,7 @@
 												id="instituicao"
 												value="#{cadastrarBemPatrimonialMB.instituicao}">
 												<f:selectItems value="#{cadastrarBemPatrimonialMB.instituicoes}" />
-												<f:ajax render=":externoCheck" onevent="checkSwitch"  event="change" listener="#{cadastrarBemPatrimonialMB.checkRevisaoInstituicao}"/>
+												<f:ajax render="externoCheck" onevent="checkSwitch"  event="change" listener="#{cadastrarBemPatrimonialMB.checkRevisaoInstituicao}"/>
 												<f:ajax event="change" onevent="criaBuscaBem" listener="#{cadastrarBemPatrimonialMB.limparBensRelacionados}"
 												 render="grupo-bens-relacionados"/>
 											</h:selectOneMenu>
