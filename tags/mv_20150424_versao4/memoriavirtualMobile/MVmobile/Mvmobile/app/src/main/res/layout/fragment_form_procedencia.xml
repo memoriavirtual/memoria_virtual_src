@@ -1,0 +1,100 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormInformacoes">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp"
+            android:gravity="center">
+
+            <TextView
+                style="@style/TextView"
+                android:text="@string/cadastro_tipo_aquisicao"/>
+            <EditText
+                android:id="@id/cadastro_tipo_aquisicao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                style="@style/TextView"
+                android:text="@string/cadastro_valor_venal"/>
+            <EditText
+                android:id="@id/cadastro_valor_venal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                style="@style/TextView"
+                android:text="@string/cadastro_data"/>
+            <EditText
+                android:id="@id/cadastro_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                style="@style/TextView"
+                android:text="@string/cadastro_primeiro_proprietario"/>
+            <EditText
+                android:id="@id/cadastro_primeiro_proprietario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                style="@style/TextView"
+                android:text="@string/cadastro_dados_transacao"/>
+            <EditText
+                android:id="@id/cadastro_dados_transacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                style="@style/TextView"
+                android:text="@string/cadastro_historico"/>
+            <EditText
+                android:id="@id/cadastro_historico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                style="@style/TextView"
+                android:text="@string/cadastro_instrumento_pesquisa"/>
+            <EditText
+                android:id="@id/cadastro_instrumento_pesquisa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <Button
+                android:background="@drawable/border_button"
+                android:textColor="@color/material_statusbar"
+                android:text="@string/cadastro_proximo_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:textSize="18sp"
+                android:onClick="onNextButtonClick"/>/>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
