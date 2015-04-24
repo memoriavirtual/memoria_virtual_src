@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Cadastrar Usuario</title>
+</head>
+<h:body>
+	<ui:composition
+		template="/restrito/fragmentos/templates/template.xhtml">
+
+
+		<ui:define name="titulo">#{mensagens.cadastrarUsuarioTitle}</ui:define>
+
+
+		<ui:define name="cabecalho">
+			<div class="row top-padding-30">
+				<div class="col-md-6 col-md-offset-3">
+					<h:graphicImage library="imagens" name="logo_mv_catalogacao.png" />
+				</div>
+			</div>
+			<div class="row background-black">
+				<div class="col-md-10 col-md-offset-1" id="subMenu">
+					<p class="sub-menu">#{mensagens.cadastrar}</p>
+				</div>
+			</div>
+		</ui:define>
+
+		<ui:define name="conteudo">
+			<div class="col-md-12">
+
+				<div class="widget wgreen">
+					<div class="widget-head">
+						<h1>#{mensagens.cadastrarUsuarioTitulo}</h1>
+						<h2>#{mensagens.cadastrarUsuarioDescricao}</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="col-md-12">
+							<h:form class="form-vertical" role="form" method="post"
+								prependId="false">
+								<div class="row">
+									<div class="col-md-offset-3 col-md-2">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="identificacao">#{mensagens.identificacao}</h:outputLabel>
+											<h:inputText value="#{cadastrarUsuarioMB.usuario.identificacao}"
+												class="form-control" id="identificacao" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-identificacao"
+													onevent="mostrarErro('#validacao-identificacao')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-identificacao',mensagens.identificacao,
+													cadastrarUsuarioMB.usuario.identificacao)}" />
+											</h:inputText>
+											<h:message id="validacao-identificacao"
+												for="validacao-identificacao"
+												infoClass="help-block has-succes"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="nome">#{mensagens.nome}</h:outputLabel>
+											<h:inputText
+												value="#{cadastrarUsuarioMB.usuario.nomeCompleto}"
+												class="form-control" id="nome" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-nome"
+													onevent="mostrarErro('#validacao-nome')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-nome',mensagens.nome,
+													cadastrarUsuarioMB.usuario.nomeCompleto)}" />
+											</h:inputText>
+											<h:message id="validacao-nome" for="validacao-nome"
+												infoClass="help-block has-succes"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="email">#{mensagens.email}</h:outputLabel>
+											<h:inputText value="#{cadastrarUsuarioMB.usuario.email}"
+												class="form-control" id="email" maxlength="100">
+												<f:ajax event="keyup"
+													render="validacao-email"
+													onevent="mostrarErro('#validacao-email')"
+													listener="#{cadastrarUsuarioMB.validarEmail('validacao-email',mensagens.email,
+													cadastrarUsuarioMB.usuario.email)}" />
+											</h:inputText>
+											<h:message id="validacao-email" for="validacao-email"
+												infoClass="help-block has-succes"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="telefone">#{mensagens.telefone}</h:outputLabel>
+											<h:inputText id="telefone" class="form-control"
+												value="#{cadastrarUsuarioMB.usuario.telefone}" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-telefone"
+													onevent="mostrarErro('#validacao-telefone')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-telefone',mensagens.telefone,
+													cadastrarUsuarioMB.usuario.telefone)}" />
+											</h:inputText>
+											<h:message id="validacao-telefone" for="validacao-telefone"
+												infoClass="help-block has-succes"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-offset-3 col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="senha">#{mensagens.senha}</h:outputLabel>
+											<h:inputSecret value="#{cadastrarUsuarioMB.senha}"
+												class="form-control" id="senha" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-senha"
+													onevent="mostrarErro('#validacao-senha')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-senha',mensagens.senha,
+													cadastrarUsuarioMB.senha)}" />
+											</h:inputSecret>
+											<h:message id="validacao-senha" for="validacao-senha"
+												infoClass="help-block has-succes"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:outputLabel class="control-label" for="confirmacao-senha">#{mensagens.confirmarSenha}</h:outputLabel>
+											<h:inputSecret id="confirmacao-senha" class="form-control"
+												value="#{cadastrarUsuarioMB.confirmacaoSenha}" maxlength="30">
+												<f:ajax event="keyup"
+													render="validacao-confirmacao-senha"
+													onevent="mostrarErro('#validacao-confirmacao-senha')"
+													listener="#{cadastrarUsuarioMB.validarCampo('validacao-confirmacao-senha',mensagens.confirmarSenha,
+													cadastrarUsuarioMB.confirmacaoSenha)}" />
+											</h:inputSecret>
+											<h:message id="validacao-confirmacao-senha"
+												for="validacao-confirmacao-senha"
+												infoClass="help-block has-succes"
+												errorClass="help-block has-error"
+												warnClass="help-block has-warning">
+											</h:message>
+										</div>
+									</div>
+								</div>
+								<div class="text-right row">
+									<div class="col-md-12">
+										<h:commandButton class="btn btn-success margin-5"
+											value="#{mensagens.cadastrar}"
+											action="#{cadastrarUsuarioMB.cadastrar}"
+											disabled="#{!cadastrarUsuarioMB.podeCadastrar}">
+										</h:commandButton>
+										<h:commandButton
+											class="btn btn-primary margin-5"
+											value="#{mensagens.limpar}"
+											actionListener="#{cadastrarUsuarioMB.limpar}"
+											disabled="#{!cadastrarUsuarioMB.podeCadastrar}">
+										</h:commandButton>
+										<h:commandButton
+											class="btn btn-danger margin-5 no-right-margin"
+											value="#{mensagens.voltar}"
+											action="#{cadastrarUsuarioMB.voltar}">
+										</h:commandButton>
+									</div>
+								</div>
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
