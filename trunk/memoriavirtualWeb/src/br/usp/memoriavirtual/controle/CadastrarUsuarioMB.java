@@ -34,14 +34,15 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 	private String confirmacaoSenha = "";
 	private Usuario usuario;
 	private MensagensMB mensagens;
-	
+
 	private boolean podeCadastrar = true;
 
 	public CadastrarUsuarioMB() {
 		super();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELResolver resolver = facesContext.getApplication().getELResolver();
-		this.mensagens = (MensagensMB) resolver.getValue(facesContext.getELContext(), null, "mensagensMB");
+		this.mensagens = (MensagensMB) resolver.getValue(
+				facesContext.getELContext(), null, "mensagensMB");
 	}
 
 	@PostConstruct
@@ -50,8 +51,10 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 				.getExternalContext().getSessionMap().get("usuario");
 		try {
 			if (usuarioLogado != null) {
-				this.getMensagens().mensagemErro(this.traduzir("erroUsuarioLogado"));
-				FacesContext.getCurrentInstance().getExternalContext().redirect("restrito/index.jsf");
+				this.getMensagens().mensagemErro(
+						this.traduzir("erroUsuarioLogado"));
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect("restrito/index.jsf");
 			} else {
 				String validacao = (String) FacesContext.getCurrentInstance()
 						.getExternalContext().getRequestParameterMap()
@@ -62,10 +65,12 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 
 				usuario = cadastrarUsuarioEJB.verificarConvite(validacao);
 				if (usuario == null) {
-					this.getMensagens().mensagemErro(this.traduzir("conviteInexistente"));
+					this.getMensagens().mensagemErro(
+							this.traduzir("conviteInexistente"));
 					podeCadastrar = false;
 				} else if (usuario.isAtivo()) {
-					this.getMensagens().mensagemErro(this.traduzir("conviteJaUtilizado"));
+					this.getMensagens().mensagemErro(
+							this.traduzir("conviteJaUtilizado"));
 					podeCadastrar = false;
 				} else {
 					usuario.setIdentificacao("");
@@ -75,7 +80,8 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 			}
 		} catch (ModeloException e) {
 			e.printStackTrace();
-			this.getMensagens().mensagemErro(this.traduzir("conviteInexistente"));
+			this.getMensagens().mensagemErro(
+					this.traduzir("conviteInexistente"));
 			podeCadastrar = false;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -85,21 +91,29 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 	}
 
 	public String cadastrar() {
-		if(podeCadastrar){
+		if (podeCadastrar) {
 			if (this.validar()) {
 				try {
-					this.cadastrarUsuarioEJB.cadastrarUsuario(usuario, this.senha);
-					this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+					this.cadastrarUsuarioEJB.cadastrarUsuario(usuario,
+							this.senha);
+					this.getMensagens().mensagemSucesso(
+							this.traduzir("sucesso"));
 					return this.redirecionar("/login.jsf", true);
 				} catch (Exception e) {
-					this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+					this.getMensagens().mensagemErro(
+							this.traduzir("erroInterno"));
 					e.printStackTrace();
 					return null;
 				}
-	
+
+			} else {
+				return this.redirecionar("/login.jsf", true);
 			}
+		} else {
+			this.getMensagens().mensagemErro(
+					this.traduzir("conviteInexistente"));
+			return this.redirecionar("/login.jsf", true);
 		}
-		return null;
 	}
 
 	@Override
@@ -130,17 +144,18 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 		e = this.validarTelefone();
 		return (a && b && c && d && e);
 	}
-	
-	public boolean validarTelefone(){
-		if(ValidacoesDeCampos.validarFormatoTelefone(this.usuario.getTelefone())){
+
+	public boolean validarTelefone() {
+		if (ValidacoesDeCampos.validarFormatoTelefone(this.usuario
+				.getTelefone())) {
 			return true;
-		}
-		else{
-			MensagensDeErro.getErrorMessage("erroFormatoTelefone","validacao-telefone");
+		} else {
+			MensagensDeErro.getErrorMessage("erroFormatoTelefone",
+					"validacao-telefone");
 			return false;
 		}
 	}
-	
+
 	public boolean validarNome() {
 		if (this.usuario.getNomeCompleto() == null
 				|| this.usuario.getNomeCompleto().equals("")) {
@@ -285,27 +300,31 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 	}
 
 	@Override
-	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
-		if(ValidacoesDeCampos.validarComprimento(campo, 30)){
-			String args[] = {"30"};
-			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
-		}		
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,
+			String campo) {
+		if (ValidacoesDeCampos.validarComprimento(campo, 30)) {
+			String args[] = { "30" };
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args,
+					nomeCampoMensagem);
+		}
 	}
-	
-	public void validarEmail(String nomeCampoMensagem, String nomeCampo,String campo) {
-		if(ValidacoesDeCampos.validarComprimento(campo, 100)){
-			String args[] = {"100"};
-			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
-		}		
+
+	public void validarEmail(String nomeCampoMensagem, String nomeCampo,
+			String campo) {
+		if (ValidacoesDeCampos.validarComprimento(campo, 100)) {
+			String args[] = { "100" };
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args,
+					nomeCampoMensagem);
+		}
 	}
-	
-	public void limpar(){
+
+	public void limpar() {
 		usuario.setNomeCompleto("");
 		usuario.setTelefone("");
 		usuario.setIdentificacao("");
 	}
-	
-	public String voltar(){
+
+	public String voltar() {
 		return "index.jsf";
 	}
 }
