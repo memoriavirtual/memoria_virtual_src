@@ -18,8 +18,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -27,6 +29,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQuery(name = "login", query = "SELECT u FROM Usuario u WHERE (u.identificacao = :usuario OR u.email = :usuario) AND u.senha = :senha AND u.ativo = true")
 @SequenceGenerator(name = "USUARIO_ID", sequenceName = "USUARIO_SEQ", allocationSize = 1)
 @XmlRootElement
+@Table(name = "USUARIO", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "identificacao" }),
+		@UniqueConstraint(columnNames = { "email" }) })
 public class Usuario implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 3549872070434704343L;

@@ -80,3 +80,7 @@ ALTER TABLE bempatrimonial_fontesinformacao ADD COLUMN fontesinformacao text;
 -- Column: notaspesquisador --adicionado por inferencia
 ALTER TABLE bempatrimonial_pesquisadores DROP COLUMN notaspesquisador;
 ALTER TABLE bempatrimonial_pesquisadores ADD COLUMN notaspesquisador text;
+
+
+ALTER TABLE USUARIO ADD CONSTRAINT UNQ_USUARIO_0 UNIQUE (identificacao);
+ALTER TABLE USUARIO ADD CONSTRAINT UNQ_USUARIO_1 UNIQUE (email);
