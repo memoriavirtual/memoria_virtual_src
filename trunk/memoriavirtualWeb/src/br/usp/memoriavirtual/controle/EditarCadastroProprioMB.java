@@ -65,8 +65,8 @@ public class EditarCadastroProprioMB implements Serializable,
 				request.getSession().setAttribute("usuario",
 						this.usuario.clone());
 				
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "O código digitado está incorreto!",null));
+				//FacesContext.getCurrentInstance().addMessage(null,
+				//		new FacesMessage(FacesMessage.SEVERITY_INFO, "O código digitado está incorreto!",null));
 				
 				this.limpar();
 				return this.redirecionar("/restrito/index.jsf", true);
