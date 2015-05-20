@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -78,6 +79,7 @@
                 android:id="@id/cadastro_latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:singleLine="true"/>
 
             <TextView
@@ -88,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <Button

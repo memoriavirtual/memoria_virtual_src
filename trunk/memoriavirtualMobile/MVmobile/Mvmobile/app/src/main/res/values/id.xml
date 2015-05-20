@@ -7,12 +7,17 @@
     <!-- Lista de Bem Patrimoniais -->
     <item name="nenhum_bem_patrimonial_cadastrado" type="id"></item>
     <item name="lista_add_button" type="id"></item>
+    <item name="lista_remove_bem_button" type="id"></item>
     <item name="registered_patrimonial_image" type="id"></item>
     <item name="registered_patrimonial_content" type="id"></item>
     <item name="registered_patrimonial_name" type="id"></item>
     <item name="registered_patrimonial_author" type="id"></item>
 
     <!-- Cadastrar Bem Patrimonial -->
+
+
+    <!-- Mídia -->
+    <item name="cadastro_foto" type="id"></item>
 
     <!-- Informações gerais -->
     <item name="cadastro_externo" type="id"></item>

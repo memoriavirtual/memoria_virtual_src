@@ -17,10 +17,21 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center"
-                android:background="@color/background_gray"/>
+                android:id="@id/cadastro_foto"
+                android:layout_marginTop="30dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:background="@drawable/border_button"
+                android:textColor="@color/material_statusbar"
+                android:text="@string/cadastro_tirar_foto"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:textSize="18sp"
+                android:onClick="onTakePictureButtonClick"/>
 
             <Button
                 android:background="@drawable/border_button"
@@ -30,7 +41,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
                 android:textSize="18sp"
-                android:onClick="onNextButtonClick"/>/>
+                android:onClick="onNextButtonClick"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

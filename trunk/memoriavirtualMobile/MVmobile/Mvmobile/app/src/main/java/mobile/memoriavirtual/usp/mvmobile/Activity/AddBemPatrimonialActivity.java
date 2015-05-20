@@ -1,18 +1,43 @@
 package mobile.memoriavirtual.usp.mvmobile.Activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v4.view.WindowInsetsCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowInsets;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.json.JSONException;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormAutor;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormDescricao;
@@ -25,6 +50,7 @@ import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormProcedencia;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormProducao;
 import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
+import mobile.memoriavirtual.usp.mvmobile.Utils.Mask;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
 public class AddBemPatrimonialActivity extends ActionBarActivity implements FormMidia.OnFragmentInteractionListener,FormInformacoes.OnFragmentInteractionListener, FormAutor.OnFragmentInteractionListener,FormProducao.OnFragmentInteractionListener,FormDescricao.OnFragmentInteractionListener,FormEstado.OnFragmentInteractionListener,FormDisponibilidade.OnFragmentInteractionListener,FormProcedencia.OnFragmentInteractionListener,FormOutros.OnFragmentInteractionListener {
@@ -32,6 +58,19 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     AddBemPatrimonialAdapter mAdapter;
     ViewPager mPager;
     BemPatrimonial mBemPatrimonial;
+    String mCurrentPhotoPath;
+    Bitmap imageCaptured;
+
+    //Datas
+    private DatePickerDialog cadastro_data_pickerDialog;
+    private DatePickerDialog cadastro_data_retorno_pickerDialog;
+    private SimpleDateFormat dateFormatter;
+
+    Integer mIndex;
+    Boolean isToEdit;
+
+    //Midia
+    ImageView cadastro_foto;
 
     //Informações gerais
     CheckBox cadastro_externo;
@@ -122,11 +161,47 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bem_patrimonial);
 
+        //Botao de voltar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         mAdapter = new AddBemPatrimonialAdapter(getSupportFragmentManager());
 
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
         mPager.setOffscreenPageLimit(9); //nao destroi as fragments escondidos
+
+        //Valores do extra, janela anterior
+        final BemPatrimonial bemPatrimonial = (BemPatrimonial) getIntent().getSerializableExtra("bem");
+        mIndex = getIntent().getIntExtra("index",1);
+
+        //Se passou um bem patrimonial entao irá editar
+        if(bemPatrimonial == null)
+            isToEdit = false;
+        else
+            isToEdit = true;
+
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                setReferenciasDosCampos();
+
+                //Se passou um bem patrimonial entao irá editar, preenche os campos com o bem patrimonial passado
+                if(bemPatrimonial != null){
+                    mBemPatrimonial = bemPatrimonial;
+                    setTitle(R.string.title_activity_edit_bem_patrimonial);
+                    preencheCampos(bemPatrimonial);
+                }
+            }
+            @Override
+
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     @Override
@@ -147,6 +222,9 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
             case R.id.action_add_bem_patrimonial:
                 addTouched();
                 return true;
+            case android.R.id.home:
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -161,15 +239,6 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     public void onFragmentInteraction(Uri uri) {
 
     }
-
-    //Acoes de botoes
-    public void onAddButtonClick(View v) {
-        addTouched();
-    }
-    public void onNextButtonClick(View v) {
-        nextTouched();
-    }
-
     private void addTouched()
     {
         new AlertDialog.Builder(this)
@@ -177,11 +246,16 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        setReferenciasDosCampos();
+                        //setReferenciasDosCampos();
                         getBemPatrimonialDosCampos();
 
                         try {
-                            Utils.salvarBemPatrimonialCache(mBemPatrimonial);
+                            //Se passou um bem patrimonial entao irá editar, preenche os campos com o bem patrimonial passado
+                            if(isToEdit) {
+                                Utils.editarBemPatrimonialCache(mBemPatrimonial,mIndex);
+                            }else{
+                                Utils.salvarBemPatrimonialCache(mBemPatrimonial);
+                            }
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -196,9 +270,11 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
                 .show();
     }
 
-
     private void setReferenciasDosCampos()
     {
+        //Midia
+        cadastro_foto = (ImageView) findViewById(R.id.cadastro_foto);
+
         //Informações gerais
         cadastro_externo = (CheckBox) findViewById(R.id.cadastro_externo);
         cadastro_tipo = (EditText) findViewById(R.id.cadastro_tipo);
@@ -271,6 +347,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         cadastro_tipo_aquisicao = (EditText) findViewById(R.id.cadastro_tipo_aquisicao);
         cadastro_valor_venal = (EditText) findViewById(R.id.cadastro_valor_venal);
         cadastro_data = (EditText) findViewById(R.id.cadastro_data);
+
         cadastro_primeiro_proprietario = (EditText) findViewById(R.id.cadastro_primeiro_proprietario);
         cadastro_dados_transacao = (EditText) findViewById(R.id.cadastro_dados_transacao);
         cadastro_historico = (EditText) findViewById(R.id.cadastro_historico);
@@ -282,14 +359,83 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         cadastro_fontes_informacao = (EditText) findViewById(R.id.cadastro_fontes_informacao);
         cadastro_pesquisadores = (EditText) findViewById(R.id.cadastro_pesquisadores);
         cadastro_relacionar_outros_bens = (EditText) findViewById(R.id.cadastro_relacionar_outros_bens);
+
+        setDatesEditText();
+    }
+
+    private void setDatesEditText() {
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+
+        cadastro_data.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    cadastro_data_pickerDialog.show();
+            }
+        });
+
+        cadastro_data_retorno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    cadastro_data_retorno_pickerDialog.show();
+            }
+        });
+
+        Calendar newCalendar = Calendar.getInstance();
+        cadastro_data_pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                cadastro_data.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        cadastro_data_retorno_pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                cadastro_data_retorno.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
     private void getBemPatrimonialDosCampos()
     {
         mBemPatrimonial = new BemPatrimonial();
-        mBemPatrimonial.setCadastro_externo((cadastro_externo.isSelected())? "true" : "false");
+
+        //Midia
+        mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
+
+        //Informações gerais
+        mBemPatrimonial.setCadastro_externo(cadastro_externo.isChecked() ? "1" : "0");
         mBemPatrimonial.setCadastro_tipo(cadastro_tipo.getText().toString());
+        mBemPatrimonial.setCadastro_num_registro(cadastro_num_registro.getText().toString());
         mBemPatrimonial.setCadastro_titulo_principal(cadastro_titulo_principal.getText().toString());
+        mBemPatrimonial.setCadastro_complemento(cadastro_complemento.getText().toString());
+        mBemPatrimonial.setCadastro_colecao(cadastro_colecao.getText().toString());
+        mBemPatrimonial.setCadastro_latitude(cadastro_latitude.getText().toString());
+        mBemPatrimonial.setCadastro_longitude(cadastro_longitude.getText().toString());
+    }
+
+    public void preencheCampos(BemPatrimonial bemPatrimonial){
+
+        //Midia
+        cadastro_foto.setImageBitmap(Utils.stringToBitMap(bemPatrimonial.getCadastro_image()));
+
+        //Informações gerais
+        cadastro_externo.setChecked((bemPatrimonial.getCadastro_externo().equals("1")) ? true : false);
+        cadastro_tipo.setText(bemPatrimonial.getCadastro_tipo());
+        cadastro_num_registro.setText(bemPatrimonial.getCadastro_num_registro());
+        cadastro_titulo_principal.setText(bemPatrimonial.getCadastro_titulo_principal());
+        cadastro_complemento.setText(bemPatrimonial.getCadastro_complemento());
+        cadastro_colecao.setText(bemPatrimonial.getCadastro_colecao());
+        cadastro_latitude.setText(bemPatrimonial.getCadastro_latitude());
+        cadastro_longitude.setText(bemPatrimonial.getCadastro_longitude());
     }
 
     private void nextTouched()
@@ -297,6 +443,78 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         mPager.setCurrentItem(mPager.getCurrentItem()+1);
     }
 
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
 
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
 
+    static final int REQUEST_TAKE_PHOTO = 1;
+
+    //Acoes de botoes
+    public void onAddButtonClick(View v) {
+        addTouched();
+    }
+    public void onNextButtonClick(View v) {
+        nextTouched();
+    }
+
+    public void onTakePictureButtonClick(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.e("Error to take picture", ex.getMessage());
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+               // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                 ///       Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+
+            }
+        }
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                imageCaptured = (Bitmap) data.getExtras().get("data");
+
+                //Bitmap myBitmap = BitmapFactory.decodeFile(dataUri);
+
+                galleryAddPic();
+                cadastro_foto.setImageBitmap(imageCaptured);
+
+            } else {
+                // usuário não tirou foto.
+            }
+        }
+    }
 }

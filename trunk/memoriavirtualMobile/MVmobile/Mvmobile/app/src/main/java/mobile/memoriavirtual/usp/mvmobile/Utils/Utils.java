@@ -2,14 +2,23 @@ package mobile.memoriavirtual.usp.mvmobile.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.util.Base64;
 import android.widget.EditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,15 +46,8 @@ public class Utils {
         SharedPreferences sharedPref = mContext.getSharedPreferences(mPathBemPatrimonial, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        Map<String, String> map = new HashMap<String, String>();
-        map.put(mContext.getString(R.string.cadastro_externo), bemPatrimonial.getCadastro_externo());
-        map.put(mContext.getString(R.string.cadastro_tipo), bemPatrimonial.getCadastro_tipo());
-        map.put(mContext.getString(R.string.cadastro_num_registro), bemPatrimonial.getCadastro_num_registro());
-
-        //transforma Map em JSONObject
-        JSONObject json = new JSONObject(map);
-        String jsonString = json.toString();
-
+        //Parse
+        String jsonString = parseBemPatrimonialToString(bemPatrimonial);
         System.out.println("JSON OBJECT ADD = " + jsonString);
 
         //Recupera bens já salvos em cache e adiciona o novo
@@ -54,7 +56,83 @@ public class Utils {
         salvarBemPatrimonialJSONArray(array);
     }
 
-    public static ArrayList<BemPatrimonial> carregarBensPatrimoniaisSalvosCache()
+    public static void editarBemPatrimonialCache(BemPatrimonial bemPatrimonial, Integer index) throws JSONException {
+        SharedPreferences sharedPref = mContext.getSharedPreferences(mPathBemPatrimonial, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        //Parse
+        String jsonString = parseBemPatrimonialToString(bemPatrimonial);
+        System.out.println("JSON OBJECT ADD = " + jsonString);
+
+        //Recupera bens já salvos em cache e adiciona o novo
+        JSONArray output = new JSONArray();
+        JSONArray array = carregarBemPatrimonialJSONArray();
+        int len = array.length();
+
+        for (int i = 0; i < len; i++)   {
+            //Se for o index do bem a ser editado entao salva este, senao salva o restante do array
+            if (i == index) {
+                output.put(jsonString);
+            }
+            else{
+                try {
+                    output.put(array.get(i));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        salvarBemPatrimonialJSONArray(output);
+    }
+
+    public static void removerBemPatrimonialCache(Integer index) throws JSONException {
+        SharedPreferences sharedPref = mContext.getSharedPreferences(mPathBemPatrimonial, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        //Recupera bens já salvos em cache e adiciona o novo
+        JSONArray output = new JSONArray();
+        JSONArray array = carregarBemPatrimonialJSONArray();
+        int len = array.length();
+
+        for (int i = 0; i < len; i++)   {
+            //Se for o index do bem a ser editado entao salva este, senao salva o restante do array
+            if (i != index) {
+                try {
+                    output.put(array.get(i));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        salvarBemPatrimonialJSONArray(output);
+    }
+
+
+
+
+    public static String parseBemPatrimonialToString(BemPatrimonial bemPatrimonial) throws JSONException {
+        Map<String, String> map = new HashMap<String, String>();
+
+        //Midia
+        map.put(mContext.getString(R.string.cadastro_midia), bemPatrimonial.getCadastro_image());
+
+        //Informações Gerais
+        map.put(mContext.getString(R.string.cadastro_externo), bemPatrimonial.getCadastro_externo());
+        map.put(mContext.getString(R.string.cadastro_tipo), bemPatrimonial.getCadastro_tipo());
+        map.put(mContext.getString(R.string.cadastro_num_registro), bemPatrimonial.getCadastro_num_registro());
+        map.put(mContext.getString(R.string.cadastro_titulo_principal), bemPatrimonial.getCadastro_titulo_principal());
+        map.put(mContext.getString(R.string.cadastro_complemento), bemPatrimonial.getCadastro_complemento());
+        map.put(mContext.getString(R.string.cadastro_colecao), bemPatrimonial.getCadastro_colecao());
+        map.put(mContext.getString(R.string.cadastro_latitude), bemPatrimonial.getCadastro_latitude());
+        map.put(mContext.getString(R.string.cadastro_longitude), bemPatrimonial.getCadastro_longitude());
+
+        //transforma Map em JSONObject
+        JSONObject json = new JSONObject(map);
+        return json.toString();
+    }
+
+
+        public static ArrayList<BemPatrimonial> carregarBensPatrimoniaisSalvosCache()
     {
         Map<String,String> outputMap = new HashMap<String,String>();
 
@@ -138,4 +216,27 @@ public class Utils {
         }
     }
 
+    public static String bitMapToString(Bitmap bitmap){
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] b = baos.toByteArray();
+            String temp = Base64.encodeToString(b, Base64.DEFAULT);
+            return temp;
+        } catch (Exception e){
+            e.getMessage();
+            return  null;
+        }
+    }
+
+    public static Bitmap stringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 }

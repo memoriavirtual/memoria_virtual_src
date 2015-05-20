@@ -1,16 +1,22 @@
 package mobile.memoriavirtual.usp.mvmobile.Fragment.ListaBemPatrimonial;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
+import mobile.memoriavirtual.usp.mvmobile.Activity.AddBemPatrimonialActivity;
 import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
+import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
 public class ListaBemPatrimonialAdapter extends ArrayAdapter<BemPatrimonial> {
 
@@ -32,9 +38,11 @@ public class ListaBemPatrimonialAdapter extends ArrayAdapter<BemPatrimonial> {
 
         TextView name = (TextView) rowView.findViewById(R.id.registered_patrimonial_name);
         TextView author = (TextView) rowView.findViewById(R.id.registered_patrimonial_author);
+        ImageView image = (ImageView) rowView.findViewById(R.id.registered_patrimonial_image);
 
-        name.setText(patrimonial.getCadastro_tipo());
-        author.setText("Autor: " + patrimonial.getCadastro_num_registro());
+        name.setText(patrimonial.getCadastro_titulo_principal());
+        author.setText("Tipo: " + patrimonial.getCadastro_tipo());
+        image.setImageBitmap(Utils.stringToBitMap(patrimonial.getCadastro_image()));
 
         return rowView;
     }

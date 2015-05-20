@@ -1,18 +1,25 @@
 package mobile.memoriavirtual.usp.mvmobile.Fragment.ListaBemPatrimonial;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.internal.widget.AdapterViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -43,7 +50,9 @@ public class ListaBemPatrimonialFragment extends Fragment {
 
     private ArrayList<BemPatrimonial> bemPatrimonialArray;
     private ListView mListView;
+    private View mView;
     private Button mAddButton;
+    private Integer mIndexClickedCell;
     private OnFragmentInteractionListener mListener;
 
     public static ListaBemPatrimonialFragment newInstance(String param1, String param2) {
@@ -66,9 +75,7 @@ public class ListaBemPatrimonialFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        /*bemPatrimonialArray.add(new BemPatrimonial("Paineira","Daniele Boscolo"));
-        bemPatrimonialArray.add(new BemPatrimonial("Computador antigo","Airton Senna"));
-        bemPatrimonialArray.add(new BemPatrimonial("Monalisa","Leonardo da Vinci"));*/
+
     }
 
 
@@ -76,9 +83,11 @@ public class ListaBemPatrimonialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_lista_bem_patrimonial, container, false);
-        mListView = (ListView) view.findViewById(android.R.id.list);
-        mAddButton = (Button) view.findViewById(R.id.lista_add_button);
+        mView = inflater.inflate(R.layout.fragment_lista_bem_patrimonial, container, false);
+        mListView = (ListView) mView.findViewById(android.R.id.list);
+        mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+
+        mAddButton = (Button) mView.findViewById(R.id.lista_add_button);
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +95,42 @@ public class ListaBemPatrimonialFragment extends Fragment {
                 onAddButtonClick(view);
             }
         });
-        return view;
+
+       mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Utils.getContext(), AddBemPatrimonialActivity.class);
+
+                mIndexClickedCell = position;
+
+                BemPatrimonial bem = bemPatrimonialArray.get(position);
+                intent.putExtra("bem", bem);
+                intent.putExtra("index",position);
+                startActivity(intent);
+            }
+        });
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                onRemoveClick(position);
+                return true;
+            }
+        });
+
+        return mView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+        getDataFromCache();
+    }
+
+    public void getDataFromCache()
+    {
         bemPatrimonialArray = Utils.carregarBensPatrimoniaisSalvosCache();
 
         //Se nao tiver nenhum bem patrimonial cadastrado mostra mensagem
@@ -107,7 +145,6 @@ public class ListaBemPatrimonialFragment extends Fragment {
             mListView.setVisibility(View.VISIBLE);
         }
     }
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -141,7 +178,6 @@ public class ListaBemPatrimonialFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-
     //Metodos
     public void loadDataListView() {
         ListaBemPatrimonialAdapter adapter = new ListaBemPatrimonialAdapter(getActivity(), bemPatrimonialArray);
@@ -155,4 +191,26 @@ public class ListaBemPatrimonialFragment extends Fragment {
         startActivity(intent);
     }
 
+    public void onRemoveClick(final Integer position) {
+        new AlertDialog.Builder(mView.getContext())
+                .setTitle("Deseja mesmo excluir?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        try {
+                            Utils.removerBemPatrimonialCache(position);
+                            getDataFromCache();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
+    }
 }

@@ -17,13 +17,14 @@
 
     <!-- Activities -->
     <string name="title_activity_add_bem_patrimonial">Cadastrar Bem Patrimonial</string>
+    <string name="title_activity_edit_bem_patrimonial">Editar Bem Patrimonial</string>
 
     <!-- Cadastro de Bem patrimonial -->
 
 
     <!-- Mídia -->
     <string name="titulo_cadastro_midia">Mídia</string>
-
+    <string name="cadastro_midia">imagem</string>
 
     <!-- Informações gerais -->
     <string name="titulo_cadastro_informacoes_gerais">Informações Gerais</string>
@@ -127,6 +128,7 @@
     <!-- Botoes -->
     <string name="cadastro_add_button">SALVAR</string>
     <string name="cadastro_proximo_button">PRÓXIMO</string>
+    <string name="cadastro_tirar_foto">TIRAR FOTO</string>
 
 
 </resources>

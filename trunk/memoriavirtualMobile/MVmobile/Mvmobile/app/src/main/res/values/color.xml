@@ -3,12 +3,12 @@
 
     <!-- Material http://www.google.com/design/spec/style/color.html#color-color-palette -->
 
-    <color name="color_app">#009688</color>
-    <color name="material_navigationbar">#009688</color>
-    <color name="material_statusbar">#00796B</color>
-    <color name="material_others">#26A69A</color>
+    <color name="color_app">#0288D1</color>
+    <color name="material_navigationbar">#03A9F4</color>
+    <color name="material_statusbar">#0288D1</color>
+    <color name="material_others">#03A9F4</color>
 
-    <color name="background_pagerView">#B2DFDB</color>
+    <color name="background_pagerView">#B3E5FC</color> <!--B2DFDB-->
 
     <color name="text_dark">#666666</color>
 

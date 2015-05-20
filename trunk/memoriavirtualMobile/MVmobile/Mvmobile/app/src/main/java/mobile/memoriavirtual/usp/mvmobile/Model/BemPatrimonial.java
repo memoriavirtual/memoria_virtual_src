@@ -1,11 +1,13 @@
 package mobile.memoriavirtual.usp.mvmobile.Model;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.text.Editable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
@@ -14,7 +16,10 @@ import mobile.memoriavirtual.usp.mvmobile.R;
 /**
  * Created by User on 09/02/2015.
  */
-public class BemPatrimonial {
+public class BemPatrimonial implements Serializable{
+
+    //Midia
+    private String cadastro_image;
 
     //Informações gerais
     private String cadastro_externo;
@@ -104,9 +109,13 @@ public class BemPatrimonial {
 
 
     public static BemPatrimonial parseBemPatrimonial(JSONObject jsonObject) throws JSONException {
+
         BemPatrimonial bp = new BemPatrimonial();
 
         Resources resources = Utils.getContext().getResources();
+
+        //Midia
+        bp.cadastro_image = Utils.safeString(jsonObject,resources.getString(R.string.cadastro_midia));
 
         //Informações gerais
         bp.cadastro_externo = Utils.safeString(jsonObject,resources.getString(R.string.cadastro_externo));
@@ -194,6 +203,13 @@ public class BemPatrimonial {
         return bp;
     }
 
+    public String getCadastro_image() {
+        return cadastro_image;
+    }
+
+    public void setCadastro_image(String cadastro_image) {
+        this.cadastro_image = cadastro_image;
+    }
 
     public String getCadastro_externo() {
         return cadastro_externo;

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.usp.mvmobile.test">
+    package="mobile.memoriavirtual.usp.mvmobile.test">
 
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="20" />
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21" />
 
     <application>
         <uses-library android:name="android.test.runner" />
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="br.usp.mvmobile"
+                     android:targetPackage="mobile.memoriavirtual.usp.mvmobile"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for br.usp.mvmobile"/>
+                     android:label="Tests for mobile.memoriavirtual.usp.mvmobile"/>
 </manifest>

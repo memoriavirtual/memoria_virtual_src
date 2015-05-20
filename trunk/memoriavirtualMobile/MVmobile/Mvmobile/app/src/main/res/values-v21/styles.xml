@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- extend one of the Theme.AppCompat themes -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/material_navigationbar</item>
+        <item name="colorPrimaryDark">@color/material_statusbar </item>
+        <item name="colorAccent">@color/material_others</item>
+        <item name="android:windowActivityTransitions">true</item>
+
+
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+</resources>

@@ -17,7 +17,9 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:background="@color/background_gray"
+        android:scaleType="centerCrop"
         />
+
     <LinearLayout
         android:id="@id/registered_patrimonial_content"
         android:orientation="vertical"

@@ -80,6 +80,7 @@ public class AddBemPatrimonialAdapter extends FragmentPagerAdapter {
         return PAGE_COUNT;
     }
 
+
     @Override
     public CharSequence getPageTitle(int position) {
         Locale l = Locale.getDefault();

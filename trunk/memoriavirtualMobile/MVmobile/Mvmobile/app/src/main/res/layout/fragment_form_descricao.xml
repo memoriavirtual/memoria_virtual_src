@@ -65,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -74,7 +75,9 @@
                 android:id="@id/cadastro_num_pavimentos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:inputType="number"
+                android:textSize="18sp"/>
 
             <CheckBox
                 android:id="@id/cadastro_alcova"
@@ -180,6 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -190,6 +194,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -200,6 +205,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -210,6 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -220,6 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -230,6 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -240,6 +249,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -250,6 +260,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -280,6 +291,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView
@@ -290,6 +302,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:inputType="number"
                 android:textSize="18sp"/>
 
             <TextView

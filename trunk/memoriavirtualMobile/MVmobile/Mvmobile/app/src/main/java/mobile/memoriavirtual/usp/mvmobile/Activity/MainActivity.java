@@ -1,5 +1,7 @@
 package mobile.memoriavirtual.usp.mvmobile.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +17,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import mobile.memoriavirtual.usp.mvmobile.Fragment.ListaBemPatrimonial.ListaBemPatrimonialFragment;
 import mobile.memoriavirtual.usp.mvmobile.R;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
 
-public class MainActivity extends ActionBarActivity implements ListaBemPatrimonialFragment.OnFragmentInteractionListener
-{
+public class MainActivity extends ActionBarActivity implements ListaBemPatrimonialFragment.OnFragmentInteractionListener {
 
     private String[] mDrawerTitulos;
     private ListView mDrawerLista;
@@ -43,7 +47,6 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
         Fragment fragment = new ListaBemPatrimonialFragment();
         fragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.main_content_fragment, fragment).commit();
-
         //Set Drawer
         setDrawer();
     }
@@ -66,6 +69,11 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
         mDrawerToggle.setDrawerIndicatorEnabled(true);
 
         mDrawerToggle.syncState(); //very importante
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /* The click listner for ListView in the navigation drawer */
@@ -127,8 +135,27 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
+    //Clique da lista
 
+    public void onRemoveClick(View v) {
+        new AlertDialog.Builder(this)
+                .setTitle("Deseja mesmo excluir?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        try {
+                            Utils.removerBemPatrimonialCache(0);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
     }
 }
