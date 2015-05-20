@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -20,17 +20,17 @@
     <color name="accent_material_light">@color/material_deep_teal_500</color>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="background_gray">#EEEEEE</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="background_pagerView">#B3E5FC</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
@@ -40,12 +40,12 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="card_shadow">#D3D3D3</color>
     <color name="card_white">#ffffffff</color>
     <color name="color_app">#0288D1</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
@@ -62,12 +62,12 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="material_navigationbar">#03A9F4</color>
     <color name="material_others">#03A9F4</color>
     <color name="material_statusbar">#0288D1</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -85,7 +85,7 @@
     <color name="secondary_text_disabled_material_light">#24000000</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="text_dark">#666666</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
@@ -111,7 +111,7 @@
     <declare-styleable name="Toolbar"><attr format="reference" name="titleTextAppearance"/><attr format="reference" name="subtitleTextAppearance"/><attr name="title"/><attr name="subtitle"/><attr name="android:gravity"/><attr format="dimension" name="titleMargins"/><attr format="dimension" name="titleMarginStart"/><attr format="dimension" name="titleMarginEnd"/><attr format="dimension" name="titleMarginTop"/><attr format="dimension" name="titleMarginBottom"/><attr name="contentInsetStart"/><attr name="contentInsetEnd"/><attr name="contentInsetLeft"/><attr name="contentInsetRight"/><attr format="dimension" name="maxButtonHeight"/><attr format="reference" name="theme"/><attr format="reference" name="collapseIcon"/><attr format="string" name="collapseContentDescription"/><attr name="popupTheme"/><attr format="reference" name="navigationIcon"/><attr format="string" name="navigationContentDescription"/><attr name="android:minHeight"/></declare-styleable>
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/></declare-styleable>
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
     <dimen name="abc_action_bar_default_padding_material">4dp</dimen>
@@ -150,11 +150,11 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -162,16 +162,16 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="action_add_bem_patrimonial" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="cadastro_agua_proxima" type="id"/>
     <item name="cadastro_alcova" type="id"/>
@@ -242,26 +242,26 @@
     <item name="cadastro_valor_venal" type="id"/>
     <item name="cadastro_vegetacao" type="id"/>
     <item name="drawer_layout" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="home" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="lista_add_button" type="id"/>
     <item name="lista_remove_bem_button" type="id"/>
     <item name="main_content_fragment" type="id"/>
     <item name="nenhum_bem_patrimonial_cadastrado" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="registered_patrimonial_author" type="id"/>
     <item name="registered_patrimonial_content" type="id"/>
     <item name="registered_patrimonial_image" type="id"/>
     <item name="registered_patrimonial_name" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <item name="split_action_bar" type="id"/>
     <item name="up" type="id"/>
@@ -282,7 +282,7 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_name">Memória Virtual</string>
@@ -375,7 +375,7 @@
     <string name="titulo_cadastro_outros">Outros</string>
     <string name="titulo_cadastro_procedencia">Procedência</string>
     <string name="titulo_cadastro_producao">Produção</string>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
@@ -383,7 +383,7 @@
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance">
         <item name="android:textColor">?android:textColorPrimary</item>
@@ -1137,7 +1137,7 @@
         <item name="android:scaleType">center</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/material_navigationbar</item>
@@ -1154,7 +1154,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
@@ -1366,7 +1366,7 @@
     <style name="TextAppearance.Widget.AppCompat.ExpandedMenu.Item" parent="Base.TextAppearance.Widget.AppCompat.ExpandedMenu.Item"/>
     <style name="TextAppearance.Widget.AppCompat.Toolbar.Subtitle" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"/>
     <style name="TextAppearance.Widget.AppCompat.Toolbar.Title" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TextView" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">match_parent</item>
@@ -1376,7 +1376,7 @@
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginTop">40dp</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.AppCompat" parent="Base.Theme.AppCompat"/>
     <style name="Theme.AppCompat.CompactMenu" parent="Base.Theme.AppCompat.CompactMenu"/>
@@ -1399,12 +1399,12 @@
     <style name="ThemeOverlay.AppCompat.Dark" parent="Base.ThemeOverlay.AppCompat.Dark"/>
     <style name="ThemeOverlay.AppCompat.Dark.ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Light" parent="Base.ThemeOverlay.AppCompat.Light"/>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TitleBarTextColor" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar"/>
     <style name="Widget.AppCompat.ActionBar.Solid" parent="Base.Widget.AppCompat.ActionBar.Solid"/>

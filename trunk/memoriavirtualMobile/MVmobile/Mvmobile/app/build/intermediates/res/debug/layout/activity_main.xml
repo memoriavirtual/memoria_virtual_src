@@ -19,4 +19,4 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="@android:color/background_light"/>
-</android.support.v4.widget.DrawerLayout><!-- From: file:/C:/Users/daniele/Desktop/Mvmobile/app/src/main/res/layout/activity_main.xml -->
+</android.support.v4.widget.DrawerLayout><!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/layout/activity_main.xml -->
