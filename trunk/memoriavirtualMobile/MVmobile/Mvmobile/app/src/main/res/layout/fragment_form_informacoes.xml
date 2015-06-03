@@ -22,6 +22,16 @@
                 style="@style/TextView"/>
 
             <TextView
+                android:text="@string/cadastro_titulo_principal"
+                style="@style/TextView"/>
+            <EditText
+                android:id="@id/cadastro_titulo_principal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="18sp"/>
+
+            <TextView
                 android:text="@string/cadastro_tipo"
                 style="@style/TextView"/>
             <EditText
@@ -42,15 +52,7 @@
                 android:inputType="number"
                 android:textSize="18sp"/>
 
-            <TextView
-                android:text="@string/cadastro_titulo_principal"
-                style="@style/TextView"/>
-            <EditText
-                android:id="@id/cadastro_titulo_principal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:textSize="18sp"/>
+
 
             <TextView
                 android:text="@string/cadastro_complemento"

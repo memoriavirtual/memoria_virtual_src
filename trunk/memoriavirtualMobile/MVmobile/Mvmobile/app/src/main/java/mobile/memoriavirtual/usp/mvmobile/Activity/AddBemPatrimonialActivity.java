@@ -187,7 +187,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
                 setReferenciasDosCampos();
 
                 //Se passou um bem patrimonial entao irá editar, preenche os campos com o bem patrimonial passado
-                if(bemPatrimonial != null){
+                if(bemPatrimonial != null && mBemPatrimonial == null){
                     mBemPatrimonial = bemPatrimonial;
                     setTitle(R.string.title_activity_edit_bem_patrimonial);
                     preencheCampos(bemPatrimonial);
@@ -406,10 +406,10 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
 
     private void getBemPatrimonialDosCampos()
     {
-        mBemPatrimonial = new BemPatrimonial();
-
         //Midia
-        mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
+        //Se tirou uma imagem entao coloca no bem patrimonial
+        if(imageCaptured != null)
+            mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
 
         //Informações gerais
         mBemPatrimonial.setCadastro_externo(cadastro_externo.isChecked() ? "1" : "0");
@@ -420,6 +420,79 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         mBemPatrimonial.setCadastro_colecao(cadastro_colecao.getText().toString());
         mBemPatrimonial.setCadastro_latitude(cadastro_latitude.getText().toString());
         mBemPatrimonial.setCadastro_longitude(cadastro_longitude.getText().toString());
+
+        //Autor
+        mBemPatrimonial.setCadastro_autoria(cadastro_autoria.getText().toString());
+
+        //Producao
+        mBemPatrimonial.setCadastro_local(cadastro_local.getText().toString());
+        mBemPatrimonial.setCadastro_ano(cadastro_ano.getText().toString());
+        mBemPatrimonial.setCadastro_edicao(cadastro_edicao.getText().toString());
+        mBemPatrimonial.setCadastro_outras_responsabilidades(cadastro_outras_responsabilidades.getText().toString());
+
+        //Descricao
+        mBemPatrimonial.setCadastro_caracteristicas(cadastro_caracteristicas.getText().toString());
+        mBemPatrimonial.setCadastro_dimensoes_quantificacoes(cadastro_dimensoes_quantificacoes.getText().toString());
+        mBemPatrimonial.setCadastro_condicao_topografica(cadastro_condicao_topografica.getText().toString());
+        mBemPatrimonial.setCadastro_uso(cadastro_uso.getText().toString());
+        mBemPatrimonial.setCadastro_num_ambientes(cadastro_num_ambientes.getText().toString());
+        mBemPatrimonial.setCadastro_num_pavimentos(cadastro_num_pavimentos.getText().toString());
+        mBemPatrimonial.setCadastro_alcova(cadastro_alcova.isChecked() ? "1" : "0");
+        mBemPatrimonial.setCadastro_porao(cadastro_porao.isChecked() ? "1" : "0");
+        mBemPatrimonial.setCadastro_sotao(cadastro_sotao.isChecked() ? "1" : "0");
+        mBemPatrimonial.setCadastro_meio_antropico(cadastro_meio_antropico.getText().toString());
+        mBemPatrimonial.setCadastro_carac_ambientais(cadastro_carac_ambientais.getText().toString());
+        mBemPatrimonial.setCadastro_sitio_paisagem(cadastro_sitio_paisagem.getText().toString());
+        mBemPatrimonial.setCadastro_agua_proxima(cadastro_agua_proxima.getText().toString());
+        mBemPatrimonial.setCadastro_vegetacao(cadastro_vegetacao.getText().toString());
+        mBemPatrimonial.setCadastro_exposicao(cadastro_exposicao.getText().toString());
+        mBemPatrimonial.setCadastro_uso_atual(cadastro_uso_atual.getText().toString());
+        mBemPatrimonial.setCadastro_outros(cadastro_outros.getText().toString());
+        mBemPatrimonial.setCadastro_area_total(cadastro_area_total.getText().toString());
+        mBemPatrimonial.setCadastro_altura_fachada_frontal(cadastro_altura_fachada_frontal.getText().toString());
+        mBemPatrimonial.setCadastro_altura_fachada_posterior(cadastro_altura_fachada_posterior.getText().toString());
+        mBemPatrimonial.setCadastro_largura(cadastro_largura.getText().toString());
+        mBemPatrimonial.setCadastro_altura(cadastro_altura.getText().toString());
+        mBemPatrimonial.setCadastro_profundidade(cadastro_profundidade.getText().toString());
+        mBemPatrimonial.setCadastro_altura_cumeeira(cadastro_altura_cumeeira.getText().toString());
+        mBemPatrimonial.setCadastro_altura_total(cadastro_altura_total.getText().toString());
+        mBemPatrimonial.setCadastro_pe_direito_terreo(cadastro_pe_direito_terreo.getText().toString());
+        mBemPatrimonial.setCadastro_tipo_pe_direito(cadastro_tipo_pe_direito.getText().toString());
+        mBemPatrimonial.setCadastro_comprimento(cadastro_comprimento.getText().toString());
+        mBemPatrimonial.setCadastro_localizacao_fisica(cadastro_localizacao_fisica.getText().toString());
+        mBemPatrimonial.setCadastro_conteudo(cadastro_conteudo.getText().toString());
+        mBemPatrimonial.setCadastro_meio_acesso(cadastro_meio_acesso.getText().toString());
+        mBemPatrimonial.setCadastro_notas(cadastro_notas.getText().toString());
+
+        //Estado
+        mBemPatrimonial.setCadastro_estado_preservacao(cadastro_estado_preservacao.getText().toString());
+        mBemPatrimonial.setCadastro_estado_convervacao(cadastro_estado_convervacao.getText().toString());
+        mBemPatrimonial.setCadastro_notas_estado_convervacao(cadastro_notas_estado_convervacao.getText().toString());
+
+        //Disponibilidade
+        mBemPatrimonial.setCadastro_disponibilidade(cadastro_disponibilidade.getText().toString());
+        mBemPatrimonial.setCadastro_condicao_acesso(cadastro_condicao_acesso.getText().toString());
+        mBemPatrimonial.setCadastro_condicao_reproducao(cadastro_condicao_reproducao.getText().toString());
+        mBemPatrimonial.setCadastro_protecao(cadastro_protecao.getText().toString());
+        mBemPatrimonial.setCadastro_numero_processo(cadastro_numero_processo.getText().toString());
+        mBemPatrimonial.setCadastro_data_retorno(cadastro_data_retorno.getText().toString());
+        mBemPatrimonial.setCadastro_notas_uso_aproveitamento(cadastro_notas_uso_aproveitamento.getText().toString());
+
+        //Procedencia
+        mBemPatrimonial.setCadastro_tipo_aquisicao(cadastro_tipo_aquisicao.getText().toString());
+        mBemPatrimonial.setCadastro_valor_venal(cadastro_valor_venal.getText().toString());
+        mBemPatrimonial.setCadastro_data(cadastro_data.getText().toString());
+        mBemPatrimonial.setCadastro_primeiro_proprietario(cadastro_primeiro_proprietario.getText().toString());
+        mBemPatrimonial.setCadastro_dados_transacao(cadastro_dados_transacao.getText().toString());
+        mBemPatrimonial.setCadastro_historico(cadastro_historico.getText().toString());
+        mBemPatrimonial.setCadastro_instrumento_pesquisa(cadastro_instrumento_pesquisa.getText().toString());
+
+        //Assuntos
+        mBemPatrimonial.setCadastro_assuntos(cadastro_assuntos.getText().toString());
+        mBemPatrimonial.setCadastro_descritores(cadastro_descritores.getText().toString());
+        mBemPatrimonial.setCadastro_fontes_informacao(cadastro_fontes_informacao.getText().toString());
+        mBemPatrimonial.setCadastro_pesquisadores(cadastro_pesquisadores.getText().toString());
+        mBemPatrimonial.setCadastro_relacionar_outros_bens(cadastro_relacionar_outros_bens.getText().toString());
     }
 
     public void preencheCampos(BemPatrimonial bemPatrimonial){
@@ -436,6 +509,83 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         cadastro_colecao.setText(bemPatrimonial.getCadastro_colecao());
         cadastro_latitude.setText(bemPatrimonial.getCadastro_latitude());
         cadastro_longitude.setText(bemPatrimonial.getCadastro_longitude());
+
+        //Autor
+        cadastro_autoria.setText(bemPatrimonial.getCadastro_autoria());
+
+        //Producao
+        cadastro_local.setText(bemPatrimonial.getCadastro_local());
+        cadastro_ano.setText(bemPatrimonial.getCadastro_ano());
+        cadastro_edicao.setText(bemPatrimonial.getCadastro_edicao());
+        cadastro_outras_responsabilidades.setText(bemPatrimonial.getCadastro_outras_responsabilidades());
+
+        //Descricao
+        cadastro_caracteristicas.setText(bemPatrimonial.getCadastro_caracteristicas());
+        cadastro_dimensoes_quantificacoes.setText(bemPatrimonial.getCadastro_dimensoes_quantificacoes());
+        cadastro_condicao_topografica.setText(bemPatrimonial.getCadastro_condicao_topografica());
+        cadastro_uso.setText(bemPatrimonial.getCadastro_uso());
+        cadastro_num_ambientes.setText(bemPatrimonial.getCadastro_num_ambientes());
+        cadastro_num_pavimentos.setText(bemPatrimonial.getCadastro_num_pavimentos());
+
+        cadastro_alcova.setChecked((bemPatrimonial.getCadastro_alcova().equals("1")) ? true : false);
+
+        cadastro_porao.setChecked((bemPatrimonial.getCadastro_porao().equals("1")) ? true : false);
+        cadastro_sotao.setChecked((bemPatrimonial.getCadastro_sotao().equals("1")) ? true : false);
+
+        cadastro_meio_antropico.setText(bemPatrimonial.getCadastro_meio_antropico());
+        cadastro_carac_ambientais.setText(bemPatrimonial.getCadastro_carac_ambientais());
+        cadastro_sitio_paisagem.setText(bemPatrimonial.getCadastro_sitio_paisagem());
+        cadastro_agua_proxima.setText(bemPatrimonial.getCadastro_agua_proxima());
+        cadastro_vegetacao.setText(bemPatrimonial.getCadastro_vegetacao());
+        cadastro_exposicao.setText(bemPatrimonial.getCadastro_exposicao());
+        cadastro_uso_atual.setText(bemPatrimonial.getCadastro_uso_atual());
+        cadastro_outros.setText(bemPatrimonial.getCadastro_outros());
+        cadastro_area_total.setText(bemPatrimonial.getCadastro_area_total());
+        cadastro_altura_fachada_frontal.setText(bemPatrimonial.getCadastro_altura_fachada_frontal());
+        cadastro_altura_fachada_posterior.setText(bemPatrimonial.getCadastro_altura_fachada_posterior());
+        cadastro_largura.setText(bemPatrimonial.getCadastro_largura());
+        cadastro_altura.setText(bemPatrimonial.getCadastro_altura());
+        cadastro_profundidade.setText(bemPatrimonial.getCadastro_profundidade());
+
+        cadastro_altura_cumeeira.setText(bemPatrimonial.getCadastro_altura_cumeeira());
+        cadastro_altura_total.setText(bemPatrimonial.getCadastro_altura_total());
+        cadastro_pe_direito_terreo.setText(bemPatrimonial.getCadastro_pe_direito_terreo());
+        cadastro_tipo_pe_direito.setText(bemPatrimonial.getCadastro_tipo_pe_direito());
+        cadastro_comprimento.setText(bemPatrimonial.getCadastro_comprimento());
+        cadastro_localizacao_fisica.setText(bemPatrimonial.getCadastro_localizacao_fisica());
+        cadastro_conteudo.setText(bemPatrimonial.getCadastro_conteudo());
+        cadastro_meio_acesso.setText(bemPatrimonial.getCadastro_meio_acesso());
+        cadastro_notas.setText(bemPatrimonial.getCadastro_notas());
+
+        //Estado
+        cadastro_estado_preservacao.setText(bemPatrimonial.getCadastro_estado_preservacao());
+        cadastro_estado_convervacao.setText(bemPatrimonial.getCadastro_estado_convervacao());
+        cadastro_notas_estado_convervacao.setText(bemPatrimonial.getCadastro_notas_estado_convervacao());
+
+        //Disponibilidadget
+        cadastro_disponibilidade.setText(bemPatrimonial.getCadastro_disponibilidade());
+        cadastro_condicao_acesso.setText(bemPatrimonial.getCadastro_condicao_acesso());
+        cadastro_condicao_reproducao.setText(bemPatrimonial.getCadastro_condicao_reproducao());
+        cadastro_protecao.setText(bemPatrimonial.getCadastro_protecao());
+        cadastro_numero_processo.setText(bemPatrimonial.getCadastro_numero_processo());
+        cadastro_data_retorno.setText(bemPatrimonial.getCadastro_data_retorno());
+        cadastro_notas_uso_aproveitamento.setText(bemPatrimonial.getCadastro_notas_uso_aproveitamento());
+
+        //Procedencia
+        cadastro_tipo_aquisicao.setText(bemPatrimonial.getCadastro_tipo_aquisicao());
+        cadastro_valor_venal.setText(bemPatrimonial.getCadastro_valor_venal());
+        cadastro_data.setText(bemPatrimonial.getCadastro_data());
+        cadastro_primeiro_proprietario.setText(bemPatrimonial.getCadastro_primeiro_proprietario());
+        cadastro_dados_transacao.setText(bemPatrimonial.getCadastro_dados_transacao());
+        cadastro_historico.setText(bemPatrimonial.getCadastro_historico());
+        cadastro_instrumento_pesquisa.setText(bemPatrimonial.getCadastro_instrumento_pesquisa());
+
+        //Assuntos
+        cadastro_assuntos.setText(bemPatrimonial.getCadastro_assuntos());
+        cadastro_descritores.setText(bemPatrimonial.getCadastro_descritores());
+        cadastro_fontes_informacao.setText(bemPatrimonial.getCadastro_fontes_informacao());
+        cadastro_pesquisadores.setText(bemPatrimonial.getCadastro_pesquisadores());
+        cadastro_relacionar_outros_bens.setText(bemPatrimonial.getCadastro_relacionar_outros_bens());
     }
 
     private void nextTouched()
