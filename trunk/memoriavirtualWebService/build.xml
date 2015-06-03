@@ -19,9 +19,6 @@
 	<target name="init">
 		<mkdir dir="../build_WS/classes"/>
 		<mkdir dir="../build_WS/src"/>
-		<delete>
-			<fileset dir="build" includes="**/*"/>
-		</delete>
 	
 		<mkdir dir="../build_WS/classes"/>
 		<mkdir dir="../build_WS/src"/>
