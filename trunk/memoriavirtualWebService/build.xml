@@ -10,8 +10,6 @@
 	<property name= "ws.dir" location = "../build_WS/src"/>
 	
 	<property name= "web.xml" location = "WebContent/WEB-INF"/>
-	
-	<property name= "web.lib" location = "WebContent/WEB-INF/lib"/>
 
 	<loadproperties srcfile="build.properties"></loadproperties>	
 
@@ -60,10 +58,8 @@
 
 	
 	<target name="memWar" depends="compile">
-		<war destfile="${memoriavirtualWebService.war}" webxml="${web.xml}"
-			compress="true">
+		<war destfile="${memoriavirtualWebService.war}" webxml="${web.xml}" compress="true">
 			<fileset dir="${ws.build.classes}"/>
-			<lib dir="${web.lib}"/>
 		</war>
 
 	</target>
