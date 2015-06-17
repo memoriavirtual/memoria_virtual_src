@@ -18,6 +18,7 @@
 
     <!-- Mídia -->
     <item name="cadastro_foto" type="id"></item>
+    <item name="cadastro_grid_fotos" type="id"></item>
 
     <!-- Informações gerais -->
     <item name="cadastro_externo" type="id"></item>

@@ -42,7 +42,12 @@ public class ListaBemPatrimonialAdapter extends ArrayAdapter<BemPatrimonial> {
 
         name.setText(patrimonial.getCadastro_titulo_principal());
         author.setText("Tipo: " + patrimonial.getCadastro_tipo());
-        image.setImageBitmap(Utils.stringToBitMap(patrimonial.getCadastro_image()));
+
+        //Imagem
+        if(patrimonial.getCadastro_image().size() > 0) {
+            String image_data = patrimonial.getCadastro_image().get(0);
+            image.setImageBitmap(Utils.stringToBitMap(image_data));
+        }
 
         return rowView;
     }

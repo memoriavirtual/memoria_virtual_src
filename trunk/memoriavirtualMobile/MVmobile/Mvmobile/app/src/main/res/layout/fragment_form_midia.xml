@@ -16,13 +16,6 @@
             android:paddingBottom="30dp"
             android:gravity="center">
 
-            <ImageView
-                android:id="@id/cadastro_foto"
-                android:layout_marginTop="30dp"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"/>
-
             <Button
                 android:background="@drawable/border_button"
                 android:textColor="@color/material_statusbar"
@@ -30,8 +23,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="30dp"
                 android:textSize="18sp"
                 android:onClick="onTakePictureButtonClick"/>
+
+            <GridView
+                android:id="@id/cadastro_grid_fotos"
+                android:layout_width="wrap_content"
+                android:layout_height="220dp"
+                android:useDefaultMargins="true"
+                android:scrollbars="horizontal"
+                android:numColumns="3"
+                android:columnWidth="150dp"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:background="@color/background_gray"
+            />
+
+
 
             <Button
                 android:background="@drawable/border_button"
@@ -39,7 +49,7 @@
                 android:text="@string/cadastro_proximo_button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:textSize="18sp"
                 android:onClick="onNextButtonClick"/>
         </LinearLayout>

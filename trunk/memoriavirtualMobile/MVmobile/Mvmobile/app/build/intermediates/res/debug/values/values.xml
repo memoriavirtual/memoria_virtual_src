@@ -206,6 +206,7 @@
     <item name="cadastro_externo" type="id"/>
     <item name="cadastro_fontes_informacao" type="id"/>
     <item name="cadastro_foto" type="id"/>
+    <item name="cadastro_grid_fotos" type="id"/>
     <item name="cadastro_historico" type="id"/>
     <item name="cadastro_instrumento_pesquisa" type="id"/>
     <item name="cadastro_largura" type="id"/>
@@ -366,6 +367,8 @@
     <string name="nenhum_bem_patrimonial_cadastrado">Nenhum bem patrimonial cadastrado.</string>
     <string name="title_activity_add_bem_patrimonial">Cadastrar Bem Patrimonial</string>
     <string name="title_activity_edit_bem_patrimonial">Editar Bem Patrimonial</string>
+    <string name="title_activity_full_screen_image_adapter">FullScreenImageAdapter</string>
+    <string name="title_activity_full_screen_view">FullScreenViewActivity</string>
     <string name="titulo_cadastro_autor">Autor</string>
     <string name="titulo_cadastro_descricao">Descrição</string>
     <string name="titulo_cadastro_disponibilidade">Disponibilidade</string>

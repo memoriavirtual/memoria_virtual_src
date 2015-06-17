@@ -6,35 +6,29 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.support.v4.view.WindowInsetsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowInsets;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.GridView;
 
 import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -50,16 +44,18 @@ import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormProcedencia;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormProducao;
 import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
-import mobile.memoriavirtual.usp.mvmobile.Utils.Mask;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
 public class AddBemPatrimonialActivity extends ActionBarActivity implements FormMidia.OnFragmentInteractionListener,FormInformacoes.OnFragmentInteractionListener, FormAutor.OnFragmentInteractionListener,FormProducao.OnFragmentInteractionListener,FormDescricao.OnFragmentInteractionListener,FormEstado.OnFragmentInteractionListener,FormDisponibilidade.OnFragmentInteractionListener,FormProcedencia.OnFragmentInteractionListener,FormOutros.OnFragmentInteractionListener {
 
+
     AddBemPatrimonialAdapter mAdapter;
+    ImageGridAdapter mAdapterGrid;
     ViewPager mPager;
     BemPatrimonial mBemPatrimonial;
     String mCurrentPhotoPath;
     Bitmap imageCaptured;
+    ArrayList<String> bp_data_images;
 
     //Datas
     private DatePickerDialog cadastro_data_pickerDialog;
@@ -70,7 +66,8 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     Boolean isToEdit;
 
     //Midia
-    ImageView cadastro_foto;
+    GridView cadastro_grid_fotos;
+    //ImageView cadastro_foto;
 
     //Informações gerais
     CheckBox cadastro_externo;
@@ -165,6 +162,9 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        mBemPatrimonial = new BemPatrimonial();
+        bp_data_images = new ArrayList<String>();
+
         mAdapter = new AddBemPatrimonialAdapter(getSupportFragmentManager());
 
         mPager = (ViewPager)findViewById(R.id.pager);
@@ -187,7 +187,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
                 setReferenciasDosCampos();
 
                 //Se passou um bem patrimonial entao irá editar, preenche os campos com o bem patrimonial passado
-                if(bemPatrimonial != null && mBemPatrimonial == null){
+                if(bemPatrimonial != null && (mBemPatrimonial.getCadastro_titulo_principal().compareTo("") == 0)){
                     mBemPatrimonial = bemPatrimonial;
                     setTitle(R.string.title_activity_edit_bem_patrimonial);
                     preencheCampos(bemPatrimonial);
@@ -273,7 +273,10 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     private void setReferenciasDosCampos()
     {
         //Midia
-        cadastro_foto = (ImageView) findViewById(R.id.cadastro_foto);
+        cadastro_grid_fotos = (GridView) findViewById(R.id.cadastro_grid_fotos);
+        mAdapterGrid = new ImageGridAdapter(this, bp_data_images);
+        cadastro_grid_fotos.setAdapter(mAdapterGrid);
+       // cadastro_foto = (ImageView) findViewById(R.id.cadastro_foto);
 
         //Informações gerais
         cadastro_externo = (CheckBox) findViewById(R.id.cadastro_externo);
@@ -289,7 +292,6 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         cadastro_autoria = (EditText) findViewById(R.id.cadastro_autoria);
 
         //Produção
-
         cadastro_local = (EditText) findViewById(R.id.cadastro_local);
         cadastro_ano = (EditText) findViewById(R.id.cadastro_ano);
         cadastro_edicao = (EditText) findViewById(R.id.cadastro_edicao);
@@ -402,14 +404,27 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+        cadastro_grid_fotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(Utils.getContext(), FullScreenViewActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putStringArrayListExtra("images", bp_data_images);
+                i.putExtra("position",position);
+                startActivity(i);
+            }
+        });
     }
 
     private void getBemPatrimonialDosCampos()
     {
         //Midia
         //Se tirou uma imagem entao coloca no bem patrimonial
-        if(imageCaptured != null)
-            mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
+
+        mBemPatrimonial.setCadastro_image(bp_data_images);
+            //mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
 
         //Informações gerais
         mBemPatrimonial.setCadastro_externo(cadastro_externo.isChecked() ? "1" : "0");
@@ -498,7 +513,8 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     public void preencheCampos(BemPatrimonial bemPatrimonial){
 
         //Midia
-        cadastro_foto.setImageBitmap(Utils.stringToBitMap(bemPatrimonial.getCadastro_image()));
+//        cadastro_foto.setImageBitmap(Utils.stringToBitMap(bemPatrimonial.getCadastro_image()));
+
 
         //Informações gerais
         cadastro_externo.setChecked((bemPatrimonial.getCadastro_externo().equals("1")) ? true : false);
@@ -656,15 +672,36 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
             if (resultCode == Activity.RESULT_OK) {
 
                 imageCaptured = (Bitmap) data.getExtras().get("data");
+                bp_data_images.add(Utils.bitMapToString(imageCaptured));
 
                 //Bitmap myBitmap = BitmapFactory.decodeFile(dataUri);
 
                 galleryAddPic();
-                cadastro_foto.setImageBitmap(imageCaptured);
+                mAdapterGrid.notifyDataSetChanged();
+                cadastro_grid_fotos.setAdapter(mAdapterGrid);
+
+               // setContentView(cadastro_grid_fotos);
+
 
             } else {
                 // usuário não tirou foto.
             }
         }
     }
+
+    /*
+    public void setGridLayoutImages()
+    {
+        //cadastro_grid_fotos.setNumColumns(bp_data_images.size());
+
+        for (int i = 0; i < bp_data_images.size(); i++) {
+            ImageView image = new ImageView(AddBemPatrimonialActivity.this);
+
+            //image.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(0), GridLayout.spec(i)));
+            image.setImageBitmap(Utils.stringToBitMap(bp_data_images.get(i)));
+            cadastro_grid_fotos.addView(image);
+        }
+
+   }
+    */
 }

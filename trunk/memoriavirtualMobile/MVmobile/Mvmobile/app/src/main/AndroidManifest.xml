@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mobile.memoriavirtual.usp.mvmobile" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -20,10 +27,15 @@
             android:name=".Activity.AddBemPatrimonialActivity"
             android:label="@string/title_activity_add_bem_patrimonial" >
         </activity>
+        <activity
+            android:name=".Activity.FullScreenImageAdapter"
+            android:label="@string/title_activity_full_screen_image_adapter" >
+        </activity>
+        <activity
+            android:name=".Activity.FullScreenViewActivity"
+            android:label="@string/title_activity_full_screen_view"
+            android:theme="@style/ThemeNoActionBar">
+        </activity>
     </application>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
 </manifest>
