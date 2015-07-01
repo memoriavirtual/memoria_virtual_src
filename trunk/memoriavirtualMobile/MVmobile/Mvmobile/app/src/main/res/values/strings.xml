@@ -129,6 +129,8 @@
     <string name="cadastro_add_button">SALVAR</string>
     <string name="cadastro_proximo_button">PRÓXIMO</string>
     <string name="cadastro_tirar_foto">TIRAR FOTO</string>
+    <string name="cadastro_gravar_video">GRAVAR VÍDEO</string>
+
     <string name="title_activity_full_screen_image_adapter">FullScreenImageAdapter</string>
     <string name="title_activity_full_screen_view">FullScreenViewActivity</string>
 

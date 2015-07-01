@@ -321,6 +321,7 @@
     <string name="cadastro_exposicao">Exposição</string>
     <string name="cadastro_externo">Uso externo?</string>
     <string name="cadastro_fontes_informacao">Fontes de informação</string>
+    <string name="cadastro_gravar_video">GRAVAR VÍDEO</string>
     <string name="cadastro_historico">Histórico</string>
     <string name="cadastro_instrumento_pesquisa">Instrumento de pesquisa</string>
     <string name="cadastro_largura">Largura</string>

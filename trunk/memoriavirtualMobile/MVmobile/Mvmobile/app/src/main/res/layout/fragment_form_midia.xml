@@ -17,15 +17,25 @@
             android:gravity="center">
 
             <Button
-                android:background="@drawable/border_button"
-                android:textColor="@color/material_statusbar"
+                android:background="@drawable/border_filled_button"
+                android:textColor="@color/card_white"
                 android:text="@string/cadastro_tirar_foto"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:textSize="18sp"
                 android:onClick="onTakePictureButtonClick"/>
+
+            <Button
+                android:background="@drawable/border_button"
+                android:textColor="@color/material_statusbar"
+                android:text="@string/cadastro_gravar_video"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="30dp"
+                android:textSize="18sp"
+                android:onClick="onRecordVideoButtonClick"/>
 
             <GridView
                 android:id="@id/cadastro_grid_fotos"
@@ -52,6 +62,7 @@
                 android:layout_marginTop="20dp"
                 android:textSize="18sp"
                 android:onClick="onNextButtonClick"/>
+
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

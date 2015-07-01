@@ -62,8 +62,9 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     private DatePickerDialog cadastro_data_retorno_pickerDialog;
     private SimpleDateFormat dateFormatter;
 
-    Integer mIndex;
-    Boolean isToEdit;
+    Integer mIndex = 0;
+    Boolean isToEdit = false;
+    Boolean camposPreenchidos = false;
 
     //Midia
     GridView cadastro_grid_fotos;
@@ -181,16 +182,21 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         else
             isToEdit = true;
 
+
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 setReferenciasDosCampos();
 
                 //Se passou um bem patrimonial entao irá editar, preenche os campos com o bem patrimonial passado
-                if(bemPatrimonial != null && (mBemPatrimonial.getCadastro_titulo_principal().compareTo("") == 0)){
+                if(isToEdit && !camposPreenchidos){
                     mBemPatrimonial = bemPatrimonial;
+                    //Passa as imagens para ArrayList de imagens
+                    bp_data_images.addAll(mBemPatrimonial.getCadastro_image());
+
                     setTitle(R.string.title_activity_edit_bem_patrimonial);
                     preencheCampos(bemPatrimonial);
+                    camposPreenchidos = true;
                 }
             }
             @Override
@@ -228,7 +234,6 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     @Override
@@ -276,6 +281,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         cadastro_grid_fotos = (GridView) findViewById(R.id.cadastro_grid_fotos);
         mAdapterGrid = new ImageGridAdapter(this, bp_data_images);
         cadastro_grid_fotos.setAdapter(mAdapterGrid);
+
        // cadastro_foto = (ImageView) findViewById(R.id.cadastro_foto);
 
         //Informações gerais
@@ -659,6 +665,15 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         }
     }
 
+    static final int REQUEST_VIDEO_CAPTURE = 1;
+
+    private void onRecordVideoButtonClick() {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
+
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
@@ -667,41 +682,29 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         this.sendBroadcast(mediaScanIntent);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_TAKE_PHOTO) {
             if (resultCode == Activity.RESULT_OK) {
 
-                imageCaptured = (Bitmap) data.getExtras().get("data");
+                imageCaptured = (Bitmap) intent.getExtras().get("data");
                 bp_data_images.add(Utils.bitMapToString(imageCaptured));
 
-                //Bitmap myBitmap = BitmapFactory.decodeFile(dataUri);
-
-                galleryAddPic();
+                //galleryAddPic();
                 mAdapterGrid.notifyDataSetChanged();
                 cadastro_grid_fotos.setAdapter(mAdapterGrid);
-
-               // setContentView(cadastro_grid_fotos);
-
 
             } else {
                 // usuário não tirou foto.
             }
         }
-    }
+        else if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+            imageCaptured = (Bitmap) intent.getExtras().get("data");
+            bp_data_images.add(Utils.bitMapToString(imageCaptured));
 
-    /*
-    public void setGridLayoutImages()
-    {
-        //cadastro_grid_fotos.setNumColumns(bp_data_images.size());
-
-        for (int i = 0; i < bp_data_images.size(); i++) {
-            ImageView image = new ImageView(AddBemPatrimonialActivity.this);
-
-            //image.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(0), GridLayout.spec(i)));
-            image.setImageBitmap(Utils.stringToBitMap(bp_data_images.get(i)));
-            cadastro_grid_fotos.addView(image);
+            mAdapterGrid.notifyDataSetChanged();
+            cadastro_grid_fotos.setAdapter(mAdapterGrid);
         }
-
-   }
-    */
+    }
 }
