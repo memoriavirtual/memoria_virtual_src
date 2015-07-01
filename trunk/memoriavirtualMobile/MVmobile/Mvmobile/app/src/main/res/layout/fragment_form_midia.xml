@@ -22,7 +22,7 @@
                 android:text="@string/cadastro_tirar_foto"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="18sp"
                 android:onClick="onTakePictureButtonClick"/>

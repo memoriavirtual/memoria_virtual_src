@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -665,9 +666,9 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         }
     }
 
-    static final int REQUEST_VIDEO_CAPTURE = 1;
+    static final int REQUEST_VIDEO_CAPTURE = 2;
 
-    private void onRecordVideoButtonClick() {
+    public void onRecordVideoButtonClick(View view) {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
@@ -700,8 +701,13 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
             }
         }
         else if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            imageCaptured = (Bitmap) intent.getExtras().get("data");
-            bp_data_images.add(Utils.bitMapToString(imageCaptured));
+
+            Uri videoUri = intent.getData();
+
+            String path = videoUri.toString();
+            Bitmap thumb = ThumbnailUtils.createVideoThumbnail(path,
+                    MediaStore.Images.Thumbnails.MINI_KIND);
+            bp_data_images.add(Utils.bitMapToString(thumb));
 
             mAdapterGrid.notifyDataSetChanged();
             cadastro_grid_fotos.setAdapter(mAdapterGrid);
