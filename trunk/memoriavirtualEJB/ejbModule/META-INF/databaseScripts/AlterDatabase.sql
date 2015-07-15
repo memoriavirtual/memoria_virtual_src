@@ -55,7 +55,7 @@ ALTER TABLE bempatrimonial ADD COLUMN notasusoaproveitamento text;
 
 -- Column: dadosdoctransacao
 ALTER TABLE bempatrimonial DROP COLUMN dadosdoctransacao;
-ALTER TABLE bempatrimonial ADD COLUMN dadosdoctransacao character varying(255);
+ALTER TABLE bempatrimonial ADD COLUMN dadosdoctransacao text;
 
 -- Column: historico
 ALTER TABLE bempatrimonial DROP COLUMN historico;
