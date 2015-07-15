@@ -3,6 +3,6 @@
   <runtime name="GlassFish 4.1"/>
   <fixed facet="jst.ejb"/>
   <fixed facet="java"/>
-  <installed facet="java" version="1.6"/>
   <installed facet="jst.ejb" version="3.1"/>
+  <installed facet="java" version="1.7"/>
 </faceted-project>
