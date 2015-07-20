@@ -110,8 +110,6 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 
 				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 
-				FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "O código digitado está incorreto!",null));
-				
 				return this.redirecionar("/restrito/index.jsf", true);
 			} catch (Exception e) {
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));

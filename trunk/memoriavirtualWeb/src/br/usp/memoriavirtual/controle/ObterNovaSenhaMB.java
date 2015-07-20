@@ -66,8 +66,6 @@ public class ObterNovaSenhaMB implements Serializable {
 					new FacesMessage(e.getMessage()));
 			return "falha";
 		}
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",null));
 		return "sucesso";
 	}
 
