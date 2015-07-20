@@ -34,15 +34,6 @@
 		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
 		<param-value>.xhtml</param-value>
 	</context-param>
-	<context-param>
-	    <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-	    <param-value>6LdnC_0SAAAAAILrDzvj4h10-WnTXHjM7EJ5HukP</param-value>
-	</context-param>
-	
-	<context-param>
-	    <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-	    <param-value>6LdnC_0SAAAAANIlxFpnqZdp7IaYsNHwVqTaGhhg</param-value>
-	</context-param>
 	
 	<servlet>
 		<description>Servlet para servir arquivos de midia</description>
