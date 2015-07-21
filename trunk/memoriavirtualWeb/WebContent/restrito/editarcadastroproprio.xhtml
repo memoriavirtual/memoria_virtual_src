@@ -173,6 +173,19 @@
 										</div>
 									</div>
 								</div>
+								<br></br>
+								<div class="row">
+									<div class="col-md-offset-4 col-md-4">
+										<h:panelGroup rendered="#{editarCadastroProprioMB.captchaNeed == true}">				
+											<div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 15px; margin-bottom: 15px;">
+												<div style="background-color: white; max-width: 300px;">
+													<h:outputText escape="false" value="#{editarCadastroProprioMB.codigoHtmlRecaptcha}"/>
+												</div>
+											</div>
+										</h:panelGroup>
+									</div>
+								</div>
+								<br></br>
 								<div class="text-right row">
 									<div class="col-md-12">
 										<h:commandButton class="btn btn-success margin-5"

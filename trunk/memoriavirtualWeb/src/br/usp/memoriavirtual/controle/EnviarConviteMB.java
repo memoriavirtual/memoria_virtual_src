@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -18,7 +19,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaFactory;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
@@ -52,6 +58,9 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 	private String emails = "";
 	private Usuario usuario;
 	private MensagensMB mensagens;
+	private boolean captchaNeed = true;
+	private String publicKey = "6LdnC_0SAAAAAILrDzvj4h10-WnTXHjM7EJ5HukP";
+	private String privateKey = "6LdnC_0SAAAAANIlxFpnqZdp7IaYsNHwVqTaGhhg";
 
 	public EnviarConviteMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -64,60 +73,64 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 	}
 
 	public String enviarConvite() {
-
-		if (this.validar()) {
-			try {
-				String[] emails = this.emails.split("\\s+");
-
-				Calendar calendario = Calendar.getInstance();
-				calendario.setTime(new Date());
-				calendario.add(Calendar.DATE, new Integer(this.validade));
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				String expiraEm = dateFormat.format(calendario.getTime());
-
-				long id = this.enviarConviteEJB.enviarConvite(emails,
-						this.mensagem, calendario.getTime(),
-						this.administrador, this.acessos);
-
-				Map<String, String> tags = new HashMap<String, String>();
-
-				Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
-						.getExternalContext().getSessionMap().get("usuario");
-
-				tags.put(MVModeloParametrosEmail.SOLICITANTE000.toString(),
-						usuario.getNomeCompleto());
-
-				tags.put(MVModeloParametrosEmail.MENSAGEM000.toString(),
-						this.mensagem);
-				tags.put(MVModeloParametrosEmail.EXPIRACAO000.toString(),
-						expiraEm);
-
-				Map<String, String> parametros = new HashMap<String, String>();
-				parametros.put("id", this.memoriaVirtualEJB
-						.embaralhar(new Long(id).toString()));
-				String url = this.memoriaVirtualEJB.getUrl(
-						MVModeloMapeamentoUrl.cadastrarUsuario, parametros);
-
-				tags.put(MVModeloParametrosEmail.URL000.toString(), url);
-
-				String email = new MVModeloEmailParser().getMensagem(tags,
-						MVModeloEmailTemplates.enviarConvite);
-
-				for (String s : emails) {
-					this.memoriaVirtualEJB.enviarEmail(s,
-							this.traduzir("enviarConviteAssunto"), email);
+		if (validaCaptcha()) {
+			if (this.validar()) {
+				try {
+					String[] emails = this.emails.split("\\s+");
+	
+					Calendar calendario = Calendar.getInstance();
+					calendario.setTime(new Date());
+					calendario.add(Calendar.DATE, new Integer(this.validade));
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					String expiraEm = dateFormat.format(calendario.getTime());
+	
+					long id = this.enviarConviteEJB.enviarConvite(emails,
+							this.mensagem, calendario.getTime(),
+							this.administrador, this.acessos);
+	
+					Map<String, String> tags = new HashMap<String, String>();
+	
+					Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+							.getExternalContext().getSessionMap().get("usuario");
+	
+					tags.put(MVModeloParametrosEmail.SOLICITANTE000.toString(),
+							usuario.getNomeCompleto());
+	
+					tags.put(MVModeloParametrosEmail.MENSAGEM000.toString(),
+							this.mensagem);
+					tags.put(MVModeloParametrosEmail.EXPIRACAO000.toString(),
+							expiraEm);
+	
+					Map<String, String> parametros = new HashMap<String, String>();
+					parametros.put("id", this.memoriaVirtualEJB
+							.embaralhar(new Long(id).toString()));
+					String url = this.memoriaVirtualEJB.getUrl(
+							MVModeloMapeamentoUrl.cadastrarUsuario, parametros);
+	
+					tags.put(MVModeloParametrosEmail.URL000.toString(), url);
+	
+					String email = new MVModeloEmailParser().getMensagem(tags,
+							MVModeloEmailTemplates.enviarConvite);
+	
+					for (String s : emails) {
+						this.memoriaVirtualEJB.enviarEmail(s,
+								this.traduzir("enviarConviteAssunto"), email);
+					}
+	
+					this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+	
+					return this.redirecionar("/restrito/index.jsf", true);
+				} catch (Exception e) {
+					this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+					e.printStackTrace();
+					return null;
 				}
-
-				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-
-				return this.redirecionar("/restrito/index.jsf", true);
-			} catch (Exception e) {
-				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-				e.printStackTrace();
-				return null;
 			}
+			return null;
+		} else {
+			this.getMensagens().mensagemErro(this.traduzir("erroCaptcha"));
+			return null;
 		}
-		return null;
 	}
 
 	public List<SelectItem> getNiveisAcesso() {
@@ -281,6 +294,14 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 		this.limpar();
 		return this.redirecionar("/restrito/index.jsf", true);
 	}
+	
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
+			String args[] = {"255"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
 
 	@Override
 	public boolean validar() {
@@ -290,6 +311,35 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 
 		return (a && b);
 	}
+	
+
+	public String getCodigoHtmlRecaptcha() {
+		ReCaptcha r = ReCaptchaFactory.newReCaptcha(publicKey, privateKey, false);
+		Properties options = new Properties();
+        options.setProperty("theme", "white");
+        options.setProperty("lang", "pt");
+		return r.createRecaptchaHtml(null, options);
+	}
+	
+	private boolean validaCaptcha() {		
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		String enderecoRemoto = req.getRemoteAddr();
+		
+		ReCaptchaImpl r = new ReCaptchaImpl();
+		r.setPrivateKey(privateKey);
+		
+		String textoCriptografado = req.getParameter("recaptcha_challenge_field");
+		String resposta = req.getParameter("recaptcha_response_field");
+		
+		ReCaptchaResponse reCaptchaResponse = r.checkAnswer(enderecoRemoto, textoCriptografado, resposta);
+		
+		if(resposta.isEmpty() || !reCaptchaResponse.isValid()){
+			return false;
+		} else {	
+			return true;
+		}
+	}
+
 
 	public List<Email> getListaEmails() {
 		return listaEmails;
@@ -337,13 +387,15 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 
 	public void setValidade(String validade) {
 		this.validade = validade;
+	}	
+	
+	public boolean getCaptchaNeed() {
+		return captchaNeed;
 	}
 
-	@Override
-	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
-		if(ValidacoesDeCampos.validarComprimento(campo, 255)){
-			String args[] = {"255"};
-			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
-		}		
+	public void setCaptchaNeed(boolean captchaNeed) {
+		this.captchaNeed = captchaNeed;
 	}
+
+
 }

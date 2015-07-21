@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -12,6 +13,10 @@ import javax.faces.context.FacesContext;
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaFactory;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarCadastroProprioRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
@@ -43,6 +48,9 @@ public class EditarCadastroProprioMB implements Serializable,
 	private boolean permissao = true;
 	private boolean alterarSenha = false;
 	private MensagensMB mensagens;
+	private boolean captchaNeed = true;
+	private String publicKey = "6LdnC_0SAAAAAILrDzvj4h10-WnTXHjM7EJ5HukP";
+	private String privateKey = "6LdnC_0SAAAAANIlxFpnqZdp7IaYsNHwVqTaGhhg";
 
 	public EditarCadastroProprioMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -54,32 +62,34 @@ public class EditarCadastroProprioMB implements Serializable,
 	}
 
 	public String editarCadastroProprio() {
-		if (this.validar() && !this.permissao) {
-			try {
-				this.usuario.setSenha(this.novaSenha);
-				this.editarCadastroProprioEJB.editar(this.usuario);
-				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
-
-				HttpServletRequest request = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-				request.getSession().setAttribute("usuario",
-						this.usuario.clone());
-				
-				//FacesContext.getCurrentInstance().addMessage(null,
-				//		new FacesMessage(FacesMessage.SEVERITY_INFO, "O código digitado está incorreto!",null));
-				
-				this.limpar();
-				return this.redirecionar("/restrito/index.jsf", true);
-			} catch (Exception e) {
-				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
-				e.printStackTrace();
+		if (validaCaptcha()) {
+			if (this.validar() && !this.permissao) {
+				try {
+					this.usuario.setSenha(this.novaSenha);
+					this.editarCadastroProprioEJB.editar(this.usuario);
+					this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+	
+					HttpServletRequest request = (HttpServletRequest) FacesContext
+							.getCurrentInstance().getExternalContext().getRequest();
+					request.getSession().setAttribute("usuario",
+							this.usuario.clone());
+					
+					this.limpar();
+					return this.redirecionar("/restrito/index.jsf", true);
+				} catch (Exception e) {
+					this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
+					e.printStackTrace();
+					return null;
+				}
+			} else if (this.permissao) {
+				this.getMensagens().mensagemErro(this.traduzir("erroLogin"));
 				return null;
 			}
-		} else if (this.permissao) {
-			this.getMensagens().mensagemErro(this.traduzir("erroLogin"));
+			return null;
+		} else {
+			this.getMensagens().mensagemErro(this.traduzir("erroCaptcha"));
 			return null;
 		}
-		return null;
 	}
 
 	public boolean validarNome() {
@@ -192,11 +202,27 @@ public class EditarCadastroProprioMB implements Serializable,
 	public String redirecionar(String pagina, boolean redirect) {
 		return redirect ? pagina + "?faces-redirect=true" : pagina;
 	}
+	
+
+	@Override
+	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 30)){
+			String args[] = {"30"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
+	
+	public void validarEmail(String nomeCampoMensagem, String nomeCampo,String campo) {
+		if(ValidacoesDeCampos.validarComprimento(campo, 100)){
+			String args[] = {"100"};
+			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
+		}		
+	}
 
 	@Override
 	public boolean validar() {
 		boolean a, b, c;
-
+		
 		a = this.validarNome();
 		b = this.validarEmail();
 		c = this.validarSenha();
@@ -216,6 +242,33 @@ public class EditarCadastroProprioMB implements Serializable,
 		this.senha = "";
 		this.novaSenha = "";
 		this.confirmarSenha = "";
+	}
+	
+	public String getCodigoHtmlRecaptcha() {
+		ReCaptcha r = ReCaptchaFactory.newReCaptcha(publicKey, privateKey, false);
+		Properties options = new Properties();
+        options.setProperty("theme", "white");
+        options.setProperty("lang", "pt");
+		return r.createRecaptchaHtml(null, options);
+	}
+	
+	private boolean validaCaptcha() {		
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		String enderecoRemoto = req.getRemoteAddr();
+		
+		ReCaptchaImpl r = new ReCaptchaImpl();
+		r.setPrivateKey(privateKey);
+		
+		String textoCriptografado = req.getParameter("recaptcha_challenge_field");
+		String resposta = req.getParameter("recaptcha_response_field");
+		
+		ReCaptchaResponse reCaptchaResponse = r.checkAnswer(enderecoRemoto, textoCriptografado, resposta);
+		
+		if(resposta.isEmpty() || !reCaptchaResponse.isValid()){
+			return false;
+		} else {	
+			return true;
+		}
 	}
 
 	// getters e setters
@@ -275,19 +328,13 @@ public class EditarCadastroProprioMB implements Serializable,
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
 	}
-
-	@Override
-	public void validarCampo(String nomeCampoMensagem, String nomeCampo,String campo) {
-		if(ValidacoesDeCampos.validarComprimento(campo, 30)){
-			String args[] = {"30"};
-			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
-		}		
-	}
 	
-	public void validarEmail(String nomeCampoMensagem, String nomeCampo,String campo) {
-		if(ValidacoesDeCampos.validarComprimento(campo, 100)){
-			String args[] = {"100"};
-			MensagensDeErro.getWarningMessage("erroMaximoCaracteres", args, nomeCampoMensagem);
-		}		
+	public boolean getCaptchaNeed() {
+		return captchaNeed;
 	}
+
+	public void setCaptchaNeed(boolean captchaNeed) {
+		this.captchaNeed = captchaNeed;
+	}
+
 }

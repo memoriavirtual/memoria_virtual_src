@@ -36,7 +36,9 @@ public class RealizarLoginMB implements Serializable {
 	private MemoriaVirtualRemote memoriaVirtualEJB;
 	private String usuario = "";
 	private String senha = "";
-	private boolean captchaNeed = false;
+	private boolean captchaNeed = true;
+	private String publicKey = "6LdnC_0SAAAAAILrDzvj4h10-WnTXHjM7EJ5HukP";
+	private String privateKey = "6LdnC_0SAAAAANIlxFpnqZdp7IaYsNHwVqTaGhhg";
 
 	public RealizarLoginMB() {
 		super();
@@ -122,25 +124,20 @@ public class RealizarLoginMB implements Serializable {
 
 	}
 	
-
-
 	public String getCodigoHtmlRecaptcha() {
-		ReCaptcha r = ReCaptchaFactory.newReCaptcha("6LdnC_0SAAAAAILrDzvj4h10-WnTXHjM7EJ5HukP", "6LdnC_0SAAAAANIlxFpnqZdp7IaYsNHwVqTaGhhg", false);
+		ReCaptcha r = ReCaptchaFactory.newReCaptcha(publicKey, privateKey, false);
 		Properties options = new Properties();
         options.setProperty("theme", "blackglass");
         options.setProperty("lang", "pt");
 		return r.createRecaptchaHtml(null, options);
 	}
 	
-	private boolean validaCaptcha() {
-		if(!captchaNeed)
-			return true;
-		
+	private boolean validaCaptcha() {		
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		String enderecoRemoto = req.getRemoteAddr();
 		
 		ReCaptchaImpl r = new ReCaptchaImpl();
-		r.setPrivateKey("6LdnC_0SAAAAANIlxFpnqZdp7IaYsNHwVqTaGhhg");
+		r.setPrivateKey(privateKey);
 		
 		String textoCriptografado = req.getParameter("recaptcha_challenge_field");
 		String resposta = req.getParameter("recaptcha_response_field");
