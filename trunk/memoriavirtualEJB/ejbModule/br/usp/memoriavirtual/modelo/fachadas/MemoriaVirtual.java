@@ -88,6 +88,46 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		return (String) propriedades.get("hostname");
 	}
+	
+	public String getCaptchaPublicKey() throws ModeloException {
+
+		Context context = null;
+		try {
+			context = new InitialContext();
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		Properties propriedades = null;
+		try {
+			propriedades = (Properties) context
+					.lookup("memoriavirtual.propriedades");
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		return (String) propriedades.get("publicKey");
+	}
+	
+	public String getCaptchaPrivateKey() throws ModeloException {
+
+		Context context = null;
+		try {
+			context = new InitialContext();
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		Properties propriedades = null;
+		try {
+			propriedades = (Properties) context
+					.lookup("memoriavirtual.propriedades");
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		return (String) propriedades.get("privateKey");
+	}
 
 	public String getIntervaloTimer() throws ModeloException {
 

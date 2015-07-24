@@ -20,6 +20,10 @@ public interface MemoriaVirtualRemote {
 	public Integer getTamanhoPagina();
 	
 	public String getURLServidor() throws ModeloException;
+	
+	public String getCaptchaPublicKey() throws ModeloException;
+	
+	public String getCaptchaPrivateKey() throws ModeloException;
 
 	public String getIntervaloTimer() throws ModeloException;
 

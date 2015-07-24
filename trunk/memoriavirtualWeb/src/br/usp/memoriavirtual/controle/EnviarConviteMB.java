@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.el.ELResolver;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -29,6 +28,7 @@ import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Grupo;
 import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
+import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EnviarConviteRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.utils.Email;
@@ -59,8 +59,6 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 	private Usuario usuario;
 	private MensagensMB mensagens;
 	private boolean captchaNeed = true;
-	private String publicKey = "6LdnC_0SAAAAAILrDzvj4h10-WnTXHjM7EJ5HukP";
-	private String privateKey = "6LdnC_0SAAAAANIlxFpnqZdp7IaYsNHwVqTaGhhg";
 
 	public EnviarConviteMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -314,11 +312,19 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 	
 
 	public String getCodigoHtmlRecaptcha() {
-		ReCaptcha r = ReCaptchaFactory.newReCaptcha(publicKey, privateKey, false);
-		Properties options = new Properties();
-        options.setProperty("theme", "white");
-        options.setProperty("lang", "pt");
-		return r.createRecaptchaHtml(null, options);
+		
+		ReCaptcha r;
+		try {
+			r = ReCaptchaFactory.newReCaptcha(memoriaVirtualEJB.getCaptchaPublicKey(), memoriaVirtualEJB.getCaptchaPrivateKey()	, false);
+			Properties options = new Properties();
+	        options.setProperty("theme", "white");
+	        options.setProperty("lang", "pt");
+	        
+			return r.createRecaptchaHtml(null, options);
+		} catch (ModeloException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	private boolean validaCaptcha() {		
@@ -326,18 +332,23 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 		String enderecoRemoto = req.getRemoteAddr();
 		
 		ReCaptchaImpl r = new ReCaptchaImpl();
-		r.setPrivateKey(privateKey);
-		
-		String textoCriptografado = req.getParameter("recaptcha_challenge_field");
-		String resposta = req.getParameter("recaptcha_response_field");
-		
-		ReCaptchaResponse reCaptchaResponse = r.checkAnswer(enderecoRemoto, textoCriptografado, resposta);
-		
-		if(resposta.isEmpty() || !reCaptchaResponse.isValid()){
-			return false;
-		} else {	
-			return true;
+		try {
+			r.setPrivateKey(memoriaVirtualEJB.getCaptchaPrivateKey());
+			String textoCriptografado = req.getParameter("recaptcha_challenge_field");
+			String resposta = req.getParameter("recaptcha_response_field");
+			
+			ReCaptchaResponse reCaptchaResponse = r.checkAnswer(enderecoRemoto, textoCriptografado, resposta);
+			
+			if(resposta.isEmpty() || !reCaptchaResponse.isValid()){
+				return false;
+			} else {	
+				return true;
+			}
+		} catch (ModeloException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return false;
 	}
 
 
