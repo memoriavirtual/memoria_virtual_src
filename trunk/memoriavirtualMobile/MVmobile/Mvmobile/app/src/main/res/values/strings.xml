@@ -14,6 +14,7 @@
 
     <!-- SharedPreferences -->
     <string name="cache_bens_patrimoniais">bem_patrimonial</string>
+    <string name="cache_login">cache_login</string>
 
     <!-- Activities -->
     <string name="title_activity_add_bem_patrimonial">Cadastrar Bem Patrimonial</string>

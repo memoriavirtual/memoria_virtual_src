@@ -22,20 +22,21 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
+import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 
 /**
- * Created by User on 10/02/2015.
+ * Created by daniele on 28/07/2015.
  */
 public class Utils {
-
     public static Context mContext;
     public static String mPathBemPatrimonial;
+    public static String mPathLogin;
 
     public static void setContext(Context context){
         mContext = context;
         mPathBemPatrimonial = context.getString(R.string.cache_bens_patrimoniais);
+        mPathLogin = context.getString(R.string.cache_login);
     }
 
     public static Context getContext(){
@@ -106,7 +107,6 @@ public class Utils {
         }
         salvarBemPatrimonialJSONArray(output);
     }
-
 
     public static String parseBemPatrimonialToString(BemPatrimonial bemPatrimonial) throws JSONException {
         Map<String, Object> map = new HashMap<>();
@@ -206,7 +206,7 @@ public class Utils {
     }
 
 
-        public static ArrayList<BemPatrimonial> carregarBensPatrimoniaisSalvosCache()
+    public static ArrayList<BemPatrimonial> carregarBensPatrimoniaisSalvosCache()
     {
         Map<String,String> outputMap = new HashMap<String,String>();
 
@@ -268,7 +268,6 @@ public class Utils {
         else{
             return new JSONArray(sharedPref.getString(mPathBemPatrimonial, (new JSONObject()).toString()));
         }
-
     }
 
     public static void removeCache() {
@@ -278,6 +277,39 @@ public class Utils {
             editor.remove(mPathBemPatrimonial);
             editor.commit();
         }
+    }
+
+
+    //-------------------------------------------- LOGIN ------------------------------------------------------
+    public static void salvarLoginCache(String email, String senha, String codInstituicao) throws JSONException {
+        SharedPreferences sharedPref = mContext.getSharedPreferences(mPathLogin, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        //Cria map dos dados
+        Map<String, Object> map = new HashMap<>();
+        map.put(mContext.getString(R.string.login_email), email);
+        map.put(mContext.getString(R.string.login_senha), senha);
+        map.put(mContext.getString(R.string.login_cod_instituition), codInstituicao);
+
+        //transforma Map em JSONObject
+        JSONObject json = new JSONObject(map);
+        String jsonString = json.toString();
+
+        //salva no Cache
+        editor.putString(mPathLogin, jsonString);
+        editor.commit();
+    }
+
+    public static JSONObject carregarLoginSalvoCache() throws JSONException {
+
+        SharedPreferences sharedPref = mContext.getSharedPreferences(mPathLogin,Context.MODE_PRIVATE);
+        String cache = (sharedPref.getString(mPathBemPatrimonial, (new JSONObject()).toString()));
+
+        //Se não for null retorna o cache
+        if( cache != null ) {
+            return new JSONObject(sharedPref.getString(mPathLogin, (new JSONObject()).toString()));
+        }
+        return null;
     }
 
 

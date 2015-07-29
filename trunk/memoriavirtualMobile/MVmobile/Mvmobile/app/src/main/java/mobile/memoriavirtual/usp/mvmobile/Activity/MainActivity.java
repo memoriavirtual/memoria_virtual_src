@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,9 +38,10 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
         //Seta o contexto
         Utils.setContext(getBaseContext());
 
-        mDrawerTitulos = new String[2];
+        mDrawerTitulos = new String[3];
         mDrawerTitulos[0] = "Bens cadastrados";
         mDrawerTitulos[1] = "Cadastrar";
+        mDrawerTitulos[2] = "Enviar para Servidor";
 
         //Fragment inicial
         Fragment fragment = new ListaBemPatrimonialFragment();
@@ -99,6 +99,11 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
             case 1:
                 Intent intent = new Intent(this, AddBemPatrimonialActivity.class);
                 startActivity(intent);
+                mDrawerLayout.closeDrawer(mDrawerLista);
+                break;
+            case 2:
+                Intent intentLogin = new Intent(this, LoginActivity.class);
+                startActivity(intentLogin);
                 mDrawerLayout.closeDrawer(mDrawerLista);
                 break;
         }

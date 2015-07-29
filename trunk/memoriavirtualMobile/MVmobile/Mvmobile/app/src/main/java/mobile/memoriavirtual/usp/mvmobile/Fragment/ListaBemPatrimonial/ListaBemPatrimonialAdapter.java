@@ -1,9 +1,6 @@
 package mobile.memoriavirtual.usp.mvmobile.Fragment.ListaBemPatrimonial;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import mobile.memoriavirtual.usp.mvmobile.Activity.AddBemPatrimonialActivity;
 import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;

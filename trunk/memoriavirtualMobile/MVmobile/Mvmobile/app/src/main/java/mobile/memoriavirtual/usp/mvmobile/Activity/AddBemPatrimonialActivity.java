@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
@@ -683,8 +684,6 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         this.sendBroadcast(mediaScanIntent);
     }
 
-
-
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_TAKE_PHOTO) {
             if (resultCode == Activity.RESULT_OK) {
@@ -704,13 +703,23 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
 
             Uri videoUri = intent.getData();
 
-            String path = videoUri.toString();
+            String path = getPath(videoUri);
             Bitmap thumb = ThumbnailUtils.createVideoThumbnail(path,
                     MediaStore.Images.Thumbnails.MINI_KIND);
+
             bp_data_images.add(Utils.bitMapToString(thumb));
 
             mAdapterGrid.notifyDataSetChanged();
             cadastro_grid_fotos.setAdapter(mAdapterGrid);
         }
+    }
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 }

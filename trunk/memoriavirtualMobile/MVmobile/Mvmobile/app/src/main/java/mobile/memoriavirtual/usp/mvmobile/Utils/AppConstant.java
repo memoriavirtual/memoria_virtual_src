@@ -20,4 +20,12 @@ public class AppConstant {
     // supported file formats
     public static final List<String> FILE_EXTN = Arrays.asList("jpg", "jpeg", "png");
 
+
+
+    //Tag default para chamada de serviço
+    public static final String TAG_DEFAULT = "tag_memoriavirtual";
+
+    //Tag para chamada de serviço enviarBemPatrimonial
+    public static final String TAG_ENVIAR_BEM_PATRIMONIAL = "tag_enviarBemPatrimonial";
+
 }

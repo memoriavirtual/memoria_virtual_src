@@ -1,8 +1,6 @@
 package mobile.memoriavirtual.usp.mvmobile.Model;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.text.Editable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,10 +9,9 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 import mobile.memoriavirtual.usp.mvmobile.R;
+import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
 /**
  * Created by User on 09/02/2015.
