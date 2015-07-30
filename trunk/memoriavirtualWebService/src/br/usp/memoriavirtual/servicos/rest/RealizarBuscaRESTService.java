@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,7 +22,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
-@Stateless
+@RequestScoped
 @Path("/buscar")
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class RealizarBuscaRESTService {
