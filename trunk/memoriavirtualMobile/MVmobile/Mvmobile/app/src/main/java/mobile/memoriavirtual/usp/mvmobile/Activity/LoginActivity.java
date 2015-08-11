@@ -29,7 +29,7 @@ import com.android.volley.VolleyError;
 import java.util.ArrayList;
 import java.util.List;
 
-import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 import mobile.memoriavirtual.usp.mvmobile.services.BemPatrimonialService;
@@ -134,7 +134,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {//&& !isPasswordValid(password)) {
             mPasswordView.setError(Utils.getContext().getString(R.string.error_invalid_password));
@@ -173,12 +172,12 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 service.enviarBemPatrimonial(email, password, codInstituicao, bemPatrimonial, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
-                                Log.e("Dado enviado com sucesso!", "Deu certo");
+                                Log.e("Dado enviado com sucesso!", s);
                             }
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
-                                Log.e("Erro inesperado", "Tente novamente mais tarde.");
+                                Log.e("Erro inesperado", volleyError.getMessage());
                             }
                         }
                 );

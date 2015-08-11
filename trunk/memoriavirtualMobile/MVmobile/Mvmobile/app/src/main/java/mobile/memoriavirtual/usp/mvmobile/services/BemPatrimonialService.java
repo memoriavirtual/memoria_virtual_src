@@ -2,6 +2,8 @@ package mobile.memoriavirtual.usp.mvmobile.services;
 
 import com.android.volley.Response;
 
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+
 
 /**
  * Created by danieleboscolo on 25/07/15.
@@ -9,5 +11,5 @@ import com.android.volley.Response;
 
 public interface BemPatrimonialService {
 
-    public void enviarBemPatrimonial(String username, String senha, String idInstituicao, mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial bemPatrimonial, final Response.Listener<String> result, final Response.ErrorListener responseError);
+    public void enviarBemPatrimonial(String username, String senha, String idInstituicao, BemPatrimonial bemPatrimonial, final Response.Listener<String> result, final Response.ErrorListener responseError);
 }

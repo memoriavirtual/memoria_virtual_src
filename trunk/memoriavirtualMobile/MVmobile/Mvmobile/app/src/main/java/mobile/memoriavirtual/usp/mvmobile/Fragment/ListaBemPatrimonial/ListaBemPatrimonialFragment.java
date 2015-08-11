@@ -20,7 +20,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 import mobile.memoriavirtual.usp.mvmobile.Activity.AddBemPatrimonialActivity;
-import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 

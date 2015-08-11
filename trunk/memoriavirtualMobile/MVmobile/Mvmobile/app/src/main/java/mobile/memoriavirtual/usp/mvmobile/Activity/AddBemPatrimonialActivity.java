@@ -35,6 +35,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.DisponibilidadeUsoProtecao;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.HistoricoProcedencia;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Producao;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormAutor;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormDescricao;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormDisponibilidade;
@@ -44,7 +49,6 @@ import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormMidia;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormOutros;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormProcedencia;
 import mobile.memoriavirtual.usp.mvmobile.Fragment.Formulario.FormProducao;
-import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
@@ -194,7 +198,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
                 if(isToEdit && !camposPreenchidos){
                     mBemPatrimonial = bemPatrimonial;
                     //Passa as imagens para ArrayList de imagens
-                    bp_data_images.addAll(mBemPatrimonial.getCadastro_image());
+                   // bp_data_images.addAll(mBemPatrimonial.getCadastro_image());
 
                     setTitle(R.string.title_activity_edit_bem_patrimonial);
                     preencheCampos(bemPatrimonial);
@@ -431,91 +435,100 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         //Midia
         //Se tirou uma imagem entao coloca no bem patrimonial
 
-        mBemPatrimonial.setCadastro_image(bp_data_images);
-            //mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
+        // mBemPatrimonial.setCadastro_image(bp_data_images);
+        //mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
 
         //Informações gerais
-        mBemPatrimonial.setCadastro_externo(cadastro_externo.isChecked() ? "1" : "0");
-        mBemPatrimonial.setCadastro_tipo(cadastro_tipo.getText().toString());
-        mBemPatrimonial.setCadastro_num_registro(cadastro_num_registro.getText().toString());
-        mBemPatrimonial.setCadastro_titulo_principal(cadastro_titulo_principal.getText().toString());
-        mBemPatrimonial.setCadastro_complemento(cadastro_complemento.getText().toString());
-        mBemPatrimonial.setCadastro_colecao(cadastro_colecao.getText().toString());
-        mBemPatrimonial.setCadastro_latitude(cadastro_latitude.getText().toString());
-        mBemPatrimonial.setCadastro_longitude(cadastro_longitude.getText().toString());
+        mBemPatrimonial.setExterno(cadastro_externo.isChecked());
+        mBemPatrimonial.setTipoBemPatrimonial(cadastro_tipo.getText().toString());
+        mBemPatrimonial.setNumeroRegistro(cadastro_num_registro.getText().toString());
+        mBemPatrimonial.setTituloPrincipal(cadastro_titulo_principal.getText().toString());
+        mBemPatrimonial.setComplemento(cadastro_complemento.getText().toString());
+        mBemPatrimonial.setColecao(cadastro_colecao.getText().toString());
+        mBemPatrimonial.setLatitude(cadastro_latitude.getText().toString());
+        mBemPatrimonial.setLongitude(cadastro_longitude.getText().toString());
 
-        //Autor
-        mBemPatrimonial.setCadastro_autoria(cadastro_autoria.getText().toString());
+        //TODO: Autor
+        //mBemPatrimonial.setAutorias();
 
         //Producao
-        mBemPatrimonial.setCadastro_local(cadastro_local.getText().toString());
-        mBemPatrimonial.setCadastro_ano(cadastro_ano.getText().toString());
-        mBemPatrimonial.setCadastro_edicao(cadastro_edicao.getText().toString());
-        mBemPatrimonial.setCadastro_outras_responsabilidades(cadastro_outras_responsabilidades.getText().toString());
+        Producao producao = new Producao();
+        producao.setLocal(cadastro_ano.getText().toString());
+        producao.setAno(cadastro_ano.getText().toString());
+        producao.setEdicao(cadastro_edicao.getText().toString());
+        producao.setOutrasResponsabilidades(cadastro_outras_responsabilidades.getText().toString());
+        mBemPatrimonial.setProducao(producao);
 
         //Descricao
-        mBemPatrimonial.setCadastro_caracteristicas(cadastro_caracteristicas.getText().toString());
-        mBemPatrimonial.setCadastro_dimensoes_quantificacoes(cadastro_dimensoes_quantificacoes.getText().toString());
-        mBemPatrimonial.setCadastro_condicao_topografica(cadastro_condicao_topografica.getText().toString());
-        mBemPatrimonial.setCadastro_uso(cadastro_uso.getText().toString());
-        mBemPatrimonial.setCadastro_num_ambientes(cadastro_num_ambientes.getText().toString());
-        mBemPatrimonial.setCadastro_num_pavimentos(cadastro_num_pavimentos.getText().toString());
-        mBemPatrimonial.setCadastro_alcova(cadastro_alcova.isChecked() ? "1" : "0");
-        mBemPatrimonial.setCadastro_porao(cadastro_porao.isChecked() ? "1" : "0");
-        mBemPatrimonial.setCadastro_sotao(cadastro_sotao.isChecked() ? "1" : "0");
-        mBemPatrimonial.setCadastro_meio_antropico(cadastro_meio_antropico.getText().toString());
-        mBemPatrimonial.setCadastro_carac_ambientais(cadastro_carac_ambientais.getText().toString());
-        mBemPatrimonial.setCadastro_sitio_paisagem(cadastro_sitio_paisagem.getText().toString());
-        mBemPatrimonial.setCadastro_agua_proxima(cadastro_agua_proxima.getText().toString());
-        mBemPatrimonial.setCadastro_vegetacao(cadastro_vegetacao.getText().toString());
-        mBemPatrimonial.setCadastro_exposicao(cadastro_exposicao.getText().toString());
-        mBemPatrimonial.setCadastro_uso_atual(cadastro_uso_atual.getText().toString());
-        mBemPatrimonial.setCadastro_outros(cadastro_outros.getText().toString());
-        mBemPatrimonial.setCadastro_area_total(cadastro_area_total.getText().toString());
-        mBemPatrimonial.setCadastro_altura_fachada_frontal(cadastro_altura_fachada_frontal.getText().toString());
-        mBemPatrimonial.setCadastro_altura_fachada_posterior(cadastro_altura_fachada_posterior.getText().toString());
-        mBemPatrimonial.setCadastro_largura(cadastro_largura.getText().toString());
-        mBemPatrimonial.setCadastro_altura(cadastro_altura.getText().toString());
-        mBemPatrimonial.setCadastro_profundidade(cadastro_profundidade.getText().toString());
-        mBemPatrimonial.setCadastro_altura_cumeeira(cadastro_altura_cumeeira.getText().toString());
-        mBemPatrimonial.setCadastro_altura_total(cadastro_altura_total.getText().toString());
-        mBemPatrimonial.setCadastro_pe_direito_terreo(cadastro_pe_direito_terreo.getText().toString());
-        mBemPatrimonial.setCadastro_tipo_pe_direito(cadastro_tipo_pe_direito.getText().toString());
-        mBemPatrimonial.setCadastro_comprimento(cadastro_comprimento.getText().toString());
-        mBemPatrimonial.setCadastro_localizacao_fisica(cadastro_localizacao_fisica.getText().toString());
-        mBemPatrimonial.setCadastro_conteudo(cadastro_conteudo.getText().toString());
-        mBemPatrimonial.setCadastro_meio_acesso(cadastro_meio_acesso.getText().toString());
-        mBemPatrimonial.setCadastro_notas(cadastro_notas.getText().toString());
+        mBemPatrimonial.setCaracteristicasFisicasTecnicasExecutivas(cadastro_caracteristicas.getText().toString());
+        mBemPatrimonial.setDimensoesQuantificacoes(cadastro_dimensoes_quantificacoes.getText().toString());
+        mBemPatrimonial.setCondicaoTopografica(cadastro_condicao_topografica.getText().toString());
+        mBemPatrimonial.setUso(cadastro_uso.getText().toString());
+        mBemPatrimonial.setNumeroAmbientes(Integer.parseInt(cadastro_num_ambientes.getText().toString()));
+        mBemPatrimonial.setNumeroPavimentos(Integer.parseInt(cadastro_num_pavimentos.getText().toString()));
+        mBemPatrimonial.setAlcova(cadastro_alcova.isChecked());
+        mBemPatrimonial.setPorao(cadastro_porao.isChecked());
+        mBemPatrimonial.setSotao(cadastro_sotao.isChecked());
+        mBemPatrimonial.setMeioAntropico(cadastro_meio_antropico.getText().toString());
+        mBemPatrimonial.setCaracteristicasAmbientais(cadastro_carac_ambientais.getText().toString());
+        mBemPatrimonial.setSitioPaisagem(cadastro_sitio_paisagem.getText().toString());
+        mBemPatrimonial.setAguaProxima(cadastro_agua_proxima.getText().toString());
+        mBemPatrimonial.setVegetacao(cadastro_vegetacao.getText().toString());
+        mBemPatrimonial.setExposicao(BemPatrimonial.Exposicao.aberto);
+        mBemPatrimonial.setUso(cadastro_uso_atual.getText().toString());
+        mBemPatrimonial.setOutros(cadastro_outros.getText().toString());
+        mBemPatrimonial.setAreaTotal(cadastro_area_total.getText().toString());
+        mBemPatrimonial.setAlturaFachadaFrontal(cadastro_altura_fachada_frontal.getText().toString());
+        mBemPatrimonial.setAlturaFachadaPosterior(cadastro_altura_fachada_posterior.getText().toString());
+        mBemPatrimonial.setLargura(cadastro_largura.getText().toString());
+        mBemPatrimonial.setAltura(cadastro_altura.getText().toString());
+        mBemPatrimonial.setProfundidade(cadastro_profundidade.getText().toString());
+        mBemPatrimonial.setAlturaCumeeira(cadastro_altura_cumeeira.getText().toString());
+        mBemPatrimonial.setAlturaTotal(cadastro_altura_total.getText().toString());
+        mBemPatrimonial.setPeDireitoTerreo(cadastro_pe_direito_terreo.getText().toString());
+        mBemPatrimonial.setPeDireitoTipo(cadastro_tipo_pe_direito.getText().toString());
+        mBemPatrimonial.setComprimento(cadastro_comprimento.getText().toString());
+        mBemPatrimonial.setLocalizacaoFisica(cadastro_localizacao_fisica.getText().toString());
+        mBemPatrimonial.setConteudo(cadastro_conteudo.getText().toString());
+        mBemPatrimonial.setMeioAcesso(cadastro_meio_acesso.getText().toString());
+        mBemPatrimonial.setNotas(cadastro_notas.getText().toString());
 
         //Estado
-        mBemPatrimonial.setCadastro_estado_preservacao(cadastro_estado_preservacao.getText().toString());
-        mBemPatrimonial.setCadastro_estado_convervacao(cadastro_estado_convervacao.getText().toString());
-        mBemPatrimonial.setCadastro_notas_estado_convervacao(cadastro_notas_estado_convervacao.getText().toString());
+        Diagnostico diagnostico = new Diagnostico();
+        diagnostico.setEstadoConservacao(Diagnostico.EstadoConservacao.bom);
+        diagnostico.setEstadoPreservacao(Diagnostico.EstadoPreservacao.integro);
+        diagnostico.setNotasEstadoConservacao(cadastro_notas_estado_convervacao.getText().toString());
+        mBemPatrimonial.setDiagnostico(diagnostico);
 
         //Disponibilidade
-        mBemPatrimonial.setCadastro_disponibilidade(cadastro_disponibilidade.getText().toString());
-        mBemPatrimonial.setCadastro_condicao_acesso(cadastro_condicao_acesso.getText().toString());
-        mBemPatrimonial.setCadastro_condicao_reproducao(cadastro_condicao_reproducao.getText().toString());
-        mBemPatrimonial.setCadastro_protecao(cadastro_protecao.getText().toString());
-        mBemPatrimonial.setCadastro_numero_processo(cadastro_numero_processo.getText().toString());
-        mBemPatrimonial.setCadastro_data_retorno(cadastro_data_retorno.getText().toString());
-        mBemPatrimonial.setCadastro_notas_uso_aproveitamento(cadastro_notas_uso_aproveitamento.getText().toString());
+        DisponibilidadeUsoProtecao disponibilidade = new DisponibilidadeUsoProtecao();
+        //TODO: trocar dados fixos pelos dados que usuário entrou
+        disponibilidade.setCondicoesAcesso(DisponibilidadeUsoProtecao.CondicoesAcesso.livre);
+        disponibilidade.setCondicoesReproducao(DisponibilidadeUsoProtecao.CondicoesReproducao.nao);
+        //disponibilidade.setCadastro_numero_processo(cadastro_numero_processo.getText().toString()); // Nao existe no modelo
+        disponibilidade.setProtecao(DisponibilidadeUsoProtecao.Protecao.sim);
+        disponibilidade.setDataRetorno(cadastro_data_retorno.getText().toString());
+        disponibilidade.setNotasUsoAproveitamento(cadastro_notas_uso_aproveitamento.getText().toString());
+        mBemPatrimonial.setDisponibilidadeUsoProtecao(disponibilidade);
 
         //Procedencia
-        mBemPatrimonial.setCadastro_tipo_aquisicao(cadastro_tipo_aquisicao.getText().toString());
-        mBemPatrimonial.setCadastro_valor_venal(cadastro_valor_venal.getText().toString());
-        mBemPatrimonial.setCadastro_data(cadastro_data.getText().toString());
-        mBemPatrimonial.setCadastro_primeiro_proprietario(cadastro_primeiro_proprietario.getText().toString());
-        mBemPatrimonial.setCadastro_dados_transacao(cadastro_dados_transacao.getText().toString());
-        mBemPatrimonial.setCadastro_historico(cadastro_historico.getText().toString());
-        mBemPatrimonial.setCadastro_instrumento_pesquisa(cadastro_instrumento_pesquisa.getText().toString());
+        HistoricoProcedencia historico = new HistoricoProcedencia();
+        historico.setTipoAquisicao(HistoricoProcedencia.TipoAquisicao.doacaoInstitucional);
+        historico.setValorVenalTransacao(cadastro_valor_venal.getText().toString());
+        historico.setDataAquisicao(cadastro_data.getText().toString());
+        historico.setPrimeiroProprietario(cadastro_primeiro_proprietario.getText().toString());
+        historico.setDadosDocTransacao(cadastro_dados_transacao.getText().toString());
+        historico.setInstrumentoPesquisa(cadastro_instrumento_pesquisa.getText().toString());
+        mBemPatrimonial.setHistoricoProcedencia(historico);
 
-        //Assuntos
-        mBemPatrimonial.setCadastro_assuntos(cadastro_assuntos.getText().toString());
-        mBemPatrimonial.setCadastro_descritores(cadastro_descritores.getText().toString());
-        mBemPatrimonial.setCadastro_fontes_informacao(cadastro_fontes_informacao.getText().toString());
-        mBemPatrimonial.setCadastro_pesquisadores(cadastro_pesquisadores.getText().toString());
-        mBemPatrimonial.setCadastro_relacionar_outros_bens(cadastro_relacionar_outros_bens.getText().toString());
+        //TODO: Assuntos
+        /*
+        mBemPatrimonial.setAssuntos(cadastro_assuntos.getText().toString());
+        mBemPatrimonial.setDescritores(cadastro_descritores.getText().toString());
+        mBemPatrimonial.setFontesInformacao(cadastro_fontes_informacao.getText().toString());
+        mBemPatrimonial.setPesquisadores(cadastro_pesquisadores.getText().toString());
+        mBemPatrimonial.setBensRelacionados(cadastro_relacionar_outros_bens.getText().toString());
+        */
     }
 
     public void preencheCampos(BemPatrimonial bemPatrimonial){
@@ -524,6 +537,17 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
 //        cadastro_foto.setImageBitmap(Utils.stringToBitMap(bemPatrimonial.getCadastro_image()));
 
 
+        //Informações gerais
+        cadastro_externo.setChecked(bemPatrimonial.isExterno());
+        cadastro_tipo.setText(bemPatrimonial.getTipoBemPatrimonial());
+        cadastro_num_registro.setText(bemPatrimonial.getNumeroRegistro());
+        cadastro_titulo_principal.setText(bemPatrimonial.getTituloPrincipal());
+        cadastro_complemento.setText(bemPatrimonial.getComplemento());
+        cadastro_colecao.setText(bemPatrimonial.getColecao());
+        cadastro_latitude.setText(bemPatrimonial.getLatitude());
+        cadastro_longitude.setText(bemPatrimonial.getLongitude());
+
+        /*
         //Informações gerais
         cadastro_externo.setChecked((bemPatrimonial.getCadastro_externo().equals("1")) ? true : false);
         cadastro_tipo.setText(bemPatrimonial.getCadastro_tipo());
@@ -610,6 +634,8 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         cadastro_fontes_informacao.setText(bemPatrimonial.getCadastro_fontes_informacao());
         cadastro_pesquisadores.setText(bemPatrimonial.getCadastro_pesquisadores());
         cadastro_relacionar_outros_bens.setText(bemPatrimonial.getCadastro_relacionar_outros_bens());
+
+        */
     }
 
     private void nextTouched()

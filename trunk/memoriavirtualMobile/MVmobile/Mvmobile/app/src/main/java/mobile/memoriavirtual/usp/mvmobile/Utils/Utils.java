@@ -3,6 +3,7 @@ package mobile.memoriavirtual.usp.mvmobile.Utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -22,8 +23,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Producao;
 import mobile.memoriavirtual.usp.mvmobile.R;
-import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
+
 
 /**
  * Created by daniele on 28/07/2015.
@@ -108,103 +112,120 @@ public class Utils {
         salvarBemPatrimonialJSONArray(output);
     }
 
+    public static JSONObject parseBemPatrimonialToJSON(BemPatrimonial bemPatrimonial) throws JSONException {
+        //Map<String, Object> map = new HashMap<>();
+        JSONObject map = new JSONObject();
+
+        //Midia
+        //map.put(mContext.getString(R.string.cadastro_midia), bemPatrimonial.getContainerMultimidia());
+
+        //Informações Gerais
+        //  map.put(br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial.condicoesTopograficas.acidentado., bemPatrimonial.getCadastro_externo());
+        map.put(mContext.getString(R.string.atributo_tipo), bemPatrimonial.getTipoBemPatrimonial());
+        map.put(mContext.getString(R.string.atributo_num_registro), bemPatrimonial.getNumeroRegistro());
+        map.put(mContext.getString(R.string.atributo_titulo_principal), bemPatrimonial.getTituloPrincipal());
+        map.put(mContext.getString(R.string.atributo_complemento), bemPatrimonial.getComplemento());
+        map.put(mContext.getString(R.string.atributo_colecao), bemPatrimonial.getColecao());
+        map.put(mContext.getString(R.string.atributo_latitude), bemPatrimonial.getLatitude());
+        map.put(mContext.getString(R.string.atributo_longitude), bemPatrimonial.getLongitude());
+
+        return map;
+    }
     public static String parseBemPatrimonialToString(BemPatrimonial bemPatrimonial) throws JSONException {
         Map<String, Object> map = new HashMap<>();
 
         //Midia
-        map.put(mContext.getString(R.string.cadastro_midia), bemPatrimonial.getCadastro_image());
+        map.put(mContext.getString(R.string.cadastro_midia), bemPatrimonial.getContainerMultimidia());
 
         //Informações Gerais
-        map.put(mContext.getString(R.string.cadastro_externo), bemPatrimonial.getCadastro_externo());
-        map.put(mContext.getString(R.string.cadastro_tipo), bemPatrimonial.getCadastro_tipo());
-        map.put(mContext.getString(R.string.cadastro_num_registro), bemPatrimonial.getCadastro_num_registro());
-        map.put(mContext.getString(R.string.cadastro_titulo_principal), bemPatrimonial.getCadastro_titulo_principal());
-        map.put(mContext.getString(R.string.cadastro_complemento), bemPatrimonial.getCadastro_complemento());
-        map.put(mContext.getString(R.string.cadastro_colecao), bemPatrimonial.getCadastro_colecao());
-        map.put(mContext.getString(R.string.cadastro_latitude), bemPatrimonial.getCadastro_latitude());
-        map.put(mContext.getString(R.string.cadastro_longitude), bemPatrimonial.getCadastro_longitude());
+      //  map.put(br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial.condicoesTopograficas.acidentado., bemPatrimonial.getCadastro_externo());
+        map.put(mContext.getString(R.string.atributo_tipo), bemPatrimonial.getTipoBemPatrimonial());
+        map.put(mContext.getString(R.string.atributo_num_registro), bemPatrimonial.getNumeroRegistro());
+        map.put(mContext.getString(R.string.atributo_titulo_principal), bemPatrimonial.getTituloPrincipal());
+        map.put(mContext.getString(R.string.atributo_complemento), bemPatrimonial.getComplemento());
+        map.put(mContext.getString(R.string.atributo_colecao), bemPatrimonial.getColecao());
+        map.put(mContext.getString(R.string.atributo_latitude), bemPatrimonial.getLatitude());
+        map.put(mContext.getString(R.string.atributo_longitude), bemPatrimonial.getLongitude());
 
         //Autor
-        map.put(mContext.getString(R.string.cadastro_autoria), bemPatrimonial.getCadastro_autoria());
+        map.put(mContext.getString(R.string.atributo_autoria), bemPatrimonial.getAutorias());
 
         //Producao
-        map.put(mContext.getString(R.string.cadastro_local), bemPatrimonial.getCadastro_local());
-        map.put(mContext.getString(R.string.cadastro_ano), bemPatrimonial.getCadastro_ano());
-        map.put(mContext.getString(R.string.cadastro_edicao), bemPatrimonial.getCadastro_edicao());
-        map.put(mContext.getString(R.string.cadastro_outras_responsabilidades), bemPatrimonial.getCadastro_outras_responsabilidades());
+
+        map.put(mContext.getString(R.string.atributo_local), bemPatrimonial.getProducao().getLocal());
+        map.put(mContext.getString(R.string.atributo_ano), bemPatrimonial.getProducao().getAno();
+        map.put(mContext.getString(R.string.atributo_edicao), bemPatrimonial.getCadastro_edicao());
+        map.put(mContext.getString(R.string.atributo_outras_responsabilidades), bemPatrimonial.getCadastro_outras_responsabilidades());
 
         //Descricao
-        map.put(mContext.getString(R.string.cadastro_caracteristicas), bemPatrimonial.getCadastro_caracteristicas());
-        map.put(mContext.getString(R.string.cadastro_dimensoes_quantificacoes), bemPatrimonial.getCadastro_dimensoes_quantificacoes());
-        map.put(mContext.getString(R.string.cadastro_condicao_topografica), bemPatrimonial.getCadastro_condicao_topografica());
-        map.put(mContext.getString(R.string.cadastro_uso), bemPatrimonial.getCadastro_uso());
-        map.put(mContext.getString(R.string.cadastro_num_ambientes), bemPatrimonial.getCadastro_num_ambientes());
-        map.put(mContext.getString(R.string.cadastro_num_pavimentos), bemPatrimonial.getCadastro_num_pavimentos());
+        map.put(mContext.getString(R.string.atributo_caracteristicas), bemPatrimonial.getCadastro_caracteristicas());
+        map.put(mContext.getString(R.string.atributo_dimensoes_quantificacoes), bemPatrimonial.getCadastro_dimensoes_quantificacoes());
+        map.put(mContext.getString(R.string.atributo_condicao_topografica), bemPatrimonial.getCadastro_condicao_topografica());
+        map.put(mContext.getString(R.string.atributo_uso), bemPatrimonial.getCadastro_uso());
+        map.put(mContext.getString(R.string.atributo_num_ambientes), bemPatrimonial.getCadastro_num_ambientes());
+        map.put(mContext.getString(R.string.atributo_num_pavimentos), bemPatrimonial.getCadastro_num_pavimentos());
 
-        map.put(mContext.getString(R.string.cadastro_alcova), bemPatrimonial.getCadastro_alcova());
-        map.put(mContext.getString(R.string.cadastro_porao), bemPatrimonial.getCadastro_porao());
-        map.put(mContext.getString(R.string.cadastro_sotao), bemPatrimonial.getCadastro_sotao());
+        map.put(mContext.getString(R.string.atributo_alcova), bemPatrimonial.getCadastro_alcova());
+        map.put(mContext.getString(R.string.atributo_porao), bemPatrimonial.getCadastro_porao());
+        map.put(mContext.getString(R.string.atributo_sotao), bemPatrimonial.getCadastro_sotao());
 
-        map.put(mContext.getString(R.string.cadastro_meio_antropico), bemPatrimonial.getCadastro_meio_antropico());
-        map.put(mContext.getString(R.string.cadastro_carac_ambientais), bemPatrimonial.getCadastro_carac_ambientais());
-        map.put(mContext.getString(R.string.cadastro_sitio_paisagem), bemPatrimonial.getCadastro_sitio_paisagem());
-        map.put(mContext.getString(R.string.cadastro_agua_proxima), bemPatrimonial.getCadastro_agua_proxima());
-        map.put(mContext.getString(R.string.cadastro_vegetacao), bemPatrimonial.getCadastro_vegetacao());
-        map.put(mContext.getString(R.string.cadastro_exposicao), bemPatrimonial.getCadastro_exposicao());
-        map.put(mContext.getString(R.string.cadastro_uso_atual), bemPatrimonial.getCadastro_uso_atual());
-        map.put(mContext.getString(R.string.cadastro_outros), bemPatrimonial.getCadastro_outros());
-        map.put(mContext.getString(R.string.cadastro_area_total), bemPatrimonial.getCadastro_area_total());
-        map.put(mContext.getString(R.string.cadastro_altura_fachada_frontal), bemPatrimonial.getCadastro_altura_fachada_frontal());
-        map.put(mContext.getString(R.string.cadastro_altura_fachada_posterior), bemPatrimonial.getCadastro_altura_fachada_posterior());
-        map.put(mContext.getString(R.string.cadastro_largura), bemPatrimonial.getCadastro_largura());
-        map.put(mContext.getString(R.string.cadastro_altura), bemPatrimonial.getCadastro_altura());
-        map.put(mContext.getString(R.string.cadastro_profundidade), bemPatrimonial.getCadastro_profundidade());
+        map.put(mContext.getString(R.string.atributo_meio_antropico), bemPatrimonial.getCadastro_meio_antropico());
+        map.put(mContext.getString(R.string.atributo_carac_ambientais), bemPatrimonial.getCadastro_carac_ambientais());
+        map.put(mContext.getString(R.string.atributo_sitio_paisagem), bemPatrimonial.getCadastro_sitio_paisagem());
+        map.put(mContext.getString(R.string.atributo_agua_proxima), bemPatrimonial.getCadastro_agua_proxima());
+        map.put(mContext.getString(R.string.atributo_vegetacao), bemPatrimonial.getCadastro_vegetacao());
+        map.put(mContext.getString(R.string.atributo_exposicao), bemPatrimonial.getCadastro_exposicao());
+        map.put(mContext.getString(R.string.atributo_uso_atual), bemPatrimonial.getCadastro_uso_atual());
+        map.put(mContext.getString(R.string.atributo_outros), bemPatrimonial.getCadastro_outros());
+        map.put(mContext.getString(R.string.atributo_area_total), bemPatrimonial.getCadastro_area_total());
+        map.put(mContext.getString(R.string.atributo_altura_fachada_frontal), bemPatrimonial.getCadastro_altura_fachada_frontal());
+        map.put(mContext.getString(R.string.atributo_altura_fachada_posterior), bemPatrimonial.getCadastro_altura_fachada_posterior());
+        map.put(mContext.getString(R.string.atributo_largura), bemPatrimonial.getCadastro_largura());
+        map.put(mContext.getString(R.string.atributo_altura), bemPatrimonial.getCadastro_altura());
+        map.put(mContext.getString(R.string.atributo_profundidade), bemPatrimonial.getCadastro_profundidade());
 
-        map.put(mContext.getString(R.string.cadastro_altura_cumeeira), bemPatrimonial.getCadastro_altura_cumeeira());
-        map.put(mContext.getString(R.string.cadastro_altura_total), bemPatrimonial.getCadastro_altura_total());
-        map.put(mContext.getString(R.string.cadastro_pe_direito_terreo), bemPatrimonial.getCadastro_pe_direito_terreo());
-        map.put(mContext.getString(R.string.cadastro_tipo_pe_direito), bemPatrimonial.getCadastro_tipo_pe_direito());
-        map.put(mContext.getString(R.string.cadastro_comprimento), bemPatrimonial.getCadastro_comprimento());
-        map.put(mContext.getString(R.string.cadastro_localizacao_fisica), bemPatrimonial.getCadastro_localizacao_fisica());
-        map.put(mContext.getString(R.string.cadastro_conteudo), bemPatrimonial.getCadastro_conteudo());
-        map.put(mContext.getString(R.string.cadastro_meio_acesso), bemPatrimonial.getCadastro_meio_acesso());
-        map.put(mContext.getString(R.string.cadastro_notas), bemPatrimonial.getCadastro_notas());
+        map.put(mContext.getString(R.string.atributo_altura_cumeeira), bemPatrimonial.getCadastro_altura_cumeeira());
+        map.put(mContext.getString(R.string.atributo_altura_total), bemPatrimonial.getCadastro_altura_total());
+        map.put(mContext.getString(R.string.atributo_pe_direito_terreo), bemPatrimonial.getCadastro_pe_direito_terreo());
+        map.put(mContext.getString(R.string.atributo_tipo_pe_direito), bemPatrimonial.getCadastro_tipo_pe_direito());
+        map.put(mContext.getString(R.string.atributo_comprimento), bemPatrimonial.getCadastro_comprimento());
+        map.put(mContext.getString(R.string.atributo_localizacao_fisica), bemPatrimonial.getCadastro_localizacao_fisica());
+        map.put(mContext.getString(R.string.atributo_conteudo), bemPatrimonial.getCadastro_conteudo());
+        map.put(mContext.getString(R.string.atributo_meio_acesso), bemPatrimonial.getCadastro_meio_acesso());
+        map.put(mContext.getString(R.string.atributo_notas), bemPatrimonial.getCadastro_notas());
 
         //Estado
-        map.put(mContext.getString(R.string.cadastro_estado_preservacao), bemPatrimonial.getCadastro_estado_preservacao());
-        map.put(mContext.getString(R.string.cadastro_estado_convervacao), bemPatrimonial.getCadastro_estado_convervacao());
-        map.put(mContext.getString(R.string.cadastro_notas_estado_convervacao), bemPatrimonial.getCadastro_notas_estado_convervacao());
+        map.put(mContext.getString(R.string.atributo_estado_preservacao), bemPatrimonial.getCadastro_estado_preservacao());
+        map.put(mContext.getString(R.string.atributo_estado_convervacao), bemPatrimonial.getCadastro_estado_convervacao());
+        map.put(mContext.getString(R.string.atributo_notas_estado_convervacao), bemPatrimonial.getCadastro_notas_estado_convervacao());
 
         //Disponibilidadget
-        map.put(mContext.getString(R.string.cadastro_disponibilidade), bemPatrimonial.getCadastro_disponibilidade());
-        map.put(mContext.getString(R.string.cadastro_condicao_acesso), bemPatrimonial.getCadastro_condicao_acesso());
-        map.put(mContext.getString(R.string.cadastro_condicao_reproducao), bemPatrimonial.getCadastro_condicao_reproducao());
-        map.put(mContext.getString(R.string.cadastro_protecao), bemPatrimonial.getCadastro_protecao());
-        map.put(mContext.getString(R.string.cadastro_numero_processo), bemPatrimonial.getCadastro_numero_processo());
-        map.put(mContext.getString(R.string.cadastro_data_retorno), bemPatrimonial.getCadastro_data_retorno());
-        map.put(mContext.getString(R.string.cadastro_notas_uso_aproveitamento), bemPatrimonial.getCadastro_notas_uso_aproveitamento());
+        map.put(mContext.getString(R.string.atributo_condicao_reproducao), bemPatrimonial.getCadastro_condicao_reproducao());
+        map.put(mContext.getString(R.string.atributo_protecao), bemPatrimonial.getCadastro_protecao());
+        map.put(mContext.getString(R.string.atributo_numero_processo), bemPatrimonial.getCadastro_numero_processo());
+        map.put(mContext.getString(R.string.atributo_data_retorno), bemPatrimonial.getCadastro_data_retorno());
+        map.put(mContext.getString(R.string.atributo_notas_uso_aproveitamento), bemPatrimonial.getCadastro_notas_uso_aproveitamento());
 
         //Procedencia
-        map.put(mContext.getString(R.string.cadastro_tipo_aquisicao), bemPatrimonial.getCadastro_tipo_aquisicao());
-        map.put(mContext.getString(R.string.cadastro_valor_venal), bemPatrimonial.getCadastro_valor_venal());
-        map.put(mContext.getString(R.string.cadastro_data), bemPatrimonial.getCadastro_data());
-        map.put(mContext.getString(R.string.cadastro_primeiro_proprietario), bemPatrimonial.getCadastro_primeiro_proprietario());
-        map.put(mContext.getString(R.string.cadastro_dados_transacao), bemPatrimonial.getCadastro_dados_transacao());
-        map.put(mContext.getString(R.string.cadastro_historico), bemPatrimonial.getCadastro_historico());
-        map.put(mContext.getString(R.string.cadastro_instrumento_pesquisa), bemPatrimonial.getCadastro_instrumento_pesquisa());
+        map.put(mContext.getString(R.string.atributo_tipo_aquisicao), bemPatrimonial.getCadastro_tipo_aquisicao());
+        map.put(mContext.getString(R.string.atributo_valor_venal), bemPatrimonial.getCadastro_valor_venal());
+        map.put(mContext.getString(R.string.atributo_data), bemPatrimonial.getCadastro_data());
+        map.put(mContext.getString(R.string.atributo_primeiro_proprietario), bemPatrimonial.getCadastro_primeiro_proprietario());
+        map.put(mContext.getString(R.string.atributo_dados_transacao), bemPatrimonial.getCadastro_dados_transacao());
+        map.put(mContext.getString(R.string.atributo_historico), bemPatrimonial.getCadastro_historico());
+        map.put(mContext.getString(R.string.atributo_instrumento_pesquisa), bemPatrimonial.getCadastro_instrumento_pesquisa());
 
         //Assuntos
-        map.put(mContext.getString(R.string.cadastro_assuntos), bemPatrimonial.getCadastro_assuntos());
-        map.put(mContext.getString(R.string.cadastro_descritores), bemPatrimonial.getCadastro_descritores());
-        map.put(mContext.getString(R.string.cadastro_fontes_informacao), bemPatrimonial.getCadastro_fontes_informacao());
-        map.put(mContext.getString(R.string.cadastro_pesquisadores), bemPatrimonial.getCadastro_pesquisadores());
-        map.put(mContext.getString(R.string.cadastro_relacionar_outros_bens), bemPatrimonial.getCadastro_relacionar_outros_bens());
+        map.put(mContext.getString(R.string.atributo_assuntos), bemPatrimonial.getCadastro_assuntos());
+        map.put(mContext.getString(R.string.atributo_descritores), bemPatrimonial.getCadastro_descritores());
+        map.put(mContext.getString(R.string.atributo_fontes_informacao), bemPatrimonial.getCadastro_fontes_informacao());
+        map.put(mContext.getString(R.string.atributo_pesquisadores), bemPatrimonial.getCadastro_pesquisadores());
+        map.put(mContext.getString(R.string.atributo_relacionar_outros_bens), bemPatrimonial.getCadastro_relacionar_outros_bens());
 
         //transforma Map em JSONObject
         JSONObject json = new JSONObject(map);
         return json.toString();
     }
-
 
     public static ArrayList<BemPatrimonial> carregarBensPatrimoniaisSalvosCache()
     {
@@ -221,7 +242,7 @@ public class Utils {
 
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject obj = new JSONObject(array.getString(i));
-                    BemPatrimonial bp = BemPatrimonial.parseBemPatrimonial(obj);
+                    BemPatrimonial bp = parseBemPatrimonial(obj);
                     arrayBemPatrimonial.add(bp);
                 }
 
@@ -231,6 +252,40 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static BemPatrimonial parseBemPatrimonial(JSONObject jsonObject) throws JSONException {
+
+        BemPatrimonial bp = new BemPatrimonial();
+
+        Resources resources = Utils.getContext().getResources();
+
+        //Midia
+        ContainerMultimidia containerMultimidia = new ContainerMultimidia();
+
+        /*
+        bp.cadastro_image = new ArrayList<String>();
+
+        JSONArray imageArray = jsonObject.getJSONArray(resources.getString(R.string.cadastro_midia));
+        for (int i = 0; i < imageArray.length() ; i++) {
+            String dataImage = imageArray.getString(i);
+            bp.cadastro_image.add(dataImage);
+        }
+        */
+
+        bp.setContainerMultimidia(containerMultimidia);
+
+        //Informações gerais
+       // bp.setExterno(Utils.safeString(jsonObject,resources.getString(R.string.cadastro_externo)));
+        bp.setTipoBemPatrimonial(Utils.safeString(jsonObject,resources.getString(R.string.atributo_tipo)));
+        bp.setNumeroRegistro(Utils.safeString(jsonObject, resources.getString(R.string.atributo_num_registro)));
+        bp.setTituloPrincipal(Utils.safeString(jsonObject, resources.getString(R.string.atributo_titulo_principal)));
+        bp.setComplemento(Utils.safeString(jsonObject, resources.getString(R.string.atributo_complemento)));
+        bp.setColecao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_colecao)));
+       // bp.cadastro_latitude = Utils.safeString(jsonObject, resources.getString(R.string.cadastro_latitude));
+       // bp.cadastro_longitude = Utils.safeString(jsonObject, resources.getString(R.string.cadastro_longitude));
+
+        return bp;
     }
 /*
     public static void saveJSONObject(Context c, String prefName, String key, JSONObject object) {

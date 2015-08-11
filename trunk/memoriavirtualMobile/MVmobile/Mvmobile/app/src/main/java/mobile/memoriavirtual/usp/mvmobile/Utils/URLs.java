@@ -6,7 +6,7 @@ package mobile.memoriavirtual.usp.mvmobile.Utils;
 
 public class URLs {
 
-    public static final String DOMAIN_URL = "http://192.168.0.104:8080/memoriavirtual/";
-
-    public static final String URL_ENVIAR_BEM_PATRIMONIAL = DOMAIN_URL + "cadastrar/bemPatrimonial/";
+    public static final String URL_IP = "http://192.168.0.107:8080/";
+    public static final String URL_DOMAIN = URL_IP + "memoriavirtualWebService/rest/";
+    public static final String URL_ENVIAR_BEM_PATRIMONIAL = URL_DOMAIN + "cadastrar/bemPatrimonial/";
 }

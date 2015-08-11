@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import mobile.memoriavirtual.usp.mvmobile.Model.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
-import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
 
 public class ListaBemPatrimonialAdapter extends ArrayAdapter<BemPatrimonial> {
 
@@ -36,15 +35,15 @@ public class ListaBemPatrimonialAdapter extends ArrayAdapter<BemPatrimonial> {
         TextView author = (TextView) rowView.findViewById(R.id.registered_patrimonial_author);
         ImageView image = (ImageView) rowView.findViewById(R.id.registered_patrimonial_image);
 
-        name.setText(patrimonial.getCadastro_titulo_principal());
-        author.setText("Tipo: " + patrimonial.getCadastro_tipo());
+        name.setText(patrimonial.getTituloPrincipal());
+        author.setText("Tipo: " + patrimonial.getTipoBemPatrimonial());
 
         //Imagem
-        if(patrimonial.getCadastro_image().size() > 0) {
+       /* if(patrimonial.getCadastro_image().size() > 0) {
             String image_data = patrimonial.getCadastro_image().get(0);
             image.setImageBitmap(Utils.stringToBitMap(image_data));
         }
-
+*/
         return rowView;
     }
 
