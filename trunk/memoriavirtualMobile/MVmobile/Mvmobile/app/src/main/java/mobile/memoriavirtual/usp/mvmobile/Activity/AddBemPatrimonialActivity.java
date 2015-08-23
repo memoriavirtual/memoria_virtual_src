@@ -434,8 +434,7 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
     {
         //Midia
         //Se tirou uma imagem entao coloca no bem patrimonial
-
-        // mBemPatrimonial.setCadastro_image(bp_data_images);
+        //mBemPatrimonial.setCadastro_image(bp_data_images);
         //mBemPatrimonial.setCadastro_image(Utils.bitMapToString(imageCaptured));
 
         //Informações gerais
@@ -464,8 +463,8 @@ public class AddBemPatrimonialActivity extends ActionBarActivity implements Form
         mBemPatrimonial.setDimensoesQuantificacoes(cadastro_dimensoes_quantificacoes.getText().toString());
         mBemPatrimonial.setCondicaoTopografica(cadastro_condicao_topografica.getText().toString());
         mBemPatrimonial.setUso(cadastro_uso.getText().toString());
-        mBemPatrimonial.setNumeroAmbientes(Integer.parseInt(cadastro_num_ambientes.getText().toString()));
-        mBemPatrimonial.setNumeroPavimentos(Integer.parseInt(cadastro_num_pavimentos.getText().toString()));
+        mBemPatrimonial.setNumeroAmbientes(Integer.parseInt(cadastro_num_ambientes.getText().toString().isEmpty() ? "0" : cadastro_num_ambientes.getText().toString()));
+        mBemPatrimonial.setNumeroPavimentos(Integer.parseInt(cadastro_num_pavimentos.getText().toString().isEmpty() ? "0" : cadastro_num_pavimentos.getText().toString()));
         mBemPatrimonial.setAlcova(cadastro_alcova.isChecked());
         mBemPatrimonial.setPorao(cadastro_porao.isChecked());
         mBemPatrimonial.setSotao(cadastro_sotao.isChecked());
