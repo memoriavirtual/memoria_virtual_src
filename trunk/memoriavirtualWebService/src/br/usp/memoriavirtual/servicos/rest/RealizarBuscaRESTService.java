@@ -43,14 +43,22 @@ public class RealizarBuscaRESTService {
 	@Path("/listarInstituicoes")
 	public List<Instituicao> listarInstituicoes() {
 		
-		List<Instituicao> lista = Collections.emptyList(); 
+		List<Instituicao> lista = Collections.emptyList();
+		List<Instituicao> listaResponse = new ArrayList<Instituicao>();
 		
 		try {
 			lista = editarInstituicaoEJB.listarInstituicoes("");
+			for (Instituicao instituicao : lista) {
+				
+				Instituicao newInstituicao = new Instituicao();
+				newInstituicao.setNome(instituicao.getNome());
+				newInstituicao.setId(instituicao.getId());
+				listaResponse.add(newInstituicao);
+			}
 		} catch (ModeloException e) {
 			e.printStackTrace();
 		}
-		return lista;
+		return listaResponse;
 	}
 	
 	@GET

@@ -23,7 +23,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 @Path("/cadastrar")
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-public class CadastrarBemPatrimonialRESTService extends BaseRESTService{
+public class CadastrarBemPatrimonialRESTService {
 	
 	@EJB
 	private CadastrarBemPatrimonialRemote cadastrarBemPatrimonialEJB;
@@ -37,7 +37,7 @@ public class CadastrarBemPatrimonialRESTService extends BaseRESTService{
 			@PathParam("instituicao") Integer idInstituicao,
 			@Context HttpServletRequest request) {
 		
-		if(validaCliente(request)){
+		//if(validaCliente(request)){
 		
 			try {
 				//Recupera instituicao pelo ID e salva no bemPatrimonial
@@ -50,7 +50,7 @@ public class CadastrarBemPatrimonialRESTService extends BaseRESTService{
 				e.printStackTrace();
 				return Response.serverError().entity(e.getMessage()).build();
 			}
-		}
-		return null;		
+	//	}
+//		return null;		
 	}
 }

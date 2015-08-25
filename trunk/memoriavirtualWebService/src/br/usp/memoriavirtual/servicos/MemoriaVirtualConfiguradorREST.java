@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import br.usp.memoriavirtual.servicos.rest.CadastrarBemPatrimonialRESTService;
 import br.usp.memoriavirtual.servicos.rest.RealizarBuscaRESTService;
 
 @ApplicationPath("rest/*")
@@ -14,6 +15,7 @@ public class MemoriaVirtualConfiguradorREST extends Application {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
 
 		classes.add(RealizarBuscaRESTService.class);
+		classes.add(CadastrarBemPatrimonialRESTService.class);
 
 		return classes;
 	}

@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.servicos.rest;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
@@ -8,6 +9,8 @@ import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
+
+@RequestScoped
 public class BaseRESTService {
 	
 	@EJB
