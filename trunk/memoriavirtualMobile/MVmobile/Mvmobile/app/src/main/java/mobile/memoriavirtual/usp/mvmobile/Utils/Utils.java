@@ -25,6 +25,9 @@ import java.util.Map;
 
 import br.usp.memoriavirtual.modelo.entidades.ContainerMultimidia;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Diagnostico;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.DisponibilidadeUsoProtecao;
+import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.HistoricoProcedencia;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Producao;
 import mobile.memoriavirtual.usp.mvmobile.R;
 
@@ -138,7 +141,7 @@ public class Utils {
         map.put(mContext.getString(R.string.cadastro_midia), bemPatrimonial.getContainerMultimidia());
 
         //Informações Gerais
-      //  map.put(br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial.condicoesTopograficas.acidentado., bemPatrimonial.getCadastro_externo());
+        map.put(mContext.getString(R.string.atributo_externo), bemPatrimonial.isExterno());
         map.put(mContext.getString(R.string.atributo_tipo), bemPatrimonial.getTipoBemPatrimonial());
         map.put(mContext.getString(R.string.atributo_num_registro), bemPatrimonial.getNumeroRegistro());
         map.put(mContext.getString(R.string.atributo_titulo_principal), bemPatrimonial.getTituloPrincipal());
@@ -147,80 +150,81 @@ public class Utils {
         map.put(mContext.getString(R.string.atributo_latitude), bemPatrimonial.getLatitude());
         map.put(mContext.getString(R.string.atributo_longitude), bemPatrimonial.getLongitude());
 
-        //Autor
-        map.put(mContext.getString(R.string.atributo_autoria), bemPatrimonial.getAutorias());
+        //TODO: Autor
+        //map.put(mContext.getString(R.string.atributo_autoria), bemPatrimonial.getAutorias());
 
         //Producao
-
         map.put(mContext.getString(R.string.atributo_local), bemPatrimonial.getProducao().getLocal());
-        map.put(mContext.getString(R.string.atributo_ano), bemPatrimonial.getProducao().getAno();
-        map.put(mContext.getString(R.string.atributo_edicao), bemPatrimonial.getCadastro_edicao());
-        map.put(mContext.getString(R.string.atributo_outras_responsabilidades), bemPatrimonial.getCadastro_outras_responsabilidades());
+        map.put(mContext.getString(R.string.atributo_ano), bemPatrimonial.getProducao().getAno());
+        map.put(mContext.getString(R.string.atributo_edicao), bemPatrimonial.getProducao().getEdicao());
+        map.put(mContext.getString(R.string.atributo_outras_responsabilidades), bemPatrimonial.getProducao().getOutrasResponsabilidades());
 
         //Descricao
-        map.put(mContext.getString(R.string.atributo_caracteristicas), bemPatrimonial.getCadastro_caracteristicas());
-        map.put(mContext.getString(R.string.atributo_dimensoes_quantificacoes), bemPatrimonial.getCadastro_dimensoes_quantificacoes());
-        map.put(mContext.getString(R.string.atributo_condicao_topografica), bemPatrimonial.getCadastro_condicao_topografica());
-        map.put(mContext.getString(R.string.atributo_uso), bemPatrimonial.getCadastro_uso());
-        map.put(mContext.getString(R.string.atributo_num_ambientes), bemPatrimonial.getCadastro_num_ambientes());
-        map.put(mContext.getString(R.string.atributo_num_pavimentos), bemPatrimonial.getCadastro_num_pavimentos());
+        map.put(mContext.getString(R.string.atributo_caracteristicas), bemPatrimonial.getCaracteristicasFisicasTecnicasExecutivas());
+        map.put(mContext.getString(R.string.atributo_dimensoes_quantificacoes), bemPatrimonial.getDimensoesQuantificacoes());
+        map.put(mContext.getString(R.string.atributo_condicao_topografica), bemPatrimonial.getCondicaoTopografica());
+        map.put(mContext.getString(R.string.atributo_uso), bemPatrimonial.getUso());
+        map.put(mContext.getString(R.string.atributo_num_ambientes), bemPatrimonial.getNumeroAmbientes());
+        map.put(mContext.getString(R.string.atributo_num_pavimentos), bemPatrimonial.getNumeroPavimentos());
 
-        map.put(mContext.getString(R.string.atributo_alcova), bemPatrimonial.getCadastro_alcova());
-        map.put(mContext.getString(R.string.atributo_porao), bemPatrimonial.getCadastro_porao());
-        map.put(mContext.getString(R.string.atributo_sotao), bemPatrimonial.getCadastro_sotao());
+        map.put(mContext.getString(R.string.atributo_alcova), bemPatrimonial.isAlcova());
+        map.put(mContext.getString(R.string.atributo_porao), bemPatrimonial.isPorao());
+        map.put(mContext.getString(R.string.atributo_sotao), bemPatrimonial.isSotao());
 
-        map.put(mContext.getString(R.string.atributo_meio_antropico), bemPatrimonial.getCadastro_meio_antropico());
-        map.put(mContext.getString(R.string.atributo_carac_ambientais), bemPatrimonial.getCadastro_carac_ambientais());
-        map.put(mContext.getString(R.string.atributo_sitio_paisagem), bemPatrimonial.getCadastro_sitio_paisagem());
-        map.put(mContext.getString(R.string.atributo_agua_proxima), bemPatrimonial.getCadastro_agua_proxima());
-        map.put(mContext.getString(R.string.atributo_vegetacao), bemPatrimonial.getCadastro_vegetacao());
-        map.put(mContext.getString(R.string.atributo_exposicao), bemPatrimonial.getCadastro_exposicao());
-        map.put(mContext.getString(R.string.atributo_uso_atual), bemPatrimonial.getCadastro_uso_atual());
-        map.put(mContext.getString(R.string.atributo_outros), bemPatrimonial.getCadastro_outros());
-        map.put(mContext.getString(R.string.atributo_area_total), bemPatrimonial.getCadastro_area_total());
-        map.put(mContext.getString(R.string.atributo_altura_fachada_frontal), bemPatrimonial.getCadastro_altura_fachada_frontal());
-        map.put(mContext.getString(R.string.atributo_altura_fachada_posterior), bemPatrimonial.getCadastro_altura_fachada_posterior());
-        map.put(mContext.getString(R.string.atributo_largura), bemPatrimonial.getCadastro_largura());
-        map.put(mContext.getString(R.string.atributo_altura), bemPatrimonial.getCadastro_altura());
-        map.put(mContext.getString(R.string.atributo_profundidade), bemPatrimonial.getCadastro_profundidade());
+        map.put(mContext.getString(R.string.atributo_meio_antropico), bemPatrimonial.getMeioAntropico());
+        map.put(mContext.getString(R.string.atributo_carac_ambientais), bemPatrimonial.getCaracteristicasAmbientais());
+        map.put(mContext.getString(R.string.atributo_sitio_paisagem), bemPatrimonial.getSitioPaisagem());
+        map.put(mContext.getString(R.string.atributo_agua_proxima), bemPatrimonial.getAguaProxima());
+        map.put(mContext.getString(R.string.atributo_vegetacao), bemPatrimonial.getVegetacao());
+        map.put(mContext.getString(R.string.atributo_exposicao), bemPatrimonial.getExposicao());
+        map.put(mContext.getString(R.string.atributo_uso_atual), bemPatrimonial.getUsoAtual());
+        map.put(mContext.getString(R.string.atributo_outros), bemPatrimonial.getOutros());
+        map.put(mContext.getString(R.string.atributo_area_total), bemPatrimonial.getAreaTotal());
+        map.put(mContext.getString(R.string.atributo_altura_fachada_frontal), bemPatrimonial.getAlturaFachadaFrontal());
+        map.put(mContext.getString(R.string.atributo_altura_fachada_posterior), bemPatrimonial.getAlturaFachadaPosterior());
+        map.put(mContext.getString(R.string.atributo_largura), bemPatrimonial.getLargura());
+        map.put(mContext.getString(R.string.atributo_altura), bemPatrimonial.getAltura());
+        map.put(mContext.getString(R.string.atributo_profundidade), bemPatrimonial.getProfundidade());
 
-        map.put(mContext.getString(R.string.atributo_altura_cumeeira), bemPatrimonial.getCadastro_altura_cumeeira());
-        map.put(mContext.getString(R.string.atributo_altura_total), bemPatrimonial.getCadastro_altura_total());
-        map.put(mContext.getString(R.string.atributo_pe_direito_terreo), bemPatrimonial.getCadastro_pe_direito_terreo());
-        map.put(mContext.getString(R.string.atributo_tipo_pe_direito), bemPatrimonial.getCadastro_tipo_pe_direito());
-        map.put(mContext.getString(R.string.atributo_comprimento), bemPatrimonial.getCadastro_comprimento());
-        map.put(mContext.getString(R.string.atributo_localizacao_fisica), bemPatrimonial.getCadastro_localizacao_fisica());
-        map.put(mContext.getString(R.string.atributo_conteudo), bemPatrimonial.getCadastro_conteudo());
-        map.put(mContext.getString(R.string.atributo_meio_acesso), bemPatrimonial.getCadastro_meio_acesso());
-        map.put(mContext.getString(R.string.atributo_notas), bemPatrimonial.getCadastro_notas());
+        map.put(mContext.getString(R.string.atributo_altura_cumeeira), bemPatrimonial.getAlturaCumeeira());
+        map.put(mContext.getString(R.string.atributo_altura_total), bemPatrimonial.getAlturaTotal());
+        map.put(mContext.getString(R.string.atributo_pe_direito_terreo), bemPatrimonial.getPeDireitoTerreo());
+        map.put(mContext.getString(R.string.atributo_tipo_pe_direito), bemPatrimonial.getPeDireitoTipo());
+        map.put(mContext.getString(R.string.atributo_comprimento), bemPatrimonial.getComprimento());
+        map.put(mContext.getString(R.string.atributo_localizacao_fisica), bemPatrimonial.getLocalizacaoFisica());
+        map.put(mContext.getString(R.string.atributo_conteudo), bemPatrimonial.getConteudo());
+        map.put(mContext.getString(R.string.atributo_meio_acesso), bemPatrimonial.getMeioAcesso());
+        map.put(mContext.getString(R.string.atributo_notas), bemPatrimonial.getNotas());
 
         //Estado
-        map.put(mContext.getString(R.string.atributo_estado_preservacao), bemPatrimonial.getCadastro_estado_preservacao());
-        map.put(mContext.getString(R.string.atributo_estado_convervacao), bemPatrimonial.getCadastro_estado_convervacao());
-        map.put(mContext.getString(R.string.atributo_notas_estado_convervacao), bemPatrimonial.getCadastro_notas_estado_convervacao());
+        map.put(mContext.getString(R.string.atributo_estado_preservacao), bemPatrimonial.getDiagnostico().getEstadoPreservacao());
+        map.put(mContext.getString(R.string.atributo_estado_convervacao), bemPatrimonial.getDiagnostico().getEstadoConservacao());
+        map.put(mContext.getString(R.string.atributo_notas_estado_convervacao), bemPatrimonial.getDiagnostico().getNotasEstadoConservacao());
 
         //Disponibilidadget
-        map.put(mContext.getString(R.string.atributo_condicao_reproducao), bemPatrimonial.getCadastro_condicao_reproducao());
-        map.put(mContext.getString(R.string.atributo_protecao), bemPatrimonial.getCadastro_protecao());
-        map.put(mContext.getString(R.string.atributo_numero_processo), bemPatrimonial.getCadastro_numero_processo());
-        map.put(mContext.getString(R.string.atributo_data_retorno), bemPatrimonial.getCadastro_data_retorno());
-        map.put(mContext.getString(R.string.atributo_notas_uso_aproveitamento), bemPatrimonial.getCadastro_notas_uso_aproveitamento());
+        map.put(mContext.getString(R.string.atributo_condicao_reproducao), bemPatrimonial.getDisponibilidadeUsoProtecao().getCondicoesReproducao());
+        map.put(mContext.getString(R.string.atributo_protecao), bemPatrimonial.getDisponibilidadeUsoProtecao().getProtecao());
+        //map.put(mContext.getString(R.string.atributo_numero_processo), bemPatrimonial.getDisponibilidadeUsoProtecao().getpro());
+        map.put(mContext.getString(R.string.atributo_data_retorno), bemPatrimonial.getDisponibilidadeUsoProtecao().getDataRetorno());
+        map.put(mContext.getString(R.string.atributo_notas_uso_aproveitamento), bemPatrimonial.getDisponibilidadeUsoProtecao().getNotasUsoAproveitamento());
 
         //Procedencia
-        map.put(mContext.getString(R.string.atributo_tipo_aquisicao), bemPatrimonial.getCadastro_tipo_aquisicao());
-        map.put(mContext.getString(R.string.atributo_valor_venal), bemPatrimonial.getCadastro_valor_venal());
-        map.put(mContext.getString(R.string.atributo_data), bemPatrimonial.getCadastro_data());
-        map.put(mContext.getString(R.string.atributo_primeiro_proprietario), bemPatrimonial.getCadastro_primeiro_proprietario());
-        map.put(mContext.getString(R.string.atributo_dados_transacao), bemPatrimonial.getCadastro_dados_transacao());
-        map.put(mContext.getString(R.string.atributo_historico), bemPatrimonial.getCadastro_historico());
-        map.put(mContext.getString(R.string.atributo_instrumento_pesquisa), bemPatrimonial.getCadastro_instrumento_pesquisa());
+        map.put(mContext.getString(R.string.atributo_tipo_aquisicao), bemPatrimonial.getHistoricoProcedencia().getTipoAquisicao());
+        map.put(mContext.getString(R.string.atributo_valor_venal), bemPatrimonial.getHistoricoProcedencia().getValorVenalTransacao());
+        map.put(mContext.getString(R.string.atributo_data), bemPatrimonial.getHistoricoProcedencia().getDataAquisicao());
+        map.put(mContext.getString(R.string.atributo_primeiro_proprietario), bemPatrimonial.getHistoricoProcedencia().getPrimeiroProprietario());
+        map.put(mContext.getString(R.string.atributo_dados_transacao), bemPatrimonial.getHistoricoProcedencia().getDadosDocTransacao());
+        map.put(mContext.getString(R.string.atributo_historico), bemPatrimonial.getHistoricoProcedencia().getHistorico());
+        map.put(mContext.getString(R.string.atributo_instrumento_pesquisa), bemPatrimonial.getHistoricoProcedencia().getInstrumentoPesquisa());
 
-        //Assuntos
+        //TODO: Assuntos
+        /*
         map.put(mContext.getString(R.string.atributo_assuntos), bemPatrimonial.getCadastro_assuntos());
         map.put(mContext.getString(R.string.atributo_descritores), bemPatrimonial.getCadastro_descritores());
         map.put(mContext.getString(R.string.atributo_fontes_informacao), bemPatrimonial.getCadastro_fontes_informacao());
         map.put(mContext.getString(R.string.atributo_pesquisadores), bemPatrimonial.getCadastro_pesquisadores());
         map.put(mContext.getString(R.string.atributo_relacionar_outros_bens), bemPatrimonial.getCadastro_relacionar_outros_bens());
+        */
 
         //transforma Map em JSONObject
         JSONObject json = new JSONObject(map);
@@ -242,6 +246,7 @@ public class Utils {
 
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject obj = new JSONObject(array.getString(i));
+                    //TODO: PROBLEMA NO PARSE
                     BemPatrimonial bp = parseBemPatrimonial(obj);
                     arrayBemPatrimonial.add(bp);
                 }
@@ -256,13 +261,11 @@ public class Utils {
 
     public static BemPatrimonial parseBemPatrimonial(JSONObject jsonObject) throws JSONException {
 
-        BemPatrimonial bp = new BemPatrimonial();
-
+        BemPatrimonial mBemPatrimonial = new BemPatrimonial();
         Resources resources = Utils.getContext().getResources();
 
         //Midia
         ContainerMultimidia containerMultimidia = new ContainerMultimidia();
-
         /*
         bp.cadastro_image = new ArrayList<String>();
 
@@ -273,19 +276,102 @@ public class Utils {
         }
         */
 
-        bp.setContainerMultimidia(containerMultimidia);
+        //bp.setContainerMultimidia(containerMultimidia);
 
         //Informações gerais
-       // bp.setExterno(Utils.safeString(jsonObject,resources.getString(R.string.cadastro_externo)));
-        bp.setTipoBemPatrimonial(Utils.safeString(jsonObject,resources.getString(R.string.atributo_tipo)));
-        bp.setNumeroRegistro(Utils.safeString(jsonObject, resources.getString(R.string.atributo_num_registro)));
-        bp.setTituloPrincipal(Utils.safeString(jsonObject, resources.getString(R.string.atributo_titulo_principal)));
-        bp.setComplemento(Utils.safeString(jsonObject, resources.getString(R.string.atributo_complemento)));
-        bp.setColecao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_colecao)));
-       // bp.cadastro_latitude = Utils.safeString(jsonObject, resources.getString(R.string.cadastro_latitude));
-       // bp.cadastro_longitude = Utils.safeString(jsonObject, resources.getString(R.string.cadastro_longitude));
+        mBemPatrimonial.setExterno(Utils.safeBoolean(jsonObject, resources.getString(R.string.atributo_externo)));
+        mBemPatrimonial.setTipoBemPatrimonial(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
 
-        return bp;
+        mBemPatrimonial.setNumeroRegistro(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setTituloPrincipal(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setComplemento(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setColecao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setLatitude(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setLongitude(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+
+        //TODO: Autor
+        //mBemPatrimonial.setAutorias();
+
+        //Producao
+        Producao producao = new Producao();
+        producao.setLocal(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        producao.setAno(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        producao.setEdicao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        producao.setOutrasResponsabilidades(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setProducao(producao);
+
+        //Descricao
+        mBemPatrimonial.setCaracteristicasFisicasTecnicasExecutivas(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setDimensoesQuantificacoes(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setCondicaoTopografica(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setUso(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setNumeroAmbientes(Utils.safeInteger(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setNumeroPavimentos(Utils.safeInteger(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAlcova(Utils.safeBoolean(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setPorao(Utils.safeBoolean(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setSotao(Utils.safeBoolean(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setMeioAntropico(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setCaracteristicasAmbientais(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setSitioPaisagem(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAguaProxima(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setVegetacao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setExposicao(BemPatrimonial.Exposicao.aberto);
+        mBemPatrimonial.setUso(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setOutros(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAreaTotal(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAlturaFachadaFrontal(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAlturaFachadaPosterior(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setLargura(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAltura(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setProfundidade(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAlturaCumeeira(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setAlturaTotal(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setPeDireitoTerreo(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setPeDireitoTipo(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setComprimento(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setLocalizacaoFisica(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setConteudo(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setMeioAcesso(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setNotas(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+
+        //Estado
+        Diagnostico diagnostico = new Diagnostico();
+        diagnostico.setEstadoConservacao(Diagnostico.EstadoConservacao.bom);
+        diagnostico.setEstadoPreservacao(Diagnostico.EstadoPreservacao.integro);
+        diagnostico.setNotasEstadoConservacao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setDiagnostico(diagnostico);
+
+        //Disponibilidade
+        DisponibilidadeUsoProtecao disponibilidade = new DisponibilidadeUsoProtecao();
+        //TODO: trocar dados fixos pelos dados que usuário entrou
+        disponibilidade.setCondicoesAcesso(DisponibilidadeUsoProtecao.CondicoesAcesso.livre);
+        disponibilidade.setCondicoesReproducao(DisponibilidadeUsoProtecao.CondicoesReproducao.nao);
+        //disponibilidade.setCadastro_numero_processo(cadastro_numero_processo.getText().toString()); // Nao existe no modelo
+        disponibilidade.setProtecao(DisponibilidadeUsoProtecao.Protecao.sim);
+        disponibilidade.setDataRetorno(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        disponibilidade.setNotasUsoAproveitamento(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setDisponibilidadeUsoProtecao(disponibilidade);
+
+        //Procedencia
+        HistoricoProcedencia historico = new HistoricoProcedencia();
+        historico.setTipoAquisicao(HistoricoProcedencia.TipoAquisicao.doacaoInstitucional);
+        historico.setValorVenalTransacao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        historico.setDataAquisicao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        historico.setPrimeiroProprietario(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        historico.setDadosDocTransacao(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        historico.setInstrumentoPesquisa(Utils.safeString(jsonObject, resources.getString(R.string.atributo_tipo)));
+        mBemPatrimonial.setHistoricoProcedencia(historico);
+
+        //TODO: Assuntos
+        /*
+        mBemPatrimonial.setAssuntos(cadastro_assuntos.getText().toString());
+        mBemPatrimonial.setDescritores(cadastro_descritores.getText().toString());
+        mBemPatrimonial.setFontesInformacao(cadastro_fontes_informacao.getText().toString());
+        mBemPatrimonial.setPesquisadores(cadastro_pesquisadores.getText().toString());
+        mBemPatrimonial.setBensRelacionados(cadastro_relacionar_outros_bens.getText().toString());
+        */
+
+        return mBemPatrimonial;
     }
 /*
     public static void saveJSONObject(Context c, String prefName, String key, JSONObject object) {
@@ -367,13 +453,30 @@ public class Utils {
         return null;
     }
 
-
     public static String safeString(JSONObject json, String string) throws JSONException {
         if (json.has(string)){
             return json.getString(string);
         }
         else{
             return "";
+        }
+    }
+
+    public static Integer safeInteger(JSONObject json, String string) throws JSONException {
+        if (json.has(string)){
+            return json.getInt(string);
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public static Boolean safeBoolean(JSONObject json, String string) throws JSONException {
+        if (json.has(string)){
+            return json.getBoolean(string);
+        }
+        else{
+            return false;
         }
     }
 

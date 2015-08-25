@@ -3,7 +3,9 @@ package mobile.memoriavirtual.usp.mvmobile.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -29,6 +31,7 @@ import com.android.volley.VolleyError;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.R;
 import mobile.memoriavirtual.usp.mvmobile.Utils.Utils;
@@ -75,6 +78,12 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         service = BemPatrimonialServiceImpl.getInstance();
 
         mCodInstituicao = (EditText) findViewById(R.id.codInstituicao);
+        mCodInstituicao.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaInstituicoesShow();
+            }
+        });
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -93,6 +102,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         });
 
 
+        listarInstituicoesService();
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -105,6 +115,39 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
+    }
+
+    private void listarInstituicoesService(){
+        service.listarInstituicoes(new Response.Listener<List<Instituicao>>() {
+                    @Override
+                    public void onResponse(List<Instituicao> s) {
+                        //TODO: preencher dialog
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e("Erro inesperado", volleyError.getMessage());
+                    }
+                }
+        );
+    }
+
+    public void listaInstituicoesShow(){
+        AlertDialog dialog ;
+        final CharSequence str[]={"Test1","Test2"};
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("Instituição:");
+        builder.setItems(str, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int position) {
+                mCodInstituicao.setText(str[position]);
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
+
     }
 
     private void populateAutoComplete() {

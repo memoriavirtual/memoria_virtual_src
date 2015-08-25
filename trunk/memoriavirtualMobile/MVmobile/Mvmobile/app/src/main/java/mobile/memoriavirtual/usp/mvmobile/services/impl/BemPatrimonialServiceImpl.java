@@ -6,12 +6,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 import mobile.memoriavirtual.usp.mvmobile.Utils.AppConstant;
 import mobile.memoriavirtual.usp.mvmobile.Utils.URLs;
@@ -43,15 +47,11 @@ public class BemPatrimonialServiceImpl extends BaseServiceImpl implements BemPat
     public void enviarBemPatrimonial(String username, String senha, String idInstituicao, BemPatrimonial bemPatrimonial, final Response.Listener<String> result, final Response.ErrorListener responseError) {
         final String URL = URLs.URL_ENVIAR_BEM_PATRIMONIAL + idInstituicao;
 
-
         try {
             JSONObject obj = new JSONObject();
-
             if (bemPatrimonial != null) {
                 obj = Utils.parseBemPatrimonialToJSON(bemPatrimonial);
-                //obj.put("bemPatrimonial", bemStr);
             }
-
             // prepare the Request
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL, obj,
                     new Response.Listener<JSONObject>() {
@@ -73,7 +73,6 @@ public class BemPatrimonialServiceImpl extends BaseServiceImpl implements BemPat
                             responseError.onErrorResponse(error);
                         }
                 }
-
             )
             {
                 @Override
@@ -82,7 +81,6 @@ public class BemPatrimonialServiceImpl extends BaseServiceImpl implements BemPat
                     header.put("authorization", "bXZpcnR1YWw6bXZpcnR1YWw=");
                     return header;
                 }
-
                 @Override
                 public String getBodyContentType() {
                     return "application/json";
@@ -92,6 +90,63 @@ public class BemPatrimonialServiceImpl extends BaseServiceImpl implements BemPat
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void listarInstituicoes(final Response.Listener<List<Instituicao>> result, final Response.ErrorListener responseError){
+        final String URL = URLs.URL_LISTAR_INSTITUICOES;
+
+            JSONObject obj = new JSONObject();
+
+            // prepare the Request
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, obj,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            List<Instituicao> array = null;
+                            try {
+                                array = parseInstituicaoLista(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            result.onResponse(array);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            responseError.onErrorResponse(error);
+                        }
+                    }
+            )
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> header = new HashMap<>() ;
+                    header.put("authorization", "bXZpcnR1YWw6bXZpcnR1YWw=");
+                    return header;
+                }
+                @Override
+                public String getBodyContentType() {
+                    return "application/json";
+                }
+            };
+            VolleyManager.getInstance().addToRequestQueue(req, AppConstant.TAG_ENVIAR_BEM_PATRIMONIAL);
+    }
+
+    public List<Instituicao> parseInstituicaoLista(JSONObject obj) throws JSONException {
+        List<Instituicao> lista = Collections.emptyList();
+        JSONArray array = obj.getJSONArray("instituicoes");
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject instObj = array.getJSONObject(i);
+            Instituicao instituicao = new Instituicao();
+
+            instituicao.setNome(instObj.getString("nome"));
+            instituicao.setId(instObj.getInt("id"));
+            lista.add(instituicao);
+        }
+        return lista;
     }
 }
