@@ -14,6 +14,6 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
 
 public interface BemPatrimonialService {
 
-    public void enviarBemPatrimonial(String username, String senha, String idInstituicao, BemPatrimonial bemPatrimonial, final Response.Listener<String> result, final Response.ErrorListener responseError);
-    public void listarInstituicoes(final Response.Listener<List<Instituicao>> result, final Response.ErrorListener responseError);
+    public void enviarBemPatrimonial(String servidorIP, String username, String senha, String idInstituicao, BemPatrimonial bemPatrimonial, final Response.Listener<String> result, final Response.ErrorListener responseError);
+    public void listarInstituicoes(String servidorIP, final Response.Listener<List<Instituicao>> result, final Response.ErrorListener responseError);
 }

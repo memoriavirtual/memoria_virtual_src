@@ -27,5 +27,7 @@ public class AppConstant {
 
     //Tag para chamada de serviço enviarBemPatrimonial
     public static final String TAG_ENVIAR_BEM_PATRIMONIAL = "tag_enviarBemPatrimonial";
+    public static final String TAG_LISTAR_INSTITUICAO = "tag_listarInstituicao";
+
 
 }

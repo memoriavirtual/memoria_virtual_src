@@ -15,6 +15,7 @@
     <!-- SharedPreferences -->
     <string name="cache_bens_patrimoniais">bem_patrimonial</string>
     <string name="cache_login">cache_login</string>
+    <string name="cache_servidor">cache_servidor</string>
 
     <!-- Activities -->
     <string name="title_activity_add_bem_patrimonial">Cadastrar Bem Patrimonial</string>
@@ -134,6 +135,7 @@
 
     <string name="title_activity_full_screen_image_adapter">FullScreenImageAdapter</string>
     <string name="title_activity_full_screen_view">FullScreenViewActivity</string>
+    <string name="title_activity_servidor">ServidorActivity</string>
 
 
 </resources>

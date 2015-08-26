@@ -4,14 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.DialogInterface;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,14 +15,15 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,26 +43,19 @@ import mobile.memoriavirtual.usp.mvmobile.services.impl.BemPatrimonialServiceImp
  * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
-public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends ActionBarActivity {
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
+    public List<Instituicao> mListaInstituicao;
+    public String mNumeroIp;
+
     private UserLoginTask mAuthTask = null;
-
     private BemPatrimonialService service;
+    private long mCodInstituicao;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
-    private EditText mCodInstituicao;
+    private EditText mNomeInstituicao;
     private View mProgressView;
     private View mEmailLoginFormView;
     private View mLoginFormView;
@@ -75,19 +65,21 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Dados passados da tela Servidor
+        mListaInstituicao =  (ArrayList<Instituicao>)getIntent().getSerializableExtra("lista");
+        mNumeroIp = (String)getIntent().getStringExtra("ip");
+
         service = BemPatrimonialServiceImpl.getInstance();
 
-        mCodInstituicao = (EditText) findViewById(R.id.codInstituicao);
-        mCodInstituicao.setOnClickListener(new OnClickListener() {
+        mNomeInstituicao = (EditText) findViewById(R.id.codInstituicao);
+        mNomeInstituicao.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 listaInstituicoesShow();
             }
         });
 
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        mEmailView = (EditText) findViewById(R.id.email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -101,9 +93,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             }
         });
 
-
-        listarInstituicoesService();
-
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -115,45 +104,67 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
+
+        //Recupera dados de login salvos no cache
+        recuperarLoginCache();
     }
 
-    private void listarInstituicoesService(){
-        service.listarInstituicoes(new Response.Listener<List<Instituicao>>() {
-                    @Override
-                    public void onResponse(List<Instituicao> s) {
-                        //TODO: preencher dialog
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.e("Erro inesperado", volleyError.getMessage());
-                    }
+    private void recuperarLoginCache(){
+        try {
+            JSONObject json = Utils.carregarLoginSalvoCache();
+
+            if(json != null) {
+                mNomeInstituicao.setText(json.getString(Utils.getContext().getString(R.string.login_instituicao)));
+                mEmailView.setText(json.getString(Utils.getContext().getString(R.string.login_email)));
+                mPasswordView.setText(json.getString(Utils.getContext().getString(R.string.login_senha)));
+
+                JSONObject listaInstituicaoJSON = json.getJSONObject(Utils.getContext().getString(R.string.login_instituicao_lista));
+                for (int i = 0; i < listaInstituicaoJSON.length(); i++) {
+                    Instituicao instituicao = new Instituicao();
+                    instituicao.setId(listaInstituicaoJSON.getLong("id"));
+                    instituicao.setNome(listaInstituicaoJSON.getString("nome"));
+                    mListaInstituicao.add(instituicao);
                 }
-        );
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void listaInstituicoesShow(){
         AlertDialog dialog ;
-        final CharSequence str[]={"Test1","Test2"};
+        int size = mListaInstituicao.size();
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setTitle("Instituição:");
-        builder.setItems(str, new DialogInterface.OnClickListener() {
+        //Preencher alert com os nomes das instituicoes retornadas do service
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            @Override
-            public void onClick(DialogInterface dialog, int position) {
-                mCodInstituicao.setText(str[position]);
+        //Se array vazio significa que instituicoes ainda não foram carregadas
+        if(size == 0 ){
+            builder.setTitle("Carregando instituições...");
+        } else {
+            final CharSequence str[] = new String[size];
+            for (int i = 0; i < size; i++) {
+                str[i] = mListaInstituicao.get(i).getNome();
             }
-        });
+            builder.setTitle("Instituição:");
+            builder.setItems(str, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int position) {
+                    mNomeInstituicao.setText(str[position]);
+                    mCodInstituicao = mListaInstituicao.get(position).getId();
+                }
+            });
+        }
         dialog = builder.create();
         dialog.show();
-
     }
 
-    private void populateAutoComplete() {
-        getLoaderManager().initLoader(0, null, this);
+    public void errorMessageShow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Erro ao carregar instituições");
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -171,30 +182,31 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        String codInstituicao = mCodInstituicao.getText().toString();
+        String senha = mPasswordView.getText().toString();
+        String idInstituicao = String.valueOf(mCodInstituicao);
+
+        //Salva dados de login no Cache
+        try {
+            Utils.salvarLoginCache(email, senha, idInstituicao, mListaInstituicao);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (TextUtils.isEmpty(password)) {//&& !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(senha)) {//&& !isPasswordValid(password)) {
             mPasswordView.setError(Utils.getContext().getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
-
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(Utils.getContext().getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } /*else if (!isEmailValid(email)) {
-            mEmailView.setError(Utils.getContext().getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }*/
-
+        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -203,27 +215,29 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, senha);
             mAuthTask.execute((Void) null);
 
             //Recupera bemPatrimonial do Cache
             ArrayList<BemPatrimonial> bemPatrimonialArray = Utils.carregarBensPatrimoniaisSalvosCache();
-            //Se tiver um bem patrimonial cadastrado entao enva para servidor
-            if (bemPatrimonialArray != null || bemPatrimonialArray.size() != 0) {
-                BemPatrimonial bemPatrimonial = bemPatrimonialArray.get(0);
+            //Se tiver um bem patrimonial cadastrado entao envia para servidor
+            if (bemPatrimonialArray != null) {
+                if( bemPatrimonialArray.size() > 0) {
+                    BemPatrimonial bemPatrimonial = bemPatrimonialArray.get(0);
 
-                service.enviarBemPatrimonial(email, password, codInstituicao, bemPatrimonial, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String s) {
-                                Log.e("Dado enviado com sucesso!", s);
+                    service.enviarBemPatrimonial(mNumeroIp, email, senha, idInstituicao, bemPatrimonial, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String s) {
+                                    Log.e("Dado enviado com sucesso!", s);
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+
+                                }
                             }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                Log.e("Erro inesperado", volleyError.getMessage());
-                            }
-                        }
-                );
+                    );
+                }
 
             }
         }
@@ -275,50 +289,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<String>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
-
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-
-    }
-
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -335,24 +305,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
             return true;
         }
 
@@ -376,6 +328,3 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 }
-
-
-

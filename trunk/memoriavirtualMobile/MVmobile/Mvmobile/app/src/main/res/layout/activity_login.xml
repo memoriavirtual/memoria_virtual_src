@@ -20,21 +20,20 @@
             <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:orientation="vertical">
 
+
                 <TextView
                     style="@style/TextView"
-                    android:text="@string/login_cod_instituition"/>
+                    android:text="@string/login_instituicao"/>
                 <EditText android:id="@+id/codInstituicao" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1"
                     android:textSize="18sp"/>
 
                 <TextView
                     style="@style/TextView"
                     android:text="@string/login_email"/>
-                <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
+                <EditText android:id="@+id/email" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:text="mvirtual"
                     android:textSize="18sp"/>
 
                 <TextView
@@ -42,7 +41,6 @@
                     android:text="@string/login_senha"/>
                 <EditText android:id="@+id/password" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="mvirtual"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified" android:inputType="textPassword"

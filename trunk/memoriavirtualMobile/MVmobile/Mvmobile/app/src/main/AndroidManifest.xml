@@ -21,13 +21,11 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name="mobile.memoriavirtual.usp.mvmobile.manager.VolleyManager"
+        android:name=".manager.VolleyManager"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-
         <activity
             android:name=".Activity.MainActivity"
             android:label="@string/app_name" >
@@ -59,6 +57,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".Activity.ServidorActivity"
+            android:label="@string/title_activity_servidor" >
+        </activity>
     </application>
 
 </manifest>

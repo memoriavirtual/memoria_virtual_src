@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -20,17 +20,17 @@
     <color name="accent_material_light">@color/material_deep_teal_500</color>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="background_gray">#EEEEEE</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="background_pagerView">#B3E5FC</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
@@ -40,12 +40,12 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="card_shadow">#D3D3D3</color>
     <color name="card_white">#ffffffff</color>
     <color name="color_app">#0288D1</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/res/values/common_colors.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/res/values/common_colors.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_signin_btn_dark_text_default">@android:color/white</color>
@@ -57,7 +57,7 @@
     <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
     <color name="common_signin_btn_light_text_focused">#FF737373</color>
     <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
@@ -74,12 +74,12 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="material_navigationbar">#03A9F4</color>
     <color name="material_others">#03A9F4</color>
     <color name="material_statusbar">#0288D1</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -97,10 +97,10 @@
     <color name="secondary_text_disabled_material_light">#24000000</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="text_dark">#666666</color>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/values/wallet_colors.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/values/wallet_colors.xml -->
     <eat-comment/>
     <color name="wallet_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
     <color name="wallet_bright_foreground_holo_dark">#fff3f3f3</color>
@@ -145,7 +145,7 @@
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
     <declare-styleable name="WalletFragmentOptions"><attr format="enum" name="appTheme"><enum name="holo_dark" value="0"/><enum name="holo_light" value="1"/></attr><attr format="enum" name="environment"><enum name="production" value="1"/><enum name="sandbox" value="0"/><enum name="strict_sandbox" value="2"/></attr><attr format="reference" name="fragmentStyle"/><attr format="enum" name="fragmentMode"><enum name="buyButton" value="1"/><enum name="selectionDetails" value="2"/></attr></declare-styleable>
     <declare-styleable name="WalletFragmentStyle"><attr format="dimension" name="buyButtonHeight"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="dimension" name="buyButtonWidth"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="enum" name="buyButtonText"><enum name="buy_with_google" value="1"/><enum name="buy_now" value="2"/><enum name="book_now" value="3"/><enum name="donate_with_google" value="4"/></attr><attr format="enum" name="buyButtonAppearance"><enum name="classic" value="1"/><enum name="grayscale" value="2"/><enum name="monochrome" value="3"/></attr><attr format="reference" name="maskedWalletDetailsTextAppearance"/><attr format="reference" name="maskedWalletDetailsHeaderTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsBackground"/><attr format="reference" name="maskedWalletDetailsButtonTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsButtonBackground"/><attr format="color" name="maskedWalletDetailsLogoTextColor"/><attr format="enum" name="maskedWalletDetailsLogoImageType"><enum name="classic" value="1"/><enum name="monochrome" value="2"/></attr></declare-styleable>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
     <dimen name="abc_action_bar_default_padding_material">4dp</dimen>
@@ -189,11 +189,11 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -201,16 +201,16 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="action_add_bem_patrimonial" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="cadastro_agua_proxima" type="id"/>
     <item name="cadastro_alcova" type="id"/>
@@ -282,36 +282,36 @@
     <item name="cadastro_valor_venal" type="id"/>
     <item name="cadastro_vegetacao" type="id"/>
     <item name="drawer_layout" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <item name="home" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="lista_add_button" type="id"/>
     <item name="lista_remove_bem_button" type="id"/>
     <item name="main_content_fragment" type="id"/>
     <item name="nenhum_bem_patrimonial_cadastrado" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/id.xml -->
     <eat-comment/>
     <item name="registered_patrimonial_author" type="id"/>
     <item name="registered_patrimonial_content" type="id"/>
     <item name="registered_patrimonial_image" type="id"/>
     <item name="registered_patrimonial_name" type="id"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <item name="split_action_bar" type="id"/>
     <item name="up" type="id"/>
     <integer name="abc_config_activityDefaultDur">220</integer>
     <integer name="abc_config_activityShortDur">150</integer>
     <integer name="abc_max_action_buttons">2</integer>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/res/values/version.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/res/values/version.xml -->
     <eat-comment/>
     <integer name="google_play_services_version">7095000</integer>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
@@ -329,20 +329,20 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="accept">Accept</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
     <eat-comment/>
     <string name="action_sign_in">Confirmar</string>
     <string name="action_sign_in_short">Sign in</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">Memória Virtual</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/atributosBemPatrimonial.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/atributosBemPatrimonial.xml -->
     <eat-comment/>
     <string name="atributo_agua_proxima">Água próxima</string>
     <string name="atributo_alcova">Alcova?</string>
@@ -412,10 +412,11 @@
     <string name="atributo_uso_atual">Uso atual</string>
     <string name="atributo_valor_venal">Valor venal</string>
     <string name="atributo_vegetacao">Vegetação</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="cache_bens_patrimoniais">bem_patrimonial</string>
     <string name="cache_login">cache_login</string>
+    <string name="cache_servidor">cache_servidor</string>
     <string name="cadastro_add_button">SALVAR</string>
     <string name="cadastro_agua_proxima">Água próxima</string>
     <string name="cadastro_alcova">Alcova?</string>
@@ -489,7 +490,7 @@
     <string name="cadastro_valor_venal">Valor venal</string>
     <string name="cadastro_vegetacao">Vegetação</string>
     <string name="clique_aqui_para_cadastrar">Clique aqui para cadastrar</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/res/values/common_strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/res/values/common_strings.xml -->
     <eat-comment/>
     <string name="common_android_wear_notification_needs_update_text">An application requires an update to the Android Wear app.</string>
     <string name="common_android_wear_update_text">This app won\'t run unless you update the Android Wear app.</string>
@@ -523,51 +524,58 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="commono_google_play_services_api_unavailable_text">This app requires one or more Google Play services that are not currently
 available. Please contact the developer for assistance.</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="create_calendar_message">Allow Ad to create a calendar event?</string>
     <string name="create_calendar_title">Create calendar event</string>
     <string name="decline">Decline</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="drawer_open">Open navigation drawer</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
     <eat-comment/>
     <string name="error_field_required">Esse campo é obrigatório</string>
     <string name="error_incorrect_password">A senha está incorreta</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">A senha é muito curta</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
     <eat-comment/>
-    <string name="login_cod_instituition">Cod. da Instituição</string>
     <string name="login_email">Usuário</string>
+    <string name="login_instituicao">Instituição</string>
+    <string name="login_instituicao_lista">Lista Instituição</string>
     <string name="login_senha">Senha</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="nenhum_bem_patrimonial_cadastrado">Nenhum bem patrimonial cadastrado.</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
     <eat-comment/>
     <string name="plus_disconnect">Disconnect from Google+</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_strings.xml -->
+    <string name="servidor_cache">servidor</string>
+    <string name="servidor_num_ip">Digite o número IP do servidor em que o bem patrimonial será sincronizado</string>
+    <string name="servidor_offline">Servidor está offline</string>
+    <string name="servidor_online">Online</string>
+    <string name="servidor_stataus">Status do servidor:</string>
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="store_picture_message">"Allow Ad to store image in Picture gallery?"</string>
     <string name="store_picture_title">Save image</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="title_activity_add_bem_patrimonial">Cadastrar Bem Patrimonial</string>
     <string name="title_activity_edit_bem_patrimonial">Editar Bem Patrimonial</string>
     <string name="title_activity_full_screen_image_adapter">FullScreenImageAdapter</string>
     <string name="title_activity_full_screen_view">FullScreenViewActivity</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings_activity_login.xml -->
     <eat-comment/>
     <string name="title_activity_login">Login</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="title_activity_servidor">ServidorActivity</string>
     <string name="titulo_cadastro_autor">Autor</string>
     <string name="titulo_cadastro_descricao">Descrição</string>
     <string name="titulo_cadastro_disponibilidade">Disponibilidade</string>
@@ -577,13 +585,13 @@ available. Please contact the developer for assistance.</string>
     <string name="titulo_cadastro_outros">Outros</string>
     <string name="titulo_cadastro_procedencia">Procedência</string>
     <string name="titulo_cadastro_producao">Produção</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/values/wallet_strings.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/values/wallet_strings.xml -->
     <eat-comment/>
     <string name="wallet_buy_button_place_holder" translation_description="Text on a button that allows a user to make a payment with Google Wallet [CHAR LIMIT=30]">Buy with Google</string>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
@@ -591,7 +599,7 @@ available. Please contact the developer for assistance.</string>
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.Animation.AppCompat.DropDownUp" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/abc_grow_fade_in_from_bottom</item>
@@ -1446,7 +1454,7 @@ available. Please contact the developer for assistance.</string>
         <item name="android:scaleType">center</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/material_navigationbar</item>
@@ -1463,7 +1471,7 @@ available. Please contact the developer for assistance.</string>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
@@ -1705,7 +1713,7 @@ available. Please contact the developer for assistance.</string>
     </style>
     <style name="TextAppearance.Widget.AppCompat.Toolbar.Title" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title">
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TextView" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">match_parent</item>
@@ -1715,7 +1723,7 @@ available. Please contact the developer for assistance.</string>
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginTop">40dp</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.AppCompat" parent="Base.Theme.AppCompat"/>
     <style name="Theme.AppCompat.CompactMenu" parent="Base.Theme.AppCompat.CompactMenu"/>
@@ -1735,7 +1743,7 @@ available. Please contact the developer for assistance.</string>
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_iap_style.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/res/values/admob_iap_style.xml -->
     <eat-comment/>
     <style name="Theme.IAPTheme" parent="android:Theme">
     <item name="android:windowIsTranslucent">true</item>
@@ -1745,19 +1753,19 @@ available. Please contact the developer for assistance.</string>
     <item name="android:windowIsFloating">true</item>
     <item name="android:backgroundDimEnabled">false</item>
   </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Dark" parent="Base.ThemeOverlay.AppCompat.Dark"/>
     <style name="ThemeOverlay.AppCompat.Dark.ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Light" parent="Base.ThemeOverlay.AppCompat.Light"/>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TitleBarTextColor" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/values/wallet_styles.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/values/wallet_styles.xml -->
     <eat-comment/>
     <style name="WalletFragmentDefaultButtonTextAppearance">
         <item name="android:textColor">@color/wallet_primary_text_holo_light</item>
@@ -1791,7 +1799,7 @@ available. Please contact the developer for assistance.</string>
         <item name="maskedWalletDetailsLogoTextColor">@color/wallet_bright_foreground_holo_dark</item>
         <item name="maskedWalletDetailsLogoImageType">classic</item>
     </style>
-    <!-- From: file:/C:/Users/daniele/Documents/Workspace/memoria_virtual_src/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/daniele/Documents/Android/Memoria/trunk/memoriavirtualMobile/MVmobile/Mvmobile/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
     </style>

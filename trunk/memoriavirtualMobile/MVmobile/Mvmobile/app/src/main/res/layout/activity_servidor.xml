@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:gravity="center_horizontal"
+    android:orientation="vertical" android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="mobile.memoriavirtual.usp.mvmobile.Activity.ServidorActivity">
+
+
+    <!-- Login progress -->
+    <ProgressBar android:id="@+id/servidor_login_progress" style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout android:id="@+id/servidor_login_form" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical">
+
+        <TextView
+            style="@style/TextView"
+            android:text="@string/servidor_num_ip"/>
+        <EditText android:id="@+id/servidor_numeroIP" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/servidor_status"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="17sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textAlignment="center"
+            android:text="@string/servidor_offline"
+            android:visibility="gone"/>
+
+        <Button android:id="@+id/servidor_button"
+            android:background="@drawable/border_filled_button"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" android:text="@string/action_sign_in"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:onClick="checarServidorOnline"/>
+
+    </LinearLayout>
+
+</LinearLayout>

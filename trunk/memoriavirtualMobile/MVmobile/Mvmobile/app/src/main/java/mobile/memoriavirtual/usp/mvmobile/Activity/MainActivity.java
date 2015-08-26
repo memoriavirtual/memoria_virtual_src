@@ -102,7 +102,7 @@ public class MainActivity extends ActionBarActivity implements ListaBemPatrimoni
                 mDrawerLayout.closeDrawer(mDrawerLista);
                 break;
             case 2:
-                Intent intentLogin = new Intent(this, LoginActivity.class);
+                Intent intentLogin = new Intent(this, ServidorActivity.class);
                 startActivity(intentLogin);
                 mDrawerLayout.closeDrawer(mDrawerLista);
                 break;
