@@ -53,7 +53,7 @@ ID:mvirtual
 Email:mvirtual@usp.br
 senha:mvirtual
 */
-INSERT INTO USUARIO values(1, true, true, 'mvirtual@usp.br', 'mvirtual', 'Memoria Virtual',
+INSERT INTO USUARIO values(nextval('USUARIO_SEQ'), true, true, 'mvirtual@usp.br', 'mvirtual', 'Memoria Virtual',
 '8D1E3B49C3A725414FBED43AD7E0A480DEA6220A83DF3B10C4496270FC5A1E6328732550F4AC8C4F6ADE0EAE7F82DC9CF3219D724E6369AA044FD630B9C5E178',
 '(16)7777-7777',null);
 
