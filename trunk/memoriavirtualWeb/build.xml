@@ -48,7 +48,7 @@
 		<javac srcdir="${web.dir}" destdir="${web.build.classes}" encoding="ISO-8859-1" includeantruntime="false">
 			<classpath refid="glassfish.classpath" />
 			<classpath refid="EJB.classpath" />
-			<classpath refid="WEBLib.classpath"/>
+			<classpath refid="WEBLib.classpath" />
 		</javac>
 
 		<echo>WEB compilation complete</echo>
@@ -56,6 +56,14 @@
 
 
 	<target name="memWar" depends="compile">
+
+		<tstamp>
+			<format property="build.tag" pattern="yyyy-MM-dd HH:mm:ss:sss zzz" locale="pt,BR" />
+		</tstamp>
+
+		<propertyfile file="${web.build.classes}/build.properties">
+			<entry key="buildtag" value="${build.tag}" />
+		</propertyfile>
 
 		<war destfile="${memoriavirtualWeb.war}" webxml="${web.xml}">
 			<fileset dir="${web}" excludes="**/.*" />

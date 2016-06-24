@@ -4,9 +4,9 @@
 
 	<target name="build">
 		<delete>
-		    <fileset dir="../" includes="*.jar, *.war, *.ear"/>
-		  </delete>
-		<ant antfile="build.xml" dir="../memoriavirtualEJB/" >
+			<fileset dir="../" includes="*.jar, *.war, *.ear" />
+		</delete>
+		<ant antfile="build.xml" dir="../memoriavirtualEJB/">
 		</ant>
 		<ant antfile="build.xml" dir="../memoriavirtualWeb/">
 		</ant>
