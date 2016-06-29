@@ -24,7 +24,7 @@
 		<mkdir dir="../build_WEB/classes" />
 		<mkdir dir="../build_WEB/src" />
 		<copy todir="${web.build.classes}">
-			<fileset dir="${web.dir}" includes="**/*.properties"/>
+			<fileset dir="${web.dir}" includes="**/*.properties" />
 		</copy>
 		<path id="glassfish.classpath">
 			<fileset dir="${glassfish.dir}">
@@ -36,6 +36,11 @@
 				<include name="memoriavirtualEJB.jar" />
 			</fileset>
 		</path>
+		<path id="WEBLib.classpath">
+			<fileset dir="${web.lib}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
 
 	</target>
 
@@ -43,6 +48,7 @@
 		<javac srcdir="${web.dir}" destdir="${web.build.classes}" encoding="ISO-8859-1" includeantruntime="false">
 			<classpath refid="glassfish.classpath" />
 			<classpath refid="EJB.classpath" />
+			<classpath refid="WEBLib.classpath" />
 		</javac>
 
 		<echo>WEB compilation complete</echo>
@@ -51,8 +57,16 @@
 
 	<target name="memWar" depends="compile">
 
+		<tstamp>
+			<format property="build.tag" pattern="yyyy-MM-dd HH:mm:ss:sss zzz" locale="pt,BR" />
+		</tstamp>
+
+		<propertyfile file="${web.build.classes}/build.properties">
+			<entry key="buildtag" value="${build.tag}" />
+		</propertyfile>
+
 		<war destfile="${memoriavirtualWeb.war}" webxml="${web.xml}">
-			<fileset dir="${web}" excludes="**/.*"/>
+			<fileset dir="${web}" excludes="**/.*" />
 
 			<lib dir="${web.lib}" />
 			<classes dir="${web.build.classes}" />
