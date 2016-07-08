@@ -24,7 +24,7 @@ public class Multimidia implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MULTIMIDIA_ID")
 	private long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CONTAINERMULTIMIDIA_ID")
 	@XmlTransient
 	private ContainerMultimidia containerMultimidia;
