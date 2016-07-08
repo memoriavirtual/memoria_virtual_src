@@ -83,7 +83,7 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 			this.pagina = pagina;
 		} catch (Exception e) {
 			e.printStackTrace();
-			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
+			MensagensDeErro.getErrorMessage("erroInterno",
 					"resultado");
 		}
 	}
@@ -109,7 +109,7 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			MensagensDeErro.getErrorMessage("realizarBuscaSimplesErro",
+			MensagensDeErro.getErrorMessage("erroInterno",
 					"resultado");
 			return null;
 		}
@@ -464,7 +464,7 @@ public class RealizarBuscaSimplesMB implements BeanMemoriaVirtual, Serializable 
 	@Override
 	public void validarCampo(String nomeCampoMensagem, String nomeCampo,
 			String campo) {
-		//Não há requisito para validação do campo de busca		
+		//Nï¿½o hï¿½ requisito para validaï¿½ï¿½o do campo de busca		
 	}
 
 }
