@@ -26,7 +26,7 @@ public class MVModeloEmailParser {
 			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
 	                .getExternalContext().getContext();
 	        String deploymentDirectoryPath = ctx.getRealPath("/");
-			
+		
 			String path = deploymentDirectoryPath+"WEB-INF/classes/br/usp/memoriavirtual/utils/emailtemplates/"+template.toString();
 			String email = lerArquivo(path,
 					Charset.defaultCharset());

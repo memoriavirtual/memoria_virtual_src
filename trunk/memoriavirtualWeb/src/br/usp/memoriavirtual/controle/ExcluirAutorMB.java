@@ -55,7 +55,7 @@ public class ExcluirAutorMB extends EditarAutorMB implements Serializable {
 	public String excluir() {
 		try {
 			this.excluirAutorEJB.excluirAutor(this.autor);
-			this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+			this.getMensagens().mensagemSucesso(this.traduzir("autorExcluido"));
 			return this.redirecionar("/restrito/index.jsf", true);
 		} catch (ModeloException m) {
 			this.getMensagens().mensagemErro(this.traduzir("erroInterno"));

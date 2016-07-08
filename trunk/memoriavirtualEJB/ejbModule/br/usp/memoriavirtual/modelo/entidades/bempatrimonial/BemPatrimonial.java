@@ -99,14 +99,10 @@ public class BemPatrimonial implements Serializable {
 	private List<Pesquisador> pesquisadores = new ArrayList<Pesquisador>();
 
 	@CascadeOnDelete
-	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", 
-	inverseJoinColumns = @JoinColumn(name="BENSRELACIONADOS_ID", referencedColumnName = "id"),
-	joinColumns = @JoinColumn(name="BEMPATRIMONIAL_ID", referencedColumnName = "id"))
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", inverseJoinColumns = @JoinColumn(name = "BENSRELACIONADOS_ID"), joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	private List<BemPatrimonial> bensRelacionados = new ArrayList<BemPatrimonial>();
-	
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "bensRelacionados")
-	private List<BemPatrimonial> bensRel = new ArrayList<BemPatrimonial>();
-	
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ContainerMultimidia containerMultimidia = new ContainerMultimidia();
 	

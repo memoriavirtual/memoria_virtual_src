@@ -159,7 +159,7 @@ public class ExcluirInstituicaoMB extends EditarInstituicaoMB implements
 						.traduzir("excluirInstituicaoAssuntoEmail");
 				this.memoriaVirtualEJB.enviarEmail(analista.getEmail(),
 						assunto, email);
-				this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
+				this.getMensagens().mensagemSucesso(this.traduzir("pedirExclusao"));
 			} catch (Exception e) {
 				e.printStackTrace();
 				this.getMensagens().mensagemErro(this.traduzir("erroInterno"));
