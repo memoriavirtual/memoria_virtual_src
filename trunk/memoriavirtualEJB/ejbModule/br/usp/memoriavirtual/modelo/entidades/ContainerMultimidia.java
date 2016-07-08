@@ -25,7 +25,7 @@ public class ContainerMultimidia implements Serializable {
 	protected long id;
 
 	@XmlTransient
-	@OneToMany(mappedBy = "containerMultimidia", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "containerMultimidia", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	protected List<Multimidia> multimidia = new ArrayList<Multimidia>();
 
 	public ContainerMultimidia() {
