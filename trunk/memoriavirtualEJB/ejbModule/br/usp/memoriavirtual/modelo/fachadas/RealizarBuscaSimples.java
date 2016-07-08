@@ -9,7 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,10 +20,10 @@ import br.usp.memoriavirtual.modelo.entidades.Instituicao;
 import br.usp.memoriavirtual.modelo.entidades.Multimidia;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.BemPatrimonial;
-import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 
-@Stateless(mappedName = "RealizarBuscaSimples")
+@Stateful(mappedName = "RealizarBuscaSimples")
 public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 	@EJB
@@ -47,8 +47,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<BemPatrimonial> buscar(String busca, Integer pagina)
-			throws ModeloException {
+	public ArrayList<BemPatrimonial> buscar(String busca, Integer pagina) throws ModeloException {
 
 		List<Long> bens = new ArrayList<Long>();
 		List<Long> parcial = new ArrayList<Long>();
@@ -82,8 +81,8 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.titulos t WHERE LOWER(t.valor) LIKE LOWER(:padrao)");
+				query = entityManager.createQuery(
+						"SELECT b.id FROM BemPatrimonial b JOIN b.titulos t WHERE LOWER(t.valor) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
@@ -96,7 +95,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
@@ -114,12 +113,12 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.localizacaoFisica) LIKE LOWER(:padrao)");
+				query = entityManager.createQuery(
+						"SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.localizacaoFisica) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
@@ -132,14 +131,13 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
-								+ "WHERE LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
-								+ "LOWER(au.codinome) LIKE LOWER(:padrao)");
+				query = entityManager.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
+						+ "WHERE LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
+						+ "LOWER(au.codinome) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
@@ -164,20 +162,17 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		}
 
 		for (int i = 0; i < resultado.size(); i++) {
-			query = entityManager
-					.createQuery("SELECT b FROM BemPatrimonial b WHERE b.id=:identificacao");
-			query.setParameter("identificacao", resultado.get(i));
-			bensCompletos.add((BemPatrimonial) query.getResultList().get(0));
+			BemPatrimonial bem = entityManager.find(BemPatrimonial.class, resultado.get(i));
+			bensCompletos.add(bem);
 		}
-		
-		numeroDePaginas = (bens.size()+memoriaVirtual.getTamanhoPagina() -1)/memoriaVirtual.getTamanhoPagina() ;
+
+		numeroDePaginas = (bens.size() + memoriaVirtual.getTamanhoPagina() - 1) / memoriaVirtual.getTamanhoPagina();
 		return bensCompletos;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<BemPatrimonial> buscarExterno(String busca, Integer pagina)
-			throws ModeloException {
+	public ArrayList<BemPatrimonial> buscarExterno(String busca, Integer pagina) throws ModeloException {
 
 		List<Long> bens = new ArrayList<Long>();
 		List<Long> parcial = new ArrayList<Long>();
@@ -193,12 +188,10 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE b.externo = TRUE AND ("
-								+ "LOWER(b.tituloPrincipal) LIKE LOWER(:padrao) OR "
-								+ "LOWER(b.numeroRegistro) LIKE LOWER(:padrao) OR "
-								+ "LOWER(b.localizacaoFisica) LIKE LOWER(:padrao)"
-								+ ")");
+				query = entityManager.createQuery("SELECT b.id FROM BemPatrimonial b WHERE b.externo = TRUE AND ("
+						+ "LOWER(b.tituloPrincipal) LIKE LOWER(:padrao) OR "
+						+ "LOWER(b.numeroRegistro) LIKE LOWER(:padrao) OR " + "LOWER(b.localizacaoFisica) LIKE LOWER(:padrao)"
+						+ ")");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
@@ -211,12 +204,12 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.titulos t WHERE b.externo = TRUE AND LOWER(t.valor) LIKE LOWER(:padrao)");
+				query = entityManager.createQuery(
+						"SELECT b.id FROM BemPatrimonial b JOIN b.titulos t WHERE b.externo = TRUE AND LOWER(t.valor) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
@@ -229,14 +222,13 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
-								+ "WHERE b.externo = TRUE AND (LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
-								+ "LOWER(au.codinome) LIKE LOWER(:padrao))");
+				query = entityManager.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
+						+ "WHERE b.externo = TRUE AND (LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
+						+ "LOWER(au.codinome) LIKE LOWER(:padrao))");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
@@ -261,22 +253,20 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		}
 
 		for (int i = 0; i < resultado.size(); i++) {
-			query = entityManager
-					.createQuery("SELECT b FROM BemPatrimonial b WHERE b.id=:identificacao");
-			query.setParameter("identificacao", resultado.get(i));
-			bensCompletos.add((BemPatrimonial) query.getResultList().get(0));
+			BemPatrimonial bem = entityManager.find(BemPatrimonial.class, resultado.get(i));
+			bensCompletos.add(bem);
 		}
-		
-		numeroDePaginas = (bens.size()+memoriaVirtual.getTamanhoPagina() -1)/memoriaVirtual.getTamanhoPagina() ;
+
+		numeroDePaginas = (bens.size() + memoriaVirtual.getTamanhoPagina() - 1) / memoriaVirtual.getTamanhoPagina();
 		return bensCompletos;
 	}
-	
+
 	/**
 	 * Metodo para gerar uma lista de strings a serem buscadas no banco a partir
 	 * de uma busca do usu�rio
 	 * 
 	 * @param busca
-	 *            String de busca inserida pelo usu�rio
+	 *           String de busca inserida pelo usu�rio
 	 * @return Lista de strings a serem buscadas no banco
 	 */
 	@SuppressWarnings("rawtypes")
@@ -299,8 +289,8 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 			}
 			for (String e : elementos) {
 
-				strPonderada = strPonderada.concat(new StringPonderada(e,
-						(tokensLista.size() - tokensLista.indexOf(e)) * 10));
+				strPonderada = strPonderada
+						.concat(new StringPonderada(e, (tokensLista.size() - tokensLista.indexOf(e)) * 10));
 
 				strPonderada = strPonderada.concat(new StringPonderada(" ", 0));
 
@@ -328,8 +318,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		}
 
 		for (int nivel = 1; nivel < gerador.length; nivel++) {
-			List<SortedSet<Comparable>> statusAnterior = new ArrayList<SortedSet<Comparable>>(
-					combinacoes);
+			List<SortedSet<Comparable>> statusAnterior = new ArrayList<SortedSet<Comparable>>(combinacoes);
 			for (Set<Comparable> antes : statusAnterior) {
 				SortedSet<Comparable> novo = new TreeSet<Comparable>(antes);
 				novo.add(gerador[nivel]);
@@ -341,20 +330,20 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 		return combinacoes;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<BemPatrimonial> buscarPorInstituicao(String busca,
-			Integer pagina,Integer tamanhoPagina, String nomeInstituicao) throws ModeloException {
-		
-		if(tamanhoPagina>memoriaVirtual.getTamanhoPagina()+10){
-			tamanhoPagina = memoriaVirtual.getTamanhoPagina()+10;
+	public ArrayList<BemPatrimonial> buscarPorInstituicao(String busca, Integer pagina, Integer tamanhoPagina,
+			String nomeInstituicao) throws ModeloException {
+
+		if (tamanhoPagina > memoriaVirtual.getTamanhoPagina() + 10) {
+			tamanhoPagina = memoriaVirtual.getTamanhoPagina() + 10;
 		}
-		
+
 		List<Long> bens = new ArrayList<Long>();
 		List<Long> parcial = new ArrayList<Long>();
 		List<Long> resultado = new ArrayList<Long>();
-		
+
 		Query queryInstituicao = entityManager.createQuery("SELECT i FROM Instituicao i WHERE i.nome=:instituicao");
 		queryInstituicao.setParameter("instituicao", nomeInstituicao);
 		Instituicao instituicao = null;
@@ -363,21 +352,21 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		} catch (Exception e) {
 			return null;
 		}
-		
+
 		ArrayList<BemPatrimonial> bensCompletos = new ArrayList<BemPatrimonial>();
 
 		List<String> stringsDeBusca = new ArrayList<String>();
 		Query query;
-		
+
 		stringsDeBusca = (List<String>) obterStrings(busca);
 
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.tituloPrincipal) LIKE LOWER(:padrao) AND b.instituicao=:inst");
+				query = entityManager.createQuery(
+						"SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.tituloPrincipal) LIKE LOWER(:padrao) AND b.instituicao=:inst");
 				query.setParameter("padrao", "%" + s + "%");
-				query.setParameter("inst",instituicao);
+				query.setParameter("inst", instituicao);
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
 					if (!bens.contains(b)) {
@@ -393,10 +382,10 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.titulos t WHERE LOWER(t.valor) LIKE LOWER(:padrao) AND b.instituicao=:inst");
+				query = entityManager.createQuery(
+						"SELECT b.id FROM BemPatrimonial b JOIN b.titulos t WHERE LOWER(t.valor) LIKE LOWER(:padrao) AND b.instituicao=:inst");
 				query.setParameter("padrao", "%" + s + "%");
-				query.setParameter("inst",instituicao);
+				query.setParameter("inst", instituicao);
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
 					if (!bens.contains(b))
@@ -408,14 +397,14 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.numeroRegistro) LIKE LOWER(:padrao) AND b.instituicao=:inst");
+				query = entityManager.createQuery(
+						"SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.numeroRegistro) LIKE LOWER(:padrao) AND b.instituicao=:inst");
 				query.setParameter("padrao", "%" + s + "%");
-				query.setParameter("inst",instituicao);
+				query.setParameter("inst", instituicao);
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
 					if (!bens.contains(b))
@@ -427,14 +416,14 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.localizacaoFisica) LIKE LOWER(:padrao) AND b.instituicao=:inst");
+				query = entityManager.createQuery(
+						"SELECT b.id FROM BemPatrimonial b WHERE LOWER(b.localizacaoFisica) LIKE LOWER(:padrao) AND b.instituicao=:inst");
 				query.setParameter("padrao", "%" + s + "%");
-				query.setParameter("inst",instituicao);
+				query.setParameter("inst", instituicao);
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
 					if (!bens.contains(b))
@@ -446,16 +435,15 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
-								+ "WHERE LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
-								+ "LOWER(au.codinome) LIKE LOWER(:padrao) AND b.instituicao=:inst");
+				query = entityManager.createQuery("SELECT b.id FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
+						+ "WHERE LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
+						+ "LOWER(au.codinome) LIKE LOWER(:padrao) AND b.instituicao=:inst");
 				query.setParameter("padrao", "%" + s + "%");
-				query.setParameter("inst",instituicao);
+				query.setParameter("inst", instituicao);
 				parcial = (List<Long>) query.getResultList();
 				for (Long b : parcial) {
 					if (!bens.contains(b))
@@ -479,13 +467,11 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		}
 
 		for (int i = 0; i < resultado.size(); i++) {
-			query = entityManager
-					.createQuery("SELECT b FROM BemPatrimonial b WHERE b.id=:identificacao");
-			query.setParameter("identificacao", resultado.get(i));
-			bensCompletos.add((BemPatrimonial) query.getResultList().get(0));
+			BemPatrimonial bem = entityManager.find(BemPatrimonial.class, resultado.get(i));
+			bensCompletos.add(bem);
 		}
-		
-		numeroDePaginas = (bens.size()+tamanhoPagina -1)/tamanhoPagina ;
+
+		numeroDePaginas = (bens.size() + tamanhoPagina - 1) / tamanhoPagina;
 		return bensCompletos;
 	}
 
@@ -511,9 +497,9 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		 * Construtor que popula os campos
 		 * 
 		 * @param elemento
-		 *            String
+		 *           String
 		 * @param peso
-		 *            Peso da string
+		 *           Peso da string
 		 */
 		public StringPonderada(String elemento, int peso) {
 			super();
@@ -538,8 +524,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		 * @return
 		 */
 		public StringPonderada concat(StringPonderada str) {
-			return new StringPonderada(this.elemento.concat(str.getElemento()),
-					this.peso + str.peso);
+			return new StringPonderada(this.elemento.concat(str.getElemento()), this.peso + str.peso);
 		}
 
 		public String getElemento() {
@@ -562,8 +547,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean possuiAcesso(Usuario usuario, Instituicao instituicao)
-			throws ModeloException {
+	public boolean possuiAcesso(Usuario usuario, Instituicao instituicao) throws ModeloException {
 
 		Query query;
 		List<Acesso> acessos = new ArrayList<Acesso>();
@@ -581,30 +565,29 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 
 		return false;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Multimidia> getMidias(Long idBemPatrimonial) {
 		ContainerMultimidia c = null;
-		try{
-			Query query = entityManager.createQuery("SELECT c FROM BemPatrimonial b join b.containerMultimidia c WHERE b.id=:id");
+		try {
+			Query query = entityManager
+					.createQuery("SELECT c FROM BemPatrimonial b join b.containerMultimidia c WHERE b.id=:id");
 			query.setParameter("id", idBemPatrimonial);
 			c = (ContainerMultimidia) query.getSingleResult();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		Query query = entityManager.createQuery
-				("SELECT m FROM Multimidia m WHERE m.containerMultimidia=:container");
+		Query query = entityManager.createQuery("SELECT m FROM Multimidia m WHERE m.containerMultimidia=:container");
 		query.setParameter("container", c);
-		
+
 		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<BemPatrimonial> buscar(String busca)
-			throws ModeloException {
+	public ArrayList<BemPatrimonial> buscar(String busca) throws ModeloException {
 
 		ArrayList<BemPatrimonial> bens = new ArrayList<BemPatrimonial>();
 		List<BemPatrimonial> parcial = new ArrayList<BemPatrimonial>();
@@ -635,8 +618,8 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b FROM BemPatrimonial b JOIN b.titulos t WHERE LOWER(t.valor) LIKE LOWER(:padrao)");
+				query = entityManager.createQuery(
+						"SELECT b FROM BemPatrimonial b JOIN b.titulos t WHERE LOWER(t.valor) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {
@@ -649,7 +632,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
@@ -667,7 +650,7 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
@@ -685,14 +668,13 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 				throw new ModeloException(e);
 			}
 		}
-		
+
 		for (String s : stringsDeBusca) {
 			s = s.trim();
 			try {
-				query = entityManager
-						.createQuery("SELECT b FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
-								+ "WHERE LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
-								+ "LOWER(au.codinome) LIKE LOWER(:padrao)");
+				query = entityManager.createQuery("SELECT b FROM BemPatrimonial b JOIN b.autorias a JOIN a.autor au "
+						+ "WHERE LOWER(au.nome) LIKE LOWER(:padrao) OR LOWER(au.sobrenome) LIKE LOWER(:padrao) OR "
+						+ "LOWER(au.codinome) LIKE LOWER(:padrao)");
 				query.setParameter("padrao", "%" + s + "%");
 				parcial = (List<BemPatrimonial>) query.getResultList();
 				for (BemPatrimonial b : parcial) {
@@ -707,6 +689,5 @@ public class RealizarBuscaSimples implements RealizarBuscaSimplesRemote {
 		}
 		return bens;
 	}
-	
 
 }
