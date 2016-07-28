@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
-  <runtime name="GlassFish 4.1"/>
+  <runtime name="Payara 4.1 at localhost"/>
   <fixed facet="jst.ear"/>
   <installed facet="sun.facet" version="9"/>
   <installed facet="jst.ear" version="7.0"/>
