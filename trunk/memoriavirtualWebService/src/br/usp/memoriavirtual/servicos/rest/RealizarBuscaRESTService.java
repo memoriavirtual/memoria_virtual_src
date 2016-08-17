@@ -1,6 +1,8 @@
 package br.usp.memoriavirtual.servicos.rest;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,11 +25,10 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarBuscaSimplesRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-
 @RequestScoped
 @Path("/buscar")
-@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+@Produces({
+		MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class RealizarBuscaRESTService {
 
 	@EJB
@@ -38,71 +39,60 @@ public class RealizarBuscaRESTService {
 
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
-	
+
 	@GET
 	@Path("/listarInstituicoes")
-	public List<Instituicao> listarInstituicoes() {
-		
-		List<Instituicao> lista = Collections.emptyList();
-		List<Instituicao> listaResponse = new ArrayList<Instituicao>();
-		
-		try {
-			lista = editarInstituicaoEJB.listarInstituicoes("");
-			for (Instituicao instituicao : lista) {
-				
-				Instituicao newInstituicao = new Instituicao();
-				newInstituicao.setNome(instituicao.getNome());
-				newInstituicao.setId(instituicao.getId());
-				listaResponse.add(newInstituicao);
+	public List<Instituicao> listarInstituicoes(@Context HttpServletRequest request) {
+
+		if (validaCliente(request)) {
+
+			List<Instituicao> lista = Collections.emptyList();
+			List<Instituicao> listaResponse = new ArrayList<Instituicao>();
+
+			try {
+				lista = editarInstituicaoEJB.listarInstituicoes("");
+				for (Instituicao instituicao : lista) {
+
+					Instituicao newInstituicao = new Instituicao();
+					newInstituicao.setNome(instituicao.getNome());
+					newInstituicao.setId(instituicao.getId());
+					listaResponse.add(newInstituicao);
+				}
+			} catch (ModeloException e) {
+				e.printStackTrace();
 			}
-		} catch (ModeloException e) {
-			e.printStackTrace();
+			return listaResponse;
+		} else {
+			return null;
 		}
-		return listaResponse;
 	}
-	
+
 	@GET
 	@Produces("text/html")
 	public String buscar(@Context HttpServletRequest request) {
-		if(validaCliente(request)){
+		if (validaCliente(request)) {
 			System.out.println("eita");
-			return "<html><head></head><body>"
-					+ "Cliente Validado Com Sucesso!<br/>"
-					+ "Servi&ccedil;os Disponiveis:<br/>"
-					+ "<table style='border: solid 1px;'>"
-					+ "	<tr>"
-					+ "		<td>buscar</td>"
-					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}</td>"
-					+"	</tr>"
-					+ "	<tr>"
+			return "<html><head></head><body>" + "Cliente Validado Com Sucesso!<br/>" + "Servi&ccedil;os Disponiveis:<br/>"
+					+ "<table style='border: solid 1px;'>" + "	<tr>" + "		<td>buscar</td>"
+					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}</td>" + "	</tr>" + "	<tr>"
 					+ "		<td>buscarPorInstituicao</td>"
-					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}</td>"
-					+ " </tr>"
-					+ "	<tr>"
-					+ "		<td>buscarMidiaPorContainer</td>"
-					+ "		<td>path: /{container}</td>"
-					+ "	</tr>"
-					+ "</table>"
-					+ "</body></html>";
-		}else{
-			return "<html><head></head><body>"
-					+ "Falha na Valida&ccedil;&atilde;o do Cliente<br/>"
-					+ "Use um header de &lt;Authorization&gt; HTTP"
-					+ "</body></html>";
+					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}</td>" + " </tr>"
+					+ "	<tr>" + "		<td>buscarMidiaPorContainer</td>" + "		<td>path: /{container}</td>" + "	</tr>"
+					+ "</table>" + "</body></html>";
+		} else {
+			return "<html><head></head><body>" + "Falha na Valida&ccedil;&atilde;o do Cliente<br/>"
+					+ "Use um header de &lt;Authorization&gt; HTTP" + "</body></html>";
 		}
 	}
 
 	@GET
 	@Path("/{stringDeBusca}/{numeroDaPagina}")
-	public ArrayList<BemPatrimonial> buscar(
-			@PathParam("stringDeBusca") String stringDeBusca,
-			@PathParam("numeroDaPagina") int pagina,
-			@Context HttpServletRequest request) {
+	public ArrayList<BemPatrimonial> buscar(@PathParam("stringDeBusca") String stringDeBusca,
+			@PathParam("numeroDaPagina") int pagina, @Context HttpServletRequest request) {
 		if (validaCliente(request)) {
 			ArrayList<BemPatrimonial> bensPatrimoniais = null;
 			try {
-				bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca,
-						pagina);
+				bensPatrimoniais = this.realizarBuscaEJB.buscar(stringDeBusca, pagina);
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
@@ -116,18 +106,15 @@ public class RealizarBuscaRESTService {
 
 	@GET
 	@Path("/{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}")
-	public ArrayList<BemPatrimonial> buscarPorInstituicao(
-			@PathParam("stringDeBusca") String stringDeBusca,
-			@PathParam("numeroDaPagina") int pagina,
-			@PathParam("tamanhoPagina") int tamanhoPagina,
-			@PathParam("nomeInstituicao") String nomeInstituicao,
-			@Context HttpServletRequest request) {
+	public ArrayList<BemPatrimonial> buscarPorInstituicao(@PathParam("stringDeBusca") String stringDeBusca,
+			@PathParam("numeroDaPagina") int pagina, @PathParam("tamanhoPagina") int tamanhoPagina,
+			@PathParam("nomeInstituicao") String nomeInstituicao, @Context HttpServletRequest request) {
 		if (validaCliente(request)) {
 			ArrayList<BemPatrimonial> bensPatrimoniais = null;
 
 			try {
-				bensPatrimoniais = this.realizarBuscaEJB.buscarPorInstituicao(
-						stringDeBusca, pagina, tamanhoPagina, nomeInstituicao);
+				bensPatrimoniais = this.realizarBuscaEJB.buscarPorInstituicao(stringDeBusca, pagina, tamanhoPagina,
+						nomeInstituicao);
 			} catch (ModeloException e) {
 				e.printStackTrace();
 			}
@@ -139,13 +126,11 @@ public class RealizarBuscaRESTService {
 
 	@GET
 	@Path("/{container}")
-	public List<Multimidia> buscarMidiaPorContainer(
-			@PathParam("container") String idContainer,
+	public List<Multimidia> buscarMidiaPorContainer(@PathParam("container") String idContainer,
 			@Context HttpServletRequest request) {
 		if (validaCliente(request)) {
 			List<Multimidia> midias = null;
-			midias = this.realizarBuscaEJB.getMidias(Long
-					.parseLong(idContainer));
+			midias = this.realizarBuscaEJB.getMidias(Long.parseLong(idContainer));
 			return midias;
 		}
 		return null;
@@ -156,11 +141,11 @@ public class RealizarBuscaRESTService {
 		String password = "";
 		try {
 			String header = request.getHeader("authorization");
-			String encodedText = header.substring(header.indexOf(" ") + 1);
-			
+			String encodedText = header.substring(header.indexOf(":") + 1);
+
 			byte[] buf = null;
-			buf = Base64.decode(encodedText.getBytes());
-			
+			buf = Base64.getDecoder().decode(encodedText.getBytes());
+
 			String credentials = new String(buf);
 
 			int p = credentials.indexOf(":");

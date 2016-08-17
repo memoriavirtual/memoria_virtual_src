@@ -114,7 +114,7 @@ public class RealizarBuscaSOAPService {
 				username = credentials.substring(0,p);
 				password = credentials.substring(p+1);
 			} else {
-				throw new RuntimeException("Erro na decodificação");
+				throw new RuntimeException("Erro na decodificaï¿½ï¿½o");
 			}
 		
 		}catch(Exception e){
