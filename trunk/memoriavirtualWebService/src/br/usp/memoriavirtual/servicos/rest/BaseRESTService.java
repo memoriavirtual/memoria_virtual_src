@@ -12,7 +12,7 @@ import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 @RequestScoped
 public class BaseRESTService {
-	
+
 	@EJB
 	private RealizarLoginRemote realizarLoginEJB;
 
@@ -22,17 +22,17 @@ public class BaseRESTService {
 		try {
 			String header = request.getHeader("authorization");
 			String encodedText = header.substring(header.indexOf(" ") + 1);
-			
+
 			byte[] buf = null;
 			buf = Base64.decode(encodedText.getBytes());
-			
+
 			String credentials = new String(buf);
 
-			int p = credentials.indexOf(":");
+			int posicaoDoCaracterSeparador = credentials.indexOf(":");
 
-			if (p > -1) {
-				username = credentials.substring(0, p);
-				password = credentials.substring(p + 1);
+			if (posicaoDoCaracterSeparador > -1) {
+				username = credentials.substring(0, posicaoDoCaracterSeparador);
+				password = credentials.substring(posicaoDoCaracterSeparador + 1);
 			} else {
 				return false;
 			}
