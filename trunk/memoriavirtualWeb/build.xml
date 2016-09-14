@@ -25,6 +25,7 @@
 		<mkdir dir="../build_WEB/src" />
 		<copy todir="${web.build.classes}">
 			<fileset dir="${web.dir}" includes="**/*.properties"/>
+			<fileset dir="${web.dir}" includes="**/*.html"/>
 		</copy>
 		<path id="glassfish.classpath">
 			<fileset dir="${glassfish.dir}">
