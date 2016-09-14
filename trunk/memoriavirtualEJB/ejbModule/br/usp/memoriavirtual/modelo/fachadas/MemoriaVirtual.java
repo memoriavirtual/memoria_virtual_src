@@ -56,16 +56,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		Properties propriedades = null;
 		try {
-			propriedades = (Properties) context
-					.lookup("memoriavirtual.propriedades");
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
 		} catch (NamingException e) {
 			return tamanhoPaginaDefault;
 		}
 		if (propriedades.get("searchResultPerPage") == null)
 			return tamanhoPaginaDefault;
 
-		Integer result = new Integer(
-				(String) propriedades.get("searchResultPerPage"));
+		Integer result = new Integer((String) propriedades.get("searchResultPerPage"));
 		return result;
 	}
 
@@ -80,15 +78,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		Properties propriedades = null;
 		try {
-			propriedades = (Properties) context
-					.lookup("memoriavirtual.propriedades");
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
 		} catch (NamingException e) {
 			new ModeloException(e);
 			return null;
 		}
 		return (String) propriedades.get("hostname");
 	}
-	
+
 	public String getCaptchaPublicKey() throws ModeloException {
 
 		Context context = null;
@@ -100,15 +97,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		Properties propriedades = null;
 		try {
-			propriedades = (Properties) context
-					.lookup("memoriavirtual.propriedades");
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
 		} catch (NamingException e) {
 			new ModeloException(e);
 			return null;
 		}
 		return (String) propriedades.get("publicKey");
 	}
-	
+
 	public String getCaptchaPrivateKey() throws ModeloException {
 
 		Context context = null;
@@ -120,8 +116,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		Properties propriedades = null;
 		try {
-			propriedades = (Properties) context
-					.lookup("memoriavirtual.propriedades");
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
 		} catch (NamingException e) {
 			new ModeloException(e);
 			return null;
@@ -140,8 +135,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 		Properties propriedades = null;
 		try {
-			propriedades = (Properties) context
-					.lookup("memoriavirtual.propriedades");
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
 		} catch (NamingException e) {
 			new ModeloException(e);
 			return null;
@@ -153,8 +147,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	public boolean verificarDisponibilidadeIdUsuario(String id) {
 
 		try {
-			Query query = entityManager
-					.createQuery("SELECT u FROM Usuario u WHERE u.identificacao = :id");
+			Query query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.identificacao = :id");
 			query.setParameter("id", id);
 
 			query.getSingleResult();
@@ -168,8 +161,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	public boolean verificarDisponibilidadeNomeInstituicao(String Nome) {
 
-		Query query = entityManager
-				.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
+		Query query = entityManager.createQuery("SELECT u FROM Instituicao u WHERE u.nome = :nome");
 		query.setParameter("nome", Nome);
 
 		try {
@@ -182,23 +174,22 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 	}
 
-	public boolean verificarDisponibilidadeEmail(String email, Usuario usuario)
-			throws ModeloException {
+	public boolean verificarDisponibilidadeEmail(String email, Usuario usuario) throws ModeloException {
 
 		try {
 			Query query;
 			if (usuario != null) {
-				query = entityManager
-						.createQuery("SELECT u FROM Usuario u WHERE u.email = :email AND u <> :usuario");
+				query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email AND u <> :usuario");
 				query.setParameter("email", email);
 				query.setParameter("usuario", usuario);
 			} else {
-				query = entityManager
-						.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
+				query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email");
 				query.setParameter("email", email);
 			}
-			query.getSingleResult();
-			return false;
+
+			Usuario usuarioMemoria = (Usuario) query.getSingleResult();
+
+			return (usuarioMemoria == null);
 		} catch (NoResultException e) {
 			return true;
 		} catch (Exception e) {
@@ -206,12 +197,10 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 	}
 
-	public void enviarEmail(String destinatario, String assunto, String mensagem)
-			throws MessagingException {
+	public void enviarEmail(String destinatario, String assunto, String mensagem) throws MessagingException {
 		Message message = new MimeMessage(this.mailSession);
 		message.setFrom();
-		message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(destinatario, false));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario, false));
 		message.setSubject(assunto);
 		Date timeStamp = new Date();
 
@@ -235,9 +224,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		if (mensagemOriginal.length() % 2 != 0) {
 			for (int i = 0; i < mensagemOriginal.length(); i++) {
 				if ((i + 1) % 2 != 0) {
-					msgNova = msgNova.concat(""
-							+ mensagemOriginal.charAt(mensagemOriginal.length()
-									- 1 - i));
+					msgNova = msgNova.concat("" + mensagemOriginal.charAt(mensagemOriginal.length() - 1 - i));
 				} else {
 					msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
 				}
@@ -247,26 +234,19 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 			for (int i = 0; i < mensagemOriginal.length(); i++) {
 				if (i + 1 != mensagemOriginal.length() - 1 - i) {
 					if ((i + 1 - aux) % 2 != 0) {
-						msgNova = msgNova.concat(""
-								+ mensagemOriginal.charAt(mensagemOriginal
-										.length() - 1 - i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(mensagemOriginal.length() - 1 - i));
 					} else {
-						msgNova = msgNova.concat(""
-								+ mensagemOriginal.charAt(i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
 					}
 				} else {
 					if (mensagemOriginal.length() % 4 == 0) {
-						msgNova = msgNova.concat(""
-								+ mensagemOriginal.charAt(i));
-						msgNova = msgNova.concat(""
-								+ mensagemOriginal.charAt(i + 1));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i + 1));
 						aux++;
 						i++;
 					} else {
-						msgNova = msgNova.concat(""
-								+ mensagemOriginal.charAt(i + 1));
-						msgNova = msgNova.concat(""
-								+ mensagemOriginal.charAt(i));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i + 1));
+						msgNova = msgNova.concat("" + mensagemOriginal.charAt(i));
 						aux++;
 						i++;
 					}
@@ -278,8 +258,7 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Usuario> listarUsuarios(String busca, Usuario usuario)
-			throws ModeloException {
+	public List<Usuario> listarUsuarios(String busca, Usuario usuario) throws ModeloException {
 
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 
@@ -291,17 +270,14 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 			Query query;
 			if (usuario.isAdministrador()) {
-				query = this.entityManager
-						.createQuery("SELECT u FROM Usuario u "
-								+ "WHERE u.ativo = TRUE "
-								+ "AND LOWER(u.nomeCompleto) LIKE LOWER(:padrao) AND u.id <> :id "
-								+ "ORDER BY u.nomeCompleto");
+				query = this.entityManager.createQuery("SELECT u FROM Usuario u " + "WHERE u.ativo = TRUE "
+						+ "AND LOWER(u.nomeCompleto) LIKE LOWER(:padrao) AND u.id <> :id " + "ORDER BY u.nomeCompleto");
 				query.setParameter("padrao", "%" + busca + "%");
 				query.setParameter("id", usuario.getId());
 			} else {
 				Grupo grupo = new Grupo("GERENTE");
-				query = entityManager
-						.createQuery("SELECT b.usuario FROM Acesso a, Acesso b WHERE a.usuario = :usuario AND a.grupo = :grupo AND a.instituicao = b.instituicao AND LOWER(b.usuario.nomeCompleto) LIKE LOWER(:padrao) AND b.usuario <> :usuario ORDER BY b.usuario.nomeCompleto");
+				query = entityManager.createQuery(
+						"SELECT b.usuario FROM Acesso a, Acesso b WHERE a.usuario = :usuario AND a.grupo = :grupo AND a.instituicao = b.instituicao AND LOWER(b.usuario.nomeCompleto) LIKE LOWER(:padrao) AND b.usuario <> :usuario ORDER BY b.usuario.nomeCompleto");
 				query.setParameter("usuario", usuario);
 				query.setParameter("grupo", grupo);
 				query.setParameter("padrao", "%" + busca + "%");
@@ -335,33 +311,27 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 	@Override
 	public Usuario getUsuario(String id) throws ModeloException {
 		try {
-			return (Usuario) entityManager.find(Usuario.class,
-					new Long(id).longValue());
+			return (Usuario) entityManager.find(Usuario.class, new Long(id).longValue());
 		} catch (Exception e) {
 			throw new ModeloException(e);
 		}
 	}
 
 	@Override
-	public String getUrl(MVModeloMapeamentoUrl url,
-			Map<String, String> mapaParametros) throws ModeloException {
+	public String getUrl(MVModeloMapeamentoUrl url, Map<String, String> mapaParametros) throws ModeloException {
 		try {
 			String parametros = "?";
 
 			boolean primeiro = true;
-			Iterator<Entry<String, String>> it = mapaParametros.entrySet()
-					.iterator();
+			Iterator<Entry<String, String>> it = mapaParametros.entrySet().iterator();
 			while (it.hasNext()) {
-				Map.Entry<String, String> par = (Map.Entry<String, String>) it
-						.next();
+				Map.Entry<String, String> par = (Map.Entry<String, String>) it.next();
 
 				if (primeiro) {
-					parametros = parametros + par.getKey() + "="
-							+ par.getValue();
+					parametros = parametros + par.getKey() + "=" + par.getValue();
 					primeiro = false;
 				} else {
-					parametros = "&" + parametros + par.getKey() + "="
-							+ par.getValue();
+					parametros = "&" + parametros + par.getKey() + "=" + par.getValue();
 				}
 			}
 

@@ -7,11 +7,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -40,8 +35,8 @@ public class EnviarConvite implements EnviarConviteRemote {
 	}
 
 	@Override
-	public long enviarConvite(String[] emails, String mensagem, Date validade,
-			boolean administrador, List<Acesso> acessos) throws ModeloException {
+	public long enviarConvite(String[] emails, String mensagem, Date validade, boolean administrador,
+			List<Acesso> acessos) throws ModeloException {
 		try {
 			for (String email : emails) {
 
@@ -55,11 +50,9 @@ public class EnviarConvite implements EnviarConviteRemote {
 				entityManager.persist(usuario);
 				if (!administrador) {
 					for (Acesso a : acessos) {
-						Instituicao i = (Instituicao) entityManager.find(
-								Instituicao.class, a.getInstituicao().getId());
+						Instituicao i = (Instituicao) entityManager.find(Instituicao.class, a.getInstituicao().getId());
 						a.setInstituicao(i);
-						Grupo g = entityManager.find(Grupo.class, a.getGrupo()
-								.getId());
+						Grupo g = entityManager.find(Grupo.class, a.getGrupo().getId());
 						a.setGrupo(g);
 						a.setUsuario(usuario);
 						entityManager.persist(a);
@@ -76,15 +69,13 @@ public class EnviarConvite implements EnviarConviteRemote {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Instituicao> listarInstituicoes(Usuario usuario)
-			throws ModeloException {
+	public List<Instituicao> listarInstituicoes(Usuario usuario) throws ModeloException {
 
 		try {
 			Query query;
 			List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 			if (usuario.isAdministrador()) {
-				query = entityManager
-						.createQuery("SELECT i FROM Instituicao i WHERE i.validade = true");
+				query = entityManager.createQuery("SELECT i FROM Instituicao i WHERE i.validade = true");
 			} else {
 				Grupo grupo = new Grupo("GERENTE");
 				query = entityManager
@@ -96,29 +87,6 @@ public class EnviarConvite implements EnviarConviteRemote {
 			return instituicoes;
 		} catch (Exception e) {
 			throw new ModeloException(e);
-		}
-	}
-
-	public void enviarEmail(String destinatario, String assunto, String mensagem)
-			throws ModeloException {
-
-		Message message = new MimeMessage(mailSession);
-
-		try {
-			/* Preenche os dados para enviar a mensagem(email). */
-			message.setFrom();
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(destinatario, false));
-			message.setSubject(assunto);
-			Date timeStamp = new Date();
-			message.setText(mensagem);
-			message.setHeader("X-Mailer", "Memoria virtual mailer");
-			message.setSentDate(timeStamp);
-			/* Envia o email. */
-			Transport.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			throw new ModeloException("Enviar Email");
 		}
 	}
 }
