@@ -50,10 +50,11 @@ public class EditarAutorMB extends CadastrarAutorMB implements Serializable {
 	}
 
 	public String voltar(){
+		this.limpar();
 		return "selecionarautoredicao.jsf";
 	}
 	
-	public String selecionarAutor() {
+	public String selecionarAutor() {		
 		if(id.isEmpty()){
 			this.getMensagens().mensagemErro(this.traduzir("mensagemErroExcluirAutorEmBranco"));
 			return null;
