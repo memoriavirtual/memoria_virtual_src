@@ -23,11 +23,11 @@
 				<h:outputText value="#{mensagens.usuario}" />
 				<h:form>
 					<div>
-						<h:inputText value="#{realizarLoginMB.usuario}" required="true" />
+						<h:inputText id="usuario" value="#{realizarLoginMB.usuario}" required="true" />
 					</div>
 					<h:outputText value="#{mensagens.senha}" />
 					<div>
-						<h:inputSecret value="#{realizarLoginMB.senha}" />
+						<h:inputSecret id="senha" value="#{realizarLoginMB.senha}" />
 					</div>
 					<br></br>
 					<div>
