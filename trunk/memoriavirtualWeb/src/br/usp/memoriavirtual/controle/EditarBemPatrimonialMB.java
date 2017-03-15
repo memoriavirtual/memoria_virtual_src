@@ -252,6 +252,18 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 			return false;
 		}
 	}
+	
+	public String retornarVersoes(){
+		//TODO implementar
+		
+		return null;
+	}
+	
+	public String compararVersoes(){
+		//TODO implementar
+		//mandar ids pro ejb, que devolve uma lista do que tá diferente
+		return null;
+	}
 
 	// getters e setters
 

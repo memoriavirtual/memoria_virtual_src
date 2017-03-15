@@ -24,7 +24,14 @@
 						<h2>#{mensagens.editarBemPatrimonialDescricao}</h2>
 						<div class="clearfix"></div>
 					</div>
+
 					<div class="widget-content">
+						
+							<button class="btn btn-primary" data-toggle="modal"
+								data-target="#escolher-versoes-modal" data-backdrop="static">
+								<i class="fa fa-user"></i>#{mensagens.compararVersoes}
+							</button>
+						
 						<div class="col-md-12">
 							<h:form class="form-vertical" role="form" method="post"
 								prependId="false" id="form-cadastro-bem-patrimonial">
@@ -36,17 +43,22 @@
 											<h:selectOneMenu class="form-control select com-select2"
 												id="instituicao"
 												value="#{editarBemPatrimonialMB.instituicao}">
-												<f:selectItems value="#{editarBemPatrimonialMB.instituicoes}" />
-												<f:ajax render="externoCheck" onevent="checkSwitch"  event="change" listener="#{editarBemPatrimonialMB.checkRevisaoInstituicao}"/>
-												<f:ajax event="change" onevent="criaBuscaBem" listener="#{editarBemPatrimonialMB.limparBensRelacionados}"
-												 render="grupo-bens-relacionados"/>
+												<f:selectItems
+													value="#{editarBemPatrimonialMB.instituicoes}" />
+												<f:ajax render="externoCheck" onevent="checkSwitch"
+													event="change"
+													listener="#{editarBemPatrimonialMB.checkRevisaoInstituicao}" />
+												<f:ajax event="change" onevent="criaBuscaBem"
+													listener="#{editarBemPatrimonialMB.limparBensRelacionados}"
+													render="grupo-bens-relacionados" />
 											</h:selectOneMenu>
 										</div>
 									</div>
 								</div>
-								
-								<h:outputText id="externoCheck" value="#{editarBemPatrimonialMB.instituicaoTemRevisao}"  style="visibility: hidden;"/>
 
+								<h:outputText id="externoCheck"
+									value="#{editarBemPatrimonialMB.instituicaoTemRevisao}"
+									style="visibility: hidden;" />
 								<div class="panel-group top-margin-10" id="informacoes-gerais">
 									<div class="panel panel-default">
 										<div class="panel-heading">
@@ -71,8 +83,8 @@
 														<div class="form-group col-md-6">
 															<h:outputLabel class="control-label" for="revisado">#{mensagens.revisado}</h:outputLabel>
 															<div class="form-control pull-right com-switch">
-																<h:selectBooleanCheckbox id="revisado"
-																	class="switch" value="#{editarBemPatrimonialMB.bemPatrimonial.revisao}">
+																<h:selectBooleanCheckbox id="revisado" class="switch"
+																	value="#{editarBemPatrimonialMB.bemPatrimonial.revisao}">
 																</h:selectBooleanCheckbox>
 															</div>
 														</div>
@@ -80,16 +92,15 @@
 													<div class="col-md-3">
 														<div class="form-group">
 															<h:outputLabel class="control-label" for="tipo">#{mensagens.tipo}</h:outputLabel>
-															<h:inputText class="form-control" id="tipo" maxlength="255"
+															<h:inputText class="form-control" id="tipo"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.tipoBemPatrimonial}">
-																<f:ajax event="keyup"
-																	render="validacao-tipo"
+																<f:ajax event="keyup" render="validacao-tipo"
 																	onevent="mostrarErro('#validacao-tipo')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-tipo',mensagens.tipo,
 																	editarBemPatrimonialMB.bemPatrimonial.tipoBemPatrimonial)}" />
 															</h:inputText>
-															<h:message id="validacao-tipo"
-																for="validacao-tipo"
+															<h:message id="validacao-tipo" for="validacao-tipo"
 																infoClass="help-block has-success"
 																errorClass="help-block has-error"
 																warnClass="help-block has-warning">
@@ -165,8 +176,7 @@
 																				<h:outputLabel class="label-control" for="titulo">#{mensagens.titulo}</h:outputLabel>
 																				<h:inputText class="form-control" id="titulo"
 																					value="#{titulo.valor}" maxlength="255">
-																					<f:ajax event="keyup"
-																						render="validacao-titulo"
+																					<f:ajax event="keyup" render="validacao-titulo"
 																						listener="#{editarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-titulo',
 																						mensagens.titulo,titulo.valor)}" />
 																				</h:inputText>
@@ -230,11 +240,10 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="complemento">#{mensagens.complemento}</h:outputLabel>
 															<h:inputTextarea class="form-control" id="complemento"
-																value="#{editarBemPatrimonialMB.bemPatrimonial.complemento}" >
-																<f:ajax event="keyup"
-																		render="validacao-complemento"
-																		onevent="mostrarErro('#validacao-complemento')"
-																		listener="#{editarBemPatrimonialMB.validarCampo('validacao-complemento',mensagens.complemento,
+																value="#{editarBemPatrimonialMB.bemPatrimonial.complemento}">
+																<f:ajax event="keyup" render="validacao-complemento"
+																	onevent="mostrarErro('#validacao-complemento')"
+																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-complemento',mensagens.complemento,
 																		editarBemPatrimonialMB.bemPatrimonial.complemento)}" />
 															</h:inputTextarea>
 															<h:message id="validacao-complemento"
@@ -250,10 +259,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="colecao">#{mensagens.colecao}</h:outputLabel>
-															<h:inputText class="form-control" id="colecao" maxlength="255"
+															<h:inputText class="form-control" id="colecao"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.colecao}">
-																<f:ajax event="keyup"
-																	render="validacao-colecao"
+																<f:ajax event="keyup" render="validacao-colecao"
 																	onevent="mostrarErro('#validacao-colecao')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-colecao',mensagens.colecao,
 																	editarBemPatrimonialMB.bemPatrimonial.colecao)}" />
@@ -268,10 +277,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="latitude">#{mensagens.latitude}</h:outputLabel>
-															<h:inputText class="form-control" id="latitude" maxlength="255"
-																value="#{editarBemPatrimonialMB.bemPatrimonial.latitude}" >
-																<f:ajax event="keyup"
-																	render="validacao-latitude"
+															<h:inputText class="form-control" id="latitude"
+																maxlength="255"
+																value="#{editarBemPatrimonialMB.bemPatrimonial.latitude}">
+																<f:ajax event="keyup" render="validacao-latitude"
 																	onevent="mostrarErro('#validacao-latitude')"
 																	listener="#{editarBemPatrimonialMB.validarLatitude('validacao-latitude')}" />
 															</h:inputText>
@@ -286,10 +295,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="longitude">#{mensagens.longitude}</h:outputLabel>
-															<h:inputText class="form-control" id="longitude" maxlength="255"
-																value="#{editarBemPatrimonialMB.bemPatrimonial.longitude}" >
-																<f:ajax event="keyup"
-																	render="validacao-longitude"
+															<h:inputText class="form-control" id="longitude"
+																maxlength="255"
+																value="#{editarBemPatrimonialMB.bemPatrimonial.longitude}">
+																<f:ajax event="keyup" render="validacao-longitude"
 																	onevent="mostrarErro('#validacao-longitude')"
 																	listener="#{editarBemPatrimonialMB.validarLongitude('validacao-longitude')}" />
 															</h:inputText>
@@ -425,10 +434,10 @@
 													<div class="col-md-offset-1 col-md-5">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="producao-local">#{mensagens.local}</h:outputLabel>
-															<h:inputText class="form-control" id="producao-local" maxlength="255"
+															<h:inputText class="form-control" id="producao-local"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.producao.local}">
-																<f:ajax event="keyup"
-																	render="validacao-local"
+																<f:ajax event="keyup" render="validacao-local"
 																	onevent="mostrarErro('#validacao-local')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-local',mensagens.local,
 																	editarBemPatrimonialMB.bemPatrimonial.producao.local)}" />
@@ -443,10 +452,10 @@
 													<div class="col-md-5">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="producao-ano">#{mensagens.ano}</h:outputLabel>
-															<h:inputText class="form-control" id="producao-ano" maxlength="255"
+															<h:inputText class="form-control" id="producao-ano"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.producao.ano}">
-																<f:ajax event="keyup"
-																	render="validacao-ano"
+																<f:ajax event="keyup" render="validacao-ano"
 																	onevent="mostrarErro('#validacao-ano')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-ano',mensagens.ano,
 																	editarBemPatrimonialMB.bemPatrimonial.producao.ano)}" />
@@ -464,10 +473,10 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="producao-edicao">#{mensagens.edicao}</h:outputLabel>
-															<h:inputText class="form-control" id="producao-edicao" maxlength="255"
+															<h:inputText class="form-control" id="producao-edicao"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.producao.edicao}">
-																<f:ajax event="keyup"
-																	render="validacao-edicao"
+																<f:ajax event="keyup" render="validacao-edicao"
 																	onevent="mostrarErro('#validacao-edicao')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-edicao',mensagens.edicao,
 																	editarBemPatrimonialMB.bemPatrimonial.producao.edicao)}" />
@@ -580,12 +589,12 @@
 													<div class="col-md-3">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="uso">#{mensagens.uso}</h:outputLabel>
-															<h:inputText id="uso" class="form-control" maxlength="255"
+															<h:inputText id="uso" class="form-control"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.uso}" />
-																<f:ajax event="keyup"
-																	render="validacao-uso"
-																	onevent="mostrarErro('#validacao-uso')"
-																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-uso',mensagens.uso,
+															<f:ajax event="keyup" render="validacao-uso"
+																onevent="mostrarErro('#validacao-uso')"
+																listener="#{editarBemPatrimonialMB.validarCampo('validacao-uso',mensagens.uso,
 																	editarBemPatrimonialMB.bemPatrimonial.uso)}" />
 															<h:message id="validacao-uso" for="validacao-uso"
 																infoClass="help-block has-success"
@@ -660,8 +669,7 @@
 															</h:outputLabel>
 															<h:inputTextarea class="form-control" id="meio-antropico"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.meioAntropico}">
-																<f:ajax event="keyup"
-																	render="validacao-meio-antropico"
+																<f:ajax event="keyup" render="validacao-meio-antropico"
 																	onevent="mostrarErro('#validacao-meio-antropico')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-meio-antropico',mensagens.meioAntropico,
 																	editarBemPatrimonialMB.bemPatrimonial.meioAntropico)}" />
@@ -703,10 +711,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="sitio-paisagem">#{mensagens.sitioPaisagem}</h:outputLabel>
-															<h:inputText class="form-control" id="sitio-paisagem" maxlength="255"
+															<h:inputText class="form-control" id="sitio-paisagem"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.sitioPaisagem}">
-																<f:ajax event="keyup"
-																	render="validacao-sitio-paisagem"
+																<f:ajax event="keyup" render="validacao-sitio-paisagem"
 																	onevent="mostrarErro('#validacao-sitio-paisagem')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-sitio-paisagem',mensagens.sitioPaisagem,
 																	editarBemPatrimonialMB.bemPatrimonial.sitioPaisagem)}" />
@@ -722,10 +730,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="agua-proxima">#{mensagens.aguaProxima}</h:outputLabel>
-															<h:inputText class="form-control" id="agua-proxima" maxlength="255"
+															<h:inputText class="form-control" id="agua-proxima"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.aguaProxima}">
-																<f:ajax event="keyup"
-																	render="validacao-agua-proxima"
+																<f:ajax event="keyup" render="validacao-agua-proxima"
 																	onevent="mostrarErro('#validacao-agua-proxima')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-agua-proxima',mensagens.aguaProxima,
 																	editarBemPatrimonialMB.bemPatrimonial.aguaProxima)}" />
@@ -741,10 +749,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="vegetacao">#{mensagens.vegetacao}</h:outputLabel>
-															<h:inputText class="form-control" id="vegetacao" maxlength="255"
+															<h:inputText class="form-control" id="vegetacao"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.vegetacao}">
-																<f:ajax event="keyup"
-																	render="validacao-vegetacao"
+																<f:ajax event="keyup" render="validacao-vegetacao"
 																	onevent="mostrarErro('#validacao-vegetacao')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-vegetacao',mensagens.vegetacao,
 																	editarBemPatrimonialMB.bemPatrimonial.vegetacao)}" />
@@ -774,10 +782,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="uso-atual">#{mensagens.usoAtual}</h:outputLabel>
-															<h:inputText class="form-control" id="uso-atual" maxlength="255"
+															<h:inputText class="form-control" id="uso-atual"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.usoAtual}">
-																<f:ajax event="keyup"
-																	render="validacao-uso-atual"
+																<f:ajax event="keyup" render="validacao-uso-atual"
 																	onevent="mostrarErro('#validacao-uso-atual')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-uso-atual',mensagens.usoAtual,
 																	editarBemPatrimonialMB.bemPatrimonial.usoAtual)}" />
@@ -796,10 +804,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="area-total">#{mensagens.areaTotal}</h:outputLabel>
-															<h:inputText class="form-control" id="area-total" maxlength="255"
+															<h:inputText class="form-control" id="area-total"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.areaTotal}">
-																<f:ajax event="keyup"
-																	render="validacao-area-total"
+																<f:ajax event="keyup" render="validacao-area-total"
 																	onevent="mostrarErro('#validacao-area-total')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-area-total',mensagens.areaTotal,
 																	editarBemPatrimonialMB.bemPatrimonial.areaTotal)}" />
@@ -859,10 +867,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="largura">#{mensagens.largura}</h:outputLabel>
-															<h:inputText class="form-control" id="largura" maxlength="255"
+															<h:inputText class="form-control" id="largura"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.largura}">
-																<f:ajax event="keyup"
-																	render="validacao-largura"
+																<f:ajax event="keyup" render="validacao-largura"
 																	onevent="mostrarErro('#validacao-largura')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-largura',mensagens.largura,
 																	editarBemPatrimonialMB.bemPatrimonial.largura)}" />
@@ -878,10 +886,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="altura">#{mensagens.altura}</h:outputLabel>
-															<h:inputText class="form-control" id="altura" maxlength="255"
+															<h:inputText class="form-control" id="altura"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.altura}">
-																<f:ajax event="keyup"
-																	render="validacao-altura"
+																<f:ajax event="keyup" render="validacao-altura"
 																	onevent="mostrarErro('#validacao-altura')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-altura',mensagens.altura,
 																	editarBemPatrimonialMB.bemPatrimonial.altura)}" />
@@ -896,10 +904,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="profundidade">#{mensagens.profundidade}</h:outputLabel>
-															<h:inputText class="form-control" id="profundidade" maxlength="255"
+															<h:inputText class="form-control" id="profundidade"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.profundidade}">
-																<f:ajax event="keyup"
-																	render="validacao-profundidade"
+																<f:ajax event="keyup" render="validacao-profundidade"
 																	onevent="mostrarErro('#validacao-profundidade')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-profundidade',mensagens.profundidade,
 																	editarBemPatrimonialMB.bemPatrimonial.profundidade)}" />
@@ -918,10 +926,10 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="altura-cumeeira">#{mensagens.alturaCumeeira}</h:outputLabel>
-															<h:inputText class="form-control" id="altura-cumeeira" maxlength="255"
+															<h:inputText class="form-control" id="altura-cumeeira"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.alturaCumeeira}">
-																<f:ajax event="keyup"
-																	render="validacao-altura-cumeeira"
+																<f:ajax event="keyup" render="validacao-altura-cumeeira"
 																	onevent="mostrarErro('#validacao-altura-cumeeira')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-altura-cumeeira',mensagens.alturaCumeeira,
 																	editarBemPatrimonialMB.bemPatrimonial.alturaCumeeira)}" />
@@ -937,10 +945,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="altura-total">#{mensagens.alturaTotal}</h:outputLabel>
-															<h:inputText class="form-control" id="altura-total" maxlength="255"
+															<h:inputText class="form-control" id="altura-total"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.alturaTotal}">
-																<f:ajax event="keyup"
-																	render="validacao-altura-total"
+																<f:ajax event="keyup" render="validacao-altura-total"
 																	onevent="mostrarErro('#validacao-altura-total')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-altura-total',mensagens.alturaTotal,
 																	editarBemPatrimonialMB.bemPatrimonial.alturaTotal)}" />
@@ -957,7 +965,8 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="pe-direito-terreo">#{mensagens.peDireitoTerreo}</h:outputLabel>
-															<h:inputText class="form-control" id="pe-direito-terreo" maxlength="255"
+															<h:inputText class="form-control" id="pe-direito-terreo"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.peDireitoTerreo}">
 																<f:ajax event="keyup"
 																	render="validacao-pe-direito-terreo"
@@ -979,10 +988,10 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="pe-direito-tipo">#{mensagens.peDireitoTipo}</h:outputLabel>
-															<h:inputText class="form-control" id="pe-direito-tipo" maxlength="255"
+															<h:inputText class="form-control" id="pe-direito-tipo"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.peDireitoTipo}">
-																<f:ajax event="keyup"
-																	render="validacao-pe-direito-tipo"
+																<f:ajax event="keyup" render="validacao-pe-direito-tipo"
 																	onevent="mostrarErro('#validacao-pe-direito-tipo')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-pe-direito-tipo',mensagens.peDireitoTipo,
 																	editarBemPatrimonialMB.bemPatrimonial.peDireitoTipo)}" />
@@ -998,10 +1007,10 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="comprimento">#{mensagens.comprimento}</h:outputLabel>
-															<h:inputText class="form-control" id="comprimento" maxlength="255"
+															<h:inputText class="form-control" id="comprimento"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.comprimento}">
-																<f:ajax event="keyup"
-																	render="validacao-comprimento"
+																<f:ajax event="keyup" render="validacao-comprimento"
 																	onevent="mostrarErro('#validacao-comprimento')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-comprimento',mensagens.comprimento,
 																	editarBemPatrimonialMB.bemPatrimonial.comprimento)}" />
@@ -1018,7 +1027,8 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="localizacao-fisica">#{mensagens.localizacaoFisica}</h:outputLabel>
-															<h:inputText class="form-control" id="localizacao-fisica" maxlength="255"
+															<h:inputText class="form-control" id="localizacao-fisica"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.localizacaoFisica}">
 																<f:ajax event="keyup"
 																	render="validacao-localizacao-fisica"
@@ -1067,8 +1077,7 @@
 															</h:outputLabel>
 															<h:inputTextarea class="form-control" id="meio-acesso"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.meioAcesso}">
-																<f:ajax event="keyup"
-																	render="validacao-meio-acesso"
+																<f:ajax event="keyup" render="validacao-meio-acesso"
 																	onevent="mostrarErro('#validacao-meio-acesso')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-meio-acesso',mensagens.meioAcesso,
 																	editarBemPatrimonialMB.bemPatrimonial.meioAcesso)}" />
@@ -1088,8 +1097,7 @@
 															</h:outputLabel>
 															<h:inputTextarea class="form-control" id="notas"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.notas}">
-																<f:ajax event="keyup"
-																	render="validacao-notas"
+																<f:ajax event="keyup" render="validacao-notas"
 																	onevent="mostrarErro('#validacao-notas')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-notas',mensagens.notas,
 																	editarBemPatrimonialMB.bemPatrimonial.notas)}" />
@@ -1106,8 +1114,7 @@
 															<h:outputLabel class="label-control" for="outros">#{mensagens.outros}</h:outputLabel>
 															<h:inputTextarea class="form-control" id="outros"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.outros}">
-																<f:ajax event="keyup"
-																	render="validacao-outros"
+																<f:ajax event="keyup" render="validacao-outros"
 																	onevent="mostrarErro('#validacao-outros')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-outros',mensagens.outros,
 																	editarBemPatrimonialMB.bemPatrimonial.outros)}" />
@@ -1196,10 +1203,9 @@
 																	<div class="col-md-2">
 																		<div class="form-group">
 																			<h:outputLabel class="label-control" for="data">#{mensagens.data}</h:outputLabel>
-																			<h:inputText class="form-control" id="data" maxlength="255"
-																				value="#{intervencao.data}">
-																				<f:ajax event="keyup"
-																					render="validacao-data"
+																			<h:inputText class="form-control" id="data"
+																				maxlength="255" value="#{intervencao.data}">
+																				<f:ajax event="keyup" render="validacao-data"
 																					listener="#{editarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-data',
 																					mensagens.data,intervencao.data)}" />
 																			</h:inputText>
@@ -1214,10 +1220,9 @@
 																		<div class="form-group">
 																			<h:outputLabel class="label-control"
 																				for="responsavel">#{mensagens.responsavel}</h:outputLabel>
-																			<h:inputText class="form-control" id="responsavel" maxlength="255"
-																				value="#{intervencao.responsavel}">
-																				<f:ajax event="keyup"
-																					render="validacao-responsavel"
+																			<h:inputText class="form-control" id="responsavel"
+																				maxlength="255" value="#{intervencao.responsavel}">
+																				<f:ajax event="keyup" render="validacao-responsavel"
 																					listener="#{editarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-responsavel',
 																					mensagens.responsavel,intervencao.responsavel)}" />
 																			</h:inputText>
@@ -1232,10 +1237,9 @@
 																	<div class="col-md-5">
 																		<div class="form-group">
 																			<h:outputLabel class="label-control" for="descricao">#{mensagens.descricao}</h:outputLabel>
-																			<h:inputText class="form-control" id="descricao" maxlength="255"
-																				value="#{intervencao.descricao}">
-																				<f:ajax event="keyup"
-																					render="validacao-descricao"
+																			<h:inputText class="form-control" id="descricao"
+																				maxlength="255" value="#{intervencao.descricao}">
+																				<f:ajax event="keyup" render="validacao-descricao"
 																					listener="#{editarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-descricao',
 																					mensagens.descricao,intervencao.descricao)}" />
 																			</h:inputText>
@@ -1365,10 +1369,10 @@
 														<div class="form-group">
 															<h:outputLabel class="label-control"
 																for="numero-processo">#{mensagens.numeroProcesso}</h:outputLabel>
-															<h:inputText class="form-control" id="numero-processo" maxlength="255"
+															<h:inputText class="form-control" id="numero-processo"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.legislacao}">
-																<f:ajax event="keyup"
-																	render="validacao-numero-processo"
+																<f:ajax event="keyup" render="validacao-numero-processo"
 																	onevent="mostrarErro('#validacao-numero-processo')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-numero-processo',mensagens.numeroProcesso,
 																	editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.legislacao)}" />
@@ -1388,10 +1392,10 @@
 															<h:outputLabel class="label-control" for="data-retorno">
 																#{mensagens.dataRetorno}
 															</h:outputLabel>
-															<h:inputTextarea class="form-control" id="data-retorno" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="data-retorno"
+																p:maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.dataRetorno}">
-																<f:ajax event="keyup"
-																	render="validacao-data-retorno"
+																<f:ajax event="keyup" render="validacao-data-retorno"
 																	onevent="mostrarErro('#validacao-data-retorno')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-data-retorno',mensagens.dataRetorno,
 																	editarBemPatrimonialMB.bemPatrimonial.disponibilidadeUsoProtecao.dataRetorno)}" />
@@ -1459,10 +1463,10 @@
 													<div class="col-md-3">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="valor-venal">#{mensagens.valorVenal}</h:outputLabel>
-															<h:inputText class="form-control" id="valor-venal" maxlength="255"
+															<h:inputText class="form-control" id="valor-venal"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.valorVenalTransacao}">
-																<f:ajax event="keyup"
-																	render="validacao-valor-venal"
+																<f:ajax event="keyup" render="validacao-valor-venal"
 																	onevent="mostrarErro('#validacao-valor-venal')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-valor-venal',mensagens.valorVenal,
 																	editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.valorVenalTransacao)}" />
@@ -1478,10 +1482,10 @@
 													<div class="col-md-3">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="data-aquisicao">#{mensagens.data}</h:outputLabel>
-															<h:inputText class="form-control" id="data-aquisicao" maxlength="255"
+															<h:inputText class="form-control" id="data-aquisicao"
+																maxlength="255"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dataAquisicao}">
-																<f:ajax event="keyup"
-																	render="validacao-data-aquisicao"
+																<f:ajax event="keyup" render="validacao-data-aquisicao"
 																	onevent="mostrarErro('#validacao-data-aquisicao')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-data-aquisicao',mensagens.data,
 																	editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dataAquisicao)}" />
@@ -1524,8 +1528,7 @@
 															<h:inputTextarea class="form-control"
 																id="dados-transacao"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao}">
-																<f:ajax event="keyup"
-																	render="validacao-dados-transacao"
+																<f:ajax event="keyup" render="validacao-dados-transacao"
 																	onevent="mostrarErro('#validacao-dados-transacao')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-dados-transacao',mensagens.dadosTransacao,
 																	editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.dadosDocTransacao)}" />
@@ -1543,8 +1546,7 @@
 															<h:outputLabel class="label-control" for="historico">#{mensagens.historico}</h:outputLabel>
 															<h:inputTextarea class="form-control" id="historico"
 																value="#{editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico}">
-																<f:ajax event="keyup"
-																	render="validacao-historico"
+																<f:ajax event="keyup" render="validacao-historico"
 																	onevent="mostrarErro('#validacao-historico')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-historico',mensagens.historico,
 																	editarBemPatrimonialMB.bemPatrimonial.historicoProcedencia.historico)}" />
@@ -1600,10 +1602,10 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="assuntos">#{mensagens.assuntos}</h:outputLabel>
-															<h:inputTextarea class="form-control" id="assuntos" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="assuntos"
+																p:maxlength="255"
 																value="#{editarBemPatrimonialMB.assuntos}">
-																<f:ajax event="keyup"
-																	render="validacao-assuntos"
+																<f:ajax event="keyup" render="validacao-assuntos"
 																	onevent="mostrarErro('#validacao-assuntos')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-assuntos',mensagens.assuntos,
 																	editarBemPatrimonialMB.assuntos)}" />
@@ -1619,10 +1621,10 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<h:outputLabel class="label-control" for="descritores">#{mensagens.descritores}</h:outputLabel>
-															<h:inputTextarea class="form-control" id="descritores" p:maxlength="255"
+															<h:inputTextarea class="form-control" id="descritores"
+																p:maxlength="255"
 																value="#{editarBemPatrimonialMB.descritores}">
-																<f:ajax event="keyup"
-																	render="validacao-descritores"
+																<f:ajax event="keyup" render="validacao-descritores"
 																	onevent="mostrarErro('#validacao-descritores')"
 																	listener="#{editarBemPatrimonialMB.validarCampo('validacao-descritores',mensagens.descritores,
 																	editarBemPatrimonialMB.descritores)}" />
@@ -1668,10 +1670,10 @@
 																			<h:inputTextarea class="form-control"
 																				id="fontes-informacao"
 																				value="#{fonteinformacao.valor}">
-																				 <f:ajax event="keyup"
+																				<f:ajax event="keyup"
 																					render="validacao-fontes-informacao"
 																					listener="#{editarBemPatrimonialMB.validarCampoComHeranca(component.clientId,'validacao-fontes-informacao',
-																					mensagens.fontesInformacao,fonteinformacao.valor)}" /> 
+																					mensagens.fontesInformacao,fonteinformacao.valor)}" />
 																			</h:inputTextarea>
 																			<h:message id="validacao-fontes-informacao"
 																				for="validacao-fontes-informacao"
@@ -1773,7 +1775,8 @@
 																		<div class="form-group">
 																			<h:outputLabel class="label-control"
 																				for="notas-pesquisa">#{mensagens.notas}</h:outputLabel>
-																			<h:inputTextarea class="form-control" id="notas-pesquisa"
+																			<h:inputTextarea class="form-control"
+																				id="notas-pesquisa"
 																				value="#{pesquisador.notasPesquisador}">
 																				<f:ajax event="keyup"
 																					render="validacao-notas-pesquisa"
@@ -1885,7 +1888,7 @@
 										<h:commandButton class="btn btn-warning margin-5"
 											value="#{mensagens.limpar}"
 											action="#{editarBemPatrimonialMB.limpar}">
-										</h:commandButton>									
+										</h:commandButton>
 										<h:commandButton class="btn btn-success margin-5"
 											value="#{mensagens.salvar}"
 											action="#{editarBemPatrimonialMB.editar}">
@@ -1908,29 +1911,28 @@
 				}
 
 				function checkSwitch(data) {
-				    var status = data.status; // Can be "begin", "complete" or "success".
-				    var source = data.source; // The parent HTML DOM element.
+					var status = data.status; // Can be "begin", "complete" or "success".
+					var source = data.source; // The parent HTML DOM element.
 
-				    switch (status) {
-				        case "begin": // Before the ajax request is sent.
-				            // ...
-				            break;
+					switch (status) {
+					case "begin": // Before the ajax request is sent.
+						// ...
+						break;
 
-				        case "complete": // After the ajax response is arrived.
-				        	// ..
-				            break;
+					case "complete": // After the ajax response is arrived.
+						// ..
+						break;
 
-				        case "success": // After update of HTML DOM based on ajax response.
-				        	if($('#externoCheck').text() == 'true'){
-								$('#externo').bootstrapSwitch('disabled',true);				        		
-				        	}
-							else{
-								$('#externo').bootstrapSwitch('disabled',false);
-							}
-				            break;
-				    }
+					case "success": // After update of HTML DOM based on ajax response.
+						if ($('#externoCheck').text() == 'true') {
+							$('#externo').bootstrapSwitch('disabled', true);
+						} else {
+							$('#externo').bootstrapSwitch('disabled', false);
+						}
+						break;
+					}
 				}
-				
+
 				$(document)
 						.ready(
 								function() {
@@ -1944,48 +1946,65 @@
 										onText : '#{mensagens.sim}',
 										offText : '#{mensagens.nao}'
 									});
-									
-									$('#revisado').bootstrapSwitch('disabled',true);
-									
-									if('#{editarBemPatrimonialMB.instituicaoTemRevisao}' == 'true'){
-										$('#externo').bootstrapSwitch('disabled',true);
+
+									$('#revisado').bootstrapSwitch('disabled',
+											true);
+
+									if ('#{editarBemPatrimonialMB.instituicaoTemRevisao}' == 'true') {
+										$('#externo').bootstrapSwitch(
+												'disabled', true);
+									} else {
+										$('#externo').bootstrapSwitch(
+												'disabled', false);
 									}
-									else{
-										$('#externo').bootstrapSwitch('disabled',false);
-									}
-									
+
 									$('.select').select2({
 										allowClear : true,
 										placeholder : "#{mensagens.selecione}",
 										minimumResultsForSearch : -1
 									});
-									
-									$("#busca").select2({
-										minimumInputLength : 1,
-										allowClear : true,
-										ajax : {
-											url : "/memoriavirtual/listar/listarbempatrimonial/"+$("#instituicao").val(),
-											quietMillis : 250,
-											type : 'GET',
-											datatype : 'json',
-											data : function(term, page) {
-												return {
-													busca : term,
-												};
-											},
-											results: function (data) {
-									          var results = [];
-									          $.each(data, function(index, item){
-									            results.push({
-									              id: item.id,
-									              text: item.tituloPrincipal
-									            });
-									          });
-									          return { results: results };
-									        }
-										}
-										});
-									
+
+									$("#busca")
+											.select2(
+													{
+														minimumInputLength : 1,
+														allowClear : true,
+														ajax : {
+															url : "/memoriavirtual/listar/listarbempatrimonial/"
+																	+ $(
+																			"#instituicao")
+																			.val(),
+															quietMillis : 250,
+															type : 'GET',
+															datatype : 'json',
+															data : function(
+																	term, page) {
+																return {
+																	busca : term,
+																};
+															},
+															results : function(
+																	data) {
+																var results = [];
+																$
+																		.each(
+																				data,
+																				function(
+																						index,
+																						item) {
+																					results
+																							.push({
+																								id : item.id,
+																								text : item.tituloPrincipal
+																							});
+																				});
+																return {
+																	results : results
+																};
+															}
+														}
+													});
+
 									window.reformar = function(data) {
 										mostrarErro('#validacao-nome');
 										mostrarErro('#validacao-sobrenome');
@@ -2002,34 +2021,46 @@
 										}
 									}
 								});
-				
-				function criaBuscaBem(event){
-					if(event.status == 'success'){
-					$("#busca").select2({
-						minimumInputLength : 1,
-						allowClear : true,
-						ajax : {
-							url : "/memoriavirtual/listar/listarbempatrimonial/"+$("#instituicao").val(),
-							quietMillis : 250,
-							type : 'GET',
-							datatype : 'json',
-							data : function(term, page) {
-								return {
-									busca : term,
-								};
-							},
-							results: function (data) {
-					          var results = [];
-					          $.each(data, function(index, item){
-					            results.push({
-					              id: item.id,
-					              text: item.tituloPrincipal
-					            });
-					          });
-					          return { results: results };
-					        }
-						}
-						});
+
+				function criaBuscaBem(event) {
+					if (event.status == 'success') {
+						$("#busca")
+								.select2(
+										{
+											minimumInputLength : 1,
+											allowClear : true,
+											ajax : {
+												url : "/memoriavirtual/listar/listarbempatrimonial/"
+														+ $("#instituicao")
+																.val(),
+												quietMillis : 250,
+												type : 'GET',
+												datatype : 'json',
+												data : function(term, page) {
+													return {
+														busca : term,
+													};
+												},
+												results : function(data) {
+													var results = [];
+													$
+															.each(
+																	data,
+																	function(
+																			index,
+																			item) {
+																		results
+																				.push({
+																					id : item.id,
+																					text : item.tituloPrincipal
+																				});
+																	});
+													return {
+														results : results
+													};
+												}
+											}
+										});
 					}
 				}
 			</script>
@@ -2052,15 +2083,14 @@
 												<h:outputLabel for="nome-autor" class="control-label">
 													#{mensagens.nome}
 												</h:outputLabel>
-												<h:inputText value="#{cadastrarAutorMB.nome}" maxlength="255"
-													class="form-control" id="nome-autor">
-													<f:ajax event="keyup"
-														render="validacao-nome-autor"
+												<h:inputText value="#{cadastrarAutorMB.nome}"
+													maxlength="255" class="form-control" id="nome-autor">
+													<f:ajax event="keyup" render="validacao-nome-autor"
 														onevent="mostrarErro('#validacao-nome-autor')"
 														listener="#{editarBemPatrimonialMB.validarCampo('validacao-nome-autor',mensagens.nome,
 														cadastrarAutorMB.nome)}" />
 												</h:inputText>
-												<h:message id="validacao-nome-autor" 
+												<h:message id="validacao-nome-autor"
 													for="validacao-nome-autor"
 													infoClass="help-block has-success"
 													errorClass="help-block has-error"
@@ -2076,9 +2106,8 @@
 													#{mensagens.sobrenome}
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.sobrenome}"
-													class="form-control" id="sobrenome-autor" >
-													<f:ajax event="keyup"
-														render="validacao-sobrenome"
+													class="form-control" id="sobrenome-autor">
+													<f:ajax event="keyup" render="validacao-sobrenome"
 														onevent="mostrarErro('#validacao-sobrenome')"
 														listener="#{editarBemPatrimonialMB.validarCampo('validacao-sobrenome',mensagens.sobrenome,
 														cadastrarAutorMB.sobrenome)}" />
@@ -2100,8 +2129,7 @@
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.codinome}"
 													class="form-control" id="codinome-autor">
-													<f:ajax event="keyup"
-														render="validacao-codinome-autor"
+													<f:ajax event="keyup" render="validacao-codinome-autor"
 														onevent="mostrarErro('#validacao-codinome-autor')"
 														listener="#{editarBemPatrimonialMB.validarCampo('validacao-codinome-autor',mensagens.codinome,
 														cadastrarAutorMB.codinome)}" />
@@ -2136,8 +2164,7 @@
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.nascimento}"
 													class="form-control" id="nascimento-autor">
-													<f:ajax event="keyup"
-														render="validacao-nascimento-autor"
+													<f:ajax event="keyup" render="validacao-nascimento-autor"
 														onevent="mostrarErro('#validacao-nascimento-autor')"
 														listener="#{editarBemPatrimonialMB.validarCampo('validacao-nascimento-autor',mensagens.nascimento,
 														cadastrarAutorMB.nascimento)}" />
@@ -2159,8 +2186,7 @@
 												</h:outputLabel>
 												<h:inputText value="#{cadastrarAutorMB.obito}"
 													class="form-control" id="obito-autor">
-													<f:ajax event="keyup"
-														render="validacao-obito-autor"
+													<f:ajax event="keyup" render="validacao-obito-autor"
 														onevent="mostrarErro('#validacao-obito-autor')"
 														listener="#{editarBemPatrimonialMB.validarCampo('validacao-obito-autor',mensagens.obito,
 														cadastrarAutorMB.obito)}" />
@@ -2201,6 +2227,69 @@
 						</div>
 					</h:form>
 				</div>
+			</div>
+
+			<div class="modal fade" id="escolher-versoes-modal" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title">#{mensagens.escolherVersao}</h4>
+						</div>
+
+						<div class="modal-body">
+							<table class="table table-striped text-center" id="tabelaVersoes">
+								<thead>
+									<tr>
+										<th></th>
+										<th class="text-center">#{mensagens.idVersao}</th>
+										<th class="text-center">#{mensagens.dataAlteracaoVersao}</th>
+										<th class="text-center">#{mensagens.usuarioVersao}</th>
+										<th class="text-center">#{mensagens.comentarioVersao}</th>
+									</tr>
+								</thead>
+								<tbody id="corpoTabelaVersoes">
+									<script type="text/javascript">
+										var i;
+										var numVersoes = 4;
+										var data = ["jan", "ago", "nov", "jun"];
+										var usuario = ["maria", "zezinho", "manuel", "carla"];
+										var coment = ["mudou autor", "mudou titulo", "adicionou descricao", ""];
+										for (i = 0; i &lt; numVersoes; i++) {
+											var table = document.getElementById("corpoTabelaVersoes");
+											var row = table.insertRow(i);
+											var cell = row.insertCell(0);
+											var input = document.createElement("input");
+											input.type = "checkbox";
+											input.value = i;
+											cell.appendChild(input);
+											row.insertCell(1).innerHTML = i;
+											row.insertCell(2).innerHTML = data[i];
+											row.insertCell(3).innerHTML = usuario[i];
+											row.insertCell(4).innerHTML = coment[i];
+										}
+									</script>
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<div class="text-right row">
+								<div class="col-md-12">
+									<h:commandButton class="btn btn-success margin-5"
+										value="#{mensagens.verDiferencas}"
+										action="#{editarBemPatrimonialMB.compararVersoes}">
+									</h:commandButton>
+									<button type="button"
+										class="btn btn-danger margin-left-5 no-right-margin"
+										data-dismiss="modal">#{mensagens.cancelar}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</ui:define>
 	</ui:composition>
