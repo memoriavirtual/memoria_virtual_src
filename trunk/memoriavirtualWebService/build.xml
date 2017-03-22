@@ -1,68 +1,68 @@
 <?xml version="1.0" ?>
 <project name="memoriavirtualWebService" default="memWar" basedir=".">
-	
-	  
-    <property name= "memoriavirtualWebService.war" location = "../memoriavirtualWebService.war"/>
 
-	
-	<property name= "ws.build.classes" location = "../build_WS/classes"/>
-	
-	<property name= "ws.dir" location = "../build_WS/src"/>
-	
-	<property name= "web.xml" location = "WebContent/WEB-INF"/>
 
-	<loadproperties srcfile="build.properties"></loadproperties>	
+	<property name="memoriavirtualWebService.war" location="../memoriavirtualWebService.war" />
 
-	
+
+	<property name="ws.build.classes" location="../build_WS/classes" />
+
+	<property name="ws.dir" location="src" />
+
+	<property name="web.xml" location="WebContent/WEB-INF/web.xml" />
+
+	<loadproperties srcfile="build.properties">
+	</loadproperties>
+
+
 	<target name="init">
-		<mkdir dir="../build_WS/classes"/>
-		<mkdir dir="../build_WS/src"/>
-	
-		<mkdir dir="../build_WS/classes"/>
-		<mkdir dir="../build_WS/src"/>
-		
-		<path id="glassfish.classpath">
-				<fileset dir="${glassfish.dir}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</path>
-		<path id="EJB.classpath">
-						<fileset dir="../">
-							<include name="memoriavirtualEJB.jar"/>
-							</fileset>
-					</path>
-		<path id="WEB.classpath">
-								<fileset dir="../">
-									<include name="memoriavirtualWEB.war"/>
-									</fileset>
-							</path>
-		<path id="Base64.classpath">
-								<fileset dir="../memoriavirtual/META-INF/lib">
-									<include name="xmlsec.jar"/>
-									</fileset>
-							</path>
-	</target>
-	
-	<target name="compile" depends="init">
-			<javac srcdir="${ws.dir}"
-				destdir="${ws.build.classes}" encoding="ISO-8859-1" includeantruntime="false">
-					<classpath refid="glassfish.classpath"/>
-					<classpath refid="EJB.classpath" />
-					<classpath refid="WEB.classpath" />
-				    <classpath refid="Base64.classpath" />
-			</javac>
-			
-			<echo>WEB compilation complete</echo>
-			</target>
-	
+		<mkdir dir="../build_WS/classes" />
+		<mkdir dir="../build_WS/src" />
 
-	
+		<mkdir dir="../build_WS/classes" />
+		<mkdir dir="../build_WS/src" />
+
+		<path id="glassfish.classpath">
+			<fileset dir="${glassfish.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<path id="EJB.classpath">
+			<fileset dir="../">
+				<include name="memoriavirtualEJB.jar" />
+			</fileset>
+		</path>
+		<path id="WEB.classpath">
+			<fileset dir="../">
+				<include name="memoriavirtualWEB.war" />
+			</fileset>
+		</path>
+		<path id="Base64.classpath">
+			<fileset dir="../memoriavirtual/EarContent/META-INF/lib">
+				<include name="xmlsec.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${ws.dir}" destdir="${ws.build.classes}" encoding="ISO-8859-1" includeantruntime="false">
+			<classpath refid="glassfish.classpath" />
+			<classpath refid="EJB.classpath" />
+			<classpath refid="WEB.classpath" />
+			<classpath refid="Base64.classpath" />
+		</javac>
+
+		<echo>WEB compilation complete</echo>
+	</target>
+
+
+
 	<target name="memWar" depends="compile">
 		<war destfile="${memoriavirtualWebService.war}" webxml="${web.xml}" compress="true">
-			<fileset dir="${ws.build.classes}"/>
+			<classes dir="${ws.build.classes}" />
 		</war>
 
 	</target>
 
 </project>
-	
+
