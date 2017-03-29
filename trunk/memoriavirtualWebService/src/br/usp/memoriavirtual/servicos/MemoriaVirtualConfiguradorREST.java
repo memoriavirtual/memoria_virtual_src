@@ -16,7 +16,7 @@ public class MemoriaVirtualConfiguradorREST extends Application {
 
 		classes.add(RealizarBuscaRESTService.class);
 		classes.add(CadastrarBemPatrimonialRESTService.class);
-
+		classes.add(CORSFilter.class);
 		return classes;
 	}
 

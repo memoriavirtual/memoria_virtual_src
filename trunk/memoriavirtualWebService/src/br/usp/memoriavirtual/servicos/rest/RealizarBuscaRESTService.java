@@ -26,7 +26,8 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginRemote;
 
 @RequestScoped
 @Path("/buscar")
-@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+@Produces({
+		MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class RealizarBuscaRESTService {
 
 	@EJB
@@ -70,13 +71,13 @@ public class RealizarBuscaRESTService {
 	public String buscar(@Context HttpServletRequest request) {
 		if (validaCliente(request)) {
 			System.out.println("eita");
-			return "<html><head></head><body>" + "Cliente Validado Com Sucesso!<br/>"
-					+ "Servi&ccedil;os Disponiveis:<br/>" + "<table style='border: solid 1px;'>" + "	<tr>"
-					+ "		<td>buscar</td>" + "		<td>path: /{stringDeBusca}/{numeroDaPagina}</td>" + "	</tr>"
-					+ "	<tr>" + "		<td>buscarPorInstituicao</td>"
-					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}</td>"
-					+ " </tr>" + "	<tr>" + "		<td>buscarMidiaPorContainer</td>"
-					+ "		<td>path: /{container}</td>" + "	</tr>" + "</table>" + "</body></html>";
+			return "<html><head></head><body>" + "Cliente Validado Com Sucesso!<br/>" + "Servi&ccedil;os Disponiveis:<br/>"
+					+ "<table style='border: solid 1px;'>" + "	<tr>" + "		<td>buscar</td>"
+					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}</td>" + "	</tr>" + "	<tr>"
+					+ "		<td>buscarPorInstituicao</td>"
+					+ "		<td>path: /{stringDeBusca}/{numeroDaPagina}/{tamanhoPagina}/{nomeInstituicao}</td>" + " </tr>"
+					+ "	<tr>" + "		<td>buscarMidiaPorContainer</td>" + "		<td>path: /{container}</td>" + "	</tr>"
+					+ "</table>" + "</body></html>";
 		} else {
 			return "<html><head></head><body>" + "Falha na Valida&ccedil;&atilde;o do Cliente<br/>"
 					+ "Use um header de &lt;Authorization&gt; HTTP" + "</body></html>";
