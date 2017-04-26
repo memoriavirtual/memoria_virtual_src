@@ -2252,23 +2252,41 @@
 								</thead>
 								<tbody id="corpoTabelaVersoes">
 									<script type="text/javascript">
-										var i;
+										var i, j;
 										var numVersoes = 4;
+										var input;
 										var data = ["jan", "ago", "nov", "jun"];
 										var usuario = ["maria", "zezinho", "manuel", "carla"];
 										var coment = ["mudou autor", "mudou titulo", "adicionou descricao", ""];
+										var total = 0;
+										
 										for (i = 0; i &lt; numVersoes; i++) {
 											var table = document.getElementById("corpoTabelaVersoes");
 											var row = table.insertRow(i);
 											var cell = row.insertCell(0);
-											var input = document.createElement("input");
+											input = document.createElement("input");
 											input.type = "checkbox";
+											input.name = "versao";
 											input.value = i;
+											input.onclick = function() {check(numVersoes)};
 											cell.appendChild(input);
 											row.insertCell(1).innerHTML = i;
 											row.insertCell(2).innerHTML = data[i];
 											row.insertCell(3).innerHTML = usuario[i];
 											row.insertCell(4).innerHTML = coment[i];
+										}
+										
+										
+										function check(numVersoes){
+											var total = 0, i;
+											var x = document.getElementsByName("versao");
+											for(i = 0; i &lt; numVersoes; i++){
+												if(x[i].checked) total++;
+												if(total > 2){
+													alert("#{mensagens.erroSelecao}");
+													x[i].checked = false;
+												}
+											}
 										}
 									</script>
 								</tbody>
