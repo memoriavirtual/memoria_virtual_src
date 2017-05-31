@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.modelo.entidades.bempatrimonial;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-
-import com.sun.jmx.snmp.Timestamp;
 
 @Entity
 @SequenceGenerator(name = "VERSAOBEMPATRIMONIAL_ID", sequenceName = "VERSAOBEMPATRIMONIAL_SEQ", allocationSize = 1)
