@@ -57,63 +57,66 @@ public class BemPatrimonial implements Serializable {
 	private long id;
 
 	@ManyToOne(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
-	private Instituicao instituicao = new Instituicao();
+	private Instituicao instituicao = null;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "BEMPATRIMONIAL_DESCRITOR", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"), inverseJoinColumns = @JoinColumn(name = "DESCRITOR_ID"))
-	private Set<Descritor> descritores = new HashSet<Descritor>();
+	private Set<Descritor> descritores = null;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "BEMPATRIMONIAL_ASSUNTO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"), inverseJoinColumns = @JoinColumn(name = "ASSUNTO_ID"))
-	private Set<Assunto> assuntos = new HashSet<Assunto>();
+	private Set<Assunto> assuntos = null;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_FONTESINFORMACAO", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
 	@Lob
-	private List<String> fontesInformacao = new ArrayList<String>();
+	private List<String> fontesInformacao = null;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
-	private List<Titulo> titulos = new ArrayList<Titulo>();
+	private List<Titulo> titulos = null;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bemPatrimonial", cascade = CascadeType.ALL)
-	private List<Autoria> autorias = new ArrayList<Autoria>();
+	private List<Autoria> autorias = null;
 
 	@Embedded
-	private Producao producao = new Producao();
+	private Producao producao = null;
 
 	@Embedded
-	private DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao();
+	private DisponibilidadeUsoProtecao disponibilidadeUsoProtecao = null;
 
 	@Embedded
-	private HistoricoProcedencia historicoProcedencia = new HistoricoProcedencia();
+	private HistoricoProcedencia historicoProcedencia = null;
 
 	@Embedded
-	private Diagnostico diagnostico = new Diagnostico();
+	private Diagnostico diagnostico = null;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_INTERVENCOES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
-	private List<Intervencao> intervencoes = new ArrayList<Intervencao>();
+	private List<Intervencao> intervencoes = null;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "BEMPATRIMONIAL_PESQUISADORES", joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
-	private List<Pesquisador> pesquisadores = new ArrayList<Pesquisador>();
+	private List<Pesquisador> pesquisadores = null;
 
 	@CascadeOnDelete
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "BEMPATRIMONIAL_BENSRELACIONADOS", inverseJoinColumns = @JoinColumn(name = "BENSRELACIONADOS_ID"), joinColumns = @JoinColumn(name = "BEMPATRIMONIAL_ID"))
-	private List<BemPatrimonial> bensRelacionados = new ArrayList<BemPatrimonial>();
+	private List<BemPatrimonial> bensRelacionados = null;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private ContainerMultimidia containerMultimidia = new ContainerMultimidia();
+	private ContainerMultimidia containerMultimidia = null;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="bemPatrimonial",cascade = CascadeType.MERGE)
-	private List<Revisao> revisoes = new ArrayList<Revisao>();
+	private List<Revisao> revisoes = null;
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="bemPatrimonial",cascade = CascadeType.MERGE)
+	private List<VersaoBemPatrimonial> versoes = null;
 	
 	private String condicaoTopografica = "";
 	private String sitioPaisagem = "";
 	private String aguaProxima = "";
 	private String vegetacao = "";
-	private Exposicao exposicao = BemPatrimonial.Exposicao.exposto;
+	private Exposicao exposicao = null;
 	private String usoAtual = "";
 	@Lob
 	private String outros = "";
@@ -125,13 +128,13 @@ public class BemPatrimonial implements Serializable {
 	private String largura = "";
 	private String profundidade = "";
 	private String uso = "";
-	private Integer numeroPavimentos = 0;
-	private Integer numeroAmbientes = 0;
-	private boolean alcova = false;
-	private boolean porao = false;
-	private boolean sotao = false;
-	private boolean externo = false;
-	private boolean revisao = false;
+	private Integer numeroPavimentos;
+	private Integer numeroAmbientes;
+	private boolean alcova;
+	private boolean porao;
+	private boolean sotao;
+	private boolean externo;
+	private boolean revisao;
 	private String alturaFachadaFrontal = "";
 	private String alturaFachadaPosterior = "";
 	private String alturaTotal = "";
@@ -163,6 +166,30 @@ public class BemPatrimonial implements Serializable {
 
 	public BemPatrimonial() {
 		super();
+		this.instituicao = new Instituicao();
+		this.descritores = new HashSet<Descritor>();
+		this.assuntos = new HashSet<Assunto>();
+		this.fontesInformacao = new ArrayList<String>();
+		this.titulos = new ArrayList<Titulo>();
+		this.autorias = new ArrayList<Autoria>();
+		this.producao = new Producao();
+		this.disponibilidadeUsoProtecao = new DisponibilidadeUsoProtecao();
+		this.historicoProcedencia = new HistoricoProcedencia();
+		this.diagnostico = new Diagnostico();
+		this.intervencoes = new ArrayList<Intervencao>();
+		this.pesquisadores = new ArrayList<Pesquisador>();
+		this.bensRelacionados = new ArrayList<BemPatrimonial>();
+		this.containerMultimidia = new ContainerMultimidia();
+		this.revisoes = new ArrayList<Revisao>();
+		this.versoes = new ArrayList<VersaoBemPatrimonial>();
+		this.exposicao = BemPatrimonial.Exposicao.exposto;
+		this.numeroPavimentos = 0;
+		this.numeroAmbientes = 0;
+		this.alcova = false;
+		this.porao = false;
+		this.sotao = false;
+		this.externo = false;
+		this.revisao = false;
 	}
 
 	public long getId() {
