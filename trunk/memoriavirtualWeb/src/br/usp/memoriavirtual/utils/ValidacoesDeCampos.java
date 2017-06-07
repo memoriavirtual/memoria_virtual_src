@@ -119,9 +119,9 @@ public class ValidacoesDeCampos {
 		return true;
 	}
 
-	public static boolean validaCoordenadaGeografica(String Coordenada) {
+	public static boolean validarLatitude(String Coordenada) {
 
-		String regexp = "[-]?[0-9]*[.]{0,1}[0-9]{4}";
+		String regexp = "^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Coordenada);
 
@@ -131,6 +131,18 @@ public class ValidacoesDeCampos {
 		return true;
 	}
 
+	public static boolean validarLongitude(String Coordenada){
+		
+		String regexp = "^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$";
+		Pattern pattern = Pattern.compile(regexp);
+		Matcher matcher = pattern.matcher(Coordenada);
+		
+		if(!matcher.matches() || Coordenada.equals(""))
+			return false;
+		
+		return true;
+	}
+	
 	public static boolean validarAltitude(String Altitude) {
 
 		String regexp = "[-]?[0-9]*[.]?{0,1}[0-9]{2}";

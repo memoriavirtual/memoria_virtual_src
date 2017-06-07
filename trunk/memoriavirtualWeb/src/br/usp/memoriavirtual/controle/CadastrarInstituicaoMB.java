@@ -225,6 +225,27 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 			return false;
 		}
 	}
+	public boolean validarCoordenadas(){
+		if(ValidacoesDeCampos.validarLatitude(this.latitude) && ValidacoesDeCampos.validarLongitude(this.longitude)){
+				return true;
+	
+		}else{
+			if(!ValidacoesDeCampos.validarLatitude(this.latitude)){
+				MensagensDeErro.getErrorMessage("erroFormatoLatitude", "validacao-latitude");
+			}else{
+				MensagensDeErro.getErrorMessage("erroFormatoLongitude", "validacao-longitude");
+			}
+			return false;
+		}
+	}
+	public boolean validarAltitude(){
+		if(ValidacoesDeCampos.validarAltitude(this.altitude)){
+			return true;
+		}else{
+			MensagensDeErro.getErrorMessage("erroFomatoAltitude", "validacao-altitude");
+			return false;
+		}
+	}
 	public boolean validarEmail(){
 		if(ValidacoesDeCampos.validarFormatoEmail(this.email)){
 			return true;
@@ -304,7 +325,8 @@ public class CadastrarInstituicaoMB extends BeanContainerDeMidia implements
 	public boolean validar() {
 		return this.validarNome() && this.validarEstado() && this.validarCep() 
 				&& this.validarCaixaPostal() && this.validarTelefone()
-				&& this.validarEmail() && this.validarWebsite();
+				&& this.validarEmail() && this.validarWebsite() && this.validarCoordenadas()
+				&& this.validarAltitude();
 	}
 
 	@Override
