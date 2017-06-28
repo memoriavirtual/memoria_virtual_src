@@ -12,6 +12,7 @@ import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Descritor;
 import br.usp.memoriavirtual.modelo.entidades.bempatrimonial.Titulo;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.VersionarBemPatrimonialRemote;
 
 @Stateless(mappedName = "CadastrarBemPatrimonial")
 public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
@@ -21,6 +22,9 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 
 	@EJB
 	private EditarBemPatrimonialRemote editarBemPatrimonialEJB;
+	
+	@EJB
+	private VersionarBemPatrimonialRemote novaVersao;
 
 	@Override
 	public BemPatrimonial cadastrarBemPatrimonial(BemPatrimonial bem)
@@ -54,7 +58,10 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 			e.printStackTrace();
 			throw new ModeloException(e);
 		}
-
+		
+		//cria entrada para esse bem na tabela de versoes
+		novaVersao.SalvarVersaoBemPatrimonial(bem);
+		
 		return bem;
 	}
 

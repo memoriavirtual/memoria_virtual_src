@@ -28,7 +28,7 @@ public class VersaoBemPatrimonial implements Serializable{
 	private Timestamp timestamp = null;
 	
 	@Lob
-	private byte[] bem = null;
+	private byte[] bemPatrimonialBytes = null;
 	
 	public VersaoBemPatrimonial(){
 		super();
@@ -79,17 +79,19 @@ public class VersaoBemPatrimonial implements Serializable{
 	}
 
 	/**
-	 * @return the bem
+	 * @return the bemPatrimonialBytes
 	 */
-	public byte[] getBem() {
-		return bem;
+	public byte[] getBemPatrimonialBytes() {
+		return bemPatrimonialBytes;
 	}
 
 	/**
-	 * @param bem the bem to set
+	 * @param bemPatrimonialBytes the bemPatrimonialBytes to set
 	 */
-	public void setBem(byte[] bem) {
-		this.bem = bem;
+	public void setBemPatrimonialBytes(byte[] bemPatrimonialBytes) {
+		this.bemPatrimonialBytes = bemPatrimonialBytes;
 	}
+
+	
 	
 }
