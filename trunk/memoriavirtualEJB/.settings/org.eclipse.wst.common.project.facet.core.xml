@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
-  <runtime name="Payara 4.1"/>
+  <runtime name="GlassFish 4"/>
   <fixed facet="jst.ejb"/>
   <fixed facet="java"/>
   <installed facet="jst.ejb" version="3.1"/>
