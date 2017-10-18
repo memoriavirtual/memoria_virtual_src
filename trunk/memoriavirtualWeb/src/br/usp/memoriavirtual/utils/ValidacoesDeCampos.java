@@ -65,14 +65,18 @@ public class ValidacoesDeCampos {
 
 		if (telefone.isEmpty()) return true;
 		
-		String regexp8digitos = "([0-9]{2})[0-9]{4}-?[0-9]{4}$";
+		//expressao regular: (XX)XXXX-XXXX
+		String regexp8digitos = "[(][0-9]{2}[)][0-9]{4}-[0-9]{4}$";
 		Pattern pattern8digitos = Pattern.compile(regexp8digitos);
 		Matcher matcher8digitos = pattern8digitos.matcher(telefone);
 
-		String regexp9digitos = "([0-9]{2})[0-9]{5}-[0-9]{4}$";
+		//expressao regular: (XX)XXXXX-XXXX
+		String regexp9digitos = "[(][0-9]{2}[)][0-9]{5}-[0-9]{4}$";
 		Pattern pattern9digitos = Pattern.compile(regexp9digitos);
 		Matcher matcher9digitos = pattern9digitos.matcher(telefone);
 
+		//verifica se a string do telefone é compatível com um dos 
+		//formatos disponiveis de telefone
 		if (!matcher8digitos.matches() && !matcher9digitos.matches())
 			return false;
 
