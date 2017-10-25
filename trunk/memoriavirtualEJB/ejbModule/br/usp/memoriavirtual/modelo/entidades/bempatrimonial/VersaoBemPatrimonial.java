@@ -10,7 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.xml.bind.annotation.XmlTransient;
+
+import br.usp.memoriavirtual.modelo.entidades.Usuario;
 
 @Entity
 @SequenceGenerator(name = "VERSAOBEMPATRIMONIAL_ID", sequenceName = "VERSAOBEMPATRIMONIAL_SEQ", allocationSize = 1)
@@ -22,7 +26,8 @@ public class VersaoBemPatrimonial implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VERSAOBEMPATRIMONIAL_ID")
 	private long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@XmlTransient
+	@ManyToOne(fetch=FetchType.EAGER)
 	private BemPatrimonial bemPatrimonial = null;
 	
 	private Timestamp timestamp = null;
@@ -30,10 +35,28 @@ public class VersaoBemPatrimonial implements Serializable{
 	@Lob
 	private byte[] bemPatrimonialBytes = null;
 	
+	@OneToOne(fetch=FetchType.EAGER)
+	private Usuario usuario;
+	
 	public VersaoBemPatrimonial(){
 		super();
 		this.timestamp = new Timestamp(System.currentTimeMillis());
 		this.bemPatrimonial = new BemPatrimonial();
+		this.usuario = new Usuario();
+	}
+
+	/**
+	 * @return the usuario
+	 */
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	/**
+	 * @param usuario the usuario to set
+	 */
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	/**
@@ -53,6 +76,7 @@ public class VersaoBemPatrimonial implements Serializable{
 	/**
 	 * @return the bemPatrimonial
 	 */
+	@XmlTransient
 	public BemPatrimonial getBemPatrimonial() {
 		return bemPatrimonial;
 	}
