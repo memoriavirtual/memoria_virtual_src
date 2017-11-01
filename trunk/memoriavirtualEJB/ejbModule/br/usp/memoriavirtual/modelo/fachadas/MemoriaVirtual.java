@@ -208,11 +208,12 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 
 		MimeBodyPart htmlPart = new MimeBodyPart();
 		htmlPart.setContent(mensagem, "text/html");
-
+		
 		multipart.addBodyPart(htmlPart);
 		message.setContent(multipart);
 		message.setHeader("X-Mailer", "Memoria virtual mailer");
 		message.setSentDate(timeStamp);
+		
 		// Enviar mensagem
 		Transport.send(message);
 	}

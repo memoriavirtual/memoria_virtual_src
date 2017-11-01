@@ -71,21 +71,30 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 	}
 
 	public String enviarConvite() {
+		//valida o captcha para confirmação dos novos usuários a serem cadastrados
 		if (validaCaptcha()) {
 			if (this.validar()) {
 				try {
+					//obtém o(s) email(s) do(s) candidato(s) a usuário(s)
 					String[] emails = this.emails.split("\\s+");
-	
+					
+					//obtem a data atual para determinar a data de expiracao
+					//do convite (um dia apos o envio)
 					Calendar calendario = Calendar.getInstance();
 					calendario.setTime(new Date());
 					calendario.add(Calendar.DATE, new Integer(this.validade));
 					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 					String expiraEm = dateFormat.format(calendario.getTime());
 	
+					//persiste o pré-cadastro dos candidatos e obtem o id de 
+					//cada um deles
 					long id = this.enviarConviteEJB.enviarConvite(emails,
 							this.mensagem, calendario.getTime(),
 							this.administrador, this.acessos);
 	
+					//hashmap criado para armazenar as tags de solicitante 
+					//da mensagem e da data de expiracao dos convites
+					
 					Map<String, String> tags = new HashMap<String, String>();
 	
 					Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
@@ -99,22 +108,27 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 					tags.put(MVModeloParametrosEmail.EXPIRACAO000.toString(),
 							expiraEm);
 	
+					//obtem a URL da pagina de confirmacao do cadastro dos candidatos,
+					//com os respectivos parametros do link (no caso, o id do
+					//candidato embaralhado)
 					Map<String, String> parametros = new HashMap<String, String>();
 					parametros.put("id", this.memoriaVirtualEJB
 							.embaralhar(new Long(id).toString()));
-					String url = this.memoriaVirtualEJB.getUrl(
+					String url = "http://" + this.memoriaVirtualEJB.getUrl(
 							MVModeloMapeamentoUrl.cadastrarUsuario, parametros);
 	
 					tags.put(MVModeloParametrosEmail.URL000.toString(), url);
-	
+					
+					//modelo do corpo do email a ser enviado, com suas respectivas
+					//tags
 					String email = new MVModeloEmailParser().getMensagem(tags,
 							MVModeloEmailTemplates.enviarConvite);
-	
+					//envio do email
 					for (String s : emails) {
 						this.memoriaVirtualEJB.enviarEmail(s,
 								this.traduzir("enviarConviteAssunto"), email);
 					}
-	
+				
 					this.getMensagens().mensagemSucesso(this.traduzir("sucesso"));
 	
 					return this.redirecionar("/restrito/index.jsf", true);
@@ -126,6 +140,7 @@ public class EnviarConviteMB implements Serializable, BeanMemoriaVirtual {
 			}
 			return null;
 		} else {
+			
 			this.getMensagens().mensagemErro(this.traduzir("erroCaptcha"));
 			return null;
 		}
