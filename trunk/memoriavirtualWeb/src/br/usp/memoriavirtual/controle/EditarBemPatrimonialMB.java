@@ -1,6 +1,7 @@
 package br.usp.memoriavirtual.controle;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.CadastrarBemPatrimonialRemot
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarBemPatrimonialRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.EditarInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.UtilMultimidiaRemote;
+import br.usp.memoriavirtual.modelo.fachadas.remoto.VersionarBemPatrimonialRemote;
 import br.usp.memoriavirtual.utils.MVModeloCamposMultimidia;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 import br.usp.memoriavirtual.utils.StringContainer;
@@ -54,6 +56,9 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 
 	@EJB
 	private EditarInstituicaoRemote editarInstituicaoEJB;
+	
+	@EJB
+	private VersionarBemPatrimonialRemote VersionarBemPatrimonialEJB;
 
 	public EditarBemPatrimonialMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -253,10 +258,42 @@ public class EditarBemPatrimonialMB extends CadastrarBemPatrimonialMB implements
 		}
 	}
 	
-	public String retornarVersoes(){
+	/*public List<VersaoBemPatrimonial> retornarVersoes() throws ModeloException{
 		//TODO implementar
 		
-		return null;
+		List<VersaoBemPatrimonial> versoes = VersionarBemPatrimonialEJB.listarVersoesDeBemPatrimonial(this.bemPatrimonial);
+		
+		return versoes;
+	}*/
+	
+	public String retornarIdsVersoes() throws ModeloException{
+		ArrayList<Long> ids = VersionarBemPatrimonialEJB.listarIdsDeVersoes(this.bemPatrimonial);
+		String idString = "[";
+		
+		for(int i = 0; i < ids.size(); i++){
+			idString += ids.get(i).toString();
+			if(i != ids.size() - 1) idString += ", ";
+		}
+		
+		idString += "]";
+		
+		return idString;
+	}
+	
+	public String retornarDatasVersoes(){
+		ArrayList<Timestamp> timestamps = VersionarBemPatrimonialEJB.listarDatasDeVersoes(this.bemPatrimonial);
+		String datas = "[";
+		
+		for(int i = 0; i < timestamps.size(); i++){
+			datas += "\"" + timestamps.get(i).toString() + "\"";
+			if(i != timestamps.size() - 1) datas += ", ";
+		}
+		
+		datas += "]";
+		
+		System.out.println(datas);
+		
+		return datas;
 	}
 	
 	public String compararVersoes(){

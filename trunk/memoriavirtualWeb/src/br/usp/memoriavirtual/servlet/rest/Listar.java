@@ -88,7 +88,7 @@ public class Listar implements Serializable{
 	public List<BemPatrimonial> listarBensInstituicao(@PathParam("inst") String inst, @QueryParam("busca") String busca, 
 			@Context HttpServletRequest request) {
 		
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+		//Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 		Integer instituicaoId = Integer.parseInt(inst);
 
 		try {

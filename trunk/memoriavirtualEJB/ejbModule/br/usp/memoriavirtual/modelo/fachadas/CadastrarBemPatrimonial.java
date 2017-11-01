@@ -60,7 +60,7 @@ public class CadastrarBemPatrimonial implements CadastrarBemPatrimonialRemote {
 		}
 		
 		//cria entrada para esse bem na tabela de versoes
-		novaVersao.SalvarVersaoBemPatrimonial(bem);
+		novaVersao.salvarVersaoBemPatrimonial(bem);
 		
 		return bem;
 	}
