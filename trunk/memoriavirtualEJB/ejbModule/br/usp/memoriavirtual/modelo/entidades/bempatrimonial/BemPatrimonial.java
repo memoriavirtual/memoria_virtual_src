@@ -109,7 +109,8 @@ public class BemPatrimonial implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="bemPatrimonial",cascade = CascadeType.MERGE)
 	private List<Revisao> revisoes = null;
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="bemPatrimonial",cascade = CascadeType.PERSIST)
+	@CascadeOnDelete
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="bemPatrimonial",cascade = CascadeType.PERSIST)
 	private List<VersaoBemPatrimonial> versoes = null;
 	
 	private String condicaoTopografica = "";

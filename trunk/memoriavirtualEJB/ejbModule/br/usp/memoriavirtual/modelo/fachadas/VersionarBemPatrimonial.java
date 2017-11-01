@@ -3,6 +3,9 @@ package br.usp.memoriavirtual.modelo.fachadas;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,7 +24,7 @@ public class VersionarBemPatrimonial implements VersionarBemPatrimonialRemote{
 	private VersaoBemPatrimonial versaoBem = new VersaoBemPatrimonial();
 	
 	@Override
-	public void SalvarVersaoBemPatrimonial(BemPatrimonial bem) throws ModeloException{
+	public void salvarVersaoBemPatrimonial(BemPatrimonial bem) throws ModeloException{
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutput out = null;
 		
@@ -47,7 +50,29 @@ public class VersionarBemPatrimonial implements VersionarBemPatrimonialRemote{
 		}
 	}
 	
-	public void excluirVersoesDeBemPatrimonial(BemPatrimonial bem){
+	@Override
+	public ArrayList<Long> listarIdsDeVersoes(BemPatrimonial bem) throws ModeloException{
+		ArrayList<Long> ids = new ArrayList<Long>();
 		
+		List<VersaoBemPatrimonial> versoes = bem.getVersoes();
+	
+		for(int i = 0; i < versoes.size(); i++){
+			ids.add(versoes.get(i).getId());
+		}
+		
+		return ids;
+	}
+	
+	@Override
+	public ArrayList<Timestamp> listarDatasDeVersoes(BemPatrimonial bem){
+		ArrayList<Timestamp> datas = new ArrayList<Timestamp>();
+		
+		List<VersaoBemPatrimonial> versoes = bem.getVersoes();
+	
+		for(int i = 0; i < versoes.size(); i++){
+			datas.add(versoes.get(i).getTimestamp());
+		}
+		
+		return datas;
 	}
 }
