@@ -35,7 +35,7 @@ public class VersionarBemPatrimonial implements VersionarBemPatrimonialRemote{
 			byte[] bpByte = bos.toByteArray();
 			versaoBem.setBemPatrimonial(bem);
 			versaoBem.setBemPatrimonialBytes(bpByte);
-			bem.getVersoes().add(versaoBem);
+//			bem.getVersoes().add(versaoBem);
 			bos.close();
 		} catch (Exception e){
 			e.printStackTrace();
@@ -54,12 +54,12 @@ public class VersionarBemPatrimonial implements VersionarBemPatrimonialRemote{
 	public ArrayList<Long> listarIdsDeVersoes(BemPatrimonial bem) throws ModeloException{
 		ArrayList<Long> ids = new ArrayList<Long>();
 		
-		List<VersaoBemPatrimonial> versoes = bem.getVersoes();
+//		List<VersaoBemPatrimonial> versoes = bem.getVersoes();
 	
-		for(int i = 0; i < versoes.size(); i++){
-			ids.add(versoes.get(i).getId());
-		}
-		
+//		for(int i = 0; i < versoes.size(); i++){
+//			ids.add(versoes.get(i).getId());
+//		}
+//		
 		return ids;
 	}
 	
@@ -67,12 +67,12 @@ public class VersionarBemPatrimonial implements VersionarBemPatrimonialRemote{
 	public ArrayList<Timestamp> listarDatasDeVersoes(BemPatrimonial bem){
 		ArrayList<Timestamp> datas = new ArrayList<Timestamp>();
 		
-		List<VersaoBemPatrimonial> versoes = bem.getVersoes();
-	
-		for(int i = 0; i < versoes.size(); i++){
-			datas.add(versoes.get(i).getTimestamp());
-		}
-		
+	//	List<VersaoBemPatrimonial> versoes = bem.getVersoes();
+//	
+//		for(int i = 0; i < versoes.size(); i++){
+//			datas.add(versoes.get(i).getTimestamp());
+//		}
+//		
 		return datas;
 	}
 }

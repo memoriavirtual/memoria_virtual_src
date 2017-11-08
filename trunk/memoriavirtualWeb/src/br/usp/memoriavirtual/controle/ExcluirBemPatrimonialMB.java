@@ -136,7 +136,7 @@ public class ExcluirBemPatrimonialMB extends EditarBemPatrimonialMB implements
 
 				Map<String, String> parametros = new HashMap<String, String>();
 				parametros.put("id", idAprovacao.toString());
-				String url = this.memoriaVirtualEJB.getUrl(
+				String url = "http://" + this.memoriaVirtualEJB.getUrl(
 						MVModeloMapeamentoUrl.excluirBem, parametros);
 
 				tags.put(MVModeloParametrosEmail.URL000.toString(), url);

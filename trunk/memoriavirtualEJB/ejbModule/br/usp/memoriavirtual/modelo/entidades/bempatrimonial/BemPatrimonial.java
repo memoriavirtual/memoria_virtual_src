@@ -109,9 +109,9 @@ public class BemPatrimonial implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="bemPatrimonial",cascade = CascadeType.MERGE)
 	private List<Revisao> revisoes = null;
 	
-	@CascadeOnDelete
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="bemPatrimonial",cascade = CascadeType.PERSIST)
-	private List<VersaoBemPatrimonial> versoes = null;
+//	@CascadeOnDelete
+//	@OneToMany(fetch = FetchType.EAGER,mappedBy="bemPatrimonial",cascade = CascadeType.PERSIST)
+//	//private List<VersaoBemPatrimonial> versoes = null;
 	
 	private String condicaoTopografica = "";
 	private String sitioPaisagem = "";
@@ -182,7 +182,7 @@ public class BemPatrimonial implements Serializable {
 		this.bensRelacionados = new ArrayList<BemPatrimonial>();
 		this.containerMultimidia = new ContainerMultimidia();
 		this.revisoes = new ArrayList<Revisao>();
-		this.versoes = new ArrayList<VersaoBemPatrimonial>();
+//		this.versoes = new ArrayList<VersaoBemPatrimonial>();
 		this.exposicao = BemPatrimonial.Exposicao.exposto;
 		this.numeroPavimentos = 0;
 		this.numeroAmbientes = 0;
@@ -307,13 +307,13 @@ public class BemPatrimonial implements Serializable {
 		this.bensRelacionados = bensRelacionados;
 	}
 	
-	public List<VersaoBemPatrimonial> getVersoes() {
-		return versoes;
-	}
+//	public List<VersaoBemPatrimonial> getVersoes() {
+//		return versoes;
+//	}
 
-	public void setVersoes(List<VersaoBemPatrimonial> versoes) {
-		this.versoes = versoes;
-	}
+//	public void setVersoes(List<VersaoBemPatrimonial> versoes) {
+//		this.versoes = versoes;
+//	}
 
 	public ContainerMultimidia getContainerMultimidia() {
 		return containerMultimidia;
