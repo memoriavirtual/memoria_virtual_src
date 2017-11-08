@@ -82,7 +82,8 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 	
 	@Override
 	public long solicitarExclusao(BemPatrimonial bem, Aprovacao aprovacao) {
-		//TODO set validade FALSE
+		bem.setExterno(false);
+		bem.setRevisao(false);
 		entityManager.persist(aprovacao);
 		return aprovacao.getId();
 	}
@@ -101,8 +102,6 @@ public class ExcluirBemPatrimonial implements ExcluirBemPatrimonialRemote {
 		aprovacao.setStatus(MVModeloStatusAprovacao.negada);
 		aprovacao.setAlteradaEm(new Date());
 		entityManager.merge(aprovacao);
-
-		//bem.setValidade(true);
 		entityManager.merge(bem);
 	}
 }

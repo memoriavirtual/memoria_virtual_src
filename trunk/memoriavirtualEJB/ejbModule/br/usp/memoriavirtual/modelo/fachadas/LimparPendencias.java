@@ -18,7 +18,6 @@ import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.ExcluirInstituicaoRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.LimparPendenciasrRemote;
 import br.usp.memoriavirtual.utils.MVModeloAcao;
-import br.usp.memoriavirtual.utils.MVModeloStatusAprovacao;
 
 @Stateless
 @Startup
@@ -43,7 +42,7 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 		
 		//Date dataAtual = new Date(2014,12,12); //usado para testes
 		
-		System.out.println("Executando Limpar Pêndencias: "+dataAtual);
+		System.out.println("Executando Limpar Pï¿½ndencias: "+dataAtual);
 		
 		List<Usuario> usuariosExpirados = null;
 		List<Aprovacao> aprovacoesExpiradas = null;
@@ -62,13 +61,13 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 			em.remove(u);			
 		}
 		
-		for (Aprovacao aprov : aprovacoesExpiradas) {
+		for (Aprovacao aprovacaoExpirada : aprovacoesExpiradas) {
 
-			/* Extraimos o nome da Ação que gerou a pêndencia */
-			MVModeloAcao acao = aprov.getAcao();
+			/* Extraimos o nome da AÃ§Ã£o que gerou a pendÃªncia */
+			MVModeloAcao acao = aprovacaoExpirada.getAcao();
 
 			if(acao.equals(MVModeloAcao.excluir_usuario)){
-				String[] dados = aprov.getDados().split(";");
+				String[] dados = aprovacaoExpirada.getDados().split(";");
 				Long id = new Long(dados[1]);
 				Query query = em.createQuery("SELECT u from Usuario u where u.id = :id");
 				query.setParameter("id", id);
@@ -77,17 +76,16 @@ public class LimparPendencias implements LimparPendenciasrRemote {
 				em.merge(user);
 
 			}else if(acao.equals(MVModeloAcao.excluir_instituicao)){
-				String[] dados = aprov.getDados().split(";");
+				String[] dados = aprovacaoExpirada.getDados().split(";");
 				Instituicao inst = em.find(Instituicao.class,Long.parseLong(dados[1]));
 				inst.setValidade(true);
 				em.merge(inst);
 			}else if(acao.equals(MVModeloAcao.excluir_bem)){
-				//TODO set validade true
+				//TODO setExterno = true
 			}else if(acao.equals(MVModeloAcao.editar_cadastro_usuario)){
 				//TODO algo ?
 			}
-			aprov.setStatus(MVModeloStatusAprovacao.expirada);
-			em.merge(aprov);			
+			em.remove(aprovacaoExpirada);
 		}
 	}
 }
