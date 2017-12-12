@@ -1,5 +1,6 @@
 package br.usp.memoriavirtual.utils;
 
+import java.util.Calendar;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -198,4 +199,99 @@ public class ValidacoesDeCampos {
 		}
 	}
 
+	/**
+	 * Verifica se uma dada string de data é precisa. Caso seja, verifica
+	 * se está dentro do padrão adotado: "dd/mm/aaaa".
+	 * @param data
+	 * @param flag
+	 * @return data validada (ou não)
+	 */
+	public static boolean validarData(String data, boolean flag){
+		
+		String regexp = "^[0-9]{2}[/][0-9]{2}[/][0-9]{4}$";	//string de um código de expressão regular
+		Pattern pattern = Pattern.compile(regexp);				//pattern definido pela string regexp
+		Matcher matcher = pattern.matcher(data);				//verificando se a data está no padrão definido por regexp, em pattern
+		
+		//caso a string data não esteja no padrão definido
+		//e a flag para verificar se a data é precisa for false
+		if (matcher.matches() && flag == false){
+			//Verificando a validade do dia, do mês e do ano
+			String aux_data[] = data.split("/");
+			int dia = Integer.parseInt(aux_data[0]);
+			int mes = Integer.parseInt(aux_data[1]);
+			int ano = Integer.parseInt(aux_data[2]);
+			
+			if ((mes >= 1 && mes <= 12) && 																//verificando os meses
+				(dia >= 1 && dia <= 31)	&&																//verificando os dias
+				(((ano % 4 == 0) && (mes == 2) && (dia <= 29)) || 										//verificando fevereiro em ano bissexto
+						((ano % 4 != 0) && (mes == 2) && (dia <= 28)) ||								//verificando fevereiro em ano normal
+				((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia <= 30)) ||						//verificando os meses de abr, jun, set e nov
+				(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12))){	//caso caia em qualquer outro mes
+			
+				//obtendo a data atual para comparar com a data inserida
+				Calendar data_atual = Calendar.getInstance();
+				
+				if (ano <= data_atual.get(Calendar.YEAR)){							//ano inserido deve ser menor ou igual a data atual
+					if (ano == data_atual.get(Calendar.YEAR)){						//verificando se o ano inserido é o ano atual
+						if (mes <= (data_atual.get(Calendar.MONTH) + 1)){			//verificando se o mês inserido não é maior que o atual
+							if (mes == (data_atual.get(Calendar.MONTH) + 1)){		//verificando se é o mês atual
+								if (dia <= data_atual.get(Calendar.DAY_OF_MONTH))	//verificando se a data inserida está correta
+									return true;
+							}
+							else return true;
+						}
+						else return true;
+					}
+					else return true;	
+				}
+			}
+		}
+		//caso não haja data precisa
+		else if (flag == true) return true;
+		
+		return false;
+	}
+	
+	/**
+	 * Método que compara as datas de nascimento e óbito, caso as duas sejam definidas
+	 * @param flagDataNascimento
+	 * @param flagDataObito
+	 * @param dataNascimento
+	 * @param dataObito
+	 * @return datas validadas (ou não)
+	 */
+	public static boolean compararDatasNascimentoEObito(boolean flagDataNascimento, boolean flagDataObito, String dataNascimento, String dataObito){
+		//verificação das flags que indicam se determinada data é imprecisa (ou seja, sem máscara)
+		if (flagDataNascimento == true || flagDataObito == true) return true;
+		
+		//caso alguma delas seja igual a true, deve-se verificar se a data de nascimento é menor ou igual a de óbito
+		else{
+			String data_nasc[] = dataNascimento.split("/");
+			String data_obito[] = dataObito.split("/");
+			
+			int dia_nasc = Integer.parseInt(data_nasc[0]);
+			int mes_nasc = Integer.parseInt(data_nasc[1]);
+			int ano_nasc = Integer.parseInt(data_nasc[2]);
+			int dia_obito = Integer.parseInt(data_obito[0]);
+			int mes_obito = Integer.parseInt(data_obito[1]);
+			int ano_obito = Integer.parseInt(data_obito[2]);
+			
+			if (ano_nasc <= ano_obito){					//ano de nascimento deve ser menor ou igual a data de óbito
+				if (ano_nasc == ano_obito){				//verificando se o ano de nascimento é o ano de óbito
+					if (mes_nasc <= mes_obito){			//verificando se o mês de nascimento não é maior que o de óbito
+						if (mes_nasc == mes_obito){		//verificando se é o mês de óbito
+							if (dia_nasc < dia_obito)	//verificando se a data de nascimento está correta
+								return true;
+							else return false;
+						}
+						else return true;
+					}
+					else return true;
+				}
+				else return true;	
+			}
+		}
+		
+		return false;
+	}
 }

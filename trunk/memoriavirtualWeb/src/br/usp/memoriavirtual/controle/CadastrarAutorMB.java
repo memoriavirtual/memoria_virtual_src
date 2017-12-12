@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.annotation.PostConstruct;
 
 import br.usp.memoriavirtual.modelo.entidades.Autor;
 import br.usp.memoriavirtual.modelo.entidades.Autor.Atividade;
@@ -41,6 +42,11 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 	protected Atividade atividade = Autor.Atividade.adaptador;
 	protected String nascimento = "";
 	protected String obito = "";
+	
+	protected boolean dataNascimentoImprecisa = false;
+	protected boolean dataObitoImprecisa = false;
+	
+	
 	private MensagensMB mensagens;
 
 	public CadastrarAutorMB() {
@@ -49,6 +55,12 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 		ELResolver resolver = facesContext.getApplication().getELResolver();
 		this.mensagens = (MensagensMB) resolver.getValue(
 				facesContext.getELContext(), null, "mensagensMB");
+	}
+	
+	@PostConstruct
+	public void inicializar(){
+		this.dataNascimentoImprecisa = true;
+		this.dataObitoImprecisa = true;
 	}
 
 	public String cadastrar() {
@@ -90,6 +102,8 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 		this.atividade = Autor.Atividade.adaptador;
 		this.nascimento = "";
 		this.obito = "";
+		this.dataNascimentoImprecisa = false;
+		this.dataObitoImprecisa = false;
 		return null;
 	}
 
@@ -116,7 +130,10 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 		boolean a = this.validarNome();
 		boolean b = this.validarSobrenome();
 		boolean c = this.validarUnico();
-		return (a && b && c);
+		boolean d = this.validarDataNasc();
+		boolean e = this.validarDataObito();
+		boolean f = this.compararDatasNascimentoEObito();
+		return (a && b && c && d && e && f);
 	}
 
 	public boolean validarUnico(){
@@ -154,6 +171,52 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 			String args[] = { this.traduzir("sobrenome") };
 			MensagensDeErro.getErrorMessage("erroCampoVazio", args,
 					"validacao-sobrenome");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Método que valida o campo "Nascimento" Caso a opção de data Imprecisa esteja marcada,
+	 * valida automaticamente. Caso contrário, valida no formato DD/MM/AAAA.
+	 * @return true, se o campo estiver ok. false, se houver algum erro no campo.
+	 */
+	public boolean validarDataNasc(){
+		if (ValidacoesDeCampos.validarData(this.nascimento, this.dataNascimentoImprecisa) == false) {
+			String args[] = { this.traduzir("nascimento") };
+			MensagensDeErro.getErrorMessage("erroDataNasc", args,
+					"validacao-nascimento");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Método que valida o campo "Óbito" Caso a opção de data Imprecisa esteja marcada,
+	 * valida automaticamente. Caso contrário, valida no formato DD/MM/AAAA.
+	 * @return true, se o campo estiver ok. false, se houver algum erro no campo.
+	 */
+	public boolean validarDataObito(){
+		if (ValidacoesDeCampos.validarData(this.obito, this.dataObitoImprecisa) == false) {
+			String args[] = { this.traduzir("obito") };
+			MensagensDeErro.getErrorMessage("erroDataObito", args,
+					"validacao-obito");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Método que compara as datas de nascimento e óbito (nascimento < óbito), caso
+	 * as flags que indicam se as datas são imprecisas forem falsas.
+	 * @return true, se as datas forem validadas; false, caso nascimento >= óbito
+	 */
+	public boolean compararDatasNascimentoEObito(){
+		if (ValidacoesDeCampos.compararDatasNascimentoEObito(this.dataNascimentoImprecisa, 
+				this.dataObitoImprecisa, this.nascimento, this.obito) == false) {
+			String args[] = { this.traduzir("obito") };
+			MensagensDeErro.getErrorMessage("erroDatasNascEObito", args,
+					"validacao-nascimento");
 			return false;
 		}
 		return true;
@@ -226,6 +289,22 @@ public class CadastrarAutorMB implements Serializable, BeanMemoriaVirtual {
 
 	public void setMensagens(MensagensMB mensagens) {
 		this.mensagens = mensagens;
+	}
+
+	public boolean getDataNascimentoImprecisa() {
+		return dataNascimentoImprecisa;
+	}
+
+	public void setDataNascimentoImprecisa(boolean dataNascimentoImprecisa) {
+		this.dataNascimentoImprecisa = dataNascimentoImprecisa;
+	}
+
+	public boolean getDataObitoImprecisa() {
+		return dataObitoImprecisa;
+	}
+
+	public void setDataObitoImprecisa(boolean dataObitoImprecisa) {
+		this.dataObitoImprecisa = dataObitoImprecisa;
 	}
 
 	@Override

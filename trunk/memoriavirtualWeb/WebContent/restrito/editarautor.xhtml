@@ -144,6 +144,36 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="col-md-4">
+									<div class="form-group">
+									
+									</div>
+								</div>
+								
+								<!-- verificando se a data de nascimento é Imprecisa --> 
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="label-control" for="dataNascimentoImprecisa">#{mensagens.imprecisa}</h:outputLabel>
+										<div class="form-control pull-right com-switch">
+											<h:selectBooleanCheckbox id="dataNascimentoImprecisa" class="switch" 
+												value="#{editarAutorMB.dataNascimentoImprecisa}">
+											</h:selectBooleanCheckbox>
+										</div>
+									</div>
+								</div>
+								
+								<!-- verificando se a data de óbito é Imprecisa -->
+								<div class="col-md-4">
+									<div class="form-group">
+										<h:outputLabel class="label-control" for="dataObitoImprecisa">#{mensagens.imprecisa}</h:outputLabel>
+										<div class="form-control pull-right com-switch">
+											<h:selectBooleanCheckbox id="dataObitoImprecisa" class="switch"
+												value="#{editarAutorMB.dataObitoImprecisa}">
+											</h:selectBooleanCheckbox>
+										</div>
+									</div>
+								</div>
 
 								<div class="text-right row">
 									<div class="col-md-12">
