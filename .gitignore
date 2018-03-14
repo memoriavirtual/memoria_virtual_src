@@ -1,1 +1,8 @@
 /.project
+*.ear
+*.jar
+*.war
+build_EJB
+build_WEB
+build_WS
+*/**/build.properties
