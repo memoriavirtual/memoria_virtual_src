@@ -6,11 +6,11 @@
 		<delete>
 			<fileset dir="../" includes="*.jar, *.war, *.ear" />
 		</delete>
-		<ant antfile="build.xml" dir="../memoriavirtualEJB/">
+		<ant antfile="build.xml" dir="../memoriavirtualEJB/" inheritAll="true">
 		</ant>
-		<ant antfile="build.xml" dir="../memoriavirtualWeb/">
+		<ant antfile="build.xml" dir="../memoriavirtualWeb/" inheritAll="true">
 		</ant>
-		<ant antfile="build.xml" dir="../memoriavirtualWebService/">
+		<ant antfile="build.xml" dir="../memoriavirtualWebService/" inheritAll="true">
 		</ant>
 
 		<ear destfile="../memoriavirtual.ear" appxml="EarContent/META-INF/application.xml">
@@ -22,4 +22,3 @@
 
 
 </project>
-
