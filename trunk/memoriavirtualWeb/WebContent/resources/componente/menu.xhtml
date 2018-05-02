@@ -14,118 +14,104 @@
 
 	<div>
 		<ul id="menuNavegacao">
-			<li><h:outputLink class="linkPrincipal" rendered="true">
-					#{mensagens.descritor}
-				</h:outputLink>
-				<ul class="linkSecundario">
-					<li><h:outputLink value="index.jsf">
-							#{mensagens.sobre}
-							<f:ajax event="click" render="@none" execute="@this" />
-						</h:outputLink></li>
-				</ul></li>
-			<li><h:outputLink class="linkPrincipal"
-					rendered="#{renderizarMenuMB.gerente}">
+			<li><h:outputLink id="menuInstituicaoPrincipal" class="linkPrincipal" rendered="#{renderizarMenuMB.gerente}">
 					#{mensagens.instituicao}
 				</h:outputLink>
 				<ul class="linkSecundario">
-					<li><h:outputLink rendered="#{renderizarMenuMB.administrador}"
+					<li><h:outputLink id="menuCadastrarInstituicao" rendered="#{renderizarMenuMB.administrador}"
 							value="cadastrarinstituicao.jsf">
-							#{mensagens.menuCadastrarInstituicao}
+							#{mensagens.menuCadastrar}
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink id="menuEditarInstituicao" rendered="#{renderizarMenuMB.gerente}"
 							value="selecionarinstituicaoedicao.jsf">
-							#{mensagens.menuEditarInstituicao}							
+							#{mensagens.menuEditar}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink id="menuExcluirInstituicao" rendered="#{renderizarMenuMB.gerente}"
 							value="selecionarinstituicaoexclusao.jsf">
-							#{mensagens.menuExcluirInstituicao}							
+							#{mensagens.menuExcluir}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
 				</ul></li>
-			<li><h:outputLink class="linkPrincipal" rendered="true">
+			<li><h:outputLink id="menuBemPatrimonial" class="linkPrincipal" rendered="true">
 					#{mensagens.bempatrimonial}
 				</h:outputLink>
 				<ul class="linkSecundario">
 					<h:form>
-						<li>
-							<h:commandLink rendered="true"
+						<li><h:commandLink id="menuCadastrarBemPatrimonial" rendered="true"
 								action="#{renderizarMenuMB.cadastrarBemAction}">
-								#{mensagens.menuCadastrarBemPatrimonial}
-							</h:commandLink>
-						</li>
+								#{mensagens.menuCadastrar}
+							</h:commandLink></li>
 					</h:form>
-					<li><h:outputLink rendered="true"
+					<li><h:outputLink id="menuEditarBemPatrimonial" rendered="true"
 							value="selecionarbempatrimonialedicao.jsf">
-							#{mensagens.menuEditarBemPatrimonial}
+							#{mensagens.menuEditar}
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="true"
+					<li><h:outputLink id="menuEcluirBemPatrimonial" rendered="true"
 							value="selecionarbempatrimonialexclusao.jsf">
-							#{mensagens.menuExcluirBemPatrimonial}
+							#{mensagens.menuExcluir}
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
 				</ul></li>
-				<li><h:outputLink class="linkPrincipal" rendered="#{renderizarMenuMB.revisor}">
+			<li><h:outputLink id="menuRevisaoPrincipal" class="linkPrincipal"
+					rendered="#{renderizarMenuMB.revisor}">
 					#{mensagens.revisao}
 				</h:outputLink>
 				<ul class="linkSecundario">
-					<li>
-						<h:outputLink rendered="true"
+					<li><h:outputLink id="menuRevisarBens" rendered="true"
 							value="selecionabempatrimonialrevisao.jsf">
 							#{mensagens.revisarbens}
-						</h:outputLink>
-					</li>
-				</ul>
-				</li>
-			<li><h:outputLink class="linkPrincipal" rendered="true">
+						</h:outputLink></li>
+				</ul></li>
+			<li><h:outputLink id="menuAutorPrincipal" class="linkPrincipal" rendered="true">
 					#{mensagens.autoria}
 				</h:outputLink>
 				<ul class="linkSecundario">
-					<li><h:outputLink rendered="true"
-							value="cadastrarautor.jsf">
-							#{mensagens.menuCadastrarAutor}
+					<li><h:outputLink id="menuCadastrarAutor" rendered="true" value="cadastrarautor.jsf">
+							#{mensagens.menuCadastrar}
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="true"
+					<li><h:outputLink id="menuEditarAutor" rendered="true"
 							value="selecionarautoredicao.jsf">
-							#{mensagens.menuEditarAutor}							
+							#{mensagens.menuEditar}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="true"
+					<li><h:outputLink id="menuExcluirAutor" rendered="true"
 							value="selecionarautorexclusao.jsf">
-							#{mensagens.menuExcluirAutor}							
+							#{mensagens.menuExcluir}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
 				</ul></li>
-			<li><h:outputLink class="linkPrincipal" rendered="#{renderizarMenuMB.gerente}">
-					#{mensagens.administracao}
+			<li><h:outputLink id="menuUsuarioPrincipal" class="linkPrincipal"
+					rendered="#{renderizarMenuMB.gerente}">
+					#{mensagens.usuario}
 				</h:outputLink>
 				<ul class="linkSecundario">
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink  id="menuEnviarConvite" rendered="#{renderizarMenuMB.gerente}"
 							value="enviarconvite.jsf">
 							#{mensagens.menuEnviarConvite}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink  id="menuEditarUsuario" rendered="#{renderizarMenuMB.gerente}"
 							value="selecionarusuarioedicao.jsf">
-							#{mensagens.menuEditarCadastroUsuario}							
+							#{mensagens.menuEditar}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
-					<li><h:outputLink rendered="#{renderizarMenuMB.gerente}"
+					<li><h:outputLink id="menuExcluirUsuario" rendered="#{renderizarMenuMB.gerente}"
 							value="selecionarusuarioexclusao.jsf">
-							#{mensagens.menuExcluirUsuario}							
+							#{mensagens.menuExcluir}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
 				</ul></li>
-			<li><h:outputLink class="linkPrincipal" rendered="true">
-					#{mensagens.usuario}
+			<li><h:outputLink id="menuContaPrincipal" class="linkPrincipal" rendered="true">
+					#{mensagens.conta}
 				</h:outputLink>
 				<ul class="linkSecundario">
-					<li><h:outputLink rendered="true"
+					<li><h:outputLink id="menuEditarConta" rendered="true"
 							value="/memoriavirtual/restrito/editarcadastroproprio.jsf">
-							#{mensagens.menuAlterarCadastroProprio}							
+							#{mensagens.menuEditar}							
 							<f:ajax event="click" render="@none" execute="@this" />
 						</h:outputLink></li>
 				</ul></li>
