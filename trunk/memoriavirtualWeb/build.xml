@@ -16,6 +16,12 @@
 
 
 	<target name="init">
+
+		<propertyfile file="./src/build.properties">
+		    <entry key="buildtag" type="date" value="now" pattern="YYYY-MM-DD hh:mm:ss a z"/>
+		</propertyfile>
+	    <replaceregexp file="./src/build.properties" match="^#.*\n" replace=""/>
+		
 		<mkdir dir="../build_WEB/classes" />
 		<mkdir dir="../build_WEB/src" />
 		<delete>
