@@ -78,6 +78,7 @@ public class CadastrarBemPatrimonialMB extends BeanContainerDeMidia implements
 
 	private ValidacoesDeCampos validacao;
 	private MensagensMB mensagens;
+	
 
 	public CadastrarBemPatrimonialMB() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();

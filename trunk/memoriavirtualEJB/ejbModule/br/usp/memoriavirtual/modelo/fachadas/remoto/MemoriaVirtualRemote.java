@@ -21,9 +21,9 @@ public interface MemoriaVirtualRemote {
 	
 	public String getURLServidor() throws ModeloException;
 	
-	public String getCaptchaPublicKey() throws ModeloException;
+	public String getCaptchaSiteKey() throws ModeloException;
 	
-	public String getCaptchaPrivateKey() throws ModeloException;
+	public String getCaptchaSecretKey() throws ModeloException;
 
 	public String getIntervaloTimer() throws ModeloException;
 

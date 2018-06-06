@@ -12,6 +12,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>#{mensagens.tituloSistema}</title>
 	<h:outputStylesheet name="login.css" library="css" />
+	
+	<!-- Script do recaptcha (fonte: google) -->
+	<script src="https://www.google.com/recaptcha/api.js"></script>
 </h:head>
 <h:body>
 	<f:view locale="#{facesContext.externalContext.requestLocale}">
@@ -29,11 +32,14 @@
 					<div>
 						<h:inputSecret value="#{realizarLoginCaptchaMB.senha}" />
 					</div>
+					   
 					<br>
 					<h:panelGroup rendered="#{realizarLoginCaptchaMB.captchaNeed == true}">				
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<div style="background-color: black; max-width: 300px;">
-								<h:outputText escape="false" value="#{realizarLoginCaptchaMB.codigoHtmlRecaptcha}"/>
+								
+								<!-- Utilizando o script do site do google para o recaptcha -->
+								<div class="g-recaptcha" data-sitekey="#{realizarLoginCaptchaMB.siteKeyRecaptcha}"></div>
 							</div>
 						</div>
 					</h:panelGroup>

@@ -86,44 +86,6 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		return (String) propriedades.get("hostname");
 	}
 
-	public String getCaptchaPublicKey() throws ModeloException {
-
-		Context context = null;
-		try {
-			context = new InitialContext();
-		} catch (NamingException e) {
-			new ModeloException(e);
-			return null;
-		}
-		Properties propriedades = null;
-		try {
-			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
-		} catch (NamingException e) {
-			new ModeloException(e);
-			return null;
-		}
-		return (String) propriedades.get("publicKey");
-	}
-
-	public String getCaptchaPrivateKey() throws ModeloException {
-
-		Context context = null;
-		try {
-			context = new InitialContext();
-		} catch (NamingException e) {
-			new ModeloException(e);
-			return null;
-		}
-		Properties propriedades = null;
-		try {
-			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
-		} catch (NamingException e) {
-			new ModeloException(e);
-			return null;
-		}
-		return (String) propriedades.get("privateKey");
-	}
-
 	public String getIntervaloTimer() throws ModeloException {
 
 		Context context = null;
@@ -351,4 +313,53 @@ public class MemoriaVirtual implements MemoriaVirtualRemote {
 		}
 	}
 
+	/**
+	 * Método que busca das propriedades do servidor de aplicação a SiteKey, um elemento 
+	 * necessário para a requisição POST enviada ao servidor da API Recaptcha v2
+	 * @return String contendo a Site Key
+	 * @throws ModeloException
+	 */
+	public String getCaptchaSiteKey() throws ModeloException {
+
+		Context context = null;
+		try {
+			context = new InitialContext();
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		Properties propriedades = null;
+		try {
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		return (String) propriedades.get("siteKey");
+	}
+
+	/**
+	 * Método que busca das propriedades do servidor de aplicação a SecretKey, um elemento 
+	 * necessário para a requisição POST enviada ao servidor da API Recaptcha v2
+	 * @return String contendo a Secret Key
+	 * @throws ModeloException
+	 */
+	public String getCaptchaSecretKey() throws ModeloException {
+
+		Context context = null;
+		try {
+			context = new InitialContext();
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		Properties propriedades = null;
+		try {
+			propriedades = (Properties) context.lookup("memoriavirtual.propriedades");
+		} catch (NamingException e) {
+			new ModeloException(e);
+			return null;
+		}
+		return (String) propriedades.get("secretKey");
+	}
 }

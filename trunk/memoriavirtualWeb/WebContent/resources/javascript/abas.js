@@ -16,7 +16,7 @@ $(document).ready(function() {
 		$("#menuNavegacao li a.linkPrincipal").removeClass("ativo");
 		$(this).addClass("ativo");
 		$("#linkSecundarioRecipiente").animate({
-			height: "39px"					   
+			height: "39px" 
 		});
 		$(".linkSecundario").hide();
 		$(this).siblings(".linkSecundario").fadeIn();

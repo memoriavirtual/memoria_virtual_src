@@ -12,39 +12,39 @@ function limparMensagens() {
 }
 
 function selecionarAbaInstituicao() {
-	selecionarAba("2");
+	selecionarAba("1");
 }
 
 function selecionarAbaPatrimonio() {
-	selecionarAba("3");
+	selecionarAba("2");
 }
 
 function selecionarAbaRevisao() {
-	selecionarAba("4");
+	selecionarAba("3");
 }
 
 function selecionarAbaAutor() {
-	selecionarAba("5");
+	selecionarAba("4");
 }
 
 function selecionarAbaAdministracao() {
-	selecionarAba("6");
+	selecionarAba("5");
 }
 
 function selecionarAbaConta() {
-	selecionarAba("7");
+	selecionarAba("6");
 }
 
-function selecionarAba(i) {
+function selecionarAba(indiceItemMenu) {
 	todosItens = $('.linkPrincipal');
 	todosItens.removeClass('itemAtual');
 	todosItens.addClass('outrosItens');
 
-	segundoItemAnchor = $("#menuNavegacao li:nth-of-type(" + i + ")").find(
+	segundoItemAnchor = $("#menuNavegacao li:nth-of-type(" + indiceItemMenu + ")").find(
 			'.linkPrincipal');
 	segundoItemAnchor.addClass('itemAtual');
 
-	filhos = $('#menuNavegacao li:nth-of-type(' + i + ')').find(
+	filhos = $('#menuNavegacao li:nth-of-type(' + indiceItemMenu + ')').find(
 			'.linkSecundario').clone();
 	subMenu = $('#subMenu');
 	subMenu.html(filhos);
