@@ -1,8 +1,6 @@
 package br.usp.memoriavirtual.controle;
 
-//
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +8,6 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.util.List;
 
-//
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -18,7 +15,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-//
 import br.usp.memoriavirtual.modelo.entidades.Acesso;
 import br.usp.memoriavirtual.modelo.entidades.Usuario;
 import br.usp.memoriavirtual.modelo.fachadas.ModeloException;
@@ -26,12 +22,12 @@ import br.usp.memoriavirtual.modelo.fachadas.remoto.MemoriaVirtualRemote;
 import br.usp.memoriavirtual.modelo.fachadas.remoto.RealizarLoginCaptchaRemote;
 import br.usp.memoriavirtual.utils.MensagensDeErro;
 
-//
-import javax.net.ssl.HttpsURLConnection;
+//Tratar URL's
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+//Tratar objetos JSON
 import javax.json.Json; 
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -125,6 +121,8 @@ public class RealizarLoginCaptchaMB implements Serializable {
 
 	}
 	
+	
+	
 	/**
 	 * Método que monta a URL contendo a requisição POST para a API reCaptcha v2 do Google,
 	 * obtém a resposta (sendo ela um objeto JSON) e verifica-se a checagem do reCaptcha (se o
@@ -181,6 +179,15 @@ public class RealizarLoginCaptchaMB implements Serializable {
 		return false;
 	}
 
+	/* **********************************************************************************
+	 * 
+	 * 
+	 * 									GETTERS E SETTERS
+	 * 
+	 * 
+	 * **********************************************************************************
+	 */
+	
 	/**
 	 * Getter da String de usuário
 	 * @return the usuario
