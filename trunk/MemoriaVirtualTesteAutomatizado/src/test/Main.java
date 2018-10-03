@@ -1,7 +1,7 @@
 package test;
 
 public class Main {
- 
+
 	/**
 	 * Método principal do teste automatizado de login
 	 * @param args
@@ -10,18 +10,12 @@ public class Main {
 	public static void main (String []args) throws InterruptedException{
 		TesteLoginMemoriaVirtual login = new TesteLoginMemoriaVirtual();
 		
-		//fluxo principal
 		login.abrirPaginaLogin();
 		login.setElementosDaPagina();
-		login.testeBase("mvirtual", "mvirtual");
 		
-		//fluxo alternativo 1
-		login = new TesteLoginMemoriaVirtual();
-		login.abrirPaginaLogin();
-		login.setElementosDaPagina();
-		login.testeFluxoAlternativo1();
-		
-		//login.testeFluxoAlternativo2();
+		//login.testeBase("mvirtual", "mvirtual");
+		//login.testeFluxoAlternativo1();
+		login.testeFluxoAlternativo2();
 		
 		login.encerrarPagina();
 	}
