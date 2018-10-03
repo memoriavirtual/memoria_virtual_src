@@ -28,7 +28,7 @@ public class TesteLoginMemoriaVirtual {
 	 */
 	public TesteLoginMemoriaVirtual(){
 		//"setando o caminho do webdriver do chrome
-		System.setProperty("webdriver.chrome.driver", "/home/goodsprings/git/memoria_virtual_src/trunk/MemoriaVirtualTesteAutomatizado/lib/webdrivers/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "/home/fernando/git/memoria_virtual_src/trunk/memoriaVirtualTesteAutomatizado/lib/seleniumjars/chromedriver");
 		
 		//abre uma nova classe controladora do webdriver do Chrome		
 		this.driver = new ChromeDriver();
@@ -56,10 +56,9 @@ public class TesteLoginMemoriaVirtual {
 		Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
 		this.searchLoginBtn.click();
 		
-		
 		Thread.sleep(2000);	//dando 2 segundo(s) para o usuário ver o teste
 		
-		//this.encerrarPagina();
+		this.encerrarPagina();
 	}
 	
 	/**
@@ -75,9 +74,18 @@ public class TesteLoginMemoriaVirtual {
 		Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
 		this.searchLoginBtn.click();
 		
-		Thread.sleep(1000);
+		Thread.sleep(500);
 		
-		//this.encerrarPagina();
+		//volta para o fluxo principal
+		this.setElementosDaPagina();
+		this.searchLoginTxt.sendKeys("mvirtual");		
+		this.searchPasswordTxt.sendKeys("mvirtual");
+		this.searchLoginBtn.click();
+
+		Thread.sleep(2000);
+
+		
+		this.encerrarPagina();
 	}
 	
 	
@@ -92,8 +100,8 @@ public class TesteLoginMemoriaVirtual {
 		}
 			
 		//procurando os elementos do recaptcha
-		WebElement searchRecaptchaTxt = driver.findElement(By.name("recaptcha_response_field"));
-	
+		WebElement searchRecaptchaTxt = driver.findElement(By.name("recaptcha-anchor-label"));
+		
 	}
 	
 	/**

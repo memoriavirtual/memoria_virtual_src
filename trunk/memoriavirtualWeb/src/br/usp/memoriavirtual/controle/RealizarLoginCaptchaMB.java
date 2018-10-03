@@ -48,7 +48,6 @@ public class RealizarLoginCaptchaMB implements Serializable {
 	private String senha = "";
 	private String siteKeyRecaptcha = "";
 
-
 	private boolean captchaNeed = true;
 
 	public RealizarLoginCaptchaMB() {
@@ -120,8 +119,6 @@ public class RealizarLoginCaptchaMB implements Serializable {
 		return null;
 
 	}
-	
-	
 	
 	/**
 	 * Método que monta a URL contendo a requisição POST para a API reCaptcha v2 do Google,
