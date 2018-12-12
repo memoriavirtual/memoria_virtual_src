@@ -106,14 +106,14 @@ public class CadastrarUsuarioMB implements Serializable, BeanMemoriaVirtual {
 					return null;
 				}
 
-			} else {
-				return this.redirecionar("/login.jsf", true);
-			}
+			} 
 		} else {
 			this.getMensagens().mensagemErro(
 					this.traduzir("conviteInexistente"));
 			return this.redirecionar("/login.jsf", true);
 		}
+		
+		return null;
 	}
 
 	@Override

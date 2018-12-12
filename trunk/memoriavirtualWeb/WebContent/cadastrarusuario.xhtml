@@ -57,8 +57,7 @@
 												<f:ajax event="keyup"
 													render="validacao-identificacao"
 													onevent="mostrarErro('#validacao-identificacao')"
-													listener="#{cadastrarUsuarioMB.validarCampo('validacao-identificacao',mensagens.identificacao,
-													cadastrarUsuarioMB.usuario.identificacao)}" />
+													listener="#{cadastrarUsuarioMB.validarCampo}" />
 											</h:inputText>
 											<h:message id="validacao-identificacao"
 												for="validacao-identificacao"
