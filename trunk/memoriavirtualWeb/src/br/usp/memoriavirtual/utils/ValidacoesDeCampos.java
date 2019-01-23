@@ -150,7 +150,7 @@ public class ValidacoesDeCampos {
 	
 	public static boolean validarAltitude(String Altitude) {
 
-		String regexp =  "^([0-7]?[0-9]?0[0-9]?[0-9]|8[0-7][0-9][0-9]|88[0-3][0-9]|884[0-8])$";
+		String regexp =  "^([0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[0-7][0-9][0-9][0-9]|8[0-7][0-9][0-9]|88[0-3][0-9]|884[0-8])$";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Altitude);
 
