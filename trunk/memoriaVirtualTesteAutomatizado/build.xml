@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="build" name="memoriaVirtualTesteAutomatizado">
+<project basedir="." default="testes" name="memoriaVirtualTesteAutomatizado">
 
 	<property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../../../dev/eclipse/"/>
@@ -58,7 +58,7 @@
         <antcall target="build"/>
     </target>
     
-	<target name="Testes">
+	<target name="testes" depends="build">
         <java classname="test.TestesAutomatizados" failonerror="true" fork="yes">
             <classpath refid="memoriaVirtualTesteAutomatizado.classpath"/>
         </java>
