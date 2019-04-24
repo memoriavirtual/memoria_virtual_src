@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  * @author Fernando e Jayro
  *
  */
-public class TesteLoginMemoriaVirtual {
+public class TesteLogin {
 	
 	protected WebDriver driver;
 	private WebElement searchLoginTxt;
@@ -20,13 +20,13 @@ public class TesteLoginMemoriaVirtual {
 
 	
 	/**
-	 * Método construtor da classe LoginMemoriaVirtual. 
+	 * Método construtor da classe TesteLogin. 
 	 * Aqui, a ideia será definir o atributo 'driver' de acordo com as propriedades
 	 * definidas no arquivo 'config.properties'. Por enquanto, estamos testando somente
 	 * no Chrome, então só precisa definir o caminho do driver no arquivo das propriedades.
 	 * Isso será feito posteriormente.
 	 */
-	public TesteLoginMemoriaVirtual(){
+	public TesteLogin(){
 		//"setando o caminho do webdriver do chrome
 		System.setProperty("webdriver.chrome.driver", "/home/fernando/git/memoria_virtual_src/trunk/memoriaVirtualTesteAutomatizado/lib/seleniumjars/chromedriver");
 		
@@ -35,9 +35,9 @@ public class TesteLoginMemoriaVirtual {
 	}
 	
 	public void setElementosDaPagina(){
-		this.searchLoginTxt = driver.findElement(By.name("j_idt9:usuario"));
-		this.searchPasswordTxt = driver.findElement(By.name("j_idt9:senha"));
-		this.searchLoginBtn = driver.findElement(By.name("j_idt9:j_idt15"));
+		this.searchLoginTxt = driver.findElement(By.id("formLogin:usuario"));
+		this.searchPasswordTxt = driver.findElement(By.id("formLogin:senha"));
+		this.searchLoginBtn = driver.findElement(By.id("formLogin:btnLogin"));
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class TesteLoginMemoriaVirtual {
 	 * @param senha
 	 * @throws InterruptedException
 	 */
-	public void testeBase (String login, String senha) throws InterruptedException{				
+	public void loginFluxoPrincipal (String login, String senha) throws InterruptedException{				
 		this.abrirPaginaLogin();
 		this.setElementosDaPagina();
 		
@@ -58,7 +58,7 @@ public class TesteLoginMemoriaVirtual {
 		this.searchLoginBtn.click();
 		
 		
-		Thread.sleep(2000);	//dando 2 segundo(s) para o usuário ver o teste
+		Thread.sleep(1000);	//dando 1 segundo(s) para o usuário ver o teste
 		
 		//this.encerrarPagina();
 	}
@@ -67,7 +67,8 @@ public class TesteLoginMemoriaVirtual {
 	 * 
 	 * @throws InterruptedException 
 	 */
-	public void testeFluxoAlternativo1() throws InterruptedException{
+	public void loginFluxoAlternativo1() throws InterruptedException{
+		
 		this.abrirPaginaLogin();
 		this.setElementosDaPagina();
 				
@@ -90,7 +91,7 @@ public class TesteLoginMemoriaVirtual {
 	}
 	
 	
-	public void testeFluxoAlternativo2() throws InterruptedException{
+	public void loginFluxoAlternativo2() throws InterruptedException{
 		this.abrirPaginaLogin();
 		this.setElementosDaPagina();
 		
@@ -110,7 +111,6 @@ public class TesteLoginMemoriaVirtual {
 		WebElement recaptchaSiteKey = driver.findElement(By.className("g-recaptcha"));
 		String r = recaptchaSiteKey.getAttribute("data-sitekey");
 
-		
 		System.out.println(r);
 	
 	}

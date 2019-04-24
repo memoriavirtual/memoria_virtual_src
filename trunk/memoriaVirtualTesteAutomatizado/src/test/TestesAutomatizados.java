@@ -1,33 +1,50 @@
 package test;
 
 public class TestesAutomatizados {
-	
-	public void testesLogin() throws InterruptedException {
-		TesteLoginMemoriaVirtual login;
-		
-//		login = new TesteLoginMemoriaVirtual();
-//		login.testeBase("mvirtual", "mvirtual");
-//		login.encerrarPagina();
-//		
-//		login = new TesteLoginMemoriaVirtual();
-//		login.testeFluxoAlternativo1();
-//		login.encerrarPagina();
-//		
-		
-		login = new TesteLoginMemoriaVirtual();
-		login.testeFluxoAlternativo2();		
-		login.encerrarPagina();
-	}
 
 	/**
-	 * Método principal do teste automatizado de login
-	 * @param args
-	 * @throws InterruptedException 
+	 * 
+	 * @throws InterruptedException
 	 */
-	public static void main (String []args) throws InterruptedException{
+	public void testesRealizarLogin() throws InterruptedException {
+		TesteLogin login;
+		
+		login = new TesteLogin();
+		login.loginFluxoPrincipal("mvirtual", "mvirtual");
+		login.encerrarPagina();
+		
+		login = new TesteLogin();
+		login.loginFluxoAlternativo1();
+		login.encerrarPagina();
+		
+		
+		login = new TesteLogin();
+		login.loginFluxoAlternativo2();		
+		login.encerrarPagina();
+	}
+	
+	/**
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void testesRealizarLogoff() throws InterruptedException{
+		TesteLogoff logoff = new TesteLogoff();
+		logoff.logoffFluxoPrincipal();
+		logoff.encerrarPagina();
+	}
+	
+	
+	/**
+	 * Método principal dos testes automatizados
+	 * @param args
+	 * @throws InterruptedException
+	 */
+	public static void main(String[] args) throws InterruptedException {
 		TestesAutomatizados testes = new TestesAutomatizados();
 		
-		testes.testesLogin();
+		
+		testes.testesRealizarLogin();
+		testes.testesRealizarLogoff();
 	}
 
 }
