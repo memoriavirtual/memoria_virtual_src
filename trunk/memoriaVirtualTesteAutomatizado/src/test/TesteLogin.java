@@ -1,5 +1,11 @@
 package test;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,10 +19,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class TesteLogin {
 	
+	protected Properties prop;
 	protected WebDriver driver;
 	private WebElement searchLoginTxt;
 	private WebElement searchPasswordTxt;
 	private WebElement searchLoginBtn;
+	
 
 	
 	/**
@@ -27,11 +35,30 @@ public class TesteLogin {
 	 * Isso será feito posteriormente.
 	 */
 	public TesteLogin(){
-		//"setando o caminho do webdriver do chrome
-		System.setProperty("webdriver.chrome.driver", "/home/fernando/git/memoria_virtual_src/trunk/memoriaVirtualTesteAutomatizado/lib/seleniumjars/chromedriver");
+		try {
+			//arquivo de propriedades - contém propriedades dos webdrivers
+			InputStream configs = new FileInputStream("webdriver.properties");
+			
+			//objeto de propriedades e carregamento do arquivo descrito acima
+			this.prop = new Properties();
+			this.prop.load(configs);
+			
+			//"setando o caminho do webdriver do chrome
+			System.setProperty(prop.getProperty("webdriver.chrome"), prop.getProperty("webdriver.chromelocation"));
+			
+			//abre uma nova classe controladora do webdriver do Chrome		
+			this.driver = new ChromeDriver();
 		
-		//abre uma nova classe controladora do webdriver do Chrome		
-		this.driver = new ChromeDriver();
+		//Caso o arquivo de propriedades não seja achado
+		} catch (FileNotFoundException e) {
+			System.out.println("Arquivo de propriedades não encontrado.");
+			e.printStackTrace();
+			
+		//Caso haja alguma falha no carregamento do arquivo de propriedades
+		} catch (IOException e) {
+			System.out.println("Erro no carregamento do arquivo de propriedades.");
+			e.printStackTrace();
+		}
 	}
 	
 	public void setElementosDaPagina(){
@@ -120,7 +147,7 @@ public class TesteLogin {
 	 */
 	public void abrirPaginaLogin(){
 		//abre o site desejado através do webdriver
-		driver.get("http://localhost:8080/memoriavirtual/login.jsf");
+		driver.get(prop.getProperty("website.loginpage"));
 	}
 	
 	/**
