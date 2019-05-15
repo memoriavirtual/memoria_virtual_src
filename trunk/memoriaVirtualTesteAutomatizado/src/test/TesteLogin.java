@@ -135,10 +135,9 @@ public class TesteLogin {
 		}
 			
 		//procurando os elementos do recaptcha
-		WebElement recaptchaSiteKey = driver.findElement(By.className("g-recaptcha"));
-		String r = recaptchaSiteKey.getAttribute("data-sitekey");
-
-		System.out.println(r);
+//		WebElement recaptchaSiteKey = driver.findElement(By.className("g-recaptcha"));
+//		String r = recaptchaSiteKey.getAttribute("data-sitekey");
+//		System.out.println(r);
 	
 	}
 	
