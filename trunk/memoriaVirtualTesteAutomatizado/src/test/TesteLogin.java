@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 /**
  * Primeiro teste com Selenium no projeto MVirtual.
@@ -39,6 +40,11 @@ public class TesteLogin {
 			//arquivo de propriedades - contém propriedades dos webdrivers
 			InputStream configs = new FileInputStream("webdriver.properties");
 			
+			//Opções do Google Chrome
+			ChromeOptions options = new ChromeOptions();
+			//options.addArguments("--headless");
+			options.addArguments("--disable-dev-shm-usage");
+			
 			//objeto de propriedades e carregamento do arquivo descrito acima
 			this.prop = new Properties();
 			this.prop.load(configs);
@@ -47,7 +53,7 @@ public class TesteLogin {
 			System.setProperty(prop.getProperty("webdriver.chrome"), prop.getProperty("webdriver.chromelocation"));
 			
 			//abre uma nova classe controladora do webdriver do Chrome		
-			this.driver = new ChromeDriver();
+			this.driver = new ChromeDriver(options);
 		
 		//Caso o arquivo de propriedades não seja achado
 		} catch (FileNotFoundException e) {
@@ -61,6 +67,9 @@ public class TesteLogin {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void setElementosDaPagina(){
 		this.searchLoginTxt = driver.findElement(By.id("formLogin:usuario"));
 		this.searchPasswordTxt = driver.findElement(By.id("formLogin:senha"));
@@ -132,13 +141,7 @@ public class TesteLogin {
 			Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
 			this.searchLoginBtn.click();
 			
-		}
-			
-		//procurando os elementos do recaptcha
-//		WebElement recaptchaSiteKey = driver.findElement(By.className("g-recaptcha"));
-//		String r = recaptchaSiteKey.getAttribute("data-sitekey");
-//		System.out.println(r);
-	
+		}	
 	}
 	
 	/**
