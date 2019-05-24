@@ -27,7 +27,7 @@ public class TesteLogoff extends TesteLogin{
 	public void logoffFluxoPrincipal() throws InterruptedException{		
 		this.loginFluxoPrincipal("mvirtual", "mvirtual");
 		
-		logoffLink = this.driver.findElement(By.linkText("Sair"));
+		logoffLink = this.driver.findElement(By.id("formCabecalho:sair"));
 		
 		logoffLink.click();
 		

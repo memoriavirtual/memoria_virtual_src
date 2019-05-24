@@ -36,14 +36,14 @@
 				}
 	</style>
 	<div class="col-md-12">
-		<h:form class="form-horizontal" role="form" method="post"
+		<h:form id="formIndex" class="form-horizontal" role="form" method="post"
 			prependId="false">
 			<h:panelGroup rendered="#{usuario!=null}">
 				<div class="row">
 					<div class="col-md-12 text-right">
 						&lt;<h:outputText value="#{usuario.nomeCompleto}" />&gt;,
 						<a href="restrito/index.jsf" style="color: blue;">#{mensagens.catalogacao}</a>,
-						<h:commandLink action="#{realizarLogoffMB.realizarLogoff}">${mensagens.sair}</h:commandLink>
+						<h:commandLink id="sair" action="#{realizarLogoffMB.realizarLogoff}">${mensagens.sair}</h:commandLink>
 					</div>
 				</div>
 			</h:panelGroup>
