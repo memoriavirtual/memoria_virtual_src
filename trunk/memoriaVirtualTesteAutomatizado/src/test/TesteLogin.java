@@ -42,10 +42,9 @@ public class TesteLogin {
 			
 			//Opções do Google Chrome
 			ChromeOptions options = new ChromeOptions();
-			//options.addArguments("--headless");
+			options.addArguments("--headless");
 			options.addArguments("--disable-dev-shm-usage");
 			options.addArguments("--no-sandbox");
-			//options.addArguments("--headless");
 			options.setBinary("/usr/bin/google-chrome-stable");
 			
 			//objeto de propriedades e carregamento do arquivo descrito acima
