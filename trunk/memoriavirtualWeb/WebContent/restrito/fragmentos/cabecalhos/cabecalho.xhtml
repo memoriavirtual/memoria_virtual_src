@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-md-12 text-right">
 				<h:form id="formCabecalho">
-					&lt;<h:outputText value="#{usuario.nomeCompleto}" />&gt;,
+					&lt;<h:outputText id="txtUsuario" value="#{usuario.nomeCompleto}" />&gt;,
 					<a href="../index.jsf" style="color: blue;">#{mensagens.busca}</a>,
 					<h:commandLink id="sair" action="#{realizarLogoffMB.realizarLogoff}">#{mensagens.sair}</h:commandLink>
 				</h:form>
