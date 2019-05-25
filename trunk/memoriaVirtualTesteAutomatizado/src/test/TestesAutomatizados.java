@@ -10,17 +10,16 @@ public class TestesAutomatizados {
 		TesteLogin login;
 		
 		login = new TesteLogin();
-		login.loginFluxoPrincipal("mvirtual", "mvirtual");
+		login.loginFluxoPrincipal();
 		login.encerrarPagina();
 		
 		login = new TesteLogin();
 		login.loginFluxoAlternativo1();
 		login.encerrarPagina();
-		
-		
-		login = new TesteLogin();
-		login.loginFluxoAlternativo2();		
-		login.encerrarPagina();
+	
+//		login = new TesteLogin();
+//		login.loginFluxoAlternativo2();		
+//		login.encerrarPagina();
 	}
 	
 	/**

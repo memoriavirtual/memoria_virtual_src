@@ -1,5 +1,10 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -24,13 +29,19 @@ public class TesteLogoff extends TesteLogin{
 	 * Fluxo principal do caso de uso "Realizar Login".
 	 * @throws InterruptedException
 	 */
+	@Test
 	public void logoffFluxoPrincipal() throws InterruptedException{		
-		this.loginFluxoPrincipal("mvirtual", "mvirtual");
+		this.loginFluxoPrincipal();
 		
 		logoffLink = this.driver.findElement(By.id("formCabecalho:sair"));
 		
 		logoffLink.click();
 		
-		Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
+		//Esperando até que todos os elementos da página seguinte sejam carregadas
+		this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
+		//Validando o teste
+		String validacao = this.driver.findElement(By.id("linkLogin")).getText();
+		assertEquals("Login", validacao);
 	}
 }

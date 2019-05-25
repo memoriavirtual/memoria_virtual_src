@@ -1,11 +1,15 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,7 +46,7 @@ public class TesteLogin {
 			
 			//Opções do Google Chrome
 			ChromeOptions options = new ChromeOptions();
-			options.addArguments("--headless");
+			//options.addArguments("--headless");
 			options.addArguments("--disable-dev-shm-usage");
 			options.addArguments("--no-sandbox");
 			options.setBinary("/usr/bin/google-chrome-stable");
@@ -70,7 +74,7 @@ public class TesteLogin {
 	}
 	
 	/**
-	 * 
+	 * Método que identifica os elementos essenciais da página de login.
 	 */
 	public void setElementosDaPagina(){
 		this.searchLoginTxt = driver.findElement(By.id("formLogin:usuario"));
@@ -81,30 +85,39 @@ public class TesteLogin {
 	/**
 	 * Método base de teste. A maioria das interações com o sistema passa pelo login
 	 * do usuário.
-	 * @param login
-	 * @param senha
 	 * @throws InterruptedException
 	 */
-	public void loginFluxoPrincipal (String login, String senha) throws InterruptedException{				
+	@Test
+	public void loginFluxoPrincipal () throws InterruptedException{				
 		this.abrirPaginaLogin();
 		this.setElementosDaPagina();
+		
+		String login = "mvirtual";
+		String senha = "mvirtual";
+		
 		
 		//enviando as mensagens desejadas para as txt's
 		this.searchLoginTxt.sendKeys(login);		
 		this.searchPasswordTxt.sendKeys(senha);
-		Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
+		//Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
 		this.searchLoginBtn.click();
 		
 		
-		Thread.sleep(1000);	//dando 1 segundo(s) para o usuário ver o teste
+		//Thread.sleep(1000);	//dando 1 segundo(s) para o usuário ver o teste
 		
-		//this.encerrarPagina();
+		//Esperando até que todos os elementos da página seguinte sejam carregadas
+		this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
+		//Validando o teste
+		String validacao = this.driver.findElement(By.id("formCabecalho:txtUsuario")).getText();
+		assertEquals("Memoria Virtual", validacao);
 	}
 	
 	/**
-	 * 
+	 * Fluxo alternativo 1 do caso de uso.
 	 * @throws InterruptedException 
 	 */
+	@Test
 	public void loginFluxoAlternativo1() throws InterruptedException{
 		
 		this.abrirPaginaLogin();
@@ -113,18 +126,22 @@ public class TesteLogin {
 		//enviando as mensagens desejadas para as txt's
 		this.searchLoginTxt.sendKeys("mvirtual");		
 		this.searchPasswordTxt.sendKeys("errado");
-		Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
+		//Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
 		this.searchLoginBtn.click();
 		
 		//Procedimento correto
 		this.setElementosDaPagina();
 		this.searchLoginTxt.sendKeys("mvirtual");		
 		this.searchPasswordTxt.sendKeys("mvirtual");
-		Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
+		//Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
 		this.searchLoginBtn.click();
 		
+		//Esperando até que todos os elementos da página seguinte sejam carregadas
+		this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		
-		Thread.sleep(1000);
+		//Validando o teste
+		String validacao = this.driver.findElement(By.id("formCabecalho:txtUsuario")).getText();
+		assertEquals("Memoria Virtual", validacao);
 		
 	}
 	
@@ -140,14 +157,14 @@ public class TesteLogin {
 			//enviando as mensagens desejadas para as txt's
 			this.searchLoginTxt.sendKeys("mvirtual");		
 			this.searchPasswordTxt.sendKeys("errado");
-			Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
+			//Thread.sleep(1000); //dando 1 segundo(s) para o usuário ver o teste
 			this.searchLoginBtn.click();
 			
 		}	
 	}
 	
 	/**
-	 * 
+	 * Método que abre a página de login
 	 */
 	public void abrirPaginaLogin(){
 		//abre o site desejado através do webdriver
@@ -155,7 +172,7 @@ public class TesteLogin {
 	}
 	
 	/**
-	 * 
+	 * Método que fecha a janela de teste.
 	 */
 	public void encerrarPagina(){
 		driver.quit();
