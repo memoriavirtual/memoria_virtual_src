@@ -6,11 +6,13 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
+    <property name="junit.output.dir" value="junit"/>
 
 	<path id="memoriaVirtualTesteAutomatizado.classpath">
         <pathelement location="bin"/>
         <pathelement location="lib/seleniumjars/selenium-server-standalone-3.141.59.jar"/>
-    
+        <pathelement location="lib/junit.jar"/>
+    	<pathelement location="lib/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
 	</path>
     
 	<target name="init">
@@ -62,5 +64,35 @@
         <java classname="test.TestesAutomatizados" failonerror="true" fork="yes">
             <classpath refid="memoriaVirtualTesteAutomatizado.classpath"/>
         </java>
+    </target>
+
+     <target name="TesteLogoff">
+		<mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TesteLogoff" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="memoriaVirtualTesteAutomatizado.classpath"/>
+        </junit>
+    </target>
+
+
+    <target name="TesteLogin">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TesteLogin" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="memoriaVirtualTesteAutomatizado.classpath"/>
+        </junit>
+    </target>
+    
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
     </target>
 </project>
