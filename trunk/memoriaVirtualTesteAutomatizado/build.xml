@@ -86,6 +86,16 @@
             <classpath refid="memoriaVirtualTesteAutomatizado.classpath"/>
         </junit>
     </target>
+	
+	<target name="TesteCadastrarInstituicao">
+	        <mkdir dir="${junit.output.dir}"/>
+	        <junit fork="yes" printsummary="withOutAndErr">
+	            <formatter type="xml"/>
+	            <test name="test.TesteCadastrarInstituicao" todir="${junit.output.dir}"/>
+	            <jvmarg line="-ea"/>
+	            <classpath refid="memoriaVirtualTesteAutomatizado.classpath"/>
+	        </junit>
+	    </target>
     
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
