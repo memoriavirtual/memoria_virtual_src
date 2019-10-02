@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:mv="http://java.sun.com/jsf/composite/componente">
 <body>
-	<ui:composition>
+	<ui:composition id="compCabecalho">
 		<div class="row">
 			<div class="col-md-12 text-right">
 				<h:form id="formCabecalho">
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div id="cabecalho" class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<mv:menu />
 			</div>
