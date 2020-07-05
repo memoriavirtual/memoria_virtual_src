@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet} from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
-export default class Main extends Component{
+export default class Home extends Component{
 
     static navigationOptions = {
         title: 'Memória Virtual',

@@ -1,12 +1,14 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-import Main from './pages/main';
 
+import Home from './screens/Main';
 
-const rootStack = createStackNavigator({
-    Main
+const MainNavigator = createStackNavigator({
+  Home: { screen : Home },
+}, {
+  initialRouteName: 'Home',
 });
 
-const appContainer = createAppContainer(rootStack);
+const appContainer = createAppContainer(MainNavigator);
 
 export default appContainer;
