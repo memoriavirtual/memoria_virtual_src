@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-import Home from './screens/Main';
+import HomeScreen from './screens/HomeScreen';
 import Search from './screens/Search';
 import GeneralInfo from './screens/GeneralInfo';
 import Disponibility from './screens/Disponibility';
@@ -10,17 +10,14 @@ import SubjectsDescriptors from './screens/SubjectsDescriptors';
 import State from './screens/State';
 
 
-
 const MainNavigator = createStackNavigator({
-  Home: { screen : Home },
+  Home: { screen : HomeScreen },
   Search: { screen : Search },
   GeneralInfo: { screen : GeneralInfo },
   Disponibility: { screen : Disponibility },
   Production: { screen : Production },
   SubjectsDescriptors: { screen : SubjectsDescriptors },
   State: { screen : State },
-
-
 }, {
   initialRouteName: 'State',
 });

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -11,10 +11,6 @@ import { Icon } from 'react-native-elements';
 import homeStyles from '../styles/home';
 import CustomButton from '../components/CustomButton';
 import VerticalSpacer from '../components/VerticalSpacer';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   ...homeStyles(),
@@ -23,7 +19,7 @@ const styles = StyleSheet.create({
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const Home = props => {
+const HomeScreen = () => {
   return (
     <View style={styles.mainContainer}>
       <Image
@@ -54,7 +50,7 @@ const Home = props => {
   );
 };
 
-Home.navigationOptions = () => ({
+HomeScreen.navigationOptions = () => ({
   headerTitle: 'Busca',
   headerTitleStyle: {
     color: 'white',
@@ -66,4 +62,4 @@ Home.navigationOptions = () => ({
   },
 });
 
-export default Home;
+export default HomeScreen;
