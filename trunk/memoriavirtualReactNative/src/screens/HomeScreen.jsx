@@ -52,14 +52,6 @@ const HomeScreen = () => {
 
 HomeScreen.navigationOptions = () => ({
   headerTitle: 'Busca',
-  headerTitleStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 22,
-  },
-  headerStyle: {
-    backgroundColor: '#4488BB',
-  },
 });
 
 export default HomeScreen;
