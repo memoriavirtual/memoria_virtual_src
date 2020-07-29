@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import generalinfoStyles from '../styles/generalinfo';
+import * as labels from '../constants/disponibility';
 import CustomTextInfo from '../components/CustomTextInfo';
 import Title from '../components/Title';
 
@@ -23,52 +24,51 @@ const DisponibilityScreen = () => (
       <View style={styles.form}>
 
           <CustomTextInfo
-            infoTitle="Disponibilidade"
-            infoValue="-"
+            infoTitle={labels.DISPONIBILITY}
+            infoValue={labels.EMPTY_VALUE}
           />
 
           <CustomTextInfo
-            infoTitle="Condições de acesso"
-            infoValue="-"
+            infoTitle={labels.ACCESS_CONDITIONS}
+            infoValue={labels.EMPTY_VALUE}
           />
 
           <CustomTextInfo
-            infoTitle="Condições de reprodução"
-            infoValue="-"
+            infoTitle={labels.CONDITIONS}
+            infoValue={labels.EMPTY_VALUE}
           />
 
           <CustomTextInfo
-            infoTitle="Proteção"
-            infoValue="-"
+            infoTitle={labels.PROTECTION}
+            infoValue={labels.EMPTY_VALUE}
           />
 
           <CustomTextInfo
-            infoTitle="Instituição Protetora"
-            infoValue="-"
+            infoTitle={labels.PROTECTION_INSTITUTE}
+            infoValue={labels.EMPTY_VALUE}
           />
 
           <CustomTextInfo
-            infoTitle="Nº de processo"
-            infoValue="-"
+            infoTitle={labels.NUMBER_PROCESS}
+            infoValue={labels.EMPTY_VALUE}
           />
 
           <CustomTextInfo
-            infoTitle="Data de retorno"
-            infoValue="-"
+            infoTitle={labels.RETURN_DATE}
+            infoValue={labels.EMPTY_VALUE}
           />
 
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={styles.formTitleText}
-              >Uso e aproveitamento</Text>
+              <Text style={styles.formTitleText}>{labels.USE}</Text>
             </View>
             <View
             style={styles.spacer}
             />
             <View style={styles.formInput}>
               <TextInput
-                value="-"
+                value={labels.EMPTY_VALUE}
               />
             </View>
 
