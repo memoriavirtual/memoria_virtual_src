@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
 } from 'react-native';
 
 import Title from '../components/Title';
@@ -12,16 +11,14 @@ const styles = StyleSheet.create({
   ...resultsStyles(),
 });
 
-const ResultsScreen = () => {
-  return (
+const ResultsScreen = () => (
     <View style={styles.resultsContainer}>
-      <Title />
+      <Title titleText="Sibipiruna" />
       <View style={styles.buttonsRowContainer}>
-        
+
       </View>
     </View>
-  );
-};
+);
 
 ResultsScreen.navigationOptions = () => ({
   headerTitle: 'Resultados',

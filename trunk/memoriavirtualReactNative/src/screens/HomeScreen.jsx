@@ -19,8 +19,7 @@ const styles = StyleSheet.create({
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const HomeScreen = () => {
-  return (
+const HomeScreen = ({ navigation }) => (
     <View style={styles.mainContainer}>
       <Image
         style={styles.logoImage}
@@ -43,12 +42,11 @@ const HomeScreen = () => {
             size={28}
           />
         }
-        action={()=> props.navigation.navigate('Search')}
+        action={() => navigation.navigate('Search')}
       />
       <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
     </View>
-  );
-};
+);
 
 HomeScreen.navigationOptions = () => ({
   headerTitle: 'Busca',

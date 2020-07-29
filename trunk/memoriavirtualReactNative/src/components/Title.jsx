@@ -5,7 +5,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-
 const styles = StyleSheet.create({
   titleContainer: {
     width: wp('92%'),
@@ -21,12 +20,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const Title = () => {
-  return (
+const Title = ({ titleText }) => (
     <View style={styles.titleContainer}>
-      <Text style={styles.titleText}>Teste</Text>
+      <Text style={styles.titleText}>{titleText}</Text>
     </View>
-  );
-};
+);
 
 export default Title;

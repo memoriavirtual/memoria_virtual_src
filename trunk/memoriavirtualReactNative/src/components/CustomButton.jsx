@@ -21,7 +21,7 @@ const CustomButton = ({
       <View
         style={[
           styles.buttonContainer,
-          styles.enabledButtonBackground
+          styles.enabledButtonBackground,
         ]}
       >
         <Text style={styles.buttonLabel}>{buttonLabel}</Text>

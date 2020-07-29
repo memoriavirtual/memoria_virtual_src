@@ -1,34 +1,23 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
-  FlatList,
-  TouchableOpacity,
   Switch,
 } from 'react-native';
-import { Icon, Divider } from 'react-native-elements';
 
 import generalinfoStyles from '../styles/generalinfo';
 import CustomTextInfo from '../components/CustomTextInfo';
-
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
 const GeneralInfoScreen = () => {
-
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
@@ -36,16 +25,13 @@ const GeneralInfoScreen = () => {
   const onToggleSwitchReview = () => setIsSwitchOnReview(!isSwitchOnReview);
   return (
     <View style={styles.container}>
-      <View style = {styles.title}>
-        <Text style={{fontSize:26}}>Sibipiruna</Text>
-      </View>
+      <Title titleText="Sibipiruna" />
       <View style={styles.form}>
-
 
           <View style={styles.inputs}>
 
             <View style={styles.formTitle}>
-              <Text style={{fontSize:18}}>Externo</Text>
+              <Text style={styles.formTitleText}>Externo</Text>
             </View>
 
             <View
@@ -53,9 +39,9 @@ const GeneralInfoScreen = () => {
             />
 
             <View style={styles.formInput}>
-              <Text style={{fontSize:18}}>{isSwitchOn ? "Sim" : "Não"}</Text>
+              <Text style={styles.formTitleText}>{isSwitchOn ? 'Sim' : 'Não'}</Text>
               <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
                 onValueChange={onToggleSwitch}
                 value={isSwitchOn}
               />
@@ -66,15 +52,15 @@ const GeneralInfoScreen = () => {
           <View style={styles.inputs}>
 
             <View style={styles.formTitle}>
-              <Text style={{fontSize:18}}>Revisão</Text>
+              <Text style={styles.formTitleText}>Revisão</Text>
             </View>
             <View
             style={styles.spacer}
             />
             <View style={styles.formInput}>
-              <Text style={{fontSize:18}}>{isSwitchOnReview ? "Sim" : "Não"}</Text>
+              <Text style={styles.formTitleText}>{isSwitchOnReview ? 'Sim' : 'Não'}</Text>
               <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
                 onValueChange={onToggleSwitchReview}
                 value={isSwitchOnReview}
               />
@@ -115,7 +101,7 @@ const GeneralInfoScreen = () => {
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={{fontSize:18}}
+              <Text style={styles.formTitleText}
                 value="-">Longitude</Text>
             </View>
             <View

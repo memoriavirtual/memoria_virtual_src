@@ -1,8 +1,7 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
 } from 'react-native';
@@ -14,17 +13,12 @@ const styles = StyleSheet.create({
   ...subjectsDescriptorStyles(),
 });
 
-
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const SubjectsDescriptorsScreen = () => {
-
-  return (
+const SubjectsDescriptorsScreen = () => (
     <View style={styles.container}>
-      <View style = {styles.title}>
-        <Text style={{fontSize:26}}>Sibipiruna4</Text>
-      </View>
+      <Title titleText="Sibipiruna" />
       <View style={styles.form}>
 
           <CustomTextInfo
@@ -35,7 +29,7 @@ const SubjectsDescriptorsScreen = () => {
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={{fontSize:18}}
+              <Text style={styles.lastFormTitleText}
               >Descritores</Text>
             </View>
             <View
@@ -53,8 +47,7 @@ const SubjectsDescriptorsScreen = () => {
 
     <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
     </View>
-  );
-};
+);
 
 SubjectsDescriptorsScreen.navigationOptions = () => ({
   headerTitle: 'Assuntos e descritores',

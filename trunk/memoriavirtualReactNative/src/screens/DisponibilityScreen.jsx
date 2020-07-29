@@ -1,30 +1,25 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
 } from 'react-native';
 
 import generalinfoStyles from '../styles/generalinfo';
 import CustomTextInfo from '../components/CustomTextInfo';
+import Title from '../components/Title';
 
 const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const DisponibilityScreen = () => {
-
-  return (
+const DisponibilityScreen = () => (
     <View style={styles.container}>
-      <View style = {styles.title}>
-        <Text style={{fontSize:26}}>Sibipiruna2</Text>
-      </View>
+      <Title titleText="Sibipiruna" />
       <View style={styles.form}>
 
           <CustomTextInfo
@@ -65,7 +60,7 @@ const DisponibilityScreen = () => {
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={{fontSize:18}}
+              <Text style={styles.formTitleText}
               >Uso e aproveitamento</Text>
             </View>
             <View
@@ -83,8 +78,7 @@ const DisponibilityScreen = () => {
 
     <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
     </View>
-  );
-};
+);
 
 DisponibilityScreen.navigationOptions = () => ({
   headerTitle: 'Disponibilidade',

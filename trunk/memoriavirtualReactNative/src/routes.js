@@ -10,18 +10,17 @@ import ProductionScreen from './screens/ProductionScreen';
 import SubjectsDescriptorsScreen from './screens/SubjectsDescriptorsScreen';
 import StateScreen from './screens/StateScreen';
 
-
 const MainNavigator = createStackNavigator({
-  Home: { screen : HomeScreen },
+  Home: { screen: HomeScreen },
   Results: { screen: ResultsScreen },
-  Search: { screen : SearchScreen },
-  GeneralInfo: { screen : GeneralInfoScreen },
-  Disponibility: { screen : DisponibilityScreen },
-  Production: { screen : ProductionScreen },
-  SubjectsDescriptors: { screen : SubjectsDescriptorsScreen },
-  State: { screen : StateScreen },
+  Search: { screen: SearchScreen },
+  GeneralInfo: { screen: GeneralInfoScreen },
+  Disponibility: { screen: DisponibilityScreen },
+  Production: { screen: ProductionScreen },
+  SubjectsDescriptors: { screen: SubjectsDescriptorsScreen },
+  State: { screen: StateScreen },
 }, {
-  initialRouteName: 'Results',
+  initialRouteName: 'Home',
   defaultNavigationOptions: {
     headerTitleStyle: {
       color: 'white',

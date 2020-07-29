@@ -20,7 +20,7 @@ const CustomTextInfo = ({
   <View style={styles.inputs}>
 
     <View style={styles.formTitle}>
-      <Text style={{fontSize:18}}>{infoTitle}</Text>
+      <Text style={styles.infoText}>{infoTitle}</Text>
     </View>
     <View
     style={styles.spacer}
