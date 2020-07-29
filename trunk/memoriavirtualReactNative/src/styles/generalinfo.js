@@ -51,14 +51,12 @@ const generalinfoStyles = () => ({
     width: wp('25%'),
   },
   form: {
-    marginTop: 30,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: wp('90%'),
   },
   verticalBar: {
-
     width: wp('100%'),
   },
   footnoteText: {
@@ -68,6 +66,16 @@ const generalinfoStyles = () => ({
   },
   formTitleText: {
     fontSize: 18,
+  },
+
+  // "Patternizing" all results details screens
+  generalPurposeForm: {
+    // flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: wp('3%'),
+    width: wp('100%'),
   },
 });
 

@@ -8,7 +8,6 @@ const footnoteStyles = () => ({
     fontSize: 14,
     marginTop: hp('26%'),
     textAlign: 'center',
-    // alignSelf: 'flex-end',
   },
 });
 

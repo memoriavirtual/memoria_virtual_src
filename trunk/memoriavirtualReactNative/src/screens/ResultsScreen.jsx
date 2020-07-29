@@ -24,7 +24,10 @@ const ResultsScreen = ({ navigation }) => {
     onPress: () => navigation.navigate('GeneralInfo'),
   };
   
-  // const buttonAuthorship = {}
+  const buttonAuthorship = {
+    label: labels.AUTHORSHIP,
+    onPress: () => navigation.navigate('Authorship'),
+  };
 
   const buttonProduction = {
     label: labels.PRODUCTION,
@@ -37,7 +40,7 @@ const ResultsScreen = ({ navigation }) => {
     <View style={styles.resultsContainer}>
       <Title titleText="Sibipiruna" />
       <View style={styles.buttonsRowContainer}>
-        <ResultsRow buttonOne={buttonGeneralInfo} buttonTwo={buttonProduction} />
+        <ResultsRow buttonOne={buttonGeneralInfo} buttonTwo={buttonAuthorship} />
       </View>
       <Footnote />
     </View>

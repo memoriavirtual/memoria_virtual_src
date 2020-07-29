@@ -28,42 +28,32 @@ const GeneralInfoScreen = () => {
     <View style={styles.container}>
       <Title titleText="Sibipiruna" />
       <View style={styles.form}>
-
-          <View style={styles.inputs}>
-
-            <View style={styles.formTitle}>
-              <Text style={styles.formTitleText}>Externo</Text>
-            </View>
-
-            <View
-            style={styles.spacer}
-            />
-
+        <View style={styles.inputs}>
+          <View style={styles.formTitle}>
+            <Text style={styles.formTitleText}>Externo</Text>
+          </View>
             <View style={styles.formInput}>
               <Text style={styles.formTitleText}>{isSwitchOn ? 'Sim' : 'Não'}</Text>
               <Switch
                 trackColor={{ false: '#767577', true: '#81b0ff' }}
                 onValueChange={onToggleSwitch}
                 value={isSwitchOn}
+                disabled
               />
             </View>
-
           </View>
-
           <View style={styles.inputs}>
-
             <View style={styles.formTitle}>
               <Text style={styles.formTitleText}>Revisão</Text>
             </View>
-            <View
-              style={styles.spacer}
-            />
+
             <View style={styles.formInput}>
               <Text style={styles.formTitleText}>{isSwitchOnReview ? 'Sim' : 'Não'}</Text>
               <Switch
                 trackColor={{ false: '#767577', true: '#81b0ff' }}
                 onValueChange={onToggleSwitchReview}
                 value={isSwitchOnReview}
+                disabled
               />
             </View>
 
@@ -99,19 +89,10 @@ const GeneralInfoScreen = () => {
             infoValue="-"
           />
 
-          <View style={styles.inputs}>
-            <View style={styles.lastFormTitle}>
-              <Text style={styles.formTitleText}
-                value="-">Longitude</Text>
-            </View>
-            <View
-            style={styles.spacer}
-            />
-            <View style={styles.formInput}>
-              <TextInput
-              />
-            </View>
-          </View>
+          <CustomTextInfo
+            infoTitle="Longitude"
+            infoValue="-"
+          />
       </View>
       <Footnote />
     </View>
@@ -120,14 +101,6 @@ const GeneralInfoScreen = () => {
 
 GeneralInfoScreen.navigationOptions = () => ({
   headerTitle: 'Informações Gerais',
-  headerTitleStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 22,
-  },
-  headerStyle: {
-    backgroundColor: '#4488BB',
-  },
 });
 
 export default GeneralInfoScreen;

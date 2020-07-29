@@ -79,14 +79,6 @@ const DisponibilityScreen = () => (
 
 DisponibilityScreen.navigationOptions = () => ({
   headerTitle: labels.DISPONIBILITY,
-  headerTitleStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 22,
-  },
-  headerStyle: {
-    backgroundColor: '#4488BB',
-  },
 });
 
 export default DisponibilityScreen;
