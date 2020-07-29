@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 
 import subjectsDescriptorStyles from '../styles/subjectsDescriptor';
+import Title from '../components/Title';
+import Footnote from '../components/Footnote';
 import CustomTextInfo from '../components/CustomTextInfo';
 
 const styles = StyleSheet.create({
@@ -45,7 +47,7 @@ const SubjectsDescriptorsScreen = () => (
 
       </View>
 
-    <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
+      <Footnote />
     </View>
 );
 

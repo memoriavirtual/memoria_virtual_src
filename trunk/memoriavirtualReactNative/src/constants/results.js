@@ -1,0 +1,14 @@
+export const MUSEUM = 'MUSEU FAUNA FLORA DO ICMC';
+export const GENERAL_INFO = 'INFORMAÇÕES GERAIS';
+export const AUTHORSHIP = 'AUTORIAS';
+export const PRODUCTION = 'PRODUÇÃO';
+export const DESCRIPTION = 'DESCRIÇÃO';
+export const STATE = 'ESTADO';
+export const DISPONIBILITY = 'DISPONIBILIDADE';
+export const ORIGIN = 'PROCEDÊNCIA';
+export const DESCRIPTORS = 'ASSUNTOS/DESCRITORES';
+export const SOURCE = 'FONTES DE INFORMAÇÃO';
+export const RESEARCHERS = 'PESQUISADORES';
+export const RELATED_GOODS = 'BENS RELACIONADOS';
+export const MULTIMIDIA = 'MULTIMÍDIA';
+export const REVIEWS = 'REVISÕES';

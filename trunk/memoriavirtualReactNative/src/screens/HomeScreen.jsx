@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   Image,
   StyleSheet,
   TextInput,
@@ -11,13 +10,11 @@ import { Icon } from 'react-native-elements';
 import homeStyles from '../styles/home';
 import CustomButton from '../components/CustomButton';
 import VerticalSpacer from '../components/VerticalSpacer';
+import Footnote from '../components/Footnote';
 
 const styles = StyleSheet.create({
   ...homeStyles(),
 });
-
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
 const HomeScreen = ({ navigation }) => (
     <View style={styles.mainContainer}>
@@ -44,7 +41,7 @@ const HomeScreen = ({ navigation }) => (
         }
         action={() => navigation.navigate('Search')}
       />
-      <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
+      <Footnote />
     </View>
 );
 

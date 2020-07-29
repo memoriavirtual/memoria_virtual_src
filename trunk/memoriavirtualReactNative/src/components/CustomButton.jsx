@@ -16,18 +16,25 @@ const CustomButton = ({
   action,
   buttonLabel,
   icon,
+  customContainerStyle,
+  customLabelStyle,
 }) => (
     <TouchableOpacity onPress={action}>
       <View
-        style={[
+        style={customContainerStyle ? customContainerStyle : [
           styles.buttonContainer,
           styles.enabledButtonBackground,
         ]}
       >
-        <Text style={styles.buttonLabel}>{buttonLabel}</Text>
-        <View style={styles.iconContainer}>
-          {icon}
-        </View>
+        <Text style={customLabelStyle ? customLabelStyle : styles.buttonLabel}>
+          {buttonLabel}
+        </Text>
+        {
+          icon ? <View style={styles.iconContainer}>
+            {icon}
+          </View>
+          : null
+        }
       </View>
     </TouchableOpacity>
 );

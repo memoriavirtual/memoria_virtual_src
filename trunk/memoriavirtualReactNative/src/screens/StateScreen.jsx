@@ -7,14 +7,12 @@ import {
 } from 'react-native';
 
 import subjectsDescriptorStyles from '../styles/subjectsDescriptor';
+import Title from '../components/Title';
 import CustomTextInfo from '../components/CustomTextInfo';
 
 const styles = StyleSheet.create({
   ...subjectsDescriptorStyles(),
 });
-
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
 const StateScreen = () => (
     <View style={styles.container}>
@@ -50,7 +48,7 @@ const StateScreen = () => (
 
       </View>
 
-    <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
+      <Footnote />
     </View>
 );
 

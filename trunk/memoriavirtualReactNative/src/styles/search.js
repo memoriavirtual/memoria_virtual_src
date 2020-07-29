@@ -12,8 +12,8 @@ const searchStyles = () => ({
 
   },
   list: {
-    width: wp('90%'),
-    height: hp('75%'),
+    width: wp('100%'),
+    // height: hp('75%'),
   },
   item: {
     flex: 1,

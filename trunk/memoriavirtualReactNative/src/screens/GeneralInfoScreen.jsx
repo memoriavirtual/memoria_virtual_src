@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,20 +9,21 @@ import {
 
 import generalinfoStyles from '../styles/generalinfo';
 import CustomTextInfo from '../components/CustomTextInfo';
+import Title from '../components/Title';
+import Footnote from '../components/Footnote';
 
 const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
 const GeneralInfoScreen = () => {
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
-  const [isSwitchOnReview, setIsSwitchOnReview] = React.useState(false);
+  const [isSwitchOnReview, setIsSwitchOnReview] = useState(false);
   const onToggleSwitchReview = () => setIsSwitchOnReview(!isSwitchOnReview);
+  
   return (
     <View style={styles.container}>
       <Title titleText="Sibipiruna" />
@@ -55,7 +56,7 @@ const GeneralInfoScreen = () => {
               <Text style={styles.formTitleText}>Revisão</Text>
             </View>
             <View
-            style={styles.spacer}
+              style={styles.spacer}
             />
             <View style={styles.formInput}>
               <Text style={styles.formTitleText}>{isSwitchOnReview ? 'Sim' : 'Não'}</Text>
@@ -99,7 +100,6 @@ const GeneralInfoScreen = () => {
           />
 
           <View style={styles.inputs}>
-
             <View style={styles.lastFormTitle}>
               <Text style={styles.formTitleText}
                 value="-">Longitude</Text>
@@ -111,12 +111,9 @@ const GeneralInfoScreen = () => {
               <TextInput
               />
             </View>
-
           </View>
-
       </View>
-
-    <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
+      <Footnote />
     </View>
   );
 };

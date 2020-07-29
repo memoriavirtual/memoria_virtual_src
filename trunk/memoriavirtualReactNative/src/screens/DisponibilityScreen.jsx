@@ -10,13 +10,11 @@ import generalinfoStyles from '../styles/generalinfo';
 import * as labels from '../constants/disponibility';
 import CustomTextInfo from '../components/CustomTextInfo';
 import Title from '../components/Title';
+import Footnote from '../components/Footnote';
 
 const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
-
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
 const DisponibilityScreen = () => (
     <View style={styles.container}>
@@ -75,13 +73,12 @@ const DisponibilityScreen = () => (
           </View>
 
       </View>
-
-    <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
+      <Footnote />
     </View>
 );
 
 DisponibilityScreen.navigationOptions = () => ({
-  headerTitle: 'Disponibilidade',
+  headerTitle: labels.DISPONIBILITY,
   headerTitleStyle: {
     color: 'white',
     fontWeight: 'bold',
