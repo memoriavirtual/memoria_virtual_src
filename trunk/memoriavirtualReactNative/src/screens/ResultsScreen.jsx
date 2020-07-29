@@ -16,6 +16,9 @@ const ResultsScreen = () => {
   return (
     <View style={styles.resultsContainer}>
       <Title />
+      <View style={styles.buttonsRowContainer}>
+        
+      </View>
     </View>
   );
 };

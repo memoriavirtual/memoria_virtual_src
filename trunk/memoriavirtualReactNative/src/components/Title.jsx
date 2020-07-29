@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFEFEF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: hp('2%'),
+    marginVertical: hp('3%'),
   },
   titleText: {
     fontSize: 20,
