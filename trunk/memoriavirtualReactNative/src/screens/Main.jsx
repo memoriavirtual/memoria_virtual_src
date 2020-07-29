@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const Home = () => {
+const Home = props => {
   return (
     <View style={styles.mainContainer}>
       <Image
@@ -47,6 +47,7 @@ const Home = () => {
             size={28}
           />
         }
+        action={()=> props.navigation.navigate('Search')}
       />
       <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
     </View>
