@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const GeneralInfo = () => {
+const GeneralInfoScreen = () => {
 
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
@@ -135,7 +135,7 @@ const GeneralInfo = () => {
   );
 };
 
-GeneralInfo.navigationOptions = () => ({
+GeneralInfoScreen.navigationOptions = () => ({
   headerTitle: 'Informações Gerais',
   headerTitleStyle: {
     color: 'white',
@@ -147,4 +147,4 @@ GeneralInfo.navigationOptions = () => ({
   },
 });
 
-export default GeneralInfo;
+export default GeneralInfoScreen;

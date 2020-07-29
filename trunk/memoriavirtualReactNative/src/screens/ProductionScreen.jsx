@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const Production = () => {
+const ProductionScreen = () => {
 
   return (
     <View style={styles.container}>
@@ -66,7 +66,7 @@ const Production = () => {
   );
 };
 
-Production.navigationOptions = () => ({
+ProductionScreen.navigationOptions = () => ({
   headerTitle: 'Produção',
   headerTitleStyle: {
     color: 'white',
@@ -78,4 +78,4 @@ Production.navigationOptions = () => ({
   },
 });
 
-export default Production;
+export default ProductionScreen;

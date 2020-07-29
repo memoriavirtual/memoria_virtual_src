@@ -18,17 +18,22 @@ const styles = StyleSheet.create({
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const SubjectsDescriptors = () => {
+const StateScreen = () => {
 
   return (
     <View style={styles.container}>
       <View style = {styles.title}>
-        <Text style={{fontSize:26}}>Sibipiruna4</Text>
+        <Text style={{fontSize:26}}>Sibipiruna5</Text>
       </View>
       <View style={styles.form}>
 
           <CustomTextInfo
-            infoTitle="Assuntos"
+            infoTitle="Estado de preservação"
+            infoValue="-"
+          />
+
+          <CustomTextInfo
+            infoTitle="Estado de conservação"
             infoValue="-"
           />
 
@@ -36,7 +41,7 @@ const SubjectsDescriptors = () => {
 
             <View style={styles.lastFormTitle}>
               <Text style={{fontSize:18}}
-              >Descritores</Text>
+              >Notas do estado de conservação</Text>
             </View>
             <View
             style={styles.spacer}
@@ -56,8 +61,8 @@ const SubjectsDescriptors = () => {
   );
 };
 
-SubjectsDescriptors.navigationOptions = () => ({
-  headerTitle: 'Assuntos e descritores',
+StateScreen.navigationOptions = () => ({
+  headerTitle: 'Estado',
   headerTitleStyle: {
     color: 'white',
     fontWeight: 'bold',
@@ -68,4 +73,4 @@ SubjectsDescriptors.navigationOptions = () => ({
   },
 });
 
-export default SubjectsDescriptors;
+export default StateScreen;

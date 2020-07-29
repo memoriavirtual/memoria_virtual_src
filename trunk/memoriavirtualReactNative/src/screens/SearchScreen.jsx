@@ -34,7 +34,7 @@ const items = [
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const Search = () => {
+const SearchScreen = () => {
   return (
     <View style={styles.container}>
     <View style={styles.list}>
@@ -57,7 +57,7 @@ const Search = () => {
   );
 };
 
-Search.navigationOptions = () => ({
+SearchScreen.navigationOptions = () => ({
   headerTitle: 'Busca',
   headerTitleStyle: {
     color: 'white',
@@ -69,4 +69,4 @@ Search.navigationOptions = () => ({
   },
 });
 
-export default Search;
+export default SearchScreen;

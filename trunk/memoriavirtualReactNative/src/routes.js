@@ -3,23 +3,23 @@ import { createAppContainer } from 'react-navigation';
 
 import HomeScreen from './screens/HomeScreen';
 import ResultsScreen from './screens/ResultsScreen';
-import Search from './screens/Search';
-import GeneralInfo from './screens/GeneralInfo';
-import Disponibility from './screens/Disponibility';
-import Production from './screens/Production';
-import SubjectsDescriptors from './screens/SubjectsDescriptors';
-import State from './screens/State';
+import SearchScreen from './screens/SearchScreen';
+import GeneralInfoScreen from './screens/GeneralInfoScreen';
+import DisponibilityScreen from './screens/DisponibilityScreen';
+import ProductionScreen from './screens/ProductionScreen';
+import SubjectsDescriptorsScreen from './screens/SubjectsDescriptorsScreen';
+import StateScreen from './screens/StateScreen';
 
 
 const MainNavigator = createStackNavigator({
   Home: { screen : HomeScreen },
   Results: { screen: ResultsScreen },
-  Search: { screen : Search },
-  GeneralInfo: { screen : GeneralInfo },
-  Disponibility: { screen : Disponibility },
-  Production: { screen : Production },
-  SubjectsDescriptors: { screen : SubjectsDescriptors },
-  State: { screen : State },
+  Search: { screen : SearchScreen },
+  GeneralInfo: { screen : GeneralInfoScreen },
+  Disponibility: { screen : DisponibilityScreen },
+  Production: { screen : ProductionScreen },
+  SubjectsDescriptors: { screen : SubjectsDescriptorsScreen },
+  State: { screen : StateScreen },
 }, {
   initialRouteName: 'Results',
   defaultNavigationOptions: {

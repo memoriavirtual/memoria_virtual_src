@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 const footnoteFirst = 'Copyright © 2009 LABES';
 const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
-const Disponibility = () => {
+const DisponibilityScreen = () => {
 
   return (
     <View style={styles.container}>
@@ -86,7 +86,7 @@ const Disponibility = () => {
   );
 };
 
-Disponibility.navigationOptions = () => ({
+DisponibilityScreen.navigationOptions = () => ({
   headerTitle: 'Disponibilidade',
   headerTitleStyle: {
     color: 'white',
@@ -98,4 +98,4 @@ Disponibility.navigationOptions = () => ({
   },
 });
 
-export default Disponibility;
+export default DisponibilityScreen;
