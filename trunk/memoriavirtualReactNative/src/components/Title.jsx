@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 20,
-    fontWeight: '500',
+    fontWeight: '600',
   },
 });
 

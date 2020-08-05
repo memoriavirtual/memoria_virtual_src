@@ -10,6 +10,7 @@ import ProductionScreen from './screens/ProductionScreen';
 import SubjectsDescriptorsScreen from './screens/SubjectsDescriptorsScreen';
 import StateScreen from './screens/StateScreen';
 import AuthorshipScreen from './screens/AuthorshipScreen';
+import DescriptionScreen from './screens/DescriptionScreen';
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -21,6 +22,7 @@ const MainNavigator = createStackNavigator({
   SubjectsDescriptors: { screen: SubjectsDescriptorsScreen },
   State: { screen: StateScreen },
   Authorship: { screen: AuthorshipScreen },
+  Description: { screen: DescriptionScreen },
 }, {
   initialRouteName: 'Home',
   defaultNavigationOptions: {

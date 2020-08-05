@@ -29,12 +29,15 @@ const ResultsRow = ({ buttonOne, buttonTwo }) => {
       }
       {
         buttonTwo
-          ? <CustomButton
-            buttonLabel={buttonTwo.label}
-            action={buttonTwo.onPress}
-            customContainerStyle={styles.customButtonStyle}
-            customLabelStyle={styles.customButtonText}
-          />
+          ? <>
+            <View style={styles.resultsRowSpacer} />
+            <CustomButton
+              buttonLabel={buttonTwo.label}
+              action={buttonTwo.onPress}
+              customContainerStyle={styles.customButtonStyle}
+              customLabelStyle={styles.customButtonText}
+            />
+          </>
           : null
       }
     </View>

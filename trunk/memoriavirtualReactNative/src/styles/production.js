@@ -3,7 +3,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const generalinfoStyles = () => ({
+const productionStyles = () => ({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -70,4 +70,4 @@ const generalinfoStyles = () => ({
   },
 });
 
-export default generalinfoStyles;
+export default productionStyles;

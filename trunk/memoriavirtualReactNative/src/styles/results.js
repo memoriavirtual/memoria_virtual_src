@@ -14,17 +14,23 @@ const resultsStyles = () => ({
   // Row
   resultsRowContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     width: wp('93.3%'),
+    marginBottom: hp('1%'),
+  },
+  resultsRowSpacer: {
+    width: wp('3%'),
   },
   customButtonStyle: {
     width: wp('45%'),
     height: hp('5.78%'),
     backgroundColor: '#B4B4B4',
     borderRadius: 10,
+    borderWidth: 0.2,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 5,
   },
   customButtonText: {
     fontSize: 12,

@@ -51,7 +51,6 @@ const ProductionScreen = () => (
             </View>
           </View>
       </View>
-      <Footnote />
     </View>
 );
 
