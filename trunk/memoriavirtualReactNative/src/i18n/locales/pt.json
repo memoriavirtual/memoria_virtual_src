@@ -14,9 +14,9 @@
   "RESULTS_DESCRIPTION": "DESCRIÇÃO",
   "RESULTS_STATE": "ESTADO",
   "RESULTS_DISPONIBILITY": "DISPONIBILIDADE",
-  "RESULTS_ORIGIN": "PROCEDÊNCIA",
+  "RESULTS_SOURCE": "PROCEDÊNCIA",
   "RESULTS_DESCRIPTORS": "ASSUNTOS/DESCRITORES",
-  "RESULTS_SOURCE": "FONTES DE INFORMAÇÃO",
+  "RESULTS_INFO_SOURCE": "FONTES DE INFORMAÇÃO",
   "RESULTS_RESEARCHERS": "PESQUISADORES",
   "RESULTS_RELATED_GOODS": "BENS RELACIONADOS",
   "RESULTS_MULTIMIDIA": "MULTIMÍDIA",
@@ -55,11 +55,22 @@
   "DESCRIPTION_ACCESS": "Meio de acesso",
   "DESCRIPTION_NOTES": "Notas",
 
-  "ACCESS_CONDITIONS": "Condições de acesso",
-  "CONDITIONS": "Condições de reprodução",
-  "PROTECTION": "Proteção",
-  "PROTECTION_INSTITUTE": "Instituição Protetora",
-  "NUMBER_PROCESS": "Nº de processo",
-  "RETURN_DATE": "Data de retorno",
-  "USE": "Uso e aproveitamento"
+  "DISPONIBILITY_ACCESS_CONDITIONS": "Condições de acesso",
+  "DISPONIBILITY_CONDITIONS": "Condições de reprodução",
+  "DISPONIBILITY_PROTECTION": "Proteção",
+  "DISPONIBILITY_PROTECTION_INSTITUTE": "Instituição Protetora",
+  "DISPONIBILITY_NUMBER_PROCESS": "Nº de processo",
+  "DISPONIBILITY_RETURN_DATE": "Data de retorno",
+  "DISPONIBILITY_USE": "Uso e aproveitamento",
+
+  "AUTHORSHIP_AUTHOR": "Autor",
+  "AUTHORSHIP_TYPE": "Tipo de autoria",
+
+  "SOURCE_ACQUISITION_TYPE": "Tipo de aquisição",
+  "SOURCE_VENAL_VALUE": "Valor venal",
+  "SOURCE_DATE": "Data",
+  "SOURCE_FIRST_OWNER": "Primeiro proprietário",
+  "SOURCE_TRANSACTION_DATE": "Dados da transação",
+  "SOURCE_HISTORY": "Histórico",
+  "SOURCE_RESEARCH_TOOL": "Instrumento de pesquisa"
 }

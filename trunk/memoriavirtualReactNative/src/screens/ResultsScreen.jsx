@@ -50,6 +50,10 @@ const ResultsScreen = ({ navigation }) => {
     onPress: () => navigation.navigate('Disponibility'),
   };
 
+  const buttonSource = {
+    label: translate('RESULTS_SOURCE'),
+    onPress: () => navigation.navigate('Source'),
+  };
   /* END - BUTTONS */
 
   return (
@@ -59,6 +63,7 @@ const ResultsScreen = ({ navigation }) => {
         <ResultsRow buttonOne={buttonGeneralInfo} buttonTwo={buttonAuthorship} />
         <ResultsRow buttonOne={buttonProduction} buttonTwo={buttonDescription} />
         <ResultsRow buttonOne={buttonState} buttonTwo={buttonDisponibility} />
+        <ResultsRow  buttonOne={buttonSource} />
       </View>
       <Footnote />
     </View>

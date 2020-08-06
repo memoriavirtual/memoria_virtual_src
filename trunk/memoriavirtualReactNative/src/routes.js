@@ -11,6 +11,7 @@ import SubjectsDescriptorsScreen from './screens/SubjectsDescriptorsScreen';
 import StateScreen from './screens/StateScreen';
 import AuthorshipScreen from './screens/AuthorshipScreen';
 import DescriptionScreen from './screens/DescriptionScreen';
+import SourceScreen from './screens/SourceScreen';
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -23,6 +24,7 @@ const MainNavigator = createStackNavigator({
   State: { screen: StateScreen },
   Authorship: { screen: AuthorshipScreen },
   Description: { screen: DescriptionScreen },
+  Source: { screen: SourceScreen },
 }, {
   initialRouteName: 'Home',
   defaultNavigationOptions: {

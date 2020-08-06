@@ -1,7 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-
-import * as labels from '../constants/authorship';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import generalinfoStyles from '../styles/generalinfo';
 
@@ -29,7 +27,7 @@ const AuthorshipScreen = ({ navigation }) => {
 
 
 AuthorshipScreen.navigationOptions = () => ({
-  headerTitle: labels.AUTHORSHIP,
+  headerTitle: 'Autoria',
 });
 
 export default AuthorshipScreen;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -6,6 +6,8 @@ import {
 } from 'react-native-responsive-screen';
 
 import CustomTextInfo from './CustomTextInfo';
+
+import { Context as I18nContext } from '../context/I18nContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,10 +23,12 @@ const styles = StyleSheet.create({
 });
 
 const AuthorshipCard = ({ author, authorshipKind }) => {
+  const { state: { translate } } = useContext(I18nContext);
+
   return (
     <View style={styles.container}>
-      <CustomTextInfo infoTitle='Autor' infoValue={author} />
-      <CustomTextInfo infoTitle='Tipo de autoria' infoValue={authorshipKind} />
+      <CustomTextInfo infoTitle={translate('AUTHORSHIP_AUTHOR')} infoValue={author} />
+      <CustomTextInfo infoTitle={translate('AUTHORSHIP_TYPE')} infoValue={authorshipKind} />
     </View>
   );
 };

@@ -31,39 +31,39 @@ const DisponibilityScreen = () => {
           />
 
           <CustomTextInfo
-            infoTitle={translate('ACCESS_CONDITIONS')}
+            infoTitle={translate('DISPONIBILITY_ACCESS_CONDITIONS')}
             infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={translate('CONDITIONS')}
+            infoTitle={translate('DISPONIBILITY_CONDITIONS')}
             infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={translate('PROTECTION')}
+            infoTitle={translate('DISPONIBILITY_PROTECTION')}
             infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={translate('PROTECTION_INSTITUTE')}
+            infoTitle={translate('DISPONIBILITY_PROTECTION_INSTITUTE')}
             infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={translate('NUMBER_PROCESS')}
+            infoTitle={translate('DISPONIBILITY_NUMBER_PROCESS')}
             infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={translate('RETURN_DATE')}
+            infoTitle={translate('DISPONIBILITY_RETURN_DATE')}
             infoValue={translate('EMPTY_VALUE')}
           />
 
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={styles.formTitleText}>{translate('USE')}</Text>
+              <Text style={styles.formTitleText}>{translate('DISPONIBILITY_USE')}</Text>
             </View>
             <View style={styles.formInput}>
               <TextInput
@@ -80,7 +80,7 @@ const DisponibilityScreen = () => {
 };
 
 DisponibilityScreen.navigationOptions = () => ({
-  headerTitle: labels.DISPONIBILITY,
+  headerTitle: 'Disponibilidade',
 });
 
 export default DisponibilityScreen;
