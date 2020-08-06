@@ -54,6 +54,16 @@ const ResultsScreen = ({ navigation }) => {
     label: translate('RESULTS_SOURCE'),
     onPress: () => navigation.navigate('Source'),
   };
+
+  const buttonSubjectDescriptors = {
+    label: translate('RESULTS_DESCRIPTORS'),
+    onPress: () => navigation.navigate('SubjectsDescriptors'),
+  };
+
+  const buttonInformationSource = {
+    label: translate('RESULTS_INFO_SOURCE'),
+    onPress: () => navigation.navigate('InformationSource'),
+  };  
   /* END - BUTTONS */
 
   return (
@@ -63,7 +73,8 @@ const ResultsScreen = ({ navigation }) => {
         <ResultsRow buttonOne={buttonGeneralInfo} buttonTwo={buttonAuthorship} />
         <ResultsRow buttonOne={buttonProduction} buttonTwo={buttonDescription} />
         <ResultsRow buttonOne={buttonState} buttonTwo={buttonDisponibility} />
-        <ResultsRow  buttonOne={buttonSource} />
+        <ResultsRow buttonOne={buttonSource} buttonTwo={buttonSubjectDescriptors} />
+        <ResultsRow buttonOne={buttonInformationSource} />
       </View>
       <Footnote />
     </View>

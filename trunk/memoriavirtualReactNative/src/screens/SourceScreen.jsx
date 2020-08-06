@@ -1,4 +1,8 @@
-import React, { useContext, useReducer } from 'react';
+import React, {
+  useContext,
+  useReducer,
+  useEffect,
+} from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import generalinfoStyles from '../styles/generalinfo';
@@ -28,26 +32,38 @@ const SourceScreen = () => {
     },
   );
 
+  useEffect(() => {
+    setState({
+      acquisitionType: 'aaaa',
+      venalValue: 'aaaa',
+      date: 'aaaa',
+      firstOwner: 'aaaa',
+      transactionDate: 'aaaa',
+      history: 'aaaa',
+      researchTool: 'aaaa',
+    });
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.generalPurposeForm}>
       <Title titleText="Sibipiruna" />
       <ItemCard
-        type={itemCardTypes.LARGE_TEXT}
+        type={itemCardTypes.TEXT}
         title={translate('SOURCE_ACQUISITION_TYPE')}
         value={state.acquisitionType}
       />
       <ItemCard
-        type={itemCardTypes.LARGE_TEXT}
+        type={itemCardTypes.TEXT}
         title={translate('SOURCE_VENAL_VALUE')}
         value={state.venalValue}
       />
       <ItemCard
-        type={itemCardTypes.LARGE_TEXT}
+        type={itemCardTypes.TEXT}
         title={translate('SOURCE_DATE')}
         value={state.date}
       />
       <ItemCard
-        type={itemCardTypes.LARGE_TEXT}
+        type={itemCardTypes.TEXT}
         title={translate('SOURCE_FIRST_OWNER')}
         value={state.firstOwner}
       />
