@@ -7,16 +7,18 @@ import {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    width: wp('92%'),
+    width: wp('95%'),
     height: hp('7.81%'),
     backgroundColor: '#EFEFEF',
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: hp('3%'),
+    borderRadius: 20,
+    borderWidth: 0.5,
   },
   titleText: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
 });
 

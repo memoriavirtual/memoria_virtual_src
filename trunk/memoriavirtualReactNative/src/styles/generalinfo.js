@@ -9,7 +9,12 @@ const generalinfoStyles = () => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#fff',
-
+  },
+  scrollContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingBottom: hp('3%'),
   },
   title: {
     top: wp('5%'),

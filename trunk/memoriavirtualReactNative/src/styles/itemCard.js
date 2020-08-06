@@ -13,7 +13,7 @@ const itemCardStyles = () => ({
     paddingHorizontal: wp('5%'),
     paddingBottom: hp('2%'),
     marginVertical: hp('2%'),
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     borderWidth: 0.1,
     elevation: 10,
@@ -26,10 +26,13 @@ const itemCardStyles = () => ({
   },
   titleText: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  valueContainer: {
+
+  // Large text stypes
+  valueLargeTextContainer: {
+    width: wp('80%'),
     marginBottom: hp('2%'),
     paddingHorizontal: wp('3%'),
     paddingVertical: hp('3%'),
@@ -38,10 +41,38 @@ const itemCardStyles = () => ({
     borderColor: '#000000',
     backgroundColor: '#FFFFFF'
   },
-
-  // Large text stypes
   valueLargeText: {
     textAlign: 'justify',
+  },
+
+  // Text (single line) styles
+  valueTextContainer: {
+    width: wp('80%'),
+    marginBottom: hp('2%'),
+    paddingHorizontal: wp('3%'),
+    paddingVertical: hp('2%'),
+    borderRadius: 20,
+    borderWidth: 0.2,
+    borderColor: '#000000',
+    backgroundColor: '#FFFFFF'
+  },
+  valueText: {
+    textAlign: 'left',
+  },
+
+  // Switch styles
+  valueSwitchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: wp('30%'),
+    marginBottom: hp('2%'),
+    paddingHorizontal: wp('3%'),
+    paddingVertical: hp('2%'),
+    borderRadius: 20,
+    borderWidth: 0.2,
+    borderColor: '#000000',
+    backgroundColor: '#FFFFFF'
   },
 });
 

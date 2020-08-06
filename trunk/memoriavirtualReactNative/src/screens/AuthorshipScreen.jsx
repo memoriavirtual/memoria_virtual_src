@@ -14,18 +14,16 @@ const styles = StyleSheet.create({
 
 const AuthorshipScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.generalPurposeForm}>
       <Title titleText="Sibipiruna" />
-      <ScrollView contentContainerStyle={styles.generalPurposeForm}>
-        <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
-        <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
-        <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
-        <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
-        <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
-        <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
-        <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
-      </ScrollView>
-    </View>
+      <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
+      <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
+      <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
+      <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
+      <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
+      <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
+      <AuthorshipCard author="IBM" authorshipKind="Autor Institucional" />
+    </ScrollView>
   );
 };
 
