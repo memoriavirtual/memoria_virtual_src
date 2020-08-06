@@ -258,7 +258,7 @@ const DescriptionScreen = ({ description }) => {
       />
       <ItemCard
         type={itemCardTypes.TEXT}
-        title={translate('DESCRIPTION_NOTES')}
+        title={translate('NOTES')}
         value={state.notes}
       />
     </ScrollView>

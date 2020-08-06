@@ -13,14 +13,22 @@ const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-const InformationSourceScreen = () => {
+const ResearchersScreen = () => {
   const { state: { translate } } = useContext(I18nContext);
 
   // Mock sources
   const sources = [
     {
       key: '1',
-      value: 'http://www.cobit.xpg.com.br/microspc/nexus2600.htm',
+      date: '30/03/2016',
+      researcher: 'Elisa',
+      notes: 'Notas',
+    },
+    {
+      key: '2',
+      date: '30/07/2020',
+      researcher: 'Thiago',
+      notes: 'Notas 2',
     }
   ];
 
@@ -29,17 +37,17 @@ const InformationSourceScreen = () => {
       <Title titleText="Sibipiruna" />
       {sources.map((item) => (
         <ItemCard
-          type={itemCardTypes.TEXT}
-          title={translate('RESEARCHER_RESEARCH')}
-          value={item.value}
+          type={itemCardTypes.RESEARCHER}
+          title={translate('RESEARCHERS_RESEARCHER')}
+          researchItem={item}
         />
       ))}
     </ScrollView>
   );
 };
 
-InformationSourceScreen.navigationOptions = () => ({
-  headerTitle: 'Fontes de Informação',
+ResearchersScreen.navigationOptions = () => ({
+  headerTitle: 'Pesquisadores',
 });
 
-export default InformationSourceScreen;
+export default ResearchersScreen;

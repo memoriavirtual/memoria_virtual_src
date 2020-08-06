@@ -74,6 +74,23 @@ const itemCardStyles = () => ({
     borderColor: '#000000',
     backgroundColor: '#FFFFFF'
   },
+
+  // Researchers styles
+  itemResearcherContainer: {
+    width: wp('80%'),
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  itemResearcherLineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: hp('2%'),
+  },
+  itemResearcherTopicText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default itemCardStyles;

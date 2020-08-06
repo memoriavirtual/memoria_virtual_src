@@ -3,4 +3,5 @@ export default {
   TEXT: 'text',
   LARGE_TEXT: 'large_text',
   IMAGE: 'image',
+  RESEARCHER: 'researcher',
 };

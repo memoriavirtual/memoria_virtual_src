@@ -3,10 +3,13 @@
   "FOOTNOTE_SECOND": "Laboratório de Engenharia de Software - ICMC-USP",
   "YES": "Sim",
   "NO": "Não",
+  "DATE": "Data",
+  "NAME": "Nome",
   "DESCRIPTION": "Descrição",
   "AUTHORSHIP": "Autorias",
   "DISPONIBILITY": "Disponibilidade",
   "INFO_SOURCE": "Fontes de informação",
+  "NOTES": "Notas",
   "EMPTY_VALUE": "-",
 
   "RESULTS_GENERAL_INFO": "INFORMAÇÕES GERAIS",
@@ -54,7 +57,6 @@
   "DESCRIPTION_LOCALIZATION": "Localização física",
   "DESCRIPTION_CONTENT": "Conteúdo",
   "DESCRIPTION_ACCESS": "Meio de acesso",
-  "DESCRIPTION_NOTES": "Notas",
 
   "DISPONIBILITY_ACCESS_CONDITIONS": "Condições de acesso",
   "DISPONIBILITY_CONDITIONS": "Condições de reprodução",
@@ -69,9 +71,10 @@
 
   "SOURCE_ACQUISITION_TYPE": "Tipo de aquisição",
   "SOURCE_VENAL_VALUE": "Valor venal",
-  "SOURCE_DATE": "Data",
   "SOURCE_FIRST_OWNER": "Primeiro proprietário",
   "SOURCE_TRANSACTION_DATE": "Dados da transação",
   "SOURCE_HISTORY": "Histórico",
-  "SOURCE_RESEARCH_TOOL": "Instrumento de pesquisa"
+  "SOURCE_RESEARCH_TOOL": "Instrumento de pesquisa",
+
+  "RESEARCHERS_RESEARCHER": "Pesquisador"
 }

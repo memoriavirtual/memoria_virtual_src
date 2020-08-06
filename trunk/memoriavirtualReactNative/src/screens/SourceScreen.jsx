@@ -59,7 +59,7 @@ const SourceScreen = () => {
       />
       <ItemCard
         type={itemCardTypes.TEXT}
-        title={translate('SOURCE_DATE')}
+        title={translate('DATE')}
         value={state.date}
       />
       <ItemCard

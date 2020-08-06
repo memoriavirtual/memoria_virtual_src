@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   ...itemCardStyles(),
 });
 
-const ItemCard = ({ type, title, value }) => {
+const ItemCard = ({ type, title, value, researchItem }) => {
   // Contexts
   const { state: { translate} } = useContext(I18nContext);
 
@@ -54,6 +54,25 @@ const ItemCard = ({ type, title, value }) => {
             value={setSwitcher}
             disabled
           />
+        </View>
+      );
+    }
+
+    if (type === itemCardTypes.RESEARCHER) {
+      return (
+        <View style={styles.itemResearcherContainer}>
+          <View style={styles.itemResearcherLineContainer}>
+            <Text style={styles.itemResearcherTopicText}>{translate('DATE')}: </Text>
+            <Text>{researchItem.date}</Text>
+          </View>
+          <View style={styles.itemResearcherLineContainer}>
+            <Text style={styles.itemResearcherTopicText}>{translate('NAME')}: </Text>
+            <Text>{researchItem.researcher}</Text>
+          </View>
+          <View style={styles.itemResearcherLineContainer}>
+            <Text style={styles.itemResearcherTopicText}>{translate('NOTES')}: </Text>
+            <Text>{researchItem.notes}</Text>
+          </View>
         </View>
       );
     }
