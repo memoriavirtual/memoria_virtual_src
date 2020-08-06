@@ -7,8 +7,10 @@ import {
 } from 'react-native';
 
 import subjectsDescriptorStyles from '../styles/subjectsDescriptor';
+
 import Title from '../components/Title';
 import CustomTextInfo from '../components/CustomTextInfo';
+import Footnote from '../components/Footnote';
 
 const styles = StyleSheet.create({
   ...subjectsDescriptorStyles(),

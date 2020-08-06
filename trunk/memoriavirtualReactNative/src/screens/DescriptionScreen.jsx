@@ -1,5 +1,9 @@
-import React, { useContext, useReducer } from 'react';
-import { StyleSheet, ScrollView, Text } from 'react-native';
+import React, {
+  useContext,
+  useReducer,
+  useEffect,
+} from 'react';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import Title from '../components/Title';
 import ItemCard from '../components/ItemCard';
@@ -15,45 +19,84 @@ const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-const DescriptionScreen = () => {
+const DescriptionScreen = ({ description }) => {
   const { state: { translate } } = useContext(I18nContext);
   const [state, setState] = useReducer(
     (prevState, newState) => ({ ...prevState, ...newState }),
     {
-       characteristics: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-       dimensions: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-       topoConditions: 'aaaaa',
-       use: 'aaaa',
-       numberEnv: '0',
-       numberFloor: '0',
-       alcove: false,
-       basement: false,
-       attic: false,
-       anthropic: '',
-       envCharacteristics: '',
-       landscapeSite: '',
-       nextWater: '',
-       vegetation: '',
-       expo: '',
-       actualUse: '',
-       other: '',
-       totalArea: '',
-       frontFacadeHeight: '',
-       rearHacadeHeight: '',
-       width: '',
-       height: '',
-       depth: '',
-       rigdeHeight: '',
-       totalHeight: '',
-       headroomGround: '',
-       headroomType: '',
-       length: '',
-       localization: '',
-       content: '',
-       access: '',
-       notes: '',
+      characteristics: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      dimensions: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      topoConditions: 'aaaaa',
+      use: 'aaaa',
+      numberEnv: '0',
+      numberFloor: '0',
+      alcove: false,
+      basement: false,
+      attic: false,
+      anthropic: '',
+      envCharacteristics: '',
+      landscapeSite: '',
+      nextWater: '',
+      vegetation: '',
+      expo: '',
+      actualUse: '',
+      other: '',
+      totalArea: '',
+      frontFacadeHeight: '',
+      rearHacadeHeight: '',
+      width: '',
+      height: '',
+      depth: '',
+      rigdeHeight: '',
+      totalHeight: '',
+      headroomGround: '',
+      headroomType: '',
+      length: '',
+      localization: '',
+      content: '',
+      access: '',
+      notes: '',
     },
   );
+
+  useEffect(() => {
+    if (description) {
+      setState({
+        characteristics: description.characteristics,
+        dimensions: description.dimensions,
+        topoConditions: description.topoConditions,
+        use: description.use,
+        numberEnv: description.numberEnv,
+        numberFloor: description.numberFloor,
+        alcove: description.alcove,
+        basement: description.basement,
+        attic: description.attic,
+        anthropic: description.anthropic,
+        envCharacteristics: description.envCharacteristics,
+        landscapeSite: description.landscapeSite,
+        nextWater: description.nextWater,
+        vegetation: description.vegetation,
+        expo: description.expo,
+        actualUse: description.actualUse,
+        other: description.other,
+        totalArea: description.totalArea,
+        frontFacadeHeight: description.frontFacadeHeight,
+        rearHacadeHeight: description.rearHacadeHeight,
+        width: description.width,
+        height: description.height,
+        depth: description.depth,
+        rigdeHeight: description.rigdeHeight,
+        totalHeight: description.totalHeight,
+        headroomGround: description.headroomGround,
+        headroomType: description.headroomType,
+        length: description.length,
+        localization: description.localization,
+        content: description.content,
+        access: description.access,
+        notes: description.notes,
+      });
+    }
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.generalPurposeForm}>

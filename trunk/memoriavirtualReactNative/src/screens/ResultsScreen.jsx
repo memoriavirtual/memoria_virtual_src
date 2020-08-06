@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,37 +6,48 @@ import {
 
 import Title from '../components/Title';
 import Footnote from '../components/Footnote';
+import ResultsRow from '../components/ResultsRow';
 
 import resultsStyles from '../styles/results';
 
-import * as labels from '../constants/results';
-import ResultsRow from '../components/ResultsRow';
+import { Context as I18nContext } from '../context/I18nContext';
 
 const styles = StyleSheet.create({
   ...resultsStyles(),
 });
 
 const ResultsScreen = ({ navigation }) => {
-  
+  const { state: { translate } } = useContext(I18nContext);
+
   /* BUTTONS */
   const buttonGeneralInfo = {
-    label: labels.GENERAL_INFO,
+    label: translate('RESULTS_GENERAL_INFO'),
     onPress: () => navigation.navigate('GeneralInfo'),
   };
   
   const buttonAuthorship = {
-    label: labels.AUTHORSHIP,
+    label: translate('RESULTS_AUTHORSHIP'),
     onPress: () => navigation.navigate('Authorship'),
   };
 
   const buttonProduction = {
-    label: labels.PRODUCTION,
+    label: translate('RESULTS_PRODUCTION'),
     onPress: () => navigation.navigate('Production'),
   };
 
   const buttonDescription = {
-    label: labels.DESCRIPTION,
+    label: translate('RESULTS_DESCRIPTION'),
     onPress: () => navigation.navigate('Description'),
+  };
+
+  const buttonState = {
+    label: translate('RESULTS_STATE'),
+    onPress: () => navigation.navigate('State'),
+  };
+
+  const buttonDisponibility = {
+    label: translate('RESULTS_DISPONIBILITY'),
+    onPress: () => navigation.navigate('Disponibility'),
   };
 
   /* END - BUTTONS */
@@ -47,6 +58,7 @@ const ResultsScreen = ({ navigation }) => {
       <View style={styles.buttonsRowContainer}>
         <ResultsRow buttonOne={buttonGeneralInfo} buttonTwo={buttonAuthorship} />
         <ResultsRow buttonOne={buttonProduction} buttonTwo={buttonDescription} />
+        <ResultsRow buttonOne={buttonState} buttonTwo={buttonDisponibility} />
       </View>
       <Footnote />
     </View>

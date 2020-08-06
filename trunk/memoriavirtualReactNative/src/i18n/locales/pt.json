@@ -1,7 +1,27 @@
 {
+  "FOOTNOTE_FIRST": "Copyright © 2009 LABES\n",
+  "FOOTNOTE_SECOND": "Laboratório de Engenharia de Software - ICMC-USP",
   "YES": "Sim",
   "NO": "Não",
   "DESCRIPTION": "Descrição",
+  "AUTHORSHIP": "Autorias",
+  "DISPONIBILITY": "Disponibilidade",
+  "EMPTY_VALUE": "-",
+
+  "RESULTS_GENERAL_INFO": "INFORMAÇÕES GERAIS",
+  "RESULTS_AUTHORSHIP": "AUTORIAS",
+  "RESULTS_PRODUCTION": "PRODUÇÃO",
+  "RESULTS_DESCRIPTION": "DESCRIÇÃO",
+  "RESULTS_STATE": "ESTADO",
+  "RESULTS_DISPONIBILITY": "DISPONIBILIDADE",
+  "RESULTS_ORIGIN": "PROCEDÊNCIA",
+  "RESULTS_DESCRIPTORS": "ASSUNTOS/DESCRITORES",
+  "RESULTS_SOURCE": "FONTES DE INFORMAÇÃO",
+  "RESULTS_RESEARCHERS": "PESQUISADORES",
+  "RESULTS_RELATED_GOODS": "BENS RELACIONADOS",
+  "RESULTS_MULTIMIDIA": "MULTIMÍDIA",
+  "RESULTS_REVIEWS": "REVISÕES",
+
   "DESCRIPTION_CHARACTERISTICS": "Características físicas técnicas e executivas",
   "DESCRIPTION_DIMENSIONS": "Dimensões e quantificações",
   "DESCRIPTION_TOPO_CONDITIONS": "Condição topográfica",
@@ -33,5 +53,13 @@
   "DESCRIPTION_LOCALIZATION": "Localização física",
   "DESCRIPTION_CONTENT": "Conteúdo",
   "DESCRIPTION_ACCESS": "Meio de acesso",
-  "DESCRIPTION_NOTES": "Notas"
+  "DESCRIPTION_NOTES": "Notas",
+
+  "ACCESS_CONDITIONS": "Condições de acesso",
+  "CONDITIONS": "Condições de reprodução",
+  "PROTECTION": "Proteção",
+  "PROTECTION_INSTITUTE": "Instituição Protetora",
+  "NUMBER_PROCESS": "Nº de processo",
+  "RETURN_DATE": "Data de retorno",
+  "USE": "Uso e aproveitamento"
 }

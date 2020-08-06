@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -7,66 +7,67 @@ import {
 } from 'react-native';
 
 import generalinfoStyles from '../styles/generalinfo';
-import * as labels from '../constants/disponibility';
 import CustomTextInfo from '../components/CustomTextInfo';
 import Title from '../components/Title';
 import Footnote from '../components/Footnote';
+
+import { Context as I18nContext } from '../context/I18nContext';
 
 const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-const DisponibilityScreen = () => (
+const DisponibilityScreen = () => {
+  const { state: { translate } } = useContext(I18nContext);
+
+  return (
     <View style={styles.container}>
       <Title titleText="Sibipiruna" />
       <View style={styles.form}>
 
           <CustomTextInfo
-            infoTitle={labels.DISPONIBILITY}
-            infoValue={labels.EMPTY_VALUE}
+            infoTitle={translate('DISPONIBILITY')}
+            infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={labels.ACCESS_CONDITIONS}
-            infoValue={labels.EMPTY_VALUE}
+            infoTitle={translate('ACCESS_CONDITIONS')}
+            infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={labels.CONDITIONS}
-            infoValue={labels.EMPTY_VALUE}
+            infoTitle={translate('CONDITIONS')}
+            infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={labels.PROTECTION}
-            infoValue={labels.EMPTY_VALUE}
+            infoTitle={translate('PROTECTION')}
+            infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={labels.PROTECTION_INSTITUTE}
-            infoValue={labels.EMPTY_VALUE}
+            infoTitle={translate('PROTECTION_INSTITUTE')}
+            infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={labels.NUMBER_PROCESS}
-            infoValue={labels.EMPTY_VALUE}
+            infoTitle={translate('NUMBER_PROCESS')}
+            infoValue={translate('EMPTY_VALUE')}
           />
 
           <CustomTextInfo
-            infoTitle={labels.RETURN_DATE}
-            infoValue={labels.EMPTY_VALUE}
+            infoTitle={translate('RETURN_DATE')}
+            infoValue={translate('EMPTY_VALUE')}
           />
 
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={styles.formTitleText}>{labels.USE}</Text>
+              <Text style={styles.formTitleText}>{translate('USE')}</Text>
             </View>
-            <View
-            style={styles.spacer}
-            />
             <View style={styles.formInput}>
               <TextInput
-                value={labels.EMPTY_VALUE}
+                value={translate('EMPTY_VALUE')}
               />
             </View>
 
@@ -75,7 +76,8 @@ const DisponibilityScreen = () => (
       </View>
       <Footnote />
     </View>
-);
+  );
+};
 
 DisponibilityScreen.navigationOptions = () => ({
   headerTitle: labels.DISPONIBILITY,
