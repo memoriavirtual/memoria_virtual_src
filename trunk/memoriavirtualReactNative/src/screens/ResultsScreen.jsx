@@ -68,7 +68,12 @@ const ResultsScreen = ({ navigation }) => {
   const buttonResearchers = {
     label: translate('RESULTS_RESEARCHERS'),
     onPress: () => navigation.navigate('Researchers'),
-  };  
+  };
+
+  const buttonRelatedGoods = {
+    label: translate('RESULTS_RELATED_GOODS'),
+    onPress: () => navigation.navigate('RelatedGoods'),
+  };
   /* END - BUTTONS */
 
   return (
@@ -80,6 +85,7 @@ const ResultsScreen = ({ navigation }) => {
         <ResultsRow buttonOne={buttonState} buttonTwo={buttonDisponibility} />
         <ResultsRow buttonOne={buttonSource} buttonTwo={buttonSubjectDescriptors} />
         <ResultsRow buttonOne={buttonInformationSource} buttonTwo={buttonResearchers} />
+        <ResultsRow buttonOne={buttonRelatedGoods} buttonTwo={buttonResearchers} />
       </View>
       <Footnote />
     </View>

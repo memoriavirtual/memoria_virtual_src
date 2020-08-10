@@ -4,4 +4,5 @@ export default {
   LARGE_TEXT: 'large_text',
   IMAGE: 'image',
   RESEARCHER: 'researcher',
+  RELATED_GOOD: 'related_good',
 };

@@ -17,7 +17,7 @@ const resultsStyles = () => ({
     justifyContent: 'center',
     alignItems: 'center',
     width: wp('93.3%'),
-    marginBottom: hp('1%'),
+    marginBottom: hp('2%'),
   },
   resultsRowSpacer: {
     width: wp('3%'),

@@ -30,7 +30,7 @@ const InformationSourceScreen = () => {
       {sources.map((item) => (
         <ItemCard
           type={itemCardTypes.TEXT}
-          title={translate('RESEARCHER_RESEARCH')}
+          title={translate('INFO_SOURCE_SOURCE')}
           value={item.value}
         />
       ))}

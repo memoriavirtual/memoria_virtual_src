@@ -91,6 +91,24 @@ const itemCardStyles = () => ({
     fontSize: 16,
     fontWeight: 'bold',
   },
+
+  // Related goods styles
+  relatedGoodsContainer: {
+    width: wp('80%'),
+    marginBottom: hp('2%'),
+    paddingHorizontal: wp('3%'),
+    paddingVertical: hp('2%'),
+    borderRadius: 20,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor: '#F2F2F2'
+  },
+
+  relatedGoodTouchableText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
 
 export default itemCardStyles;

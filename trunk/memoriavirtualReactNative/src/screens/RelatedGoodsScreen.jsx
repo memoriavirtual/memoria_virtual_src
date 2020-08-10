@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import generalinfoStyles from '../styles/generalinfo';
+
 import itemCardTypes from '../enums/itemCardTypes';
 
 import Title from '../components/Title';
@@ -13,43 +14,37 @@ const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-const ResearchersScreen = () => {
+const RelatedGoodsScreen = () => {
   const { state: { translate } } = useContext(I18nContext);
 
-  // Mock sources
-  const sources = [
+  // Mock relatedGoods
+  const relatedGoods = [
     {
       key: '1',
-      date: '30/03/2016',
-      researcher: 'Elisa',
-      notes: 'Notas',
+      value: 'Sibipiruna 1',
     },
     {
       key: '2',
-      date: '30/07/2020',
-      researcher: 'Thiago',
-      notes: 'Notas 2',
+      value: 'Sibipiruna 2',
     }
   ];
 
   return (
     <ScrollView contentContainerStyle={styles.generalPurposeForm}>
       <Title titleText="Sibipiruna" />
-      {sources.map((item) => {
-        return (
-          <ItemCard
-            type={itemCardTypes.RESEARCHER}
-            title={translate('RESEARCHERS_RESEARCHER')}
-            researchItem={item}
-          />
-        );
-      })}
+      {relatedGoods.map((item) => (
+        <ItemCard
+          type={itemCardTypes.RELATED_GOOD}
+          title={translate('RELATED_GOODS_RELATED_GOOD')}
+          value={item.value}
+        />
+      ))}
     </ScrollView>
   );
 };
 
-ResearchersScreen.navigationOptions = () => ({
-  headerTitle: 'Pesquisadores',
+RelatedGoodsScreen.navigationOptions = () => ({
+  headerTitle: 'Bens Relacionados',
 });
 
-export default ResearchersScreen;
+export default RelatedGoodsScreen;
