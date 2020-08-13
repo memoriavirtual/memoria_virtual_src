@@ -21,7 +21,7 @@ const InformationSourceScreen = () => {
     {
       key: '1',
       value: 'http://www.cobit.xpg.com.br/microspc/nexus2600.htm',
-    }
+    },
   ];
 
   return (

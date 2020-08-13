@@ -9,7 +9,6 @@ import {
 import productionStyles from '../styles/production';
 import CustomTextInfo from '../components/CustomTextInfo';
 import Title from '../components/Title';
-import Footnote from '../components/Footnote';
 
 const styles = StyleSheet.create({
   ...productionStyles(),

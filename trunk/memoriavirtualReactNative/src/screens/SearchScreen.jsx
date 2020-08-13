@@ -26,8 +26,6 @@ const items = [
   { name: 'MFF-FL-329 Sibipiruna', key: '10' },
   { name: 'MFF-FL-329 Sibipiruna', key: '11' },
 ];
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
 
 const SearchScreen = ({ navigation }) => (
     <View style={styles.container}>

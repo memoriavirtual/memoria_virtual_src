@@ -39,7 +39,7 @@ const itemCardStyles = () => ({
     borderRadius: 20,
     borderWidth: 0.2,
     borderColor: '#000000',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   valueLargeText: {
     textAlign: 'justify',
@@ -54,7 +54,7 @@ const itemCardStyles = () => ({
     borderRadius: 20,
     borderWidth: 0.2,
     borderColor: '#000000',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   valueText: {
     textAlign: 'left',
@@ -72,7 +72,7 @@ const itemCardStyles = () => ({
     borderRadius: 20,
     borderWidth: 0.2,
     borderColor: '#000000',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
 
   // Researchers styles
@@ -101,7 +101,7 @@ const itemCardStyles = () => ({
     borderRadius: 20,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor: '#F2F2F2'
+    backgroundColor: '#F2F2F2',
   },
 
   relatedGoodTouchableText: {
@@ -121,8 +121,6 @@ const itemCardStyles = () => ({
     borderColor: '#000000',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: hp('2%'),
-    // backgroundColor: '#F2F2F2'
   },
   multimidiaDescriptionContainer: {
     marginBottom: hp('2%'),

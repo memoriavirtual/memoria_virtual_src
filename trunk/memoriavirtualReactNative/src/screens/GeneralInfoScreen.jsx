@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Switch,
 } from 'react-native';
 
@@ -16,14 +15,13 @@ const styles = StyleSheet.create({
   ...generalinfoStyles(),
 });
 
-
 const GeneralInfoScreen = () => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   const [isSwitchOnReview, setIsSwitchOnReview] = useState(false);
   const onToggleSwitchReview = () => setIsSwitchOnReview(!isSwitchOnReview);
-  
+
   return (
     <View style={styles.container}>
       <Title titleText="Sibipiruna" />

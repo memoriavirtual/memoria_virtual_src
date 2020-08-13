@@ -1,12 +1,15 @@
 import {
   heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
 const footnoteStyles = () => ({
+  footnoteContainer: {
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: hp('2%'),
+  },
   footnoteText: {
     fontSize: 14,
-    marginTop: hp('26%'),
     textAlign: 'center',
   },
 });

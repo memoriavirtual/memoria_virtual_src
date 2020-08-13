@@ -19,7 +19,7 @@ const Footnote = () => {
         {translate('FOOTNOTE_SECOND')}
       </Text>
     </View>
- );
+  );
 };
 
 export default Footnote;

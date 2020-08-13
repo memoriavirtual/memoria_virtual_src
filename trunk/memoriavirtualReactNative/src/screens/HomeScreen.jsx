@@ -17,32 +17,32 @@ const styles = StyleSheet.create({
 });
 
 const HomeScreen = ({ navigation }) => (
-    <View style={styles.mainContainer}>
-      <Image
-        style={styles.logoImage}
-        source={require('../assets/logo_mv_catalogacao1.png')}
-      />
-      <View style={styles.searchInputContainer}>
-        <TextInput
-          autoCorrect={false}
+  <View style={styles.mainContainer}>
+    <Image
+      style={styles.logoImage}
+      source={require('../assets/logo_mv_catalogacao1.png')}
+    />
+    <View style={styles.searchInputContainer}>
+      <TextInput
+        autoCorrect={false}
 
-        />
-      </View>
-      <VerticalSpacer />
-      <CustomButton
-        buttonLabel="BUSCAR"
-        icon={
-          <Icon
-            name="search"
-            type="material"
-            color="white"
-            size={28}
-          />
-        }
-        action={() => navigation.navigate('Search')}
       />
-      <Footnote />
     </View>
+    <VerticalSpacer />
+    <CustomButton
+      buttonLabel="BUSCAR"
+      icon={
+        <Icon
+          name="search"
+          type="material"
+          color="white"
+          size={28}
+        />
+      }
+      action={() => navigation.navigate('Search')}
+    />
+    <Footnote />
+  </View>
 );
 
 HomeScreen.navigationOptions = () => ({

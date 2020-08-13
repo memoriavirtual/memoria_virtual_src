@@ -34,4 +34,3 @@ const AuthorshipCard = ({ author, authorshipKind }) => {
 };
 
 export default AuthorshipCard;
-

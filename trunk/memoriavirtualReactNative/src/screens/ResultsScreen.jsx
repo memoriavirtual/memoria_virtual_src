@@ -24,7 +24,7 @@ const ResultsScreen = ({ navigation }) => {
     label: translate('RESULTS_GENERAL_INFO'),
     onPress: () => navigation.navigate('GeneralInfo'),
   };
-  
+
   const buttonAuthorship = {
     label: translate('RESULTS_AUTHORSHIP'),
     onPress: () => navigation.navigate('Authorship'),
@@ -79,6 +79,11 @@ const ResultsScreen = ({ navigation }) => {
     label: translate('RESULTS_MULTIMIDIA'),
     onPress: () => navigation.navigate('Multimidia'),
   };
+
+  const buttonReview = {
+    label: translate('RESULTS_REVIEWS'),
+    onPress: () => navigation.navigate('Reviews'),
+  };
   /* END - BUTTONS */
 
   return (
@@ -91,6 +96,7 @@ const ResultsScreen = ({ navigation }) => {
         <ResultsRow buttonOne={buttonSource} buttonTwo={buttonSubjectDescriptors} />
         <ResultsRow buttonOne={buttonInformationSource} buttonTwo={buttonResearchers} />
         <ResultsRow buttonOne={buttonRelatedGoods} buttonTwo={buttonMultimidia} />
+        <ResultsRow buttonOne={buttonReview} />
       </View>
       <Footnote />
     </View>

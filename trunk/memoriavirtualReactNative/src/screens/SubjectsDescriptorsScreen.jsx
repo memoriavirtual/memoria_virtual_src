@@ -15,9 +15,6 @@ const styles = StyleSheet.create({
   ...subjectsDescriptorStyles(),
 });
 
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
-
 const SubjectsDescriptorsScreen = () => (
     <View style={styles.container}>
       <Title titleText="Sibipiruna" />

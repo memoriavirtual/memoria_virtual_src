@@ -26,7 +26,7 @@ const RelatedGoodsScreen = () => {
     {
       key: '2',
       value: 'Sibipiruna 2',
-    }
+    },
   ];
 
   return (

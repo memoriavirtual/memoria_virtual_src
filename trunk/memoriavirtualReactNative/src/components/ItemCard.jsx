@@ -21,7 +21,9 @@ const styles = StyleSheet.create({
   ...itemCardStyles(),
 });
 
-const ItemCard = ({ type, title, value, researchItem }) => {
+const ItemCard = ({
+  type, title, value, researchItem,
+}) => {
   // Contexts
   const { state: { translate } } = useContext(I18nContext);
 
@@ -109,11 +111,11 @@ const ItemCard = ({ type, title, value, researchItem }) => {
     if (type === itemCardTypes.LARGE_TEXT) {
       return renderLargeText();
     }
-  
+
     if (type === itemCardTypes.TEXT) {
       return renderText();
     }
-  
+
     if (type === itemCardTypes.SWITCHER) {
       return renderSwitcher();
     }
