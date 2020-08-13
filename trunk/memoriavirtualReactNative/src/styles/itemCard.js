@@ -109,6 +109,38 @@ const itemCardStyles = () => ({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+
+  // Multimidia styles
+  multimidiaImageContainer: {
+    width: wp('80%'),
+    marginBottom: hp('2%'),
+    paddingHorizontal: wp('3%'),
+    paddingVertical: hp('2%'),
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: hp('2%'),
+    // backgroundColor: '#F2F2F2'
+  },
+  multimidiaDescriptionContainer: {
+    marginBottom: hp('2%'),
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  multimidiaImage: {
+    width: wp('70%'),
+    height: hp('50%'),
+    resizeMode: 'contain',
+  },
+  multimidiaTopicText: {
+    fontWeight: 'bold',
+  },
+  multimidiaValueText: {
+    fontSize: 16,
+  },
 });
 
 export default itemCardStyles;

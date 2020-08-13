@@ -74,6 +74,11 @@ const ResultsScreen = ({ navigation }) => {
     label: translate('RESULTS_RELATED_GOODS'),
     onPress: () => navigation.navigate('RelatedGoods'),
   };
+
+  const buttonMultimidia = {
+    label: translate('RESULTS_MULTIMIDIA'),
+    onPress: () => navigation.navigate('Multimidia'),
+  };
   /* END - BUTTONS */
 
   return (
@@ -85,7 +90,7 @@ const ResultsScreen = ({ navigation }) => {
         <ResultsRow buttonOne={buttonState} buttonTwo={buttonDisponibility} />
         <ResultsRow buttonOne={buttonSource} buttonTwo={buttonSubjectDescriptors} />
         <ResultsRow buttonOne={buttonInformationSource} buttonTwo={buttonResearchers} />
-        <ResultsRow buttonOne={buttonRelatedGoods} buttonTwo={buttonResearchers} />
+        <ResultsRow buttonOne={buttonRelatedGoods} buttonTwo={buttonMultimidia} />
       </View>
       <Footnote />
     </View>

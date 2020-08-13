@@ -9,6 +9,7 @@ import {
   Text,
   Switch,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 import itemCardTypes from '../enums/itemCardTypes';
@@ -77,6 +78,33 @@ const ItemCard = ({ type, title, value, researchItem }) => {
     </TouchableOpacity>
   );
 
+  const renderMultimidia = () => (
+    <>
+      <View style={styles.multimidiaImageContainer}>
+        <Image
+          source={value.source}
+          style={styles.multimidiaImage}
+        />
+      </View>
+      <View style={styles.multimidiaDescriptionContainer}>
+        <Text style={styles.multimidiaValueText}>
+          <Text style={styles.multimidiaTopicText}>
+            {translate('NAME')}
+          </Text>
+          : {value.name}
+        </Text>
+      </View>
+      <View style={styles.multimidiaDescriptionContainer}>
+        <Text style={styles.multimidiaValueText}>
+          <Text style={styles.multimidiaTopicText}>
+            {translate('DESCRIPTION')}
+          </Text>
+          : {value.description}
+        </Text>
+      </View>
+    </>
+  );
+
   const renderItemValue = () => {
     if (type === itemCardTypes.LARGE_TEXT) {
       return renderLargeText();
@@ -96,6 +124,10 @@ const ItemCard = ({ type, title, value, researchItem }) => {
 
     if (type === itemCardTypes.RELATED_GOOD) {
       return renderRelatedGood();
+    }
+
+    if (type === itemCardTypes.MULTIMIDIA) {
+      return renderMultimidia();
     }
 
     return null;

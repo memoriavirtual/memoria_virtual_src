@@ -15,6 +15,7 @@ import SourceScreen from './screens/SourceScreen';
 import InformationSourceScreen from './screens/InformationSourceScreen';
 import ResearchersScreen from './screens/ResearchersScreen';
 import RelatedGoods from './screens//RelatedGoodsScreen';
+import MultimidiaScreen from './screens/MultimidiaScreen';
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -31,6 +32,7 @@ const MainNavigator = createStackNavigator({
   InformationSource: { screen: InformationSourceScreen },
   Researchers: { screen: ResearchersScreen },
   RelatedGoods: { screen: RelatedGoods },
+  Multimidia: { screen: MultimidiaScreen, },
 }, {
   initialRouteName: 'Home',
   defaultNavigationOptions: {

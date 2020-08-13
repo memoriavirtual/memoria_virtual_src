@@ -5,4 +5,5 @@ export default {
   IMAGE: 'image',
   RESEARCHER: 'researcher',
   RELATED_GOOD: 'related_good',
+  MULTIMIDIA: 'multimidia',
 };
