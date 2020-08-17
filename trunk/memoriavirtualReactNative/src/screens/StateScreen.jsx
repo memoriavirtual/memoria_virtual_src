@@ -1,52 +1,41 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
 } from 'react-native';
 
-import productionStyles from '../styles/production';
+import subjectsDescriptorStyles from '../styles/subjectsDescriptor';
+
+import Title from '../components/Title';
 import CustomTextInfo from '../components/CustomTextInfo';
+import Footnote from '../components/Footnote';
 
 const styles = StyleSheet.create({
-  ...productionStyles(),
+  ...subjectsDescriptorStyles(),
 });
 
-
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
-
-const Production = () => {
-
-  return (
+const StateScreen = () => (
     <View style={styles.container}>
-      <View style = {styles.title}>
-        <Text style={{fontSize:26}}>Sibipiruna3</Text>
-      </View>
+      <Title titleText="Sibipiruna" />
       <View style={styles.form}>
 
           <CustomTextInfo
-            infoTitle="Local"
+            infoTitle="Estado de preservação"
             infoValue="-"
           />
 
           <CustomTextInfo
-            infoTitle="Ano"
-            infoValue="-"
-          />
-
-          <CustomTextInfo
-            infoTitle="Edição"
+            infoTitle="Estado de conservação"
             infoValue="-"
           />
 
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={{fontSize:18}}
-              >Outras responsibilidades</Text>
+              <Text style={styles.lastFormTitleText}
+              >Notas do estado de conservação</Text>
             </View>
             <View
             style={styles.spacer}
@@ -61,13 +50,12 @@ const Production = () => {
 
       </View>
 
-    <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
+      <Footnote />
     </View>
-  );
-};
+);
 
-Production.navigationOptions = () => ({
-  headerTitle: 'Produção',
+StateScreen.navigationOptions = () => ({
+  headerTitle: 'Estado',
   headerTitleStyle: {
     color: 'white',
     fontWeight: 'bold',
@@ -78,4 +66,4 @@ Production.navigationOptions = () => ({
   },
 });
 
-export default Production;
+export default StateScreen;

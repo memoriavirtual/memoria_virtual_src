@@ -1,42 +1,44 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
 } from 'react-native';
 
-import subjectsDescriptorStyles from '../styles/subjectsDescriptor';
+import productionStyles from '../styles/production';
 import CustomTextInfo from '../components/CustomTextInfo';
+import Title from '../components/Title';
 
 const styles = StyleSheet.create({
-  ...subjectsDescriptorStyles(),
+  ...productionStyles(),
 });
 
-
-const footnoteFirst = 'Copyright © 2009 LABES';
-const footnoteSecond = 'Laboratório de Engenharia de Software - ICMC-USP';
-
-const SubjectsDescriptors = () => {
-
-  return (
+const ProductionScreen = () => (
     <View style={styles.container}>
-      <View style = {styles.title}>
-        <Text style={{fontSize:26}}>Sibipiruna4</Text>
-      </View>
+      <Title titleText="Sibipiruna" />
       <View style={styles.form}>
 
           <CustomTextInfo
-            infoTitle="Assuntos"
+            infoTitle="Local"
+            infoValue="-"
+          />
+
+          <CustomTextInfo
+            infoTitle="Ano"
+            infoValue="-"
+          />
+
+          <CustomTextInfo
+            infoTitle="Edição"
             infoValue="-"
           />
 
           <View style={styles.inputs}>
 
             <View style={styles.lastFormTitle}>
-              <Text style={{fontSize:18}}
-              >Descritores</Text>
+              <Text style={styles.lastFormTitleText}
+              >Outras responsibilidades</Text>
             </View>
             <View
             style={styles.spacer}
@@ -46,18 +48,13 @@ const SubjectsDescriptors = () => {
                 value="-"
               />
             </View>
-
           </View>
-
       </View>
-
-    <Text style={styles.footnoteText}>{footnoteFirst}{'\n'}{footnoteSecond}</Text>
     </View>
-  );
-};
+);
 
-SubjectsDescriptors.navigationOptions = () => ({
-  headerTitle: 'Assuntos e descritores',
+ProductionScreen.navigationOptions = () => ({
+  headerTitle: 'Produção',
   headerTitleStyle: {
     color: 'white',
     fontWeight: 'bold',
@@ -68,4 +65,4 @@ SubjectsDescriptors.navigationOptions = () => ({
   },
 });
 
-export default SubjectsDescriptors;
+export default ProductionScreen;

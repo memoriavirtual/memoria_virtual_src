@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TextInput,
   Text,
 } from 'react-native';
 
@@ -18,17 +17,11 @@ const CustomTextInfo = ({
 }) => (
 
   <View style={styles.inputs}>
-
     <View style={styles.formTitle}>
-      <Text style={{fontSize:18}}>{infoTitle}</Text>
+      <Text style={styles.infoText}>{infoTitle}</Text>
     </View>
-    <View
-    style={styles.spacer}
-    />
     <View style={styles.formInput}>
-      <TextInput
-        value={infoValue}
-      />
+      <Text>{infoValue}</Text>
     </View>
 
   </View>

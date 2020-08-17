@@ -8,6 +8,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const VerticalSpacer = () => <View  style={styles.spacerContainer} />;
+const VerticalSpacer = () => <View style={styles.spacerContainer} />;
 
 export default VerticalSpacer;
